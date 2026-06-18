@@ -9,7 +9,7 @@ export const meta = {
   ],
 }
 
-const A = (typeof args === 'object' && args) ? args : {}
+const A = typeof args === 'string' ? JSON.parse(args) : (args || {})
 const ROUNDS = A.rounds || 4
 const CHUNK = A.chunk || 8
 const MAXI = A.maxi || 40
