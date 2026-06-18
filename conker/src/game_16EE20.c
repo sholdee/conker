@@ -376,7 +376,23 @@ u8 func_15145C90(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15145EA4.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15146078.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151462C8.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151464B8.s")
+extern s32 D_80082FA0;
+
+u8 func_151464B8(s16 *arg0) {
+    s32 i;
+    s16 mask;
+    s16 field;
+    s32 ret;
+
+    i = 0;
+    mask = 0;
+    for (; i <= D_80082FA0; i++) {
+        mask |= 1 << i;
+    }
+    ret = (arg0[1] & mask) == 0;
+    field = arg0[1];
+    return ret;
+}
 
 void func_15146508(struct127 *arg0, struct127 *arg1) {
     struct193 tmp;

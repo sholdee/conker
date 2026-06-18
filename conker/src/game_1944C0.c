@@ -37,7 +37,24 @@
 void func_15168A2C(s32 arg0) {
     func_15168B10(arg0, 0);
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15168A4C.s")
+extern u8 D_800DCE50[];
+
+void func_15168A4C(s32 *arg0, s32 arg1) {
+    s32 idx;
+    s32 t;
+    s32 *temp;
+
+    idx = ((u8 *)arg0)[1];
+    temp = (s32 *)(&D_800DCE50[(idx * 0x1A0) + (arg1 * 4)]);
+    t = *temp & 0xFFFFFFFFFFFFFFFFu;
+    arg0[2] = t;
+    if (t != 0) {
+        ((s32 *)t)[1] = (s32)arg0;
+    }
+    ((u8 *)arg0)[0] = (u8)arg1;
+    arg0[1] = 0;
+    *temp = (s32)arg0;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15168A9C.s")
 // void *func_15168A9C(struct12 *arg0) {
 //     void *temp_a1;

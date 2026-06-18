@@ -799,7 +799,16 @@ void func_1506EE38(void) {
     D_800D154C->unk25C &= ~D_800D1580;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_1506EE60.s")
+void func_1506EE60(void) {
+    s32 temp_v0 = D_800D1580;
+    s32 temp_a1 = D_800D1580 & 0xFFFF;
+
+    if (temp_v0 != 0) {
+        func_15188810(D_800D154C, temp_a1, D_800D1580 >> 0x10);
+        return;
+    }
+    func_15188A9C(D_800D154C, temp_a1);
+}
 // NON-MATCHING: same issue as earlier
 // void func_1506EE60(void) {
 //     s32 temp_a1;
