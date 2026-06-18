@@ -50,7 +50,16 @@ void func_15141250(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16DC80/func_15141478.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16DC80/func_15141564.s")
+s32 func_15141564(u8 *arg0) {
+    f32 *v1 = (f32 *)(arg0 + 0x170);
+    f32 *p;
+
+    *(f32 *)(arg0 + 0x158) = v1[1] * sinf(*(f32 *)(arg0 + 0x178)) + v1[0];
+    p = &v1[2];
+    *p = v1[3] * D_800BE9A4 + *p;
+    *p = func_15144B68(*p);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16DC80/func_151415D4.s")
 

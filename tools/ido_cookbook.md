@@ -52,10 +52,16 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Read a `u8`/`u16` param into a WIDER local (`s32 a = arg2;`) to reproduce a
   word home (`sw`, not `sb`) with no re-masking `andi`; the narrow type would home
   byte-width and re-mask on use.
+- Inversely, binding a value to a `u8` local before passing it to a call forces an
+  `andi reg,0xff` (mask) right before the `jal` plus a `move a0,reg`; narrow-type
+  the local when the target masks an arg into the low byte at the call site.
 
 ## Register allocation & evaluation order (the usual "so close" diffs)
 - Multiply/commutative operand order matters: `a*b` vs `b*a` changes which FPU
   register is the destination. Match the asm's operand order literally.
+- Store each call's result in its OWN dedicated f32 local (not a reused temp) to
+  pin the later operand order (`argN*result` -> f2,f0) and the load order of those
+  results into the following expression.
 - Casting changes BOTH load width and evaluation order: `*(u8*)(p+0xC)` forces
   `lbu` (vs `lh` for an `s16` struct field) and can force the other operand to be
   evaluated first. Use a raw cast to control which side loads first.
@@ -121,6 +127,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   function's internal labels (.L...), so compiling it as C FAILS TO LINK
   (undefined .L refs) — it does NOT silently match the ROM. Leave it as a
   GLOBAL_ASM stub; needs jtbl/asm-processor work, not steering/permuter — BAIL.
+- Loop-rotation / strength-reduction of an indexed reload: when the target
+  converges every branch onto ONE shared bottom load (or hoists/duplicates an
+  `arr[i*k]` reload into branch delay slots) and your C produces the other shape,
+  the schedule is driven by IDO's induction-variable rewrite — unsteerable from C.
+  Bail (stub); decomp-permuter candidate.
 - Native 64-bit ops in the target (`ld`/`sd`/`dsll32`/`dsrl`/`dsra32` on a u64)
   are UNMATCHABLE under the project's -mips2/-o32 build: IDO lowers `long long`
   shifts to `__ll_lshift`/`__ull_rshift` helper CALLS, never native d-shifts.

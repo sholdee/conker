@@ -182,7 +182,17 @@ void func_1514373C(f32 arg0, f32 arg1, f32 *arg2, f32 *arg3) {
 }
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143794.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143834.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143874.s")
+void func_15143874(s32 arg0, f32 arg1, f32 *arg2, f32 *arg3) {
+    f32 temp;
+    f32 temp2;
+    u8 idx;
+
+    temp = func_151423D8((u8) arg0);
+    idx = (s16) arg0 - 0x40;
+    temp2 = func_151423D8(idx);
+    *arg2 = arg1 * temp2;
+    *arg3 = arg1 * temp;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151438D8.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143D18.s")
 s32 func_15143DA8(s32 *arg0, s32 arg1, s32 arg2) {
