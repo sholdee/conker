@@ -171,7 +171,15 @@ f32 func_15142B44(f32 arg0) {
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151436B4.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_1514373C.s")
+void func_1514373C(f32 arg0, f32 arg1, f32 *arg2, f32 *arg3) {
+    f32 c;
+    f32 s;
+
+    c = cosf(arg0);
+    s = sinf(arg0);
+    *arg2 = arg1 * s;
+    *arg3 = arg1 * c;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143794.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143834.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143874.s")

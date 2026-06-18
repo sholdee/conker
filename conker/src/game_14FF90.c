@@ -459,7 +459,22 @@ s32 func_151253CC(struct108 *arg0) {
 }
 
 // no idea what going on here
-#pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_15125490.s")
+s32 func_15125490(struct108 *arg0) {
+    struct127 *temp = arg0->unk3D0;
+    s32 v1;
+
+    if (temp->in_water == 1) {
+        v1 = (s32) fabsf(temp->y_position - temp->unk118);
+        if (v1 < 0x64) {
+            return 0;
+        }
+        if (v1 >= 0x12D) {
+            return 1;
+        }
+    } else {
+        return 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_151254F4.s")
 // NON-MATCHING: first statements in wrong order

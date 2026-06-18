@@ -1161,8 +1161,18 @@ s32 func_1516429C(struct237 *arg0) {
     return 1;
 }
 
-// what structs?
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18D770/func_1516434C.s")
+void func_1516434C(struct225 *arg0, struct227 *arg1, u8 arg2) {
+    struct227 *temp = &arg0->unk18;
+
+    if (arg2 == 0x33) {
+        if (*(u8 *)((u8 *)arg1 + 4) == *(u8 *)((u8 *)temp + 4)) {
+            temp->unk0 = arg1->unk0;
+            arg0->unk14->unk5 = *(u8 *)((u8 *)arg1 + 5);
+            arg0->unk14->unk6 = *(u8 *)((u8 *)arg1 + 6);
+            arg0->unk14->unk7 = *(u8 *)((u8 *)arg1 + 7);
+        }
+    }
+}
 
 void func_151643A8(struct225 *arg0, s32 arg1, u8 arg2) {
     struct227 *tmp;

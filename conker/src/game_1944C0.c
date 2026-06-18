@@ -93,11 +93,19 @@ void func_1516968C(struct102 *arg0, u8 *arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_151696DC.s")
+void func_151696DC(s32 arg0) {
+    s8 i;
+
+    for (i = 0; i < D_800DD190; i++) {
+        if (arg0 == ((s32 *)D_800DD198)[i]) {
+            ((s32 *)D_800DD198)[i] = *(s32 *)(arg0 + 0x8);
+        }
+    }
+}
 
 void func_1516972C(struct102 *arg0) {
     void (*func)(struct102 *arg0);
-    func_151696DC();
+    func_151696DC(arg0);
 
     if (arg0->unk0 >= 2) {
         func = D_8008B4D0[arg0->unk0].unk0;
@@ -112,7 +120,7 @@ void func_1516972C(struct102 *arg0) {
 void func_1516979C(struct102 *arg0) {
     void (*func)(struct102 *arg0);
 
-    func_151696DC();
+    func_151696DC(arg0);
     func = D_8008B4D4[arg0->unk0].unk0;
     if (func != NULL) {
         func(arg0);
