@@ -24,8 +24,19 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_151671E8.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167310.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_151674F8.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167A68.s")
-s32 func_15167A68(s32, s32, s32, s32, s32, s32);
+void func_15168A4C(s32 *arg0, s32 arg1);
+
+s32 func_15167A68(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    s32 temp;
+
+    temp = func_10003C6C(arg2, 1, arg3, 0, (u8)arg5);
+    if (temp != 0) {
+        *(u8 *)(temp + 1) = arg1;
+        func_15168A4C((s32 *)temp, arg0);
+        *(u8 *)(temp + 0xC) = *((u8 *)&arg4 + 3);
+    }
+    return temp;
+}
 
 void func_15167AD8(s32 arg0, s32 arg1, s32 arg2) {
     s32 temp;

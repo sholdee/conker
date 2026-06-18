@@ -49,7 +49,7 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Inlining a value in the for-CONDITION (vs a named `count` local) also pins its
   register: the named local can swap which reg holds the bound vs the index `i`.
 - abs/trunc intrinsics: use `fabsf` to emit `abs.s`, and an `(s32)` cast on a
-  float to emit `trunc.w.s`.
+  float to emit `trunc.w.s`. `sqrtf` emits a native `sqrt.s` under IDO 5.3.
 - A signed `(s16)` cast on a u16 field forces a signed `lh` load (vs `lhu`) and a
   signed branch (`bgtzl`/`blez`) on its value; use it when the asm sign-extends.
 - Read a `u8`/`u16` param into a WIDER local (`s32 a = arg2;`) to reproduce a
@@ -100,6 +100,30 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - A base pointer (`addiu vN,base,off`) only stays distinct (not folded into
   base-relative `+4`/`+8` loads) if you actually read/write THROUGH that pointer;
   do the field access via `*p` to keep `p` live and force the separate base.
+- A float param arriving in an INTEGER register (`mtc1 aN,fM` at entry) is still a
+  `f32` in the signature — declare it `f32`; IDO emits the int-reg-to-FPU move.
+- A param the target loads as a low BYTE of its un-homed caller stack slot wants
+  `*((u8*)&arg + 3)` (big-endian byte-3) to emit the exact `lbu off+3(sp)`; neither
+  `arg` nor `(u8)arg` produces the `lbu` (both give a full-word `lw`).
+- Param-type tension with an existing PROTOTYPE: if a forward decl types a param
+  `s32`, the definition MUST also be `s32` (a `u8` def is "Incompatible type"
+  redeclaration). Match the narrowing at the use site/call cast, not the signature.
+- An EXTRA dead trailing arg at a call site makes IDO reload it from its home slot
+  into the `jal` delay slot (and reorders nearby stores) — a large score. Verify
+  the true callee arg count from a sibling CALLER's asm (which regs it loads).
+- Array-index form `D_xxxx[idx]` is needed for the reloc pattern
+  `lui at,%hi; addu at,at,idx; lwc1 %lo(D_xxxx)(at)`. Pointer/byte arithmetic
+  (`(u8*)D - n`, `D - arg`) instead materializes a base pointer + `0(reg)` load.
+- For a NEGATED index, write `0 - v` (binary subtract from 0), not unary `-v`:
+  the binary form scales-then-negates (`sll`,`negu`, the order IDO's target uses);
+  unary negates-then-scales (wrong order). Same fix for any negate+shift ordering.
+- Switch dispatch through a function-pointer table: a local
+  `extern void (*D_xxxx[])(void *);` plus `D_xxxx[idx](arg)` reproduces the
+  table-load + `jalr`. (See bail note on case-pointer delay-slot hoisting below.)
+- Varargs printf-style wrapper: `#include "libc/stdarg.h"` and a `va_arg` copy loop
+  give the exact pointer-bump alignment idiom (`(p+3)&~3` / `(p+7)&~3`); size the
+  stack buffer so its last element OVERLAPS the arg-home region (e.g. `s32 buf[17]`
+  where buf[16] would give the wrong frame size) to land the right frame/offset.
 
 ## When to BAIL (don't burn iterations)
 - If after ~4-6 iterations the ONLY remaining diff is a single register name
@@ -135,6 +159,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `arr[i*k]` reload into branch delay slots) and your C produces the other shape,
   the schedule is driven by IDO's induction-variable rewrite — unsteerable from C.
   Bail (stub); decomp-permuter candidate.
+- Switch case-pointer delay-slot hoist: when the target hoists a case body's
+  `lui %hi` into the preceding `beq` branch delay slot and keeps that pointer in
+  the branch register (reading fields through it), while IDO from your C emits a
+  `nop` in the delay slot and computes the `lui` inline at the case body top (in a
+  different reg) — no C form (temp before/inside the case, if/else) steers IDO to
+  that hoist without over-hoisting or growing the frame. Register-rename + 1-slot
+  store shift remains. Bail; decomp-permuter candidate. (Reading the shared operand
+  FIRST so its load fills the delay slot can still fix a `beql`->`beq` likely-bit.)
 - Aggregate-relative reloc you can't produce: when the target accesses a field via
   a base symbol + addend (e.g. `%lo(D_xxxx+4)`, the +4 element of a 2-element
   aggregate WITHOUT a base pointer), every C layout (array, struct, `(&x)[1]`,

@@ -99,7 +99,23 @@ void func_151D2E14(struct102 *arg0) {
 //     }
 // }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FFF60/func_151D2F00.s")
+s32 func_15167A68(s32, s32, s32, s32, s32, s32);
+
+s32 func_151D2F00(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 tmp = func_15167A68(0x3E, arg3, arg1 + 0x30, 1, (u8)arg2, 1);
+
+    if (tmp == 0) {
+        return 0;
+    }
+
+    memcpy((void *)(tmp + 0x10), arg0, 0x10);
+    *(s16 *)(tmp + 0x20) = 0;
+    *(s32 *)(tmp + 0x24) = 0;
+    *(s32 *)(tmp + 0x28) = 0;
+    *(u8 *)(tmp + 0x18) = *(u8 *)(tmp + 0x18) & 0xFFFD;
+
+    return tmp;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FFF60/func_151D2F90.s")
 
