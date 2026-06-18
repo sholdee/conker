@@ -1,0 +1,50 @@
+# IDO 5.3 -O2 Matching Cookbook
+
+Transferable idioms for matching IDO 5.3 (`-O2 -g3`) codegen, distilled from
+matched functions. Read this before iterating; append NEW generalizable idioms
+(not function-specific facts) after a batch. Keep entries tight and general.
+
+## Language / syntax (these cause hard compile errors)
+- C89 ONLY: declare ALL locals at the TOP of their block, before any statement.
+  A mid-block declaration is a "Syntax Error" in IDO's cfe.
+- Missing global/callee: add a LOCAL `extern <type> D_xxxx;` or a callee
+  prototype at the TOP of your own .c file. Never edit shared headers.
+
+## Constants
+- Read float/double constants EXACTLY from the `lui` immediate, never guess:
+  0x3F000000=0.5, 0x3F400000=0.75, 0x3F800000=1.0, 0x40000000=2.0,
+  0x40400000=3.0, 0x40800000=4.0, 0xBF800000=-1.0.
+- A single wrong constant shows as a tiny non-zero score on an otherwise-perfect
+  diff — check immediates first when score is small.
+
+## Return values
+- A value still live in v0 (int) or f0 (float) at `jr ra` usually means the
+  function RETURNS it. Add an explicit `return <that value>;` to force it — this
+  also pins the value's register and often fixes downstream allocation.
+
+## Loops
+- Backward branch at the bottom of the body => `do { } while (cond);`, not for/while.
+- `while (i--)` (implicit `!= 0`) blocks IDO's -O2 loop-unrolling that
+  `for(...)` and `while(i != 0)` trigger; it also emits `move/beqz` on the raw
+  value instead of an `sltu` boolean. Use it for simple countdown loops.
+- `bnel`/`beql` are branch-LIKELY: the delay-slot instruction executes ONLY when
+  the branch is taken. Watch for stores/ops that belong to the taken path only.
+
+## Register allocation & evaluation order (the usual "so close" diffs)
+- Multiply/commutative operand order matters: `a*b` vs `b*a` changes which FPU
+  register is the destination. Match the asm's operand order literally.
+- Casting changes BOTH load width and evaluation order: `*(u8*)(p+0xC)` forces
+  `lbu` (vs `lh` for an `s16` struct field) and can force the other operand to be
+  evaluated first. Use a raw cast to control which side loads first.
+- Reuse one register for a repeated value by binding it to a single local used
+  everywhere — BUT IDO constant-propagates small literals and may rematerialize
+  them anyway (a known unavoidable diff for absolute-address stores).
+- Bit packing `x * 65537` => write `(x << 16) + x`, shift-operand first; type the
+  source as `s16` when the asm sign-extends (sll/sra pair) before the multiply.
+
+## When to BAIL (don't burn iterations)
+- If after ~4-6 iterations the ONLY remaining diff is a single register name
+  ('r' markers, everything else identical), or a single instruction's delay-slot
+  placement, it is almost certainly an irreducible JUSTREG / instruction-schedule
+  case. IDO won't be steered there from C; STOP, record best score, REVERT to the
+  stub, and flag it as a decomp-permuter candidate in notes.
