@@ -9,6 +9,8 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   A mid-block declaration is a "Syntax Error" in IDO's cfe.
 - Missing global/callee: add a LOCAL `extern <type> D_xxxx;` or a callee
   prototype at the TOP of your own .c file. Never edit shared headers.
+- For an empty/trivial body, declare params with EXACT types (e.g. `(f32,f32,
+  s32,s32)`), not `(...)`: a varargs signature adds a spurious -8 stack frame.
 
 ## Constants
 - Read float/double constants EXACTLY from the `lui` immediate, never guess:
@@ -65,6 +67,15 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Param homing: a param NEVER homed if only forwarded/used as-is; it IS homed
   (`sw aN,off`) if reassigned. Forward ALL args through to callees to suppress a
   spurious dead-param home; verify against objdump of matched sibling funcs.
+- To reproduce a param HOMED to the stack and reloaded on every use, take its
+  address into a local (`s32 **pp = &arg0;`) and read through `**pp` each time.
+- To force IDO to emit fresh registers + `move`s (e.g. an XOR-swap), use two
+  distinct temp locals rather than reusing one — the extra temp pins the moves.
+- Defeat CSE of a duplicated priming load from C: instead of reading `arg0`
+  directly, write `p = &arg0[i];` (with i=0) then deref `p` — the indexed address
+  blocks the collapse and forces the separate load IDO's target emits.
+- Passing a struct BY VALUE reproduces IDO's word-unrolled do-while struct copy
+  before a forwarding call; match the callee's by-value signature, don't pass `&`.
 
 ## When to BAIL (don't burn iterations)
 - If after ~4-6 iterations the ONLY remaining diff is a single register name
@@ -75,6 +86,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - CSE mismatch: when the target re-loads/re-indexes a value but IDO collapses your
   two identical accesses into one (register-only 'r' diffs from the missing
   reload), you cannot force the duplicate load from C. Same bail as JUSTREG.
+- Coupled/cyclic JUSTREG: if fixing one register diff forces a different one (e.g.
+  keeping an index live frees one reg but changes a multiply distribution), the
+  alloc is cyclically constrained — unsteerable from C. Bail.
+- Same-symbol read+write where the target uses SPLIT `lui %hi`/`%lo` with a
+  SEPARATE lui for load vs store (huge score, e.g. 900): IDO at -O2 CSEs both into
+  one `lui+addiu` pointer and no C form (--, -=, x=x-1, temp, ptr-cast, [0]) splits
+  them. Likely an -O3 function (check Makefile for commented per-file -O3 rules);
+  bail and flag as a flag-rule/decomp-permuter candidate.
 - Native 64-bit ops in the target (`ld`/`sd`/`dsll32`/`dsrl`/`dsra32` on a u64)
   are UNMATCHABLE under the project's -mips2/-o32 build: IDO lowers `long long`
   shifts to `__ll_lshift`/`__ull_rshift` helper CALLS, never native d-shifts.

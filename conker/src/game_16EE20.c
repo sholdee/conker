@@ -185,7 +185,26 @@ void func_1514373C(f32 arg0, f32 arg1, f32 *arg2, f32 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143874.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151438D8.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143D18.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143DA8.s")
+s32 func_15143DA8(s32 *arg0, s32 arg1, s32 arg2) {
+    s32 **pp = &arg0;
+    s32 t;
+    s32 t2;
+    if (arg2 < arg1) {
+        t = arg1 ^ arg2;
+        t2 = arg2 ^ t;
+        arg2 = t2;
+        arg1 = t ^ t2;
+    }
+    if (**pp < arg1) {
+        **pp = arg1;
+        return 1;
+    }
+    if (arg2 < **pp) {
+        **pp = arg2;
+        return 2;
+    }
+    return 0;
+}
 
 s32 func_15143E08(struct127 *arg0) {
     return (((s32) arg0->unk7A >> 8) + 64) & 0xFF;

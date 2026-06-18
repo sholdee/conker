@@ -5,7 +5,12 @@
 
 
 // wtf?
-#pragma GLOBAL_ASM("asm/nonmatchings/game_76710/func_15049260.s")
+typedef struct { s32 w[9]; } Va36;
+extern void func_150AAD98(Va36);
+
+void func_15049260(Va36 arg0) {
+    func_150AAD98(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_76710/func_150492CC.s")
 // void func_150492CC(f32 arg0, f32 arg1, f32 arg2) {
