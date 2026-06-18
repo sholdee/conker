@@ -29,6 +29,8 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   value instead of an `sltu` boolean. Use it for simple countdown loops.
 - `bnel`/`beql` are branch-LIKELY: the delay-slot instruction executes ONLY when
   the branch is taken. Watch for stores/ops that belong to the taken path only.
+- To force a per-iteration reload of a global pointer/value, deref-cast it inline
+  IN the loop body; binding it to a local lets IDO hoist it out of the loop.
 
 ## Register allocation & evaluation order (the usual "so close" diffs)
 - Multiply/commutative operand order matters: `a*b` vs `b*a` changes which FPU
@@ -41,6 +43,17 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   them anyway (a known unavoidable diff for absolute-address stores).
 - Bit packing `x * 65537` => write `(x << 16) + x`, shift-operand first; type the
   source as `s16` when the asm sign-extends (sll/sra pair) before the multiply.
+- A read-modify-write (`x &= ~m;`) loads the lvalue EARLY, steering the scheduler;
+  a plain assignment can't reproduce that load order. If the target loads a
+  destination before computing, prefer the compound-assignment form.
+- Group related locals into ONE local struct to keep a store live; separate
+  scalar locals get DCE'd while a struct member used later survives.
+- Passing `&local` DIRECTLY to multiple calls (no named pointer var) makes IDO
+  spill the address to its own 8-aligned temp slot and reload it before the
+  later call — matches target spill/reload. A named pointer keeps it in a reg.
+- Param homing: a param NEVER homed if only forwarded/used as-is; it IS homed
+  (`sw aN,off`) if reassigned. Forward ALL args through to callees to suppress a
+  spurious dead-param home; verify against objdump of matched sibling funcs.
 
 ## When to BAIL (don't burn iterations)
 - If after ~4-6 iterations the ONLY remaining diff is a single register name
@@ -48,3 +61,6 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   placement, it is almost certainly an irreducible JUSTREG / instruction-schedule
   case. IDO won't be steered there from C; STOP, record best score, REVERT to the
   stub, and flag it as a decomp-permuter candidate in notes.
+- CSE mismatch: when the target re-loads/re-indexes a value but IDO collapses your
+  two identical accesses into one (register-only 'r' diffs from the missing
+  reload), you cannot force the duplicate load from C. Same bail as JUSTREG.
