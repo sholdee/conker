@@ -51,6 +51,9 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   SEPARATE `if`s (not `else if`) to keep a middle test as a non-likely `bnez`.
 - A case that should "fall off" returning garbage v0 (matching an EC epilogue)
   needs NO trailing `return` on that path; adding one pins v0 and breaks the match.
+- A two-constant ternary's operand order controls which `li` is emitted FIRST:
+  `(cond)?A:B` lays out `li B` then `li A` (matching `slti/bnez`-fallthrough);
+  the inverted condition swaps the two `li`s. Pick the form matching the asm order.
 - To force a per-iteration reload of a global pointer/value, deref-cast it inline
   IN the loop body; binding it to a local lets IDO hoist it out of the loop.
 - Inlining a value in the for-CONDITION (vs a named `count` local) also pins its
@@ -198,6 +201,20 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   IDO from every C form (`<`/`>`/reversed operands, named local, `||` chain) emits
   the arg load first — a single swapped-instruction diff. Separate `if`s break the
   branch structure instead. Irreducible schedule case; bail, decomp-permuter.
+- Loop limit-substitution: when the target keeps a signed index test against an
+  immediate (`slti at,sN,LIMIT; bnezl`), but IDO from EVERY C loop form (for /
+  while / do-while / goto-SSA, `< LIMIT` vs `<= LIMIT-1`, struct-index vs
+  byte-offset vs explicit `(i<<k)+base`, even forcing `i` live after the loop)
+  instead MATERIALIZES the trip-count limit in a register and uses an equality
+  test (`li sM,LIMIT; bnel sN,sM`), the divergence is IDO's induction/limit-rewrite
+  backend pass. The extra bound register cascades into renames + an extra save
+  slot + a `move`. An EMPTY warm-up loop may keep `slti`, but any active body
+  triggers the rewrite. Unsteerable from C; bail, decomp-permuter candidate.
+- IDO never uses `$at` ($1, the assembler temp) as a general compiler temp from C.
+  If the target REUSES `$at` for some loads (e.g. holding offset-0/offset-8 copies
+  while a named t-reg holds the middle one), no C form (struct member, raw
+  pointer+offset casts) reproduces it — IDO allocates sequential `$t`/`$v`
+  registers and a `$v1` base instead. Register-only diff; bail (JUSTREG).
 - Native 64-bit ops in the target (`ld`/`sd`/`dsll32`/`dsrl`/`dsra32` on a u64)
   are UNMATCHABLE under the project's -mips2/-o32 build: IDO lowers `long long`
   shifts to `__ll_lshift`/`__ull_rshift` helper CALLS, never native d-shifts.

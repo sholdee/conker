@@ -1217,15 +1217,14 @@ void func_15079A28(void) {
 //     D_800D2110[D_800D154C->unk13F] = tmp;
 // }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_A28B0/func_15079A98.s")
-// void func_15079A98(s32 arg0) {
-//     struct169 *temp_v0;
-//     struct127 *temp_v1;
-//
-//     temp_v0 = D_800D2104[D_800D154C->unk13F];
-//     temp_v1 = &D_800CC2D0[arg0];
-//     func_1505A630(temp_v0->unk0 - temp_v1->x_position, temp_v1->z_position - temp_v0->unk4, 0);
-// }
+void func_15079A98(s32 arg0) {
+    struct169 *temp_v0;
+    struct127 *temp_v1;
+
+    temp_v0 = ((struct169**)D_800D2104)[D_800D154C->unk13F];
+    temp_v1 = &D_800CC2D0[arg0];
+    func_1505A630(temp_v0->unk0 - temp_v1->x_position, temp_v1->z_position - temp_v0->unk4, 0);
+}
 
 // requires jump table
 #pragma GLOBAL_ASM("asm/nonmatchings/game_A28B0/func_15079B30.s")
