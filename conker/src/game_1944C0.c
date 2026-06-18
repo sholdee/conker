@@ -34,7 +34,9 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_1516865C.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15168800.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15168870.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15168A2C.s")
+void func_15168A2C(s32 arg0) {
+    func_15168B10(arg0, 0);
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15168A4C.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15168A9C.s")
 // void *func_15168A9C(struct12 *arg0) {

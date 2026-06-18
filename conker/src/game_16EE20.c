@@ -99,7 +99,9 @@ s32 func_151422F8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142A80.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142AC0.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142B04.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142B44.s")
+f32 func_15142B44(f32 arg0) {
+    return ((arg0 + 1.0f) * (arg0 - 1.0f) * arg0) * D_800A5628;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142B7C.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142C10.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142CF0.s")
