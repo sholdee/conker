@@ -196,7 +196,19 @@ s32 func_151DA6A8(s32 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_2062D0/func_151DA938.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_2062D0/func_151DAA88.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_2062D0/func_151DAB58.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_2062D0/func_151DADA0.s")
+extern f32 D_800AB4B0;
+
+s32 func_151DADA0(u8 *arg0) {
+    f32 f0;
+    u8 *p;
+
+    p = arg0 + 0x110;
+    *p = (s8)arg0[0x111] * D_800BE9E4 + *p;
+    f0 = func_151423D8((u8)(*p - 0x40));
+    *(f32 *)(arg0 + 0x4C) = *(f32 *)(p + 4) * f0 + 1.0f;
+    *(f32 *)(arg0 + 0x50) = D_800AB4B0 - *(f32 *)(p + 8) * f0;
+    return 1;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_2062D0/func_151DAE28.s")
 
 void func_151DB004(struct218 *arg0) {

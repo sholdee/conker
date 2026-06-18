@@ -49,6 +49,9 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   float to emit `trunc.w.s`.
 - A signed `(s16)` cast on a u16 field forces a signed `lh` load (vs `lhu`) and a
   signed branch (`bgtzl`/`blez`) on its value; use it when the asm sign-extends.
+- Read a `u8`/`u16` param into a WIDER local (`s32 a = arg2;`) to reproduce a
+  word home (`sw`, not `sb`) with no re-masking `andi`; the narrow type would home
+  byte-width and re-mask on use.
 
 ## Register allocation & evaluation order (the usual "so close" diffs)
 - Multiply/commutative operand order matters: `a*b` vs `b*a` changes which FPU
@@ -83,6 +86,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   before a forwarding call; match the callee's by-value signature, don't pass `&`.
 - When a near-identical SIBLING func already matches, mirror its exact C structure
   (call order, arg casts via prototype, last-arg literals) — often a 1-try match.
+- Local DECLARATION ORDER controls stack-slot assignment: declare an earlier-slot
+  local before a temp to land them on the slots the asm expects (e.g. 0x1C/0x18).
+- A base pointer (`addiu vN,base,off`) only stays distinct (not folded into
+  base-relative `+4`/`+8` loads) if you actually read/write THROUGH that pointer;
+  do the field access via `*p` to keep `p` live and force the separate base.
 
 ## When to BAIL (don't burn iterations)
 - If after ~4-6 iterations the ONLY remaining diff is a single register name

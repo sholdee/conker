@@ -250,7 +250,20 @@ struct17 *func_15144B34(s32 arg0) {
     return (struct17 *)&D_800DBFF0[arg0].unk2F8;
 }
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15144B68.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15144BC8.s")
+f32 func_15144BC8(f32 arg0) {
+    f32 v = arg0;
+    if (360.0f < v) {
+        do {
+            v -= 360.0f;
+        } while (360.0f < v);
+    }
+    if (v < 0.0f) {
+        do {
+            v += 360.0f;
+        } while (v < 0.0f);
+    }
+    return v;
+}
 
 s32 func_15144C2C(s16 arg0) {
     s16 tmp1 = arg0;

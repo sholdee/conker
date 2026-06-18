@@ -967,7 +967,27 @@ f32 func_1505D34C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 *arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_1505DADC.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_1505DDA8.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_1505DF10.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_1505DFDC.s")
+extern u16 D_800C4ED0[];
+
+void func_1505DFDC(u8 *arg0) {
+    s32 sp1C;
+    void *temp;
+    u16 *p;
+
+    *(u16 *)(arg0 + 0x84) = 0xFFFF;
+    temp = *(void **)(arg0 + 0x2D0);
+    if (temp != NULL) {
+        sp1C = *(u8 *)(arg0 + 0x4);
+        *(s32 *)((u8 *)temp + 0x28) = 0;
+        bzero((u8 *)temp + 0x40, 0x3A0);
+        p = &D_800C4ED0[sp1C];
+        *(u8 *)((u8 *)temp + 0x41) = *p + 1;
+        *(u8 *)((u8 *)temp + 0x211) = *p + 1;
+        *(s32 *)((u8 *)temp + 0x30) = 0;
+        *(s32 *)((u8 *)temp + 0x34) = 0;
+    }
+}
+
 void func_1505E060(void *arg0) {
     u8 *p = (u8 *)arg0;
 

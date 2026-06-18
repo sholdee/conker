@@ -16,7 +16,21 @@ void func_151411C4(struct210 *arg0) {
     func_1513CAA0(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16DC80/func_151411E4.s")
+extern s32 D_800DC9F0;
+extern void (*D_80089F9C[])(void *);
+void func_1517E134(void *);
+
+struct conk1411E4 { u8 pad0[0x154]; void *unk154; u8 pad158[0x10]; u8 unk168; };
+
+void func_151411E4(struct conk1411E4 *arg0) {
+    void **pp = &arg0->unk154;
+
+    if (*pp != 0) {
+        func_1517E134(*pp);
+    }
+    D_800DC9F0 -= 1;
+    D_80089F9C[arg0->unk168](arg0);
+}
 
 extern s32 D_800DC9F0;
 extern void (*D_80089FE4[])(void *);
