@@ -3,6 +3,8 @@
 #include "functions.h"
 #include "variables.h"
 
+void func_15131D4C(s32 arg0, s32 arg1);
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_1506AD30.s")
 
@@ -1212,24 +1214,21 @@ void func_15071764(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_150717E0.s")
-// void func_150717E0(s32 arg0) {
-//     u8 sp24;
-//     void *sp20;
-//     void **sp18;
-//     void **temp_a0;
-//     void *temp_v0;
-//
-//     temp_v0 = func_15083E90(0x12);
-//     temp_a0 = &sp20;
-//     if (temp_v0 != 0) {
-//         sp20 = temp_v0;
-//         sp18 = temp_a0;
-//         sp24 = temp_v0->unk3B;
-//         func_15131D4C(temp_a0, 0x43);
-//         func_151494E0(temp_a0, 0x43);
-//     }
-// }
+void func_150717E0(s32 arg0) {
+    struct {
+        struct127 *unk0;
+        u8 unk4;
+    } sp20;
+    struct127 *temp_v0;
+
+    temp_v0 = func_15083E90(0x12);
+    if (temp_v0 != 0) {
+        sp20.unk0 = temp_v0;
+        sp20.unk4 = temp_v0->unique_id;
+        func_15131D4C((s32)&sp20, 0x43);
+        func_151494E0((s32)&sp20, 0x43);
+    }
+}
 
 void func_15071830(s32 arg0) {
     func_150F9BB0(D_800D154C, 0xFF, 1);

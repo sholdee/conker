@@ -47,7 +47,34 @@
 //     return 1;
 // }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1897A0/func_1515D030.s")
+typedef struct {
+    char pad0[0x25];
+    u8 unk25;
+    char pad26[0x6];
+    s8 unk2C;
+    char pad2D[0x1];
+    s8 unk2E;
+} Struct1515D030;
+
+s32 func_1515D030(Struct1515D030 *arg0, s32 arg1) {
+    s8 temp_v0;
+    s32 phi_v1;
+
+    temp_v0 = arg0->unk2C;
+    phi_v1 = 1;
+    if ((s32) temp_v0 >= 3) {
+        arg0->unk2C = (s8) (temp_v0 - 1);
+        arg0->unk2E = (s8) (arg0->unk2E - 1);
+        if ((s32) arg0->unk2E < 0) {
+            arg0->unk2E = (s8) (arg0->unk25 - 1);
+            phi_v1 = 1;
+        }
+    } else {
+        phi_v1 = 0;
+    }
+    return phi_v1;
+}
+
 // s32 func_1515D030(void *arg0, ? arg1) {
 //     s8 temp_v0;
 //     s32 phi_v1;
