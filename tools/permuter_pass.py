@@ -19,6 +19,7 @@ os.chdir(ROOT)
 # symbols not in variables.h that a seed references -> local extern to prepend
 EXTERNS = {
     "func_15168A4C": "extern u8 D_800DCE50[];\n\n",
+    "func_15144B68": "extern f32 D_800A56A4;\n\n",
 }
 
 def run(cmd, **kw):
