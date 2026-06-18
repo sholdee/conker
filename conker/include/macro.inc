@@ -19,3 +19,17 @@
     .global \label
     \label:
 .endm
+
+# Non-matching marker emitted by newer spimdisasm (ASM_NM_LABEL) before a
+# function's glabel. Purely informational for tooling; expands to nothing so
+# it contributes zero bytes and does not affect byte-matching.
+.macro nonmatching name, size
+.endm
+
+# End-of-symbol markers emitted by newer spimdisasm (ASM_TEXT_END_LABEL /
+# ASM_DATA_END_LABEL) after a function/data symbol. No-op markers; emit nothing.
+.macro endlabel name
+.endm
+
+.macro enddlabel name
+.endm
