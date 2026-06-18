@@ -18,6 +18,9 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   0x40400000=3.0, 0x40800000=4.0, 0xBF800000=-1.0.
 - A single wrong constant shows as a tiny non-zero score on an otherwise-perfect
   diff — check immediates first when score is small.
+- IDO -O2 constant-folds `D_xxxx + off` into ONE relocated `%lo(D_xxxx+off)`. If
+  the target instead emits a separate base + temp (`lui`/`addiu sN,s0,off`), no C
+  form (pointer, index, separate-base) splits the fold — BAIL.
 - An all-ones mask: `*(u16*)&x = ...` / `(u16)-1` yields `ori reg,0xFFFF`, whereas
   a plain `-1` yields `li reg,-1`. Cast to the field width when the asm uses `ori`.
 
@@ -44,6 +47,8 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   register: the named local can swap which reg holds the bound vs the index `i`.
 - abs/trunc intrinsics: use `fabsf` to emit `abs.s`, and an `(s32)` cast on a
   float to emit `trunc.w.s`.
+- A signed `(s16)` cast on a u16 field forces a signed `lh` load (vs `lhu`) and a
+  signed branch (`bgtzl`/`blez`) on its value; use it when the asm sign-extends.
 
 ## Register allocation & evaluation order (the usual "so close" diffs)
 - Multiply/commutative operand order matters: `a*b` vs `b*a` changes which FPU
@@ -76,6 +81,8 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   blocks the collapse and forces the separate load IDO's target emits.
 - Passing a struct BY VALUE reproduces IDO's word-unrolled do-while struct copy
   before a forwarding call; match the callee's by-value signature, don't pass `&`.
+- When a near-identical SIBLING func already matches, mirror its exact C structure
+  (call order, arg casts via prototype, last-arg literals) — often a 1-try match.
 
 ## When to BAIL (don't burn iterations)
 - If after ~4-6 iterations the ONLY remaining diff is a single register name
@@ -95,6 +102,16 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   them. NOTE: this is an -O2 codegen quirk, NOT -O3 — a sibling function in the
   same file matching at -O2 proves the file is -O2 (and asm-processor rejects -O3
   anyway). Bail and flag as a decomp-permuter candidate.
+- Score inflation: a single extra/missing nop or JUSTREG can 4-byte-shift ALL
+  later functions, inflating a per-object score (e.g. 200/630) far above the true
+  per-func delta. Judge the func in isolation (objdump its bytes); don't chase the
+  inflated number — if the isolated diff is one nop/regname, BAIL.
+- Jump-table externalization: the expected .c.o references an EXTERNAL jtbl symbol
+  (HI16/LO16 + R_MIPS_PC16 default branch encoded `ffff`), but compiling C makes
+  IDO emit a LOCAL .rodata table (R_MIPS_32 entries, baked intra-section branch).
+  No C construct externalizes it; the per-object differ never hits 0 though the
+  linked ROM matches. Needs separate-rodata/asm-processor handling, not steering
+  or decomp-permuter — BAIL.
 - Native 64-bit ops in the target (`ld`/`sd`/`dsll32`/`dsrl`/`dsra32` on a u64)
   are UNMATCHABLE under the project's -mips2/-o32 build: IDO lowers `long long`
   shifts to `__ll_lshift`/`__ull_rshift` helper CALLS, never native d-shifts.
