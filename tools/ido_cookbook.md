@@ -92,8 +92,9 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Same-symbol read+write where the target uses SPLIT `lui %hi`/`%lo` with a
   SEPARATE lui for load vs store (huge score, e.g. 900): IDO at -O2 CSEs both into
   one `lui+addiu` pointer and no C form (--, -=, x=x-1, temp, ptr-cast, [0]) splits
-  them. Likely an -O3 function (check Makefile for commented per-file -O3 rules);
-  bail and flag as a flag-rule/decomp-permuter candidate.
+  them. NOTE: this is an -O2 codegen quirk, NOT -O3 — a sibling function in the
+  same file matching at -O2 proves the file is -O2 (and asm-processor rejects -O3
+  anyway). Bail and flag as a decomp-permuter candidate.
 - Native 64-bit ops in the target (`ld`/`sd`/`dsll32`/`dsrl`/`dsra32` on a u64)
   are UNMATCHABLE under the project's -mips2/-o32 build: IDO lowers `long long`
   shifts to `__ll_lshift`/`__ull_rshift` helper CALLS, never native d-shifts.
