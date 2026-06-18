@@ -16,6 +16,8 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   0x40400000=3.0, 0x40800000=4.0, 0xBF800000=-1.0.
 - A single wrong constant shows as a tiny non-zero score on an otherwise-perfect
   diff — check immediates first when score is small.
+- An all-ones mask: `*(u16*)&x = ...` / `(u16)-1` yields `ori reg,0xFFFF`, whereas
+  a plain `-1` yields `li reg,-1`. Cast to the field width when the asm uses `ori`.
 
 ## Return values
 - A value still live in v0 (int) or f0 (float) at `jr ra` usually means the
@@ -29,8 +31,17 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   value instead of an `sltu` boolean. Use it for simple countdown loops.
 - `bnel`/`beql` are branch-LIKELY: the delay-slot instruction executes ONLY when
   the branch is taken. Watch for stores/ops that belong to the taken path only.
+- A branch-LIKELY (`bnel`) with a delayed `v0=0` often means an `if(cond==1){...}
+  else return 0;` wrapper — the explicit else-return-0 produces both. Use two
+  SEPARATE `if`s (not `else if`) to keep a middle test as a non-likely `bnez`.
+- A case that should "fall off" returning garbage v0 (matching an EC epilogue)
+  needs NO trailing `return` on that path; adding one pins v0 and breaks the match.
 - To force a per-iteration reload of a global pointer/value, deref-cast it inline
   IN the loop body; binding it to a local lets IDO hoist it out of the loop.
+- Inlining a value in the for-CONDITION (vs a named `count` local) also pins its
+  register: the named local can swap which reg holds the bound vs the index `i`.
+- abs/trunc intrinsics: use `fabsf` to emit `abs.s`, and an `(s32)` cast on a
+  float to emit `trunc.w.s`.
 
 ## Register allocation & evaluation order (the usual "so close" diffs)
 - Multiply/commutative operand order matters: `a*b` vs `b*a` changes which FPU
@@ -64,3 +75,7 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - CSE mismatch: when the target re-loads/re-indexes a value but IDO collapses your
   two identical accesses into one (register-only 'r' diffs from the missing
   reload), you cannot force the duplicate load from C. Same bail as JUSTREG.
+- Native 64-bit ops in the target (`ld`/`sd`/`dsll32`/`dsrl`/`dsra32` on a u64)
+  are UNMATCHABLE under the project's -mips2/-o32 build: IDO lowers `long long`
+  shifts to `__ll_lshift`/`__ull_rshift` helper CALLS, never native d-shifts.
+  Bail (stub) unless a -mips3 per-file rule or inline asm is on the table.
