@@ -109,9 +109,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Jump-table externalization: the expected .c.o references an EXTERNAL jtbl symbol
   (HI16/LO16 + R_MIPS_PC16 default branch encoded `ffff`), but compiling C makes
   IDO emit a LOCAL .rodata table (R_MIPS_32 entries, baked intra-section branch).
-  No C construct externalizes it; the per-object differ never hits 0 though the
-  linked ROM matches. Needs separate-rodata/asm-processor handling, not steering
-  or decomp-permuter — BAIL.
+  No C construct externalizes it. The external rodata jtbl references the asm
+  function's internal labels (.L...), so compiling it as C FAILS TO LINK
+  (undefined .L refs) — it does NOT silently match the ROM. Leave it as a
+  GLOBAL_ASM stub; needs jtbl/asm-processor work, not steering/permuter — BAIL.
 - Native 64-bit ops in the target (`ld`/`sd`/`dsll32`/`dsrl`/`dsra32` on a u64)
   are UNMATCHABLE under the project's -mips2/-o32 build: IDO lowers `long long`
   shifts to `__ll_lshift`/`__ull_rshift` helper CALLS, never native d-shifts.
