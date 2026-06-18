@@ -26,11 +26,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Dividing a float by an INT literal (`x/2`) preserves a real `div.s` by 2.0;
   using a FLOAT literal (`x/2.0f`) makes IDO -O2 strength-reduce to `mul.s` by the
   reciprocal (0.5). Pick the literal form that matches the asm's div vs mul.
+- Unsigned-int-to-float: a `(u32)` cast on the integer source reproduces the
+  unsigned conversion idiom (`bgez`, `lui 0x4F800000`, `add.s` 2^32 correction),
+  even when the value is loaded via `lbu`. A signed cast omits the correction.
 
 ## Return values
 - A value still live in v0 (int) or f0 (float) at `jr ra` usually means the
   function RETURNS it. Add an explicit `return <that value>;` to force it — this
   also pins the value's register and often fixes downstream allocation.
+- Early-return ordering: `if (temp == 0) return 0; <body>; return temp;`
+  preserves `temp`'s register across the body (`bnez v0; move v1,v0`) and gives a
+  fallthrough `move v0,zero`. The inverted `if(temp!=0){...return temp;} return 0;`
+  flips to `beqz` and adds an instruction. Pick the form matching the branch shape.
 
 ## Loops
 - Backward branch at the bottom of the body => `do { } while (cond);`, not for/while.
@@ -97,6 +104,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   (call order, arg casts via prototype, last-arg literals) — often a 1-try match.
 - Local DECLARATION ORDER controls stack-slot assignment: declare an earlier-slot
   local before a temp to land them on the slots the asm expects (e.g. 0x1C/0x18).
+- STATEMENT/assignment order steers t-register grouping: assigning all the
+  load/computed struct fields FIRST then the constant fields LAST puts loads in one
+  t-register band (t6-t9) and constants in another (t0-t3) to match the target;
+  the reverse order compiles identically except for swapped t-register names.
 - A base pointer (`addiu vN,base,off`) only stays distinct (not folded into
   base-relative `+4`/`+8` loads) if you actually read/write THROUGH that pointer;
   do the field access via `*p` to keep `p` live and force the separate base.
@@ -114,6 +125,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Array-index form `D_xxxx[idx]` is needed for the reloc pattern
   `lui at,%hi; addu at,at,idx; lwc1 %lo(D_xxxx)(at)`. Pointer/byte arithmetic
   (`(u8*)D - n`, `D - arg`) instead materializes a base pointer + `0(reg)` load.
+- Index-add operand order: `base[idx]` emits `addu index,base`, whereas byte
+  arithmetic `(Struct*)((u8*)base + idx*size)` emits `addu base,index`. Use the
+  byte form when the asm adds the base into the index register (not vice versa).
+- Two DIFFERENT element strides off one base (e.g. a *2 stride for 16-bit fields
+  and a *4 stride for 32-bit fields, same index): use raw byte-pointer casts
+  `((u8*)base + idx*N + offset)` per group to reproduce the distinct scaled adds;
+  a single struct-sized `&base[idx]` stride is wrong for both.
 - For a NEGATED index, write `0 - v` (binary subtract from 0), not unary `-v`:
   the binary form scales-then-negates (`sll`,`negu`, the order IDO's target uses);
   unary negates-then-scales (wrong order). Same fix for any negate+shift ordering.
@@ -175,6 +193,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   DISTINCT scalar symbol at that address. The linked ROM bytes are identical (same
   resolved address); the divergence is purely object-level relocation
   representation. Bail (stub) — decomp-permuter / reloc-aware match candidate.
+- Loop-invariant load hoisted ABOVE the first arg load: when the target emits an
+  invariant constant load (e.g. `lwc1 $f2,%lo(D_xxxx)`) BEFORE the first arg load,
+  IDO from every C form (`<`/`>`/reversed operands, named local, `||` chain) emits
+  the arg load first — a single swapped-instruction diff. Separate `if`s break the
+  branch structure instead. Irreducible schedule case; bail, decomp-permuter.
 - Native 64-bit ops in the target (`ld`/`sd`/`dsll32`/`dsrl`/`dsra32` on a u64)
   are UNMATCHABLE under the project's -mips2/-o32 build: IDO lowers `long long`
   shifts to `__ll_lshift`/`__ull_rshift` helper CALLS, never native d-shifts.
