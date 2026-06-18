@@ -25,7 +25,17 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167310.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_151674F8.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167A68.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167AD8.s")
+s32 func_15167A68(s32, s32, s32, s32, s32, s32);
+
+void func_15167AD8(s32 arg0, s32 arg1, s32 arg2) {
+    s32 temp;
+
+    temp = func_15167A68(3, arg2, 0x28, 0, (u8)arg1, 1);
+    if (temp != 0) {
+        bcopy(arg0, (void *)(temp + 0x10), 0x18);
+        *(u8 *)(temp + 0x23) = 0xFF;
+    }
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167B44.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167C58.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167D84.s")

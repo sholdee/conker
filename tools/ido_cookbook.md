@@ -23,6 +23,9 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   form (pointer, index, separate-base) splits the fold — BAIL.
 - An all-ones mask: `*(u16*)&x = ...` / `(u16)-1` yields `ori reg,0xFFFF`, whereas
   a plain `-1` yields `li reg,-1`. Cast to the field width when the asm uses `ori`.
+- Dividing a float by an INT literal (`x/2`) preserves a real `div.s` by 2.0;
+  using a FLOAT literal (`x/2.0f`) makes IDO -O2 strength-reduce to `mul.s` by the
+  reciprocal (0.5). Pick the literal form that matches the asm's div vs mul.
 
 ## Return values
 - A value still live in v0 (int) or f0 (float) at `jr ra` usually means the
@@ -132,6 +135,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `arr[i*k]` reload into branch delay slots) and your C produces the other shape,
   the schedule is driven by IDO's induction-variable rewrite — unsteerable from C.
   Bail (stub); decomp-permuter candidate.
+- Aggregate-relative reloc you can't produce: when the target accesses a field via
+  a base symbol + addend (e.g. `%lo(D_xxxx+4)`, the +4 element of a 2-element
+  aggregate WITHOUT a base pointer), every C layout (array, struct, `(&x)[1]`,
+  `*(&x+1)`, volatile) instead makes IDO materialize a base pointer
+  (`addiu vN,vN,%lo`; `0(vN)/4(vN)`), and the only clean-layout form references the
+  DISTINCT scalar symbol at that address. The linked ROM bytes are identical (same
+  resolved address); the divergence is purely object-level relocation
+  representation. Bail (stub) — decomp-permuter / reloc-aware match candidate.
 - Native 64-bit ops in the target (`ld`/`sd`/`dsll32`/`dsrl`/`dsra32` on a u64)
   are UNMATCHABLE under the project's -mips2/-o32 build: IDO lowers `long long`
   shifts to `__ll_lshift`/`__ull_rshift` helper CALLS, never native d-shifts.

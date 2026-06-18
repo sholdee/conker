@@ -145,7 +145,26 @@ s32 func_1501407C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_15014144.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_15014220.s")
+s32 func_15014220(struct16 *arg0) {
+    struct {
+        f32 unk0;
+        struct16 *unk4;
+        u8 unk8;
+    } tmp;
+    struct260 *temp_v0;
+
+    arg0->unk16 |= 4;
+    tmp.unk8 = 1;
+    tmp.unk4 = arg0;
+    tmp.unk0 = 0.0f;
+
+    temp_v0 = func_15149130(0x12C, -1, 0x26, -1, 0, 0x24, (struct37 *)0xC, 0xFF, 0);
+    if (temp_v0 != NULL) {
+        memcpy((u8 *)temp_v0 + 0x28, &tmp, 0xC);
+    }
+    return 1;
+}
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_150142AC.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_150142EC.s")
