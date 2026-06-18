@@ -531,7 +531,12 @@ void func_1513F6C0(struct171 *arg0, u8 arg1, u8 arg2) {
     *(u8 *)((u8 *)arg0 + 0x81) = arg2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_1513F6E8.s")
+s32 func_1513F6E8(s32 arg0) {
+    f32 temp = *(f32 *)(arg0 + 0x128);
+    *(f32 *)(arg0 + 0x2C) = *(f32 *)(arg0 + 0x2C) + (temp * D_800BE9A4);
+    *(f32 *)(arg0 + 0x30) = *(f32 *)(arg0 + 0x30) + (temp * D_800BE9A4);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_1513F728.s")
 

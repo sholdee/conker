@@ -85,7 +85,14 @@ void func_15168E34(s32 *arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_151695F0.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_1516962C.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15169668.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_1516968C.s")
+void func_1516968C(struct102 *arg0, u8 *arg1, u8 arg2) {
+    if (arg2 == 0xF || arg2 == 0x10) {
+        if (arg1[0] == ((u8 *)arg0)[0xC]) {
+            func_1516972C(arg0);
+        }
+    }
+}
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_151696DC.s")
 
 void func_1516972C(struct102 *arg0) {

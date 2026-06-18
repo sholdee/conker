@@ -166,7 +166,13 @@ f32 func_15135670(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15137C64.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15137E10.s")
+extern f32 D_800A4828;
+
+s32 func_15137E10(s32 *arg0) {
+    f32 temp = func_150ADA68();
+    *(f32 *)((u8 *)arg0 + 0x74) = (temp * 50.0f + 580.0f) * D_800A4828;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15137E60.s")
 
