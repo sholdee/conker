@@ -104,7 +104,24 @@ void func_15134CD4(f32 arg0, f32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15134CEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15134DAC.s")
+extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
+
+void *func_15134DAC(void *arg0, s32 arg1) {
+    void *temp_v1;
+
+    temp_v1 = func_15167A68(0x29, 0, arg1 + 0x80, 1, 0xFF, 1);
+    if (temp_v1 == 0) {
+        return NULL;
+    }
+    memcpy((s32)temp_v1 + 0x18, arg0, 0x3C);
+    *(s16 *)((s32)temp_v1 + 0x54) = -(*(s16 *)((s32)arg0 + 0x28));
+    *(s32 *)((s32)temp_v1 + 0x10) = 1;
+    *(s32 *)((s32)temp_v1 + 0x14) = 0;
+    *(f32 *)((s32)temp_v1 + 0x70) = 0.0f;
+    *(f32 *)((s32)temp_v1 + 0x74) = 0.0f;
+    *(f32 *)((s32)temp_v1 + 0x78) = 0.0f;
+    return temp_v1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15134E48.s")
 
@@ -190,7 +207,22 @@ void func_1513555C(struct102 *arg0, struct arg1_1513555C *arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_151355B8.s")
+void func_151355B8(struct102 *arg0, struct arg1_1513555C *arg1, u8 arg2) {
+    switch (arg2) {
+    case 0:
+        if (arg1->unk0 == *(s32 *)&arg0->unk1C || arg0->unk18 == arg1->unk4) {
+            func_1516972C(arg0);
+        }
+        break;
+    case 3:
+        if (arg1->unk0 == *(s32 *)&arg0->unk1C || arg0->unk18 == arg1->unk4) {
+            s32 *p = (s32 *)((u8 *)arg0 + 0x10);
+            *p &= ~1;
+            *p = *p;
+        }
+        break;
+    }
+}
 
 s32 func_15135658(void *arg0) {
     *(f32 *)((u8 *)arg0 + 0x74) = 1.0f;

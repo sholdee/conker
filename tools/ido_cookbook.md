@@ -11,6 +11,9 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   prototype at the TOP of your own .c file. Never edit shared headers.
 - For an empty/trivial body, declare params with EXACT types (e.g. `(f32,f32,
   s32,s32)`), not `(...)`: a varargs signature adds a spurious -8 stack frame.
+- To copy a global aggregate BY VALUE into a stack local, declare a TAGGED struct
+  (e.g. `struct foo { s32 unk0[6]; }`) for it; an anonymous-struct local triggers
+  an "incompatible struct" assignment error on the copy.
 
 ## Constants
 - Read float/double constants EXACTLY from the `lui` immediate, never guess:
@@ -83,6 +86,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   them anyway (a known unavoidable diff for absolute-address stores).
 - Bit packing `x * 65537` => write `(x << 16) + x`, shift-operand first; type the
   source as `s16` when the asm sign-extends (sll/sra pair) before the multiply.
+- A conditionally-assigned value spills: `if (cond) x = ...;` makes IDO home `x`
+  to the stack (sw/lw) so both paths agree. Rewrite as a ternary
+  `x = cond ? A : B;` (and keep any following call UNCONDITIONAL) to keep `x` in a
+  register with a `move` default + branch-with-computed-value-in-delay-slot shape.
 - A read-modify-write (`x &= ~m;`) loads the lvalue EARLY, steering the scheduler;
   a plain assignment can't reproduce that load order. If the target loads a
   destination before computing, prefer the compound-assignment form.
@@ -196,6 +203,20 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   DISTINCT scalar symbol at that address. The linked ROM bytes are identical (same
   resolved address); the divergence is purely object-level relocation
   representation. Bail (stub) — decomp-permuter / reloc-aware match candidate.
+- Constant load hoisted ABOVE the prologue saves: when the target schedules a
+  float/loop-invariant constant load (`lui at,%hi; lwc1 %lo`) ahead of the prologue
+  register saves (`sw ra`, `sw aN`), IDO from every C form emits the integer saves
+  first then the constant load. A single swapped pair; unsteerable from C — bail,
+  decomp-permuter candidate. (Inlining the constant into its uses is worse — it
+  materializes a base pointer instead of the at-relative `lwc1`.)
+- Hand-written asm with lazily-scheduled int-to-float arg conversions: when the
+  target keeps surplus integer args (`mtc1 aN`) converted lazily/per-use and live
+  in FPU regs across the whole function with NO stack frame (`jr ra`, no `addiu
+  sp`), IDO from C converts EAGERLY and SPILLS the surplus arg (`sw aN,off(sp)` +
+  `lwc1`), allocating a frame; the spill cascades into pervasive FPU renames. Not
+  even a permuter candidate (it won't introduce lazy mtc1 or drop the frame). Leave
+  as GLOBAL_ASM. (Tell-tale: file comment says "handwritten?", and a no-frame
+  matrix/vector transform with args arriving in integer registers.)
 - Loop-invariant load hoisted ABOVE the first arg load: when the target emits an
   invariant constant load (e.g. `lwc1 $f2,%lo(D_xxxx)`) BEFORE the first arg load,
   IDO from every C form (`<`/`>`/reversed operands, named local, `||` chain) emits

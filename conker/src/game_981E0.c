@@ -1120,24 +1120,20 @@ void func_15070C18(s32 arg0) {
     func_15199834(D_800D154C);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_15070C40.s")
-// NON-MATCHING: missing a move and a branch
-// void func_15103E40(s32, s32, s32, u8, u8, u8, u8);
-// void func_15070C40(u8 arg0) {
-//     struct17 tmp;
-//     struct127 *temp_a1;
-//     struct127 *phi_a0;
-//
-//     phi_a0 = temp_a1 = D_800D154C;
-//     tmp.unk0 = temp_a1->x_position;
-//     tmp.unk4 = temp_a1->y_position;
-//     tmp.unk8 = temp_a1->z_position;
-//
-//     if (temp_a1->unk124) {
-//         phi_a0 = &D_800CC2D0[temp_a1->unk124 - 1];
-//         func_15103E40(phi_a0, temp_a1, &tmp, arg0, 0, 0xFF, 0);
-//     }
-// }
+void func_15103E40(struct127 *, struct127 *, struct17 *, u8, u8, u8, u8);
+void func_15070C40(u8 arg0) {
+    struct17 tmp;
+    struct127 *temp_a1;
+    struct127 *phi_a0;
+
+    temp_a1 = D_800D154C;
+    tmp.unk0 = temp_a1->x_position;
+    tmp.unk4 = temp_a1->y_position;
+    tmp.unk8 = temp_a1->z_position;
+
+    phi_a0 = temp_a1->unk124 ? &D_800CC2D0[temp_a1->unk124 - 1] : temp_a1;
+    func_15103E40(phi_a0, temp_a1, &tmp, arg0, 0, 0xFF, 0);
+}
 
 void func_15070CDC(s32 arg0) {
     func_15070C40(1);
