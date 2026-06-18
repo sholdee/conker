@@ -5,15 +5,14 @@
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/init_1420/func_10001420.s")
-// NOT MATCHING: JUSTREG: uses v0 registers not a1 registers
+// JUSTREG (verified 2026-06-18): the body below is structurally byte-perfect
+// vs the target — every instruction/immediate/branch matches — but IDO -O2
+// allocates v0/v1 where the target uses a1/a0. Imported into decomp-permuter.
 // void func_10001420(void) {
-//     s32 *tmp = &D_80043B40;
-//     s32 cnt = 4064;
-//
+//     s32 *p = (s32 *)&D_80043B40;
 //     do {
-//         *tmp++ = 0;
-//     }
-//     while ((s32)tmp < (u32)&D_80043B40 + cnt);
+//         *p++ = 0;
+//     } while ((u32)p < (u32)&D_80043B40 + 0xFE0);
 // }
 
 void func_10001444(void) {
