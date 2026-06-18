@@ -535,7 +535,12 @@ void func_1513F6C0(struct171 *arg0, u8 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_1513F728.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_1513FA2C.s")
+void func_1513FA2C(void *arg0, s16 arg1) {
+    f32 stack_vals[2];
+    stack_vals[0] = 1.0f;
+    stack_vals[1] = 1.0f;
+    func_1513FAB4(arg0, 0, stack_vals, arg1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_1513FA70.s")
 
