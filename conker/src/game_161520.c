@@ -142,7 +142,24 @@ void func_1513532C(struct1513532C *arg0) {
     D_80089B70[idx](p);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_151353A8.s")
+extern void (*D_80089B88[])(void *);
+
+void func_151353A8(struct1513532C *arg0) {
+    struct1513532C *p = arg0;
+    s32 idx;
+
+    idx = p->unk50;
+    if (idx < 0) {
+        idx = 0;
+    } else if (idx >= 6) {
+        idx = 0;
+    }
+    if (p->unk44 != 0) {
+        func_100111C8(p->unk44);
+        p->unk44 = 0;
+    }
+    D_80089B88[idx](p);
+}
 
 extern s32 func_15145EA4(s32 *arg0, s32 *arg1, s32 arg2, s32 arg3);
 

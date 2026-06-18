@@ -22,7 +22,59 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1897A0/func_1515C388.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1897A0/func_1515C534.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1897A0/func_1515C6F4.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1897A0/func_1515CF9C.s")
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    f32 unkC;
+} Struct1515CF9C_t1;
+
+typedef struct {
+    char pad0[0x10];
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    char pad1C[0x9];
+    u8 unk25;
+    char pad26[0x6];
+    s8 unk2C;
+    char pad2D[0x1];
+    s8 unk2E;
+    char pad2F[0x65];
+    Struct1515CF9C_t1 *unk94;
+} Struct1515CF9C_a0;
+
+typedef struct {
+    char pad0[0x8];
+    f32 unk8;
+    char pad0C[0x2D];
+    s8 unk39;
+} Struct1515CF9C_a1;
+
+s32 func_1515CF9C(Struct1515CF9C_a0 *arg0, Struct1515CF9C_a1 *arg1) {
+    Struct1515CF9C_t1 *temp_t1;
+    Struct1515CF9C_t1 *temp_v1;
+    s8 temp_v0;
+
+    temp_v0 = arg0->unk2C;
+    if ((s32) temp_v0 < (arg0->unk25 - 1)) {
+        temp_v1 = (Struct1515CF9C_t1 *) arg0->unk94;
+        arg0->unk2C = (s8) (temp_v0 + 1);
+        temp_t1 = temp_v1 + arg0->unk2E;
+        temp_t1->unk0 = arg0->unk10;
+        temp_t1->unk4 = arg0->unk14;
+        temp_t1->unk8 = arg0->unk18;
+        (temp_v1 + arg0->unk2E)->unkC = arg1->unk8;
+        arg0->unk2E = (s8) (arg0->unk2E + 1);
+        if (arg0->unk25 == arg0->unk2E) {
+            arg0->unk2E = 0;
+        }
+    } else {
+        arg1->unk39 = -1;
+    }
+    return 1;
+}
+
 // s32 func_1515CF9C(void *arg0, void *arg1) {
 //     s32 temp_v1;
 //     s8 temp_v0;

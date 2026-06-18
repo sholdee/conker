@@ -104,7 +104,38 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C251C.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C2558.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C2700.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C2804.s")
+extern f32 D_800A0280;
+extern f32 D_800A0284;
+extern void func_15134908(void *, s32, u8, s32);
+
+typedef struct {
+    /* 0x00 */ s32 unk00;
+    /* 0x04 */ s32 unk04;
+    /* 0x08 */ s32 unk08;
+    /* 0x0C */ f32 unk0C;
+    /* 0x10 */ f32 unk10;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ u8 unk16;
+    /* 0x17 */ u8 unk17;
+    /* 0x18 */ u8 unk18;
+    /* 0x19 */ s8 unk19;
+} Struct150C2804;
+
+void func_150C2804(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
+    Struct150C2804 sp1C;
+
+    sp1C.unk0C = D_800A0280;
+    sp1C.unk00 = arg0;
+    sp1C.unk04 = arg1;
+    sp1C.unk08 = arg2;
+    sp1C.unk10 = D_800A0284;
+    sp1C.unk14 = arg3;
+    sp1C.unk16 = 5;
+    sp1C.unk17 = 6;
+    sp1C.unk18 = 3;
+    sp1C.unk19 = -1;
+    func_15134908(&sp1C, 0, arg4, arg5);
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C2898.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C29F0.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C2C00.s")

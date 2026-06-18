@@ -307,7 +307,29 @@ void func_15123508(struct108 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_15123568.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_151236D0.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_15123934.s")
+s32 func_15123934(struct108 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s32 v0;
+
+    v0 = 0;
+    if (((s16 *)((u8 *)arg0 + arg4 * 2))[0x106] == 0) {
+        *(u16 *)((u8 *)arg0 + arg4 * 2 + 0x2) = arg0->unk0;
+        *(s32 *)((u8 *)arg0 + arg4 * 4 + 0x30) = arg0->unk2C;
+        *(s32 *)((u8 *)arg0 + arg4 * 4 + 0x88) = arg0->unk84;
+        *(s32 *)((u8 *)arg0 + arg4 * 4 + 0xE0) = arg0->unkDC;
+        *(s32 *)((u8 *)arg0 + arg4 * 4 + 0x138) = arg0->unk134;
+        *(s16 *)((u8 *)arg0 + arg4 * 2 + 0x1B6) = arg0->unk1B4;
+        *(s16 *)((u8 *)arg0 + arg4 * 2 + 0x1E2) = arg0->unk1E0;
+        arg0->unk2C = arg1;
+        arg0->unkDC = arg2;
+        arg0->unk134 = arg3;
+        *(s16 *)((u8 *)arg0 + arg4 * 2 + 0x20C) = 1;
+        func_15125394(arg0);
+        return 1;
+    }
+    return v0;
+}
+
+#if 0
 // NON-MATCHING: not sure what is up with arg0
 // s32 func_15123934(struct108 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 //     struct108 *temp_v0;
@@ -332,6 +354,7 @@ void func_15123508(struct108 *arg0) {
 //     }
 //     return 0;
 // }
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_151239CC.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_15123A54.s")
