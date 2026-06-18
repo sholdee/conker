@@ -688,6 +688,7 @@ extern s32 D_800A4AA0; //?
 extern f32 D_800A5168;
 extern f32 D_800A5178;
 extern f32 D_800A45B4;
+extern f32 D_800A5624;
 extern f32 D_800A5628;
 extern f32 D_800A5644;
 extern f32 D_800A56A8;
