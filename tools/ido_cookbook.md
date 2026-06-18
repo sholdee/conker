@@ -240,3 +240,9 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   are UNMATCHABLE under the project's -mips2/-o32 build: IDO lowers `long long`
   shifts to `__ll_lshift`/`__ull_rshift` helper CALLS, never native d-shifts.
   Bail (stub) unless a -mips3 per-file rule or inline asm is on the table.
+  Corollary for 64-bit STORES specifically: a target that zeroes/copies an
+  aggregate with native `sd $zero,off` doublewords is unmatchable too — every C
+  form (`u64 *`, a tagged `struct{long long d[N];}`, direct `d[i]=0`) SCALARIZES
+  into `li tN,0; sw tN,off` pairs (no helper call, just split stores), and the
+  split + reg renames are the whole diff. Tell-tale that the project punted: a
+  byte-identical sibling left as a raw `asm` segment in the yaml. Bail (stub).
