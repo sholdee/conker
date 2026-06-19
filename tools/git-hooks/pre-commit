@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Conker decomp — pre-commit gate guard (lightweight; no build).
+#
+# The expected ROM SHA1s (outer 4cbadd3c…, inner 842e3d34…) and integrate.py's
+# constants are what make autonomous commits trustworthy. Silently editing them so
+# a NON-matching build "passes" is the known failure mode (a sister Claude decomp
+# hit exactly this — every later commit had to be reverted). This blocks such edits.
+#
+# It does NOT rebuild (integrate.py already force-clean-builds + dual-SHA1-gates every
+# src commit). It only refuses commits that TAMPER WITH THE GATE ITSELF.
+# Intentional gate change?  ALLOW_GATE_EDIT=1 git commit ...
+set -uo pipefail
+
+[ "${ALLOW_GATE_EDIT:-0}" = "1" ] && exit 0
+
+# Only the files that encode the verification gate are guarded. Docs that merely
+# mention the hash (AGENTS.md, the cookbook) are NOT guarded — editing them is fine.
+guarded=$(git diff --cached --name-only | grep -E 'tools/integrate\.py$|(^|/)Makefile$|\.sha1$' || true)
+[ -z "$guarded" ] && exit 0
+
+HASHES='4cbadd3c4e0729dec46af64ad018050eada4f47a|842e3d348e3c8ae0039e2ab367ad492f9b5266d8'
+bad=$(git diff --cached -U0 -- $guarded \
+  | grep -E '^[+-]' | grep -vE '^(\+\+\+|---)' \
+  | grep -E "INNER_SHA|OUTER_SHA|${HASHES}" || true)
+
+[ -z "$bad" ] && exit 0
+{
+  echo "✋ pre-commit BLOCKED: this commit changes the ROM verification gate:"
+  echo "${bad}" | sed 's/^/    /'
+  echo "  Editing the expected SHA1 / integrate.py constants is the 'fake a match' vector."
+  echo "  If this gate change is genuinely intentional:  ALLOW_GATE_EDIT=1 git commit ..."
+} >&2
+exit 1

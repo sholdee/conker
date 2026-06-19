@@ -11,7 +11,9 @@ Two engines run in PARALLEL: the **orchestrator** (LLM agents match `GLOBAL_ASM`
 3. **FORCE-clean before every ROM check:** `rm -f conker/build/conker.us.bin build/conker.us.z64` FIRST.
    A failed compile leaves a STALE matching bin → a false "ROM OK". This caused both integrity incidents.
 4. **The gate is the full ROM sha1** (inner `842e3d34…`, outer `4cbadd3c…`). `integrate.py` enforces it
-   deterministically — trust it; never hand-commit a match without a force-clean ROM verify.
+   deterministically — trust it; never hand-commit a match without a force-clean ROM verify. A pre-commit hook
+   (`tools/git-hooks/`, active via `core.hooksPath`) blocks edits to these SHA constants — the "fake a match"
+   vector (override a genuine gate change with `ALLOW_GATE_EDIT=1 git commit`).
 
 ## THE CYCLE  (run only when NOTHING else is running)
 ```
@@ -35,9 +37,14 @@ cd conker; for d in asm/nonmatchings/game_*; do for f in "$d"/*.s; do [ -f "$f" 
 ```
 
 ## TOOLS
-- `orchestrator.js` — self-driving loop: select→match→distill→integrate ×N rounds (Workflow). Agents read the
-  cookbook, harvest near-misses (score ≤80) to `~/conker/.nearmiss/<func>.json`. Integration = `integrate.py`.
-- `select_chunk.py N M` — next N DISTINCT-file stubs (6..M instr), not in `/tmp/orchestrator_attempted.txt` (appends picks).
+- `orchestrator.js` — self-driving loop: select→match→distill→**rescue(Codex)**→integrate ×N rounds (Workflow).
+  Claude agents read the cookbook + a similar matched reference, harvest near-misses (score ≤80) to
+  `~/conker/.nearmiss/<func>.json`; Codex (`agentType: codex:codex-rescue`) takes a 2nd pass at misses ≤150.
+  Integration = `integrate.py` (gates BOTH engines — only true de-stubbed score-0 matches commit).
+- `select_chunk.py N M` — next N DISTINCT-file stubs (6..M instr), not in `/tmp/orchestrator_attempted.txt` (smallest-first; legacy).
+- `find_similar.py FUNC [--top N]` — rank MATCHED functions by asm similarity to FUNC (cached corpus, register-normalized; drops low-quality refs).
+- `similar_chunk.py N M` — like select_chunk but prioritizes stubs with a STRONG matched reference (similarity scheduling);
+  writes each reference C to `/tmp/ref_<func>.c` for the match/rescue agents. This is what the orchestrator's Select stage runs.
 - `iter_match.sh FILE FUNC` — build ONE object + object-diff vs `expected/`. `SCORE: 0` = match.
   ⚠ a STUB also scores 0 — only trust it for an already-de-stubbed function.
 - `integrate.py FILE FUNC …` — DETERMINISTIC gate: force-clean build, dual-sha1, bisect out broken funcs, commit good.

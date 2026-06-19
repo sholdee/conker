@@ -78,5 +78,8 @@ else
   echo "baserom.us.z64:     MISSING (place it in $REPO)"
 fi
 
+# Activate the pre-commit gate guard (blocks tampering with the ROM verification SHA1s).
+git config core.hooksPath tools/git-hooks 2>/dev/null && echo "git hooks:          core.hooksPath -> tools/git-hooks"
+
 echo
 echo "Done. Activate the venv with:  source ~/conker/.venv/bin/activate"

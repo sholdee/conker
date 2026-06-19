@@ -5,6 +5,7 @@ export const meta = {
     { title: 'Select', detail: 'pick the next distinct-file chunk' },
     { title: 'Match', detail: 'one self-iterating agent per function' },
     { title: 'Distill', detail: 'fold lessons into the cookbook' },
+    { title: 'Rescue', detail: 'Codex second-pass on Claude near-misses' },
     { title: 'Integrate', detail: 're-verify, full ROM sha1 gate, commit' },
   ],
 }
@@ -27,7 +28,11 @@ const CHUNK_SCHEMA = {
   type: 'object', additionalProperties: false, required: ['candidates'],
   properties: { candidates: { type: 'array', items: {
     type: 'object', additionalProperties: false, required: ['func', 'file'],
-    properties: { func: { type: 'string' }, file: { type: 'string' } } } } },
+    properties: {
+      func: { type: 'string' }, file: { type: 'string' },
+      ref_func: { type: 'string' }, ref_file: { type: 'string' },
+      ref_similarity: { type: 'number' },
+    } } } },
 }
 const INTEG_SCHEMA = {
   type: 'object', additionalProperties: false,
@@ -45,7 +50,8 @@ YOUR FUNCTION: ${c.func}   (in ~/conker/conker/src/${c.file}.c)
 Target asm: ~/conker/conker/asm/nonmatchings/${c.file}/${c.func}.s
 
 THE LOOP:
-0. FIRST: cat ~/conker/tools/ido_cookbook.md  — proven IDO 5.3 -O2 matching idioms. Apply the relevant ones; obey its "When to BAIL" section.
+0. FIRST: cat ~/conker/tools/ido_cookbook.md  — proven IDO 5.3 -O2 matching idioms. Apply the relevant ones; obey its "When to BAIL" section.${c.ref_func ? `
+0b. A SIMILAR ALREADY-MATCHED function is your strongest guide (asm similarity ${c.ref_similarity}): its byte-matching C is at /tmp/ref_${c.func}.c and its asm at ~/conker/conker/asm/nonmatchings/${c.ref_file}/${c.ref_func}.s. READ BOTH FIRST. Diff its asm against YOUR target .s to see what differs; reuse its structure, types, casts, loop/branch shapes, and idioms as a template — adapt offsets/constants/symbols to your function. This is a worked example of exactly the codegen you're targeting.` : ''}
 1. Read the target .s and src/${c.file}.c (neighbor style/types); read structs.h/functions.h/variables.h for types.
 2. Replace the line  #pragma GLOBAL_ASM("asm/nonmatchings/${c.file}/${c.func}.s")  in src/${c.file}.c with your candidate C.
 3. Run:  ~/conker/tools/iter_match.sh ${c.file} ${c.func}   → builds ONLY your object and prints a diff + "SCORE: N" (0 = byte-perfect).
@@ -74,6 +80,30 @@ ${notesBlob}
 
 Return a one-line summary (what you added, or "no new idioms").`
 
+const rescuePrompt = (m, c) => `You are Codex, a SECOND decompiler brought in to RESCUE a function Claude could NOT byte-match. Match it to its target IDO 5.3 -O2 -g3 assembly using a real compile+diff loop. Claude's best was SCORE ${m.score} (0 = byte-perfect; lower = closer). A different reasoning approach may crack it.
+
+YOUR FUNCTION: ${m.func}  (in ~/conker/conker/src/${m.file}.c)
+Target asm: ~/conker/conker/asm/nonmatchings/${m.file}/${m.func}.s
+
+START FROM CLAUDE'S BEST ATTEMPT — do not restart from scratch:
+- Claude's near-miss C is at ~/conker/.nearmiss/${m.func}.json (the "c" field), if it scored <= 80. Load it as your starting candidate.
+- What diverged, per Claude: ${JSON.stringify((m.notes || '').slice(0, 500))}${c && c.ref_func ? `
+- A SIMILAR already-matched function (asm similarity ${c.ref_similarity}) is a strong template: its byte-matching C is at /tmp/ref_${m.func}.c and its asm at ~/conker/conker/asm/nonmatchings/${c.ref_file}/${c.ref_func}.s. Diff that asm against your target to see exactly what to change.` : ''}
+- IDO idioms: cat ~/conker/tools/ido_cookbook.md (apply the relevant ones; obey its "When to BAIL").
+
+THE LOOP:
+1. Replace  #pragma GLOBAL_ASM("asm/nonmatchings/${m.file}/${m.func}.s")  in src/${m.file}.c with your candidate C.
+2. Run  ~/conker/tools/iter_match.sh ${m.file} ${m.func}  → prints a diff + "SCORE: N" (0 = perfect). Read the diff (TARGET vs CURRENT; 'r' = register-only), refine, re-run. Up to ~20 iterations — you have budget.
+
+HARD RULES (a violation corrupts the shared build tree):
+- ONLY edit src/${m.file}.c. NEVER touch other src/ files or shared headers. Add any missing extern/prototype as a LOCAL decl at the TOP of the file.
+- IDO is C89: declare all locals at the top of their block.
+- NEVER run make / make -C conker / any full build. ONLY iter_match.sh (it builds just your one object; concurrency-safe).
+
+WHEN DONE:
+- SCORE: 0 → STOP, LEAVE your matching C in the file. Report "MATCHED ${m.func}".
+- Cannot reach 0 → you MUST run  git checkout conker/src/${m.file}.c  to revert ${m.func} to its exact stub line, then report your best score. Leaving non-matching C breaks the shared build. (The deterministic gate re-verifies independently, so only a true SCORE-0 de-stub will be committed.)`
+
 const integratePrompt = (claimed) => `You are the INTEGRATION gate for the Conker decomp orchestrator. The match agents this round left matching C in these files (one function each); failures already reverted themselves to stubs. Your job: re-verify, ROM-gate, and commit ONLY what truly matches. Be strict — never commit a non-matching tree.
 
 CLAIMED MATCHES (func, file): ${JSON.stringify(claimed.map(c => ({ func: c.func, file: c.file })))}
@@ -96,29 +126,52 @@ Return: committed (list of func names actually committed), reverted (funcs you r
 let totalCommitted = 0
 for (let r = 0; r < ROUNDS; r++) {
   phase('Select')
-  const sel = await agent(`Run EXACTLY: python3 ~/conker/tools/select_chunk.py ${CHUNK} ${MAXI}\nReturn its stdout JSON array as {"candidates": <array>}. Do nothing else — no edits, no other commands.`,
+  // Similarity-based scheduling: prefer stubs with a strong matched reference
+  // (writes /tmp/ref_<func>.c for each); falls back to smallest-first to fill.
+  const sel = await agent(`Run EXACTLY: python3 ~/conker/tools/similar_chunk.py ${CHUNK} ${MAXI}\nReturn its stdout JSON array as {"candidates": <array>}, preserving each object's func, file, ref_func, ref_file, ref_similarity fields. Do nothing else — no edits, no other commands.`,
     { label: `select:r${r + 1}`, phase: 'Select', schema: CHUNK_SCHEMA })
   const chunk = (sel && sel.candidates) || []
   if (!chunk.length) { log(`round ${r + 1}: candidate pool empty — stopping`); break }
-  log(`round ${r + 1}: ${chunk.length} candidates — ${chunk.map(c => c.func).join(', ')}`)
+  const withRef = chunk.filter(c => c.ref_func).length
+  log(`round ${r + 1}: ${chunk.length} candidates (${withRef} with matched reference) — ${chunk.map(c => c.ref_func ? `${c.func}~${c.ref_func}(${c.ref_similarity})` : c.func).join(', ')}`)
 
   phase('Match')
   const results = (await parallel(chunk.map((c) => () =>
     agent(matchPrompt(c), { label: `iter:${c.func}`, phase: 'Match', schema: MATCH_SCHEMA })
+      .then(x => x && ({ ...x, hadRef: !!c.ref_func }))
   ))).filter(Boolean)
   const matched = results.filter((x) => x.matched)
-  log(`round ${r + 1}: ${matched.length}/${results.length} matched`)
+  const mRef = matched.filter(x => x.hadRef).length, nRef = results.filter(x => x.hadRef).length
+  log(`round ${r + 1}: ${matched.length}/${results.length} matched — with-ref ${mRef}/${nRef}, no-ref ${matched.length - mRef}/${results.length - nRef}`)
 
   phase('Distill')
   const notesBlob = results.map((x) => `${x.func} [${x.matched ? 'MATCH' : 'miss ' + x.score}]: ${x.notes}`).join('\n')
   await agent(distillPrompt(notesBlob), { label: `distill:r${r + 1}`, phase: 'Distill' })
 
+  phase('Rescue')
+  // Codex (unlimited tokens, different reasoning) takes a SECOND pass at Claude's
+  // near-misses, seeded with Claude's best C + the similarity reference. Successes
+  // leave matching C; the deterministic gate re-verifies independently, so Codex's
+  // word is never trusted. Misses are distinct-file → safe in parallel; failures
+  // revert to stub and are skipped by integrate.py. Graceful: a Codex error → null.
+  const misses = results.filter((x) => !x.matched && x.score > 0 && x.score <= 150)
+  let rescuedFuncs = []
+  if (misses.length) {
+    await parallel(misses.map((m) => () =>
+      agent(rescuePrompt(m, chunk.find((c) => c.func === m.func)),
+        { label: `codex:${m.func}`, phase: 'Rescue', agentType: 'codex:codex-rescue' })))
+    rescuedFuncs = misses
+    log(`round ${r + 1}: codex rescue attempted ${misses.length} near-miss(es) [${misses.map(m => m.func).join(', ')}]`)
+  }
+
   phase('Integrate')
-  if (!matched.length) { log(`round ${r + 1}: no matches to commit`); continue }
-  // DETERMINISTIC integration: a single agent runs integrate.py (force-clean
-  // rebuild + ROM gate + bisect + commit). No LLM judgement in the gate — this
-  // is what makes autonomous commits safe (the LLM agent gate was stale-bin-fooled).
-  const pairs = matched.map((m) => `${m.file} ${m.func}`).join(' ')
+  // DETERMINISTIC integration: integrate.py force-clean rebuilds + dual-SHA1 gates +
+  // bisects + commits. It keeps ONLY truly de-stubbed funcs (Claude matches AND any
+  // Codex rescues that reached score 0); stubs/failures are skipped. No LLM judgement
+  // in the gate — this is what makes autonomous commits safe.
+  const integPairs = [...matched, ...rescuedFuncs]
+  if (!integPairs.length) { log(`round ${r + 1}: no matches to commit`); continue }
+  const pairs = integPairs.map((m) => `${m.file} ${m.func}`).join(' ')
   const integ = await agent(
     `Run EXACTLY this one command and report its full stdout verbatim — do nothing else, edit nothing:\n  python3 ~/conker/tools/integrate.py ${pairs}`,
     { label: `integrate:r${r + 1}`, phase: 'Integrate', schema: INTEG_SCHEMA })
