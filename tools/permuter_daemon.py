@@ -86,7 +86,7 @@ def run(seconds):
         subprocess.Popen(
             f"nice -n 19 timeout {seconds} {PY} {PERM}/permuter.py nonmatchings/{func} "
             f"--best-only --stop-on-zero -j {THREADS} > {log} 2>&1",
-            shell=True, cwd=INNER)
+            shell=True, cwd=INNER, start_new_session=True)   # detach so they survive the launcher
         launched += 1
     print(f"run: launched {launched} nice'd permuters ({THREADS} threads each, {seconds}s)")
 
