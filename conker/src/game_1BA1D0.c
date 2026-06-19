@@ -93,7 +93,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_151905BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_151906C4.s")
+void func_151906C4(void *arg0) {
+    u8 *temp;
+    temp = *(u8 **)(*(u8 **)((u8 *)arg0 + 0x10) + 0x31C);
+    if (temp != NULL) {
+        temp[0x1AC] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_151906E0.s")
 
