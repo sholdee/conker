@@ -78,7 +78,14 @@ void func_15106F24(struct102 *arg0) {
     func_15169824(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15106F50.s")
+extern void (*D_80088C28[])(void *, s32, u8);
+
+void func_15106F50(struct102 *arg0, s32 arg1, u8 arg2) {
+    void (*fn)(void *, s32, u8) = D_80088C28[*(u8 *)((u8 *)arg0 + 0x5C)];
+    if (fn != NULL) {
+        fn(arg0, arg1, arg2);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15106F98.s")
 

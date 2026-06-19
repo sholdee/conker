@@ -79,7 +79,13 @@ void func_1514DC5C(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DC98.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DCAC.s")
+void func_1514DCAC(arg0)
+struct127 *arg0;
+{
+    *(s32 *)((u8 *)arg0 + 0x9C) = 0x6000;
+    func_15083568(arg0, 0x23, 1.0f, 0);
+    func_15083568(arg0, 0x44, 1.0f, 0);
+}
 
 struct struct1514DCF4 {
     u8 pad[0x31C];
@@ -92,8 +98,6 @@ void func_1514DCF4(struct struct1514DCF4 *arg0) {
     }
     func_15083568((struct127 *)arg0, 0x17, 1.0f, 0);
 }
-
-void func_1514DCAC(void);
 
 void func_1514DD2C(void) {
     func_1514DCAC();

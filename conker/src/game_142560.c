@@ -131,7 +131,27 @@ s32 func_1511896C(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_15118F24.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151193AC.s")
+struct Obj151193AC_0 {
+    char pad0[0x73];
+    u8 unk73;
+};
+
+struct Obj151193AC_1 {
+    s32 unk0;
+    char pad4[0x61];
+    u8 unk65;
+};
+
+void func_151193AC(struct Obj151193AC_0 *arg0, struct Obj151193AC_1 *arg1) {
+    if (arg1->unk0 == 1) {
+        if (arg1->unk65 == 0) {
+            if (!(arg0->unk73 & 0x3) && !(arg0->unk73 & 0x4)) {
+                arg0->unk73 &= 0xFFFC;
+                arg0->unk73 |= 0x2;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151193F4.s")
 

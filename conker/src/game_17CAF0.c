@@ -17,7 +17,16 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514FCE8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514FEFC.s")
+struct Local1514FEFC { u8 unk0[0x2C]; };
+extern void func_1514F640(void *, struct Local1514FEFC *);
+extern void func_1514FF44(struct Local1514FEFC *, s32, s32, u8, s32);
+
+void func_1514FEFC(void *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4) {
+    struct Local1514FEFC sp24;
+
+    func_1514F640(arg0, &sp24);
+    func_1514FF44(&sp24, arg1, arg2, arg3, arg4);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514FF44.s")
 

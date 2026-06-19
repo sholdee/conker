@@ -5,9 +5,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15130280.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15130374.s")
+void func_15130280(s32 a0, u8 a1, s32 a2, s32 a3, u8 a4, s32 a5);
 
-void func_15130374(s32 a0, u8 a1, s32 a2, u8 a3, s32 a4);
+void func_15130374(s32 a0, u8 a1, s32 a2, u8 a3, s32 a4) {
+    func_15130280(a0, a1, 0, a2, a3, a4);
+}
 
 void func_151303BC(s32 a0, u8 a1, s32 a2) {
     func_15130374(a0, a1, a2, 0xFF, 0);

@@ -192,7 +192,27 @@ void func_151906C4(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_151906E0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1519072C.s")
+extern void func_151D343C(void *, s32);
+extern void func_1518F45C(void *, s32);
+
+struct tmp1519072C {
+    s32 unk0;
+    s8  unk4;
+};
+
+void func_1519072C(void *arg0) {
+    struct tmp1519072C tmp;
+    struct tmp1519072C *p;
+    struct tmp1519072C **pp;
+
+    tmp.unk0 = (s32)arg0;
+    tmp.unk4 = *(u8 *)((char *)arg0 + 0x3B);
+    pp = &p;
+    p = &tmp;
+
+    func_151D343C(*pp, 0x2A);
+    func_1518F45C(*pp, 0x49);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15190770.s")
 

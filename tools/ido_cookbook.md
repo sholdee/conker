@@ -14,6 +14,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - To copy a global aggregate BY VALUE into a stack local, declare a TAGGED struct
   (e.g. `struct foo { s32 unk0[6]; }`) for it; an anonymous-struct local triggers
   an "incompatible struct" assignment error on the copy.
+- When the asm body USES an arg (saved/reloaded across calls) but every in-file caller
+  invokes it with NO args, a prototyped definition errors ("number of arguments doesn't
+  agree") at those call sites. Define the function K&R-style (param declared AFTER the
+  empty paren list) so it establishes NO prototype — the no-arg calls compile and the
+  body still references the arg. Also drop any preceding `void f(void);` forward decl.
 - Param-type tension with a PROTOTYPE: if a forward decl types a param `s32`, the
   definition MUST also be `s32` (a `u8` def is "Incompatible type" redeclaration);
   match the narrowing at the use site/call cast, not the signature. Inverse — when
