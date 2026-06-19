@@ -114,7 +114,27 @@ struct S15033E84 *func_15033E84(u8 *arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033EC4.s")
+void func_15033EC4(s32 arg0, s32 arg1) {
+    struct S15033E84 *var;
+    struct S15033E84 *next;
+    s32 b;
+    s32 key;
+
+    b = arg0;
+    var = (struct S15033E84 *)D_800C3EE0;
+    if (var != 0) {
+        do {
+            next = var->unk54;
+            key = var->unk0;
+            if (b == key) {
+                var->unk0 = arg1;
+            } else if (arg1 == key) {
+                var->unk0 = b;
+            }
+            var = next;
+        } while (next != 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033F0C.s")
 

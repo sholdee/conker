@@ -95,7 +95,14 @@ void func_15153C84(void *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1515548C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15155564.s")
+struct Local15155564 { u8 pad[0x2A]; u8 unk2A; };
+extern void (*D_8008AD04[])(struct Local15155564 *, s32, u8);
+
+void func_15155564(struct Local15155564 *arg0, s32 arg1, u8 arg2) {
+    if (D_8008AD04[arg0->unk2A] != NULL) {
+        D_8008AD04[arg0->unk2A](arg0, arg1, arg2);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_151555AC.s")
 

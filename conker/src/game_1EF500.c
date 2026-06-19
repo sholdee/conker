@@ -11,7 +11,23 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C2AD0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C2E4C.s")
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+} GameStruct151C2E4C;
+
+s32 func_151C2E4C(GameStruct151C2E4C *a0, GameStruct151C2E4C *a1) {
+    if (a0 == a1) {
+        return 0;
+    }
+    if (a0->unk0 == 0) {
+        return 0;
+    }
+    if (a0->unk4 == 0xFF) {
+        return 0;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C2E94.s")
 
