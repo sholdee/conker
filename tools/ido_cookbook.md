@@ -252,6 +252,9 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   the FIRST case body instead of the sorted one. Ordering the case BODIES (handled,
   default, shared) can be required to avoid spilling a shared `result` to the stack; a
   `default` that falls through needs no explicit test.
+- Two cases with IDENTICAL bodies but BOTH compares needed: use an if/else-if chain,
+  NOT a switch — a switch COALESCES same-body arms into one target and DROPS the second
+  comparison. Order the if/else-if conditions to match the asm's compare sequence.
 - Switch min-subtraction: when the asm normalizes by subtracting the smallest case
   (`addiu v1,v1,-MIN`) then compares against 0/1/2, write `switch(field - MIN)` with
   cases `0/1/2` (NOT absolute labels, which compile to direct compares). The highest

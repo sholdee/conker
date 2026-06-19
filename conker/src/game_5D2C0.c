@@ -69,7 +69,15 @@ void func_1503192C(struct127 *arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_150335C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_1503378C.s")
+s32 func_1503378C(u8 *arg0, s16 *arg1) {
+    u16 temp = (u16)arg1[0x42];
+    if (arg0[1] == 0x11) {
+        if ((temp == 0x3E) || (temp == 0x3D) || (temp == 0x41) || (temp == 0xD9) || (temp == 0x138) || (temp == 0x139)) {
+            return 0;
+        }
+    }
+    return 1;
+}
 
 extern s32 D_800902FC[];
 

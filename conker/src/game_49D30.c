@@ -67,7 +67,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15022024.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15022190.s")
+extern s16 D_800C358C[];
+extern f32 D_800C3594;
+extern u8 D_800C3663;
+
+void func_15022190(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
+    D_800C3594 = arg3;
+    D_800C358C[0] = arg0;
+    D_800C358C[1] = arg1;
+    D_800C358C[2] = arg2;
+    D_800C3663 = 1;
+}
 
 extern s16 D_800C3598[];
 extern f32 D_800C35A0;

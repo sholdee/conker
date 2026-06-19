@@ -92,7 +92,16 @@ s32 func_15181CC8(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_15181D00.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_15181D70.s")
+extern f32 D_800A72B0;
+extern f32 D_800DDDE8[][2];
+
+void func_15181D70(s32 arg0) {
+    (&D_800DDDD8)[arg0] = D_800A72B0;
+    (&D_800DDDC8)[arg0] = 0.0f;
+    D_800DDDE8[arg0][0] = 0.0f;
+    D_800DDDE8[arg0][1] = 0.0f;
+    (&D_800DDE20)[arg0] = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_15181DC8.s")
 

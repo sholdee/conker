@@ -31,7 +31,13 @@ void func_151D8BE0(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_205C90/func_151D8C00.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_205C90/func_151D8D5C.s")
+void func_151D8D5C(struct102 *arg0, s32 arg1, u8 arg2) {
+    if (arg2 == 0x58) {
+        func_1516972C(arg0);
+    } else if (arg2 == 0x47) {
+        func_1516972C(arg0);
+    }
+}
 
 extern f32 D_800AB300;
 

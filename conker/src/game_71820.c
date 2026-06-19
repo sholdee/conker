@@ -38,7 +38,17 @@ void func_15044DA0(void) {
     func_1505D024(&D_800CC2D0[0], 5, D_800CC2D0[0].unk7A, -1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044DE8.s")
+void func_15044DE8(void) {
+    if (D_800CC2D0[0].stunned != 0) {
+        return;
+    }
+    if (D_800CC2D0[0].immune != 0) {
+        return;
+    }
+    if (D_800C35EA != 1) {
+        func_1505D024(&D_800CC2D0[0], 4, D_800CC2D0[0].unk7A, -1);
+    }
+}
 
 void func_15044E40(void) {
     if (D_800CC2D0[0].stunned != 0) {

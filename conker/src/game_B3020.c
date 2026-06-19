@@ -101,7 +101,24 @@ void func_15087FEC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_150881CC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15088218.s")
+struct Struct15088218 {
+    char pad0[8];
+    f32 unk8;
+    char padC[0x24 - 0xC];
+    s16 unk24;
+    char pad26[0x84 - 0x26];
+};
+
+s32 func_15088218(s32 arg0) {
+    struct Struct15088218 *p;
+    s32 v;
+    if (D_800872A0 == 0) {
+        return 0;
+    }
+    p = (struct Struct15088218 *)(arg0 * sizeof(struct Struct15088218) + (s32)D_800872A0);
+    v = p->unk24;
+    return (v << 4) + (s32)(p->unk8 * 16.0f);
+}
 
 struct Struct15088270 {
     char pad0[0x14];
