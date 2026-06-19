@@ -647,7 +647,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   cast suppresses it; a fn-pointer cast emits `jalr`); a phantom extra param emits a
   stray `sw aN,off` home (-g3 homes every named param) and a correct definition won't
   COMPILE against the header. The only fix is correcting the shared header. If header
-  edits are out of scope, bail (stub) and flag the prototype.
+  edits are out of scope, bail (stub) and flag the prototype. ESCAPE HATCH (no header
+  edit): `#define func_xxxx func_xxxx_orig` BEFORE the header `#include` to rename the
+  wrong prototype out of the way, then declare the TRUE signature locally so the direct
+  `jal func_xxxx` (correct arg count/widths) is emitted from this TU only.
 - Reverse-engineer stack-arg local TYPES/SIZES (and frame size/offsets) from the
   CALLEE's store widths: `sh`=>`s16[]`, `swc1`=>`f32[]`, `sb`/`sw`=>`u8`/`s32`. A local
   STACK BUFFER's array LENGTH controls the frame and slot: an exact-fit array keeps the
