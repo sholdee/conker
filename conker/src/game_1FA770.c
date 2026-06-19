@@ -100,7 +100,11 @@ s32 func_151D10C4(void *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D1328.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D1368.s")
+void func_151D13E0(void);
+
+void func_151D1368(void) {
+    func_151D13E0();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D1388.s")
 

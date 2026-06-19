@@ -105,7 +105,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15023264.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_150233BC.s")
+void func_150233BC(void) {
+    bzero(D_800C3CA0, 0xA8);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_150233E4.s")
 

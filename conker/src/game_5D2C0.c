@@ -75,7 +75,12 @@ s32 func_150302F0(void *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033BDC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033E00.s")
+s32 func_15033E00(s32 arg0, u8 *arg1) {
+    if (arg1[5] == 3) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033E28.s")
 

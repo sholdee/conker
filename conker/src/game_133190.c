@@ -23,7 +23,10 @@ void *func_151061EC(struct S151061EC *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15106214.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_151064B4.s")
+f32 func_151064B4(f32 arg0) {
+    f32 t = 1.0f - arg0;
+    return t * t * t;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_151064DC.s")
 
