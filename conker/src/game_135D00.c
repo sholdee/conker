@@ -40,7 +40,39 @@ void func_15108BC0(struct Arg0_15108BC0 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_135D00/func_15108FFC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_135D00/func_15109064.s")
+struct Arg0_15109064
+{
+  u8 pad[0x50];
+  s32 off;
+};
+void func_15109064(struct Arg0_15109064 *arg0, s32 *arg1, u8 arg2)
+{
+  u8 *v0 = (((u8 *) arg0) + arg0->off) + 0xF8;
+  u8 *new_var;
+  switch (arg2)
+  {
+    case 0x1D:
+      *((s32 *) (v0 + 0x14)) = arg1[0];
+      *((u8 *) (v0 + 0x18)) = *((u8 *) (((u8 *) arg1) + 0x8));
+      *((s32 *) (v0 + 0x1C)) = arg1[1];
+ goto dummy_label_480240; dummy_label_480240: ;
+      break;
+
+    case 0x1E:
+      if ((*((u8 *) (new_var = v0 + 0x20))) != 0)
+    {
+      *((u8 *) new_var) = 0;
+    }
+    else
+    {
+      *((u8 *) (v0 + 0x20)) = 1;
+    }
+      break;
+
+  }
+
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_135D00/func_151090DC.s")
 
