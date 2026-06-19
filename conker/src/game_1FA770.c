@@ -176,6 +176,11 @@ void func_151D2258(s32 arg0) {
     func_151478F4((void *)arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D2284.s")
+extern void func_15147928(s32);
+
+void func_151D2284(s32 arg0) {
+    func_151D223C(arg0);
+    func_15147928(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D22B0.s")

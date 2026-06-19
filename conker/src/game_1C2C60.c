@@ -164,7 +164,10 @@ s32 func_1519C970(s32 arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C998.s")
+s32 func_1519C998(s32 arg0) {
+    func_1519CDB0(arg0, 0.2f, 0x1D);
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C9C4.s")
 
