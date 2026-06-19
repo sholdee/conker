@@ -120,5 +120,28 @@ void func_1507DE4C(struct127 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_A9D90/func_1507DF10.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_A9D90/func_1507DFE4.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_A9D90/func_1507E114.s")
+extern s32 func_15084D70(s32, s32, s32, s16*, f32*, u8*, u8*, s32*, s32*, s32, s32*);
+
+
+s32 func_1507E114(s32 arg0) {
+    s32 sp5C;
+    s16 sp54[3];
+    f32 sp48[3];
+    s32 sp44;
+    u8 sp43;
+    u8 sp42;
+    s32 sp3C;
+    s32 temp;
+
+    if (D_800D18A8 == 0) {
+        return 0;
+    }
+    temp = (s32)D_800BE9F4;
+    if (temp == 0x22 || temp == 0x18) {
+        return 0;
+    }
+    *(s32*)&D_800BE9F4 = (s8)D_800BE3DF;
+    func_15084D70(0, (u8)D_800BE3E0, 1, sp54, sp48, &sp43, &sp42, &sp44, &sp3C, 1, &sp5C);
+    return sp5C + 1;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_A9D90/func_1507E1D0.s")

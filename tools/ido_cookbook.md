@@ -262,6 +262,20 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   declares `next`@0x18 but not `prev`@0x1C), define a LOCAL tagged struct with
   explicit padding (`struct { u8 pad[0x18]; void *next, *prev; }`) to reach the
   undeclared offsets, rather than editing the shared header.
+- Modify an integer PARAM in place (`arg0 += 1; arg1 -= K;`) to reuse the incoming
+  aN register as the result; computing into a fresh expression/local instead uses a
+  temp (`tN`) and shows up as a register-only diff. Mutate the param when the asm
+  writes the updated value back into the same aN.
+- To pin which register holds a deref vs an address (e.g. `*p` -> v1, `&field` -> v0),
+  declare the POINTER local FIRST and compute it (`s32 *p = (s32*)(arg+off);`), THEN
+  read `v1 = *p`, accessing the pointer's other fields via casts of `p`. Declaring
+  the deref value first reverses the two register assignments — IDO allocates in the
+  order the locals are computed.
+- Reverse-engineer the TYPES/SIZES of stack-arg locals (and thus the frame size and
+  each local's offset) from the CALLEE's asm store widths: a `sh` at the arg pointer
+  means `s16[]`, `swc1` means `f32[]`, `sb`/`sw` give `u8`/`s32`. Sizing a local array
+  to match the callee's accesses can be the fix that grows/shifts the frame to the
+  target's layout.
 - Varargs printf-style wrapper: `#include "libc/stdarg.h"` and a `va_arg` copy loop
   give the exact pointer-bump alignment idiom (`(p+3)&~3` / `(p+7)&~3`); size the
   stack buffer so its last element OVERLAPS the arg-home region (e.g. `s32 buf[17]`
@@ -366,6 +380,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   while a named t-reg holds the middle one), no C form (struct member, raw
   pointer+offset casts) reproduces it — IDO allocates sequential `$t`/`$v`
   registers and a `$v1` base instead. Register-only diff; bail (JUSTREG).
+- Pointer post-increment schedule lock: building successive records through a running
+  pointer where the target schedules the bump (`addiu aN,aN,sz`) AFTER each record's
+  stores. The only C form keeping distinct snapshot pointers (`p = arg0++`) ALWAYS
+  hoists the increment BEFORE the stores; any form that would delay it (`arg0 = p+1`,
+  a separate `arg0++` statement) makes IDO fold all stores into one base + offset
+  (`sw t,0; sw,4; ...; addiu`), far worse. Coupled with a snapshot-count vs frame-size
+  tradeoff (more snapshot locals fix a v0/v1 reg but grow the frame). Unsteerable; bail.
 - Native 64-bit ops in the target (`ld`/`sd`/`dsll32`/`dsrl`/`dsra32` on a u64)
   are UNMATCHABLE under the project's -mips2/-o32 build: IDO lowers `long long`
   shifts to `__ll_lshift`/`__ull_rshift` helper CALLS, never native d-shifts.
