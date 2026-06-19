@@ -31,7 +31,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B2FA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B2FD0.s")
+void func_151B2FD0(s32 *arg0) {
+    s32 *temp = (s32 *)arg0[0x4C / 4];
+    if (temp != 0) {
+        temp[0x44 / 4] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B2FE8.s")
 

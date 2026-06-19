@@ -9,7 +9,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1048D0/func_150D758C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1048D0/func_150D7630.s")
+extern u16 D_800D9910;
+
+void func_150D7630(s32 arg0) {
+    if (arg0 == 0) {
+        D_800D9910 += D_800BE9E4 << 6;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1048D0/func_150D765C.s")
 

@@ -43,7 +43,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D8718.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D8764.s")
+void func_151D8764(s32 *arg0) {
+    s32 *temp = (s32 *)arg0[0x98 / 4];
+    s32 *temp2 = (s32 *)temp[0];
+    if (temp2 != 0) {
+        temp2[0x28 / 4] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D8780.s")
 
