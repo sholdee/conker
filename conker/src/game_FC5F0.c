@@ -41,7 +41,15 @@ unsigned char *func_150CFD5C(unsigned char *arg0) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CFD84.s")
+extern unsigned char *func_150CFD20(unsigned char *);
+
+s32 func_150CFD84(unsigned char *arg0, unsigned char **arg1) {
+    unsigned char *temp;
+
+    temp = func_150CFD20(arg0);
+    *arg1 = temp;
+    return temp - arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CFDB8.s")
 

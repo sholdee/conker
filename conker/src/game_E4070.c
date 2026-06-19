@@ -34,7 +34,10 @@ void func_150B765C(void) {
     D_800D9890 = 3;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B768C.s")
+void func_150B768C(void) {
+    func_150B76BC(0xE6, 2);
+    D_800D9890 = 3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B76BC.s")
 

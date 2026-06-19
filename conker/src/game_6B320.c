@@ -34,7 +34,11 @@ void func_1503EEB8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503EFC4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503F078.s")
+extern void func_1503EB78(void *arg0, f32 arg1, f32 arg2, s32 arg3);
+
+void func_1503F078(void *arg0, s32 arg1) {
+    func_1503EB78(arg0, 2.0f, 2.0f, 0);
+}
 
 extern void func_1503EB78(void *arg0, f32 arg1, f32 arg2, s32 arg3);
 

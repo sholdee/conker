@@ -37,7 +37,12 @@ s32 func_151316DC(s32 *a0, s32 a1) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_1513170C.s")
+s32 func_15131958(s32 a0, s32 a1);
+
+s32 func_1513170C(s32 *a0, s32 a1) {
+    func_15131958((s32)a0 + 0x58, a0[0x2A]);
+    return 1;
+}
 
 void func_1513173C(void) {
     extern void func_15169804();

@@ -530,6 +530,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Param-type tension with an existing PROTOTYPE: if a forward decl types a param
   `s32`, the definition MUST also be `s32` (a `u8` def is "Incompatible type"
   redeclaration). Match the narrowing at the use site/call cast, not the signature.
+- Inverse of the above when the asm REQUIRES the narrow param (e.g. a `u8` param to
+  get the entry `andi`/byte-spill): if a PRE-EXISTING forward decl of the matched
+  function itself sits in the SAME file (used by another caller), you must UPDATE
+  that decl to the new narrow width too — IDO errors "Incompatible type redeclaration"
+  if the definition narrows the param while the file's own forward decl still says
+  `s32`. Changing the definition's param width is only safe once every in-file decl
+  of that same function agrees. (Edit the local/in-file forward decl, never a shared
+  header.)
 - A WRONG-width param in a SHARED callee prototype (header says `u8`/`u16` where the
   target's reg has the full `s32` with NO mask) is unfixable from the call site: the
   narrow prototype forces IDO to emit `andi tN,aM,0xff; move aM,tN` (+nop) before the
