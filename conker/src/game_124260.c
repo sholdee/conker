@@ -3,7 +3,16 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_124260/func_150F6DB0.s")
+void func_150F6DB0(s32 arg0) {
+    struct {
+        s32 unk0;
+        u8 unk4;
+    } sp18;
+
+    sp18.unk0 = arg0;
+    sp18.unk4 = *(u8 *)(arg0 + 0x3B);
+    func_151494E0((s32)&sp18, 0x3E);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_124260/func_150F6DE4.s")
 

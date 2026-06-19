@@ -18,7 +18,13 @@ void func_15080718(s32 arg0, s32 *arg1, s32 *arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AD9B0/func_15080784.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AD9B0/func_150807F4.s")
+extern void func_15080784(void);
+
+void func_150807F4(s32 arg0, s32 arg1, s32 arg2) {
+    if (arg2 == 0x20) {
+        func_15080784();
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AD9B0/func_15080828.s")
 

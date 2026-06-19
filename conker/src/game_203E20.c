@@ -3,7 +3,13 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_203E20/func_151D6970.s")
+extern void func_150D6730(s32 arg0, s32 arg1, s32 arg2);
+
+void func_151D6970(s32 arg0, s32 arg1) {
+    if ((D_800BE9F0 == 0x32) || (D_800BE9F0 == 0x33)) {
+        func_150D6730(arg0, 0xFF, 1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_203E20/func_151D69B4.s")
 

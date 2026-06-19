@@ -151,6 +151,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Inversely, binding a value to a `u8` local before passing it to a call forces an
   `andi reg,0xff` (mask) right before the `jal` plus a `move a0,reg`; narrow-type
   the local when the target masks an arg into the low byte at the call site.
+- Narrow-cast at the CALL SITE (not in the param type) to schedule the masked-byte
+  load into the jal DELAY SLOT: declaring a param `s32` and writing the call as
+  `f(..., (u8)arg)` lets IDO sink the `lbu off(sp)` into the `jal`'s delay slot,
+  whereas declaring the param itself `u8` HOISTS the `lbu` before the controlling
+  branch. Use the s32-param + call-site-cast form when the target loads the byte
+  arg in the delay slot rather than ahead of the branch.
 
 ## Register allocation & evaluation order (the usual "so close" diffs)
 - Multiply/commutative operand order matters: `a*b` vs `b*a` changes which FPU
