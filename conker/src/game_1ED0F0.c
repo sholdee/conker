@@ -56,7 +56,16 @@ void func_151C1628(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C1798.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C1814.s")
+void func_151C1814(s32 *arg0, s32 *arg1, u8 arg2) {
+    s32 *v0 = (s32 *)((u8 *)arg0 + 0x170);
+    if (arg2 == 0x2D) {
+        if (arg1[0] == v0[0x1B]) {
+            v0[0x1B] = arg1[1];
+        } else if (arg1[1] == v0[0x1B]) {
+            v0[0x1B] = arg1[0];
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C1860.s")
 

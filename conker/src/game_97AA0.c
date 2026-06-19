@@ -61,7 +61,19 @@ void func_1506ABC4(s32 arg0, struct struct1506AB7C *arg1) {
     func_15103E40(arg0, arg1->unk0, &arg1->unk4, 2, arg1->unk10, 0xFF, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506AC0C.s")
+s32 func_151B7328(void *, s32, s32, s32, s32);
+
+struct struct1506AC0C {
+    /* 0x00 */ s32 *unk0;
+    /* 0x04 */ u8 unk4;
+};
+
+void func_1506AC0C(s32 *arg0, s32 arg1) {
+    struct struct1506AC0C sp20;
+    sp20.unk0 = arg0;
+    sp20.unk4 = *(u8 *)((s32)arg0 + 0x3B);
+    func_151B7328(&sp20, 0, 8, 0xFF, 1);
+}
 
 s32 func_151CEAAC(s32, s32, s32, s32, s32);
 

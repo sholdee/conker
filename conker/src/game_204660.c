@@ -75,7 +75,14 @@ s32 func_151D7770(s32 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D80C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D8718.s")
+extern f32 D_800AB2EC;
+extern f32 D_800AB2F0;
+
+void func_151D8718(f32 *arg0, f32 *arg1, f32 arg2) {
+    f32 v = arg1[0];
+    arg1[0] += D_800AB2EC * arg2;
+    arg0[1] += v * arg2 + D_800AB2F0 * (arg2 * arg2);
+}
 
 void func_151D8764(s32 *arg0) {
     s32 *temp = (s32 *)arg0[0x98 / 4];
