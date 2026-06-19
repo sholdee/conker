@@ -969,7 +969,12 @@ void func_1506FCFC(s32 arg0) {
     func_15196438(D_800D154C, 5, 0xFF, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_1506FD30.s")
+extern f32 D_80099EA0;
+
+void func_1506FD30(s32 arg0) {
+    struct127* a0;
+    func_150E2EA4(a0 = D_800D154C, a0->unique_id, 1, -1, 0.0f, 0, D_80099EA0, 0.0f, 0, 414.0f, 3, 3, 5, 20.0f, (func_150ADA68() * 10.0f) + 40.0f, 1, 50.0f);
+}
 
 void func_1506FDF0(s32 arg0) {
     func_151AABC4(D_800D154C, 0);

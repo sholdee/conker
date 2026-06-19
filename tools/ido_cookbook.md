@@ -66,6 +66,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   SEPARATE `if`s (not `else if`) to keep a middle test as a non-likely `bnez`.
 - A case that should "fall off" returning garbage v0 (matching an EC epilogue)
   needs NO trailing `return` on that path; adding one pins v0 and breaks the match.
+- Multiple ZERO float args CSE into one FPU register: passing several `0.0f` args
+  makes IDO -O2 collapse them into a SINGLE materialized zero reg (e.g. all -> f2),
+  with a single store. When the target keeps TWO distinct zero registers (e.g. f2
+  and f12) and a grouped store order, pass literal int `0` (not `0.0f`) for the args
+  that should land in the second zero reg — the int-vs-float mix defeats the CSE and
+  forces the separate zero register + the target's store grouping.
+- A chained `else if` (vs two separate `if`s) is sometimes REQUIRED to fill a `bne`
+  delay slot with the default value and turn the second test into a `bnel`
+  branch-likely: the fall-through default `li` emits standalone before the bne, and
+  the chained second test becomes the likely branch with the loop-init in its delay
+  slot. (Converse of the separate-ifs rule: pick chained vs separate to match the
+  bne/bnel + delay-slot shape.)
 - A two-constant ternary's operand order controls which `li` is emitted FIRST:
   `(cond)?A:B` lays out `li B` then `li A` (matching `slti/bnez`-fallthrough);
   the inverted condition swaps the two `li`s. Pick the form matching the asm order.
@@ -231,6 +243,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Array-index form `D_xxxx[idx]` is needed for the reloc pattern
   `lui at,%hi; addu at,at,idx; lwc1 %lo(D_xxxx)(at)`. Pointer/byte arithmetic
   (`(u8*)D - n`, `D - arg`) instead materializes a base pointer + `0(reg)` load.
+- Array-of-array cast for byte-stride indexing WITHOUT a product temp: when the
+  byte form `(Struct*)((u8*)base + idx*size)` gives the right `addu base,index` order
+  but an intermediate `off = idx*size;` temp steals a register (e.g. v0) for the
+  product, instead `typedef u8 Entry[size]; (*(Entry**)&base)[idx]` reproduces the
+  same byte-arithmetic add order while letting IDO keep the product in the index
+  register (no extra temp), matching the target's exact allocation.
 - Index-add operand order: `base[idx]` emits `addu index,base`, whereas byte
   arithmetic `(Struct*)((u8*)base + idx*size)` emits `addu base,index`. Use the
   byte form when the asm adds the base into the index register (not vice versa).
@@ -400,6 +418,15 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   while a named t-reg holds the middle one), no C form (struct member, raw
   pointer+offset casts) reproduces it — IDO allocates sequential `$t`/`$v`
   registers and a `$v1` base instead. Register-only diff; bail (JUSTREG).
+- Phantom 8-byte stack slot from `&local` to >4-arg calls: passing `&local` to
+  several calls that have STACK args (>4 args) can make IDO reserve an unused
+  8-aligned temp slot BETWEEN the saved regs and the first local (recomputing
+  `addiu aN,sp,off` fresh, no actual spill), landing the local one word too high
+  vs a target that places its first local directly after the saves. The slot appears
+  ONLY with the stack-arg calls present (3-arg calls drop it) and is unaffected by
+  buffer count/type, combined/tagged buffers, decl order, or the casts. Named pointers
+  GROW the frame instead. If the target lacks the slot, it is unsteerable from C —
+  bail, decomp-permuter candidate.
 - Pointer post-increment schedule lock: building successive records through a running
   pointer where the target schedules the bump (`addiu aN,aN,sz`) AFTER each record's
   stores. The only C form keeping distinct snapshot pointers (`p = arg0++`) ALWAYS
