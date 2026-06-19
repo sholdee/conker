@@ -18,7 +18,19 @@ void func_150F6DB0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_124260/func_150F706C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_124260/func_150F7310.s")
+void func_150F7310(s32 arg0, s32 arg1, u8 arg2) {
+    s32 *p = &arg0;
+    s32 q;
+    if (arg2 == 0x3E) {
+        q = *p + 0x28;
+        if ((*(s32 *)q == *(s32 *)arg1) || (*(u8 *)(q + 4) == *(u8 *)(*(s32 *)&arg1 + 4))) {
+            func_1516972C((struct102 *)*p);
+        }
+    } else {
+        q = *p + 0x28;
+        func_15149514(arg1, arg2, q, q + 4, *p);
+    }
+}
 
 extern void func_1514EDF0(struct260 *, s32);
 

@@ -482,7 +482,52 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `v` straight into the destination register and DROP the `move`, losing the
   delay-slot default. Use the ternary when the asm keeps the move + conditional load.
 
+## More register-allocation / branch-shape idioms
+- Two-sided index CLAMP to a default: write it as `if (idx < 0) idx = 0; else
+  if (idx >= N) idx = 0;` to get the target's bgez-skip-then-bnezl shape (a
+  `bgez` that skips the low fix, then a likely branch on the high test). Other
+  forms collapse or reverse: `idx<0 || idx>=N` and the empty-if
+  `if(idx>=0 && idx<N){}else idx=0;` both fold to ONE inverted `bltz`; the nested
+  `if(idx>=0){if(idx>=N)...}else...` gives the right tests but REVERSED branch
+  order. Use the explicit two-statement `if/else if` clamp.
+- A dual-path increment of a global (`G = idx + 1` reached by both a fall-through
+  and a call path) wants TWO statements `idx = G; G = idx + 1;` where `idx` is
+  ALSO live on the no-call path (e.g. reused in a delay slot): the no-call path
+  keeps the live `idx` ($v0) and the call path reloads `G` with its own fused
+  `%hi/%lo`, and the store merges. Plain `G = G + 1` routes the value through a
+  spare arg reg with an extra move; `G = idx + 1` (without the separate `idx = G`
+  read) spills idx to the stack and GROWS the frame.
+- A single FUNCTION-SCOPE local assigned INDEPENDENTLY in each branch (same
+  variable, different value per arm, no value carried across arms) unifies the
+  result onto ONE register (e.g. a2) in every branch WITHOUT cross-branch
+  liveness. Declaring the local PER-BLOCK gives a different reg (e.g. v0) per arm;
+  sharing it LIVE across branches forces a callee-saved (s0) promotion. Use one
+  function-scope local written fresh in each branch when the asm lands the same
+  arg register in all arms.
+- Bind a now-DEAD register's next consumer to its OWN local to make IDO REUSE that
+  dead register: e.g. after a value in v0 is clobbered/spent, declaring the next
+  pointer load as its own local (`s32 *p = ...; ... = *p;`) lets IDO reuse the
+  freed v0 for the load instead of allocating a fresh temp (t3). Pairs with the
+  "void return, flag live in v0 because v0 is later reloaded" shape — the trailing
+  pointer load is what frees v0 for reuse.
+- Declaring a flag/init local INSIDE the conditional block that first sets it
+  sinks its `move reg,zero` init into the TAKEN path (matching a zero-init placed
+  after the entry branch), rather than an eager pre-branch init. (Block-scope
+  declaration controls WHERE the initializer is scheduled, not just the field-
+  address computation.)
+
 ## When to BAIL (don't burn iterations)
+- IDO canonicalizes an EQUALITY compare to put the LOCALLY-LOADED operand FIRST in
+  the `beq`/`bne` regardless of source operand order: `a==b`, `b==a`, `!=`,
+  early-return, nested-if, and width/cast variants ALL emit the loaded-local-first
+  form (e.g. `beq $v0,$t6`). If the target has the other order (`beq $t6,$v0`),
+  rewriting the test as `^` or `-` (`if (idx ^ G)`) DOES flip the operand order but
+  reserves a PHANTOM temp register that cascades a t-register rename chain (worse).
+  Neither reaches 0 — single-instruction operand-order diff; bail, decomp-permuter.
+  (Distinct from the `bnel`/`beql` LIKELY-branch operand-order rule, which IS
+  steerable by swapping operands; this canonicalization applies to plain
+  `beq`/`bne` equality and is NOT steerable.)
+
 - Callee-saved promotion of a cross-call pure pass-through: when the target carries
   a value across a call in a callee-saved reg (`or sN,v0,zero` in the call's delay
   slot, `or v0,sN,zero` at return, with sN saved/restored + a larger frame), IDO

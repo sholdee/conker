@@ -5,7 +5,32 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CBE20/func_1519E970.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CBE20/func_1519EA04.s")
+struct Local1519EA04 {
+    char pad0[0x10];
+    s32 unk10;
+    char pad14[0x20 - 0x14];
+    s16 unk20;
+    char pad22[0x24 - 0x22];
+    s32 *unk24;
+    u8 unk28;
+};
+
+void func_1519EA04(struct Local1519EA04 *arg0) {
+    if (arg0->unk10 & 1) {
+        s32 flag = 0;
+        arg0->unk20 -= D_800BE9E4;
+        if (arg0->unk20 < 0) {
+            flag = 1;
+        }
+        if (flag != 0) {
+            if (arg0->unk28 == 0) {
+                s32 *p = arg0->unk24;
+                p[0x30 / 4] = 0;
+            }
+            func_1516972C((struct102 *)arg0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CBE20/func_1519EA78.s")
 

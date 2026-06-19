@@ -28,7 +28,17 @@ void func_15147928(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_1514795C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_151479E0.s")
+extern void (*D_8008A2F0[])(void *);
+
+void func_151479E0(void *arg0) {
+    s32 idx = *(s32 *)((u8 *)arg0 + 0x20);
+    if (idx < 0) {
+        idx = 0;
+    } else if (idx >= 0x14) {
+        idx = 0;
+    }
+    D_8008A2F0[idx](arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_15147A30.s")
 

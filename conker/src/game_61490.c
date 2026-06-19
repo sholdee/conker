@@ -39,4 +39,20 @@ s16 *func_150343B0(s16 *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_61490/func_15034728.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_61490/func_150347E8.s")
+extern void func_15034728(struct127 *);
+
+void func_150347E8(void) {
+    struct127 *obj;
+
+    if (D_800BEAC0 != 0) {
+        return;
+    }
+
+    obj = D_800CC2D0;
+    do {
+        if (obj->interaction_state != 0 && obj->unk9C != 0) {
+            func_15034728(obj);
+        }
+        obj++;
+    } while (obj != (struct127 *)&D_800D121C);
+}

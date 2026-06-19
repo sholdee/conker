@@ -32,4 +32,11 @@ s32 func_150C52CC(s32 arg0) {
     return D_8008ADA8(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F21D0/func_150C5310.s")
+s32 func_150C5310(s32 *arg0) {
+    if (func_150C5280()) {
+        arg0[0x18] |= 0x20000;
+    } else {
+        arg0[0x18] &= ~0x20000;
+    }
+    return 1;
+}
