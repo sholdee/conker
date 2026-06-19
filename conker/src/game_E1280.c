@@ -17,7 +17,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E1280/func_150B4710.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E1280/func_150B5060.s")
+void func_150B5060(void *arg0) {
+    void *temp_v0 = *(void **)((u8 *)arg0 + 0x98);
+
+    *(u8 *)((u8 *)arg0 + 0x30) = 0;
+    *(u16 *)((u8 *)arg0 + 0x1E) = *(u16 *)((u8 *)arg0 + 0x1E) & 0xFFFD;
+    *(u8 *)((u8 *)temp_v0 + 0x1C) = *(u8 *)((u8 *)temp_v0 + 0x1C) | 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E1280/func_150B5088.s")
 

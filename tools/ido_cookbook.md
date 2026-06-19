@@ -877,6 +877,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   a rodata-split representation artifact, not a real instruction diff — fixing it
   to 0 on the default invocation would require editing the rodata split YAML/data,
   not the C. Leave the matching C in place and record it as matched.
+- Whole-object score polluted by NEIGHBORING GLOBAL_ASM stubs: when your target
+  function is byte-perfect but the iter_match/whole-object score is large (tens or
+  hundreds of thousands), the score is the Levenshtein of the ENTIRE object, which
+  still contains adjacent `#pragma GLOBAL_ASM` stubs. The differ's `-o` (object) mode
+  bleeds those un-decompiled neighbors' expected disassembly into the trailing
+  context, inflating the score even though your function diffs clean. Verify the
+  function in isolation: (1) asm-differ shows ZERO diff markers (no `r`/`>`/`<`/`~`)
+  on exactly your function's line range, AND (2) raw `objdump` byte-compare of the
+  function's object-offset range (start to where the next symbol begins, per `nm`)
+  is identical — modulo unresolved `%hi/%lo` reloc placeholders (`0x0000` in the
+  unlinked object) that resolve at link time. A clean isolated diff means matched;
+  the whole-object number is a neighbor artifact, not your function.
 
 ## Reusing a condition's loaded register as a call arg
 - When the `if` tests a GLOBAL directly (`if (D_xxxx) { ... }`, IDO loads it into

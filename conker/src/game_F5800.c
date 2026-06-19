@@ -5,7 +5,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F5800/func_150C8350.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F5800/func_150C84F4.s")
+extern void func_150C8350(void);
+
+void func_150C84F4(s32 arg0) {
+    if (arg0 == 0) {
+        func_150C8350();
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F5800/func_150C851C.s")
 
