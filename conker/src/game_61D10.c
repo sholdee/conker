@@ -5,7 +5,39 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_61D10/func_15034860.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_61D10/func_15034EB4.s")
+extern s16 D_800C3EF0;
+extern f32 D_80097D60;
+
+struct Entry15034EB4 {
+    u8 pad[0x34];
+    f32 unk34;
+    u8 pad2[0x8];
+};
+
+struct Obj15034EB4 {
+    u8 pad[0x14C];
+    f32 unk14C;
+    u8 pad2[0x84];
+    struct Entry15034EB4 *unk1D4;
+};
+
+void func_15034EB4(struct Obj15034EB4 *obj, s32 idx, s32 idx2) {
+    f32 amt;
+    struct Entry15034EB4 *e;
+    struct Entry15034EB4 *e2;
+    struct Entry15034EB4 *base;
+
+    if (D_800C3EF0 != 0) {
+        base = obj->unk1D4;
+        amt = ((f32)D_800C3EF0 * D_80097D60) * obj->unk14C;
+        e = &base[idx];
+        e->unk34 -= amt;
+        if (idx2 != -1) {
+            e2 = &base[idx2];
+            e2->unk34 -= amt;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_61D10/func_15034F20.s")
 

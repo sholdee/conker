@@ -17,7 +17,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501D1D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501D258.s")
+void func_1501D258(s32 arg0, s32 arg1) {
+    if (!D_800C3670) {
+        D_800C3A60[arg0] |= (1LL << arg1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501D2C4.s")
 

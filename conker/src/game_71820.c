@@ -105,7 +105,19 @@ void func_15044E40(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_1504554C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15045714.s")
+extern void func_1510F800(s32);
+extern s32 func_150A6500(s16, s16, s32, u16);
+
+struct conker15045714 {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+};
+
+void func_15045714(struct conker15045714 *arg0, s32 arg1, s32 *arg2, s32 arg3) {
+    func_1510F800(2);
+    *arg2 = func_150A6500((s16)arg0->unk0, (s16)arg0->unk8, arg3, (u16)arg1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15045780.s")
 

@@ -39,7 +39,20 @@ GameStruct_15039A54 *func_15039A54(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_1503A08C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_1503A60C.s")
+typedef struct {
+    u8  pad0[0x30];
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+} GameStruct_1503A60C;
+
+void func_1503A60C(void) {
+    GameStruct_1503A60C *dst = (GameStruct_1503A60C *)((u8 *)D_800CC2D0[D_800C3E78].unk1D4 + 0x40);
+
+    dst->unk30 = *(f32 *)&D_800CC2D0[D_800C3E78].pad174;
+    dst->unk34 = D_800CC2D0[D_800C3E78].y_position;
+    dst->unk38 = *(f32 *)&D_800CC2D0[D_800C3E78].pad178;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_1503A678.s")
 

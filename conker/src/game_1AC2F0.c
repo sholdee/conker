@@ -20,7 +20,18 @@ s32 func_1517EFAC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F08C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F3A0.s")
+extern u8 D_800DDDA0[];
+s32 func_1517F08C(s32 arg0, s32 arg1, u8 arg2, u8 arg3, u8 arg4, s32 arg5);
+
+s32 func_1517F3A0(s32 arg0, s32 arg1) {
+    s32 v0 = func_1517EF00(arg1);
+    u8 *p;
+    if (v0 == 0) {
+        return arg0;
+    }
+    p = &D_800DDDA0[arg1 * 3];
+    return func_1517F08C(arg0, v0, p[0], p[1], p[2], arg1);
+}
 
 s32 func_1517F40C(s32 arg0) {
     if ((&D_800DDDB0)[arg0] >= (&D_800DDE28)[arg0]) {
@@ -114,8 +125,6 @@ void func_15181D70(s32 arg0) {
 void func_15182748(s32 arg0) {
     *(u8 *)(arg0 + 0x2B) = *(s16 *)(arg0 + 0xE) * *(s16 *)(arg0 + 0x2E);
 }
-
-s32 func_1517F08C(s32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5);
 
 s32 func_15182768(s32 arg0, s32 arg1, s16 arg2) {
     u8 *p = (u8 *)(*(s32 *)&arg1 + 0x28);

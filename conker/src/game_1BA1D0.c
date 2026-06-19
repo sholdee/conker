@@ -211,7 +211,20 @@ void func_15190518(void *arg0) {
     func_1516944C(0x3E, (s32)&tmp, 0x2A);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15190550.s")
+extern void func_151D33FC(void *, s32);
+extern void (*D_8008D684[])(void *, s32, u8);
+
+void func_15190550(void *arg0, s32 arg1, u8 arg2) {
+    void (*fn)(void *, s32, u8);
+
+    if (arg2 == 0x2A) {
+        func_151D33FC(arg0, arg1);
+    }
+    fn = D_8008D684[*(u8 *)((char *)arg0 + 0x8A)];
+    if (fn != NULL) {
+        fn(arg0, arg1, arg2);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_151905BC.s")
 
