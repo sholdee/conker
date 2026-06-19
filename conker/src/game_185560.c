@@ -33,7 +33,28 @@ void func_15158AD0(struct102 *arg0) {
     func_15169824(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158AFC.s")
+typedef struct {
+    u8 pad0[0x14];
+    s16 unk14;
+    u8 pad16[0x25];
+    u8 unk3B;
+    u8 pad3C[0xBC];
+    s16 unkF8;
+    u8 padFA[0x2];
+    s32 unkFC;
+} Struct15158AFC;
+
+s32 func_15158AFC(Struct15158AFC *arg0) {
+    s32 temp;
+
+    if (arg0->unk14 < arg0->unkF8) {
+        temp = arg0->unk14 * arg0->unkFC;
+        if (temp < arg0->unk3B) {
+            arg0->unk3B = temp;
+        }
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158B3C.s")
 

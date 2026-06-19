@@ -63,7 +63,9 @@ s32 func_15157860(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157AA8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157D88.s")
+void func_15157D88(s32 arg0, s32 arg1, u8 arg2) {
+    func_15169850(arg1, arg2, arg0 + 0x4C, arg0 + 0x50, arg0);
+}
 
 extern void func_15157DEC(void *, void *);
 

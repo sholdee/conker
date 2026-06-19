@@ -27,7 +27,15 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DAA4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DB18.s")
+s32 func_15158BD0(s32, s32, s32);
+void func_1514EC1C(s32, s32, s32);
+
+void func_1514DB18(s32 arg0) {
+    s32 v0 = func_15158BD0(arg0, 1, 0);
+    if (v0 != 0) {
+        func_1514EC1C(v0, arg0, 0x13);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DB58.s")
 
