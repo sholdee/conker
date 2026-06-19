@@ -15,7 +15,22 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515D5F8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515D69C.s")
+struct Node1515D69C {
+    struct Node1515D69C *next;
+    char pad4[8];
+    s8 unkC;
+    char pad10[0x23];
+    s8 unk30;
+};
+
+void func_1515D69C(void) {
+    struct Node1515D69C *p;
+
+    for (p = (struct Node1515D69C *)D_800DCD78; p != 0; p = p->next) {
+        p->unkC = 0;
+        p->unk30 = 0;
+    }
+}
 
 void func_1515D6C8(void) {
 }
