@@ -58,7 +58,7 @@ HARD RULES (a violation corrupts the shared build tree):
 
 WHEN DONE:
 - SCORE: 0 → STOP, LEAVE the matching C in the file, return matched=true, file="${c.file}", final_c=your function.
-- Cannot reach 0 → REVERT src/${c.file}.c so ${c.func} is exactly its original stub line  #pragma GLOBAL_ASM("asm/nonmatchings/${c.file}/${c.func}.s")  again, return matched=false with best score. Leaving non-matching C would break the build; reverting on failure is MANDATORY.`
+- Cannot reach 0 → FIRST, if your best SCORE was <= 80 (a near miss worth permuting), harvest the seed: mkdir -p ~/conker/.nearmiss, then write the best-scoring C you reached to ~/conker/.nearmiss/${c.func}.json as JSON {"func","file","score","c"} (use python3 -c with json.dump so the C string is escaped correctly). THEN REVERT src/${c.file}.c so ${c.func} is exactly its original stub line  #pragma GLOBAL_ASM("asm/nonmatchings/${c.file}/${c.func}.s")  again, and return matched=false with best score. Leaving non-matching C would break the build; reverting on failure is MANDATORY. (The harvested seed feeds a background decomp-permuter pass on spare CPU.)`
 
 const distillPrompt = (notesBlob) => `You curate ~/conker/tools/ido_cookbook.md, a tight set of TRANSFERABLE IDO 5.3 -O2 matching idioms. From this round's agent notes, append only GENERALIZABLE idioms NOT already covered (ignore function-specific facts: addresses, specific constants, per-func offsets). Deduplicate; do not rewrite/remove existing entries; if nothing generalizes, make NO edit. Edit the file in place.
 
