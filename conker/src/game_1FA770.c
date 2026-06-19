@@ -14,7 +14,14 @@ void func_151CD35C(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CD394.s")
+void func_151CD394(s32 arg0) {
+    s32 sp1C;
+
+    if (arg0 >= 0 && arg0 < 4) {
+        sp1C = arg0;
+        func_151494E0((s32)&sp1C, 0x18);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CD3CC.s")
 

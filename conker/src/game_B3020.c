@@ -103,7 +103,14 @@ s32 func_150887F8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508B194.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508B1D4.s")
+extern s8 D_8008FD90;
+extern s16 *D_8008FDD4;
+
+void func_1508B1D4(s32 arg0) {
+    if (arg0 < D_8008FD90) {
+        *(s16 *)((u8 *)D_8008FDD4 + arg0 * 12 + 0x70) = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508B20C.s")
 

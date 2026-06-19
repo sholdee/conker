@@ -122,7 +122,15 @@ void func_151993B4(struct ConkerStruct151993B4 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_151994B8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15199834.s")
+void func_15199834(u8 *arg0) {
+    struct ConkerStruct15197A7C sp18;
+
+    if (arg0 != 0) {
+        sp18.unk0 = (s32) arg0;
+        sp18.unk4 = arg0[0x3B];
+        func_15147D64(&sp18, 0x26);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519986C.s")
 

@@ -11,7 +11,9 @@ void func_151942B0(s32 arg0, s32 arg1, s32 arg2) {
     func_15193CA0(arg1, 0, 0xFF, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_151942E8.s")
+void func_151942E8(s32 arg0, s32 arg1, s32 arg2) {
+    func_15193CA0(arg1, 1, 0xFF, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194320.s")
 

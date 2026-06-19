@@ -3,7 +3,12 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507EB80.s")
+void func_1507EB80(u8 *buf, s32 *count, u8 c) {
+    if (*count + 1 < 40) {
+        buf[*count] = c;
+        *count = *count + 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507EBB8.s")
 
