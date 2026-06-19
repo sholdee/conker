@@ -66,7 +66,17 @@ void func_1509CC94(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CF28.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509D054.s")
+extern s32 D_800D2FB0;
+extern s32 func_10004074(s32);
+
+void func_1509D054(void) {
+    s32 temp;
+    if (D_800D2FB0) {
+        temp = D_800D2FB0;
+        func_10004074(temp);
+        D_800D2FB0 = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509D08C.s")
 

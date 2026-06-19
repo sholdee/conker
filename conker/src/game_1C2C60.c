@@ -204,7 +204,35 @@ void func_1519C22C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C56C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C910.s")
+struct ConkerStruct1519C910_inner {
+    char pad0[0x84];
+    u16 unk84;
+};
+
+struct ConkerStruct1519C910 {
+    struct ConkerStruct1519C910_inner *unk0;
+    char pad4[0x154];
+    s32 unk158;
+    s32 unk15C;
+};
+
+struct ConkerStruct1519C910Outer {
+    char pad0[0x98];
+    struct ConkerStruct1519C910 *unk98;
+};
+
+s32 func_1519C910(struct ConkerStruct1519C910Outer *arg0) {
+    struct ConkerStruct1519C910 *p = arg0->unk98;
+    struct ConkerStruct1519C910_inner *q = p->unk0;
+    u16 v = q->unk84;
+
+    if (v != p->unk158) {
+        if (v != p->unk15C) {
+            return 0;
+        }
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C948.s")
 

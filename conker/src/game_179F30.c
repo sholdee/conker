@@ -124,7 +124,12 @@ void func_1514DE50(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DE94.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DFD0.s")
+s32 func_15083FB0(s32);
+
+void func_1514DFD0(u8 *arg0) {
+    arg0[0x65] = func_15083FB0(9) + 1;
+    arg0[0x101] |= 0x34;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514E00C.s")
 

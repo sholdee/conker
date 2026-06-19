@@ -49,7 +49,22 @@ void func_150DA4E0(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150DA50C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150DA5EC.s")
+struct s_150DA5EC {
+    s32 unk0;
+    u8 unk4;
+    f32 unk8;
+};
+
+extern void func_15147D64(struct s_150DA5EC *, s32);
+
+void func_150DA5EC(u8 *arg0, f32 arg1) {
+    struct s_150DA5EC sp1C;
+
+    sp1C.unk0 = (s32) arg0;
+    sp1C.unk4 = arg0[0x3B];
+    sp1C.unk8 = arg1;
+    func_15147D64(&sp1C, 0x44);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150DA628.s")
 

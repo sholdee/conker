@@ -143,6 +143,16 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   trailing EARLY-RETURN inside the `if(!r)` block, NOT an else-branch or a named
   `ret` local — both of those regress with an extra `move v0,v1`. Make the null
   (taken) path the early-return body and let the other path fall through.
+- Match-EITHER-of-two-values 0/1 return (`return v==A || v==B;` semantically): when
+  the asm tests a value against two alternatives via TWO `beql`s that both jump to a
+  SHARED tail priming `li v0,1` (and falls through to `return 0`), write it as the
+  NESTED NEGATIVE-test form `if (v != A) { if (v != B) return 0; } return 1;`. The
+  symmetric two positive tests (`if(v==A)return 1; if(v==B)return 1;`) invert the
+  branch to `bnel`, and the `||` form emits an `xori`/`sltiu` boolean instead of the
+  twin likely-branches. Use the nested-`!=` shape with a single trailing `return 1;`
+  when both compares route to one shared `li v0,1` tail. Operand order `v != p->field`
+  (value first) is canonicalized to field-first in the emitted `beql t,a` — write the
+  value first.
 
 ## Loops
 - Backward branch at the bottom of the body => `do { } while (cond);`, not for/while.
