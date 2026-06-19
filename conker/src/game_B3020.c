@@ -64,7 +64,20 @@ void func_15087FEC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15088218.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15088270.s")
+struct Struct15088270 {
+    char pad0[0x14];
+    f32 unk14;
+    char pad18[0x84 - 0x18];
+};
+
+s32 func_15088270(s32 arg0) {
+    struct Struct15088270 *p;
+    if (D_800872A0 == 0) {
+        return 0;
+    }
+    p = (struct Struct15088270 *)(arg0 * sizeof(struct Struct15088270) + (s32)D_800872A0);
+    return (s32)p->unk14;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_150882B0.s")
 

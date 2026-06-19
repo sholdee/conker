@@ -134,6 +134,10 @@ void func_15107678(struct260 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15107E48.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15107F54.s")
+void func_15143134(void *, s32, s32);
+
+void func_15107F54(s32 *arg0, u8 arg1, void *arg2, s32 arg3) {
+    func_15143134(arg2, arg3, arg0[0x1D4 / 4] + (arg1 << 6));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15107F98.s")

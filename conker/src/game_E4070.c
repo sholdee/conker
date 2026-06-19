@@ -11,7 +11,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B6D78.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B6DFC.s")
+void func_150B6DFC(void *arg0) {
+    *(s16 *)((u8 *)arg0 + 0x34) += D_800BE9E4 * 0x30;
+    if (*(s16 *)((u8 *)arg0 + 0x34) >= 0x801) {
+        *(s16 *)((u8 *)arg0 + 0x34) = -0xC00;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B6E3C.s")
 

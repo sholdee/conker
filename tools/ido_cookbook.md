@@ -1589,3 +1589,15 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   decomp-permuter seed and bail. (Distinct from the homing idioms above, which are
   steerable because the home backs a real source-level reassignment/forward/spill;
   this one has no such anchor — the slot was simply empty.)
+- Integer `multu`/`mult` rs/rt canonicalization (cached-live × freshly-loaded):
+  when a commutative integer multiply has one factor CACHED in a register across
+  preceding compares/uses and the other FRESHLY LOADED, IDO always allocates the
+  fresh load as `rs` and the cached value as `rt` (`multu fresh,cached`), REGARDLESS
+  of C operand order — `cached*fresh`, `fresh*cached`, signed/unsigned casts of
+  either, and inlining the fresh load all produce the same rs/rt assignment. It is
+  NOT steerable in place: naming the fresh value as a separate local, or
+  self-assigning the product back into the cached operand, both REGRESS (extra
+  instructions / different allocation). If a byte-correct body's only residual is the
+  swapped `multu` rs/rt registers, harvest as a decomp-permuter seed and bail — the
+  permuter can flip the operand registers. (Integer analog of the float `mul.s`
+  memory-operand-first canonicalization rule above.)

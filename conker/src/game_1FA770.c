@@ -181,7 +181,9 @@ s32 func_151D10C4(void *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D1138.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D1328.s")
+void func_151D1328(s32 arg0, s32 arg1, u8 arg2) {
+    func_15169850(arg1, arg2, arg0 + 0x28, arg0 + 0x2C, arg0);
+}
 
 void func_151D13E0(struct260 *arg0);
 

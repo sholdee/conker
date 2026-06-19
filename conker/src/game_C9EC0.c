@@ -50,13 +50,17 @@ s32 func_1509CA78(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CBD4.s")
 
-void func_1509CCB4(void);
+extern void func_1509CE64(void *, void *);
+extern GameC9EC0Struct D_8008743C[];
+void func_1509CCB4();
 
 void func_1509CC94(void) {
     func_1509CCB4();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CCB4.s")
+void func_1509CCB4(s32 arg0) {
+    func_1509CE64((void *)D_8008743C[arg0].unk0, func_1509CCB4);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CCF4.s")
 

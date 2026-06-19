@@ -17,7 +17,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FAAEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FACE4.s")
+void func_150FACE4(struct102 *arg0, s32 arg1, u8 arg2) {
+    switch (arg2) {
+        case 0x4E:
+        case 0x4F:
+            func_1516972C(arg0);
+            break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FAD28.s")
 
