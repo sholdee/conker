@@ -450,6 +450,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   (`s32 i = arg->idx;` then `&arg->elems[i]`). The inline form folds the index load into
   the offset-chain register (a register-only diff); the named index local forces IDO to
   allocate a distinct register for the loaded value vs the scaled-offset computation.
+- Widen an index local to free the return register: when a loaded byte is used as an
+  INDEX into a returned `base[idx]`, declare the index local `s32` (not `u8`/the field's
+  narrow type). The `s32` typing forces the loaded value into a TEMP register (`$v1`)
+  rather than reusing the `$v0` return slot, matching a target that keeps the index in a
+  temp and computes the final `base[idx]` result into v0. The narrow-typed index can
+  collapse onto v0 and give a register-rename diff.
 - Force a per-copy RELOAD of a pointer field that intervening stores may ALIAS by
   writing those stores through UNTYPED byte-pointer arithmetic
   (`*(f32*)((u8*)arg+off) = ...`): the raw cast defeats IDO's alias analysis, so it

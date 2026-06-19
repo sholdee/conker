@@ -92,7 +92,14 @@ void func_151E4DD8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E53E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E557C.s")
+extern u8 D_80084060[];
+
+void func_151E557C(void) {
+    D_80084060[0] = 0;
+    D_80084060[1] = 1;
+    D_80084060[2] = 2;
+    D_80084060[3] = 3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E55A8.s")
 

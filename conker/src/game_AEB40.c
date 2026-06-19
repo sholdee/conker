@@ -55,7 +55,20 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084558.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_150849A0.s")
+typedef struct {
+    u8 pad[0x1C9];
+    u8 unk1C9;
+    u8 pad2[0x2C4 - 0x1CA];
+    u8 *unk2C4;
+} GameAEB40Struct;
+
+u8 func_150849A0(GameAEB40Struct *a0) {
+    s32 v1 = a0->unk1C9;
+    if (v1 != 0) {
+        return a0->unk2C4[v1 - 1];
+    }
+    return a0->unk2C4[0];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_150849CC.s")
 
