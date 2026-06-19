@@ -60,7 +60,17 @@ void func_151CE49C(s32 arg0) {
     func_151478F4((void *)arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CE4DC.s")
+extern void func_15147928(s32);
+
+void func_151CE4DC(s32 arg0) {
+    s32 sp1C;
+    s32 temp;
+
+    temp = *(s32 *)(arg0 + 0x98);
+    sp1C = *(s32 *)(temp + 0x48);
+    func_151494E0((s32)&sp1C, 0x23);
+    func_15147928(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CE51C.s")
 

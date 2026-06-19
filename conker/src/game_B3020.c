@@ -39,7 +39,22 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15087FC4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15087FEC.s")
+extern u8 *D_800872A0;
+
+struct Struct15087FEC {
+    char pad0[4];
+    f32 unk4;
+    char pad8[0x84 - 8];
+};
+
+void func_15087FEC(s32 arg0, s32 arg1) {
+    struct Struct15087FEC *p;
+    if (D_800872A0 == 0) {
+        return;
+    }
+    p = (struct Struct15087FEC *)(arg0 * sizeof(struct Struct15087FEC) + (s32)D_800872A0);
+    p->unk4 = (f32)arg1 * (1.0f / 256.0f);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508802C.s")
 

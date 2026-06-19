@@ -33,7 +33,13 @@ s32 func_1506A760(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506A968.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506AA08.s")
+s32 func_151B7144(s32, s32, s32);
+s32 func_151B6320(s32, s32, s32);
+
+s32 func_1506AA08(s32 arg0, s32 arg1) {
+    func_151B7144(arg0, 0xFF, 1);
+    return func_151B6320(arg0, 0xFF, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506AA48.s")
 

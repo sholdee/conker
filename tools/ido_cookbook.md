@@ -188,6 +188,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - `while (i--)` (implicit `!= 0`) blocks IDO's -O2 loop-unrolling that
   `for(...)` and `while(i != 0)` trigger; it also emits `move/beqz` on the raw
   value instead of an `sltu` boolean. Use it for simple countdown loops.
+- Linked-list search (walk `node = node->next` until a field matches, return node or
+  NULL): write the loop as a `do { ... } while (...)` ENTRY form so the top emits the
+  `beqzl`-likely with `move v0,zero` in its delay slot (the not-found default primed in
+  the likely slot). Inside, load `next = node->next` BEFORE the field comparison to
+  reproduce the `lw v0,nextoff(v1)`-then-compare instruction order, giving the bottom
+  `bnez v0,->loop` with `move v1,v0` (advance) in the delay slot. Write the compare
+  field-FIRST (`node->key == arg`, not `arg == node->key`) to land the correct `bne`
+  operand order. The entry-load-next-before-compare ordering is the load-bearing shape.
 - strlen / string-end finder (return pointer to the null terminator): write the
   ROTATED do-while `if (*p) { do { p++; } while (*p); }` to emit the bottom-test
   `bnel` loop with the load HOISTED to offset `1(base)` (the next char tested in the
@@ -780,6 +788,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Index-add operand order: `base[idx]` emits `addu index,base`, whereas byte
   arithmetic `(Struct*)((u8*)base + idx*size)` emits `addu base,index`. Use the
   byte form when the asm adds the base into the index register (not vice versa).
+- Scaled-index as the LEFT addu operand (and result register): when the asm computes
+  an element address as `addu dst,scaled_index,base` (the *scaled* index first, base
+  second, result in a fresh reg), write the access as explicit integer arithmetic with
+  the index term FIRST — `*(T*)(idx * sizeof(Struct) + (s32)base)`. The typed-pointer
+  index form `base[idx]` (or `((Struct*)base)[idx]`) puts the base-derived value as the
+  left operand and lands the result in the wrong register; leading with the scaled
+  `idx*sizeof` term forces it to be the first operand and steers the destination reg.
+  (Operand-order companion to the `base[idx]` vs `(u8*)base+idx*size` rule above.)
 - Fold the element-size scale INTO an odd-stride multiply chain: when the asm
   computes a BYTE offset directly (e.g. `812*idx` for a u16[] with element stride
   812 = 406*2) via a single sll/subu/addu chain folded into the table base, write

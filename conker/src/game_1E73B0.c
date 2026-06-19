@@ -134,7 +134,9 @@ void func_151BE6A0(struct210 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE6CC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE788.s")
+void func_151BE788(s32 arg0, s32 arg1, u8 arg2) {
+    func_15169850(arg1, arg2, arg0 + 0x180, arg0 + 0x184, arg0);
+}
 
 typedef struct {
     u8 pad0[0x10];

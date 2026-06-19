@@ -43,7 +43,17 @@ GameStruct_15039A54 *func_15039A54(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_1503A678.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_1503A7F0.s")
+extern u8 D_800C3FFA;
+extern void func_15036F34(void);
+extern void func_1503A678(void);
+
+void func_1503A7F0(void) {
+    s32 temp = D_800C3FFA;
+    D_800C3FFA = 0;
+    func_15036F34();
+    D_800C3FFA = temp;
+    func_1503A678();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_1503A830.s")
 

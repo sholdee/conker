@@ -90,7 +90,29 @@ s32 func_15033E00(s32 arg0, u8 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033E28.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033E84.s")
+struct S15033E84 {
+    u8 unk0;
+    u8 pad[0x53];
+    struct S15033E84 *unk54;
+};
+struct S15033E84 *func_15033E84(u8 *arg0) {
+    struct S15033E84 *var;
+    struct S15033E84 *next;
+    u8 key;
+
+    var = (struct S15033E84 *)D_800C3EE0;
+    if (var != 0) {
+        key = arg0[0x3B];
+        do {
+            next = var->unk54;
+            if (var->unk0 == key) {
+                return var;
+            }
+            var = next;
+        } while (next != 0);
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033EC4.s")
 
