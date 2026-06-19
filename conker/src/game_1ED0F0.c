@@ -56,7 +56,16 @@ void func_151C1628(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C1860.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C1940.s")
+s32 func_151C02E4(s32, s32, s32, s32 *);
+
+typedef struct {
+    s32 unk0;
+    s32 unk4[1];
+} Struct151C1940;
+
+s32 func_151C1940(s32 arg0, s32 arg1, Struct151C1940 *arg2) {
+    return func_151C02E4(arg0, arg1, arg2->unk0, arg2->unk4);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C196C.s")
 

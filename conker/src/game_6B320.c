@@ -42,7 +42,9 @@ void func_1503F0AC(void *arg0, s32 arg1) {
     func_1503EB78(arg0, 1.0f, 2.0f, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503F0D8.s")
+void func_1503F0D8(void *arg0, s32 arg1) {
+    func_1503EB78(arg0, 2.06f, 3.0f, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503F108.s")
 

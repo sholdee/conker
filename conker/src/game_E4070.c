@@ -27,7 +27,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B7560.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B765C.s")
+void func_150B76BC(s32, s32);
+
+void func_150B765C(void) {
+    func_150B76BC(0x3C, 1);
+    D_800D9890 = 3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B768C.s")
 

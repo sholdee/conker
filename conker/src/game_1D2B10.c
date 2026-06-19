@@ -32,7 +32,10 @@ void func_151A6B10(struct210 *arg0) {
     func_1513CA6C(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D2B10/func_151A6B3C.s")
+void func_151A6B3C(struct210 *arg0) {
+    func_151A6AB8(arg0);
+    func_1513CAA0(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D2B10/func_151A6B68.s")
 
