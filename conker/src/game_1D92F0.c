@@ -88,7 +88,19 @@ void func_151ACB94(s32 arg0, s32 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE0E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE264.s")
+extern f32 D_800A9294;
+
+void func_151AE264(u8 *arg0) {
+    f32 temp = *(f32 *)(arg0 + 0x3C) * D_800A9294;
+    u8 *v0 = *(u8 **)(*(s32 *)(arg0 + 0x31C) + 0x9C);
+    *(f32 *)(v0 + 0x4C) = temp;
+    *(s8 *)(v0 + 0x50) = *(u16 *)(arg0 + 0x76) >> 8;
+    *(s8 *)(v0 + 0x51) = *(u8 *)(*(s32 *)(arg0 + 0x31C) + 0xAE);
+    *(s16 *)(v0 + 0x52) = 0x14;
+    *(s32 *)(v0 + 0x44) = 0;
+    *(s8 *)(*(s32 *)(arg0 + 0x31C) + 0x98) = 0;
+    *(s32 *)(*(s32 *)(arg0 + 0x31C) + 0x9C) = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE2BC.s")
 

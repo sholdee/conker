@@ -31,7 +31,12 @@ s32 func_151C2E4C(GameStruct151C2E4C *a0, GameStruct151C2E4C *a1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C2E94.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C2EF0.s")
+s32 func_151D4DAC(s32, s32, s32, s32, s32, s32, void *, s32, s32);
+
+s32 func_151C2EF0(s32 a0, s32 a1, struct108 *a2, s32 a3, s32 arg4, s32 arg5) {
+    return func_151D4DAC(a0, a1, a3, arg4, arg5, *(s32 *)((u8 *)a2 + 0x1B4),
+                         (u8 *)a2 + 0x170, *((u8 *)a2 + 0xC), *((u8 *)a2 + 0x1));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C2F48.s")
 

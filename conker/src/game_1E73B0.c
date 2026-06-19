@@ -66,7 +66,35 @@ s32 func_151BD2BC(s32 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BD750.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BD79C.s")
+extern void func_1513170C(void);
+
+struct S151BD79C_sub {
+    s32 unk0;
+    u8 unk4;
+    u8 pad5[0xF];
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+};
+
+struct S151BD79C {
+    u8 pad0[0x4C];
+    f32 unk4C;
+    f32 unk50;
+    f32 unk54;
+    u8 padB0[0xB0 - 0x58];
+    struct S151BD79C_sub *unkB0;
+};
+
+void func_151BD79C(struct S151BD79C *arg0) {
+    struct S151BD79C_sub *v0 = arg0->unkB0;
+    if (v0->unk0 != 0 && v0->unk4 != 0xFF) {
+        arg0->unk4C = v0->unk14;
+        arg0->unk50 = v0->unk18;
+        arg0->unk54 = v0->unk1C;
+    }
+    func_1513170C();
+}
 
 void func_151BD7F4(s32 arg0) {
     s32 sp18[2];

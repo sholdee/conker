@@ -25,7 +25,19 @@ void func_151A8560(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D4E00/func_151A87F8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D4E00/func_151A8A20.s")
+extern void (*D_8008F964[])(u8 *, s32, u8);
+
+void func_151A8A20(u8 *arg0, s32 arg1, u8 arg2) {
+    s32 idx;
+
+    idx = arg0[0x5C];
+    if (idx >= 3) {
+        idx = 0;
+    }
+    if (D_8008F964[idx] != NULL) {
+        D_8008F964[idx](arg0, arg1, arg2);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D4E00/func_151A8A78.s")
 
