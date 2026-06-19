@@ -21,7 +21,13 @@ void func_151942E8(s32 arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194408.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194588.s")
+extern void func_150C7020(s32, s32, s32, s32);
+extern void func_15194408(s32, s32);
+
+void func_15194588(s32 arg0, s32 arg1, s32 arg2) {
+    func_150C7020(arg0, 0x1F4, 0xFF, 1);
+    func_15194408(arg0, arg1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_151945CC.s")
 

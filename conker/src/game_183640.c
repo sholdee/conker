@@ -41,7 +41,16 @@ void func_15156FE4(struct102 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_151571C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157248.s")
+extern void func_151571C4(void *);
+extern void func_1518CA04(void *);
+extern void func_1503F7B8(void *);
+
+void func_15157248(u8 *arg0) {
+    func_151571C4(arg0);
+    func_1518CA04(*(void **)(arg0 + 0x18));
+    func_1503F7B8(*(void **)(arg0 + 0x68));
+    func_15169804(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_1515728C.s")
 

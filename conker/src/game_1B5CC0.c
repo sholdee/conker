@@ -7,7 +7,25 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B5CC0/func_1518894C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B5CC0/func_15188A58.s")
+typedef struct Node15188A58 {
+    char pad0[12];
+    struct Node15188A58 *unkC;
+} Node15188A58;
+
+void func_15188A58(Node15188A58 *arg0, Node15188A58 **arg1) {
+    Node15188A58 *node;
+
+    arg0->unkC = 0;
+    if (*arg1 != 0) {
+        node = *arg1;
+        while (node->unkC != 0) {
+            node = node->unkC;
+        }
+        node->unkC = arg0;
+    } else {
+        *arg1 = arg0;
+    }
+}
 
 typedef struct Node15188A9C {
     char pad0[6];

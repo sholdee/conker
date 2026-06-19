@@ -399,6 +399,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Store each call's result in its OWN dedicated f32 local (not a reused temp) to
   pin the later operand order (`argN*result` -> f2,f0) and the load order of those
   results into the following expression.
+- `x - x*y` float store-back where x is the SAME field being written: when the asm
+  wants the field value (x, loaded once into f0) as the FIRST mul operand, the factor
+  y in an INLINE temporary register (e.g. f4, NOT a named local's f2), and the
+  subtraction result in a FRESH register (f8) — write the MINUEND through a named local
+  holding x but RE-READ x from MEMORY inside the product: `*p = temp - y * *(f32*)&x;`
+  (where `temp = x`). IDO CSE-collapses the re-read back to f0, keeps y as an inline f4
+  temporary, and lands the result in fresh f8 (`mul.s f6,f0,f4; sub.s f8,f0,f6`).
+  Either inline operand order (`temp - temp*y`) emits the factor first (`mul.s f4,f0`,
+  reg diff); making y a NAMED local forces it into f2 and shifts every later FP reg by
+  one; `-=`/reassigning temp reuses temp's f0 for the result instead of f8. The
+  asymmetry — local for the minuend, memory re-read inside the product — is the
+  load-bearing trick.
 - Force REUSE of a product across two consumers (don't recompute): when a
   field*global product feeds two operations (e.g. two adds), bind it to a shared
   `f32 prod` local and use `prod` in both. Writing the two consumers as separate
@@ -1022,6 +1034,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   where buf[16] would give the wrong frame size) to land the right frame/offset.
 
 ## Diagnosing a FALSE non-zero score
+- Asm-differ over-reads PAST `jr ra` into neighbors: a bare `iter_match.sh`/`-o`
+  object diff can report a huge score (tens of thousands) on a byte-perfect SHORT
+  function because the differ reads PAST the function's own `jr ra` boundary into
+  the adjacent (still un-decompiled) functions and counts THOSE instructions as
+  diffs. Re-run `diff.py -o func -s` (the `-s`/stop-at-ret flag halts at the
+  function's return): a clean CURRENT (0) with no diff markers confirms a match.
+  Cross-check with a raw byte compare of the function's own object range (start to
+  its symbol size, e.g. 0x44, from `nm`/symbol-size) between build and expected
+  objects — "raw diff bytes: []" (including the `jal` relocation, matching symbol
+  sizes) confirms byte-identical. The inflated number is a boundary over-read
+  artifact, not a real instruction diff. (Distinct from the neighbor-GLOBAL_ASM and
+  rodata-split artifacts below — here the differ reads past THIS function's ret.)
 - Jump-table rodata-ref FALSE score: when a switch matches byte-for-byte but the
   scorer still reports a non-zero score, check whether the diff is ONLY the
   compiler-jtbl rodata references — IDO emits the jump table as an anonymous LOCAL
