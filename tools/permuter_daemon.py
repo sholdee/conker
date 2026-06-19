@@ -73,8 +73,12 @@ def import_new():
     print(f"import_new: {n} new near-misses imported")
 
 def run(seconds):
-    dirs = [d for d in sorted(glob.glob(os.path.join(NM_DIR, "func_*")))
-            if not cracked(os.path.basename(d))]
+    # newest imports first, skip cracked + no-port — so fresh high-value
+    # near-misses get the slots, not the never-cracking old hard cases.
+    dirs = sorted(
+        [d for d in glob.glob(os.path.join(NM_DIR, "func_*"))
+         if not cracked(os.path.basename(d)) and not os.path.exists(os.path.join(d, ".noport"))],
+        key=os.path.getmtime, reverse=True)
     launched = 0
     for d in dirs[:MAX_PARALLEL]:
         func = os.path.basename(d)
