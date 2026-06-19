@@ -55,7 +55,12 @@ f32 func_151065EC(f32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15106E78.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15106EF8.s")
+void func_15106E78(struct102 *arg0);
+
+void func_15106EF8(struct102 *arg0) {
+    func_15106E78(arg0);
+    func_15169804(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15106F24.s")
 

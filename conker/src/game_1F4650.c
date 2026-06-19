@@ -77,7 +77,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CC1D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CC290.s")
+extern void func_1515572C(void *, s32);
+
+void func_151CC290(s32 arg0) {
+    s32 sp1C;
+
+    sp1C = arg0;
+    func_1515572C(&sp1C, 0x46);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CC2BC.s")
 

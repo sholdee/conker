@@ -145,7 +145,9 @@ void func_1514E9FC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514EA1C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514EB6C.s")
+void func_1514EB6C(void) {
+    func_1514E89C();
+}
 
 s32 func_1514EB8C(s32 arg0, s32 arg1, s32 arg2) {
     return 1;

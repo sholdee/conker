@@ -35,7 +35,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D4DAC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D5148.s")
+void func_151D5148(void *arg0) {
+    s16 *p = *(s16 **)((u8 *)arg0 + 0x31C);
+    if (p[0x24 / 2] > 0) {
+        p[0x24 / 2]--;
+        p = *(s16 **)((u8 *)arg0 + 0x31C);
+    }
+    p[0x1AA / 2]++;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D5174.s")
 

@@ -51,7 +51,9 @@ s32 func_15185D5C(f32 *arg0) {
     return arg0[1] <= 0.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B1600/func_15185D84.s")
+s32 func_15185D84(f32 *arg0) {
+    return arg0[0] > 0.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B1600/func_15185DAC.s")
 

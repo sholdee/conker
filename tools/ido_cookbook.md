@@ -102,6 +102,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `if(cond) return 1; return 0;` variant emits the plain `bc1f` but DUPLICATES the
   `jr ra` epilogue. Only the bare comparison-return gives the non-likely branch with a
   single shared epilogue — use it when the asm tests once and falls through to one `jr ra`.
+- Float-vs-ZERO compare with the zero as the FIRST FPU operand: a strict `> 0.0f`
+  test (`return x > 0.0f;`) compiles to `c.lt.s fZero,fX` with the materialized 0.0
+  in the LEFT register (i.e. IDO rewrites `x > 0` as `0 < x`). Write the source as
+  `x > 0.0f` (not `0.0f < x`) and it reproduces the zero-on-the-left `c.lt.s`; the
+  mirrored sibling `x <= 0.0f` test instead emits `c.le.s fX,fZero` (zero on the
+  RIGHT). Pick the strict/non-strict and `>`/`<=` form to match which operand the
+  asm loads the zero into. (Operand-order analog of the two-value boolean-return rule.)
 - Read-and-clear flag (return current value, then zero it): write
   `ret = 1; if (field == 0) ret = 0; field = 0; return ret;` (prime the nonzero
   result, demote to 0 on the zero test) — NOT the symmetric `if(field){ret=1;}
@@ -936,6 +943,16 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   after the entry branch), rather than an eager pre-branch init. (Block-scope
   declaration controls WHERE the initializer is scheduled, not just the field-
   address computation.)
+- Decrement-a-field-if-positive: the guarded `if (p->field > 0) p->field--;` on a
+  SIGNED field emits the `> 0` test as a `blez ...,->skip` (branch-on-`<=0`-to-skip)
+  — the signed `> 0` field guard maps to `blez`, not `bltz`/`bgtz`. Write the literal
+  `> 0` (not `>= 1` or `!= 0`) to get the `blez`.
+- Reload a struct-loaded pointer after writing THROUGH it: when a pointer is loaded
+  from a struct/global into a register and then a field is written through it, IDO
+  RE-LOADS that pointer (`lw vN,off(base)`) before the next access through it (it
+  can't prove the store didn't alias the pointer's source). Reading the field via a
+  raw `*(s16*)((u8*)p + off)` byte-cast (when the struct layout isn't exposed)
+  reproduces this reload-after-store; don't try to cache the pointer once.
 
 ## When to BAIL (don't burn iterations)
 - IDO canonicalizes an EQUALITY compare to put the LOCALLY-LOADED operand FIRST in
