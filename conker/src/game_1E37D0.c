@@ -31,7 +31,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E37D0/func_151B8318.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E37D0/func_151B8370.s")
+void func_151B8370(void *arg0) {
+    s32 v0 = *(s32 *)((u8 *)arg0 + 0x98);
+    struct102 *v = *(struct102 **)v0;
+    if (v != 0) {
+        func_1516972C(v);
+    }
+}
 
 extern void func_151B8370(void *);
 extern void func_151478F4(void *);

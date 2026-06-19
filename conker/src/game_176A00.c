@@ -80,7 +80,11 @@ s32 func_1514C258(void *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514C288.s")
+s32 func_1514C288(void *arg0) {
+    func_1514BF9C(arg0);
+    func_1514BF50(arg0);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514C2B8.s")
 

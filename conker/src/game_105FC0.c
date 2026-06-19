@@ -25,7 +25,12 @@ void func_150D8B10(f32 *a0, f32 *a1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150D9C7C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150DA484.s")
+void func_150DA484(void *arg0) {
+    u16 *temp = (u16 *)*(u32 *)((u8 *)arg0 + 0x98);
+    if (temp[0x18] != 0) {
+        func_100111C8(temp[0x18]);
+    }
+}
 
 void func_150DA484(void *);
 void func_151478F4(void *);

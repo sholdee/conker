@@ -85,7 +85,9 @@ s32 func_1515F2B8(struct127 *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515FB70.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515FB94.s")
+s32 func_1515FB94(struct127 *arg0, s32 arg1) {
+    return func_1505D024(arg0, 0x6002D, arg0->unk7A, -1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515FBC4.s")
 

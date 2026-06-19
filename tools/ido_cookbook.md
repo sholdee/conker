@@ -699,6 +699,16 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   read `v1 = *p`, accessing the pointer's other fields via casts of `p`. Declaring
   the deref value first reverses the two register assignments — IDO allocates in the
   order the locals are computed.
+- Pointer-field-into-v0 via a NAMED local: when a pointer loaded from a struct field
+  (`arg->unk98`) must land in v0 for the intermediate load (`lw v0,off(arg)`), bind it
+  to a NAMED local and dereference THROUGH it (`s32 *p = arg->unk98; ... = *p;`), NOT
+  an inline cast-deref (`*(s32*)arg->unk98`). The inline form makes IDO allocate the
+  intermediate pointer to a t-register (e.g. t6); the named local pins it to v0. (More
+  general than the switch-base-into-v0 rule: applies to any plain field-pointer deref,
+  no switch/constant-return needed.) The named local's WIDTH further steers the reg: a
+  `u16 *` local can claim v0 where a `u32`/`s32` temp claimed a t-register — when only
+  this load's register differs, also try narrowing the pointer local to the field's
+  true element width (and convert byte offsets to element units, e.g. 0x30 -> [0x18]).
 - Source-ASSIGNMENT order wins over asm LOAD order for v0/v1 coloring: when two
   fields (e.g. a pointer at one offset and a scalar at another) are both loaded for a
   compare/store-back, IDO colors them by the order their LOCALS are first assigned in

@@ -31,7 +31,16 @@ void func_1519CFA0(struct s_1519CFA0 *arg0) {
     temp[6] |= 4;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519CFD0.s")
+extern void func_1514EDF0(struct260 *, s32);
+extern void func_151478F4(struct s_1519CFA0 *);
+
+void func_1519CFD0(struct s_1519CFA0 *arg0) {
+    s32 *temp;
+
+    temp = (s32 *)arg0->unk98;
+    func_1514EDF0((struct260 *)arg0, *temp);
+    func_151478F4(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519D000.s")
 
