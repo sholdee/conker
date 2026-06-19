@@ -40,6 +40,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Unsigned-int-to-float: a `(u32)` cast on the integer source reproduces the
   unsigned conversion idiom (`bgez`, `lui 0x4F800000`, `add.s` 2^32 correction),
   even when the value is loaded via `lbu`. A signed cast omits the correction.
+- Always-false low-byte sign test: when the asm tests a byte value with `andi
+  reg,0xFF; bgez` (an unsigned masked value compared `< 0`, always false), write
+  the condition as `(v & 0xFF) < 0`. A `(s8)v` cast instead emits a sign-extend
+  `sll/sra` pair and a real signed branch; the `& 0xFF` form keeps the masked
+  unsigned value with the (vacuous) `bgez`.
 
 ## Return values
 - A value still live in v0 (int) or f0 (float) at `jr ra` usually means the
@@ -150,6 +155,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   operand.
 - Group related locals into ONE local struct to keep a store live; separate
   scalar locals get DCE'd while a struct member used later survives.
+- Defeat DCE of intermediate read-modify-write byte stores to the SAME address
+  (e.g. `*p |= 0x80; *p &= 0xBF;` before a final write that overwrites them): IDO
+  -O2 drops the dead intermediate stores. Casting the lvalue through `(volatile
+  u8*)` keeps every `sb` instruction. Combine with pre-computing the FINAL value
+  into a local BEFORE an intervening (also-volatile) store, so the intervening
+  store lands at the exact target slot instead of cascading the instruction order.
 - Defeat DCE of all-but-last stores to a PLAIN global: IDO -O2 drops every store
   but the last to a bare global. Make each store "observed" by having the NEXT
   statement READ the global back (e.g. `arr[i] = D_glob;` after `D_glob = ...`);
