@@ -3,7 +3,15 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515D440.s")
+s32 *allocate_memory(s32, s32, s32, s32);
+
+s32 *func_1515D440(void) {
+    s32 *temp;
+
+    temp = allocate_memory(0x10, 1, 2, 0);
+    bzero(temp, 0x10);
+    return temp;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515D480.s")
 

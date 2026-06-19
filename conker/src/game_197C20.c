@@ -3,7 +3,18 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_197C20/func_1516A770.s")
+s32 func_1516A770(u8 *arg0) {
+    s32 count = 1;
+
+    while (*arg0 != 0) {
+        if (*arg0 == 0xBD) {
+            *arg0 = 0;
+            count++;
+        }
+        arg0++;
+    }
+    return count;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_197C20/func_1516A7B0.s")
 

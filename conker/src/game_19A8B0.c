@@ -47,7 +47,13 @@ void func_1516F94C(s32 arg0, s32 arg1) {
     func_1516F91C(arg0, arg1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516F984.s")
+void func_1516F984(s32 arg0, s32 arg1) {
+    s32 temp;
+    func_1516F94C(arg0, arg1);
+    temp = *(s16*)(arg0 + 0x18);
+    temp = temp * arg1;
+    *(s16*)(arg0 + 0x18) = temp >> 8;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516F9C4.s")
 

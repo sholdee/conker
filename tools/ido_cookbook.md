@@ -228,6 +228,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   Both `if(p){...} return p;` and `if(!p) return NULL; ...return p;` force IDO to
   insert a redundant phi-resolution `move v1,v0`/`move v0,v1` pair (large score).
   This extends the "fall off returning v0" idiom to a legitimate pointer return.
+- Alloc-then-CLEAR-then-return (`p = alloc(N); bzero(p, N); return p;`): UNLIKE the
+  fall-through alloc-and-init rule above, when an intervening call (e.g. `bzero`/
+  `memset`) clobbers v0 between the allocation and the return, IDO SPILLS the alloc
+  result to a stack slot across that call (`sw v0,off(sp)` before the `jal`, `lw
+  v0,off(sp)` after) and you MUST write the explicit trailing `return p;`. Omitting
+  it (relying on v0 fall-through) is wrong here because the clearing call destroys v0;
+  the spill+reload+explicit-return is the expected shape. Pick fall-through only when
+  NOTHING clobbers v0 between the alloc and the return.
 - A second call whose RETURN VALUE is discarded but whose DELAY SLOT does work (e.g.
   a store) needs an explicit bare `func();` statement at that point in the source;
   dropping the call because "the value is unused" deletes the delay-slot work too.

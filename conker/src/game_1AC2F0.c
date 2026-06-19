@@ -29,7 +29,11 @@ s32 func_1517F40C(s32 arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F448.s")
+void func_1517F448(s32 arg0) {
+    if ((&D_800DDDB0)[arg0] != (&D_800DDE28)[arg0]) {
+        (&D_800DDDB0)[arg0] += D_800BE9E4;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F488.s")
 

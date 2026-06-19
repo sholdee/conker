@@ -53,4 +53,22 @@ void func_151895CC(s32 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B5CC0/func_151897A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B5CC0/func_151898C0.s")
+typedef struct Node151898C0 {
+    char pad0[12];
+    struct Node151898C0 *unkC;
+    s32 unk10;
+    s32 unk14;
+} Node151898C0;
+
+void func_151898C0(s32 arg0, s32 arg1) {
+    Node151898C0 *node;
+
+    node = (Node151898C0 *)D_800DF7C8[0];
+    while (node != 0) {
+        if (arg0 == node->unk10) {
+            node->unk14 = arg1;
+            return;
+        }
+        node = node->unkC;
+    }
+}
