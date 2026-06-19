@@ -347,6 +347,28 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   Placing the zero/constant store earlier materializes the value early and perturbs
   the surrounding f-register allocation; emitting it last lets IDO build it lazily
   and lands the other constants in the target's registers.
+- Constant-bound for-loop to trigger IDO's unroll-by-4 with NO trip guard: write
+  `for (i = 0; i < N; i++)` with a literal `N` to get the auto-unrolled body and
+  NO `divu`/remainder guard. ANY pointer-bound form (`p != end`, a named end local,
+  or `&arr[N]`) either injects a `divu` trip-count guard or fails to unroll; a
+  `p < end` form also fails to unroll. Use the literal-count index loop when the
+  target unrolls cleanly with no remainder check.
+- A cluster of HIGH-offset fields accessed through an explicit base pointer
+  (`addiu vN,base,K` then small offsets off vN) wants a SEPARATE cast pointer at
+  +K (`struct Bar *p = (struct Bar*)((u8*)arg + K)`) read with LOW offsets, while
+  LOW-offset fields use the `arg` base directly (`arg->field`). This reproduces the
+  base-pointer home (e.g. a `vN` save across calls / a larger frame) that a flat
+  `arg->highfield` (one base + big offsets) does not.
+- Same-global first-use-folds-then-later-splits: when a global is read once as a
+  direct `%lo` load but LATER reads load its address into a register and deref `[0]`
+  (`lw reg,%lo(sym); lwc1 0(reg)`), write the FIRST use as `D_xxxx` and the later
+  uses as `(&D_xxxx)[0]`. The `&sym[0]` form forces the load-address-then-deref pair
+  for the later occurrences while the first stays a folded `%lo`.
+- A branch-LIKELY over a float compare (`c.le.s` + `bc1fl`) naturally emits a
+  DUPLICATED store (e.g. `sb zero` once in the delay slot, once unreachable on the
+  fall-through) when written as a plain `if/else` whose both arms store the same
+  zero/value. Don't hand-dedupe or restructure — the if/else over the likely branch
+  produces the duplicate for free.
 - Reverse-engineer the TYPES/SIZES of stack-arg locals (and thus the frame size and
   each local's offset) from the CALLEE's asm store widths: a `sh` at the arg pointer
   means `s16[]`, `swc1` means `f32[]`, `sb`/`sw` give `u8`/`s32`. Sizing a local array
