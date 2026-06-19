@@ -35,6 +35,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `((T*)q)[-1]`, `q-N`) folds the K into a fresh `lui;addiu %lo(D_xxxx+K)` instead of
   reusing the zero-store register. Unsteerable from C when the init is unrolled; the
   sibling that fuses has a real loop, not an artifact you can reproduce — bail.
+- Single- vs double-precision from the LITERAL TYPE: a float operation against a
+  bare decimal literal (e.g. `x * 3.64`) promotes to DOUBLE (`cvt.d.w`/`mul.d`/
+  `trunc.w.d`); writing the literal with an `f` suffix (`3.64f`) keeps it single
+  (`mul.s`). Use the `f`-suffixed literal when the asm stays single-precision.
 - Dividing a float by an INT literal (`x/2`) preserves a real `div.s` by 2.0;
   using a FLOAT literal (`x/2.0f`) makes IDO -O2 strength-reduce to `mul.s` by the
   reciprocal (0.5). Pick the literal form that matches the asm's div vs mul.
@@ -232,6 +236,16 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   varargs homes ALL arg regs with a larger frame.
 - To reproduce a param HOMED to the stack and reloaded on every use, take its
   address into a local (`s32 **pp = &arg0;`) and read through `**pp` each time.
+- A `void*` param CAST INLINE at each use (vs a typed param or a single cached
+  typed local) makes IDO SPILL the param to its stack home and RELOAD it at every
+  use (`sw aN,off(sp)` once, then `lw tM,off(sp)` per access). A typed param or one
+  cached local pointer instead keeps it in a SAVED register (sN), shrinking the
+  frame. Keep the param `void*` and cast at each use when the asm spills+reloads it;
+  this also keeps the def consistent with an existing `void*` forward decl/callers.
+- A u8 param the target spills-then-NARROWS BEFORE saving ra (`sw a2,off(sp); andi
+  tN,a2,0xff; move a2,tN` ahead of `sw ra`) wants the param TYPED `u8` (not `s32`):
+  the spill-then-mask-before-prologue ordering is exactly IDO's u8-param codegen. An
+  s32 param emits the andi/move in a different order with a different base register.
 - To home ALL incoming register args (`sw a0,0(sp)`/`a1,4`/`a2,8`/`a3,0xc`) to the
   standard caller arg-save slots WITHOUT allocating a stack frame (a trivial body
   that just spills its args), take the address of the FIRST param

@@ -31,4 +31,15 @@ s32 func_150BED28(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EBE60/func_150BED4C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_EBE60/func_150BEEB0.s")
+void func_150BEEB0(struct108 *arg0) {
+    if (func_1509BE40(1, 0x4063, 6, 0x2000) || func_1509BE40(1, 0x4001, 6, 0x9000)) {
+        arg0->unk84 |= 0x1010;
+    } else {
+        arg0->unk84 &= ~0x1010;
+    }
+    if (func_1509BE40(1, 0x4069, 6, 0x2000)) {
+        arg0->unk84 |= 0x1000000;
+    } else {
+        arg0->unk84 &= ~0x1000000;
+    }
+}
