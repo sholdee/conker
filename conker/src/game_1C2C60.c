@@ -90,7 +90,15 @@ void func_15198C60(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15198C90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15198D40.s")
+void func_15198D40(s8 *arg0) {
+    u8 *temp = *(u8 **)(arg0 + 0x98);
+    if (arg0[0x2C] != 0) {
+        u16 val = *(u16 *)(temp + 0x66);
+        if (val != 0) {
+            func_100111C8(val);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15198D7C.s")
 

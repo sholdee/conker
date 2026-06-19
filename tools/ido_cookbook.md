@@ -1078,6 +1078,20 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   can't prove the store didn't alias the pointer's source). Reading the field via a
   raw `*(s16*)((u8*)p + off)` byte-cast (when the struct layout isn't exposed)
   reproduces this reload-after-store; don't try to cache the pointer once.
+- Chained assignment to order two same-RHS stores: when the asm stores ONE computed
+  value to TWO destinations and the rightmost-addressed destination's `%lo`/`addiu`
+  is set up FIRST, write it as a single chained assignment `DST_B = DST_A = expr;`.
+  IDO evaluates the chain right-to-left, so the INNER (rightmost) lvalue `DST_A` gets
+  its store address materialized before `DST_B`. Two separate statements (`DST_A =
+  expr; DST_B = expr;`) recompute/reload or reverse the address-setup order. Use the
+  chained form when the asm shows the rightmost target's address built first.
+- `&&` short-circuit nested-if => stacked branch-LIKELY (`beql`) tests: a source
+  `if (a && b) { ... }` (or the equivalent nested `if (a) if (b)`) compiles to TWO
+  `beql` branch-likely instructions, one per short-circuited operand. When the
+  function's tail is a shared epilogue, the `ra`-restore (`lw ra,off(sp)`) commonly
+  lands in those `beql` delay slots (executed only when the branch falls through to
+  the epilogue). Write the test as `&&`/nested-if when the asm shows the per-operand
+  twin `beql`s with the ra-reload sunk into their delay slots.
 
 ## When to BAIL (don't burn iterations)
 - IDO canonicalizes an EQUALITY compare to put the LOCALLY-LOADED operand FIRST in

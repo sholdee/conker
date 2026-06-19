@@ -11,7 +11,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502C1A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502C380.s")
+extern s32 D_800C3E88;
+extern s32 D_800C3E8C;
+extern u16 D_800C3E7A;
+
+void func_1502C380(void) {
+    D_800C3E8C = D_800C3E88 = (&D_800C3E80)[D_800BE9C0];
+    D_800C3E7A = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502C3BC.s")
 

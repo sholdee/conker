@@ -37,7 +37,20 @@ s32 func_1517F40C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F564.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F720.s")
+extern u8 D_800DDD88;
+extern u8 D_800DDD89;
+extern u8 D_800DDD8A;
+extern u8 D_800DDD8B;
+extern u8 D_800DDD8C;
+
+void func_1517F720(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    D_800DDE08 = arg1;
+    D_800DDD88 = arg2;
+    D_800DDD89 = 0;
+    D_800DDD8A = arg0;
+    D_800DDD8B = arg3;
+    D_800DDD8C = arg4;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F75C.s")
 

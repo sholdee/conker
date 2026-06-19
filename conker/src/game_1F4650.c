@@ -77,7 +77,16 @@ s32 func_151C9B30(void *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C9B64.s")
+s32 func_151C9B64(void *arg0, u8 *arg1) {
+    s32 temp = *(s32 *)((s32)arg0 + 0x188);
+    if (*(u8 *)(temp + 0x6F) == 0) {
+        *arg1 = 1;
+    } else {
+        *(s32 *)((s32)arg0 + 0x58) &= ~0x2;
+        *arg1 = 0;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C9BA0.s")
 
