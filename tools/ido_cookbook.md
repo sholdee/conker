@@ -640,6 +640,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   counts as a use that pins/homes the arg under -g3. Declare the param at its true
   narrow signed width and forward it as-is; the home + re-sign pair is expected, not
   a sign you over-narrowed. (Mirror a re-signing sibling forwarder for the layout.)
+- Unsigned analog: a thin forwarder passing a `u16`/`u8` param UNCHANGED to a callee
+  typed for that narrow width emits the entry-narrowing MASK (`andi reg,0xFFFF` /
+  `andi reg,0xFF`) plus the -g3 home store (`sw aN,off(sp)`). Declare the param `u16`/
+  `u8` (not `s32`) to reproduce the mask exactly; an `s32` param omits it. This is the
+  forwarder counterpart of the narrow-return / narrow-param entry-mask rules.
 - Thin wrapper forwarding `arg0 + CONST` to a single call: writing `f(arg0 + K);`
   emits IDO's `or a1,a0,zero; addiu a0,a1,K` (copy the live param into a scratch
   reg, then form `arg0+K` in/around the jal delay slot). This is the standard

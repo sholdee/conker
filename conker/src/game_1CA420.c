@@ -31,7 +31,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E61C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E65C.s")
+extern void func_1519CF70(s32);
+
+void func_1519E65C(s32 arg0) {
+    func_1519CF70(3);
+    func_1519CF70(4);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E688.s")
 

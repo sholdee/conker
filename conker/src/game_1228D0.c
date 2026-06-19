@@ -59,7 +59,10 @@ void func_150F6400(u8 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F6420.s")
+void func_150F6420(u8 *arg0) {
+    func_150F6400(arg0);
+    func_1513CA6C((struct210 *)arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F644C.s")
 

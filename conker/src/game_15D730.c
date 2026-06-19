@@ -7,7 +7,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15130374.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_151303BC.s")
+void func_15130374(s32 a0, u8 a1, s32 a2, u8 a3, s32 a4);
+
+void func_151303BC(s32 a0, u8 a1, s32 a2) {
+    func_15130374(a0, a1, a2, 0xFF, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_151303EC.s")
 
