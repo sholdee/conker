@@ -41,7 +41,12 @@ void func_151C15FC(void *arg0) {
     func_15132570(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C1628.s")
+void func_1513259C(void *);
+
+void func_151C1628(void *arg0) {
+    func_151C1570(arg0);
+    func_1513259C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C1654.s")
 

@@ -46,7 +46,12 @@ void func_1519E65C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E818.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E8CC.s")
+extern void func_1514EDF0(struct260 *, s32);
+
+void func_1519E8CC(struct260 *arg0) {
+    func_1514EDF0(arg0, *(s32 *)((u8 *)arg0 + 0x28));
+    func_1514933C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E8F8.s")
 

@@ -629,6 +629,17 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   in a0 across its own clobber, so the home + per-call reload is the expected shape,
   not a sign of over-forwarding. Just forward the same arg to both calls; don't try
   to suppress the home or cache it in a saved register.
+- A wrapper that passes its incoming pointer arg0 STRAIGHT THROUGH as the callee's
+  arg0 (a0 never re-set before the single `jal`) AVOIDS the a0 stack-spill entirely:
+  IDO keeps the live param in a0 across the call setup, so there is no `sw a0,off(sp)`
+  /reload (contrast the sequential-two-call shape above, where the first call's
+  clobber forces the home). Pass arg0 as-is when the asm has no a0 home.
+- A 5th (stack) argument FORCES a frame + the standard stack-arg slot at sp+0x10:
+  a single-call wrapper that supplies a 5th callee arg (the first arg beyond a0-a3)
+  emits a 0x20 frame and stores that arg to sp+0x10 (e.g. a `swc1 fN,0x10(sp)` for an
+  f32 5th arg) regardless of the arg's type. A 4-or-fewer-arg call stays frameless.
+  Count the callee args from the asm's stack store at sp+0x10 (and 0x14/0x18... for
+  the 6th/7th) to fix a wrong frame size / missing stack-slot store.
 - Zero-a-buffer wrapper: a function whose body is a single `jal bzero`/`jal memset`
   clearing N bytes of a fixed global/buffer is `bzero(&D_xxxx, N);` (or
   `memset(&D_xxxx, 0, N)` if the asm passes a 0 middle arg). Declare the global as a
