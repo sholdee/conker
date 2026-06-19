@@ -15,7 +15,7 @@ void func_151D73A8(s32 *arg0, s32 arg1, u8 arg2) {
     }
 }
 
-void func_151D77C8(void);
+void func_151D77C8();
 
 void func_151D7404(void) {
     func_151D77C8();
@@ -69,7 +69,20 @@ s32 func_151D7770(s32 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D779C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D77C8.s")
+void func_151D77C8(s32 *arg0) {
+    s32 **p = (s32 **)((u8 *)arg0 + 0x28);
+
+    if (*p != 0) {
+        s32 *v1 = (s32 *)(*p)[0x98 / 4];
+        *(u8 *)((u8 *)*p + 0x30) = 0;
+        *(u16 *)((u8 *)*p + 0x1E) &= ~2;
+        *(u16 *)((u8 *)*p + 0x1E) |= 8;
+        *(u16 *)((u8 *)*p + 0x1E) |= 1;
+        *(u16 *)((u8 *)*p + 0x1C) = 0x14;
+        *v1 = 0;
+        *p = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D7830.s")
 

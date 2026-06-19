@@ -221,7 +221,37 @@ void func_151D13B4(struct260 *arg0) {
     func_15149368(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D13E0.s")
+struct Obj151D13E0 {
+    char pad0[0x1C];
+    s16 unk1C;
+    u16 unk1E;
+    char pad20[0x10];
+    u8 unk30;
+    char pad31[0x67];
+    s32 *unk98;
+};
+
+struct Slot151D13E0 {
+    char pad0[0x8];
+    struct Obj151D13E0 *unk8;
+};
+
+void func_151D13E0(struct260 *arg0) {
+    struct Slot151D13E0 *slot = (struct Slot151D13E0 *)((char *)arg0 + 0x28);
+    struct Obj151D13E0 *obj;
+    s32 *p;
+
+    if (slot->unk8 != 0) {
+        p = slot->unk8->unk98;
+        slot->unk8->unk30 = 0;
+        slot->unk8->unk1E &= ~0x2;
+        slot->unk8->unk1E |= 0x8;
+        slot->unk8->unk1E |= 0x1;
+        slot->unk8->unk1C = 0x28;
+        *p = 0;
+        slot->unk8 = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D1448.s")
 

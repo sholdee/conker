@@ -55,7 +55,14 @@ s32 func_1518E66C(void *arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518E6D4.s")
+extern u8 D_800A749C[];
+
+s32 func_1518E6D4(void *arg0) {
+    func_1518D1C0(*(s32 *)((char *)arg0 + 0x18), 4, 0, 0, *(u8 *)((char *)arg0 + 0xC), *(u8 *)((char *)arg0 + 1), D_800A749C);
+    *(s16 *)((char *)arg0 + 0x1E) = 0x80;
+    *(s8 *)((char *)arg0 + 0x21) = -1;
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518E73C.s")
 

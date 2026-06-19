@@ -197,7 +197,24 @@ void func_151E7E9C(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E7EF8.s")
+extern void func_151DDC20(void);
+
+void func_151E7EF8(void) {
+    s32 *p;
+    s32 *end;
+    s32 sum;
+
+    func_151E7E9C();
+    sum = 0;
+    p = (s32 *)func_151DDC20;
+    end = (s32 *)func_151DE7D4;
+    for (; p < end; p++) {
+        sum += *p;
+    }
+    if (sum != (s32)0xBFC924E3) {
+        *(s32 *)osSpTaskLoad = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E7F60.s")
 

@@ -264,6 +264,7 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   + `jalr`. (See BAIL on case-pointer delay-slot hoisting.)
 - Counted loop bounded by an ADJACENT distinct end-symbol: `for(i=0;i<N;i++)` synthesizes a WRONG `%lo(D_A+N*stride)` bound reloc, and a pointer-compare `p != &D_B[0]` makes IDO 4x-unroll. Winning shape: a counted `do-while` naming BOTH externs as locals - body reads `D_A[i+k]`, condition `&D_B[0] != &D_A[i]` (uses `D_B` directly as the bound reloc, non-unrolled `bnel`); condition operand order sets the `bnel` rs/rt.
 - Assignment-in-for-condition sentinel: `for (i=0; (v = arr[i+off]) != 0; i++)` keeps the sentinel load IN the test (one `lw`+`beqz`), vs pre-loading into a separate local which adds an assignment/register. [banjo-mined]
+- Loop spanning two ADDRESS-CONSTANT endpoints (e.g. summing words over a `[D_START,D_END)` code/data range as `T*`): bind BOTH the start and end pointers to separate locals BEFORE the loop (`p = (T*)D_START; e = (T*)D_END;`) so IDO materializes both `%hi`s first then both `addiu`s in declaration order. Inlining a bound in the for-condition (`p < (T*)D_END`) SWAPS the two lui/addiu pairs.
 
 ## Type & access width (loads, stores, casts)
 - abs/trunc intrinsics: `fabsf` emits `abs.s`; `(s32)` on a float emits `trunc.w.s`;

@@ -105,7 +105,16 @@ void func_150221E8(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_150226BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15022754.s")
+extern u8 D_800C363A[];
+extern void func_150226BC(s32, s32);
+
+void func_15022754(s32 arg0) {
+    s32 i;
+
+    for (i = 0; i < D_800C363A[arg0]; i++) {
+        func_150226BC(i, arg0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_150227BC.s")
 
