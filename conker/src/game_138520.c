@@ -7,7 +7,15 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_138520/func_1510B128.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_138520/func_1510B32C.s")
+void func_1510B128(s32, f32, f32, f32, f32);
+
+void func_1510B32C(s32 arg0, f32 arg1, f32 arg2, f32 arg3) {
+    func_1510B128(arg0, arg1, arg2, arg3, 0.0f);
+    D_800D9AC0[arg0].unk0 = arg3;
+    D_800D9AC0[arg0].unk4 = arg1;
+    D_800D9AC0[arg0].unk8 = arg2;
+    D_800D9AF0 = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_138520/func_1510B3B0.s")
 

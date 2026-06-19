@@ -19,6 +19,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   agree") at those call sites. Define the function K&R-style (param declared AFTER the
   empty paren list) so it establishes NO prototype — the no-arg calls compile and the
   body still references the arg. Also drop any preceding `void f(void);` forward decl.
+- Float args to an UNPROTOTYPED callee get K&R default-promoted to DOUBLE (`cvt.d.s` per
+  f32 arg, args passed as double-words with a spilled `0.0`); add a LOCAL prototype with
+  the true `f32` param types so they pass as raw single words (no `cvt.d.s`). (Distinct
+  from the literal-suffix double-promotion rule — this is the call-site/missing-decl path.)
 - Param-type tension with a PROTOTYPE: if a forward decl types a param `s32`, the
   definition MUST also be `s32` (a `u8` def is "Incompatible type" redeclaration);
   match the narrowing at the use site/call cast, not the signature. Inverse — when

@@ -3,7 +3,34 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D71B0.s")
+struct260 *func_151D71B0(s16 arg0, u8 arg1, u8 arg2, f32 arg3, void *arg4, u8 arg5, s32 arg6) {
+    struct260 *temp_v0;
+    struct {
+        s32 unk0;
+        u8 unk4;
+        u8 unk5;
+        u8 pad6;
+        u8 pad7;
+        f32 unk8;
+        f32 unkC;
+        f32 unk10;
+        f32 unk14;
+    } sp34;
+
+    sp34.unk0 = 0;
+    sp34.unk4 = arg2;
+    sp34.unk5 = 0;
+    sp34.unk8 = 0.0f;
+    sp34.unkC = 0.0f;
+    sp34.unk10 = 0.0f;
+    sp34.unk14 = arg3;
+
+    temp_v0 = func_15149130(arg0, -1, 0x42, -1, arg1, 0x36, (struct37 *)((s32)arg4 + 0x18), arg5, arg6);
+    if (temp_v0 != NULL) {
+        memcpy((void *)((s32)temp_v0 + 0x28), &sp34, 0x18);
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D7264.s")
 

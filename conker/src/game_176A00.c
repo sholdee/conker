@@ -33,7 +33,20 @@ s32 func_15149BF4(struct Foo15149BF4 *arg0) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_15149C58.s")
+extern f32 D_800BE9A4;
+s32 func_15149C58(f32 *arg0) {
+    arg0[11] -= arg0[11] * arg0[84];
+    arg0[12] -= arg0[12] * arg0[84];
+    arg0[20] += arg0[19] * D_800BE9A4;
+    arg0[14] += arg0[20] * D_800BE9A4;
+    if (arg0[87] < arg0[14]) {
+        return 0;
+    }
+    if ((arg0[11] < 4.0f) || (arg0[12] < 4.0f)) {
+        return 0;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_15149D18.s")
 

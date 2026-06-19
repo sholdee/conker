@@ -18,7 +18,19 @@ void func_15110360(s32 arg0, f32 arg1[4][4], f32 arg2, f32 arg3, f32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_151103C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15110544.s")
+Gfx *func_1501A680(Gfx *arg0);
+Gfx *func_1501A6CC(Gfx *arg0, s32 a, s32 b, s32 c, s32 d);
+
+Gfx *func_15110544(Gfx *gfx, s32 a, s32 b, s32 c, s32 d, u8 r, u8 g, u8 bl) {
+    s32 color;
+
+    gDPPipeSync(gfx++);
+    gDPSetOtherMode(gfx++, 0x302C0F, 4);
+    gfx = func_1501A680(gfx);
+    color = GPACK_RGBA5551(r, g, bl, 1);
+    gDPSetFillColor(gfx++, (color << 16) | color);
+    gfx = func_1501A6CC(gfx, a, b, c, d);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15110600.s")
 

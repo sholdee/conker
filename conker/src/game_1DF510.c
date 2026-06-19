@@ -59,4 +59,10 @@ void func_151B3014(s32 *arg0) {
     func_15149368((struct260 *)arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B3040.s")
+void func_151B3040(s32 arg0, s32 arg1, u8 arg2) {
+    s32 a;
+    s32 temp;
+    temp = arg0 + 0x150;
+    func_15169850(arg1, arg2, temp, arg0 + 0x154, arg0);
+    func_15169850(arg1, arg2, temp + 0x14, temp + 0x18, arg0);
+}

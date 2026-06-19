@@ -20,7 +20,14 @@ Gfx *func_15094F40(Gfx *arg0) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_15094F70.s")
+extern void func_15095060(s32, s32, s32);
+extern void func_150950D4(s32, s32 *, s32, s32, s32, s32, s32, s32, s32, s32);
+extern s32 D_800D2C90;
+
+void func_15094F70(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
+    func_15095060(arg1, arg2, arg3);
+    func_150950D4(arg0, &D_800D2C90, arg4, arg5, 0, arg6, arg7, 0x100, 0x100, arg8);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_15094FE8.s")
 
