@@ -57,7 +57,35 @@ struct249 *func_1509B704(s16 arg0) {
 }
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C8950/func_1509B764.s")
+typedef struct Node1509 {
+    u8 pad0[0x18];
+    struct Node1509 *next;
+    struct Node1509 *prev;
+} Node1509;
+
+extern void func_10004074(void);
+
+void func_1509B764(Node1509 *arg0) {
+    if (D_800D2F48.length == 1) {
+        D_800D2F48.unk4 = 0;
+        D_800D2F48.unk8 = 0;
+    } else {
+        if (arg0 == (Node1509 *)D_800D2F48.unk4) {
+            D_800D2F48.unk4 = (struct249 *)arg0->next;
+            arg0->next->prev = 0;
+        } else {
+            arg0->prev->next = arg0->next;
+        }
+        if (arg0 == (Node1509 *)D_800D2F48.unk8) {
+            D_800D2F48.unk8 = (s32)arg0->prev;
+            arg0->prev->next = 0;
+        } else {
+            arg0->next->prev = arg0->prev;
+        }
+    }
+    func_10004074();
+    D_800D2F48.length--;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C8950/func_1509B810.s")
 

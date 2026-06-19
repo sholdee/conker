@@ -1157,7 +1157,33 @@ void func_15071278(s32 arg0) {
     func_150FC438(D_800D154C, 0, 1, D_800D154C->unk84.ub[1]);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_150712AC.s")
+extern void func_150FE860(struct127 *arg0, s32 arg1, s32 arg2);
+extern void func_151D8868(void *arg0, s32 arg1, s32 arg2, s32 arg3);
+
+struct sp18_150712AC {
+    /* 0x0 */ u8 unk0;
+    /* 0x1 */ u8 unk1;
+    /* 0x2 */ s16 unk2;
+    /* 0x4 */ u8 unk4;
+    /* 0x5 */ u8 unk5;
+    /* 0x6 */ s8 unk6;
+    /* 0x7 */ u8 unk7;
+};
+
+void func_150712AC(s32 arg0) {
+    struct sp18_150712AC sp18;
+
+    func_150FE860(D_800D154C, 0xFF, 1);
+    if (D_800D154C->camera != 0) {
+        sp18.unk0 = 1;
+        sp18.unk2 = (func_150ADA20() % 7U) + 0xA;
+        sp18.unk5 = 1 << D_800D154C->camera->unk23D;
+        sp18.unk4 = (func_150ADA20() % 7U) + 2;
+        sp18.unk6 = -1;
+        func_151D8868(&sp18, 0, 0xFF, 1);
+    }
+}
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_15071360.s")
 
 void func_15071434(s32 arg0) {

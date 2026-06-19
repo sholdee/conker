@@ -195,7 +195,26 @@ void func_1514373C(f32 arg0, f32 arg1, f32 *arg2, f32 *arg3) {
     *arg2 = arg1 * s;
     *arg3 = arg1 * c;
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143794.s")
+void func_15143794(s32 arg0, s32 arg1, f32 arg2, f32 *arg3) {
+    f32 cos0;
+    f32 sin0;
+    f32 cos1;
+    f32 sin1;
+    u8 idx0;
+    u8 idx1;
+    f32 temp;
+
+    cos0 = func_151423D8((u8) arg0);
+    idx0 = (s16) arg0 - 0x40;
+    sin0 = func_151423D8(idx0);
+    cos1 = func_151423D8((u8) arg1);
+    idx1 = (s16) arg1 - 0x40;
+    sin1 = func_151423D8(idx1);
+    temp = arg2 * cos1;
+    arg3[0] = temp * sin0;
+    arg3[1] = -arg2 * sin1;
+    arg3[2] = temp * cos0;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143834.s")
 void func_15143874(s32 arg0, f32 arg1, f32 *arg2, f32 *arg3) {
     f32 temp;
