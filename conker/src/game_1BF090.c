@@ -9,7 +9,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BF090/func_1519203C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BF090/func_15192308.s")
+extern void func_15131C84(s32, s32, s32, s32, s32, s32);
+
+u8 func_15192308(s32 arg0, s32 arg1) {
+    func_15131C84(arg0 + 0xAC, arg0 + 0xAE, *(s32 *)(arg0 + 0xA8), arg0 + 0xB0, arg0 + 0x38, arg0 + 0x3C);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BF090/func_15192358.s")
 

@@ -28,7 +28,14 @@ s32 func_1509F33C(s32 arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F4E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F5A8.s")
+extern s32 func_1000F568(s32, u8);
+
+void func_1509F5A8(s32 arg0, s32 arg1, s32 arg2) {
+    s32 temp;
+
+    temp = func_1000F568(arg0, (u8)(arg1 - arg0 + 1));
+    func_10010F30(temp, (u16)arg2, 0x40, 0, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F5F4.s")
 

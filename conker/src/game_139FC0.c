@@ -23,7 +23,24 @@ void func_1510D608(s32 arg0, s32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510D630.s")
+extern s32 func_1510D694(s16);
+extern s32 func_10004074(s16 *);
+
+void func_1510D630(s16 *arg0) {
+    s16 *p;
+    s16 *end;
+    s16 count = arg0[0];
+
+    p = arg0 + 1;
+    if (count > 0) {
+        end = arg0 + count + 1;
+        do {
+            func_1510D694(*p);
+            p++;
+        } while (end != p);
+    }
+    func_10004074(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510D694.s")
 

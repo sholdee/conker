@@ -322,6 +322,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   named temp in the exact sequence the asm loads them (and bind a value that is
   both compared and stored FIRST so it loads before the others and the store
   reuses it). Reusing one temp or reordering the binds reorders the loads.
+- Swap the two temp registers feeding a `bnel`/`beql` compare via a CAST+INDEX on
+  one operand: since IDO canonicalizes likely-branch operand order (flipping `a==b`
+  to `b==a` doesn't move the registers), instead RAISE one side's register pressure
+  so it claims the higher temp — write the field side as `((u8*)p)[off]` (cast+index)
+  vs the plain `*arg` on the other side. The cast-indexed expression's extra address
+  arithmetic makes IDO allocate it the later (t9) register and the bare deref the
+  earlier (t8), matching a target whose two compare loads use the swapped temp pair.
 - Defeat CSE of a duplicated priming load from C: instead of reading `arg0`
   directly, write `p = &arg0[i];` (with i=0) then deref `p` — the indexed address
   blocks the collapse and forces the separate load IDO's target emits.
@@ -704,6 +711,24 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   steerable by swapping operands; this canonicalization applies to plain
   `beq`/`bne` equality and is NOT steerable.)
 
+- Struct-copy destination forced into v0 (spurious `move a0,v0`): when a function
+  copies an aggregate (a by-value global/struct) into a stack local and then passes
+  that local's ADDRESS as the first call arg, and the target keeps the destination
+  address in a0 the WHOLE time (homes a0 early, then `addiu a0,sp,off` reusing the
+  freed reg), IDO from EVERY C form (struct assignment, init-at-decl, pointer-
+  indirection local, field-by-field or element-wise copy, with/without casts)
+  instead allocates v0 as the copy destination and emits a spurious `move a0,v0`
+  before the call. The single inserted `move` 4-byte-shifts the address and cascades
+  the score. Register-allocation artifact unsteerable from C; bail, decomp-permuter
+  candidate. (Field-by-field/element-wise copies regress further to split stores.)
+- Trailing dead doubled epilogue (`jr ra; nop` after the real return): when the
+  target ends with an UNREACHABLE second `jr ra; nop` pair (more instructions than
+  any C body emits) while your byte-perfect body stops at the real return, no C
+  structure reproduces it — else-branch, dual `return X; return X;` (IDO drops the
+  dead one), ternary/explicit-ret-local (inject phi `move`s), trailing label, and
+  discarding-the-call-result-while-returning forms all regress (spill or extra
+  moves). The doubled epilogue is an IDO -g3 artifact; if the body itself matches
+  and this is the only residual, bail (stub) and flag as a decomp-permuter case.
 - Callee-saved promotion of a cross-call pure pass-through: when the target carries
   a value across a call in a callee-saved reg (`or sN,v0,zero` in the call's delay
   slot, `or v0,sN,zero` at return, with sN saved/restored + a larger frame), IDO
