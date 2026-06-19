@@ -3,7 +3,40 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FF5C0/func_150D2110.s")
+extern u8 D_800D9900;
+struct260 *func_15149130(s16 arg0, s8 arg1, s8 arg2, s8 arg3, u8 arg4, u8 arg5, struct37 *arg6, u8 arg7, s32 arg8);
+
+struct sub150D2110 {
+    u8  unk0;
+    u8  pad1[3];
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    u8  unk14;
+    u8  unk15;
+    u8  pad16[2];
+};
+
+void func_150D2110(s16 arg0, f32 arg1, f32 arg2, u8 arg3, u8 arg4, u8 arg5, s32 arg6) {
+    struct sub150D2110 sp38;
+    struct260 *temp_v0;
+
+    D_800D9900++;
+
+    sp38.unk8 = arg1;
+    sp38.unkC = arg2;
+    sp38.unk10 = arg1 + arg2;
+    sp38.unk0 = 0;
+    sp38.unk4 = 0.0f;
+    sp38.unk14 = arg3;
+    sp38.unk15 = arg4;
+
+    temp_v0 = func_15149130(arg0, -1, 0x2F, 2, 1, 0x26, (struct37 *)0x18, arg5, arg6);
+    if (temp_v0 != NULL) {
+        memcpy((u8 *)temp_v0 + 0x28, &sp38, 0x18);
+    }
+}
 
 extern f32 D_800BE9A4;
 

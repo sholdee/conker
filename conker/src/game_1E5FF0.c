@@ -79,4 +79,31 @@ s32 func_151B8C54(struct Foo151B8C54 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E5FF0/func_151B8CFC.s")
+struct Foo151B8CFC {
+    char pad38[0x38];
+    f32 unk38;
+    char pad3C[0x4];
+    f32 unk40;
+    char pad44[0x4];
+    f32 unk48;
+};
+
+struct Bar151B8CFC {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    char pad14[0x4];
+    f32 unk18;
+};
+
+s32 func_151B8CFC(struct Foo151B8CFC *arg0) {
+    struct Bar151B8CFC *v1 = (struct Bar151B8CFC *)((char *)arg0 + 0x110);
+    arg0->unk38 = sinf(v1->unk8) * v1->unk4 + v1->unk0;
+    v1->unk8 = v1->unk8 + v1->unkC * D_800BE9A4;
+    v1->unk8 = func_15144B68(v1->unk8);
+    arg0->unk40 += v1->unk10 * (&D_800BE9A4)[0];
+    arg0->unk48 += v1->unk18 * (&D_800BE9A4)[0];
+    return 1;
+}

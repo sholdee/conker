@@ -347,6 +347,22 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   Placing the zero/constant store earlier materializes the value early and perturbs
   the surrounding f-register allocation; emitting it last lets IDO build it lazily
   and lands the other constants in the target's registers.
+- Walk-loop back-edge: to keep the `bnel vN,end` branch-LIKELY back-edge (reload in
+  the delay slot), the loop END must be a SEPARATE end symbol (`%hi/%lo(D_END)` loaded
+  into a reg) — i.e. write the bound as the distinct global at the array's end. A
+  RELATIVE end (`&arr[N]`) keeps the START base alive and emits `addiu t,base,size;
+  bne` (no bnel). Use the separate end-symbol when the asm's back-edge is `bnel`.
+- Defeat trip-count unrolling on a POINTER-walk loop WITHOUT losing the pointer bound:
+  a `do { } while (p != end)` triggers IDO's runtime unroll (`subu; li; divu; mfhi` +
+  duplicated body). A `goto`-based loop instead — body's first read placed at the TOP
+  (right after the label), then `p++; if (p != end) goto loop;` at the BOTTOM — yields
+  a single-body `bnel vN,end,top; <reload>` with NO unroll. Use the goto form when the
+  target walks with one body + a likely back-edge.
+- Declaring a nested-if-LOCAL (`s32 u = p->field;`) inside the if-body PULLS that
+  field's address computation (`addu`) INSIDE the branch, matching an `addu` emitted
+  AFTER the conditional branch; reading the same field before the if hoists the `addu`
+  above the branch. Declare it locally inside the body when the asm computes the
+  address only on the taken path.
 - Constant-bound for-loop to trigger IDO's unroll-by-4 with NO trip guard: write
   `for (i = 0; i < N; i++)` with a literal `N` to get the auto-unrolled body and
   NO `divu`/remainder guard. ANY pointer-bound form (`p != end`, a named end local,
