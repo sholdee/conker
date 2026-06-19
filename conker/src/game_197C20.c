@@ -25,4 +25,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_197C20/func_1516D378.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_197C20/func_1516D3C4.s")
+s32 func_1516D3C4(u8 *arg0) {
+    s32 *temp;
+
+    if ((arg0 != 0) && (*arg0 == 0x51)) {
+        temp = *(s32 **)(arg0 + 0x10);
+        *temp |= 0x500;
+        return (s32)arg0;
+    }
+    return 0;
+}

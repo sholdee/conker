@@ -7,7 +7,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AC078.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AC3CC.s")
+s32 func_151AC3CC(s16 *arg0) {
+    u8 *ptr = *(u8 **)((u8 *)arg0 + 0x98);
+    s32 val = arg0[0x1C / 2] << 3;
+    if (val >= 0x100) {
+        val = 0xFF;
+    }
+    if (val < ptr[0x1B]) {
+        ptr[0x1B] = val;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AC408.s")
 

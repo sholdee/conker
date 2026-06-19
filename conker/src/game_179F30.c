@@ -240,6 +240,11 @@ void func_1514F538(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F568.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F590.s")
+void func_1501175C(struct127 *arg0, u8 arg1, s32 arg2);
+
+void func_1514F590(struct127 *arg0) {
+    func_1501175C(arg0, 0xFF, 1);
+    func_15011A78(arg0, 0xFF, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F5CC.s")

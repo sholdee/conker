@@ -22,7 +22,12 @@ s32 func_1517EFAC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F3A0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F40C.s")
+s32 func_1517F40C(s32 arg0) {
+    if ((&D_800DDDB0)[arg0] >= (&D_800DDE28)[arg0]) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F448.s")
 

@@ -116,6 +116,15 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   (wrong prime + branch sense); the prime-then-DEMOTE form (`ret=1; if(!...)ret=0;
   return ret;`) regresses with an extra instruction. Pick the test-zero-first /
   fall-through-1 shape when the asm primes 1 and branches over the zero path.
+- INTEGER two-value comparison 0/1 return (`a >= b` style): when the asm EAGERLY
+  primes `move v0,zero` then `slt at,a,b; bnez at,->jr ra` (separate epilogue), then
+  `li v0,1` falling through, write the prime-0/fall-through-1 TWO-return form
+  `if (a >= b) return 1; return 0;`. The inverted `if (a < b) return 0; return 1;`
+  primes 1 + `beqz` (wrong prime + branch sense, score jumps), and the BARE boolean
+  `return a >= b;` collapses into a single `slt;xori` (no eager zero-prime, worse).
+  Use the `>=`-then-`return 1`/fall-through-`return 0` shape when the asm zero-primes
+  v0 and branches over the `li v0,1`. (Integer-`slt` analog of the float `bc1f`
+  boolean-return and the masked-bit prime-0/fall-1 rules above.)
 - Float-vs-ZERO compare with the zero as the FIRST FPU operand: a strict `> 0.0f`
   test (`return x > 0.0f;`) compiles to `c.lt.s fZero,fX` with the materialized 0.0
   in the LEFT register (i.e. IDO rewrites `x > 0` as `0 < x`). Write the source as
@@ -760,6 +769,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   actually a pointer variable. Read it via `(*(struct160**)&D_xxxx)[i]` (cast the
   symbol's address to pointer-to-pointer) so IDO emits the `lw base` load before
   indexing — without editing the mistyped shared header.
+- A global the shared header DECLARES as a plain SCALAR (`s32 D_xxxx;`) but the asm
+  INDEXES (`lui;addu at,idx<<2;lw %lo(D_xxxx)(at)`) is actually an array. Reach its
+  elements WITHOUT editing the header by taking the symbol's address and indexing it:
+  `(&D_xxxx)[i]`. This emits the `%hi/addu/%lo`-indexed load against the base symbol;
+  declaring a separate local `extern T D_xxxx[];` would conflict with the header's
+  scalar decl, and `*(&D_xxxx + i)` is equivalent. (Scalar-typed analog of the
+  aggregate-as-pointer rule above; pairs with the same-symbol fold/split note.)
 - To deref a struct field the prototype only PARTIALLY declares (e.g. header
   declares `next`@0x18 but not `prev`@0x1C), define a LOCAL tagged struct with
   explicit padding (`struct { u8 pad[0x18]; void *next, *prev; }`) to reach the

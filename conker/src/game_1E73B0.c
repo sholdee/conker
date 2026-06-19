@@ -47,7 +47,16 @@ s32 func_151BC580(s32 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BD21C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BD2BC.s")
+s32 func_151BD2BC(s32 *arg0) {
+    s32 *p = (s32 *)arg0[0xA];
+    if (*p == 0) {
+        return 0;
+    }
+    if (*((u8 *)arg0 + 0x2C) != *((u8 *)p + 0x3B)) {
+        return 0;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BD2F8.s")
 
