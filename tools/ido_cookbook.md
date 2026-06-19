@@ -89,6 +89,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   preserves `temp`'s register across the body (`bnez v0; move v1,v0`) and gives a
   fallthrough `move v0,zero`. The inverted `if(temp!=0){...return temp;} return 0;`
   flips to `beqz` and adds an instruction. Pick the form matching the branch shape.
+- Boolean comparison return (`return a < b;` as a 0/1 result): write the BARE
+  comparison-return directly. It emits a NON-likely `bc1f` (for a float compare) with
+  `li v0,1` falling THROUGH into a single shared `jr ra` epilogue. The `if(cond) ret=1;
+  return ret;` variant instead emits a branch-LIKELY (`bc1fl`); the two-return
+  `if(cond) return 1; return 0;` variant emits the plain `bc1f` but DUPLICATES the
+  `jr ra` epilogue. Only the bare comparison-return gives the non-likely branch with a
+  single shared epilogue — use it when the asm tests once and falls through to one `jr ra`.
 - Read-and-clear flag (return current value, then zero it): write
   `ret = 1; if (field == 0) ret = 0; field = 0; return ret;` (prime the nonzero
   result, demote to 0 on the zero test) — NOT the symmetric `if(field){ret=1;}

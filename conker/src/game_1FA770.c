@@ -84,7 +84,11 @@ void func_151CE47C(ConkerStruct151CE47C *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D1074.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D10A4.s")
+s32 func_151D10E4(void *arg0, s32 arg1, s32 arg2);
+
+s32 func_151D10A4(void *arg0, s32 arg1) {
+    return func_151D10E4(arg0, arg1, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D10C4.s")
 

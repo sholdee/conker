@@ -68,7 +68,13 @@ void func_151DE8E8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E4DC4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E4DD8.s")
+extern s16 D_800E0B9A;
+
+void func_151E4DD8(void) {
+    if (D_800E0B9A & 0x8020) {
+        D_800E0B94 = 4;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E4E00.s")
 
