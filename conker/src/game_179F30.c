@@ -2,6 +2,16 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct struct_1514EBA4 {
+    char pad0[0x10];
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s16 unk1C;
+} struct_1514EBA4;
+
+extern struct_1514EBA4 *func_15167A68(s32, s32, s32, s32, s32, s32);
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514CA80.s")
 
@@ -211,7 +221,19 @@ s32 func_1514EB8C(s32 arg0, s32 arg1, s32 arg2) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514EBA4.s")
+struct_1514EBA4 *func_1514EBA4(s32 arg0, s16 arg1, s32 arg2) {
+    struct_1514EBA4 *ret;
+
+    ret = func_15167A68(0x24, 1, arg2 + 0x20, 1, 0xFF, 1);
+    if (ret == 0) {
+        return NULL;
+    }
+    ret->unk10 = arg0;
+    ret->unk14 = 0;
+    ret->unk18 = 0;
+    ret->unk1C = arg1;
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514EC1C.s")
 

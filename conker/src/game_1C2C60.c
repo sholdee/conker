@@ -102,7 +102,41 @@ s32 func_15197BBC(Struct15197BBC *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15197C10.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15198054.s")
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+} SubA_15198054;
+
+typedef struct {
+    s32 unk0;
+    union {
+        u8 b4;
+        s32 w4;
+    } u4;
+    u8 unk8;
+    u8 unk9;
+} ArgB_15198054;
+
+void func_151993B4();
+
+void func_15198054(void *arg0, s32 arg1, u8 arg2) {
+    SubA_15198054 *temp_v1 = *(SubA_15198054 **)((u8 *)arg0 + 0x98);
+    ArgB_15198054 *b = (ArgB_15198054 *)arg1;
+
+    if (arg2 == 0 || arg2 == 2 || arg2 == 8) {
+        if ((b->unk0 == temp_v1->unk0) || (b->u4.b4 == temp_v1->unk4)) {
+            func_151993B4(arg0);
+        }
+    } else if (arg2 == 0x2D) {
+        if (temp_v1->unk0 == b->unk0) {
+            temp_v1->unk0 = b->u4.w4;
+            temp_v1->unk4 = b->unk9;
+        } else if (temp_v1->unk0 == b->u4.w4) {
+            temp_v1->unk0 = b->unk0;
+            temp_v1->unk4 = b->unk8;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15198110.s")
 

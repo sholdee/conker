@@ -173,4 +173,20 @@ s32 func_15033F0C(s32 arg0, u8 *arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033F70.s")
+s32 func_15033F70(s32 arg0, u8 *arg1) {
+    u8 *temp;
+
+    if (D_800C35EA == 1) {
+        return 0;
+    }
+    temp = *(u8 **)(arg1 + 0x31C);
+    if (temp != 0) {
+        if ((temp[0x78] != 0xC) && (temp[0x78] != 0x16)) {
+            if (temp[0x11A] != 3) {
+                temp[0x11A] = 0;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}

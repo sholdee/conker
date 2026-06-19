@@ -34,7 +34,26 @@ void func_150F568C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F5A54.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F5C08.s")
+void func_150F5C08(void *arg0, s16 arg1, u8 arg2, s32 arg3) {
+    struct {
+        void *unk0;
+        u8 unk4;
+        u8 pad5;
+        u8 pad6;
+        u8 pad7;
+        f32 unk8;
+    } sp34;
+    struct260 *temp_v0;
+
+    sp34.unk0 = arg0;
+    sp34.unk4 = *(u8 *)((s32)arg0 + 0x3B);
+    sp34.unk8 = 0.0f;
+
+    temp_v0 = func_15149130(arg1, -1, 0x51, -1, 1, 0x3E, (struct37 *)0xC, arg2, arg3);
+    if (temp_v0 != NULL) {
+        memcpy((void *)((s32)temp_v0 + 0x28), &sp34, 0xC);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F5C98.s")
 

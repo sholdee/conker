@@ -121,4 +121,23 @@ s32 func_15102884(struct210 *arg0, s32 arg1) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_151028AC.s")
+s32 func_151028AC(struct210 *arg0, s16 arg1) {
+    s32 *p = (s32 *)(*(s32 *)((s32)arg0 + 0x170) + 0x110);
+    s32 v1;
+
+    if (arg1 != *(u8 *)((s32)p + 0x22)) {
+        goto tail;
+    }
+    v1 = *p;
+    if (v1 != 0) {
+        if (*(u8 *)(*(s32 *)(v1 + 0x31C) + 0x197) == 0) {
+            goto tail;
+        }
+    }
+    return 0;
+tail:
+    if (!(*(u8 *)((s32)arg0 + 0x174) & 1)) {
+        return 0;
+    }
+    return 1;
+}
