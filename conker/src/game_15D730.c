@@ -81,7 +81,10 @@ s32 func_15131AFC(u8 *arg0, s32 arg1) {
     return func_151319C4(arg0, arg1, arg0 + 0xB0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15131B3C.s")
+s32 func_15131B3C(u8 *arg0, s32 arg1) {
+    func_15131918((s32)arg0 + 0x58, *(s32 *)(arg0 + 0xA8));
+    return func_151319C4(arg0, arg1, arg0 + 0xB0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15131B7C.s")
 

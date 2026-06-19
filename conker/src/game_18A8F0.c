@@ -73,7 +73,23 @@ f32 func_1515F008(s16 *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F10C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F170.s")
+struct Node1515F170 {
+    struct Node1515F170 *next;
+    char pad4[5];
+    s8 unk9;
+    char padA[1];
+    u8 unkB;
+};
+
+void func_1515F170(s32 arg0, u8 arg1) {
+    struct Node1515F170 *p;
+
+    for (p = (struct Node1515F170 *)D_800DCD78; p != 0; p = p->next) {
+        if (arg0 == p->unkB) {
+            p->unk9 = arg1;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F1B0.s")
 

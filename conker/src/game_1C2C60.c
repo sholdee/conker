@@ -4,6 +4,8 @@
 
 void func_1519CDB0(s32, f32, s32);
 
+s32 func_15195DD4(s32, s32, s32, s32, s32, s32, s32);
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_151957B0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519582C.s")
@@ -22,7 +24,9 @@ s16 func_15195A84(s16 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15195DD4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15195FB0.s")
+s32 func_15195FB0(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+    return func_15195DD4(*(s32 *)(arg0 + 0x1C), arg1, arg2, arg3, arg4, arg5, arg6);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15195FF0.s")
 

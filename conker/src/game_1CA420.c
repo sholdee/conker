@@ -70,7 +70,11 @@ void func_1519D000(struct s_1519CFA0 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E570.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E61C.s")
+void func_1519E61C(struct102 *arg0, s32 arg1, u8 arg2) {
+    if (arg2 == 0 || arg2 == 9) {
+        func_1516972C(arg0);
+    }
+}
 
 extern void func_1519CF70(u8);
 

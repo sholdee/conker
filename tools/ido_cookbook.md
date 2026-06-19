@@ -542,6 +542,16 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   for the call rather than caching it. (Volatile-on-the-POINTER analog of the
   differently-typed double-read and untyped-byte-store reload rules; recurs verbatim
   across sibling forwarders that null-test a field then call through it.)
+- Volatile-cast the TEST read to force a fresh re-load for a same-width CALL arg (no
+  intervening call): when a narrow scalar field (e.g. `u16` at off) is read TWICE —
+  once for a `!= 0` test and once as a call argument of the SAME width — a plain double
+  `*(u16*)(arg+off)` CSEs into ONE `lhu` and masks the cached value with `andi` for the
+  arg (score regresses). Cast the TEST read through `(u16 volatile *)` (`*(volatile
+  u16*)(arg+off) != 0`) while leaving the call-arg read plain: the volatile defeats CSE
+  so IDO re-emits a fresh `lhu` for the call arg instead of the cached-value `andi`.
+  (Scalar-value, no-intervening-call analog of the volatile-pointer-reload rule above;
+  use when the asm performs two distinct narrow loads of one field for a test + a
+  same-width call arg.)
 - Defeat CSE between a COMPARE's operand load and a later SHIFT of the SAME param/
   field by CASTING the shift operand: when the target compares a param then shifts it
   and emits a SEPARATE re-read for the shift (`lw a2,off; sll t,a2,k; move a2,t`)

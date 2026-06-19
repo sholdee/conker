@@ -121,4 +121,16 @@ s32 func_151AADBC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151ABD54.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151ABE00.s")
+struct tmp151ABE00 {
+    s32 unk0;
+    s8  unk4;
+};
+
+void func_151ABE00(void *arg0) {
+    struct tmp151ABE00 tmp;
+
+    tmp.unk0 = (s32)arg0;
+    tmp.unk4 = *(u8 *)((char *)arg0 + 0x3B);
+
+    func_1516944C(0x20, (s32)&tmp, 0xC);
+}
