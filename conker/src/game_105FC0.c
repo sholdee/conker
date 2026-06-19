@@ -9,7 +9,17 @@ void func_150D8B10(f32 *a0, f32 *a1) {
     a1[2] = a0[7];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150D8B3C.s")
+extern u8 D_800BE616;
+extern f32 D_800A0B40;
+extern f32 D_800A0B44;
+void func_15145740(void *, void *, void *, void *, f32);
+
+void func_150D8B3C(void *arg0, void *arg1) {
+    f32 sp34[3];
+    f32 sp28[3];
+
+    func_15145740(arg0, sp34, sp28, arg1, D_800BE616 ? D_800A0B40 : D_800A0B44);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150D8B88.s")
 

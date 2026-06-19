@@ -57,7 +57,9 @@ void func_1506AB7C(s32 arg0, struct struct1506AB7C *arg1) {
     func_15103E40(arg0, arg1->unk0, &arg1->unk4, 1, arg1->unk10, 0xFF, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506ABC4.s")
+void func_1506ABC4(s32 arg0, struct struct1506AB7C *arg1) {
+    func_15103E40(arg0, arg1->unk0, &arg1->unk4, 2, arg1->unk10, 0xFF, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506AC0C.s")
 

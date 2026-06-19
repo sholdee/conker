@@ -5,7 +5,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150AF200.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150AF2E0.s")
+extern void func_151CF898(void *, f32, f32);
+
+void func_150AF2E0(void *arg0, s16 *arg1) {
+    func_151CF898(arg0, (f32)(arg1[4] + arg1[1]), (f32)arg1[1]);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150AF328.s")
 

@@ -148,7 +148,22 @@ void func_151E562C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E565C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E5F64.s")
+extern u8 D_800BE616;
+extern u8 D_800E0B94;
+extern s8 D_800E0C00[];
+
+s32 func_151E5F64(s32 arg0) {
+    s32 ret;
+
+    if ((D_800BE616 != 0) || (D_800E0B94 != 0)) {
+        ret = D_800E0C00[arg0];
+        if (ret < 0) {
+            ret = 0;
+        }
+        return ret;
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E5FAC.s")
 

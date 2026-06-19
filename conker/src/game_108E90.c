@@ -35,4 +35,11 @@ s32 func_150DE2A4(void *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_108E90/func_150DE2C4.s")
+void func_150DE2C4(void *arg0) {
+    *(s16 *)((u8 *)arg0 + 0x34) = *(s16 *)((u8 *)arg0 + 0x34) - 0x1A;
+    *(s16 *)((u8 *)arg0 + 0x36) = *(s16 *)((u8 *)arg0 + 0x36) - 0x1A;
+    if (*(s16 *)((u8 *)arg0 + 0x34) >= 0xA && *(s16 *)((u8 *)arg0 + 0x36) >= 0xA) {
+        return;
+    }
+    *(s16 *)((u8 *)arg0 + 0x38) = 0;
+}

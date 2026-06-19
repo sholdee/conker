@@ -40,7 +40,15 @@ void func_15044DA0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044DE8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044E40.s")
+void func_15044E40(void) {
+    if (D_800CC2D0[0].stunned != 0) {
+        return;
+    }
+    if (D_800CC2D0[0].immune != 0) {
+        return;
+    }
+    func_1505D024(&D_800CC2D0[0], 0x40, D_800CC2D0[0].unk7A, -1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044E88.s")
 

@@ -34,7 +34,11 @@ Gfx *func_15094F40(Gfx *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_150958B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_15095A48.s")
+void func_15095A90(s32, s32, f32, f32, f32, s32, s32, s32, s32);
+
+void func_15095A48(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
+    func_15095A90(arg0, arg1, arg2, arg3, 4096.0f, 0, 0, 0, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_15095A90.s")
 
