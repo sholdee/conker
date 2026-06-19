@@ -7,7 +7,20 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EB340/func_150BDF0C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_EB340/func_150BE150.s")
+void func_1516972C(struct102 *arg0);
+
+void func_150BE150(struct102 *arg0, s32 **arg1, u8 arg2) {
+    if (arg2 == 0x21) {
+        if (*(s32 *)((u8 *)arg0 + 0x28) == (s32)arg1[0]) {
+            func_1516972C(arg0);
+        }
+    } else if (arg2 == 0) {
+        s32 *temp = arg1[0];
+        if (*(s32 *)((u8 *)arg0 + 0x28) == temp[0xC6]) {
+            func_1516972C(arg0);
+        }
+    }
+}
 
 extern f32 D_800BE9A4;
 

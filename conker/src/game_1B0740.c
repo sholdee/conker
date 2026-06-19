@@ -31,7 +31,31 @@ void func_15183974(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B0740/func_15183ACC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B0740/func_15183BA4.s")
+extern u8 D_800A72D0[];
+
+u32 *func_15183BA4(u32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 idx;
+    s32 i;
+    u32 *p;
+
+    idx = -1;
+    for (i = 0; i != 11; i++) {
+        if (arg1 == D_800A72D0[i]) {
+            idx = i;
+            break;
+        }
+    }
+
+    if (idx != -1) {
+        if (D_800DDF78[idx] != 0) {
+            p = arg0;
+            arg0 += 2;
+            p[0] = 0xDE000000;
+            p[1] = D_800DDF78[idx];
+        }
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B0740/func_15183C28.s")
 

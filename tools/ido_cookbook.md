@@ -21,6 +21,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   0x40400000=3.0, 0x40800000=4.0, 0xBF800000=-1.0.
 - A single wrong constant shows as a tiny non-zero score on an otherwise-perfect
   diff — check immediates first when score is small.
+- A single-precision float literal must be written to FULL precision to match the
+  low-halfword `ori`: a `f32` constant is built as `lui reg,%hi; ori reg,%lo`, and a
+  rounded source literal (e.g. `0.352f`) yields the right `lui` but an `ori` off by 1
+  in the low 16 bits. Write the exact decimal that reproduces the mantissa (e.g.
+  `0.352000028f`); recover it from the full 32-bit pattern (lui<<16 | ori), not by
+  eyeballing the high half. The `lui`-only rule (above) catches the high half; this
+  catches the `ori` low half.
 - IDO -O2 constant-folds `D_xxxx + off` into ONE relocated `%lo(D_xxxx+off)`. If
   the target instead emits a separate base + temp (`lui`/`addiu sN,s0,off`), no C
   form (pointer, index, separate-base) splits the fold — BAIL.
@@ -183,6 +190,22 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   source (e.g. handled-case, default, shared-cases) can be required to get the exact
   branch layout without spilling a shared `result` local to the stack; a `default`
   that simply falls through needs no explicit test.
+- Switch min-subtraction: when the asm normalizes the switch value by subtracting the
+  smallest case (`addiu v1,v1,-MIN`) then compares the result against 0/1/2 in a
+  beql/beq chain, write the switch as `switch(field - MIN)` with cases `0/1/2` (NOT
+  the absolute `case MIN:`/`case MIN+1:` labels, which compile to direct compares
+  against the absolute values and never produce the `-MIN` normalization). The
+  highest case must also carry the `default:` label to share the chain's exit.
+- Switch base-pointer into v0 so a constant return eager-primes early: when a switch
+  dispatches on a field reached through a pointer chain (`arg0->subptr->bytefield`)
+  AND the function returns a constant (e.g. `return 1;`), hoist the intermediate
+  pointer into a NAMED local (`struct X *p = arg0->subptr; switch(p->field ...)`).
+  This forces IDO to allocate v0 to the loaded sub-pointer (`lw v0,off(a0); lbu
+  v1,off(v0)`), which FREES v0 to be eagerly primed with the return constant
+  (`li v0,1`) BEFORE the switch. Without the named local IDO puts the sub-pointer in
+  a t-register and schedules the `li v0,1` at the END (large score). Pair with a
+  SINGLE trailing `return K;` (not per-case returns) to get the shared `b exit`
+  epilogue and the eager constant prime; per-case returns regress.
 - To force a per-iteration reload of a global pointer/value, deref-cast it inline
   IN the loop body; binding it to a local lets IDO hoist it out of the loop.
 - Inlining a value in the for-CONDITION (vs a named `count` local) also pins its
@@ -380,6 +403,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   double reads CSE into ONE load cached in a register; the type mismatch defeats CSE
   so IDO emits a fresh reload for the body. Use it when the target loads a field
   twice (a beqz test then a reload) rather than caching the first load.
+- Defeat CSE between a COMPARE's operand load and a later SHIFT of the SAME param/
+  field by CASTING the shift operand: when the target compares a param then shifts it
+  and emits a SEPARATE re-read for the shift (`lw a2,off; sll t,a2,k; move a2,t`)
+  rather than reusing the compared register, write the shift as
+  `(s32)((u32)arg << k)`. The (u32)-then-(s32) cast pair breaks IDO's CSE between the
+  compare's load and the shift's load, forcing the distinct re-read. A plain
+  `arg << k` reuses the already-loaded compare register (one fewer load).
 - Route a store to a FAR field through a sub-object pointer with a NEGATIVE offset
   to defeat cross-field alias analysis AND keep the folded store offset: when a near
   field (e.g. unk5C) is stored while a nearby field (e.g. unk1C) must be RELOADED on
@@ -922,6 +952,17 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   backend pass. The extra bound register cascades into renames + an extra save
   slot + a `move`. An EMPTY warm-up loop may keep `slti`, but any active body
   triggers the rewrite. Unsteerable from C; bail, decomp-permuter candidate.
+- mul.s memory-operand-first canonicalization (live-value × freshly-loaded field):
+  when one factor is a live call-result/temp already in an FPU reg and the other is a
+  just-loaded memory operand (a struct field `lwc1`), IDO ALWAYS emits the multiply
+  with the freshly-loaded memory operand FIRST and the live value second
+  (`mul.s fD,fMEM,fLIVE`), REGARDLESS of C operand order (`live*field` and
+  `field*live` both produce it). Unlike the ordinary commutative-operand-order rule
+  (which IS steerable), this one is not steerable in place: the ONLY way to flip it is
+  to pre-load the field into a named local first, which DOES put the live value first
+  but CASCADES the whole FP register-pair allocation by one and reorders nearby loads
+  (worse). If a provably-correct body's only residual is this operand order, bail;
+  decomp-permuter candidate.
 - IDO never uses `$at` ($1, the assembler temp) as a general compiler temp from C.
   If the target REUSES `$at` for some loads (e.g. holding offset-0/offset-8 copies
   while a named t-reg holds the middle one), no C form (struct member, raw
