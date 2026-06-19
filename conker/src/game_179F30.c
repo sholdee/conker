@@ -335,7 +335,23 @@ void func_1514F110(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F308.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F3CC.s")
+void func_1514F3CC(struct127 *arg0) {
+    struct {
+        struct127 *unk0;
+        u8 unk4;
+        f32 unk8;
+    } sp34;
+    struct260 *temp_v0;
+
+    sp34.unk0 = arg0;
+    sp34.unk4 = arg0->unique_id;
+    sp34.unk8 = 0.0f;
+
+    temp_v0 = func_15149130(0x12C, -1, 0x3A, -1, 0, 0x2B, (struct37 *)0xC, 0xFF, 1);
+    if (temp_v0 != NULL) {
+        memcpy((void *)((s32)temp_v0 + 0x28), &sp34, 0xC);
+    }
+}
 
 extern s32 D_800A5988;
 s32 func_1518D1C0(s32, s32, s32, s32, s32, s32, s32 *);

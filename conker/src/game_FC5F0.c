@@ -184,7 +184,23 @@ void func_150D0134(u8 arg0, s32 arg1, s16 arg2, u8 arg3, void *arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150D01A0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150D02B4.s")
+struct frame150D02B4 {
+    f32 unk0;
+    s16 unk4;
+    u8 pad[2];
+};
+
+void func_150D02B4(u8 arg0, s32 arg1, s16 arg2, u8 arg3, void *arg4) {
+    void *ret;
+    struct frame150D02B4 sp2C;
+
+    sp2C.unk4 = 0;
+    sp2C.unk0 = 0.0f;
+    ret = func_150CFF10(arg0, arg1, arg2, 8, 1, 0, arg3, arg4);
+    if (ret != 0) {
+        memcpy(*(void **)((u8 *)ret + 0x48), &sp2C.unk0, 8);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150D032C.s")
 
