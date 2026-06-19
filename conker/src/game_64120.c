@@ -21,7 +21,15 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_15038620.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_15039A54.s")
+typedef struct {
+    s32 unk0[6];
+} GameStruct_15039A54;
+
+extern GameStruct_15039A54 D_80098068[];
+
+GameStruct_15039A54 *func_15039A54(s32 arg0, s32 arg1) {
+    return &D_80098068[arg1];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_15039A78.s")
 

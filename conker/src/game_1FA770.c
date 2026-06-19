@@ -21,7 +21,18 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CDE20.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CE47C.s")
+typedef struct {
+    char pad0[0x1E];
+    u16 unk1E;
+    char pad20[0x10];
+    u8 unk30;
+} ConkerStruct151CE47C;
+
+void func_151CE47C(ConkerStruct151CE47C *arg0) {
+    arg0->unk30 = 0;
+    arg0->unk1E &= ~0x2;
+    arg0->unk1E |= 0x8;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CE49C.s")
 

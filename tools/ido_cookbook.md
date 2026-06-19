@@ -518,6 +518,16 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   unmodified arg0 in a0 for a same-base store/call. This is the canonical way to
   reproduce an otherwise-unexplained dead base-advance that resists return-value,
   dead-local (DCE'd), and call-arg (mis-allocated regs) interpretations.
+- Split a COMPOUND offset on a freshly-LOADED pointer (a standalone `addiu vN,vN,HI`
+  followed by a `sw/sb zero,LO(vN)` rather than one folded `sw zero,HI+LO(base)`): when
+  a pointer is loaded from a struct/global and then a field at `+(HI+LO)` is written,
+  bind a SEPARATELY-TYPED struct pointer at `+HI` (`struct T *p = (T*)(load + HI);`) and
+  store at its `+LO` field. IDO emits the `addiu` of HI standalone and keeps LO as the
+  store's folded offset; writing the full `*(t*)(load + HI+LO) = 0` instead folds both
+  into a single `addiu base,HI+LO`-style access. (Recurs alongside the v0/v1 coloring
+  trick — the loaded pointer lands in the next reg, the +HI addiu in the one after.)
+  If the struct has no clean field at LO (it falls in padding), a raw cast store at LO
+  off the +HI pointer reproduces the same split.
 - A float param arriving in an INTEGER register (`mtc1 aN,fM` at entry) is still a
   `f32` in the signature — declare it `f32`; IDO emits the int-reg-to-FPU move.
 - A param the target loads as a low BYTE of its un-homed caller stack slot wants

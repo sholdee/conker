@@ -3,7 +3,19 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CA10.s")
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+} GameC9EC0Struct;
+
+extern GameC9EC0Struct D_80087430[];
+
+s32 func_1509CA10(s32 arg0) {
+    return D_80087430[arg0].unk0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CA30.s")
 

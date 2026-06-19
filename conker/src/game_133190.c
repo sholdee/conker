@@ -49,7 +49,17 @@ f32 func_15106540(f32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_151072BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15107604.s")
+struct S15107604 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+};
+
+void func_15107604(s32 **arg0) {
+    s32 **q = (s32 **)arg0[0x18];
+    struct S15107604 *p = (struct S15107604 *)((u8 *)q[0] + 0x28);
+    p->unk8 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_1510761C.s")
 
