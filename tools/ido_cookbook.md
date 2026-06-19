@@ -45,6 +45,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - A value still live in v0 (int) or f0 (float) at `jr ra` usually means the
   function RETURNS it. Add an explicit `return <that value>;` to force it — this
   also pins the value's register and often fixes downstream allocation.
+- Branch-sense from `slt`+`beqz`: a `slt at,a0,X; beqz at,->body` runs the body
+  when `a0 < X`, so the source condition is `a0 < X` (NOT `>=`). Writing the
+  inverted `>=`/`!=` form flips the only diff to `bnez` vs `beqz`; match the
+  comparison direction to the asm's beqz/bnez to fix a single inverted-branch diff.
 - Early-return ordering: `if (temp == 0) return 0; <body>; return temp;`
   preserves `temp`'s register across the body (`bnez v0; move v1,v0`) and gives a
   fallthrough `move v0,zero`. The inverted `if(temp!=0){...return temp;} return 0;`
@@ -83,6 +87,9 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   register: the named local can swap which reg holds the bound vs the index `i`.
 - abs/trunc intrinsics: use `fabsf` to emit `abs.s`, and an `(s32)` cast on a
   float to emit `trunc.w.s`. `sqrtf` emits a native `sqrt.s` under IDO 5.3.
+- Float truncated to a NARROW int (`(s16)f`): write `(s16)(s32)f` to emit
+  `trunc.w.s` followed by the `sll reg,16; sra reg,16` sign-extend-to-16 pair;
+  a bare `(s16)f` does not produce the trunc + half-word narrowing sequence.
 - A signed `(s16)` cast on a u16 field forces a signed `lh` load (vs `lhu`) and a
   signed branch (`bgtzl`/`blez`) on its value; use it when the asm sign-extends.
 - Read a `u8`/`u16` param into a WIDER local (`s32 a = arg2;`) to reproduce a
@@ -269,6 +276,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   form (named local, `register`, comma-expr `return (r=..., f(), r)`, `if(1)`-wrap)
   produces the same stack spill; the frame-size + offset cascade is the whole diff.
   Unsteerable from C; bail, decomp-permuter candidate.
+- -g3 home of a singly-used call result into the call's own register lineage:
+  when the target homes a `jal`/`jalr` result (`sw v0,off` in the delay slot) and
+  RELOADS it into v0 before its single use, IDO from a plain `s32 res` local FOLDS
+  the home away (no spill, with a v0/v1 swap). Marking `res` volatile forces a home
+  but reloads into a FRESH temp at the WRONG offset (not v0), and every address-of /
+  self-store / pointer-deref form either folds the home back out or grows the frame.
+  IDO won't home a use-once value into a callee register from C — bail (stub),
+  decomp-permuter candidate.
 - If after ~4-6 iterations the ONLY remaining diff is a single register name
   ('r' markers, everything else identical), or a single instruction's delay-slot
   placement, it is almost certainly an irreducible JUSTREG / instruction-schedule

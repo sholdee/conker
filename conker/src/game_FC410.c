@@ -7,4 +7,6 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC410/func_150CF040.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FC410/func_150CF080.s")
+void func_150CF080(s32 *arg0) {
+    arg0[0x21] |= 0x4000;
+}
