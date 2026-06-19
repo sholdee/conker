@@ -47,7 +47,16 @@ Node15178B98 *func_15178BE4(u8 arg0, s32 arg1, s16 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A5440/func_15178C34.s")
+Node15178B98 *func_15178C34(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4) {
+    Node15178B98 *node;
+
+    node = func_15178B98(arg0);
+    if (node != NULL) {
+        node->unk10 = (arg1 << 16) | (arg2 & 0xFFFF);
+        node->unk14 = arg3 << 16;
+        node->unk30 = arg4;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A5440/func_15178C9C.s")
 

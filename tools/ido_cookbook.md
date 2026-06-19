@@ -97,6 +97,26 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 
 ## Loops
 - Backward branch at the bottom of the body => `do { } while (cond);`, not for/while.
+- Flip the SAVED-REGISTER coloring of a counter/pointer pair (e.g. target wants
+  counter=s0, walk-pointer=s1, but a `for`/`do-while` gives the INVERSE i=s1,p=s0 —
+  a pure register-rename diff) by writing the loop as
+  `init_counter; while(1){ <body>; counter++; ptr += stride; if(counter==N) break; }`
+  with an EXPLICIT bottom-of-loop break. IDO allocates the saved regs in the order
+  the locals first become live: the counter init must stay BEFORE the entry test (it
+  becomes `move s0,zero` ahead of the loop's leading `beq`), and the pointer init
+  must sit INSIDE the leading guard (its `lui` lands in the entry branch's delay
+  slot). A `for`/`do-while` reorders these and swaps the s0/s1 assignment.
+- No-unroll vs upward-`slt` mutual exclusion (lookup-table / match scan): when a tiny
+  inner loop in the target is SINGLE-BODY (not unrolled) AND counts UP with an index
+  test (`slt at,j,count; bnez at`), you generally cannot get BOTH from C. Every upward
+  `<`-bound form (`for`, `while(j<count)`, `do{}while(++j<count)`, `base[j]`, a walking
+  pointer, or `p != base+count`) makes IDO -O2 UNROLL the loop 4-way (`andi t,_,0x3`
+  remainder prologue + duplicated early-return bodies). The ONLY non-unrolling form is
+  `while(count--)` (the countdown idiom), but it counts DOWN (`addiu a0,a0,-1; bnez`),
+  the WRONG bound test vs the target's upward slt. These two requirements are not
+  simultaneously satisfiable from C; if that is the only residual, bail (decomp-permuter).
+  (Only reading the count in the for-condition or `while(count--)` blocks unrolling — an
+  increasing inner counter with a loop-invariant count otherwise unrolls.)
 - `while (i--)` (implicit `!= 0`) blocks IDO's -O2 loop-unrolling that
   `for(...)` and `while(i != 0)` trigger; it also emits `move/beqz` on the raw
   value instead of an `sltu` boolean. Use it for simple countdown loops.

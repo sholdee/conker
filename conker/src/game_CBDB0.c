@@ -39,7 +39,20 @@ void func_1509F5A8(s32 arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F5F4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F660.s")
+extern struct127 *func_1505EEF4();
+
+void func_1509F660(s32 arg0, s32 arg1) {
+    struct127 *temp;
+
+    temp = func_1505EEF4(arg0);
+    if (temp != 0) {
+        if (arg1 != 0) {
+            func_10010A3C(temp);
+        } else {
+            func_100109D0(temp);
+        }
+    }
+}
 
 void func_1509F6B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     func_10010F30(arg0, arg1, arg3, arg2, 0);
