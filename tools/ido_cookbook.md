@@ -63,6 +63,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - A value still live in v0 (int) or f0 (float) at `jr ra` usually means the
   function RETURNS it. Add an explicit `return <that value>;` to force it — this
   also pins the value's register and often fixes downstream allocation.
+- Declare a function `void` (not `s32`) when its callee's result is meant to flow
+  straight out: an `s32` return type makes IDO PRESERVE the call result as a return
+  value, emitting a spurious `move v1,v0` (and/or using v1 where the target uses v0
+  directly, e.g. in a `beqz` delay slot). If the asm uses v0 directly with no such
+  move and the function's "result" is just whatever the tail call left, type it
+  `void` (and call siblings without `return`, just letting v0 pass through).
 - Branch-sense from `slt`+`beqz`: a `slt at,a0,X; beqz at,->body` runs the body
   when `a0 < X`, so the source condition is `a0 < X` (NOT `>=`). Writing the
   inverted `>=`/`!=` form flips the only diff to `bnez` vs `beqz`; match the
@@ -170,6 +176,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Force `lbu` (unsigned byte load) vs `lb` on a field the prototype declares signed
   (`s8`) by reading it through `*(u8*)&p->field`; the plain `p->field` emits the
   signed `lb`. (Byte-load analog of the s16/u16 lh/lhu rule.)
+- A signed-byte (`lb`) read off a global declared `u8[]` needs both the s8 typing AND
+  an explicit `s8 *p = (s8*)&D_xxxx[i];` pointer local read via `*p`: materializing the
+  address into the pointer local first pins the (address-in-pointer-reg, value-in-other)
+  register pair, whereas indexing the array directly (`((s8*)D_xxxx)[i]`) gives the
+  INVERSE register assignment for the address/value pair. Use the explicit-pointer-local
+  form when the asm holds the element address and the loaded value in a specific order.
 - Read a `u8`/`u16` param into a WIDER local (`s32 a = arg2;`) to reproduce a
   word home (`sw`, not `sb`) with no re-masking `andi`; the narrow type would home
   byte-width and re-mask on use.
@@ -302,6 +314,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Defeat CSE of a duplicated priming load from C: instead of reading `arg0`
   directly, write `p = &arg0[i];` (with i=0) then deref `p` — the indexed address
   blocks the collapse and forces the separate load IDO's target emits.
+- Force a per-copy RELOAD of a pointer field that intervening stores may ALIAS by
+  writing those stores through UNTYPED byte-pointer arithmetic
+  (`*(f32*)((u8*)arg+off) = ...`): the raw cast defeats IDO's alias analysis, so it
+  re-loads the pointer field (`lw vN,off(arg)`) before EACH copy through it (the
+  target assumes the stores to nearby fields could clobber the pointer). Typed
+  struct-member stores instead let IDO prove no-alias and CACHE the pointer once,
+  collapsing the reloads. (Pairs with: read the pointer ONCE as a value for a
+  null-check, and again via its address for each copy.)
 - Force TWO separate loads of the SAME field (a condition load + a body reload) by
   giving the test and the body DIFFERENTLY-TYPED reads: e.g. condition
   `*(s32*)(arg+off) != 0` (int) and body `*(u8**)(arg+off)` (pointer). Same-typed

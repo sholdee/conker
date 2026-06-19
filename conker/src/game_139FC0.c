@@ -15,7 +15,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510D404.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510D608.s")
+void func_1510D608(s32 arg0, s32 arg1) {
+    s8 *p = (s8 *)&D_800BC448[arg0];
+    s8 temp = *p;
+    if (temp != 0) {
+        *p = (temp & 0x40) | arg1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510D630.s")
 

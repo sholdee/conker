@@ -21,4 +21,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F8590/func_150CBE88.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F8590/func_150CBF5C.s")
+struct Func150CBF5C {
+    char pad0[0x1C];
+    s16 unk1C;
+    char pad1E[0x58 - 0x1E];
+    s32 unk58;
+};
+
+void func_150CBF5C(struct Func150CBF5C *arg0) {
+    arg0->unk58 |= 1;
+    arg0->unk1C = 0x20;
+}

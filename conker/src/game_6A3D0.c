@@ -7,7 +7,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503D368.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503D438.s")
+void func_1503D438(s32 *arg0, s32 arg1) {
+    s32 temp = *arg0;
+    if (temp != 0 && (temp & 0x0F000000) == 0) {
+        *arg0 = temp + arg1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503D45C.s")
 
