@@ -45,7 +45,29 @@ void func_150AF790(void *arg0, u8 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150AF7C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150AFBF4.s")
+extern f32 sinf(f32);
+
+struct Sub150AFBF4 {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+};
+
+struct Obj150AFBF4 {
+    char pad0[0x10];
+    f32 unk10;
+    char pad14[0x5C];
+    struct Sub150AFBF4 unk70;
+};
+
+s32 func_150AFBF4(struct Obj150AFBF4 *arg0) {
+    struct Sub150AFBF4 *p = &arg0->unk70;
+    p->unk8 = p->unk8 + p->unkC * D_800BE9A4;
+    p->unk8 = func_15144B68(p->unk8);
+    arg0->unk10 = sinf(p->unk8) * p->unk4 + p->unk0;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150AFC68.s")
 

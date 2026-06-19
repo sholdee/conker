@@ -122,7 +122,21 @@ void func_15022754(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_150227BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15022848.s")
+extern void func_15022398(s32, s32);
+extern void func_150222E0(s32, s32);
+
+void func_15022848(s32 arg0) {
+    s32 i;
+
+    if ((&D_800C35EA)[arg0] == 1) {
+        D_800C3638 = 0;
+        for (i = 0; i < D_800C363A[arg0]; i++) {
+            func_15022398(i, arg0);
+            func_150222E0(i, arg0);
+        }
+        D_800C3638 = 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_150228E4.s")
 

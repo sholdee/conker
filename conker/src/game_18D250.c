@@ -3,9 +3,22 @@
 #include "variables.h"
 
 
+extern void *func_15167A68(s32, s32, s32, s32, u8, s32);
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18D250/func_1515FDA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18D250/func_1515FF74.s")
+void *func_1515FF74(void *arg0, s32 arg1, u8 arg2, s32 arg3) {
+    void *temp_v0;
+    void *sp24;
+
+    temp_v0 = func_15167A68(0x34, arg3, arg1 + 0x18, 1, arg2, 1);
+    if (temp_v0 == 0) {
+        return NULL;
+    }
+    sp24 = temp_v0;
+    memcpy((s32)temp_v0 + 0xE, arg0, 8);
+    return sp24;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18D250/func_1515FFEC.s")
 

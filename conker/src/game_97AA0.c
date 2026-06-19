@@ -41,7 +41,28 @@ s32 func_1506AA08(s32 arg0, s32 arg1) {
     return func_151B6320(arg0, 0xFF, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506AA48.s")
+struct s1506AA48 {
+    s32 unk0;
+    s32 unk4;
+};
+
+void func_1506AA48(struct127 *arg0, struct s1506AA48 *arg1) {
+    struct260 *temp_v0;
+    struct {
+        struct127 *unk0;
+        u8 unk4;
+        struct s1506AA48 unk8;
+    } sp34;
+
+    sp34.unk0 = arg0;
+    sp34.unk4 = arg0->unique_id;
+    sp34.unk8 = *arg1;
+
+    temp_v0 = func_15149130(0xA, 0x7, 0x23, -1, 1, 0x21, (struct37 *)0x10, 0xFF, 1);
+    if (temp_v0 != NULL) {
+        memcpy((void *)((s32)temp_v0 + 0x28), &sp34, 0x10);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506AAE0.s")
 
