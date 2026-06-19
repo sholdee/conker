@@ -68,7 +68,14 @@ void func_151174A0(struct Obj151174A0 *arg0) {
     arg0->unk8 = func_151172D8(arg0, arg0->unk8);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151174C8.s")
+struct Obj151174C8 {
+    char pad0[0x4];
+    f32 unk4;
+};
+
+void func_151174C8(struct Obj151174C8 *arg0) {
+    arg0->unk4 = func_151172D8((struct Obj151174A0 *)arg0, arg0->unk4);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151174F0.s")
 

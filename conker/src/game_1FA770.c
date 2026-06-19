@@ -130,13 +130,16 @@ s32 func_151D10C4(void *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D1328.s")
 
-void func_151D13E0(void);
+void func_151D13E0(struct260 *arg0);
 
-void func_151D1368(void) {
-    func_151D13E0();
+void func_151D1368(struct260 *arg0) {
+    func_151D13E0(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D1388.s")
+void func_151D1388(struct260 *arg0) {
+    func_151D1368(arg0);
+    func_1514933C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D13B4.s")
 

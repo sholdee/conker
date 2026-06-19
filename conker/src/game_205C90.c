@@ -18,7 +18,10 @@ void func_151D8B88(struct102 *arg0) {
     func_15169804(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_205C90/func_151D8BB4.s")
+void func_151D8BB4(struct102 *arg0) {
+    func_151D8B24(arg0);
+    func_15169824(arg0);
+}
 
 void func_151D8C00(void *, void *);
 

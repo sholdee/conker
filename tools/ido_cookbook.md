@@ -734,6 +734,16 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   IDO keeps the live param in a0 across the call setup, so there is no `sw a0,off(sp)`
   /reload (contrast the sequential-two-call shape above, where the first call's
   clobber forces the home). Pass arg0 as-is when the asm has no a0 home.
+- A0 RELOADED in a `jal`'s delay slot reveals the CALLEE consumes the arg — and may
+  expose a mis-signatured NEIGHBOR you must correct: when the asm reloads a0 (`lw
+  a0,off(sp)`) in a forwarding call's delay slot (vs a bare `nop`), the called
+  function takes that arg, so forward it from C. If a sibling/neighbor callee in YOUR
+  file is currently typed `(void)` (forwarding to ITS own callee with no arg), correct
+  BOTH that neighbor's signature AND the function it forwards to, to take and pass the
+  arg through — driven by the neighbor's own asm (a `nop` delay slot = pass-through, no
+  reload; its forwarded callee reading a0 = consumes it). These signature fixes keep
+  the neighbor matching while letting your function reload a0 in the slot. (Inverse of
+  the bare-`nop` pass-through rule: nop = arg not consumed, reload = arg consumed.)
 - A 5th (stack) argument FORCES a frame + the standard stack-arg slot at sp+0x10:
   a single-call wrapper that supplies a 5th callee arg (the first arg beyond a0-a3)
   emits a 0x20 frame and stores that arg to sp+0x10 (e.g. a `swc1 fN,0x10(sp)` for an

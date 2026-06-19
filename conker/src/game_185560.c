@@ -39,7 +39,12 @@ void func_15158AD0(struct102 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158BD0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158CD4.s")
+void func_1514EDF0(struct102 *, s32);
+
+void func_15158CD4(struct102 *arg0) {
+    func_1514EDF0(arg0, *(s32 *)((u8 *)arg0 + 0x18));
+    func_15169804(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158D00.s")
 
