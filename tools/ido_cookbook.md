@@ -614,6 +614,43 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   load, or a `default:` label — all give the identical 10-temp allocation. When
   only `r` (reg-only) diffs remain and the temp COUNT differs by one with a
   skipped mid-pool register, it is an allocator artifact: BAIL (stub).
+- Dual-width access (same field read as both `lbu` and `lw` on different paths):
+  declare the field as a UNION of the two widths (`union { s32 w; u8 b; } u4;`) and
+  read `u.b` on the byte path, `u.w` on the word path. This matches both access
+  widths cleanly without a `*(s32*)&` reinterpret cast and without re-masking.
+- Hoist a field LOAD INSIDE a conditional block (after the `bnez`, as the first
+  statement of the taken branch) to fix a load-ORDER mismatch in the controlling
+  comparison: keeping the load scheduled inside the branch can force IDO to load the
+  OTHER compared operand first, fixing a v0-vs-aN load-order diff. Reading the field
+  before the if hoists its load above the branch.
+- An extra dummy/return local declared BEFORE a stack struct local reserves a
+  4-byte slot (plus alignment) ABOVE the struct, growing the frame and pinning the
+  struct at the target's offset. Declaring that local AFTER the struct places it
+  below (wrong struct offset). Use a before-the-struct local to bump frame size and
+  shift the struct up when the frame is a word short. (Pairs with the named-pointer
+  frame-grow idiom.)
+
+## When to BAIL (additional schedule/JUSTREG cases)
+- Prologue arg-homing order driven by clobber-prep: when the target homes the
+  args it clobbers/preps FIRST (e.g. `sw a3; andi a3,0xff; move a3; move a2` as a
+  tight group at the TOP, homing a2/a3 before a0/a1) but every C form schedules the
+  mask/move LATE (or reloads via `lbu`/`lw`) and homes a0/a1 early, the homing order
+  is set by IDO's clobber-prep ordering and is unsteerable from C (tried u8/s8/s32
+  arg types, `(u8)`cast vs `&0xFF` vs reassign vs temp, eager arg locals). Bail.
+- Return-phi shape when an intervening call SPILLS the result: the `if(p){...}
+  return p;` phi idiom assumes p stays in v0 with no spill. If a call inside the
+  body (e.g. `memcpy`) spills the result to the stack, IDO reloads OPTIMALLY into v0
+  on the non-null path and gives the zero path its own `b epilogue; move v0,zero` —
+  whereas the target reloads into v1 then `move v0,v1`. No C form (two-return,
+  if/else, goto-merge, struct-ptr return) reproduces the redundant v1->v0 once a
+  spill is in play. Single-schedule diff; bail, decomp-permuter candidate.
+- Saved-pointer vs array-subscript tradeoff in an indexed walk: a saved element
+  pointer `e = &base[idx]` keeps a later same-element access correct (no recomputed
+  base) but an array-subscript form recomputes the byte offset (extra `addu`);
+  CONVERSELY a named `next = idx+1` local is required to keep the final compare as
+  `next*size < LIMIT*size` (inline `idx++`/`idx+1` strength-reduces the compare to a
+  scaled form). When both a saved pointer AND a named-next are correct yet a uniform
+  register-name cascade + one li-hoist remain, it is JUSTREG/schedule — bail.
 - Folding note for that family: a store whose address equals `base+4` may be
   emitted by the target as its OWN relocated symbol (`%hi/%lo(D_NEXT)`), NOT as
   `%lo(D_base+0x4)`. Match it by declaring a SEPARATE `extern` for the +4 symbol
