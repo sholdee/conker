@@ -21,4 +21,14 @@ s32 func_150E2F90(s32 a0, s32 a1, s16 a2) {
     return func_150E2DA4(a0, a2);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_10EF60/func_150E2FC0.s")
+void func_150E2FC0(u8 *a0, s32 *a1, u8 a2) {
+    if (a2 == 0x2D) {
+        if (a1[0] == *(s32 *)(a0 + 0xDC)) {
+            *(s32 *)(a0 + 0xDC) = a1[1];
+            a0[0xDA] = *(u8 *)((u8 *)a1 + 9);
+        } else if (a1[1] == *(s32 *)(a0 + 0xDC)) {
+            *(s32 *)(a0 + 0xDC) = a1[0];
+            a0[0xDA] = *(u8 *)((u8 *)a1 + 8);
+        }
+    }
+}

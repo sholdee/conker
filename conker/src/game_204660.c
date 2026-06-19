@@ -29,7 +29,14 @@ void func_151D7404(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D7724.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D7770.s")
+s32 func_151D7770(s32 *arg0) {
+    u8 *p = (u8 *)arg0 + 0x28;
+    s32 *v = (s32 *)arg0[0x40 / 4];
+    if (*(u16 *)((u8 *)v + 0x84) == 0) {
+        p[5] &= ~1;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D779C.s")
 

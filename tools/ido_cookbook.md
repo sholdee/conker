@@ -518,6 +518,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Index-add operand order: `base[idx]` emits `addu index,base`, whereas byte
   arithmetic `(Struct*)((u8*)base + idx*size)` emits `addu base,index`. Use the
   byte form when the asm adds the base into the index register (not vice versa).
+- Fold the element-size scale INTO an odd-stride multiply chain: when the asm
+  computes a BYTE offset directly (e.g. `812*idx` for a u16[] with element stride
+  812 = 406*2) via a single sll/subu/addu chain folded into the table base, write
+  the access in byte-offset form `*(u16*)((u8*)base + 812*idx)` so the *2 element
+  scaling is absorbed into the multiply. The natural element-index form
+  `base[406*idx]` instead emits a SEPARATE `<<1` element scale (an extra register
+  off the index), giving register-rename diffs. Use the byte-offset cast when the
+  multiplier in the asm already encodes the element size.
 - Two DIFFERENT element strides off one base (e.g. a *2 stride for 16-bit fields
   and a *4 stride for 32-bit fields, same index): use raw byte-pointer casts
   `((u8*)base + idx*N + offset)` per group to reproduce the distinct scaled adds;

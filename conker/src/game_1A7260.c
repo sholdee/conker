@@ -17,7 +17,18 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A7260/func_1517A84C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A7260/func_1517A958.s")
+extern s16 D_800DD450;
+extern s32 func_1517A394();
+
+s32 func_1517A958(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    arg2 = arg2;
+    arg3 = arg3;
+    D_800DD450 = -1;
+    if ((arg1 == 0xC) || (arg1 == 0x59)) {
+        arg0 = func_1517A394();
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A7260/func_1517A9A8.s")
 
