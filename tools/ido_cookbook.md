@@ -808,6 +808,16 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   self-store / pointer-deref form either folds the home back out or grows the frame.
   IDO won't home a use-once value into a callee register from C — bail (stub),
   decomp-permuter candidate.
+- Loaded value held in v0 then `move`d to a call arg vs coalesced straight in: when
+  the target loads a value (e.g. `*arg` via one `lw`/`lbu`) into $v0, HOISTS a sibling
+  constant arg (`li a0,2`) BEFORE the controlling branch, and copies the value with
+  `move a1,v0` at the `jal`, EVERY single-load C form instead coalesces the value
+  DIRECTLY into the destination arg reg (`lw a1,...` / value-in-a1) with the constant
+  in the jal delay slot (one fewer instr). A two-read/volatile form can recover the
+  arg-constant hoist and the instruction count but reloads into a FRESH temp + reload
+  instead of the `move a1,v0` (worse). You cannot force the load-to-v0-then-move-to-arg
+  pattern from C — IDO coalesces a use-once load into its consumer register. Bail (stub),
+  decomp-permuter candidate.
 - If after ~4-6 iterations the ONLY remaining diff is a single register name
   ('r' markers, everything else identical), or a single instruction's delay-slot
   placement, it is almost certainly an irreducible JUSTREG / instruction-schedule
@@ -975,6 +985,19 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   load, or a `default:` label — all give the identical 10-temp allocation. When
   only `r` (reg-only) diffs remain and the temp COUNT differs by one with a
   skipped mid-pool register, it is an allocator artifact: BAIL (stub).
+- Straight-line indexed-RMW temp-counter off-by-one: a tiny non-switch body that
+  indexes a global array, compares a byte field, and on equality ORs a bit into an
+  adjacent byte field (`lbu tN,off(base); ori tM,tN,k; sb tM,off(base)`) can match the
+  base/index/compare prologue BYTE-for-BYTE yet leave the 2-3 instruction body's temp
+  counter one position too HIGH (e.g. target `t0/t1` but C `t9/t0`, with the target
+  SKIPPING a register the prologue would otherwise occupy). The body temp band is
+  invariant to address formulation (`(u8*)glob + idx*size`, `&glob[idx]`, array-
+  subscript byte forms, a tagged-struct overlay all give the SAME body diff), and
+  pressure shifts it the WRONG way (caching the compared field into a local moves the
+  body DOWN to t8/t9; recomputing the address in the body spawns a separate base, worse).
+  No C form bumps the body up a register while keeping the clean prologue — the counter
+  nuance is tied to how the (often unused-arg) spill interacts with the original
+  statement shape. Reg-only residual; BAIL (stub), decomp-permuter candidate.
 - Dual-width access (same field read as both `lbu` and `lw` on different paths):
   declare the field as a UNION of the two widths (`union { s32 w; u8 b; } u4;`) and
   read `u.b` on the byte path, `u.w` on the word path. This matches both access

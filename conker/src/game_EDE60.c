@@ -3,7 +3,9 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_EDE60/func_150C09B0.s")
+void func_150C09B0(s32 arg0, s32 arg1, s32 arg2) {
+    func_15169850(arg1, (u8)arg2, arg0 + 0x20, arg0 + 0x24, arg0);
+}
 
 extern void func_150C0A48(struct102 *);
 

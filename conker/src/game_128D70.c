@@ -13,7 +13,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_128D70/func_150FC818.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_128D70/func_150FC930.s")
+s32 func_150FC930(struct260 *arg0, s32 arg1, s32 arg2) {
+    u8 v = *((u8 *)arg0 + 4);
+    if (v == 0x12 || v == 0x23 || v == 0x73 || v == 0x8A) {
+        return 0;
+    }
+    return 1;
+}
 
 void func_150FC974(struct260 *arg0) {
     s32 *p = (s32 *)((u8 *)arg0 + 0x38);

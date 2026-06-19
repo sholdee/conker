@@ -24,7 +24,11 @@ void func_150B60E0(s32 *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E2DA0/func_150B6110.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E2DA0/func_150B6450.s")
+void func_150B6450(struct102 *arg0, s32 arg1, u8 arg2) {
+    if (arg2 == 0x4A) {
+        func_1516972C(arg0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E2DA0/func_150B648C.s")
 
