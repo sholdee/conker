@@ -7,7 +7,22 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517B6E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517B7A8.s")
+s32 func_1517B7A8(s16 *a0, s16 *a1, s32 *a2, s32 a3) {
+    s32 v0 = *a2;
+
+    if (v0 >= 0x300) {
+        if (v0 >= 0x501) {
+            *a2 = v0 - 0x200;
+        } else {
+            *a2 = 0x300;
+        }
+    }
+
+    a1[0] = a0[0];
+    a1[1] = a0[1];
+    a1[2] = a0[2];
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517B7F8.s")
 

@@ -35,7 +35,18 @@ void func_1517F448(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F488.s")
+extern u8 D_800DDD90[];
+extern u8 D_800DDD9C[];
+extern s16 D_800DDE10[];
+
+void func_1517F488(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    u8 *p = &D_800DDD90[arg5 * 3];
+    p[0] = arg0;
+    p[1] = arg1;
+    p[2] = arg2;
+    D_800DDD9C[arg5] = arg3;
+    D_800DDE10[arg5] = arg4;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F4D8.s")
 

@@ -35,7 +35,12 @@ void func_150FAD28(void) {
     func_151494E0(0, 0x4D);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FAD78.s")
+void func_150FAD78(void) {
+    func_1515F170(8, 1);
+    func_1515F170(7, 0);
+    func_151494E0(*(s32 *)&D_800D3098 + 0x514, 0x31);
+    func_151494E0(0, 0x4C);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FADC8.s")
 

@@ -39,7 +39,18 @@ void func_15086C70(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15086CBC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15086D48.s")
+extern s16 D_80087290;
+
+s32 func_15086D48(s32 arg0) {
+    s32 i;
+
+    for (i = 0; i < D_80087290; i++) {
+        if (arg0 == ((u8 *)D_800D2350)[i * 16 + 7]) {
+            return i;
+        }
+    }
+    return 0xFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15086D94.s")
 

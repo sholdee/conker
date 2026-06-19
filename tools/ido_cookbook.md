@@ -356,6 +356,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - For a NEGATED index, write `0 - v` (binary subtract from 0), not unary `-v`: the
   binary form scales-then-negates (`sll`,`negu`); unary negates-then-scales. Same fix
   for any negate+shift ordering.
+- Array-scan strength-reduction wants the INDEX form, not an explicit walking-pointer local:
+  `((u8*)D_glob)[i*stride+off]` lets IDO reduce the per-iter address to a walking pointer
+  (`addiu p,p,stride`, no sll/multu) AND DEFER the base load (`lw p,%lo(D_glob)`) into the
+  guard's `blezl` (branch-likely) delay slot — pinning the count/pointer reg pair. An explicit
+  `p = D_glob; p++` local forces an EAGER base load + plain `blez` (wrong reg pair); `&D_glob[i]`
+  doesn't reduce at all (sll/addu). (Inverse of the masked-counter-blocks-induction rule.)
 - Distinct `addiu vN,v0,K` + small-offset store (vs a folded `K+m(v0)`): null-check the SOURCE global DIRECTLY (`if (D_glob != 0)`, not a cached temp) to pin it in v0, AND compute the offset pointer into its OWN local via `u8*` arithmetic (`q = (T*)((u8*)D_glob + K)`). A temp null-check, `temp += K`, or `temp[1]` all fold or reuse v0.
 
 ## Register allocation & evaluation order (the usual "so close" diffs)

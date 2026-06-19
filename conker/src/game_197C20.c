@@ -38,7 +38,13 @@ void func_1516D2E0(u8 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_197C20/func_1516D328.s")
+void func_1516D328(u8 *arg0) {
+    if ((arg0 != 0) && (*arg0 == 0x51)) {
+        *(s32 *)(*(s32 *)(arg0 + 0x10)) |= 0x100;
+        *(s32 *)(*(s32 *)(arg0 + 0x10)) &= ~0x400;
+        arg0[0x20] = *(u8 *)(*(s32 *)(arg0 + 0x10) + 8);
+    }
+}
 
 u8 *func_1516D378(u8 *arg0) {
     if ((arg0 != 0) && (*arg0 == 0x51)) {
