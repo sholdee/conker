@@ -64,7 +64,11 @@ void func_1513259C(struct102 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133E3C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133E84.s")
+void func_15133EEC(s32 arg0, u16 arg1, u8 arg2, s32 arg3);
+
+void func_15133E84(s32 arg0, void *arg1, s32 arg2) {
+    func_15133EEC(arg0, *(u16 *)((u8 *)arg1 + 0x170), *(u8 *)((u8 *)arg1 + 0x172), *(s32 *)((u8 *)arg1 + 0x174));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133EB8.s")
 

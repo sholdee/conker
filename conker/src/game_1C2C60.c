@@ -148,7 +148,13 @@ void func_1519BF8C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519BFBC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C06C.s")
+void func_1519C06C(u8 *arg0) {
+    u8 *temp = *(u8 **)(arg0 + 0x98);
+    u16 val = *(u16 *)(temp + 0x130);
+    if (val != 0) {
+        func_100111C8(val);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C09C.s")
 

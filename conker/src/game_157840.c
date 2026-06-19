@@ -15,7 +15,25 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512B53C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512B5FC.s")
+struct Struct1512B5FC {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+    s32 unk4;
+    s32 unk8;
+};
+
+void func_1512B5FC(struct Struct1512B5FC *arg0, s32 arg1, s32 arg2) {
+    arg0->unk2 = arg0->unk1;
+    if (arg0->unk4 < arg1) {
+        arg0->unk1 = 0;
+    } else {
+        arg0->unk1 = 1;
+    }
+    arg0->unk8 = arg2;
+    arg0->unk4 = arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512B630.s")
 

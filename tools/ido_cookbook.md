@@ -178,6 +178,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   (not `lb`). The clean rotation is what matches byte-for-byte.
 - `bnel`/`beql` are branch-LIKELY: the delay-slot instruction executes ONLY when
   the branch is taken. Watch for stores/ops that belong to the taken path only.
+- A NON-likely `beqz`/`bnez` delay-slot instruction ALWAYS executes (both paths),
+  so a store/assignment sitting in a plain (non-likely) branch's delay slot is
+  UNCONDITIONAL — pull it OUT of the conditional in source. Putting that store
+  inside the if-true block instead makes IDO emit a branch-LIKELY and DUPLICATE the
+  store on the else path (large score). Identify which writes are conditional by the
+  branch's likely-bit, not by proximity to the if: e.g. `b=a; if(...)c=K;` (only `c`
+  conditional) when the `b=a` store is in a plain-beqz delay slot.
 - A branch-LIKELY (`bnel`) with a delayed `v0=0` often means an `if(cond==1){...}
   else return 0;` wrapper — the explicit else-return-0 produces both. Use two
   SEPARATE `if`s (not `else if`) to keep a middle test as a non-likely `bnez`.
@@ -905,6 +912,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   means `s16[]`, `swc1` means `f32[]`, `sb`/`sw` give `u8`/`s32`. Sizing a local array
   to match the callee's accesses can be the fix that grows/shifts the frame to the
   target's layout.
+- A local STACK BUFFER's array LENGTH controls the frame size and the buffer's slot:
+  an exact-fit array (e.g. `s8 buf[5]` for a pointer at offset 0 + a byte at offset 4)
+  keeps the minimal frame with the buffer at the target's offset, whereas an
+  OVERSIZED array (e.g. `s8 buf[9]`) pads the frame to the next 8-aligned size and
+  shifts the buffer offset. Size the array to the EXACT span of bytes actually
+  written (per the asm's `sw`/`sb` offsets into it), not a rounded-up convenience
+  size, when a too-large frame is the only diff.
 - Varargs printf-style wrapper: `#include "libc/stdarg.h"` and a `va_arg` copy loop
   give the exact pointer-bump alignment idiom (`(p+3)&~3` / `(p+7)&~3`); size the
   stack buffer so its last element OVERLAPS the arg-home region (e.g. `s32 buf[17]`

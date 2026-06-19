@@ -208,7 +208,9 @@ void func_1514F508(s32 arg0) {
     func_151D74B0(arg0, 3, 0, 0xFF, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F538.s")
+void func_1514F538(s32 arg0) {
+    func_151D74B0(arg0, 4, -1, 0xFF, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F568.s")
 

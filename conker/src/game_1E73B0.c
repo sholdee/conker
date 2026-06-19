@@ -91,9 +91,20 @@ void func_151BE1E4(struct260 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE604.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE644.s")
+struct Sub151BE644 {
+    u8  pad0[0x5];
+    u8  unk5;
+    u8  pad6[0x4A];
+    s32 unk50;
+};
 
-extern void func_151BE644(struct210 *);
+void func_151BE644(struct210 *arg0) {
+    struct Sub151BE644 *v0 = (struct Sub151BE644 *)((u8 *)arg0 + 0x110);
+    if (*(s32 *)((u8 *)arg0 + 0x160) != 0) {
+        s32 v1 = v0->unk50 + 0x28;
+        *(s32 *)(v1 + (v0->unk5 << 2) + 8) = 0;
+    }
+}
 
 void func_151BE674(struct210 *arg0) {
     func_151BE644(arg0);

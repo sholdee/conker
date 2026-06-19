@@ -85,7 +85,13 @@ void func_15101328(struct210 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_151026BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_151027E8.s")
+void func_151027E8(struct210 *arg0) {
+    s8 sp18[5];
+
+    *(struct210 **)&sp18[0] = arg0;
+    sp18[4] = *(u8 *)((s32)arg0 + 0x3B);
+    func_151403A8(&sp18, 0x1A);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_1510281C.s")
 
