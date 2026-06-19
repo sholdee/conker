@@ -17,6 +17,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10B7D0/func_150DEB58.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_10B7D0/func_150DEBE0.s")
+extern void func_150DEC28(u8, s32);
+
+void func_150DEBE0(s32 arg0) {
+    u8 i;
+
+    for (i = 0; i < 4; i++) {
+        func_150DEC28(i, 1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10B7D0/func_150DEC28.s")

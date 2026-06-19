@@ -7,7 +7,16 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F3270/func_150C5E0C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F3270/func_150C5EFC.s")
+extern s32 func_1513F6C0(void *arg0, s32 arg1, s32 arg2);
+
+s32 func_150C5EFC(u8 *arg0) {
+    s32 *temp = (s32 *)((*(u8 **)((u8 *)arg0 + 0xB0)) + 0x58);
+    temp[0] = 0;
+    *(s32 *)((u8 *)arg0 + 0x18) |= 2;
+    *(u8 **)((u8 *)arg0 + 0xB0) = 0;
+    func_1513F6C0(arg0, 0, 0);
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F3270/func_150C5F40.s")
 

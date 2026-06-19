@@ -77,6 +77,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   matching a target that primes the zero return and patches it on the taken side.
   Inverting to `if (ptr == 0) return 0; return *field;` flips the branch sense and
   drops the eager-zero priming.
+- Post-call `bnez v0` => the POINTER-return path is the FALL-THROUGH: when a
+  function ends `r = call(arg); if(!r){...; return &D_glob;}` and the asm emits
+  `bnez v0,->skip` after the `jal`, the &global (non-null) return must be the
+  trailing EARLY-RETURN inside the `if(!r)` block, NOT an else-branch or a named
+  `ret` local — both of those regress with an extra `move v0,v1`. Make the null
+  (taken) path the early-return body and let the other path fall through.
 
 ## Loops
 - Backward branch at the bottom of the body => `do { } while (cond);`, not for/while.
@@ -303,6 +309,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - A base pointer (`addiu vN,base,off`) only stays distinct (not folded into
   base-relative `+4`/`+8` loads) if you actually read/write THROUGH that pointer;
   do the field access via `*p` to keep `p` live and force the separate base.
+- A NAMED-pointer store materializes a "dead" advance: declaring
+  `s32 *temp = (s32*)(child + K);` and storing via `temp[0] = v` makes IDO FOLD the
+  store offset (`sw v,K(child)`) yet STILL emit the `addiu vN,child,K` advance into a
+  register (the named-pointer idiom forces the base+K to be computed even though no
+  use needs it). A plain `*(s32*)(child+K) = v` omits the stray advance. Use the
+  named-pointer form when the asm has an otherwise-unexplained `addiu vN,base,K`
+  before a store whose offset is already folded. (Confirm the trailing CALL arg is
+  the unmodified base, not temp/temp+K — passing temp+K spills the base instead.)
 - A float param arriving in an INTEGER register (`mtc1 aN,fM` at entry) is still a
   `f32` in the signature — declare it `f32`; IDO emits the int-reg-to-FPU move.
 - A param the target loads as a low BYTE of its un-homed caller stack slot wants

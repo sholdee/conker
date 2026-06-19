@@ -37,4 +37,6 @@ void func_1515BA80(s16 arg0) {
     func_1515B5F4(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_188440/func_1515BAAC.s")
+void func_1515BAAC(s16 arg0) {
+    func_1515B5F4(arg0);
+}

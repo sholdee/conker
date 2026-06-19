@@ -23,7 +23,21 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E9E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E9F8.s")
+extern s32 func_150849A0(void *);
+extern s32 D_8009D910;
+
+void *func_1507E9F8(void *arg0, s32 *arg1) {
+    if (!func_150849A0(arg0)) {
+        if (arg1 != 0) {
+            *arg1 = 5;
+        }
+        return &D_8009D910;
+    }
+    if (arg1 != 0) {
+        *arg1 = 0;
+    }
+    return (void *)0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507EA44.s")
 

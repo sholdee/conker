@@ -33,7 +33,9 @@ void func_150C5C74(s32 arg0) {
     func_1514D3B0(arg0, 0x15, 1, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F2820/func_150C5C9C.s")
+void func_150C5C9C(s32 arg0) {
+    func_1514D3B0(arg0, 0x15, 2, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F2820/func_150C5CC4.s")
 
