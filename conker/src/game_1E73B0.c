@@ -7,7 +7,51 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BA084.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BA468.s")
+typedef struct {
+    s32 unk0;
+    u8  unk4;
+} SubA_151BA468;
+
+typedef struct {
+    u8  pad[0x3B];
+    u8  unk3B;
+} SomeObj_151BA468;
+
+typedef struct {
+    u8  pad[0x50];
+    s32 unk50;
+} Base_151BA468;
+
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        u8  b4;
+    } u4;
+    u8  unk8;
+    u8  unk9;
+} ArgB_151BA468;
+
+void func_151BA468(struct260 *arg0, s32 arg1, u8 arg2) {
+    SubA_151BA468 *temp_v0 = (SubA_151BA468 *)((u8 *)arg0 + ((Base_151BA468 *)arg0)->unk50 + 0xF8);
+    ArgB_151BA468 *b = (ArgB_151BA468 *)arg1;
+    s32 b0 = temp_v0->unk0;
+    SomeObj_151BA468 *o = (SomeObj_151BA468 *)b0;
+
+    if (arg2 == 0) {
+        if ((b0 == b->unk0) || (b->u4.b4 == o->unk3B)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    } else if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->unk0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else if (temp_v0->unk0 == b->u4.w4) {
+            temp_v0->unk0 = b->unk0;
+            temp_v0->unk4 = b->unk8;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BA518.s")
 

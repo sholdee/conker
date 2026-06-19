@@ -130,7 +130,35 @@ void func_151A4F7C(struct102 *arg0, struct102 *arg1, u8 arg2)
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A4FD0.s")
+struct Obj151A4FD0 {
+    char pad0[0x10];
+    s32 unk10;
+    u8  unk14;
+    u8  unk15;
+    u8  unk16;
+    u8  unk17;
+    u8  unk18;
+    u8  unk19;
+    u8  unk1A;
+};
+
+extern struct Obj151A4FD0 *func_15167A68(s32, s32, s32, s32, s32, s32);
+
+struct Obj151A4FD0 *func_151A4FD0(s32 a0, s32 a1, s32 a2, s32 a3, s32 a4, s32 a5, u8 a6, s32 a7) {
+    struct Obj151A4FD0 *ret = func_15167A68(0x5A, 0, a7 + 0x20, 0, 0xFF, 1);
+    if (ret == 0) {
+        return NULL;
+    }
+    ret->unk14 = a0;
+    ret->unk10 = a1;
+    ret->unk15 = a2;
+    ret->unk16 = a3;
+    ret->unk17 = a4;
+    ret->unk19 = a6;
+    ret->unk18 = 0;
+    ret->unk1A = a5;
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A5070.s")
 

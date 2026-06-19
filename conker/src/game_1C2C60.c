@@ -246,7 +246,26 @@ void func_15199834(u8 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519986C.s")
+void func_1516972C();
+
+void func_1519986C(void *arg0, s32 arg1, u8 arg2) {
+    SubA_15198054 *temp_v1 = *(SubA_15198054 **)((u8 *)arg0 + 0x98);
+    ArgB_15198054 *b = (ArgB_15198054 *)arg1;
+
+    if (arg2 == 0 || arg2 == 2 || arg2 == 0x26) {
+        if ((b->unk0 == temp_v1->unk0) || (b->u4.b4 == temp_v1->unk4)) {
+            func_1516972C(arg0);
+        }
+    } else if (arg2 == 0x2D) {
+        if (temp_v1->unk0 == b->unk0) {
+            temp_v1->unk0 = b->u4.w4;
+            temp_v1->unk4 = b->unk9;
+        } else if (temp_v1->unk0 == b->u4.w4) {
+            temp_v1->unk0 = b->unk0;
+            temp_v1->unk4 = b->unk8;
+        }
+    }
+}
 
 void func_15199980(void *);
 void func_151478F4(void *);

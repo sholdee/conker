@@ -840,6 +840,15 @@ Register-allocation rotation / coupling:
   indexed walk (saved `e = &base[idx]` avoids a recomputed base but a named `next = idx+1`
   is needed to keep the final compare unscaled) can leave a uniform reg cascade + one
   li-hoist — JUSTREG; bail.
+- Sub-object-dispatch home-vs-fold: a swap/dispatch func that materializes a sub-object
+  base per-block as `addiu vN,a0,K` AND ALSO uses arg0 directly (a call `f(arg0)` or a
+  far-field read like `arg0->unk2D` in the else/default arm). Hoisting `temp=&arg->sub`
+  above the branches DOES emit the per-block addiu but -g3 then HOMES arg0 to a saved reg
+  (`move sN,a0` at entry, +1 instr cascading all offsets); per-branch/inline base access
+  avoids the home but FOLDS the base into `K(a0)` loads (no addiu). Mutually exclusive —
+  unlike the plain hoist rule (where the sibling has no arg0-direct use and the hoist just
+  works). Bail; the function-scope-hoist version is byte-correct except the lone home, so
+  harvest it as a permuter seed if its ISOLATED delta is <=80.
 - mflo-in-v0 vs dependent-shift-input-as-fresh-low-temp mutual exclusion: for `(val *
   a1) >> 8`, reassigning the SAME `val` through load->fold->multiply KEEPS mflo in v0,
   but then the dependent shift READS v0 while the target colors its input as a fresh LOW
