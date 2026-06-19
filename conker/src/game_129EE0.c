@@ -23,6 +23,11 @@ void func_150FCFB0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_129EE0/func_150FDC2C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_129EE0/func_150FDCAC.s")
+extern void func_150FDC2C(struct210 *);
+
+void func_150FDCAC(struct210 *arg0) {
+    func_150FDC2C(arg0);
+    func_1513CA6C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_129EE0/func_150FDCD8.s")

@@ -32,7 +32,14 @@ void func_150CFC38(f32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CFD20.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CFD5C.s")
+unsigned char *func_150CFD5C(unsigned char *arg0) {
+    if (*arg0 != 0) {
+        do {
+            arg0++;
+        } while (*arg0 != 0);
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CFD84.s")
 

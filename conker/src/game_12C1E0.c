@@ -24,7 +24,12 @@ void func_150FF2AC(struct127 *arg0, struct17 *arg1, struct17 *arg2, struct17 *ar
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12C1E0/func_150FF474.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12C1E0/func_150FF6B4.s")
+s32 func_150FF6B4(struct127 *arg0, s32 arg1, s32 arg2) {
+    if (arg0->id == 0x98) {
+        return 0;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12C1E0/func_150FF6E0.s")
 

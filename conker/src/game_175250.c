@@ -27,4 +27,8 @@ s32 func_15148EF8(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_175250/func_151490C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_175250/func_15149104.s")
+void func_151478F4(void);
+
+void func_15149104(void) {
+    func_151478F4();
+}

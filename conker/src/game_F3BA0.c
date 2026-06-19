@@ -2,6 +2,8 @@
 #include "functions.h"
 #include "variables.h"
 
+void func_1513470C(struct102 *arg0);
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F3BA0/func_150C66F0.s")
 
@@ -50,6 +52,10 @@ void func_150C6D40(Func150C6D40Arg* arg0) {
     func_151346EC((struct102*)arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F3BA0/func_150C6D68.s")
+void func_150C6D68(Func150C6D40Arg* arg0) {
+    Func150C6D40Inner* inner = &arg0->unk58->inner58;
+    inner->unk18 = 0;
+    func_1513470C((struct102*)arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F3BA0/func_150C6D90.s")

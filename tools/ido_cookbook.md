@@ -135,6 +135,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - `while (i--)` (implicit `!= 0`) blocks IDO's -O2 loop-unrolling that
   `for(...)` and `while(i != 0)` trigger; it also emits `move/beqz` on the raw
   value instead of an `sltu` boolean. Use it for simple countdown loops.
+- strlen / string-end finder (return pointer to the null terminator): write the
+  ROTATED do-while `if (*p) { do { p++; } while (*p); }` to emit the bottom-test
+  `bnel` loop with the load HOISTED to offset `1(base)` (the next char tested in the
+  likely-branch delay slot). A plain `while (p[1])` form peels the entry test AND is
+  off-by-one (reads the wrong offset); the do-while reading `p[1]` explicitly also
+  reads the wrong offset. Type the param `unsigned char*` so the loads are `lbu`
+  (not `lb`). The clean rotation is what matches byte-for-byte.
 - `bnel`/`beql` are branch-LIKELY: the delay-slot instruction executes ONLY when
   the branch is taken. Watch for stores/ops that belong to the taken path only.
 - A branch-LIKELY (`bnel`) with a delayed `v0=0` often means an `if(cond==1){...}

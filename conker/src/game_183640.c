@@ -23,7 +23,10 @@ void func_15156F94(void *arg0) {
     func_151D5E30((void *)((u8 *)arg0 + 0x88));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15156FB8.s")
+void func_15156FB8(struct102 *arg0) {
+    func_15156F94(arg0);
+    func_15169804(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15156FE4.s")
 
