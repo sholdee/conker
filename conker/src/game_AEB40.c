@@ -43,7 +43,16 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15083FB0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084000.s")
+extern struct127 *func_1505EEF4(void);
+
+s32 func_15084000(void) {
+    struct127 *temp = func_1505EEF4();
+
+    if (temp != 0) {
+        return temp - D_800CC2D0;
+    }
+    return -1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084044.s")
 

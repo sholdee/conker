@@ -87,7 +87,19 @@ void func_1518F858(void *arg0) {
     D_8008D680[*(s8 *)((char *)arg0 + 0x89)]();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F89C.s")
+extern f32 func_150ADA68(void);
+extern void func_1518F8E0(void *);
+
+struct Vec898 { f32 unk0; f32 unk4; f32 unk8; f32 unkC; f32 unk10; };
+struct Obj898 { char pad[0x30]; struct Vec898 vec; };
+
+void func_1518F89C(struct Obj898 *arg0) {
+    struct Vec898 *p;
+
+    p = &arg0->vec;
+    p->unk0 = func_150ADA68() * p->unk10 + p->unkC;
+    func_1518F8E0(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F8E0.s")
 

@@ -27,4 +27,8 @@ void func_150B5060(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E1280/func_150B5088.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E1280/func_150B538C.s")
+void func_150B538C(void *arg0, s32 arg1, u8 arg2) {
+    if (arg2 == 5) {
+        func_150B5060(arg0);
+    }
+}

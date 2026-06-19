@@ -205,6 +205,17 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   (not `lb`). The clean rotation is what matches byte-for-byte.
 - `bnel`/`beql` are branch-LIKELY: the delay-slot instruction executes ONLY when
   the branch is taken. Watch for stores/ops that belong to the taken path only.
+- Counted do-while over TWO adjacent externs to avoid runtime-trip unroll WITH the
+  distinct bound-symbol reloc: when a small loop walks a global array (anchor symbol
+  `D_A`) bounded by an ADJACENT distinct symbol (`D_B`, the array end), a clean counted
+  `for(i=0;i<N;i++)` does NOT unroll but synthesizes the bound as `%lo(D_A+N*stride)`
+  (wrong reloc, small score), while any pointer-compare `p != &D_B[0]` makes IDO 4x-UNROLL
+  (trip count between two externs unknown). The winning shape is a counted do-while that
+  NAMES BOTH symbols: body reads `D_A[i+k]` (anchor reloc), condition `&D_B[0] != &D_A[i]`
+  makes IDO use `D_B` DIRECTLY as the bound reloc (addend 0) while keeping a non-unrolled
+  `bnel` back-edge. Operand ORDER of the condition controls the bnel rs/rt: `&D_B[0] !=
+  &D_A[i]` gives `bnel v1,a1`; the swap gives `bnel a1,v1`. Declare both as local externs.
+  (Counted-loop analog of the separate-end-symbol bnel rule above.)
 - A NON-likely `beqz`/`bnez` delay-slot instruction ALWAYS executes (both paths),
   so a store/assignment sitting in a plain (non-likely) branch's delay slot is
   UNCONDITIONAL — pull it OUT of the conditional in source. Putting that store
@@ -399,6 +410,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Store each call's result in its OWN dedicated f32 local (not a reused temp) to
   pin the later operand order (`argN*result` -> f2,f0) and the load order of those
   results into the following expression.
+- Conversely, INLINE a call's result directly into a multiply (`func() * p->field`,
+  no named temp) to keep the return value in `$f0` as the FIRST mul operand, matching
+  `mul.s fD,$f0,fN`. Binding the result to a named local first moves it out of $f0 (it
+  becomes the second operand or lands in a fresh reg). Use the bare inline form when the
+  asm multiplies the freshly-returned $f0 value as the left factor. (Converse of the
+  dedicated-temp rule above — pick inline-vs-named by which operand the asm keeps in $f0.)
 - `x - x*y` float store-back where x is the SAME field being written: when the asm
   wants the field value (x, loaded once into f0) as the FIRST mul operand, the factor
   y in an INLINE temporary register (e.g. f4, NOT a named local's f2), and the
@@ -667,6 +684,16 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - A base pointer (`addiu vN,base,off`) only stays distinct (not folded into
   base-relative `+4`/`+8` loads) if you actually read/write THROUGH that pointer;
   do the field access via `*p` to keep `p` live and force the separate base.
+- Non-folded `addiu vN,v0,K` + small-offset store (vs a single folded `swc1
+  f,K+m(v0)`): when a pointer is loaded/null-checked into v0 and a field at `+(K+m)`
+  is then written through a SEPARATE register, two things are jointly required — (1)
+  null-check the SOURCE pointer DIRECTLY (`if (D_glob != 0)`, not via a cached temp)
+  so the loaded pointer stays in v0, AND (2) compute the offset pointer into its OWN
+  local via byte-pointer arithmetic on a u8* base (`q = (T*)((u8*)D_glob + K);`) and
+  store at `q->field` (small offset m). A temp-local null-check, in-place `temp += K`,
+  or constant array indexing (`temp[1]`) all either fold to `K+m(v0)` or reuse v0 for
+  the offset pointer. The direct null-check pins v0; the separate u8*-arithmetic local
+  pins the distinct `addiu vN,v0,K` + folded small `m` store.
 - Shared biased base across both arms of a branch (the `addiu vN,vN,K` lands in the
   BRANCH DELAY SLOT, so both the taken and untaken paths reuse the same `vN=base+K`):
   load the field pointer ONCE into a named local, BIAS it once (`s32 *p = base + K;`),
@@ -732,6 +759,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   register IDO picks for the subexpression. When a JUSTREG cascade hangs on a
   product's temp, try the other form (e.g. `v * 0x3F` instead of `(v<<6) - v`) — the
   literal-multiply form can move the work onto an arg/`a`-register and resolve it.
+- Compute a sub-object base pointer BEFORE a call to home a0 + rematerialize after:
+  when several fields of `arg0` at a cluster of HIGH offsets (e.g. +0x30/+0x3C/+0x40)
+  are accessed AFTER a call, assigning `T *p = &arg0->sub;` (base = arg0 + 0x30) BEFORE
+  the `jal` makes IDO home a0 to the stack across the call and REMATERIALIZE `v0 = a0 +
+  0x30` after it, addressing the fields via SMALL offsets (0/0xC/0x10) off the recomputed
+  base instead of folding big offsets (0x30/0x3C/0x40) off a reloaded a0. Use the
+  pre-call sub-pointer assignment when the asm recomputes `addiu vN,a0,K` post-call and
+  reads small offsets off it. (Call-crossing analog of the hoist-above-branches rule.)
 - Hoist a `p = &arg->sub` pointer assignment ONCE above an if/switch chain (not
   inside or per-branch) to keep the sub-object base live in a value reg: each branch
   then re-emits `addiu vN,base,off` and reads small offsets off vN, instead of IDO

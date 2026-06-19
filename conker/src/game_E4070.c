@@ -7,7 +7,23 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B6C90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B6D34.s")
+extern s32 *D_800D9898[];
+extern s32 *D_800D98A4[];
+
+void func_150B6D34(void) {
+    s32 i;
+    s32 *e;
+
+    i = 0;
+    do {
+        e = D_800D9898[i + 5];
+        if (e != 0) {
+            e[8] = 1;
+        }
+        i++;
+    } while (&D_800D98A4[0] != &D_800D9898[i]);
+    D_800D9890 = 3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B6D78.s")
 
