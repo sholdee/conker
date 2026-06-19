@@ -149,6 +149,20 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   address into a local (`s32 **pp = &arg0;`) and read through `**pp` each time.
 - To force IDO to emit fresh registers + `move`s (e.g. an XOR-swap), use two
   distinct temp locals rather than reusing one — the extra temp pins the moves.
+- To force TWO separate (non-CSE'd) `addu`s of the SAME `base+off` value, compute
+  one use via INTEGER arithmetic and the other via POINTER arithmetic: e.g. an
+  `lbu` address as `*(u8*)((s32)base + off + k)` but the call-arg as
+  `(u8*)off + (s32)base`. Mixing int-cast and pointer-cast of the same sum defeats
+  IDO's GCSE, so it emits a separate `addu` per use (e.g. one into a temp for the
+  load, one into `a0` in the `jalr` delay slot) instead of one shared add + `nop`.
+  The arg's operand order (`addu a0,off_reg,base_reg`) is set by which term is the
+  pointer base — make `off` the base (`(u8*)off + base`) to put it first.
+- An intermediate named float product (`f32 prod = a * b;`) can stop IDO from
+  DUPLICATING an integer load (e.g. an `lb` of a flag) into a branch-LIKELY delay
+  slot: without the temp IDO recomputes the load in the likely slot (extra
+  instruction); binding the product to a local serializes it so the load happens
+  once. Use a dedicated temp for the sub-expression when the asm has no duplicated
+  load but your C emits one in a `bnezl`/`beqzl` slot.
 - The OPERAND ORDER of an equality test steers `bnel`/`beql` register order: `a==b`
   vs `b==a` swaps which reg is first in the branch (`bnel b,a` vs `bnel a,b`).
   When a likely-branch's two registers are reversed, flip the comparison operands.
