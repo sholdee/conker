@@ -7,7 +7,22 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AD9B0/func_15080620.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AD9B0/func_150806A8.s")
+void func_150806A8(s32 arg0) {
+    struct127 *e = &D_800CC2D0[arg0];
+    struct127 *p = (struct127 *)e->unk31C;
+
+    if (p->unk74 != 0) {
+        if (!(p->unk74 & 0x80)) {
+            p->unk74 = 0;
+            p = (struct127 *)e->unk31C;
+        }
+    }
+    if (*(u8 *)&p->pad75 != 0) {
+        if (!(*(u8 *)&p->pad75 & 0x80)) {
+            *(u8 *)&p->pad75 = 0;
+        }
+    }
+}
 
 void func_15080718(s32 arg0, s32 *arg1, s32 *arg2) {
     *arg2 = 1 << (arg0 & 7);

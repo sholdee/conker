@@ -145,9 +145,22 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   asm masks the high half before shifting.
 - A signed `(s16)` cast on a u16 field forces a signed `lh` load (vs `lhu`) and a
   signed branch (`bgtzl`/`blez`) on its value; use it when the asm sign-extends.
+- Force `lbu` (unsigned byte load) vs `lb` on a field the prototype declares signed
+  (`s8`) by reading it through `*(u8*)&p->field`; the plain `p->field` emits the
+  signed `lb`. (Byte-load analog of the s16/u16 lh/lhu rule.)
 - Read a `u8`/`u16` param into a WIDER local (`s32 a = arg2;`) to reproduce a
   word home (`sw`, not `sb`) with no re-masking `andi`; the narrow type would home
   byte-width and re-mask on use.
+- A u8-masked loop counter (`i = (u8)(i + 1)` with a plain `i < N` compare) blocks
+  IDO -O2 from turning a per-iteration `sll/addu/lw` address recompute into a
+  POINTER induction (`addiu sN,sN,stride`): a plain `i++` makes IDO strength-reduce
+  to a running pointer, breaking the recompute. The masked form emits exactly one
+  `andi tN,sM,0xff; slti at,tN,N; move sM,tN` and keeps the address recompute. Use
+  it when the asm recomputes the element address each iteration from a masked index.
+- A struct field load read via the typed FIELD (`arg->unkN` with arg typed as the
+  real struct ptr) reproduces a base-FIRST add (`addu vN,base,off`), whereas a raw
+  `*(s32*)((u8*)arg+N)` byte-deref emits the offset-FIRST add (`addu vN,off,base`).
+  Use the typed-field form when the asm adds the base register first.
 - Inversely, binding a value to a `u8` local before passing it to a call forces an
   `andi reg,0xff` (mask) right before the `jal` plus a `move a0,reg`; narrow-type
   the local when the target masks an arg into the low byte at the call site.
@@ -671,6 +684,15 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `next*size < LIMIT*size` (inline `idx++`/`idx+1` strength-reduces the compare to a
   scaled form). When both a saved pointer AND a named-next are correct yet a uniform
   register-name cascade + one li-hoist remain, it is JUSTREG/schedule — bail.
+- Split lui/addiu cross-pairing between two pointers: when the target emits one
+  pointer's `lui` EARLY (hoisted first) but DEFERS its `addiu` to just before the
+  loop, while building a second pointer's `lui`+`addiu` eagerly in between (so the
+  lui order is `lui p` but the addiu order is `addiu e` first), no C declaration
+  order reproduces it. The lui-hoist order and the addiu order stay COUPLED to
+  declaration order: declaring p first gives `lui p,e + addiu p,e`; declaring e
+  first gives `lui e,p + addiu e,p`. Neither matches a target that splits them (lui
+  p but addiu e). Statement reorder, condition-operand swap, separate end local, and
+  loop-form changes don't decouple them. Instruction-schedule artifact; bail.
 - Folding note for that family: a store whose address equals `base+4` may be
   emitted by the target as its OWN relocated symbol (`%hi/%lo(D_NEXT)`), NOT as
   `%lo(D_base+0x4)`. Match it by declaring a SEPARATE `extern` for the +4 symbol

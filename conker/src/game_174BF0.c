@@ -36,7 +36,14 @@ void func_15147928(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_15147C4C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_15147D1C.s")
+extern void (*D_8008A390[])(void *, s32, u8);
+
+void func_15147D1C(void *arg0, s32 arg1, u8 arg2) {
+    void (*fn)(void *, s32, u8) = D_8008A390[*(s32 *)((u8 *)arg0 + 0x20)];
+    if (fn != NULL) {
+        fn(arg0, arg1, arg2);
+    }
+}
 
 void func_15147D64(s32 arg0, u8 arg1) {
     func_15169260(&D_800A5760, 2, arg0, arg1);
