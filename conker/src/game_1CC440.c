@@ -106,7 +106,38 @@ void func_151A0928(struct Obj151A0928 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A0950.s")
+void func_1519F48C(void);
+
+struct Sub151A0950 {
+    u8 pad0[0x18];
+    s32 unk18;
+    u8 unk1C;
+};
+
+struct Obj151A0950 {
+    u8 pad0[0x98];
+    struct Sub151A0950 **unk98;
+};
+
+struct Arg151A0950 {
+    s32 unk0;
+    u8 unk4;
+};
+
+void func_151A0950(struct Obj151A0950 *arg0, struct Arg151A0950 *arg1, u8 arg2) {
+    struct Sub151A0950 *v0;
+    struct Sub151A0950 **pp = arg0->unk98;
+    s32 temp;
+    if (arg2 == 10) {
+        v0 = *pp;
+        if (v0 != 0) {
+            temp = v0->unk18;
+            if (arg1->unk0 == temp || arg1->unk4 == v0->unk1C) {
+                func_1519F48C();
+            }
+        }
+    }
+}
 
 struct Sub151A09B4 {
     u8 pad0[0x3B];

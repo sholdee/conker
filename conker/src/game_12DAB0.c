@@ -93,7 +93,26 @@ void func_151027E8(struct210 *arg0) {
     func_151403A8(&sp18, 0x1A);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_1510281C.s")
+s32 func_1510281C(struct210 *arg0, s16 arg1) {
+    s32 *p = (s32 *)(*(s32 *)((s32)arg0 + 0xD0) + 0x110);
+    s32 v1;
+
+    if (arg1 != *(u8 *)((s32)p + 0x22)) {
+        goto tail;
+    }
+    v1 = *p;
+    if (v1 != 0) {
+        if (*(u8 *)(*(s32 *)(v1 + 0x31C) + 0x197) == 0) {
+            goto tail;
+        }
+    }
+    return 0;
+tail:
+    if (!(*(u8 *)((s32)arg0 + 0xD4) & 1)) {
+        return 0;
+    }
+    return 1;
+}
 
 s32 func_15102884(struct210 *arg0, s32 arg1) {
     if (!(*(u8 *)((s32)arg0 + 0xAC) & 1)) {

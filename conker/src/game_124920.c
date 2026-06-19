@@ -31,7 +31,16 @@ void func_150F884C(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_124920/func_150F892C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_124920/func_150F9720.s")
+extern u8 D_800A1C40[];
+
+void func_150F9720(u8 arg0) {
+    struct { s32 unk0; u8 unk4; } sp18;
+    sp18.unk0 = 0;
+    sp18.unk4 = D_800A1C40[arg0 * 2];
+    func_151494E0((s32)&sp18, 0x42);
+    sp18.unk4 = D_800A1C40[arg0 * 2 + 1];
+    func_151494E0((s32)&sp18, 0x42);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_124920/func_150F9788.s")
 

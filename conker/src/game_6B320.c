@@ -55,7 +55,14 @@ void func_1503F0D8(void *arg0, s32 arg1) {
     func_1503EB78(arg0, 2.06f, 3.0f, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503F108.s")
+extern s8 D_800CC364[];
+
+void func_1503F108(s32 arg0) {
+    struct106 *p = &D_800C6660[arg0];
+    (*(s16 *)((s32)p + 0xC)) = 0x8C;
+    *(s32 *)&D_800CC364[arg0 * 812] = 6;
+    *(f32 *)(p->unk0 + 0x1EC) = 10.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503F16C.s")
 

@@ -490,6 +490,17 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   live. A field-read-and-shift that folds to a single load off a biased base (e.g.
   `lh 0x21c(base)`) must be evaluated UNCONDITIONALLY, BEFORE any inner `if`; gating it
   behind the branch makes IDO sink the load and re-derive a small offset.
+- Biased pointer that must emit `addiu vN,base,K` THEN `lw 0(vN)` (offset-0 deref) when
+  ANOTHER nearby field at K+m is also read: bind ONE pointer `T *p = (T*)(base+K);` at
+  the function top and reach BOTH fields through it — the far field as `*(u8*)((s32)p+m)`
+  (IDO folds it to `lbu (K+m)(base)` but the read PINS `p` in the addiu reg) and the
+  offset-0 field as `*p` (emits `lw 0(p)`, addiu preserved). This beats the in-place
+  advance (`u8 *t=base; flag=t[K+m]; t+=K; ...*t`), which DOES materialize the addiu but
+  forces the flag temp into v1 and shifts the whole t-register pool by one (JUSTREG).
+  Separate `base`+`temp` locals OR a struct-field `p->memberat0` both fold the addiu
+  away. The single-pointer-two-offsets form satisfies addiu-placement AND register
+  coloring simultaneously — the way out of the split-base-vs-fold + JUSTREG tension when
+  a second field sits at a nonzero offset off the SAME biased base.
 - Shared biased base across both arms of a branch (the `addiu vN,vN,K` lands in the
   BRANCH DELAY SLOT, both paths reuse `vN=base+K`): load the field pointer ONCE, bias it
   once (`s32 *p = base + K;`), and have each arm index OFF it (`p[1]`, `p[3]`). A naive
@@ -612,6 +623,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   (`s32 *p = &arg0;`). Exact-typed params with no address-of home nothing; varargs adds
   a frame. A finer-grained alternative: self-assignment (`arg0 = arg0; arg1 = arg1;`)
   homes EXACTLY those params with no frame (a `return 0;` stub homes nothing).
+- Pass the IDENTICAL conversion of `&local` to EVERY call so IDO unifies the address into
+  ONE saved-register CSE temp (s0) with no named local and no extra slot: write the SAME
+  integer expression `(s32)&local` at all call sites (callees pinning a `void*` param take
+  `(void*)(s32)&local` — the inner s32 node still shares the CSE). MIXING `void*` and `s32`
+  argument CONVERSIONS across the calls SPLITS the CSE into two spilled temps; raw `&local`
+  (no cast) gets no CSE and recomputes the `addiu` per call. Constrain unprototyped callees
+  with local `(s32,...)` decls so they take the raw cast.
 - Passing `&local` DIRECTLY to multiple calls (no named pointer) makes IDO spill the
   address to its own 8-aligned temp slot and reload it — matches target spill/reload.
   CONVERSELY, routing `&local` through a NAMED pointer var GROWS the frame: the named

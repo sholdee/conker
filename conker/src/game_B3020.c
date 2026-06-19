@@ -239,7 +239,12 @@ void func_1508E6C8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508EB90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508EBF8.s")
+extern struct127 D_800CC40F[];
+
+void func_1508EBF8(s32 arg0, s32 arg1) {
+    s32 temp = *(u8*)&D_800CC40F[arg0];
+    func_1509BFB0(1, temp | 0x2000, 0x14, arg1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508EC5C.s")
 
