@@ -311,7 +311,15 @@ void func_1514F110(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F3CC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F44C.s")
+extern s32 D_800A5988;
+s32 func_1518D1C0(s32, s32, s32, s32, s32, s32, s32 *);
+
+void func_1514F44C(s32 arg0) {
+    s32 v0;
+
+    v0 = func_1518D1C0(arg0, 5, 0, 1, 0xFF, 1, &D_800A5988);
+    func_1514EC1C(v0, arg0, 0xD);
+}
 
 extern void func_151D74B0(s32, s32, s32, s32, s32);
 

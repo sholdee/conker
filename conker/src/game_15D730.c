@@ -23,7 +23,13 @@ void func_151303BC(s32 a0, u8 a1, s32 a2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15131514.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_1513164C.s")
+void func_15131514(s32 a0, s32 a1, s32 a2, s32 a3, s32 a4);
+void func_1513137C(s32 a0, s32 a1, s32 a2, s32 a3, s32 a4);
+
+void func_1513164C(s32 a0, s32 a1, s32 a2, s32 a3, s32 a4, s32 a5, s32 a6, s32 a7, s32 a8) {
+    func_15131514(a4, a5, a6, a7, a8);
+    func_1513137C(a0, a1, a2, a3, a8);
+}
 
 void func_151318E8(s32 a0, s32 a1);
 

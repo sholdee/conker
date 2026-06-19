@@ -207,7 +207,20 @@ void func_1511A6FC(s32 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511BDF4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511BE5C.s")
+struct Obj1511BE5C {
+    u8  pad0[0x4];
+    f32 unk4;
+    u8  pad8[0x8];
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+};
+
+extern f32 D_800A31E0;
+
+void func_1511BE5C(struct Obj1511BE5C *arg0) {
+    arg0->unk4 = func_150484A0((f32)arg0->unk10 - D_800DBFF0->unk2F8, (f32)arg0->unk14 - D_800DBFF0->unk300) * D_800A31E0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511BEBC.s")
 
