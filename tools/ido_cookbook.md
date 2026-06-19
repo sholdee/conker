@@ -351,6 +351,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   aN register as the result; computing into a fresh expression/local instead uses a
   temp (`tN`) and shows up as a register-only diff. Mutate the param when the asm
   writes the updated value back into the same aN.
+- Thin wrapper forwarding `arg0 + CONST` to a single call: writing `f(arg0 + K);`
+  emits IDO's `or a1,a0,zero; addiu a0,a1,K` (copy the live param into a scratch
+  reg, then form `arg0+K` in/around the jal delay slot). This is the standard
+  -O2 shape for keeping the original pointer live while passing a constant-biased
+  copy — don't introduce a named `tmp = arg0 + K;` local (it homes/reorders).
 - Route a CALL RESULT back through the first param: writing `arg0 = f(arg0, ...);
   return arg0;` flows the value through a0 (target emits `move a0,v0` then `move
   v0,a0`); a separate `ret` local lands the value in v1 instead (the only diff).
