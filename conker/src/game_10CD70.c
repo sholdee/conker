@@ -11,7 +11,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10CD70/func_150DFCA8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_10CD70/func_150DFDA4.s")
+extern f32 D_800A0FB0;
+
+void func_150DFDA4(s32 a0) {
+    f32 *p = (f32 *)(*(s32 *)(a0 + 0x1D4) + 0x40);
+    p[0xC] = *(f32 *)(a0 + 0x14);
+    p[0xD] = D_800A0FB0;
+    p[0xE] = *(f32 *)(a0 + 0x1C);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10CD70/func_150DFDD0.s")
 

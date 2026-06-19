@@ -137,7 +137,11 @@ void func_1514E9DC(void) {
     func_1514E920();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514E9FC.s")
+void func_1514E89C(void);
+
+void func_1514E9FC(void) {
+    func_1514E89C();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514EA1C.s")
 

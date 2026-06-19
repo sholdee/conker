@@ -66,7 +66,26 @@ void func_151CE47C(ConkerStruct151CE47C *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D0058.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D0128.s")
+typedef struct {
+    char pad84[0x84];
+    u16 unk84;
+} ConkerStruct151D0128b;
+
+typedef struct {
+    char padE[0xE];
+    s16 unkE;
+    char pad10[0x18];
+    ConkerStruct151D0128b *unk28;
+    char pad2C[0x2];
+    u16 unk2E;
+} ConkerStruct151D0128;
+
+void func_151D0128(ConkerStruct151D0128 *arg0) {
+    ConkerStruct151D0128b *p = arg0->unk28;
+    if (arg0->unk2E != p->unk84) {
+        arg0->unkE = -1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D014C.s")
 

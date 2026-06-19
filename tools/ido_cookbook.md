@@ -31,6 +31,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - IDO -O2 constant-folds `D_xxxx + off` into ONE relocated `%lo(D_xxxx+off)`. If
   the target instead emits a separate base + temp (`lui`/`addiu sN,s0,off`), no C
   form (pointer, index, separate-base) splits the fold — BAIL.
+- Inverse: a `%lo` reference at a small offset from a known global may be its OWN
+  DISTINCT symbol, not `%lo(D_base+off)`. When the asm references `%lo(D_at_off)` as
+  a self-contained reloc (e.g. a `lhu`/`andi` reading what looks like `D_base+0x2`),
+  declare a SEPARATE local `extern` for the offset symbol (`extern T D_at_off[];`)
+  and access it directly; reaching it as `D_base[...]+off` emits the folded
+  `%lo(D_base+off)` and scores worse. (Load-side analog of the +4-store folding note.)
 - An all-ones mask: `*(u16*)&x = ...` / `(u16)-1` yields `ori reg,0xFFFF`, whereas
   a plain `-1` yields `li reg,-1`. Cast to the field width when the asm uses `ori`.
 - `%lo`-advance fusion depends on whether the preceding stores leave the pointer at
@@ -681,6 +687,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   for that arg instead emits `move a0,zero` (score ~200); a function-pointer cast of
   the callee emits `jalr` instead of `jal` (score ~400). Forward the live param when
   the asm has the bare `jal` + `nop` with no arg move.
+- Pass the ORIGINAL arg, not a locally-computed temp, when the asm leaves a0
+  unchanged across the call: if a function computes a temp (e.g. a base+offset
+  pointer) ONLY to feed a local store, and the callee's asm shows a0 unmodified
+  (`jal f` with no `move aN,a0` and the temp used solely for the store), pass the
+  ORIGINAL arg0 to the callee — not the temp. Passing the temp injects a spurious
+  `move a1,a0` (or shifts the arg into the wrong register). Verify which value a0
+  holds at the `jal` from the asm; the computed temp's only consumer is the store.
 - Two SEQUENTIAL calls forwarding the SAME param (`f(arg0); g(arg0);` as a wrapper
   body): IDO -O2 -g3 homes the param ONCE (`sw a0,off(sp)` in the prologue) and
   RELOADS it (`lw a0,off(sp)`) before EACH call — the first call can't keep it live

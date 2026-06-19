@@ -32,7 +32,11 @@ s32 func_1509CA30(s32 arg0) {
     return D_80087438[arg0].unk0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CA50.s")
+extern GameC9EC0StructB D_8008743A[];
+
+s32 func_1509CA50(s32 arg0) {
+    return D_8008743A[arg0].unk0 & 0xFFF;
+}
 
 extern GameC9EC0Struct D_80087434[];
 

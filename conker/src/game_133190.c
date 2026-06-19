@@ -36,7 +36,10 @@ f32 func_15106540(f32 arg0) {
     return arg0 * arg0 * arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15106558.s")
+f32 func_15106558(f32 arg0) {
+    f32 t = 1.0f - arg0;
+    return -3.0f * t * t;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15106584.s")
 
