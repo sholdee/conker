@@ -13,7 +13,18 @@ void func_150C5450(struct102 *arg0) {
     func_15169824(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F2820/func_150C5470.s")
+extern void (*D_800887B8[])(void);
+
+void func_150C5470(struct102 *arg0) {
+    s32 temp = *(u8 *)((u8 *)arg0 + 0x38);
+
+    if (temp < 0) {
+        temp = 0;
+    } else if (temp >= 2) {
+        temp = 0;
+    }
+    D_800887B8[temp]();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F2820/func_150C54C0.s")
 

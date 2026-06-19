@@ -11,7 +11,25 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A5440/func_151787AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A5440/func_15178B98.s")
+typedef struct Node15178B98 {
+    char pad0[0x8];
+    struct Node15178B98 *unk8;
+    char pad_C[0x28];
+    u8 unk34;
+} Node15178B98;
+
+extern Node15178B98 *D_800DCF38;
+
+Node15178B98 *func_15178B98(u8 arg0) {
+    Node15178B98 *node;
+
+    for (node = D_800DCF38; node != NULL; node = node->unk8) {
+        if (node->unk34 == arg0) {
+            return node;
+        }
+    }
+    return NULL;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A5440/func_15178BE4.s")
 

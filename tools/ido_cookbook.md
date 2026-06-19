@@ -441,6 +441,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - An EXTRA dead trailing arg at a call site makes IDO reload it from its home slot
   into the `jal` delay slot (and reorders nearby stores) — a large score. Verify
   the true callee arg count from a sibling CALLER's asm (which regs it loads).
+- Callee prototyped `void(void)` => call it with NO args even when this function
+  RECEIVES args and the target asm stores them to their home slots (e.g. 0x18/0x1C/
+  0x20): those home stores come from the non-leaf PROLOGUE (-g3 homes every named
+  param of THIS function), NOT from the call. Respect the header's `void(void)`
+  signature and pass nothing; forwarding the incoming args adds spurious arg moves
+  and a wrong callee shape. (The home stores are produced by declaring/using the
+  params, not by the jal.)
 - Array-index form `D_xxxx[idx]` is needed for the reloc pattern
   `lui at,%hi; addu at,at,idx; lwc1 %lo(D_xxxx)(at)`. Pointer/byte arithmetic
   (`(u8*)D - n`, `D - arg`) instead materializes a base pointer + `0(reg)` load.
