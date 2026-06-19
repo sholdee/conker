@@ -13,7 +13,16 @@ s32 *func_1515D440(void) {
     return temp;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515D480.s")
+s32 *func_1515D480(s32 arg0) {
+    s32 *temp;
+    s32 size;
+    s32 *pp = &arg0;
+
+    size = *pp * 0x60;
+    temp = allocate_memory(size, 1, 2, 0);
+    bzero(temp, size);
+    return temp;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515D4D4.s")
 

@@ -74,7 +74,31 @@ void func_15197A7C(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15197AB4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15197BBC.s")
+typedef struct {
+    char pad0[0x1C];
+    s16 unk1C;
+    char pad1E[0x2C - 0x1E];
+    f32 unk2C;
+    f32 unk30;
+    char pad34[0x5C - 0x34];
+    u8 unk5C;
+    char pad5D[0x164 - 0x5D];
+    f32 unk164;
+    s16 unk168;
+    s16 unk16A;
+} Struct15197BBC;
+
+s32 func_15197BBC(Struct15197BBC *arg0) {
+    s16 temp;
+
+    temp = arg0->unk1C;
+    arg0->unk30 = arg0->unk30 - (arg0->unk30 * arg0->unk164);
+    arg0->unk2C = arg0->unk2C - (arg0->unk2C * arg0->unk164);
+    if (temp < arg0->unk168) {
+        arg0->unk5C = temp * arg0->unk16A;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15197C10.s")
 

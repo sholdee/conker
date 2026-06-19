@@ -112,7 +112,19 @@ void func_15158D00(struct102 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_1515A78C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_1515A920.s")
+s32 func_1514ECE0(void *, s16, void *);
+
+s32 func_1515A920(struct102 *arg0, s32 *arg1) {
+    s32 *temp;
+    s32 v;
+
+    if (func_1514ECE0(*(void **)((u8 *)arg0 + 0x2F4), 0x13, &temp) == 0) {
+        return 0;
+    }
+    v = *(s32 *)((u8 *)temp + 0x10);
+    *arg1 = v + 0x34;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_1515A974.s")
 

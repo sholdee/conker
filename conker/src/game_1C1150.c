@@ -69,7 +69,13 @@ s32 func_15194DA4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194DC8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194E54.s")
+extern void func_150B06B0(s32, s32, s32, s32);
+
+void func_15194E54(s32 arg0, s32 arg1, s32 arg2) {
+    if ((*(u8 *)(arg1 + 4) == 0x3E) || (*(u8 *)(arg1 + 4) == 0xA6)) {
+        func_150B06B0(arg1, arg0, 0xFF, 1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194EA8.s")
 

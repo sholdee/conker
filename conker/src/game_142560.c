@@ -260,4 +260,15 @@ void func_1511F768(s32 *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511F788.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511F92C.s")
+extern s32 func_151149AC(u32);
+
+void func_1511F92C(s16 *arg0) {
+    s16 *temp_v0;
+
+    temp_v0 = (s16 *)func_151149AC(*(u8 *)((u8 *)arg0 + 0x3F));
+    if (temp_v0 != NULL) {
+        arg0[8] = temp_v0[8];
+        arg0[9] = temp_v0[9];
+        arg0[0xA] = temp_v0[0xA];
+    }
+}

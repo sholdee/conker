@@ -228,6 +228,19 @@ void func_1508E6C8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508ECC0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508EDBC.s")
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s32 unk4;
+    s32 unk8[4];
+} Struct1508EDBC;
+
+void func_1508EDBC(s32 arg0) {
+    if (arg0 < D_80087380) {
+        ((Struct1508EDBC *)D_800D23C0)[arg0].unk2 = 0;
+        ((Struct1508EDBC *)D_800D23C0)[arg0].unk4 = 0;
+        ((Struct1508EDBC *)D_800D23C0)[arg0].unk0 = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508EE0C.s")
