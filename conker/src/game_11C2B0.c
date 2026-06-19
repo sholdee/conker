@@ -5,7 +5,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150EEE00.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150EEF40.s")
+void func_150EEF40(struct210 *arg0, u8 arg1) {
+    s8 sp18[6];
+
+    *(struct210 **)&sp18[0] = arg0;
+    sp18[4] = *(u8 *)((s32)arg0 + 0x3B);
+    sp18[5] = arg1;
+    func_151403A8(&sp18, 0x43);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150EEF80.s")
 

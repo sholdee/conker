@@ -38,7 +38,9 @@ void func_150F568C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F5C98.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F6138.s")
+void func_150F6138(s32 arg0, s32 arg1, u8 arg2) {
+    func_15149514(arg1, arg2, arg0 + 0x28, arg0 + 0x2C, arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F6178.s")
 

@@ -652,6 +652,15 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   analog: `*((s16*)&arg + 1)` (big-endian low halfword) emits an `lh off+2(sp)` and
   ALSO defeats CSE — use it to force a SECOND reload of a param IDO would otherwise
   collapse to one load (a plain `arg`/`(s16)arg` re-uses the prior register).
+- Homed-arg `lbu` vs un-homed: when a forwarder HOMES its own args and RELOADS them
+  for the (tail-)call, passing an `s32` arg as a callee param typed `u8` yields the
+  exact `lbu off+3(sp)` (low byte of the arg's homed word slot) with NO explicit
+  byte-3 cast — just pass `arg` to a `u8`-param callee (or write `(u8)arg`). This is
+  the opposite of the un-homed-slot rule above (where `(u8)arg` gives a full `lw` and
+  you must write `*((u8*)&arg+3)`): once the function homes the arg itself, the `u8`
+  callee param reloads it as `lbu` directly. Recurs in arg-homing forwarders that
+  reload their saved args and pass `arg0+offA`/`arg0+offB` as middle args plus `arg0`
+  as the 5th (stacked) arg.
 - Decompose a constant multiply to steer the WORKING register: writing `v * K` (a
   literal multiply) vs the shift-subtract identity (`(v<<n) - v`) changes which
   register IDO picks for the subexpression. When a JUSTREG cascade hangs on a

@@ -19,7 +19,11 @@ s32 func_1506A724(s32 arg0, s32 arg1) {
     return func_151BB61C(arg0, (s32)&D_800D1560, (s32)&D_800D1570, 0xFF, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506A760.s")
+s32 func_151BBA9C(s32, s32, s32, s32, s32);
+
+s32 func_1506A760(s32 arg0, s32 arg1) {
+    return func_151BBA9C(arg0, (s32)&D_800D1560, (s32)&D_800D1570, 0xFF, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506A79C.s")
 

@@ -50,4 +50,10 @@ void func_15095D0C(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_1509629C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_15096934.s")
+extern Gfx D_80087408[];
+
+Gfx *func_15096934(Gfx *arg0) {
+    gSPDisplayList(arg0++, D_80087408);
+    D_800D2DAB = 0;
+    return arg0;
+}

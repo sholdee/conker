@@ -24,7 +24,9 @@ void func_150DFDA4(s32 a0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10CD70/func_150DFEFC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_10CD70/func_150E02C0.s")
+void func_150E02C0(s32 arg0, s32 arg1, s32 arg2) {
+    func_15149514(arg1, (u8)arg2, arg0 + 0x28, arg0 + 0x2C, arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10CD70/func_150E0300.s")
 
