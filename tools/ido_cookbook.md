@@ -243,7 +243,21 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `f32` in the signature — declare it `f32`; IDO emits the int-reg-to-FPU move.
 - A param the target loads as a low BYTE of its un-homed caller stack slot wants
   `*((u8*)&arg + 3)` (big-endian byte-3) to emit the exact `lbu off+3(sp)`; neither
-  `arg` nor `(u8)arg` produces the `lbu` (both give a full-word `lw`).
+  `arg` nor `(u8)arg` produces the `lbu` (both give a full-word `lw`). The HALFWORD
+  analog: `*((s16*)&arg + 1)` (big-endian low halfword) emits an `lh off+2(sp)` and
+  ALSO defeats CSE — use it to force a SECOND reload of a param IDO would otherwise
+  collapse to one load (a plain `arg`/`(s16)arg` re-uses the prior register).
+- Decompose a constant multiply to steer the WORKING register: writing `v * K` (a
+  literal multiply) vs the shift-subtract identity (`(v<<n) - v`) changes which
+  register IDO picks for the subexpression. When a JUSTREG cascade hangs on a
+  product's temp, try the other form (e.g. `v * 0x3F` instead of `(v<<6) - v`) — the
+  literal-multiply form can move the work onto an arg/`a`-register and resolve it.
+- Hoist a `p = &arg->sub` pointer assignment ONCE above an if/switch chain (not
+  inside or per-branch) to keep the sub-object base live in a value reg: each branch
+  then re-emits `addiu vN,base,off` and reads small offsets off vN, instead of IDO
+  folding every access to one big `off(base)`. Per-branch reassignment or struct
+  casts let the fold happen; the single hoisted assignment reproduces the separate
+  addiu per branch (and reuses vN for both a switch-value move and the pointer).
 - To read a sub-byte of a wider struct field the PROTOTYPE doesn't expose (e.g. the
   high byte of a `u16 unkN` accessed as `unkN+1`), cast through a raw byte pointer:
   `*((u8*)arg + 0xNN) & mask` — don't edit the shared header to add the field.

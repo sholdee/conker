@@ -7,7 +7,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_131620/func_151041E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_131620/func_1510448C.s")
+s32 func_1517F08C(s32, s32, s32, s32, s32, s32);
+
+s32 func_1510448C(s32 arg0, s32 arg1, s32 arg2) {
+    s32 *p1 = &arg1;
+    s32 *p2 = &arg2;
+    s32 v0;
+    if ((s16)*p2 != 0 || (v0 = *(u8 *)(*p1 + 0x1B)) == 0) {
+        return arg0;
+    }
+    return func_1517F08C(arg0, ((v0 * 0x3F) >> 8), 0, 0, 0, *((s16 *)&arg2 + 1));
+}
 
 extern struct126 *D_800CC5EC;
 
