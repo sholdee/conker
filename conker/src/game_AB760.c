@@ -30,9 +30,15 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507EABC.s")
 
 void func_1507EB4C(void *, s32);
+void func_1507EABC(void *);
 
 void func_1507EB2C(void *arg0) {
     func_1507EB4C(arg0, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507EB4C.s")
+void func_1507EB4C(void *arg0, s32 arg1) {
+    if (arg1 != *(u8 *)((s32)arg0 + 0x70)) {
+        *(u8 *)((s32)arg0 + 0x70) = arg1;
+        func_1507EABC(arg0);
+    }
+}

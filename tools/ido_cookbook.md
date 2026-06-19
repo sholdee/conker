@@ -88,6 +88,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - A branch-LIKELY (`bnel`) with a delayed `v0=0` often means an `if(cond==1){...}
   else return 0;` wrapper — the explicit else-return-0 produces both. Use two
   SEPARATE `if`s (not `else if`) to keep a middle test as a non-likely `bnez`.
+- All-paths-return-same-constant via branch-likely: when EVERY path through nested
+  `if`s ends at `jr ra` with the same value AND the asm sets that value in a `beql`/
+  `bnel` delay slot (e.g. `addiu v0,zero,1`), write plain nested `if`s with a SINGLE
+  trailing `return K;` (no per-branch return). The branch-likely's delay-slot
+  constant IS that shared return; the nested ifs gate only the conditional stores and
+  fall through to the one tail. Don't add a `return K;` inside each branch.
+- Conditional store-on-change via branch-likely: a `beql`/`bnel` whose delay slot is
+  a STORE (e.g. `sb`) to a field — and which may also gate a following call — is the
+  "update only if the new value differs from the current" idiom: write
+  `if (newval != p->field) { p->field = newval; func(p); }`. The not-equal test
+  becomes the likely branch and the field store lands in its delay slot; the call (if
+  any) runs only on the changed path.
 - A case that should "fall off" returning garbage v0 (matching an EC epilogue)
   needs NO trailing `return` on that path; adding one pins v0 and breaks the match.
 - Alloc-and-init returning the call's pointer (`p = alloc(); if(p){init} return p;`):
@@ -390,6 +402,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   for that arg instead emits `move a0,zero` (score ~200); a function-pointer cast of
   the callee emits `jalr` instead of `jal` (score ~400). Forward the live param when
   the asm has the bare `jal` + `nop` with no arg move.
+- Forwarder that RE-SIGNS its param before the call homes that param: a thin
+  forwarder passing an `s16`/`s8` param UNCHANGED to a callee still emits a frame +
+  `sw aN,off(sp)` home for it because the source-level sign-extend (`sll/sra`)
+  counts as a use that pins/homes the arg under -g3. Declare the param at its true
+  narrow signed width and forward it as-is; the home + re-sign pair is expected, not
+  a sign you over-narrowed. (Mirror a re-signing sibling forwarder for the layout.)
 - Thin wrapper forwarding `arg0 + CONST` to a single call: writing `f(arg0 + K);`
   emits IDO's `or a1,a0,zero; addiu a0,a1,K` (copy the live param into a scratch
   reg, then form `arg0+K` in/around the jal delay slot). This is the standard
