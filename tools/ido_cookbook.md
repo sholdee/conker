@@ -248,6 +248,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Read a `u8`/`u16` param into a WIDER local (`s32 a = arg2;`) to reproduce a
   word home (`sw`, not `sb`) with no re-masking `andi`; the narrow type would home
   byte-width and re-mask on use.
+- A param STORED directly as a halfword (`sh`) into a field/global wants an `s32`
+  param, NOT `s16`: the `sh` already truncates to 16 bits, so an `s16` param adds a
+  spurious entry sign-extension (`sll reg,16; sra reg,16`) before the store, while
+  the `s32` param stores the incoming register straight (`sh aN,off`). Type the param
+  `s32` whenever the asm stores it as a halfword with no sign-extend pair. (Store-side
+  analog of the shift-result-to-byte-field `s32`-local rule.)
 - Declare a param `s32` and write the mask INLINE at its single use (`arg3 & 0xFF`)
   rather than typing the param `u8`, when the asm has NO prologue narrow-entry for it:
   a `u8` param forces IDO to emit an extra entry-narrowing (`andi`) + a homed store of

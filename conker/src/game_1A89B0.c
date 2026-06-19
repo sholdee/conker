@@ -29,4 +29,10 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517DE5C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517E05C.s")
+extern struct { s16 unk0; s16 unk2; s16 unk4; } D_800DD470;
+
+void func_1517E05C(s32 arg0, s32 arg1, s32 arg2) {
+    D_800DD470.unk0 = arg0;
+    D_800DD470.unk2 = arg1;
+    D_800DD470.unk4 = arg2;
+}

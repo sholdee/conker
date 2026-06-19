@@ -17,7 +17,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_108E90/func_150DDED0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_108E90/func_150DDF88.s")
+s32 func_150DBD70(s32);
+
+s32 func_150DDF88(u8 *arg0) {
+    return func_150DBD70(arg0[0x28]);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_108E90/func_150DDFAC.s")
 

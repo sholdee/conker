@@ -35,7 +35,9 @@ void func_150F0260(void) {
     func_150F02A0();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F0280.s")
+void func_150F0280(void) {
+    func_150F02A0();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F02A0.s")
 
