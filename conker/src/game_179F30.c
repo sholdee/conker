@@ -31,7 +31,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DB58.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DB64.s")
+extern s32 D_800BE9F0;
+void func_151B2060(void);
+
+void func_1514DB64(void) {
+    if (D_800BE9F0 == 0x14) {
+        func_151B2060();
+    }
+}
 
 void func_1514F194(void);
 

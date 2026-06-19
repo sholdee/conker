@@ -120,7 +120,24 @@ void func_151BE6A0(struct210 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE788.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE7C8.s")
+typedef struct {
+    u8 pad0[0x10];
+    s32 unk10;
+} BE7C8_elem;
+
+typedef struct {
+    u8 pad0[0x8];
+    s32 *unk8;
+    u8 unkC;
+} BE7C8_sub;
+
+void func_151BE7C8(struct210 *arg0) {
+    BE7C8_sub *sub = (BE7C8_sub *)((u8 *)arg0 + 0x170);
+    if (sub->unk8 != NULL) {
+        s32 *arr = (s32 *)((u8 *)sub->unk8 + 0x28);
+        ((BE7C8_elem *)&arr[sub->unkC])->unk10 = 0;
+    }
+}
 
 extern void func_151BE7C8(struct210 *);
 extern void func_151411A4(struct210 *);

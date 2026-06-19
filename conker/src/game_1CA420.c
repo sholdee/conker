@@ -79,7 +79,11 @@ void func_1519E65C(s32 arg0) {
     func_1519CF70(4);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E688.s")
+void func_1519E688(void) {
+    func_1519CF70(3);
+    func_1519CF70(4);
+    func_15147D64(0, 9);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E6BC.s")
 

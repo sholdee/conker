@@ -17,7 +17,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AC810.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AC9EC.s")
+extern f32 D_800BE9A4;
+
+s32 func_151AC9EC(u8 *arg0) {
+    f32 temp = *(f32 *)(arg0 + 0x4C) * D_800BE9A4;
+    *(f32 *)(arg0 + 0x2C) += temp;
+    *(f32 *)(arg0 + 0x30) += temp;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151ACA20.s")
 

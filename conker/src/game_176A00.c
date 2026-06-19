@@ -60,7 +60,23 @@ s32 func_1514B87C(struct Foo1514B87C *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514B8B0.s")
+struct Foo1514B8B0 {
+    char pad1C[0x1C];
+    s16 unk1C;
+    char pad1E[0x3E];
+    u8 unk5C;
+};
+
+s32 func_1514B8B0(struct Foo1514B8B0 *arg0) {
+    s32 v = arg0->unk1C;
+    if (v < 0x10) {
+        s32 sh = v << 4;
+        if (sh < arg0->unk5C) {
+            arg0->unk5C = sh;
+        }
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514B8E4.s")
 

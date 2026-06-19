@@ -70,7 +70,9 @@ void func_15133E84(s32 arg0, void *arg1, s32 arg2) {
     func_15133EEC(arg0, *(u16 *)((u8 *)arg1 + 0x170), *(u8 *)((u8 *)arg1 + 0x172), *(s32 *)((u8 *)arg1 + 0x174));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133EB8.s")
+void func_15133EB8(s32 arg0, void *arg1, s32 arg2) {
+    func_15133EEC(arg0, *(u16 *)((u8 *)arg1 + 0x174), *(u8 *)((u8 *)arg1 + 0x176), *(s32 *)((u8 *)arg1 + 0x178));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133EEC.s")
 

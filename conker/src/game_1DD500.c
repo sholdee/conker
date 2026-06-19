@@ -18,7 +18,16 @@ void func_15149368(struct260 *arg0);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DD500/func_151B118C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DD500/func_151B1478.s")
+s32 func_151B1478(struct260 *arg0) {
+    s32 v1;
+    if (*(s16 *)((u8 *)arg0 + 0x1C) < 0x20) {
+        v1 = *(s16 *)((u8 *)arg0 + 0x1C) << 3;
+        if (v1 < *(u8 *)((u8 *)arg0 + 0x5C)) {
+            *(u8 *)((u8 *)arg0 + 0x5C) = v1;
+        }
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DD500/func_151B14AC.s")
 
