@@ -39,7 +39,15 @@ void func_15194588(s32 arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_151949F4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194A68.s")
+extern void func_1507DE4C(s32);
+extern void func_15138BC0(s32, s32, s32);
+extern void func_151949F4(s32, s32, s32);
+
+void func_15194A68(s32 arg0, s32 arg1, s32 arg2) {
+    func_1507DE4C(arg1);
+    func_15138BC0(arg1, 0xFF, 1);
+    func_151949F4(0, arg0, arg1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194AB4.s")
 

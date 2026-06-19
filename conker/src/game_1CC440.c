@@ -105,7 +105,12 @@ void func_151A11CC(f32 arg0, f32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A2AD4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A2B84.s")
+void func_151A2B84(f32 *in, s32 a1, s32 a2, s32 a3, f32 t, f32 *out) {
+    f32 s = 1.0f - t;
+    out[0] = in[0] * s;
+    out[1] = in[1] * s;
+    out[2] = in[2] * s;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A2BD0.s")
 

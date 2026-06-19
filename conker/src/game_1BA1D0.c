@@ -196,7 +196,20 @@ void func_151906C4(void *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_151906E0.s")
+void func_151906E0(void *arg0, s32 *arg1, u8 arg2) {
+    s32 *ptr;
+    s32 temp;
+
+    ptr = (s32 *)((char *)arg0 + 0x90);
+    if (arg2 == 0x2D) {
+        temp = arg1[0];
+        if (temp == ptr[2]) {
+            ptr[2] = arg1[1];
+        } else if (arg1[1] == ptr[2]) {
+            ptr[2] = temp;
+        }
+    }
+}
 
 extern void func_151D343C(void *, s32);
 extern void func_1518F45C(void *, s32);

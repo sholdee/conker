@@ -40,7 +40,14 @@ void func_1516D2E0(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_197C20/func_1516D328.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_197C20/func_1516D378.s")
+u8 *func_1516D378(u8 *arg0) {
+    if ((arg0 != 0) && (*arg0 == 0x51)) {
+        *(s32 *)(*(s32 *)(arg0 + 0x10)) |= 0x100;
+        *(s32 *)(*(s32 *)(arg0 + 0x10)) &= ~0x400;
+        return arg0;
+    }
+    return 0;
+}
 
 s32 func_1516D3C4(u8 *arg0) {
     s32 *temp;

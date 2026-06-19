@@ -16,7 +16,14 @@ void func_151323AC(s32 arg0) {
     D_800899B0[idx](arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_151323F8.s")
+extern void (*D_800899D4[])(s32);
+
+void func_151323F8(s32 arg0) {
+    s32 idx;
+
+    idx = (*(s32 *)(arg0 + 0x60) & 0x100) ? *(u8 *)(arg0 + 0x68) : 0;
+    D_800899D4[idx](arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15132444.s")
 

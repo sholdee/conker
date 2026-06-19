@@ -260,6 +260,30 @@ s32 func_1519C998(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C9C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519CD64.s")
+struct Sub1519CD64 {
+    s32 unk0;
+    u8 unk4;
+    u8 pad5[0x36];
+    u8 unk3B;
+};
+
+struct Obj1519CD64 {
+    u8 padD[0xD];
+    u8 unkD;
+    s16 unkE;
+    u8 pad10[0x18];
+    struct Sub1519CD64 *unk28;
+    u8 unk2C;
+};
+
+void func_1519CD64(struct Obj1519CD64 *a0) {
+    struct Sub1519CD64 *v0 = a0->unk28;
+
+    if (v0->unk0 != 0 && v0->unk4 != 0xFF && v0->unk3B == a0->unk2C) {
+        return;
+    }
+    a0->unkE = -1;
+    a0->unkD |= 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519CDB0.s")
