@@ -51,7 +51,22 @@ void func_15196318(u8 *arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15197A68.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15197A7C.s")
+struct ConkerStruct15197A7C {
+    s32 unk0;
+    u8 unk4;
+};
+
+extern void func_15147D64(struct ConkerStruct15197A7C *, s32);
+
+void func_15197A7C(u8 *arg0) {
+    struct ConkerStruct15197A7C sp18;
+
+    if (arg0 != 0) {
+        sp18.unk0 = (s32) arg0;
+        sp18.unk4 = arg0[0x3B];
+        func_15147D64(&sp18, 8);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15197AB4.s")
 

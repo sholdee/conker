@@ -78,4 +78,8 @@ s32 func_15157DC8(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157FE8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15158078.s")
+extern s32 D_800A6060;
+
+void func_15158078(s32 arg0, u8 arg1) {
+    func_15169260((s32)&D_800A6060, 3, arg0, arg1);
+}

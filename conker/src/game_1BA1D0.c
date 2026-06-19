@@ -116,7 +116,19 @@ void func_15190490(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_151904BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15190518.s")
+struct tmp15190518 {
+    s32 unk0;
+    s8  unk4;
+};
+
+void func_15190518(void *arg0) {
+    struct tmp15190518 tmp;
+
+    tmp.unk0 = (s32)arg0;
+    tmp.unk4 = *(u8 *)((char *)arg0 + 0x3B);
+
+    func_1516944C(0x3E, (s32)&tmp, 0x2A);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15190550.s")
 

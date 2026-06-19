@@ -114,7 +114,11 @@ void func_1514DE0C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DE44.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DE50.s")
+void func_1514DE50(void) {
+    if (((u8 *)D_800D2E4C)[0x11] & 8) {
+        func_1514DCAC();
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DE88.s")
 
