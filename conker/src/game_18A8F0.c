@@ -95,7 +95,17 @@ void func_1515F170(s32 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F25C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F270.s")
+extern void (*D_8008B090[])(s32);
+
+void func_1515F270(s32 arg0, s32 *arg1) {
+    s32 idx = arg1[6];
+
+    if (idx >= 0 && idx < 12) {
+        if (D_8008B090[idx] != 0) {
+            D_8008B090[idx](arg0);
+        }
+    }
+}
 
 s32 func_1505D024(struct127 *arg0, s32 arg1, u16 arg2, s32 arg3);
 

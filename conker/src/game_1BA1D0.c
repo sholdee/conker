@@ -2,6 +2,7 @@
 #include "functions.h"
 #include "variables.h"
 
+void func_1518E308(void *);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518CD20.s")
 
@@ -13,7 +14,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518E308.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518E37C.s")
+void func_1518E37C(void *arg0, u8 arg1) {
+    if (arg1 != *(u8 *)((char *)arg0 + 0x22)) {
+        func_1518E308(arg0);
+        *(u8 *)((char *)arg0 + 0x22) = arg1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518E3C4.s")
 

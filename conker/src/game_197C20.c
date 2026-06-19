@@ -30,7 +30,13 @@ s32 func_1516A770(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_197C20/func_1516D0CC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_197C20/func_1516D2E0.s")
+void func_1516D2E0(u8 *arg0) {
+    if ((arg0 != 0) && (*arg0 == 0x51)) {
+        *(u8 *)(*(s32 *)(arg0 + 0x10) + 8) = 0;
+        func_1516972C((struct102 *)arg0);
+        arg0[0x15] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_197C20/func_1516D328.s")
 

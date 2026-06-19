@@ -9,7 +9,16 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18D250/func_1515FFEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18D250/func_15160090.s")
+extern void (*D_8008B0E4[])(void*, s32, u8);
+
+void func_15160090(void *arg0, s32 arg1, u8 arg2) {
+    void (*func)(void*, s32, u8);
+
+    func = D_8008B0E4[*(u8*)((char*)arg0 + 0x14)];
+    if (func != NULL) {
+        func(arg0, arg1, arg2);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18D250/func_151600D8.s")
 

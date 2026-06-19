@@ -147,4 +147,8 @@ void func_15107F54(s32 *arg0, u8 arg1, void *arg2, s32 arg3) {
     func_15143134(arg2, arg3, arg0[0x1D4 / 4] + (arg1 << 6));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15107F98.s")
+void func_15169850(s32, u8, s32, s32, s32);
+
+void func_15107F98(s32 *arg0, s32 arg1, u8 arg2) {
+    func_15169850(arg1, arg2, arg0[0x18], arg0[0x18] + 4, (s32)arg0);
+}

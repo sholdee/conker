@@ -11,7 +11,27 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_1519F1C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_1519F3B8.s")
+s32 *func_1519F1C8(void *arg0, s32 arg1);
+
+struct Sub1519F3B8 {
+    s32 *unk0;
+    s32 unk4;
+    s32 *unk8;
+    s32 unkC;
+};
+
+struct Obj1519F3B8 {
+    u8 pad0[0x58];
+    struct Sub1519F3B8 unk58;
+};
+
+void func_1519F3B8(struct Obj1519F3B8 *arg0) {
+    struct Sub1519F3B8 *p = &arg0->unk58;
+    p->unk0 = func_1519F1C8(arg0, 6);
+    p->unk4 = 0;
+    p->unk8 = func_1519F1C8(arg0, 7);
+    p->unkC = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_1519F400.s")
 
