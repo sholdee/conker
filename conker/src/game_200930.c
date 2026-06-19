@@ -21,7 +21,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D4408.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D4668.s")
+struct S151D4668 {
+    void *unk0;
+    u8 unk4;
+};
+
+void func_151D4668(void *arg0) {
+    struct S151D4668 sp18;
+    sp18.unk0 = arg0;
+    sp18.unk4 = *((u8 *)arg0 + 0x3B);
+    func_151494E0((s32)&sp18, 0x3C);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D469C.s")
 

@@ -59,7 +59,12 @@ s32 func_151BC580(s32 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BD79C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BD7F4.s")
+void func_151BD7F4(s32 arg0) {
+    s32 sp18[2];
+    sp18[0] = arg0;
+    *((u8 *)&sp18 + 4) = *((u8 *)arg0 + 0x3B);
+    func_151494E0((s32)&sp18, 0x3B);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BD828.s")
 

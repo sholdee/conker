@@ -1449,3 +1449,19 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   to get the correct sll/lbu coloring AND keep the `addu` reusing v0. Splitting the
   load and the fold into two statements (not one combined expression) is what
   reproduces the load/sll/addu register banding.
+- Opportunistic -g3 param-home filling an EMPTY jal delay slot (1-instruction
+  bail): when the SOLE residual is a `sw aN,off(sp)` homing an incoming arg to its
+  caller arg-save slot (OUTSIDE the function's own frame) sitting in an otherwise-
+  empty `jal`/`jalr` delay slot, IDO -g3 emitted it to fill the slot — there is no
+  C source use that reproduces it WITHOUT a side effect. All forms regress: forwarding
+  the callee's result across the call (with a void callee) produces the home but
+  SPILLS the live value (frame grows, extra move/lw); `&arg`/`**pp`/volatile-pointer
+  reads home the arg at ENTRY and add a reload (`move aN,tM`); self-assign and
+  comma-expr tricks are DCE'd (no home at all); early-return/ternary/named-result
+  forms flip the branch or add moves. The home is a pure delay-slot-fill artifact of
+  the empty slot, not a modeled store. If a correct body matches everything (loaded-
+  value register, the likely-branch + `lw ra` in its delay slot, the jal, epilogue,
+  fall-off return) and only this single delay-slot home differs, harvest as a
+  decomp-permuter seed and bail. (Distinct from the homing idioms above, which are
+  steerable because the home backs a real source-level reassignment/forward/spill;
+  this one has no such anchor — the slot was simply empty.)

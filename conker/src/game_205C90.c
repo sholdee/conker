@@ -33,6 +33,10 @@ void func_151D8BE0(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_205C90/func_151D8D5C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_205C90/func_151D8DB4.s")
+extern f32 D_800AB300;
+
+void func_151D8DB4(s32 arg0, u8 arg1) {
+    func_15169260(&D_800AB300, 1, arg0, arg1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_205C90/func_151D8DE8.s")
