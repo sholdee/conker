@@ -5,7 +5,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_196DB0/func_15169900.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_196DB0/func_15169968.s")
+s32 func_15169900(s32 arg0, s32 arg1);
+
+s32 func_15169968(s32 arg0) {
+    return func_15169900(arg0, 0xFF);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_196DB0/func_15169988.s")
 

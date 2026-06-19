@@ -173,6 +173,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   varargs homes ALL arg regs with a larger frame.
 - To reproduce a param HOMED to the stack and reloaded on every use, take its
   address into a local (`s32 **pp = &arg0;`) and read through `**pp` each time.
+- To home ALL incoming register args (`sw a0,0(sp)`/`a1,4`/`a2,8`/`a3,0xc`) to the
+  standard caller arg-save slots WITHOUT allocating a stack frame (a trivial body
+  that just spills its args), take the address of the FIRST param
+  (`s32 *p = &arg0;`): IDO -O2 -g3 spills/homes every register arg to its standard
+  slot with NO frame. Declaring the params with exact types and no address-of
+  homes nothing; a varargs signature adds a spurious frame and shifts the offsets.
 - To force IDO to emit fresh registers + `move`s (e.g. an XOR-swap), use two
   distinct temp locals rather than reusing one — the extra temp pins the moves.
 - To force TWO separate (non-CSE'd) `addu`s of the SAME `base+off` value, compute
