@@ -114,6 +114,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Float truncated to a NARROW int (`(s16)f`): write `(s16)(s32)f` to emit
   `trunc.w.s` followed by the `sll reg,16; sra reg,16` sign-extend-to-16 pair;
   a bare `(s16)f` does not produce the trunc + half-word narrowing sequence.
+- High-halfword extraction: write `(x & 0xFFFF0000) >> 16` to emit the `lui
+  at,0xffff; and; srl reg,16` triple; a plain `x >> 16` or `(u16)(x >> 16)`
+  collapses to a bare `srl` and scores worse. Use the explicit mask form when the
+  asm masks the high half before shifting.
 - A signed `(s16)` cast on a u16 field forces a signed `lh` load (vs `lhu`) and a
   signed branch (`bgtzl`/`blez`) on its value; use it when the asm sign-extends.
 - Read a `u8`/`u16` param into a WIDER local (`s32 a = arg2;`) to reproduce a

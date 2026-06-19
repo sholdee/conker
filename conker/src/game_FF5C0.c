@@ -14,7 +14,10 @@ void func_150D227C(s32 arg0) {
     func_1514933C((struct260 *)arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FF5C0/func_150D22A8.s")
+void func_150D22A8(s32 arg0) {
+    func_150D22D4(arg0);
+    func_15149368((struct260 *)arg0);
+}
 
 extern u8 D_800D9900;
 
