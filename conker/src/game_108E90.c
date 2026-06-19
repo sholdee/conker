@@ -23,6 +23,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_108E90/func_150DE12C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_108E90/func_150DE2A4.s")
+s32 func_150DE2A4(void *arg0) {
+    s16 temp = *(s16 *)((u8 *)arg0 + 0x1C);
+    if (temp < 0x20) {
+        *(s8 *)((u8 *)arg0 + 0x28) = temp << 3;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_108E90/func_150DE2C4.s")

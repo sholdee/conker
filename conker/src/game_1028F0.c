@@ -9,7 +9,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D596C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D5A2C.s")
+void func_150D5A2C(struct260 *arg0) {
+    func_1514933C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D5A4C.s")
 

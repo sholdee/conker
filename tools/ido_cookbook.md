@@ -1083,6 +1083,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   into `li tN,0; sw tN,off` pairs (no helper call, just split stores), and the
   split + reg renames are the whole diff. Tell-tale that the project punted: a
   byte-identical sibling left as a raw `asm` segment in the yaml. Bail (stub).
+- Empty-body sign-test guard that survives only with a side effect: when the target
+  loads a field and tests its sign to an EMPTY inner if (`lw v0,off(aN); bltz v0,end;
+  nop` with no body, v0 unused afterward, function effectively void), NO truly-empty C
+  form keeps the `lw`+`bltz` — IDO DCEs the whole guard. Every empty-body shape (`{}`,
+  `cond1 && cond2`, early `return;`, `volatile` read, dead-local assign, `goto end`)
+  drops the branch (score jumps, missing lw+bltz); every two-return/boolean form injects
+  a phi `move`/`bgez` or an `slti/xori` (worse). The ONLY thing that preserves the
+  empty-body guard branch is a MEMORY side effect inside the if — but that emits an extra
+  store the target lacks. The target's original source had a side effect that fully
+  optimized away while leaving the guard; from C you get either no branch or an extra
+  store. If the lone residual is one extra store vs the bare guard, bail (harvest the
+  +1-store form as a permuter seed; dropping that store would reach 0).
 
 ## Register-allocation rotation (the unreachable +1 temp shift)
 - A small switch (beqz/beq-at chain, no jump table) over 0/1/2 with per-case byte
