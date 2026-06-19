@@ -263,6 +263,7 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `extern void (*D_xxxx[])(void *);` plus `D_xxxx[idx](arg)` reproduces the table-load
   + `jalr`. (See BAIL on case-pointer delay-slot hoisting.)
 - Counted loop bounded by an ADJACENT distinct end-symbol: `for(i=0;i<N;i++)` synthesizes a WRONG `%lo(D_A+N*stride)` bound reloc, and a pointer-compare `p != &D_B[0]` makes IDO 4x-unroll. Winning shape: a counted `do-while` naming BOTH externs as locals - body reads `D_A[i+k]`, condition `&D_B[0] != &D_A[i]` (uses `D_B` directly as the bound reloc, non-unrolled `bnel`); condition operand order sets the `bnel` rs/rt.
+- Assignment-in-for-condition sentinel: `for (i=0; (v = arr[i+off]) != 0; i++)` keeps the sentinel load IN the test (one `lw`+`beqz`), vs pre-loading into a separate local which adds an assignment/register. [banjo-mined]
 
 ## Type & access width (loads, stores, casts)
 - abs/trunc intrinsics: `fabsf` emits `abs.s`; `(s32)` on a float emits `trunc.w.s`;
@@ -503,6 +504,8 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   works if no clean field falls there.
 - Group related locals into ONE local struct to keep a store live; separate scalar
   locals get DCE'd while a struct member used later survives.
+- Scope-based init sink: declaring a local INSIDE an `if` body (not at function top) confines its init store to the TAKEN path only; read the outer-scope value on the else-path - matches a branch that stores in one arm but not the other. [banjo-mined]
+- Chained assignment `a = b = c = v;` (or `arr[0]=arr[1]=arr[2]=v;`) materializes `v` ONCE and propagates via `move`s, vs separate assignments that may re-materialize. Use when the asm sets several fields/registers from one value with moves. [banjo-mined]
 
 ## CSE & store/load duplication
 - Defeat DCE of intermediate RMW byte stores to the SAME address (`*p |= 0x80; *p &=
