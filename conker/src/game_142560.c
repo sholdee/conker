@@ -123,7 +123,19 @@ void func_15117798(struct Obj15117798 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151179BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_15117D3C.s")
+void func_15117D3C(u8 *arg0, u8 *arg1) {
+    s32 temp = *(s32 *)(arg0 + 0x3C) & 0xFFFF;
+    if (((s32 *)arg1)[0] == 1) {
+        if (arg0[0x4F] & 0x4) {
+            if (!(arg0[0x73] & 0x3) && !(arg0[0x73] & 0x4)) {
+                if (temp == 0 || ((u8 **)arg1)[0x31C / 4][0x57] == 1) {
+                    arg0[0x73] &= 0xFFFC;
+                    arg0[0x73] |= 0x2;
+                }
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_15117DA4.s")
 

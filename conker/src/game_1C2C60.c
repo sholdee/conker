@@ -152,7 +152,30 @@ void func_151993B4(struct ConkerStruct151993B4 *arg0) {
     p[6] |= 4;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_151993E4.s")
+extern u8 D_800A8A9C[];
+
+void func_151993E4(u8 *arg0) {
+    u8 *q;
+    u8 *p;
+    s32 i;
+    s32 found;
+
+    q = *(u8 **)(arg0 + 0x98);
+    p = *(u8 **)q;
+    i = 0;
+    found = 0;
+    do {
+        if (p[0x3B] == D_800A8A9C[i]) {
+            found = 1;
+        } else {
+            i++;
+        }
+    } while (!found && i < 6);
+
+    if (found) {
+        ((u8 *)D_800E0900[i])[0x14] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519944C.s")
 

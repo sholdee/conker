@@ -90,7 +90,14 @@ s32 func_15157DC8(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157DEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157F80.s")
+extern Mtx D_80089470;
+
+Gfx *func_15157F80(Gfx *pkt, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) {
+    gSPMatrix(pkt++, &D_80089470, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
+    gSPMatrix(pkt++, &((Mtx *)D_800DCC10)[arg2], G_MTX_PROJECTION | G_MTX_LOAD | G_MTX_NOPUSH);
+    *arg4 = 1;
+    return pkt;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157FE8.s")
 

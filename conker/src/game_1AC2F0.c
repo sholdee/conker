@@ -115,4 +115,12 @@ void func_15182748(s32 arg0) {
     *(u8 *)(arg0 + 0x2B) = *(s16 *)(arg0 + 0xE) * *(s16 *)(arg0 + 0x2E);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_15182768.s")
+s32 func_1517F08C(s32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5);
+
+s32 func_15182768(s32 arg0, s32 arg1, s16 arg2) {
+    u8 *p = (u8 *)(*(s32 *)&arg1 + 0x28);
+    if (arg2 == *(u8 *)(*(s32 *)&arg1 + 0x2C)) {
+        arg0 = func_1517F08C(arg0, p[3], p[0], p[1], p[2], p[4]);
+    }
+    return arg0;
+}

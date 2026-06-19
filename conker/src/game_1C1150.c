@@ -49,7 +49,23 @@ void func_15194A68(s32 arg0, s32 arg1, s32 arg2) {
     func_151949F4(0, arg0, arg1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194AB4.s")
+void func_15194AB4(struct127* arg0) {
+    s32 sp_a1;
+
+    arg0->unk9C |= 0xFFFE;
+    sp_a1 = -1;
+    switch (arg0->id) {
+    case 0x75:
+        sp_a1 = 0x73;
+        break;
+    case 0x80:
+        sp_a1 = 0x72;
+        break;
+    }
+    if (sp_a1 != -1) {
+        func_15083568(arg0, sp_a1, 1.0f, 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194B1C.s")
 
