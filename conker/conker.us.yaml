@@ -756,7 +756,7 @@ segments:
       - [0x21c4f0, asm]
       - [0x21c540, asm]
       - [0x21C900, asm, libultra/io/pfsinit2] # dupe of libultra/io/pfsinit
-      - [0x21CAC0, asm]
+      - [0x21CAC0, c, game_21CAC0]
       - [0x21CAF0, asm]
       - [0x21ccb0, asm] # gu function
       - [0x21ce70, asm] # modified osSetTimer ?
