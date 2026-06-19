@@ -49,7 +49,12 @@ void func_15156F94(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157D88.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157DC8.s")
+extern void func_15157DEC(void *, void *);
+
+s32 func_15157DC8(void *arg0) {
+    func_15157DEC(arg0, (void *)((u8 *)arg0 + 0x120));
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157DEC.s")
 

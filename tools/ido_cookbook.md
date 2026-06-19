@@ -89,6 +89,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   preserves `temp`'s register across the body (`bnez v0; move v1,v0`) and gives a
   fallthrough `move v0,zero`. The inverted `if(temp!=0){...return temp;} return 0;`
   flips to `beqz` and adds an instruction. Pick the form matching the branch shape.
+- Read-and-clear flag (return current value, then zero it): write
+  `ret = 1; if (field == 0) ret = 0; field = 0; return ret;` (prime the nonzero
+  result, demote to 0 on the zero test) — NOT the symmetric `if(field){ret=1;}
+  else{ret=0;}`. The `==0` demote form makes IDO emit the test as a `bnel`
+  branch-likely with the CLEARING store (`sb zero,off`) sunk into its delay slot;
+  the symmetric if/else materializes both constants and stores the clear separately
+  (extra instructions). Use the prime-then-demote shape when the asm clears the flag
+  in a likely-branch delay slot.
 - Null-guard return-default: `if (ptr != 0) return *ptr_field; return 0;` (the
   non-null-deref-first, default-last form) emits an EAGER `move v0,zero` BEFORE the
   branch, then OVERRIDES v0 via the field load (`lbu`/`lw`) on the non-null path —
@@ -1096,6 +1104,16 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `(u8)` cast, temp-local mask, narrow 4th-param prototype, array-index arg, explicit
   arg locals — all share the same one-instruction reload-vs-live-register diff. A
   thin 1-instruction miss; bail (stub), decomp-permuter candidate.
+- Size-arg homed INTO the call's delay slot then reloaded for a post-call add
+  (`(s32)memcpy(dst,src,n)+n` / "compute pointer past the copy" tails): when the
+  target homes the count arg (`sw a2,off(sp)`) IN the `jal memcpy` DELAY SLOT, then
+  reloads it (`lw tN,off(sp)`) and does the final `addu v0,v0,tN` in the `jr ra`
+  delay slot, IDO from EVERY equivalent body (memcpy()+n with any cast/return-type,
+  size_t vs s32 param, operand order, a temp `r=memcpy(); return r+n;`) instead homes
+  `a2` BEFORE the `jal`, emits a redundant `lw a2,off` reload in the delay slot, and
+  orders the epilogue (`lw ra`/`lw tN`/`addiu sp`/`addu v0`) differently. No C form
+  moves the home store into the call's delay slot — the body is provably correct and
+  only the around-the-call schedule differs. Bail, decomp-permuter candidate.
 - Return-phi shape when an intervening call SPILLS the result: the `if(p){...}
   return p;` phi idiom assumes p stays in v0 with no spill. If a call inside the
   body (e.g. `memcpy`) spills the result to the stack, IDO reloads OPTIMALLY into v0

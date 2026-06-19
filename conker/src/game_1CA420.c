@@ -45,6 +45,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E8F8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E924.s")
+extern s32 D_800E0920;
+
+void func_1519E924(struct260 *arg0) {
+    D_800E0920 = 0;
+    func_1514933C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E948.s")
