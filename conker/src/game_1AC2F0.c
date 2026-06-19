@@ -80,7 +80,26 @@ void func_1517F720(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F75C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F7B4.s")
+extern s32 D_800BE9E4;
+extern u16 D_800DDE08;
+extern u8 D_800DDD88;
+extern u8 D_800DDD89;
+void func_1517F7B4(void)
+{
+  if (D_800DDE08)
+  {
+    if (D_800BE9E4 < D_800DDE08)
+    {
+      D_800DDE08 -= D_800BE9E4;
+    }
+    else
+    {
+      D_800DDE08 = 0;
+    }
+    D_800DDD89 += D_800DDD88 * D_800BE9E4;
+  }
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F814.s")
 
