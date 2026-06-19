@@ -211,6 +211,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `return 0;` paths share ONE epilogue (a `bc1t`-to-shared-ret + `bc1fl`-enter-body
   branch shape) that plain separate `if`s each with their own `return 0;` cannot
   produce.
+- A global the shared header DECLARES as an aggregate (e.g. `struct160 D_xxxx[]`)
+  but the asm dereferences as a POINTER (`lw tN,0(base); addu ...` per access) is
+  actually a pointer variable. Read it via `(*(struct160**)&D_xxxx)[i]` (cast the
+  symbol's address to pointer-to-pointer) so IDO emits the `lw base` load before
+  indexing — without editing the mistyped shared header.
 - To deref a struct field the prototype only PARTIALLY declares (e.g. header
   declares `next`@0x18 but not `prev`@0x1C), define a LOCAL tagged struct with
   explicit padding (`struct { u8 pad[0x18]; void *next, *prev; }`) to reach the
