@@ -945,6 +945,16 @@ Schedule / hoist artifacts:
   to the top (it feeds a long float chain, higher list-scheduling priority) and pushes
   `li v0,1` to the END. No transform steers the tie-break. Bail. (Store order of the
   field copies still must match exactly.)
+- Epilogue `lw ra` duplicated into a branch-over delay slot: in a multi-arm dispatch/swap
+  func where one arm (e.g. the `0x2D` block) is physically FIRST and must branch PAST a
+  fall-through trailing block to the shared epilogue, IDO may DUPLICATE the `lw ra,off(sp)`
+  into that branch's delay slot (branching to the post-reload tail) instead of reusing the
+  shared reload. C codegen instead fills the slot with the block's last store and branches
+  TO the shared `lw ra` (1 fewer instr). Unsteerable from source (else-if, separate ifs,
+  early `return;`, operand/store reorder all leave it); a matched sibling only gets the
+  duplication because its analogous block ended in a `jal` that clobbered ra. Pure 1-instr
+  delay-slot miss whose +1 shift cascades into an inflated score; harvest as a permuter
+  seed and bail.
 - End-to-end live value with no early C need (Horner `+D` / shared subexpression): when
   the target keeps an arg/element live in ONE FPU reg across the whole function (used in
   an INLINED early subexpression AND as the final trailing add), IDO loads it late and

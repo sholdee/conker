@@ -47,7 +47,15 @@ void func_150CF530(s32 arg0) {
     func_151CF898(&D_800CC2D0[0], D_800CC2D0[0].y_position + 300.0f, -10000.0f);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CF578.s")
+extern s8 *D_80088890;
+extern s8 *D_80088894;
+extern s8 *D_80088898;
+
+void func_150CF578(s32 arg0) {
+    D_80088890 += D_800BE9E4 * 26;
+    D_80088894 -= D_800BE9E4 * 28;
+    D_80088898 -= D_800BE9E4 * 28;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CF5E8.s")
 

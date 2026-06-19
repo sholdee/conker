@@ -15,7 +15,14 @@ void func_150B3E74(void *arg0) {
     func_151478F4(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E1280/func_150B3EE8.s")
+extern void func_15147928(void *);
+
+void func_150B3EE8(void *arg0) {
+    func_1000FC18(0x221, (s16)(s32)*(f32 *)((u8 *)arg0 + 0x10),
+                  (s16)(s32)*(f32 *)((u8 *)arg0 + 0x14),
+                  (s16)(s32)*(f32 *)((u8 *)arg0 + 0x18), 0xFA0);
+    func_15147928(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E1280/func_150B3F5C.s")
 
