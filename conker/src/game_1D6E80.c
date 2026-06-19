@@ -95,7 +95,16 @@ s32 func_151AADBC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB090.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB180.s")
+extern s32 func_1513F6C0(void *arg0, s32 arg1, s32 arg2);
+
+s32 func_151AB180(u8 *arg0) {
+    s32 *temp = (s32 *)((*(u8 **)((u8 *)arg0 + 0xB0)) + 0x58);
+    temp[6] = 0;
+    *(s32 *)((u8 *)arg0 + 0x18) |= 2;
+    *(u8 **)((u8 *)arg0 + 0xB0) = 0;
+    func_1513F6C0(arg0, 0, 0);
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB1C4.s")
 

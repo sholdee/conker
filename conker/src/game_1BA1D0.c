@@ -78,7 +78,14 @@ s32 func_1518F15C(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F7C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F858.s")
+extern void (*D_8008D680[])(void);
+
+void func_1518F858(void *arg0) {
+    if (*(volatile s8 *)((char *)arg0 + 0x89) == -1) {
+        return;
+    }
+    D_8008D680[*(s8 *)((char *)arg0 + 0x89)]();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F89C.s")
 

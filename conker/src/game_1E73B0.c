@@ -205,4 +205,8 @@ void func_151BFBD0(struct260 *arg0) {
     func_15149368(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BFBFC.s")
+void func_151BFBFC(struct102 *arg0, s32 arg1, u8 arg2) {
+    if (arg2 == 0x57) {
+        func_1516972C(arg0);
+    }
+}

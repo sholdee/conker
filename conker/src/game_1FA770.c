@@ -82,7 +82,18 @@ void func_151CE4DC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CEAAC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CEC10.s")
+struct Vec3w151CEC10 { s32 x, y, z; };
+
+s32 func_151CEC10(struct Vec3w151CEC10 *arg0, f32 *arg1, void *arg2) {
+    if (arg2 != NULL) {
+        *arg0 = *(struct Vec3w151CEC10 *)((s32)arg2 + 0x40);
+    } else {
+        *(f32 *)&arg0->x = arg1[5];
+        *(f32 *)&arg0->y = arg1[6];
+        *(f32 *)&arg0->z = arg1[7];
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CEC54.s")
 

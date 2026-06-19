@@ -579,6 +579,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   (Scalar-value, no-intervening-call analog of the volatile-pointer-reload rule above;
   use when the asm performs two distinct narrow loads of one field for a test + a
   same-width call arg.)
+- Defeat CSE of a doubled SIGNED-byte read (a `== -1` early-return test + a table/array
+  INDEX use of the same byte) WITHOUT corrupting its signedness: when the asm loads the
+  byte TWICE as `lb` (one for the sentinel compare, one for the index) and IDO collapses
+  your two same-typed reads into a single load + `beq`, cast ONLY the TEST read through
+  `volatile s8 *` and leave the index read plain `s8`. The `volatile` defeats GCSE so IDO
+  emits a fresh signed `lb` reload for the index, both loads stay `lb` (signed), and the
+  early-return shape yields the `beql` branch-likely (with the `lw ra` restore in its
+  delay slot). Do NOT read the index as `u8` to break CSE — that defeats CSE but emits an
+  `lbu` (wrong signedness). The asymmetric volatile-on-the-TEST / plain-signed-on-the-USE
+  cast is what reloads while keeping both loads `lb`. (Signedness-preserving variant of
+  the volatile-cast-test CSE-defeat rules above; applies to a function-pointer table or
+  array indexed by a signed-byte field that is also sentinel-tested for -1.)
 - Defeat CSE between a COMPARE's operand load and a later SHIFT of the SAME param/
   field by CASTING the shift operand: when the target compares a param then shifts it
   and emits a SEPARATE re-read for the shift (`lw a2,off; sll t,a2,k; move a2,t`)

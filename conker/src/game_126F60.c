@@ -42,6 +42,11 @@ void func_150FACE4(struct102 *arg0, s32 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FB29C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FB2E0.s")
+extern void func_150FB240(u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
+
+s32 func_150FB2E0(void *arg0) {
+    func_150FB240((u8 *)arg0 + 0x2E, *(s16 *)((u8 *)arg0 + 0x22), *(s16 *)((u8 *)arg0 + 0x70), *(s16 *)((u8 *)arg0 + 0x26), *(s16 *)((u8 *)arg0 + 0x28));
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FB324.s")

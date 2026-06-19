@@ -47,6 +47,18 @@ void func_1507EFA0(s32 c, u8 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507FEA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507FF94.s")
+void func_15191B8C(s32 arg0, u8 arg1);
+
+void func_1507FF94(s32 arg0) {
+    struct {
+        s32 unk0;
+        u8 unk4;
+    } sp20;
+
+    sp20.unk0 = arg0;
+    sp20.unk4 = *(u8 *)(arg0 + 0x3B);
+    func_15191B8C((s32)&sp20, 0xD);
+    func_151494E0((s32)&sp20, 0xD);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507FFD8.s")
