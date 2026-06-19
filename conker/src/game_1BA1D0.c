@@ -137,7 +137,10 @@ void func_15190840(void *arg0) {
     func_15169804(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1519086C.s")
+void func_1519086C(void *arg0) {
+    func_15191400(arg0);
+    func_15169824(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15190898.s")
 

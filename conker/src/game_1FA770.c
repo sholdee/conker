@@ -93,9 +93,14 @@ void func_151D0128(ConkerStruct151D0128 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D09A8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D0ED8.s")
+void func_151D0ED8(void *arg0) {
+    if (*(struct102 *volatile *)((u8 *)arg0 + 0xA8) != 0) {
+        func_1516972C(*(struct102 *volatile *)((u8 *)arg0 + 0xA8));
+    }
+}
 
 void func_151D0ED8(void *arg0);
+
 void func_1513173C(void *arg0);
 
 void func_151D0F08(void *arg0) {

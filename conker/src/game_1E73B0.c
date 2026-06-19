@@ -147,7 +147,12 @@ s32 func_151BEC94(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BFB2C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BFBA4.s")
+extern void func_151BFB2C(struct260 *arg0);
+
+void func_151BFBA4(struct260 *arg0) {
+    func_151BFB2C(arg0);
+    func_1514933C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BFBD0.s")
 

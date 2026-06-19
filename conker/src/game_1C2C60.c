@@ -83,7 +83,23 @@ void func_15198C60(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_151990AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_151993B4.s")
+struct ConkerStruct151993B4 {
+    char pad0[0x1E];
+    u16 unk1E;
+    char pad20[0x10];
+    u8 unk30;
+    char pad31[0x67];
+    u8 *unk98;
+};
+
+void func_151993B4(struct ConkerStruct151993B4 *arg0) {
+    u8 *p;
+    p = arg0->unk98;
+    arg0->unk30 = 0;
+    arg0->unk1E &= 0xFFFD;
+    p[6] |= 1;
+    p[6] |= 4;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_151993E4.s")
 

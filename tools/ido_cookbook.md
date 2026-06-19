@@ -484,6 +484,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   double reads CSE into ONE load cached in a register; the type mismatch defeats CSE
   so IDO emits a fresh reload for the body. Use it when the target loads a field
   twice (a beqz test then a reload) rather than caching the first load.
+- Force a pointer field RELOAD across an intervening call by casting through a
+  VOLATILE pointer-to-pointer: when the target loads a struct's pointer field TWICE
+  (once for a null/!=0 test, again as the call ARGUMENT) instead of CSE-caching it —
+  because the intervening `jal` may modify the struct — read it as
+  `*(T *volatile *)((u8*)arg + off)` at BOTH the test and the call. A plain
+  struct-field access (or a same-typed double read) CSEs the load and emits
+  `move aN,reg` reusing the first value (large score); the `volatile`-pointer cast
+  defeats CSE so IDO reloads `lw aN,off(arg)` (often in the jal delay slot) and emits
+  the `move a1,a0` arg-shuffle. Use it whenever the asm reloads a tested pointer field
+  for the call rather than caching it. (Volatile-on-the-POINTER analog of the
+  differently-typed double-read and untyped-byte-store reload rules; recurs verbatim
+  across sibling forwarders that null-test a field then call through it.)
 - Defeat CSE between a COMPARE's operand load and a later SHIFT of the SAME param/
   field by CASTING the shift operand: when the target compares a param then shifts it
   and emits a SEPARATE re-read for the shift (`lw a2,off; sll t,a2,k; move a2,t`)
@@ -573,6 +585,17 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   unmodified arg0 in a0 for a same-base store/call. This is the canonical way to
   reproduce an otherwise-unexplained dead base-advance that resists return-value,
   dead-local (DCE'd), and call-arg (mis-allocated regs) interpretations.
+  INTEGER-address variant (when the base is an int address, not a typed pointer):
+  a standalone `addiu reg,base,K` whose result is immediately OVERWRITTEN (e.g. a
+  following `move reg,zero`) is modeled as `s32 addr = base + K;` (integer-typed
+  address local) used for later `*(T*)(addr + off)` accesses — e.g. `(s32)arg + 0x170`
+  loaded, then `+0x110`. IDO keeps the `addiu base,K` live but FOLDS each later
+  `*(u8*)(addr + m)` back to `(K+m)(base)` off the ORIGINAL base register, leaving the
+  addiu unused. Use it when the base is reached as an INTEGER address and the
+  typed-pointer dead-store forms (comma exprs, unused locals, `p += K`,
+  `ret=(s32)(p+K)`) all get DCE'd. Pair with SEPARATE per-path `return 1;`/`return 0;`
+  statements (not one shared `ret` var) when the asm hoists a `move v0,zero` / needs
+  the t6/t7 split for that allocation.
 - Split a COMPOUND offset on a freshly-LOADED pointer (a standalone `addiu vN,vN,HI`
   followed by a `sw/sb zero,LO(vN)` rather than one folded `sw zero,HI+LO(base)`): when
   a pointer is loaded from a struct/global and then a field at `+(HI+LO)` is written,

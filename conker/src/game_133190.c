@@ -93,9 +93,11 @@ void func_15107604(s32 **arg0) {
     p->unk8 = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_1510761C.s")
-
-void func_1510761C(struct260 *arg0);
+void func_1510761C(struct260 *arg0) {
+    if (*(struct102 *volatile *)((u8 *)arg0 + 0x30) != 0) {
+        func_1516972C(*(struct102 *volatile *)((u8 *)arg0 + 0x30));
+    }
+}
 
 void func_1510764C(struct260 *arg0) {
     func_1510761C(arg0);
