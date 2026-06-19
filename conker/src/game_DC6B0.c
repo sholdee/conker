@@ -29,7 +29,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150B0094.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150B02C0.s")
+void func_150B02C0(void *arg0) {
+    if (*(s32 *)((u8 *)arg0 + 0x170) != 0) {
+        func_1516972C(*(struct102 **)((u8 *)arg0 + 0x170));
+    }
+}
 
 extern void func_150B02C0(void *);
 extern void func_15132570(void *);

@@ -117,7 +117,12 @@ void func_151D0F34(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D0F60.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D1074.s")
+s32 func_151D1074(f32 *arg0, f32 *arg1) {
+    arg1[0] = arg0[5];
+    arg1[1] = arg0[96] + 8.0f;
+    arg1[2] = arg0[7];
+    return 1;
+}
 
 s32 func_151D10E4(void *arg0, s32 arg1, s32 arg2);
 

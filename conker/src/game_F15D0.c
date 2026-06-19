@@ -7,7 +7,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F15D0/func_150C44A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F15D0/func_150C4AD8.s")
+void func_150C4AD8(struct260 *arg0) {
+    if (*(s32 *)((u8 *)arg0 + 0x34) != 0) {
+        func_1516972C(*(struct102 **)((u8 *)arg0 + 0x34));
+    }
+}
 
 extern void func_150C4AD8(struct260 *);
 

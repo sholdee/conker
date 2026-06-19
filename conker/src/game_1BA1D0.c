@@ -87,7 +87,13 @@ void func_1518E4F8(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1519021C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_151903D0.s")
+extern void func_15163DEC(void *, void *);
+extern s32 func_15163F50(void *, void *);
+
+void func_151903D0(void *arg0) {
+    func_15163DEC(arg0, (char *)arg0 + 0x20);
+    func_15163F50(arg0, (char *)arg0 + 0x18);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15190400.s")
 

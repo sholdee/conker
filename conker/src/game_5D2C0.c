@@ -33,7 +33,13 @@ s32 func_150302F0(void *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_150311C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_1503192C.s")
+void func_1503192C(struct127 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    struct126 *temp;
+    temp = func_1503195C(arg0, arg1, arg3);
+    if (temp != 0) {
+        *((u8 *)temp + 3) = arg2;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_1503195C.s")
 
