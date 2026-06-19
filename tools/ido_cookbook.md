@@ -429,6 +429,15 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   prototype but emits `jalr` instead of `jal`. The only real fix is correcting the
   shared header width — a header-correctness fix, not a C-steering problem. If header
   edits are out of scope, bail (stub) and flag the prototype.
+- A WRONG param COUNT in a SHARED header (declares an EXTRA later param the real
+  function lacks) forces an unmatchable spurious home: under -g3 every named param is
+  homed to its caller arg-save slot, so the phantom `s32 arg1` emits a stray
+  `sw a1,off(sp)` the target never had. A correct single-param DEFINITION matches the
+  asm byte-for-byte but fails to COMPILE ("redeclaration ... number of parameters is
+  different") against the un-editable header; `register`-qualifying the extra param
+  does NOT suppress the home. Only correcting the header param count fixes it. If
+  header edits are out of scope, bail (stub) and flag the prototype. (Count analog of
+  the wrong-width-param-in-shared-header bail above.)
 - An EXTRA dead trailing arg at a call site makes IDO reload it from its home slot
   into the `jal` delay slot (and reorders nearby stores) — a large score. Verify
   the true callee arg count from a sibling CALLER's asm (which regs it loads).
@@ -609,6 +618,15 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   (`dl->words.w0 = 0xDBxxxxxx; dl->words.w1 = addr;`) instead emits the `ori` BEFORE
   the `addiu`, a large scheduling diff. Use the macro form when matching gbi-built
   DL words; don't hand-write the raw word stores.
+- Single-command DL builder returning the advanced pointer: invoke the actual GBI
+  macro with a POST-INCREMENT argument (`gSPMatrix(pkt++, ...)`) and `return pkt;`
+  to reproduce IDO's `move v1,a0; <stores via v1>; addiu a0,a0,8; move v0,a0` shape.
+  Every hand-written C equivalent (`Gfx *g = pkt; ...; return pkt+1;`) gets
+  coalesced/folded into stores-via-a0 + a single `addiu v0,a0,8` (large score). Only
+  the real macro + `pkt++` form keeps the snapshot `move v1,a0` and the trailing
+  `move v0,a0`. (Unused params spilled to the arg-save slots at entry confirm the
+  original signature; declare any undeclared global the macro references as a local
+  extern.)
 - DL-store pointer split: to write a record through one pointer (`move v0,a0`) while
   separately advancing the list pointer (`a0 += 8`), use a DISTINCT local for the
   store target and increment the list pointer BEFORE the macro store. A single

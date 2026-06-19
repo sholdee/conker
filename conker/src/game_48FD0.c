@@ -22,6 +22,11 @@ void func_1501C17C(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_48FD0/func_1501C1B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_48FD0/func_1501C53C.s")
+void func_1501C53C(void) {
+    u8 i;
+    for (i = 0; i < 4; i++) {
+        func_1501C17C(i);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_48FD0/func_1501C57C.s")

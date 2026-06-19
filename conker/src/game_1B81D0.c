@@ -14,6 +14,10 @@ s32 func_1518B1AC(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B81D0/func_1518B1D8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B81D0/func_1518B264.s")
+void func_1518B2A8(s32, f32, f32, s32, s32, s32, s32);
+
+void func_1518B264(s32 arg0, f32 arg1, f32 arg2, s32 arg3, u8 arg4) {
+    func_1518B2A8(arg0, arg1, arg2, arg3, 4, 0xFF, arg4);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B81D0/func_1518B2A8.s")

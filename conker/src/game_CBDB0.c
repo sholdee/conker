@@ -29,7 +29,9 @@ s32 func_1509F33C(s32 arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F660.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F6B0.s")
+void func_1509F6B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    func_10010F30(arg0, arg1, arg3, arg2, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F6E8.s")
 
