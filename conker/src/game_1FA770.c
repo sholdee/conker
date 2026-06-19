@@ -99,7 +99,16 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D1C98.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D223C.s")
+void func_151D223C(s32 arg0) {
+    s32 *temp_v0;
+    s32 temp_v1;
+
+    temp_v0 = *(s32 **)(arg0 + 0x98);
+    temp_v1 = temp_v0[0];
+    if (temp_v1 != 0) {
+        *(s32 *)(temp_v1 + 0x30) = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D2258.s")
 

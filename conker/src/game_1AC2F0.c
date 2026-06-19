@@ -55,6 +55,8 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_15182670.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_15182748.s")
+void func_15182748(s32 arg0) {
+    *(u8 *)(arg0 + 0x2B) = *(s16 *)(arg0 + 0xE) * *(s16 *)(arg0 + 0x2E);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_15182768.s")

@@ -49,7 +49,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502EA50.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502EA60.s")
+void func_1502EA60(u8 *arg0, s32 arg1) {
+    arg0[0xA4] = 2;
+    arg0[0xA5] = 0xFF;
+    arg0[0xA6] = arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502EA7C.s")
 
