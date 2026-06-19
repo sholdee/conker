@@ -17,7 +17,20 @@ s16 *func_150D8590(s16 *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_105760/func_150D85AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_105760/func_150D88AC.s")
+struct S150D88AC {
+    u8 pad0[0x14];
+    u8 *unk14;
+    u8 *unk18;
+};
+
+s32 func_150D88AC(struct S150D88AC *arg0) {
+    if (arg0->unk18[0x6F] != 0) {
+        arg0->unk14[0x9] = 0;
+    } else {
+        arg0->unk14[0x9] = 1;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_105760/func_150D88E0.s")
 

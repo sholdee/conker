@@ -13,6 +13,8 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_203E20/func_151D7000.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_203E20/func_151D70CC.s")
+void func_151D70CC(s32 *arg0, s32 arg1, u8 arg2) {
+    func_15169850(arg1, arg2, arg0[0x12], arg0[0x12] + 4, (s32)arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_203E20/func_151D710C.s")

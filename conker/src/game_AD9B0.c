@@ -26,4 +26,9 @@ void func_15080718(s32 arg0, s32 *arg1, s32 *arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AD9B0/func_15080C64.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AD9B0/func_15080CF4.s")
+s32 func_15080CF4(void) {
+    if (!D_800D1941) {
+        return 1;
+    }
+    return 0;
+}

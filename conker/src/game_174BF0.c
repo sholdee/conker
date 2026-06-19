@@ -11,7 +11,13 @@ void func_151478D0(void *arg0) {
     func_151D5E30((void *)((u8 *)arg0 + 0x84));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_151478F4.s")
+extern void func_1514795C(void *);
+
+void func_151478F4(void *arg0) {
+    func_151478D0(arg0);
+    func_1514795C(arg0);
+    func_15169804((struct102 *)arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_15147928.s")
 
