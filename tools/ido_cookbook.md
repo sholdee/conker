@@ -477,6 +477,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   4-aligned slot (e.g. 0x1C). Declaring `s16 x[2]` (write/read `x[0]`) bumps the
   alignment to 4 and forces the lower 4-aligned placement, with no change to the
   emitted store width.
+- Address-taken scalar landing HIGH in an 8-byte slot: an address-taken `s32`
+  scalar local that IDO 8-byte-aligns lands in the TOP half of an 8-byte slot
+  (e.g. 0x1C of a 0x18/0x1C pair), but the target stores+addresses it at the LOW
+  offset (`sw aN,0x18(sp)` / `addiu a0,sp,0x18`). Declaring it `s32 x[2]`
+  (write/read `x[0]`) forces the array onto the low 4-aligned offset, matching both
+  the store offset and the `addiu` of its address. (8-byte-slot analog of the
+  oversize-to-array trick above, for an `&x`-taken scalar rather than a sub-word.)
 - STATEMENT/assignment order steers t-register grouping: assigning all the
   load/computed struct fields FIRST then the constant fields LAST puts loads in one
   t-register band (t6-t9) and constants in another (t0-t3) to match the target;

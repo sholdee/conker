@@ -85,6 +85,10 @@ void func_1515D6C8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515FBC4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515FC34.s")
+s32 func_1505D024(struct127 *arg0, s32 arg1, u16 arg2, s32 arg3);
+
+s32 func_1515FC34(struct127 *arg0, s32 arg1) {
+    return func_1505D024(arg0, 0x33, 0xC000, -1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515FC60.s")

@@ -3,6 +3,7 @@
 #include "variables.h"
 
 void func_151B1918(struct260 *arg0);
+void func_15149368(struct260 *arg0);
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DD500/func_151B0050.s")
@@ -32,7 +33,10 @@ void func_151B1A58(struct260 *arg0) {
     func_1514933C(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DD500/func_151B1A84.s")
+void func_151B1A84(struct260 *arg0) {
+    func_151B1918(arg0);
+    func_15149368(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DD500/func_151B1AB0.s")
 

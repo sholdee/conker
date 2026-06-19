@@ -60,7 +60,12 @@ void func_150F02A0(struct func150F02A0_arg *arg0) {
     *(s32*)(base + temp->unkC * 4 + 0x12C) = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F02C0.s")
+void func_150F0318(struct260 *arg0);
+
+void func_150F02C0(struct260 *arg0) {
+    func_150F0318(arg0);
+    func_1514933C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F02EC.s")
 
