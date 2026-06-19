@@ -58,6 +58,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   preserves `temp`'s register across the body (`bnez v0; move v1,v0`) and gives a
   fallthrough `move v0,zero`. The inverted `if(temp!=0){...return temp;} return 0;`
   flips to `beqz` and adds an instruction. Pick the form matching the branch shape.
+- Null-guard return-default: `if (ptr != 0) return *ptr_field; return 0;` (the
+  non-null-deref-first, default-last form) emits an EAGER `move v0,zero` BEFORE the
+  branch, then OVERRIDES v0 via the field load (`lbu`/`lw`) on the non-null path —
+  matching a target that primes the zero return and patches it on the taken side.
+  Inverting to `if (ptr == 0) return 0; return *field;` flips the branch sense and
+  drops the eager-zero priming.
 
 ## Loops
 - Backward branch at the bottom of the body => `do { } while (cond);`, not for/while.
