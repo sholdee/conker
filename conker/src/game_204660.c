@@ -7,7 +7,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D7264.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D73A8.s")
+extern void (*D_8008FCA4[])(s32 *, s32, u8);
+
+void func_151D73A8(s32 *arg0, s32 arg1, u8 arg2) {
+    if (D_8008FCA4[*(u8 *)((s32)arg0 + 0x2C)] != 0) {
+        D_8008FCA4[*(volatile u8 *)((s32)arg0 + 0x2C)](arg0, arg1, arg2);
+    }
+}
 
 void func_151D77C8(void);
 

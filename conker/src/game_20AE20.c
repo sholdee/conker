@@ -185,7 +185,17 @@ void func_151E6BFC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E7DC0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E7E9C.s")
+extern s8 D_800E0BE9;
+
+void func_151E7E9C(void) {
+    if (D_800E0BE9 == 2) {
+        func_10017870(1);
+    } else if (D_800E0BE9 == 0) {
+        func_10017870(2);
+    } else {
+        func_10017870(4);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E7EF8.s")
 

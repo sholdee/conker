@@ -22,7 +22,35 @@ void func_15044658(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044B78.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044CE4.s")
+struct conker15044CE4 {
+    char pad0[6];
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    char padC[4];
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    char pad16[2];
+    s16 *unk18;
+    s16 *unk1C;
+};
+
+extern void func_15044B78(struct conker15044CE4 *);
+
+void func_15044CE4(struct conker15044CE4 *arg0) {
+    s16 *sp18 = arg0->unk18;
+    s32 temp;
+
+    arg0->unk6 = sp18[0];
+    arg0->unk8 = sp18[1];
+    arg0->unkA = sp18[2];
+    temp = arg0->unk1C[0] / 32;
+    arg0->unk10 = temp;
+    arg0->unk12 = temp;
+    arg0->unk14 = temp;
+    func_15044B78(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044D40.s")
 
