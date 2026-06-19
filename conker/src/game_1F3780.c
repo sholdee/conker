@@ -11,7 +11,9 @@ void func_151C6974(void *a0, s32 a1, s32 a2) {
     func_151C69CC(a0, a2, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F3780/func_151C69A0.s")
+void func_151C69A0(void *a0, s32 a1, s32 a2) {
+    func_151C69CC(a0, a2, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F3780/func_151C69CC.s")
 

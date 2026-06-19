@@ -288,6 +288,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   (`s32 *p = &arg0;`): IDO -O2 -g3 spills/homes every register arg to its standard
   slot with NO frame. Declaring the params with exact types and no address-of
   homes nothing; a varargs signature adds a spurious frame and shifts the offsets.
+- Self-assignment to force -g3 arg homes: writing `arg0 = arg0; arg1 = arg1; ...`
+  in a trivial stub makes IDO -g3 emit the home stores (`sw aN,off(sp)`) for EXACTLY
+  those params, with no stack frame. A sibling stub that just `return 0;` (no
+  self-assigns) homes nothing. Use the self-assign trick when a trivial body must
+  spill a specific subset of its register args to the caller arg-save slots; this is
+  a finer-grained alternative to the `&arg0` whole-arg-block homing trick.
 - To force IDO to emit fresh registers + `move`s (e.g. an XOR-swap), use two
   distinct temp locals rather than reusing one — the extra temp pins the moves.
 - To force TWO separate (non-CSE'd) `addu`s of the SAME `base+off` value, compute
@@ -754,6 +760,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   even a permuter candidate (it won't introduce lazy mtc1 or drop the frame). Leave
   as GLOBAL_ASM. (Tell-tale: file comment says "handwritten?", and a no-frame
   matrix/vector transform with args arriving in integer registers.)
+- Custom register-level calling convention (hand-written asm cluster): when a
+  function receives MORE float args than the ABI allows in non-standard FPU
+  registers (IDO's C ABI passes float params only in `$f12`/`$f14`; a callee taking
+  values in `$f6`-`$f11` simultaneously is impossible from any C signature), and/or
+  saves `ra` in a t-register and tail-calls via `jr $t9`/`jr $tN` with NO stack
+  frame instead of a normal `sw ra` + stack epilogue, the function is hand-written
+  asm using a private inter-procedural convention. Confirm by checking a CALLER: if
+  it materializes values directly into those non-ABI registers before the `jal`, the
+  whole cluster is hand-staged and not reproducible/steerable from C — leave as
+  GLOBAL_ASM (not even a near-miss permuter seed: a plausible C lerp+call stages
+  values in `$f12`/`$f14` with a normal frame, scoring far above any permutable
+  threshold). Bail.
 - Loop-invariant load hoisted ABOVE the first arg load: when the target emits an
   invariant constant load (e.g. `lwc1 $f2,%lo(D_xxxx)`) BEFORE the first arg load,
   IDO from every C form (`<`/`>`/reversed operands, named local, `||` chain) emits

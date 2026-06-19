@@ -9,7 +9,24 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F8590/func_150CB1F4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F8590/func_150CB7CC.s")
+struct Func150CB7CC {
+    char pad0[0x1C];
+    s16 unk1C;
+    char pad1E[0x28 - 0x1E];
+    u8 unk28;
+};
+
+s32 func_150CB7CC(struct Func150CB7CC *arg0) {
+    s32 v1;
+
+    if (arg0->unk1C < 0x20) {
+        v1 = arg0->unk1C << 3;
+        if (v1 < arg0->unk28) {
+            arg0->unk28 = v1;
+        }
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F8590/func_150CB800.s")
 

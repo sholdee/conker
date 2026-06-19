@@ -14,7 +14,14 @@ void func_1503D438(s32 *arg0, s32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503D45C.s")
+void func_1503D45C(s32 *arg0, s32 arg1) {
+    s32 temp = *arg0;
+    while (temp != 0) {
+        *arg0 = temp + arg1;
+        temp = arg0[2];
+        arg0 += 2;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503D484.s")
 
