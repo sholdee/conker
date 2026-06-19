@@ -11,4 +11,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E6260/func_151B9408.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E6260/func_151B9660.s")
+extern f32 D_800AA56C;
+extern f32 D_800AA570;
+
+void func_151B9660(s32 *arg0) {
+    *(f32 *)((u8 *)arg0 + 0x188) = 5.0f;
+    *(f32 *)((u8 *)arg0 + 0x18C) = D_800AA56C;
+    *(f32 *)((u8 *)arg0 + 0x190) = D_800AA570;
+}

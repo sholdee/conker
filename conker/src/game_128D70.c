@@ -15,7 +15,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_128D70/func_150FC930.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_128D70/func_150FC974.s")
+void func_150FC974(struct260 *arg0) {
+    s32 *p = (s32 *)((u8 *)arg0 + 0x38);
+    if (*p != 0) {
+        func_1516972C((struct102 *)*p);
+    }
+}
 
 extern void func_150FC974(struct260 *);
 

@@ -9,7 +9,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D73A8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D7404.s")
+void func_151D77C8(void);
+
+void func_151D7404(void) {
+    func_151D77C8();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D7424.s")
 

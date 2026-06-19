@@ -226,6 +226,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   real struct ptr) reproduces a base-FIRST add (`addu vN,base,off`), whereas a raw
   `*(s32*)((u8*)arg+N)` byte-deref emits the offset-FIRST add (`addu vN,off,base`).
   Use the typed-field form when the asm adds the base register first.
+- Defeat CSE of a field used twice (once into a register, once as a call arg) so the
+  SECOND use reloads in the `jal` DELAY SLOT: bind a raw pointer
+  `s32 *p = (s32*)((u8*)arg + off);` and read `*p` at BOTH uses. A typed struct-field
+  read (`arg->fieldN`) CSEs the value into one register and emits `move a0,reg`,
+  whereas the double-`*p` through an offset-cast pointer makes IDO reload the field
+  (`lw a0,off(arg)` in the delay slot) for the call. Use it when the asm reloads a
+  field for a call instead of reusing an already-loaded copy. (Especially handy for an
+  off-prototype offset the struct def doesn't reach, which forces the cast anyway.)
 - Inversely, binding a value to a `u8` local before passing it to a call forces an
   `andi reg,0xff` (mask) right before the `jal` plus a `move a0,reg`; narrow-type
   the local when the target masks an arg into the low byte at the call site.
