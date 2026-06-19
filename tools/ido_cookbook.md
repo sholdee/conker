@@ -338,6 +338,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 ## Register allocation & evaluation order (the usual "so close" diffs)
 - Multiply/commutative operand order matters: `a*b` vs `b*a` changes which FPU
   register is the destination. Match the asm's operand order literally.
+- Pointer-base term FIRST in a multi-term integer add: in `base + C + (idx << k)`
+  (a pointer base plus a constant plus a shifted index/global), write the POINTER
+  BASE term first so IDO keeps it as the first `addu` operand (`addu dst,base,shift`).
+  Leading with the shifted term (`(idx<<k) + base + C`) REVERSES the operands
+  (`addu dst,shift,base`) — a register-only diff. Order the source so the base
+  register the asm adds first appears first in the expression.
+- Reassign a computed result back INTO a local that already held one of its operands
+  to REUSE that operand's register as the result destination: e.g. `hi = (hi << 16) |
+  lo;` makes IDO emit `or v0,t,t` reusing the register `hi` was loaded into (v0) as
+  the OR's destination. Writing the combine into a FRESH local (or inlining it) lands
+  the result in a new temp (register-only diff). Self-assign the result back into an
+  operand's local when the asm reuses that operand's register for the op's destination.
 - Commutative operand order also controls the LOAD ORDER of the two operands, not
   just the destination reg: writing the product `b*a` (vs `a*b`) makes IDO emit
   `b`'s `lwc1` before `a`'s. When a multiply/add chain's loads come out in the

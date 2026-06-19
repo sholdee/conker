@@ -57,7 +57,15 @@ void func_151C970C(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C9AC0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C9B30.s")
+s32 func_151C9B30(void *arg0) {
+    s32 temp = *(s32 *)((s32)arg0 + 0x18);
+    if (*(u8 *)(temp + 0x6F) == 0) {
+        *(u8 *)(*(s32 *)((s32)arg0 + 0x14) + 0x9) = 0;
+    } else {
+        *(u8 *)(*(s32 *)((s32)arg0 + 0x14) + 0x9) = 1;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C9B64.s")
 

@@ -49,7 +49,13 @@ void func_15156FE4(struct102 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157420.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157860.s")
+extern u8 D_800BE9C0;
+extern void guMtxIdentF(float mf[4][4]);
+
+s32 func_15157860(u8 *arg0) {
+    guMtxIdentF((float (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)));
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157898.s")
 

@@ -11,4 +11,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_193E50/func_15166F6C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_193E50/func_15166FD8.s")
+extern Mtx D_80089470;
+
+Gfx *func_15166FD8(Gfx *pkt, s32 arg1, s32 arg2) {
+    gSPMatrix(pkt++, &D_80089470, G_MTX_LOAD);
+    return pkt;
+}

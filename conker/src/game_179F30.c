@@ -64,7 +64,17 @@ void func_1514DC5C(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DCAC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DCF4.s")
+struct struct1514DCF4 {
+    u8 pad[0x31C];
+    struct127 *unk31C;
+};
+
+void func_1514DCF4(struct struct1514DCF4 *arg0) {
+    if (arg0->unk31C != NULL) {
+        *(u8 *)((u8 *)arg0->unk31C + 0x94) = 1;
+    }
+    func_15083568((struct127 *)arg0, 0x17, 1.0f, 0);
+}
 
 void func_1514DCAC(void);
 

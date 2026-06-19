@@ -53,7 +53,11 @@ void func_1515D6C8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515EF74.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F008.s")
+f32 func_1515F008(s16 *arg0, s32 arg1) {
+    s32 hi = arg0[arg1];
+    hi = (hi << 16) | (u16)arg0[arg1 + 0x10];
+    return (f32)hi * 1.52587890625e-05f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F040.s")
 

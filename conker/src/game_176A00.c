@@ -134,7 +134,29 @@ s32 func_1514C288(void *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514C2B8.s")
+struct Foo1514C2B8 {
+    char pad1C[0x1C];
+    s16 unk1C;
+    char pad1E[0x3A];
+    s32 unk58;
+    char pad5C[0x15];
+    u8 unk71;
+    u8 unk72;
+    char pad73[0xE1];
+    f32 unk154;
+    char pad158[0x8];
+    f32 unk160;
+    s16 unk164;
+};
+
+s32 func_1514C2B8(struct Foo1514C2B8 *arg0) {
+    arg0->unk72 = 0;
+    arg0->unk71 = 0x24;
+    arg0->unk1C = arg0->unk164;
+    arg0->unk58 |= 0x08000000;
+    arg0->unk154 = arg0->unk160;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514C2F0.s")
 
