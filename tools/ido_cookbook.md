@@ -69,6 +69,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   directly, e.g. in a `beqz` delay slot). If the asm uses v0 directly with no such
   move and the function's "result" is just whatever the tail call left, type it
   `void` (and call siblings without `return`, just letting v0 pass through).
+- A `u8`/`u16` RETURN TYPE truncates the returned value: IDO masks v0 with
+  `andi v0,reg,0xFF` (or `0xFFFF`) right before `jr ra`. When the asm masks the
+  return value to a byte/halfword, declare the function (and any local callee
+  prototype whose result you forward) at that narrow return width; an `s32` return
+  emits no mask. (Return-side analog of the narrow-param promotion mask.)
 - Branch-sense from `slt`+`beqz`: a `slt at,a0,X; beqz at,->body` runs the body
   when `a0 < X`, so the source condition is `a0 < X` (NOT `>=`). Writing the
   inverted `>=`/`!=` form flips the only diff to `bnez` vs `beqz`; match the
@@ -933,6 +938,33 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `%lo(D_base+0x4)`. Match it by declaring a SEPARATE `extern` for the +4 symbol
   and indexing that array; writing `base[i].field_at_4` emits `%lo(D_base+0x4)`
   and scores worse.
+- Two-array-index register-bank inversion with a delay-slot add: a tail-call/expr
+  that indexes TWO parallel arrays by the same param (one a *4 word array, one a *12
+  stride array, plus a field load off the second) can match byte-for-byte yet have
+  the target's allocation INVERTED — it puts the word-array path on one t-pair
+  (t6/t7) and the stride-array path on the other (t0/t1), and your C gives the
+  opposite, which also flips the final delay-slot `addu aN,X,Y` operand order. The
+  schedule (interleaving of field/base reloads between the two index computations)
+  matches; only the register bank differs. NO C reformulation (named pointer, byte
+  vs s32 array typing, `&elem.field`, field-temp-first, swapped add operands, typed
+  struct field, common index local) flips the bank — they stay clean-register (best)
+  or add a spurious sll/move/home. Provably-correct body, register-names-only diff;
+  bail, decomp-permuter candidate.
+- Single-sll-vs-register-pair tension on an array-walk with a byte-offset counter:
+  a loop walking a pointer array where the target needs ONE shared `sll` feeding
+  BOTH the element-pointer-init `addu` AND a `-4`-stride byte-offset counter tested
+  with `bgez`, with a specific pointer/field register pairing (e.g. ptr=a0,
+  field=a1). The two requirements are mutually exclusive across C forms: byte/integer
+  pointer-init with a shared `sll` gives the INVERSE register pair (one-pair-off,
+  small score); TYPED pointer arithmetic (`(T**)base + i`) gives the CORRECT pair AND
+  the `bgez` counter loop but DUPLICATES the `sll` (IDO won't CSE the int-multiply
+  against the pointer-scale shift); `off = i << 2` re-CSEs the two shifts into one
+  but reverts to the wrong pair. Pointer-vs-base loop conditions (`p >= base`,
+  `--p >= start`) give the correct register body but compile to `sltu/subu` + a
+  likely branch instead of `bgez` on the maintained counter. No decl-order /
+  decrement-order / `&&`-flatten / struct-typing breaks it. Harvest the typed
+  (correct-pair, duplicate-sll) form as a permuter seed: swapping the a0/a1
+  assignment then dropping the redundant sll would likely reach 0. Bail from C.
 - Scheduler-priority hoist of a chain-feeding load vs a constant return: when the
   target loads a constant FIRST (`lui/lwc1`), THEN a struct-pointer (`lw vN,off(a0)`),
   fills that load's delay slot with `li v0,1` (the return value), and only then does

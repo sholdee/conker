@@ -9,7 +9,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509EFF0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F248.s")
+s32 func_1509F248(s32 arg0, u32 *arg1) {
+    if (arg0 != 0) {
+        func_100111C8((*arg1 & 0xFFFF0000) >> 16);
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F284.s")
 

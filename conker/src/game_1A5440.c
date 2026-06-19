@@ -14,7 +14,12 @@
 typedef struct Node15178B98 {
     char pad0[0x8];
     struct Node15178B98 *unk8;
-    char pad_C[0x28];
+    char padC[0x4];
+    s32 unk10;
+    s32 unk14;
+    char pad18[0x18];
+    s16 unk30;
+    char pad32[0x2];
     u8 unk34;
 } Node15178B98;
 
@@ -31,7 +36,16 @@ Node15178B98 *func_15178B98(u8 arg0) {
     return NULL;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A5440/func_15178BE4.s")
+Node15178B98 *func_15178BE4(u8 arg0, s32 arg1, s16 arg2) {
+    Node15178B98 *node;
+
+    node = func_15178B98(arg0);
+    if (node != NULL) {
+        node->unk10 = arg1;
+        node->unk14 = 0x80000000;
+        node->unk30 = arg2;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A5440/func_15178C34.s")
 

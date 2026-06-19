@@ -9,7 +9,18 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_121A20/func_150F4A38.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_121A20/func_150F4CFC.s")
+struct sub150F4 { u8 pad[0x24]; u8 unk24; };
+
+void func_150F4CFC(struct102 *arg0, s32 arg1, u8 arg2) {
+    struct sub150F4 *p;
+    p = (struct sub150F4 *)((u8 *)arg0 + 0x170);
+    if (arg2 == 0x4E) {
+        ((u8 *)arg0)[0x71] = 0;
+        p->unk24 |= 0x5;
+    } else if (arg2 == 0x4F) {
+        func_1516972C(arg0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_121A20/func_150F4D5C.s")
 

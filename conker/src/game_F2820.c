@@ -26,7 +26,18 @@ void func_150C5470(struct102 *arg0) {
     D_800887B8[temp]();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F2820/func_150C54C0.s")
+extern void (*D_800887C0[])(void);
+
+void func_150C54C0(struct102 *arg0) {
+    s32 temp = *(u8 *)((u8 *)arg0 + 0x38);
+
+    if (temp < 0) {
+        temp = 0;
+    } else if (temp >= 2) {
+        temp = 0;
+    }
+    D_800887C0[temp]();
+}
 
 extern void func_1514EDF0(struct102 *arg0, s32 arg1);
 

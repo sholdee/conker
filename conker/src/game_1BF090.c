@@ -13,7 +13,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BF090/func_15192358.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BF090/func_1519257C.s")
+u8 func_15192308(s32 arg0, s32 arg1);
+u8 func_15192358(s32 arg0, s32 arg1);
+
+u8 func_1519257C(s32 arg0, s32 arg1) {
+    u8 ret;
+    ret = func_15192308(arg0, arg1);
+    if (ret != 0) {
+        ret = func_15192358(arg0, arg1);
+    }
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BF090/func_151925C4.s")
 
