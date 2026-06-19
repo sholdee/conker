@@ -17,7 +17,23 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E7E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E908.s")
+extern struct124 *D_800D1C90[];
+s32 func_150849A0(void *arg0);
+
+s32 func_1507E908(void *arg0, s32 arg1) {
+    s32 *temp;
+    s32 base;
+
+    temp = (s32 *)D_800D1C90[func_150849A0(arg0)];
+    if (temp != 0) {
+        temp -= 2;
+        base = temp[0];
+        if (base != 0) {
+            return (arg1 * 10) + base;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E968.s")
 

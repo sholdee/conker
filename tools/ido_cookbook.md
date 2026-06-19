@@ -308,6 +308,23 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   (call order, arg casts via prototype, last-arg literals) — often a 1-try match.
 - Local DECLARATION ORDER controls stack-slot assignment: declare an earlier-slot
   local before a temp to land them on the slots the asm expects (e.g. 0x1C/0x18).
+- SOURCE POSITION of the function definition controls object-level emission order
+  and can DESYNC the whole diff: a function must be defined at its ORIGINAL position
+  in the file (relative to its siblings). If an old prototype/stub sat earlier and you
+  define the body THERE, IDO emits the function out of order and the object diff
+  massively desyncs (huge cascading score) even when the body is byte-correct. Fix:
+  leave a forward-declaration where the old prototype was and place the DEFINITION at
+  the original source position (e.g. just before the next stub). Suspect this when a
+  byte-correct body scores in the thousands.
+- A shift/arithmetic result that is then STORED to a byte field must be held in an
+  `s32` local, not `s16`: an `s16` local re-truncates the value and emits a spurious
+  `sll reg,16; sra reg,16` sign-extension pair before the final `sb`. Widen the
+  intermediate local when the asm stores the shifted value with no sign-extend pair.
+- A field-read-and-shift that folds to a single load off a biased base (e.g.
+  `lh 0x21c(base)` from `base+0x1E0` then `+0x3C`) must be evaluated UNCONDITIONALLY,
+  BEFORE any inner `if`: gating it behind the branch makes IDO sink the load past the
+  base `addiu` and re-derive it as the small offset (`0x3c(temp)`) instead of folding
+  to the combined offset off base. Hoist the folded read above the conditional.
 - Force a sub-word local onto a 4-ALIGNED slot by OVERSIZING it to an array: a bare
   `s16 x` may land at an odd-of-4 offset (e.g. 0x1E), but the target stores it at a
   4-aligned slot (e.g. 0x1C). Declaring `s16 x[2]` (write/read `x[0]`) bumps the

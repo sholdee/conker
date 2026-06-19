@@ -16,7 +16,13 @@ void func_1515B5F4(s16 arg0) {
     func_1515572C(sp1C, 0xB);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_188440/func_1515B62C.s")
+void func_1515B62C(struct102 *arg0, s16 *arg1, u8 arg2) {
+    if (arg2 == 0xB) {
+        if (*(s16 *)((u8 *)arg0 + 0x70) == arg1[0]) {
+            func_1516972C(arg0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_188440/func_1515B674.s")
 
