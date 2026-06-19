@@ -16,7 +16,40 @@ void func_151419B0(void *arg0) {
     func_15141970(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151419D0.s")
+struct A1_151419D0 {
+    s32 unk0;
+    s32 unk4;
+    u8 unk8;
+    u8 unk9;
+};
+
+struct B_151419D0 {
+    s32 unk0;
+    s32 unk4;
+    u8 unk8;
+};
+
+void func_1516972C(struct102 *arg0);
+
+void func_151419D0(struct102 *arg0, struct A1_151419D0 *arg1, u8 arg2) {
+    struct B_151419D0 *p = (struct B_151419D0 *)((u8 *)arg0 + 0x28);
+    s32 v;
+    if (arg2 == 0) {
+        v = arg1->unk0;
+        if ((v == p->unk4) ||
+            (p->unk8 == *(u8*)&arg1->unk4)) {
+            func_1516972C(arg0);
+        }
+    } else if (arg2 == 0x2D) {
+        if (p->unk4 == arg1->unk0) {
+            p->unk4 = arg1->unk4;
+            p->unk8 = arg1->unk9;
+        } else if (p->unk4 == arg1->unk4) {
+            p->unk4 = arg1->unk0;
+            p->unk8 = arg1->unk8;
+        }
+    }
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15141A7C.s")
 // requires jump table
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15141C0C.s")

@@ -1289,7 +1289,24 @@ void func_15071888(s32 arg0) {
     func_151D5714(D_800D154C, &D_800A1FB0, &D_800A1FBC, D_80088B90, D_80099F30, 0xFF, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_150718E4.s")
+extern u32 D_80099BB8;
+void func_15143134(void *, s32, s32);
+void func_151C329C(s32 arg0, s32 arg1, s32 arg2);
+
+void func_150718E4(s32 arg0) {
+    f32 *p;
+    f32 sp24[2];
+    u32 sp20;
+
+    sp20 = D_80099BB8;
+    if ((D_800D154C->unk1D4 != 0) || ((D_800D154C->unk74 & 0xF) == 0xF)) {
+        p = sp24;
+        func_15143134(&D_800A5480, (s32)p,
+                      (((s32)((u8 *)&sp20)[func_150ADA20() & 3]) << 6) + (s32)D_800D154C->unk1D4);
+        sp24[1] = D_800D154C->unk180 + 20.0f;
+        func_151C329C((s32)p, 0xFF, 1);
+    }
+}
 
 void func_15071998(s32 arg0) {
     func_150FA520(D_800D154C, 0, 0xFF, 1);

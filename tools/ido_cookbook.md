@@ -29,6 +29,9 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Dividing a float by an INT literal (`x/2`) preserves a real `div.s` by 2.0;
   using a FLOAT literal (`x/2.0f`) makes IDO -O2 strength-reduce to `mul.s` by the
   reciprocal (0.5). Pick the literal form that matches the asm's div vs mul.
+- Doubling a float: `x + x` (self-add) emits `add.s fN,fN`, whereas `2.0f * x`
+  emits a `mul.s` by a materialized 2.0 constant. Use `x + x` when the asm doubles
+  via add rather than multiply.
 - Unsigned modulo: `x % NU` (unsigned literal, or an unsigned `x`) emits `divu`;
   a signed `x % N` emits `div`. Type the operand/literal to match divu vs div.
 - A `-1` sentinel stored to a field: an `s8`/`s16` field emits `li reg,-1`,
@@ -128,6 +131,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Passing `&local` DIRECTLY to multiple calls (no named pointer var) makes IDO
   spill the address to its own 8-aligned temp slot and reload it before the
   later call — matches target spill/reload. A named pointer keeps it in a reg.
+- Conversely, routing `&local` through a NAMED pointer var can be used to GROW the
+  frame: the named pointer reserves its own extra 8-aligned slot, bumping frame
+  size (e.g. 0x28->0x30) and shifting the local onto the target's offset with params
+  homed at the incoming arg slots. Use it when the frame is 8 short and the target
+  recomputes `addiu aN,sp,off` fresh at each call rather than spilling the address.
 - Param homing: a param NEVER homed if only forwarded/used as-is; it IS homed
   (`sw aN,off`) if reassigned. Forward ALL args through to callees to suppress a
   spurious dead-param home; verify against objdump of matched sibling funcs.
@@ -183,6 +191,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Param-type tension with an existing PROTOTYPE: if a forward decl types a param
   `s32`, the definition MUST also be `s32` (a `u8` def is "Incompatible type"
   redeclaration). Match the narrowing at the use site/call cast, not the signature.
+- A WRONG-width param in a SHARED callee prototype (header says `u8`/`u16` where the
+  target's reg has the full `s32` with NO mask) is unfixable from the call site: the
+  narrow prototype forces IDO to emit `andi tN,aM,0xff; move aM,tN` (+nop) before the
+  `jal`, and NO call-site cast suppresses it. A local redeclaration with the correct
+  width is "Incompatible type / redeclaration"; a function-pointer cast bypasses the
+  prototype but emits `jalr` instead of `jal`. The only real fix is correcting the
+  shared header width — a header-correctness fix, not a C-steering problem. If header
+  edits are out of scope, bail (stub) and flag the prototype.
 - An EXTRA dead trailing arg at a call site makes IDO reload it from its home slot
   into the `jal` delay slot (and reorders nearby stores) — a large score. Verify
   the true callee arg count from a sibling CALLER's asm (which regs it loads).

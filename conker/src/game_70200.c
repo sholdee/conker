@@ -72,7 +72,26 @@ s32 func_15043A20(u8 *arg0, s32 arg1, s32 arg2, u8 *arg3, s32 arg4) {
     }
     return arg2;
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_70200/func_15043AC8.s")
+s32 func_15043AC8(u8 *arg0, s32 arg1, s32 arg2, u8 *arg3, s32 arg4) {
+    s32 n;
+
+    while (arg4 != 0) {
+        if (arg1 < arg2 + arg4) {
+            n = arg1 - arg2;
+        } else {
+            n = arg4;
+        }
+        memcpy(arg3, arg0 + arg2, n);
+        arg2 += n;
+        arg3 += n;
+        arg4 -= n;
+        if (arg2 < arg1) {
+        } else {
+            arg2 = 0;
+        }
+    }
+    return arg2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_70200/func_15043B70.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_70200/func_15043BB8.s")
