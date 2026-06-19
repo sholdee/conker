@@ -57,7 +57,21 @@ void *func_1507E9F8(void *arg0, s32 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507EA44.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507EABC.s")
+extern void func_1507E7E4(void *, s32, s32, s32, s32);
+
+void func_1507EABC(void *arg0) {
+    func_1507E7E4(arg0, *(u8 *)((s32)arg0 + 0x70), 3, 0xFFFF, 0xA);
+    *(u8 *)((s32)arg0 + 0x71) = 0;
+    *(u16 *)((s32)arg0 + 0x72) = 0;
+    if ((u8)*(u8 *)((s32)arg0 + 0x6C) >= 10) {
+        *(u8 *)((s32)arg0 + 0x6C) = 0;
+        *(u8 *)((s32)arg0 + 0x6A) = 0;
+    }
+    if ((u8)*(u8 *)((s32)arg0 + 0x6D) >= 10) {
+        *(u8 *)((s32)arg0 + 0x6D) = 0;
+        *(u8 *)((s32)arg0 + 0x6B) = 0;
+    }
+}
 
 void func_1507EB4C(void *, s32);
 void func_1507EABC(void *);

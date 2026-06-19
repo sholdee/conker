@@ -3,7 +3,17 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F4D20/func_150C7870.s")
+extern void func_1511650C(struct131 *arg0, s32, s32, f32);
+
+void func_150C7870(struct131 *arg0) {
+    if (!(((u8 *)D_800D2E4C)[0xA] & 8)) {
+        if (!(((u8 *)D_800DBEF4)[0x73] & 4)) {
+            func_1511650C(arg0, 1, 0x353, 1000.0f);
+        } else {
+            func_1511650C(arg0, 1, 0x43, 400.0f);
+        }
+    }
+}
 
 typedef struct {
     u8  pad00[0x3C];

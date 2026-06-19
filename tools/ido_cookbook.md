@@ -186,6 +186,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Inversely, binding a value to a `u8` local before passing it to a call forces an
   `andi reg,0xff` (mask) right before the `jal` plus a `move a0,reg`; narrow-type
   the local when the target masks an arg into the low byte at the call site.
+- Do NOT re-mask an already-`u8`/`u16` param when scaling/indexing it: write the
+  index as `arg * K` (or `arg << k`), NOT `(arg & 0xFF) * K`. The param is already
+  narrow, so the explicit `& 0xFF` emits a REDUNDANT `andi reg,0xff; move` pair and
+  shifts the scale (`sll`) onto the wrong register — a stride/register diff. The
+  single `sll v0,a3,2` IDO emits comes from the param-promotion `andi a3,a0,0xff`
+  followed directly by the shift; an extra source mask duplicates that andi.
 - Narrow-cast at the CALL SITE (not in the param type) to schedule the masked-byte
   load into the jal DELAY SLOT: declaring a param `s32` and writing the call as
   `f(..., (u8)arg)` lets IDO sink the `lbu off(sp)` into the `jal`'s delay slot,
