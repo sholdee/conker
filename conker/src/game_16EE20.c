@@ -406,7 +406,29 @@ void func_151450B4(struct17 *arg0, struct17 *arg1, struct17 *arg2) {
     arg2->unk8 = arg0->unk0 * arg1->unk4 - arg0->unk4 * arg1->unk0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15145128.s")
+s32 func_15145128(struct17 *arg0, struct17 *arg1, f32 *arg2, f32 *arg3) {
+    f32 sq;
+    f32 sp0;
+
+    if (arg3 != 0) {
+    } else {
+        arg3 = &sp0;
+    }
+    sq = arg0->unk0 * arg0->unk0 + arg0->unk4 * arg0->unk4 + arg0->unk8 * arg0->unk8;
+    if (sq == 0.0f) {
+        return 0;
+    }
+    if (arg2 != 0) {
+        *arg2 = sqrtf(sq);
+        *arg3 = 1.0f / sqrtf(sq);
+    } else {
+        *arg3 = 1.0f / sqrtf(sq);
+    }
+    arg1->unk0 = *arg3 * arg0->unk0;
+    arg1->unk4 = *arg3 * arg0->unk4;
+    arg1->unk8 = *arg3 * arg0->unk8;
+    return 1;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151451F0.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151452C4.s")
 

@@ -3,9 +3,34 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E5FF0/func_151B8B40.s")
-
 extern f32 func_15144B68(f32);
+
+struct Foo151B8B40 {
+    char pad20[0x20];
+    f32 unk20;
+    char pad24[0x4];
+    f32 unk28;
+    char pad2C[0x10];
+    f32 unk3C;
+    f32 unk40;
+    f32 unk44;
+    f32 unk48;
+    f32 unk4C;
+    f32 unk50;
+    char pad54[0x4];
+    f32 unk58;
+    f32 unk5C;
+};
+
+s32 func_151B8B40(struct Foo151B8B40 *arg0) {
+    arg0->unk3C = sinf(arg0->unk44) * arg0->unk5C + arg0->unk48;
+    arg0->unk44 = arg0->unk44 + arg0->unk4C * D_800BE9A4;
+    arg0->unk44 = func_15144B68(arg0->unk44);
+    arg0->unk20 = arg0->unk20 + arg0->unk50 * D_800BE9A4;
+    arg0->unk28 = arg0->unk28 + arg0->unk58 * D_800BE9A4;
+    return 1;
+}
+
 extern void func_151D9450(void*, void*);
 
 struct Foo151B8BE0 {

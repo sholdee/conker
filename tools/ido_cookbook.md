@@ -312,6 +312,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   aN register as the result; computing into a fresh expression/local instead uses a
   temp (`tN`) and shows up as a register-only diff. Mutate the param when the asm
   writes the updated value back into the same aN.
+- Route a CALL RESULT back through the first param: writing `arg0 = f(arg0, ...);
+  return arg0;` flows the value through a0 (target emits `move a0,v0` then `move
+  v0,a0`); a separate `ret` local lands the value in v1 instead (the only diff).
+  Assign the result back into arg0 when the asm round-trips the return value via a0.
 - To pin which register holds a deref vs an address (e.g. `*p` -> v1, `&field` -> v0),
   declare the POINTER local FIRST and compute it (`s32 *p = (s32*)(arg+off);`), THEN
   read `v1 = *p`, accessing the pointer's other fields via casts of `p`. Declaring
@@ -501,6 +505,22 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   cascading into pervasive FPU renames + a swapped load order. You cannot force the
   early load without a named local, which adds a -g3 home and GROWS the frame.
   Unsteerable from C; bail, decomp-permuter candidate.
+- Branch-likely duplicated store reusing a call-clobbered register: when the target
+  stores a value (e.g. `sh v1,off`) AFTER a `jal` that clobbers that same register
+  (so the store reuses a now-dead reg) and keeps the `jal` delay slot a NOP, no C
+  form reproduces it. The store-AFTER-call source (`if(...){...}else{call;store}`)
+  forces IDO to SPILL the value across the call (sw/reload, +3 instrs, bigger frame);
+  the store-BEFORE-call form (`if(...){store;call}else{store}`) matches the frame, the
+  branch-likely, AND the duplicated store but fills the jal delay slot with the store
+  instead of the target's NOP (one residual diff). Unsteerable; bail, decomp-permuter.
+- Branch-likely orientation vs constant-arg-in-delay-slot tension: when the target
+  fires a `bnel`/`beql` (likely) AND keeps a constant second arg (`move a1,zero`) in
+  the else-call's jal delay slot with a duplicated arg load, the `==K`-fallthrough
+  source orientation makes IDO HOIST the cheap constant above the branch (filling the
+  delay with the arg load -> plain `bne`, no likely-bit), while the inverted `!=K`
+  orientation fires the likely branch but swaps the two call sites and hoists an
+  unrelated `lui %hi` into a preceding `beq` delay slot. Neither orientation gets both
+  the likely-bit and the in-slot constant; irreducible schedule. Bail, decomp-permuter.
 - Native 64-bit ops in the target (`ld`/`sd`/`dsll32`/`dsrl`/`dsra32` on a u64)
   are UNMATCHABLE under the project's -mips2/-o32 build: IDO lowers `long long`
   shifts to `__ll_lshift`/`__ull_rshift` helper CALLS, never native d-shifts.
@@ -511,3 +531,23 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   into `li tN,0; sw tN,off` pairs (no helper call, just split stores), and the
   split + reg renames are the whole diff. Tell-tale that the project punted: a
   byte-identical sibling left as a raw `asm` segment in the yaml. Bail (stub).
+
+## Register-allocation rotation (the unreachable +1 temp shift)
+- A small switch (beqz/beq-at chain, no jump table) over 0/1/2 with per-case byte
+  RMW + a store case can reach BYTE-IDENTICAL structure (same opcodes/order/
+  immediates/symbols) yet leave a uniform +1 temp-register rename in two of three
+  cases. Root cause: the target's allocator uses N temps and SKIPS one mid-pool
+  (e.g. uses t6,t7,t9,t0,... never t8 -> 9 temps) by COALESCING a later exclusive
+  case's value reg onto an earlier case's; the C form yields N+1 temps (no
+  coalesce). This rotation does NOT respond to ANY source lever tried: switch vs
+  if-chain (if-chain adds li at/bne per case = worse), case BODY reorder (worse),
+  field type u8 vs s32-with-(u8*)cast, pointer-var indirection, shared pointer
+  local across cases, compound `|=`/`&=` vs explicit `x = x | k`, hoisting the
+  load, or a `default:` label — all give the identical 10-temp allocation. When
+  only `r` (reg-only) diffs remain and the temp COUNT differs by one with a
+  skipped mid-pool register, it is an allocator artifact: BAIL (stub).
+- Folding note for that family: a store whose address equals `base+4` may be
+  emitted by the target as its OWN relocated symbol (`%hi/%lo(D_NEXT)`), NOT as
+  `%lo(D_base+0x4)`. Match it by declaring a SEPARATE `extern` for the +4 symbol
+  and indexing that array; writing `base[i].field_at_4` emits `%lo(D_base+0x4)`
+  and scores worse.
