@@ -43,7 +43,12 @@ void func_150E70CC(f32 *arg0, f32 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E8470.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E8824.s")
+extern s32 func_15131828(s32, s32, s32, s32);
+
+s32 func_150E8824(s32 arg0, s32 arg1) {
+    func_15131828(arg0, arg0 + 0xAC, arg0 + 0xA8, arg0 + 0xAA);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E8854.s")
 

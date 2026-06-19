@@ -9,7 +9,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F15D0/func_150C4AD8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F15D0/func_150C4B08.s")
+extern void func_150C4AD8(struct260 *);
+
+void func_150C4B08(struct260 *arg0) {
+    func_150C4AD8(arg0);
+    func_1514933C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F15D0/func_150C4B34.s")
 
