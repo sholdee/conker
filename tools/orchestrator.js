@@ -154,7 +154,10 @@ for (let r = 0; r < ROUNDS; r++) {
   // leave matching C; the deterministic gate re-verifies independently, so Codex's
   // word is never trusted. Misses are distinct-file → safe in parallel; failures
   // revert to stub and are skipped by integrate.py. Graceful: a Codex error → null.
-  const misses = results.filter((x) => !x.matched && x.score > 0 && x.score <= 150)
+  // Rescue every real miss: with similarity scheduling ~all have a reference, so even
+  // a hard bail is a viable Codex target (different reasoning + the template). The gate
+  // reverts anything Codex can't truly match, so over-triggering only costs Codex time.
+  const misses = results.filter((x) => !x.matched && x.score > 0)
   let rescuedFuncs = []
   if (misses.length) {
     await parallel(misses.map((m) => () =>
