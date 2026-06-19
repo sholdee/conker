@@ -26,6 +26,15 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   form (pointer, index, separate-base) splits the fold — BAIL.
 - An all-ones mask: `*(u16*)&x = ...` / `(u16)-1` yields `ori reg,0xFFFF`, whereas
   a plain `-1` yields `li reg,-1`. Cast to the field width when the asm uses `ori`.
+- `%lo`-advance fusion depends on whether the preceding stores leave the pointer at
+  a RUNTIME value: a target that fuses `addiu vN,vN,K` onto a constant-address base
+  (instead of folding K into `%lo(D_xxxx+K)`) only does so when an earlier REAL
+  (non-unrolled) loop already left the pointer in a register at a runtime value. If
+  your zeroing/init of that base is UNROLLED (constant trip count, e.g. 3 decreasing
+  stores), IDO has no live runtime pointer, so EVERY advance form (`q+=K`, `q=q+K`,
+  `((T*)q)[-1]`, `q-N`) folds the K into a fresh `lui;addiu %lo(D_xxxx+K)` instead of
+  reusing the zero-store register. Unsteerable from C when the init is unrolled; the
+  sibling that fuses has a real loop, not an artifact you can reproduce — bail.
 - Dividing a float by an INT literal (`x/2`) preserves a real `div.s` by 2.0;
   using a FLOAT literal (`x/2.0f`) makes IDO -O2 strength-reduce to `mul.s` by the
   reciprocal (0.5). Pick the literal form that matches the asm's div vs mul.
