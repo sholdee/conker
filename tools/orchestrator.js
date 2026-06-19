@@ -60,12 +60,19 @@ WHEN DONE:
 - SCORE: 0 → STOP, LEAVE the matching C in the file, return matched=true, file="${c.file}", final_c=your function.
 - Cannot reach 0 → FIRST, if your best SCORE was <= 80 (a near miss worth permuting), harvest the seed: mkdir -p ~/conker/.nearmiss, then write the best-scoring C you reached to ~/conker/.nearmiss/${c.func}.json as JSON {"func","file","score","c"} (use python3 -c with json.dump so the C string is escaped correctly). THEN REVERT src/${c.file}.c so ${c.func} is exactly its original stub line  #pragma GLOBAL_ASM("asm/nonmatchings/${c.file}/${c.func}.s")  again, and return matched=false with best score. Leaving non-matching C would break the build; reverting on failure is MANDATORY. (The harvested seed feeds a background decomp-permuter pass on spare CPU.)`
 
-const distillPrompt = (notesBlob) => `You curate ~/conker/tools/ido_cookbook.md, a tight set of TRANSFERABLE IDO 5.3 -O2 matching idioms. From this round's agent notes, append only GENERALIZABLE idioms NOT already covered (ignore function-specific facts: addresses, specific constants, per-func offsets). Deduplicate; do not rewrite/remove existing entries; if nothing generalizes, make NO edit. Edit the file in place.
+const distillPrompt = (notesBlob) => `You curate ~/conker/tools/ido_cookbook.md, a TIGHT set of transferable IDO 5.3 -O2 matching idioms. It is already MATURE (~250 idioms) and the idiom set has largely plateaued, so your DEFAULT is to make NO edit. Read the file first.
+
+Add a bullet ONLY if this round's notes reveal a technique that is genuinely NOVEL — not covered, even loosely, by ANY existing bullet. Ignore function-specific facts (addresses, specific constants, per-func offsets). When in doubt, add NOTHING.
+
+If you DO add (rare):
+- MERGE it as ONE tight bullet under the single most relevant EXISTING "## " section. NEVER create a new "## " section (that fragments the file).
+- Keep it one or two lines; no examples longer than the existing style.
+- If you notice two existing bullets that say the same thing, you MAY merge them into one (dedup), but otherwise do not rewrite existing entries.
 
 ROUND NOTES:
 ${notesBlob}
 
-Return a one-line summary of what you added (or "no new idioms").`
+Return a one-line summary (what you added, or "no new idioms").`
 
 const integratePrompt = (claimed) => `You are the INTEGRATION gate for the Conker decomp orchestrator. The match agents this round left matching C in these files (one function each); failures already reverted themselves to stubs. Your job: re-verify, ROM-gate, and commit ONLY what truly matches. Be strict — never commit a non-matching tree.
 
