@@ -31,7 +31,16 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A4E34.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A4E9C.s")
+void func_151A4E9C(void *arg0)
+{
+  u8 *p;
+  u8 v;
+  int new_var;
+  *((u8 *) (((u8 *) arg0) + 0x30)) = 0;
+  *((u16 *) (((u8 *) arg0) + 0x1E)) &= 0xFFFD;
+ new_var = 0xFFu; do { p = *((u8 **) (((u8 *) arg0) + 0x98)); v = (p[0x30] & new_var) | 1; *(p + 0x30) = v; *((volatile u8 *) (p + 0x30)) = v | 4; } while (0);
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A4ECC.s")
 

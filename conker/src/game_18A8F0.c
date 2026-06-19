@@ -83,7 +83,27 @@ s32 func_1515F2B8(struct127 *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F850.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515FB70.s")
+long func_1515FB70(u8 *a0, u8 *a1)
+{
+  long new_var;
+  s32 v0;
+  s32 *new_var2;
+  v0 = (*((u8 *) (a0 + 0x3B))) == 1;
+  if ((*((u8 *) (a0 + 0x3B))) == 1)
+  {
+ if (0) { *new_var2 = v0; }
+    v0 = *((s32 *) (a1 + 0x1C));
+    if (v0 >= 0)
+    {
+      new_var = 0x1C;
+      if (!v0)
+      {
+        new_var2 = (s32 *) (a1 + new_var);
+      }
+    }
+  }
+}
+
 
 s32 func_1515FB94(struct127 *arg0, s32 arg1) {
     return func_1505D024(arg0, 0x6002D, arg0->unk7A, -1);
