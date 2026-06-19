@@ -3,7 +3,17 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_10CD70/func_150DF8C0.s")
+typedef struct { u8 c[3]; } Outer;
+extern Outer D_80088984;
+
+s32 func_150DF8C0(s32 a0) {
+    Outer sp4;
+    sp4 = D_80088984;
+    if (((struct178 *)*(s32 *)&D_800D3098)[((u8 *)&sp4)[a0]].unk6[0xE] != 0) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10CD70/func_150DF920.s")
 

@@ -156,7 +156,20 @@ void func_150F1684(struct func150F1684_sub *arg0, struct func150F1684_sub *arg1,
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F1B48.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F1CB0.s")
+void func_150F1CB0(u8 *arg0) {
+    if (*(u16 *)(arg0 + 0x84) == 0x14) {
+        arg0[0x68] = 0x1B;
+    } else {
+        arg0[0x68] = 0xC;
+    }
+    arg0[0x69] = 0x13;
+    if ((*(s32 *)(arg0 + 0x2E4) & 0x3) == 0x3) {
+        arg0[0x69] = 0x14;
+    }
+    if ((*(s32 *)(arg0 + 0x2E4) & 0xC) == 0xC) {
+        arg0[0x69] = 0x17;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F1D10.s")
 

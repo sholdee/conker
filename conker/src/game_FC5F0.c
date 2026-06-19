@@ -88,7 +88,39 @@ s32 func_150CFD84(unsigned char *arg0, unsigned char **arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CFDB8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CFE3C.s")
+struct inner150CFE3C {
+    char pad0[0x14];
+    u8 unk14;
+    u8 unk15;
+    char pad16[0x18 - 0x16];
+    u8 *unk18[1];
+};
+
+struct flat150CFE3C {
+    char pad0[0x34];
+    u8 *unk34;
+    char pad38[0x3C - 0x38];
+    u8 unk3C;
+    u8 unk3D;
+    char pad3E[0x40 - 0x3E];
+    u8 *unk40[1];
+};
+
+union par150CFE3C {
+    struct flat150CFE3C flat;
+    struct {
+        char pad0[0x28];
+        struct inner150CFE3C inner;
+    } sub;
+};
+
+void func_150CFE3C(union par150CFE3C *arg0) {
+    struct inner150CFE3C *inner;
+
+    inner = &arg0->sub.inner;
+    memcpy(arg0->flat.unk40[arg0->flat.unk3D], arg0->flat.unk34, arg0->flat.unk3C);
+    inner->unk18[inner->unk15][inner->unk14] = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CFE98.s")
 

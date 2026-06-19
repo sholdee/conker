@@ -97,6 +97,30 @@ void func_151C4510(GameStruct151C4510a *a0, GameStruct151C4510b *a1, f32 a2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C4820.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C4AB0.s")
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    u8 unk8;
+    u8 unk9;
+} GameStruct151C4AB0a;
+
+typedef struct {
+    u8 pad0[0x90];
+    s32 unk90;
+    u8 unk94;
+} GameStruct151C4AB0b;
+
+void func_151C4AB0(void *a0, GameStruct151C4AB0a *a1, u8 a2) {
+    GameStruct151C4AB0b *v0 = (GameStruct151C4AB0b *)((u8 *)a0 + 0x110);
+    if (a2 == 0x2D) {
+        if (v0->unk90 == a1->unk0) {
+            v0->unk90 = a1->unk4;
+            v0->unk94 = a1->unk9;
+        } else if (v0->unk90 == a1->unk4) {
+            v0->unk90 = a1->unk0;
+            v0->unk94 = a1->unk8;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C4B0C.s")

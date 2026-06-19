@@ -574,9 +574,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   for a 3-word copy): write it as a struct-to-struct value assignment of a TAGGED struct
   (`temp->v = *arg1;`). Field-by-field allocates fresh sequential temps (no $at reuse).
   (Exception to "IDO never uses $at as a general temp from C" — a value-copy of the
-  right width CAN land words in $at.) Passing a struct BY VALUE also reproduces IDO's
-  word-unrolled do-while struct copy before a forwarding call; match the by-value
-  signature, don't pass `&`.
+  right width CAN land words in $at.) Sub-word widths key off the struct SIZE: a 3-byte
+  tagged-struct copy (`struct{u8 c[3];}`) uniquely emits a single `lwr at,2(src)/swr
+  at,2(dst)` through $at; 4 bytes gives `lw/sw`, 2 bytes gives `lhu/sh`. Size the tagged
+  struct to the EXACT byte span to pick the copy instruction. Passing a struct BY VALUE
+  also reproduces IDO's word-unrolled do-while struct copy before a forwarding call;
+  match the by-value signature, don't pass `&`.
 - `x - x*y` store-back to the SAME field x: write `temp = x; *p = temp - y * *(f32*)&x;` - the memory re-read of x CSE-collapses to f0 (first mul operand), y stays an inline temp reg, result lands fresh. A named `y` shifts every later FP reg by one; `-=`/reassigning `temp` reuses its reg for the result.
 - Defeat CSE of a doubled SIGNED-byte read (sentinel `== -1` test + index use of the same byte) WITHOUT losing signedness: cast ONLY the TEST read `volatile s8 *`, leave the index read plain `s8` - both stay `lb`. Reading the index as `u8` also breaks CSE but emits `lbu` (wrong sign).
 

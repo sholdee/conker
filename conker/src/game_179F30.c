@@ -276,7 +276,26 @@ s32 func_1514ED3C(Node1514ED3C *node, s32 key, s32 *out) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514EDF0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514EE70.s")
+struct Struct1514EE70 {
+    s32 unk0;
+    u8 unk4;
+    u8 unk5;
+    u16 unk6;
+};
+
+s32 func_1515BE50(struct Struct1514EE70 *, s32, s32, s32);
+
+void func_1514EE70(u8 *arg0) {
+    struct Struct1514EE70 sp20;
+    s32 v0;
+
+    sp20.unk0 = (s32) arg0;
+    sp20.unk4 = arg0[0x3B];
+    sp20.unk5 = 0;
+    sp20.unk6 = 0x12C;
+    v0 = func_1515BE50(&sp20, 0, 0xFF, 1);
+    func_1514EC1C(v0, (s32) arg0, 0x16);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514EECC.s")
 

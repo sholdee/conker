@@ -63,7 +63,18 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15114B94.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15114CC4.s")
+s32 func_15114CC4(void *a0, s32 a1, s32 *a2, s32 a3) {
+    s16 *v1 = *(s16 **)((u8 *)a0 + 0x18);
+
+    if (v1 != 0 && (*a2 != 0 || *(s32 *)((u8 *)a0 + 0x1C) == 0)) {
+        *(s32 *)((u8 *)a0 + 0x1C) = 1;
+        *(s16 *)((u8 *)a0 + 0x2) = v1[8];
+        *(s16 *)((u8 *)a0 + 0x4) = v1[9];
+        *(s16 *)((u8 *)a0 + 0x6) = v1[10];
+        return 0;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15114D24.s")
 
