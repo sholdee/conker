@@ -92,6 +92,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 ## Register allocation & evaluation order (the usual "so close" diffs)
 - Multiply/commutative operand order matters: `a*b` vs `b*a` changes which FPU
   register is the destination. Match the asm's operand order literally.
+- Commutative operand order also controls the LOAD ORDER of the two operands, not
+  just the destination reg: writing the product `b*a` (vs `a*b`) makes IDO emit
+  `b`'s `lwc1` before `a`'s. When a multiply/add chain's loads come out in the
+  wrong order, swap the operands of that term to reorder the `lwc1`s.
 - Store each call's result in its OWN dedicated f32 local (not a reused temp) to
   pin the later operand order (`argN*result` -> f2,f0) and the load order of those
   results into the following expression.
