@@ -29,6 +29,10 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507EABC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507EB2C.s")
+void func_1507EB4C(void *, s32);
+
+void func_1507EB2C(void *arg0) {
+    func_1507EB4C(arg0, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507EB4C.s")

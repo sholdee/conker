@@ -9,4 +9,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B6DB0/func_15189EBC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B6DB0/func_15189FD0.s")
+s32 func_15189FD0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 *p = &arg0;
+    return 1;
+}

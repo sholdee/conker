@@ -384,6 +384,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   aN register as the result; computing into a fresh expression/local instead uses a
   temp (`tN`) and shows up as a register-only diff. Mutate the param when the asm
   writes the updated value back into the same aN.
+- In-place forwarder (callee's first param == this func's first param): pass the
+  param THROUGH UNCHANGED (`f(arg0, ...)`) so IDO emits NO `move a0,..` (a0 already
+  holds it on entry) and leaves the `jal` delay slot a `nop`. Passing a literal `0`
+  for that arg instead emits `move a0,zero` (score ~200); a function-pointer cast of
+  the callee emits `jalr` instead of `jal` (score ~400). Forward the live param when
+  the asm has the bare `jal` + `nop` with no arg move.
 - Thin wrapper forwarding `arg0 + CONST` to a single call: writing `f(arg0 + K);`
   emits IDO's `or a1,a0,zero; addiu a0,a1,K` (copy the live param into a scratch
   reg, then form `arg0+K` in/around the jal delay slot). This is the standard

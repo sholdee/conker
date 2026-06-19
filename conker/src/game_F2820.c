@@ -5,7 +5,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F2820/func_150C5370.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F2820/func_150C5430.s")
+void func_150C5430(struct102 *arg0) {
+    func_15169804(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F2820/func_150C5450.s")
 

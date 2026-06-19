@@ -11,4 +11,6 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A0790/func_151738C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A0790/func_15173994.s")
+s8 func_15173994(s32 arg0) {
+    return *((s8*)D_800B0DF0 + 0x46);
+}
