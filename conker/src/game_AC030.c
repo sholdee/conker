@@ -14,7 +14,16 @@ void func_1507EB80(u8 *buf, s32 *count, u8 c) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507EC38.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507EE58.s")
+void func_1507EEB8(s32 arg0, void *arg1);
+
+void func_1507EE58(s32 arg0, void *arg1) {
+    func_1507EEB8(*((u8*)&arg0 + 3), arg1);
+    if (*((u8*)&arg0 + 3) == 0x11) {
+        func_1507EEB8(0x12, arg1);
+    } else if (*((u8*)&arg0 + 3) == 0x12) {
+        func_1507EEB8(0x11, arg1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507EEB8.s")
 

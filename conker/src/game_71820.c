@@ -52,7 +52,12 @@ void func_15044CE4(struct conker15044CE4 *arg0) {
     func_15044B78(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044D40.s")
+extern s32 func_1505D1C4(f32, f32, f32, s32, s32, u16, s32, s32);
+
+s32 func_15044D40(struct conker15044CE4 *arg0) {
+    func_1505D1C4(arg0->unk6, arg0->unk8, arg0->unkA, arg0->unk10, 0xFF, 0, 0, 0);
+    return 0;
+}
 
 s32 func_1505D024(struct127 *arg0, s32 arg1, u16 arg2, s32 arg3);
 

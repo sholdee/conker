@@ -38,7 +38,22 @@ void func_1519F108(struct Obj1519F108 *arg0) {
     func_151478F4(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_1519F168.s")
+void func_15147928(struct Obj1519F108 *);
+
+void func_1519F168(struct Obj1519F108 *arg0) {
+    struct Sub1519F108 **pp = arg0->unk98;
+    s32 *ptr;
+    if (*pp != 0) {
+        ptr = (s32 *)((u8 *)*pp + 0x58);
+        if (arg0->unk20 == 6) {
+            ptr[0] = 0;
+        }
+        if (arg0->unk20 == 7) {
+            ptr[2] = 0;
+        }
+    }
+    func_15147928(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_1519F1C8.s")
 

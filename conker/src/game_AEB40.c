@@ -56,7 +56,20 @@ s32 func_15084000(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084044.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_1508434C.s")
+extern void func_150843AC(void *arg0, s32 arg1);
+
+void func_1508434C(u8 *arg0) {
+    s32 count;
+    s32 i;
+
+    count = arg0[0x2C9];
+    if (count == 0) {
+        count = 1;
+    }
+    for (i = 0; i < count; i++) {
+        func_150843AC(arg0, i);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_150843AC.s")
 
