@@ -22,9 +22,19 @@ void func_15155EF8(struct225 *arg0) {
     func_1518CA04(0xA6);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_182C30/func_15155F3C.s")
-
 extern u8 *func_15155FD4(u8 arg0);
+
+void func_15155F3C(void) {
+    u8 *temp_v0 = func_15155FD4(D_800C3E78);
+    if (temp_v0 != NULL) {
+        if (temp_v0[0x11] == 2) {
+            temp_v0[0x11] = 0;
+        } else if (temp_v0[0x11] == 3) {
+            temp_v0[0x11] = 2;
+        }
+    }
+}
+
 
 void func_15155F90(void) {
     u8 *temp_v0 = func_15155FD4(D_800C3E78);

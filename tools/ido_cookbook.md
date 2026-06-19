@@ -296,12 +296,23 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Defeat CSE of a duplicated priming load from C: instead of reading `arg0`
   directly, write `p = &arg0[i];` (with i=0) then deref `p` — the indexed address
   blocks the collapse and forces the separate load IDO's target emits.
+- Force TWO separate loads of the SAME field (a condition load + a body reload) by
+  giving the test and the body DIFFERENTLY-TYPED reads: e.g. condition
+  `*(s32*)(arg+off) != 0` (int) and body `*(u8**)(arg+off)` (pointer). Same-typed
+  double reads CSE into ONE load cached in a register; the type mismatch defeats CSE
+  so IDO emits a fresh reload for the body. Use it when the target loads a field
+  twice (a beqz test then a reload) rather than caching the first load.
 - Passing a struct BY VALUE reproduces IDO's word-unrolled do-while struct copy
   before a forwarding call; match the callee's by-value signature, don't pass `&`.
 - When a near-identical SIBLING func already matches, mirror its exact C structure
   (call order, arg casts via prototype, last-arg literals) — often a 1-try match.
 - Local DECLARATION ORDER controls stack-slot assignment: declare an earlier-slot
   local before a temp to land them on the slots the asm expects (e.g. 0x1C/0x18).
+- Force a sub-word local onto a 4-ALIGNED slot by OVERSIZING it to an array: a bare
+  `s16 x` may land at an odd-of-4 offset (e.g. 0x1E), but the target stores it at a
+  4-aligned slot (e.g. 0x1C). Declaring `s16 x[2]` (write/read `x[0]`) bumps the
+  alignment to 4 and forces the lower 4-aligned placement, with no change to the
+  emitted store width.
 - STATEMENT/assignment order steers t-register grouping: assigning all the
   load/computed struct fields FIRST then the constant fields LAST puts loads in one
   t-register band (t6-t9) and constants in another (t0-t3) to match the target;
@@ -317,6 +328,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   named-pointer form when the asm has an otherwise-unexplained `addiu vN,base,K`
   before a store whose offset is already folded. (Confirm the trailing CALL arg is
   the unmodified base, not temp/temp+K — passing temp+K spills the base instead.)
+  The same dead-advance trick applies to LOADS, not just stores: reading
+  `named_ptr->field` (with `named_ptr = (T*)(base + K)`) folds the read to
+  `lw K+off(base)` yet STILL emits the stray `addiu vN,base,K`, while leaving an
+  unmodified arg0 in a0 for a same-base store/call. This is the canonical way to
+  reproduce an otherwise-unexplained dead base-advance that resists return-value,
+  dead-local (DCE'd), and call-arg (mis-allocated regs) interpretations.
 - A float param arriving in an INTEGER register (`mtc1 aN,fM` at entry) is still a
   `f32` in the signature — declare it `f32`; IDO emits the int-reg-to-FPU move.
 - A param the target loads as a low BYTE of its un-homed caller stack slot wants
