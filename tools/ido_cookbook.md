@@ -77,6 +77,16 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   SEPARATE `if`s (not `else if`) to keep a middle test as a non-likely `bnez`.
 - A case that should "fall off" returning garbage v0 (matching an EC epilogue)
   needs NO trailing `return` on that path; adding one pins v0 and breaks the match.
+- Alloc-and-init returning the call's pointer (`p = alloc(); if(p){init} return p;`):
+  when the target keeps the alloc result in v0 throughout (stores use v0, epilogue
+  returns v0) with NO copy, OMIT the explicit trailing `return p;` and let the
+  function fall through — v0 already holds the call result (or 0 on the null path).
+  Both `if(p){...} return p;` and `if(!p) return NULL; ...return p;` force IDO to
+  insert a redundant phi-resolution `move v1,v0`/`move v0,v1` pair (large score).
+  This extends the "fall off returning v0" idiom to a legitimate pointer return.
+- A second call whose RETURN VALUE is discarded but whose DELAY SLOT does work (e.g.
+  a store) needs an explicit bare `func();` statement at that point in the source;
+  dropping the call because "the value is unused" deletes the delay-slot work too.
 - Multiple ZERO float args CSE into one FPU register: passing several `0.0f` args
   makes IDO -O2 collapse them into a SINGLE materialized zero reg (e.g. all -> f2),
   with a single store. When the target keeps TWO distinct zero registers (e.g. f2
