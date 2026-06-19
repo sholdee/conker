@@ -31,7 +31,19 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F63C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F6400.s")
+struct Sub150F6400 {
+    s32 pad[2];
+    s32 unk8;
+};
+
+void func_150F6400(u8 *arg0) {
+    struct Sub150F6400 *p;
+
+    if (*(s32 *)(arg0 + 0x160) != 0) {
+        p = (struct Sub150F6400 *)(*(u8 **)(arg0 + 0x160) + 0x28);
+        p->unk8 = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F6420.s")
 

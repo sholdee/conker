@@ -542,6 +542,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   signature and pass nothing; forwarding the incoming args adds spurious arg moves
   and a wrong callee shape. (The home stores are produced by declaring/using the
   params, not by the jal.)
+- Override a WRONG-arg SHARED-header callee prototype with a block-scope empty K&R
+  extern to get a no-arg call: when the header prototypes a callee as taking a param
+  (e.g. `struct *`) but the target calls it with NO args, the header forces a spurious
+  `move aN,zero` (e.g. `move a0,zero`) in the jal delay slot. Declaring
+  `extern void func();` (EMPTY K&R arg list, not `(void)`) INSIDE the function body
+  overrides the header to a no-argument call, yielding a bare `nop` delay slot. (Use
+  the empty `()` form specifically — it suppresses the arg without a header edit and
+  without a redeclaration error.)
 - Array-index form `D_xxxx[idx]` is needed for the reloc pattern
   `lui at,%hi; addu at,at,idx; lwc1 %lo(D_xxxx)(at)`. Pointer/byte arithmetic
   (`(u8*)D - n`, `D - arg`) instead materializes a base pointer + `0(reg)` load.
