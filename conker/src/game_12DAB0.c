@@ -65,7 +65,11 @@ void func_15101300(struct210 *arg0) {
     func_151411C4(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_15101328.s")
+void func_15101328(struct210 *arg0) {
+    s32 temp = *(s32 *)((s32)arg0 + 0xA8) + 0x110;
+    *(s32 *)(temp + 0x34) = 0;
+    func_1513173C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_15101350.s")
 

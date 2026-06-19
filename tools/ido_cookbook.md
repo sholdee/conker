@@ -537,6 +537,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - A base pointer (`addiu vN,base,off`) only stays distinct (not folded into
   base-relative `+4`/`+8` loads) if you actually read/write THROUGH that pointer;
   do the field access via `*p` to keep `p` live and force the separate base.
+- Shared biased base across both arms of a branch (the `addiu vN,vN,K` lands in the
+  BRANCH DELAY SLOT, so both the taken and untaken paths reuse the same `vN=base+K`):
+  load the field pointer ONCE into a named local, BIAS it once (`s32 *p = base + K;`),
+  and have EACH arm index OFF that biased pointer at element offsets (`p[1]` for one
+  case, `p[3]` for the other). A naive per-arm pointer-add (`*(base+K1)` in one branch,
+  `*(base+K2)` in the other) emits a SEPARATE base load/add per branch (extra loads,
+  large score). Use the single hoisted-and-biased base with per-arm indexing when the
+  asm shares one `addiu base,K` (in the delay slot) between both branches.
 - A NAMED-pointer store materializes a "dead" advance: declaring
   `s32 *temp = (s32*)(child + K);` and storing via `temp[0] = v` makes IDO FOLD the
   store offset (`sw v,K(child)`) yet STILL emit the `addiu vN,child,K` advance into a

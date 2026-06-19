@@ -101,7 +101,10 @@ s32 func_151BC580(s32 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BEB20.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BEC94.s")
+s32 func_151BEC94(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) {
+    *arg4 = 1;
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BECB8.s")
 

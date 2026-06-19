@@ -25,7 +25,20 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A084C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A0928.s")
+struct Obj151A0928 {
+    u8 pad0[0x28];
+    s32 *unk28;
+    u8 unk2C;
+};
+
+void func_151A0928(struct Obj151A0928 *arg0) {
+    s32 *ptr = (s32 *)((u8 *)arg0->unk28 + 0x58);
+    if (arg0->unk2C == 6) {
+        ptr[1] = 0;
+    } else {
+        ptr[3] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A0950.s")
 

@@ -23,7 +23,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151ACA60.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151ACB38.s")
+s32 func_151ACB38(u8 *arg0, u8 *arg1) {
+    s32 ret = 0;
+    if (arg0[0x3B] == 1) {
+        arg1[0] = 1;
+        ret = 1;
+    }
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151ACB60.s")
 
