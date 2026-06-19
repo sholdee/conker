@@ -108,6 +108,8 @@ def collect():
     wins = []
     for d in sorted(glob.glob(os.path.join(NM_DIR, "func_*"))):
         func = os.path.basename(d)
+        if os.path.exists(os.path.join(d, ".noport")):
+            continue
         if not cracked(func):
             continue
         file = file_of(func)
