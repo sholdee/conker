@@ -9,7 +9,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_151061E0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_151061EC.s")
+struct S151061EC {
+    u8 pad0[0x48];
+    s32 idx;
+    u8 pad4C[0x88 - 0x4C];
+    u8 elems[1][0x34];
+};
+
+void *func_151061EC(struct S151061EC *arg0) {
+    s32 i = arg0->idx;
+    return &arg0->elems[i];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15106214.s")
 

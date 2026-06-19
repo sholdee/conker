@@ -430,6 +430,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Defeat CSE of a duplicated priming load from C: instead of reading `arg0`
   directly, write `p = &arg0[i];` (with i=0) then deref `p` — the indexed address
   blocks the collapse and forces the separate load IDO's target emits.
+- Split the loaded index off the offset chain in `&base->elems[base->idx]`: when an
+  element address is computed from an index LOADED out of a field (`&arg->elems[arg->idx]`)
+  and the target keeps the loaded index in one register (e.g. v1) and the byte-offset
+  stride chain in another (e.g. t6), introduce a SEPARATE named local for the index first
+  (`s32 i = arg->idx;` then `&arg->elems[i]`). The inline form folds the index load into
+  the offset-chain register (a register-only diff); the named index local forces IDO to
+  allocate a distinct register for the loaded value vs the scaled-offset computation.
 - Force a per-copy RELOAD of a pointer field that intervening stores may ALIAS by
   writing those stores through UNTYPED byte-pointer arithmetic
   (`*(f32*)((u8*)arg+off) = ...`): the raw cast defeats IDO's alias analysis, so it

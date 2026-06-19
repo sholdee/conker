@@ -27,7 +27,9 @@ s32 func_15185554(f32 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B1600/func_151857DC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B1600/func_151858D4.s")
+s32 func_151858D4(f32 *arg0) {
+    return arg0[2] < arg0[0];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B1600/func_151858FC.s")
 
