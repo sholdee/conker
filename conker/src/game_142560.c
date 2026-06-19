@@ -45,7 +45,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_15116930.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_15116984.s")
+extern void func_151169B4(u8 *arg0);
+
+void func_15116984(u8 *arg0) {
+    if (arg0[0x73] & 0x2) {
+        func_151169B4(arg0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151169B4.s")
 

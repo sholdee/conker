@@ -119,7 +119,10 @@ void func_151BE7F8(struct210 *arg0) {
     func_151411A4(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE824.s")
+void func_151BE824(struct210 *arg0) {
+    func_151BE7C8(arg0);
+    func_151411C4(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE850.s")
 

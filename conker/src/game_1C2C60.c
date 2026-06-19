@@ -69,7 +69,9 @@ void func_15196318(u8 *arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519897C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15198C60.s")
+void func_15198C60(void) {
+    func_10010F30(0x1AA, 0x7FFF, 0x40, 0, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15198C90.s")
 

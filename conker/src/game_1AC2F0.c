@@ -7,7 +7,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517EF00.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517EFAC.s")
+extern s32 func_1517EF00(s32);
+
+s32 func_1517EFAC(s32 arg0) {
+    if (func_1517EF00(arg0) == 0xFF) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517EFDC.s")
 

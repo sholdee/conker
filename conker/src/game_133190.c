@@ -45,7 +45,9 @@ f32 func_15106558(f32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15106584.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_151065BC.s")
+f32 func_151065BC(f32 arg0) {
+    return -9.0f * arg0 * arg0 + 6.0f * arg0;
+}
 
 f32 func_151065EC(f32 arg0) {
     return 3.0f * arg0 * arg0;

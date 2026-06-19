@@ -1395,3 +1395,20 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   INLINE at each use (`((T*)glob)[i].field` repeated); IDO -O2 CSEs it into one
   register but treats the spill as a 4-aligned temp, packing it top-down next to
   the param home. Same instructions, only the spill offset flips 0x18->0x1c.
+- mflo-in-v0 vs dependent-shift-input-as-fresh-low-temp mutual exclusion: for a
+  `(val * a1) >> 8` chain (multu/mflo then a dependent `sra`), reassign the SAME
+  `val` through load -> fold-add (`val += ...`) -> multiply to KEEP the mflo result
+  in v0 (a fresh `res` local moves the multiply result out to v1 and regresses the
+  whole tail). But pinning mflo in v0 means the dependent shift then READS v0, while
+  the target may color that shift's input as a FRESH LOW temp (t0) instead — which
+  only happens if `res` is a separate variable, the very thing that displaced mflo
+  from v0. The two are mutually exclusive from C (allocator artifact); if a
+  single-register coloring on the post-multiply shift input is the only residual,
+  harvest the mflo-in-v0 form as a permuter seed and bail.
+- Big-endian 16-bit fixed-point read steering: to load a signed-hi/unsigned-lo
+  big-endian 16-bit value (asm: `lb hi,off; lbu lo,off+1; sll; addu`), write the
+  hi-byte load as its OWN first statement (`val = *(s8*)(base+off) << 8;`) to pin it
+  into v0, then fold the low byte as a SEPARATE `+=` statement (`val += ((u8*)base)[off+1];`)
+  to get the correct sll/lbu coloring AND keep the `addu` reusing v0. Splitting the
+  load and the fold into two statements (not one combined expression) is what
+  reproduces the load/sll/addu register banding.

@@ -194,7 +194,11 @@ void func_1514F110(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F44C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F4A8.s")
+extern void func_151D74B0(s32, s32, s32, s32, s32);
+
+void func_1514F4A8(s32 arg0) {
+    func_151D74B0(arg0, 1, -1, 0xFF, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F4D8.s")
 
