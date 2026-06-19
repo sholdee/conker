@@ -1115,6 +1115,19 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Coupled/cyclic JUSTREG: if fixing one register diff forces a different one (e.g.
   keeping an index live frees one reg but changes a multiply distribution), the
   alloc is cyclically constrained — unsteerable from C. Bail.
+- -g3 param self-home before an index-multiply (`move aN+1,aN` copy, multiply on the
+  copy, result back in aN): when a tiny array-index lookup target COPIES the incoming
+  index param into the NEXT register first (`move a1,a0`), does the stride multiply on
+  that copy, then lands the final element pointer back in the ORIGINAL param register
+  (`addu a0,t6,v1`), no C form triggers the leading copy. IDO from every index form
+  (`((s8*)D)[idx*stride+off]`, `*(p + idx*stride + off)`, a tagged-struct array
+  `p[idx].field`, an int-address cast `*(s8*)((s32)D + idx*stride + off)`, separate
+  off/i locals, reassigning the param, or computing the offset before a null branch)
+  SKIPS the copy: it multiplies on the param register directly and lands the result in
+  a fresh temp (e.g. t7). The residual is the missing `move` plus the cascading t-vs-a
+  register renames — a -g3 param-homing artifact, not steerable from C. Bail (harvest a
+  near-miss seed; the local diff is ~5 lines and high-value for the permuter even when
+  the whole-object score is inflated by the 1-instruction offset cascade).
 - Same-symbol read+write where the target uses SPLIT `lui %hi`/`%lo` with a
   SEPARATE lui for load vs store (huge score, e.g. 900): IDO at -O2 CSEs both into
   one `lui+addiu` pointer and no C form (--, -=, x=x-1, temp, ptr-cast, [0]) splits

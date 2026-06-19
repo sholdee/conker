@@ -41,7 +41,24 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514B364.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514B844.s")
+struct Foo1514B844 {
+    char pad1C[0x1C];
+    s16 unk1C;
+    char pad1E[0x7A];
+    u8 *unk98;
+};
+
+s32 func_1514B844(struct Foo1514B844 *arg0) {
+    u8 *p = arg0->unk98;
+    s16 v = arg0->unk1C;
+    if (v < 0x10) {
+        s32 sh = v << 4;
+        if (sh < p[0x1B]) {
+            p[0x1B] = sh;
+        }
+    }
+    return 1;
+}
 
 extern f32 D_800BE9A4;
 

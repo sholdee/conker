@@ -37,7 +37,23 @@ void func_150C84F4(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F5800/func_150CA930.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F5800/func_150CA9D0.s")
+typedef struct {
+    char pad1C[0x1C];
+    s16 unk1C;
+    char pad1E[0x28 - 0x1E];
+    u8 unk28;
+} Struct150CA9D0;
+
+s32 func_150CA9D0(Struct150CA9D0 *arg0) {
+    s32 v1;
+    if (arg0->unk1C < 0x20) {
+        v1 = arg0->unk1C << 3;
+        if (v1 < arg0->unk28) {
+            arg0->unk28 = v1;
+        }
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F5800/func_150CAA04.s")
 

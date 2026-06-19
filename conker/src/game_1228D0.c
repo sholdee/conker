@@ -5,7 +5,22 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F5420.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F5590.s")
+struct Struct150F5590 {
+    char pad0[0x24];
+    s16 unk24;
+    char pad26[0x38 - 0x26];
+    s16 unk38;
+    s16 unk3A;
+};
+
+void func_150F55C8(struct Struct150F5590 *);
+
+void func_150F5590(struct Struct150F5590 *arg0) {
+    s32 temp = 0x1000 - (arg0->unk24 << 2);
+    arg0->unk38 = temp;
+    arg0->unk3A = arg0->unk38;
+    func_150F55C8(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F55C8.s")
 

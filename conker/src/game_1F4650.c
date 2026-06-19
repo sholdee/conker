@@ -43,7 +43,15 @@ s32 func_151C96DC(void *arg0, s32 arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C970C.s")
+void func_151C970C(s32 arg0, s32 arg1) {
+    struct {
+        s32 unk0;
+        u8 unk4;
+    } sp18;
+    sp18.unk0 = arg1;
+    sp18.unk4 = arg0;
+    func_151403A8((s32)&sp18, 0x3A);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C9740.s")
 
