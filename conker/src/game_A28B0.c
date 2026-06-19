@@ -192,7 +192,21 @@ void func_15075A50(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_A28B0/func_15075AAC.s")
+struct func_15075AAC_pt { s16 unk0; s16 unk2; s16 unk4; };
+void func_15075AAC(void) {
+    struct func_15075AAC_pt *temp_v0;
+    f32 dx;
+    f32 dz;
+
+    func_15075548();
+    temp_v0 = (struct func_15075AAC_pt *)((u8 *)((struct func_15075AAC_pt **)D_800D2104)[D_800D154C->unk13F] + (D_800D1891 << 3));
+    dx = temp_v0->unk0 - D_800D154C->x_position;
+    dz = temp_v0->unk4 - D_800D154C->z_position;
+    if (fabsf(dx) + fabsf(dz) < 40.0f) {
+        D_800D154C->unk21C = 0;
+        D_800D154C->xz_velocity = 0.0f;
+    }
+}
 // what is D_800D2104?
 // void func_15075AAC(void) {
 //     struct169 *temp_v0;

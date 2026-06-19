@@ -180,6 +180,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - To read a sub-byte of a wider struct field the PROTOTYPE doesn't expose (e.g. the
   high byte of a `u16 unkN` accessed as `unkN+1`), cast through a raw byte pointer:
   `*((u8*)arg + 0xNN) & mask` — don't edit the shared header to add the field.
+- To force a NARROWER STORE width than a field's declared type (asm uses `sb` where
+  the header declares the field `u16`/`s16`, so a plain `field = v` emits `sh`),
+  store through a byte-pointer cast of the field's address: `*(u8*)&arg->unkN = v;`
+  emits `sb`. Mirror this off a matched sibling whose asm shows the true store width;
+  don't edit the shared header to renarrow the field.
 - Plain truthiness (`if (x)`/`if (!x)`) keeps a value already live in a register
   (e.g. v1) across all branch arms; the explicit `x != 0`/`x == 0` form can inject
   a spurious `move v1,v0` (re-materializing the test value). Use bare truthiness
