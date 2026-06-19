@@ -57,7 +57,16 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151172D8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151174A0.s")
+struct Obj151174A0 {
+    char pad0[0x8];
+    f32 unk8;
+};
+
+extern f32 func_151172D8(struct Obj151174A0 *, f32);
+
+void func_151174A0(struct Obj151174A0 *arg0) {
+    arg0->unk8 = func_151172D8(arg0, arg0->unk8);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151174C8.s")
 
