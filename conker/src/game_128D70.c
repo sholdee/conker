@@ -29,4 +29,9 @@ void func_150FC9A4(struct260 *arg0) {
     func_1514933C(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_128D70/func_150FC9D0.s")
+extern void func_15149368(struct260 *);
+
+void func_150FC9D0(struct260 *arg0) {
+    func_150FC974(arg0);
+    func_15149368(arg0);
+}

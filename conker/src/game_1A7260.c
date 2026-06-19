@@ -23,4 +23,8 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A7260/func_1517AA20.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A7260/func_1517AB7C.s")
+extern void func_1510B7B4(s32, s32);
+
+void func_1517AB7C(s32 arg0, s32 arg1, s16 arg2) {
+    func_1510B7B4(arg0, arg2);
+}

@@ -576,6 +576,23 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   read `v1 = *p`, accessing the pointer's other fields via casts of `p`. Declaring
   the deref value first reverses the two register assignments — IDO allocates in the
   order the locals are computed.
+- Source-ASSIGNMENT order wins over asm LOAD order for v0/v1 coloring: when two
+  fields (e.g. a pointer at one offset and a scalar at another) are both loaded for a
+  compare/store-back, IDO colors them by the order their LOCALS are first assigned in
+  the C, NOT by the order the asm emits the loads. If the target loads the pointer
+  SECOND (e.g. `lh value` then `lw ptr`) yet colors the pointer into v0 and the value
+  into v1, assign/read the POINTER local FIRST in source anyway; the reverse source
+  order is a pure register-rename diff (e.g. SCORE 40). Don't be misled into matching
+  source order to the asm's load order — match it to the desired register coloring.
+- Forwarding a param to a callee that IGNORES it, purely to force a delay-slot
+  reload: when the target reloads a0 from its stack home (`lw a0,off(sp)`) in a
+  jal's delay slot, pass this function's arg0 to that call EVEN IF the callee ignores
+  the parameter — the source-level use pins/homes arg0 and makes IDO reload it in the
+  slot. To pass it without a type error, widen the IGNORED callee's LOCAL prototype
+  (e.g. from `(void)` to `(struct *arg0)`); the callee's own codegen is unaffected
+  because it never reads the param, so both functions still match. (Distinct from the
+  field-double-`*p` reload idiom: this reloads the PARAM itself, via an ignoring
+  callee, not a struct field via a cast pointer.)
 - REASSIGN the SAME local for a second derived value (e.g. recompute `base` for a
   compare) instead of using a fresh `base2`: reusing the local forces IDO to compute
   any still-needed earlier value (e.g. the return addr) EAGERLY before the local's
