@@ -55,7 +55,15 @@ s32 func_1502C3BC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502DF38.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502E474.s")
+extern u8 D_800C3E90;
+extern void func_150A9984(s32, s32);
+
+void func_1502E474(void) {
+    if (D_800C3E7A != 0) {
+        func_150A9984((&D_800C3E80)[D_800BE9C0], D_800C3E7A);
+    }
+    D_800C3E90 = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502E4C4.s")
 

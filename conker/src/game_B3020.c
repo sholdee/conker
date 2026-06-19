@@ -7,7 +7,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15085BE8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15085DA8.s")
+extern f32 D_800D2360[];
+extern u8 D_800D237C[];
+
+u8 func_15085DA8(f32 arg0) {
+    s32 i = 0;
+
+    while (D_800D2360[i] <= arg0) {
+        i++;
+    }
+    return D_800D237C[i];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15085DF8.s")
 

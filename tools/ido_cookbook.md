@@ -680,7 +680,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   IDO collapse them into a SINGLE materialized zero reg with a single store. When the
   target keeps TWO distinct zero registers (e.g. f2 and f12) and a grouped store order,
   pass literal int `0` (not `0.0f`) for the args that should land in the second zero reg
-  — the int-vs-float mix defeats the CSE.
+  — the int-vs-float mix defeats the CSE. STORE-to-global analog has NO such lever and is
+  a BAIL: parallel `D_a[i]=0.0f; D_b[i]=0.0f;...` where the target keeps TWO `mtc1 zero`
+  regs (one eager, one lazy) cannot be split — IDO 5.3 ALWAYS CSEs identical FP-zero
+  literals into ONE register for stores (temp `f32 zero`, `&D` indirection, reorder, read-
+  back all fail). A sibling earns a 2nd f-reg only by storing a LOADED global (lwc1), not
+  a literal. Confirm against such a sibling, then stub.
 - To force EAGER loading of later call args (e.g. `lbu a2` before a branch, `lbu a3` in
   its delay slot) surrounding a conditional, read those globals/fields into local temps
   BEFORE the controlling ternary/if; IDO then interleaves their loads with the branch.
@@ -919,6 +924,14 @@ Object-level / reloc / 64-bit cases:
   base is UNROLLED (constant trip count), IDO has no live runtime pointer, so EVERY
   advance form folds K into a fresh `lui;addiu %lo(D_xxxx+K)`. Unsteerable when the init
   is unrolled. Bail.
+- Unroll-vs-end-reloc-anchor tension on a region between two EXTERNAL symbols (clear
+  `D_START..D_END`): a literal-trip-count `for(i=0;i<N;i++) D_START[i]=0;` gives the clean
+  4x unroll but anchors the loop-end pointer reloc on the INDEXED base `%lo(D_START+N)`,
+  while every pointer-compare naming the end (`p!=&D_END`, `i<&D_END-D_START`, negative
+  index from `D_END`) anchors the reloc on `D_END` but DEFEATS the unroll (IDO can't prove
+  the external-symbol span is a multiple of 4 -> auto-vectorize + Duff remainder, huge
+  score). Same linked bytes; only the reloc symbol differs. Mutually exclusive; harvest the
+  literal-count form as a seed and bail.
 - Aggregate-relative reloc you can't produce: when the target accesses a field via a base
   symbol + addend (e.g. `%lo(D_xxxx+4)`, the +4 element of a 2-element aggregate WITHOUT a
   base pointer), every C layout materializes a base pointer instead, and the only clean
