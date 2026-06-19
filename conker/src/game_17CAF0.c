@@ -11,7 +11,19 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514F8F8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514FB98.s")
+struct Vec3F { f32 x; f32 y; f32 z; };
+struct Arg1514FB98 { u8 pad[0xC]; f32 unkC; u8 unk10[0x4]; };
+extern s32 func_15146078(struct Arg1514FB98 *, struct Vec3F *, struct Vec3F *);
+extern void func_1514F8F8(void *, struct Arg1514FB98 *, struct Vec3F *, struct Vec3F *, f32, u8, s32);
+
+void func_1514FB98(struct Arg1514FB98 *arg0, u8 arg1, s32 arg2) {
+    struct Vec3F sp34;
+    struct Vec3F sp28;
+
+    if (func_15146078(arg0, &sp34, &sp28) != 0) {
+        func_1514F8F8((u8 *)arg0 + 0x10, arg0, &sp34, &sp28, arg0->unkC, arg1, arg2);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514FBFC.s")
 

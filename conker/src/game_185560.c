@@ -82,7 +82,25 @@ void func_15158D00(struct102 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15159084.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15159120.s")
+typedef struct {
+    u8 pad0[0x118];
+    f32 unk118;
+    u8 pad11C[0x64];
+    f32 unk180;
+} Struct15159120;
+
+s32 func_15159120(Struct15159120 *arg0, u8 arg1) {
+    s32 ret;
+
+    if ((arg1 == 2) || (arg1 == 3)) {
+        ret = 1;
+    } else if (arg0->unk180 < (arg0->unk118 - 35.0f)) {
+        ret = 1;
+    } else {
+        ret = 0;
+    }
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15159184.s")
 

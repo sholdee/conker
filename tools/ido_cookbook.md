@@ -444,6 +444,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   steerable — see BAIL.) When canonicalization blocks the swap, RAISE one side's
   register pressure: write one operand `((u8*)p)[off]` (cast+index) so its extra address
   arithmetic claims the later (t9) register and the bare deref the earlier (t8).
+- Capture a field into a local BEFORE an intervening call to spill it across that call:
+  `ret = node->unk10; func(node); if (ret) ...` homes `ret` to the stack, fills the
+  `jal` delay slot with the spill, and reloads it so the trailing test becomes a `beqzl`
+  with the reload in ITS delay slot. Reading the field AFTER the call (or inlining the
+  test) re-loads from the struct instead.
 - A single FUNCTION-SCOPE local assigned INDEPENDENTLY in each branch (no value carried
   across arms) unifies the result onto ONE register in every branch. Declaring it
   PER-BLOCK gives a different reg per arm; sharing it LIVE across branches forces a

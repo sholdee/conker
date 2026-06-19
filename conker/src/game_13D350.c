@@ -53,7 +53,21 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_1511473C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_151148A8.s")
+void func_150A7A48(f32 a[4][4], f32 b[4][4], f32 c[4][4]);
+
+struct Struct151148A8 {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+};
+
+void func_151148A8(f32 arg0[4][4], struct Struct151148A8 *arg1) {
+    f32 sp18[4][4];
+
+    func_150A8050(arg0, 0.0f, arg1->unk4, 0.0f);
+    func_150A8050(sp18, arg1->unk0, 0.0f, arg1->unk8);
+    func_150A7A48(sp18, arg0, arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_1511490C.s")
 

@@ -5,7 +5,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11A680/func_150ED1D0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11A680/func_150ED234.s")
+extern void func_150ED1D0(f32, f32);
+
+void func_150ED234(f32 *arg0, f32 *arg1) {
+    s32 temp;
+    temp = func_1505A630(arg1[5] - arg0[5], arg0[7] - arg1[7], 0) + 0x4000;
+    func_150ED1D0((f32)temp * 0.0054931640625f, arg0[0x10]);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11A680/func_150ED298.s")
 
