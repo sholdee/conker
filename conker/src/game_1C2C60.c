@@ -2,6 +2,7 @@
 #include "functions.h"
 #include "variables.h"
 
+void func_1519CDB0(s32, f32, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_151957B0.s")
 
@@ -136,7 +137,10 @@ void func_15196318(u8 *arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C948.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C970.s")
+s32 func_1519C970(s32 arg0) {
+    func_1519CDB0(arg0, 0.5f, 0x1D);
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C998.s")
 

@@ -89,6 +89,11 @@ void func_15101328(struct210 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_1510281C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_15102884.s")
+s32 func_15102884(struct210 *arg0, s32 arg1) {
+    if (!(*(u8 *)((s32)arg0 + 0xAC) & 1)) {
+        return 0;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_151028AC.s")

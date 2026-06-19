@@ -174,7 +174,11 @@ void func_1511CB2C(s32 arg0, f32 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511F4D0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511F768.s")
+void func_1511F768(s32 *arg0, s32 arg1) {
+    if (arg0[0x20] == 0) {
+        arg0[0x20] = 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511F788.s")
 

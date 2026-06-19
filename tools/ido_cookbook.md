@@ -102,6 +102,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `if(cond) return 1; return 0;` variant emits the plain `bc1f` but DUPLICATES the
   `jr ra` epilogue. Only the bare comparison-return gives the non-likely branch with a
   single shared epilogue — use it when the asm tests once and falls through to one `jr ra`.
+- Masked-bit 0/1 return (`return (field >> n) & 1;` shape, integer): when the asm
+  EAGERLY loads `li v0,1` then `bnez ...,->jr ra` (priming 1, branching to a SEPARATE
+  `jr ra`), write the prime-then-fallthrough TWO-return form `if (!(field & 1)) return
+  0; return 1;` (test the FALSE/zero case first, fall through to `return 1`). The
+  inverted `if (field & 1) return 1; return 0;` emits an eager `move v0,zero` + `beqz`
+  (wrong prime + branch sense); the prime-then-DEMOTE form (`ret=1; if(!...)ret=0;
+  return ret;`) regresses with an extra instruction. Pick the test-zero-first /
+  fall-through-1 shape when the asm primes 1 and branches over the zero path.
 - Float-vs-ZERO compare with the zero as the FIRST FPU operand: a strict `> 0.0f`
   test (`return x > 0.0f;`) compiles to `c.lt.s fZero,fX` with the materialized 0.0
   in the LEFT register (i.e. IDO rewrites `x > 0` as `0 < x`). Write the source as

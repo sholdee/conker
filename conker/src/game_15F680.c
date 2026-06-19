@@ -2,6 +2,7 @@
 #include "functions.h"
 #include "variables.h"
 
+void func_15132444(struct102 *arg0);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_151321D0.s")
 
@@ -11,7 +12,10 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15132444.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15132570.s")
+void func_15132570(struct102 *arg0) {
+    func_15132444(arg0);
+    func_15169804(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_1513259C.s")
 

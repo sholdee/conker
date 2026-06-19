@@ -91,7 +91,12 @@ void func_15107604(s32 **arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_1510761C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_1510764C.s")
+void func_1510761C(struct260 *arg0);
+
+void func_1510764C(struct260 *arg0) {
+    func_1510761C(arg0);
+    func_1514933C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15107678.s")
 

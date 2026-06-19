@@ -127,7 +127,12 @@ void func_1514E830(struct102 *arg0) {
     func_1516972C(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514E850.s")
+void func_1518E308(void *);
+
+void func_1514E850(void *arg0) {
+    func_1518E308(arg0);
+    func_1516972C(arg0);
+}
 
 void func_1514E87C(void) {
     func_1515F10C();
