@@ -332,6 +332,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   u8*)` keeps every `sb` instruction. Combine with pre-computing the FINAL value
   into a local BEFORE an intervening (also-volatile) store, so the intervening
   store lands at the exact target slot instead of cascading the instruction order.
+- Separate bit-op statements => one load-modify-store EACH: distinct read-modify-
+  write statements on the SAME field that touch DIFFERENT bits (e.g. clear one bit,
+  set another, set a third: `f &= ~0x2; f |= 0x8; f |= 0x1;`, or two ORs
+  `*p |= 1; *p |= 4;`) each emit their OWN `lhu/sh` (or `lbu/sb`) cycle — N statements
+  produce N writes-back. These are NOT redundant/dead (unlike the DCE case above), so
+  IDO keeps every one. Write each bit operation as its own statement (do NOT fold the
+  bits into a single combined mask) when the asm shows one load-modify-store per bit
+  change to the same field.
 - Defeat DCE of all-but-last stores to a PLAIN global: IDO -O2 drops every store
   but the last to a bare global. Make each store "observed" by having the NEXT
   statement READ the global back (e.g. `arr[i] = D_glob;` after `D_glob = ...`);

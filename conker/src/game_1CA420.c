@@ -12,7 +12,24 @@ void func_1519CF70(u8 arg0) {
     func_15147D64(sp1C, 6);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519CFA0.s")
+struct s_1519CFA0 {
+    char pad0[0x1E];
+    u16 unk1E;
+    char pad20[0x10];
+    u8 unk30;
+    char pad31[0x67];
+    u8 *unk98;
+};
+
+void func_1519CFA0(struct s_1519CFA0 *arg0) {
+    u8 *temp;
+
+    arg0->unk30 = 0;
+    temp = arg0->unk98;
+    arg0->unk1E &= 0xFFFD;
+    temp[6] |= 1;
+    temp[6] |= 4;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519CFD0.s")
 
