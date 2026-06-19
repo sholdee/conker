@@ -618,6 +618,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - CSE mismatch: when the target re-loads/re-indexes a value but IDO collapses your
   two identical accesses into one (register-only 'r' diffs from the missing
   reload), you cannot force the duplicate load from C. Same bail as JUSTREG.
+- v0/a0 split with NO `move a0,v0`: when the target computes a pointer via `addiu
+  v0,v0,K` (into v0) yet uses a0 as BOTH the store base (`sw tN,off(a0)`) and the
+  jal argument — with no `move a0,v0` linking them — that v0->a0 register split is an
+  IDO scheduling artifact unreachable from C. Every C form forces the pointer into ONE
+  register: computing it into the call-arg lineage emits `addiu a0,v0,K` (a0, not v0);
+  a separate read/write split or a `move` shifts the whole shape. The lone diff is the
+  addiu's destination register; bail, decomp-permuter candidate.
 - Coupled/cyclic JUSTREG: if fixing one register diff forces a different one (e.g.
   keeping an index live frees one reg but changes a multiply distribution), the
   alloc is cyclically constrained — unsteerable from C. Bail.

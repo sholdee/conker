@@ -15,7 +15,14 @@ void func_15187F90(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B5370/func_15187FC0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B5370/func_15188010.s")
+struct S_DF700 { f32 unkC; s32 pad[8]; };
+extern struct S_DF700 D_800DF70C[];
+
+void func_15188010(s32 arg0, f32 *arg1) {
+    if (arg0 < D_800DF7B4 && arg0 >= 0) {
+        *arg1 = D_800DF70C[arg0].unkC;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B5370/func_1518804C.s")
 

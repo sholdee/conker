@@ -31,6 +31,10 @@ void func_150C6410(struct102 *arg0) {
     func_151346EC(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F3270/func_150C6438.s")
+void func_150C6438(struct102 *arg0) {
+    s32 *temp = (s32 *)((*(u8 **)((u8 *)arg0 + 0x58)) + 0x58);
+    temp[1] = 0;
+    func_1513470C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F3270/func_150C6460.s")

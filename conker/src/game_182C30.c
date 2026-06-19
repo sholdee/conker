@@ -11,7 +11,16 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_182C30/func_15155CFC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_182C30/func_15155EF8.s")
+void func_1515F10C(struct226 *arg0, struct225 *arg1);
+void func_1518CA04(s32 arg0);
+
+void func_15155EF8(struct225 *arg0) {
+    if (arg0->unk14 != NULL) {
+        func_1515F10C(arg0->unk14, arg0);
+    }
+    func_15169804((struct102 *)arg0);
+    func_1518CA04(0xA6);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_182C30/func_15155F3C.s")
 
