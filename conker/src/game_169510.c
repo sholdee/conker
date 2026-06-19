@@ -553,7 +553,55 @@ void func_1513FA2C(void *arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_1513FFF4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_151400D0.s")
+typedef struct {
+    u8  pad0[6];
+    u16 unk6;
+    u8  pad8[4];
+    s8  unkC;
+    s8  unkD;
+    s8  unkE;
+    s8  unkF;
+} Dst151400D0;
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    u16 unk8;
+} Src151400D0;
+
+void func_151400D0(Dst151400D0 *dst, Src151400D0 *src) {
+    dst[0].unk6 = src[0].unk8;
+    dst += 3;
+    src += 3;
+    dst[-3].unkC = src[-3].unk0;
+    dst[-3].unkD = src[-3].unk2;
+    dst[-3].unkE = src[-3].unk4;
+    dst[-3].unkF = src[-3].unk6;
+    dst[-3].unk6 = 0;
+
+    dst[-2].unk6 = src[-2].unk8;
+    dst[-2].unkC = src[-2].unk0;
+    dst[-2].unkD = src[-2].unk2;
+    dst[-2].unkE = src[-2].unk4;
+    dst[-2].unkF = src[-2].unk6;
+    dst[-2].unk6 = 0;
+
+    dst[-1].unk6 = src[-1].unk8;
+    dst[-1].unkC = src[-1].unk0;
+    dst[-1].unkD = src[-1].unk2;
+    dst[-1].unkE = src[-1].unk4;
+    dst[-1].unkF = src[-1].unk6;
+    dst[-1].unk6 = 0;
+
+    dst[0].unk6 = src[0].unk8;
+    dst[0].unkC = src[0].unk0;
+    dst[0].unkD = src[0].unk2;
+    dst[0].unkE = src[0].unk4;
+    dst[0].unkF = src[0].unk6;
+    dst[0].unk6 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_15140190.s")
 

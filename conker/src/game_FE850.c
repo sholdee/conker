@@ -3,7 +3,33 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FE850/func_150D13A0.s")
+extern f32 D_800A08B0;
+extern f32 D_800A08B4;
+extern f32 D_800A08B8;
+extern void func_15059C84(s32);
+
+struct Obj150D13A0 {
+    u8 pad0[0x3C];
+    f32 unk3C;
+    u8 pad40[0xB8 - 0x40];
+    f32 unkB8;
+    f32 unkBC;
+    f32 unkC0;
+    f32 unkC4;
+    u8 padC8[0x148 - 0xC8];
+    f32 unk148;
+};
+
+void func_150D13A0(s32 arg0) {
+    struct Obj150D13A0 *temp = (struct Obj150D13A0 *)arg0;
+
+    temp->unkB8 = temp->unkB8 + temp->unkBC;
+    temp->unkBC = temp->unkBC * D_800A08B0;
+    temp->unk3C = temp->unk3C * D_800A08B4;
+    temp->unkC4 = temp->unkC4 + temp->unk148;
+    temp->unk148 = temp->unk148 * D_800A08B8;
+    func_15059C84(arg0);
+}
 
 extern s32 func_151149AC(u32);
 

@@ -271,6 +271,26 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   read `v1 = *p`, accessing the pointer's other fields via casts of `p`. Declaring
   the deref value first reverses the two register assignments — IDO allocates in the
   order the locals are computed.
+- REASSIGN the SAME local for a second derived value (e.g. recompute `base` for a
+  compare) instead of using a fresh `base2`: reusing the local forces IDO to compute
+  any still-needed earlier value (e.g. the return addr) EAGERLY before the local's
+  register is clobbered. Distinct locals let IDO sink that computation into both
+  return paths, adding an instruction. Reuse the local when the asm computes-then-clobbers.
+- A field read once and reused across an early store of the SAME base wants the field
+  accessed via a typed STRUCT-POINTER member (`arg->field` with arg typed as the real
+  struct ptr), not a raw `*(T*)(arg+off)`: the member form keeps the single loaded
+  register live across the intervening store, whereas the raw-cast form either
+  double-loads the base or defers the store to a later slot.
+- Base-pointer BIAS (target does `addiu base,base,K` upfront then NEGATIVE offsets,
+  e.g. `dst[-3]..dst[0]`): plain unrolled positive-index `dst[i]` won't trigger it —
+  IDO uses positive offsets off one base. Force it by ADVANCING the pointer in source
+  (`dst += K;`) and addressing elements as `dst[-K]..dst[0]`; IDO keeps the runtime
+  `addiu` because the advanced pointer feeds later statements. Write any field that
+  must load through the UN-advanced base (the lazy first read) BEFORE the advance.
+- Dead-store scheduling into a delay slot: to make a kept dead store (e.g. `field = 0`
+  IDO won't DCE) land in a LATER load's delay slot, make it the LAST statement of its
+  block (after the real field writes); an earlier placement schedules it into an
+  earlier slot.
 - Reverse-engineer the TYPES/SIZES of stack-arg locals (and thus the frame size and
   each local's offset) from the CALLEE's asm store widths: a `sh` at the arg pointer
   means `s16[]`, `swc1` means `f32[]`, `sb`/`sw` give `u8`/`s32`. Sizing a local array
