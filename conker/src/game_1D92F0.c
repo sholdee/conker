@@ -36,7 +36,16 @@ s32 func_151AC9EC(u8 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151ACA20.s")
+s32 func_151ACA20(s16 *arg0) {
+    s32 val = 0xFF;
+    if (arg0[0x1C / 2] < 0x10) {
+        val = (s16)(arg0[0x1C / 2] << 4);
+    }
+    if (val < ((u8 *)arg0)[0x5C]) {
+        ((u8 *)arg0)[0x5C] = val;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151ACA60.s")
 

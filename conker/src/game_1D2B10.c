@@ -14,7 +14,12 @@ void func_151A5CAC(struct260 *arg0) {
     func_1514933C(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D2B10/func_151A5CEC.s")
+void func_151A5CEC(struct260 *arg0) {
+    if (*(u16 volatile *)((u8*)arg0 + 0x6C) != 0) {
+        func_151A5D2C(*(u16*)((u8*)arg0 + 0x6C));
+    }
+    func_15149368(arg0);
+}
 
 void func_151A5D2C(u16 arg0) {
     func_100111C8(arg0);

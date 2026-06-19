@@ -75,7 +75,17 @@ void func_1518E4F8(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F8E0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518FC04.s")
+extern void func_1514BE20(void *);
+
+struct Vec3i { s32 x, y, z; };
+
+s32 func_1518FC04(void *arg0, struct Vec3i *arg1) {
+    struct { s32 pad[13]; struct Vec3i v; } *temp;
+    temp = ((void **)arg0)[0xB];
+    temp->v = *arg1;
+    func_1514BE20(temp);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518FC44.s")
 

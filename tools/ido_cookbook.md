@@ -302,6 +302,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   at,0xffff; and; srl reg,16` triple; a plain `x >> 16` or `(u16)(x >> 16)`
   collapses to a bare `srl` and scores worse. Use the explicit mask form when the
   asm masks the high half before shifting.
+- INTEGER left-shift-then-narrow (`(s16)(x << n)`): when the asm shifts a value left
+  and sign-extends to 16 bits in ONE fused pair — `sll tN,x,(16+n); sra dst,tN,16`
+  (e.g. `sll t6,v0,0x14; sra v0,t6,0x10` for `n=4`) — write the source as the
+  `(s16)(x << n)` cast. A plain `x << n` emits a SINGLE `sll reg,n` with no narrowing;
+  the (s16) cast folds the `<<n` and the 16-bit sign-extend into the combined
+  `sll by (16+n)` / `sra by 16` form. Use it when the shifted value is sign-narrowed
+  to a halfword. (Integer-shift analog of the `(s16)(s32)f` float-trunc-narrow rule.)
 - A signed `(s16)` cast on a u16 field forces a signed `lh` load (vs `lhu`) and a
   signed branch (`bgtzl`/`blez`) on its value; use it when the asm sign-extends.
 - Force `lbu` (unsigned byte load) vs `lb` on a field the prototype declares signed
@@ -573,6 +580,15 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   IDO materializes `base+K` into a register rather than folding per-access.)
 - Passing a struct BY VALUE reproduces IDO's word-unrolled do-while struct copy
   before a forwarding call; match the callee's by-value signature, don't pass `&`.
+- Small-struct VALUE COPY reproduces an $at-reusing word-copy register sequence: when
+  the asm copies a few consecutive words into a struct field via a register pattern
+  that REUSES `$at` for non-adjacent words (e.g. `at`/`t8`/`at` for a 3-word copy),
+  write it as a struct-to-struct value assignment of a TAGGED small struct
+  (`temp->v = *arg1;` where `v` is a multi-int Vec-like member). A field-by-field
+  assignment instead allocates fresh sequential temps (t6/t7/t8, no `$at` reuse) and
+  scores worse. The value copy is the only form that reproduces the `$at`/`$tN`/`$at`
+  allocation. (Exception to "IDO never uses $at as a general temp from C" — a struct
+  value-copy of the right width CAN land copied words in $at.)
 - When a near-identical SIBLING func already matches, mirror its exact C structure
   (call order, arg casts via prototype, last-arg literals) — often a 1-try match.
 - Local DECLARATION ORDER controls stack-slot assignment: declare an earlier-slot

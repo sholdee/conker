@@ -17,4 +17,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F2730/func_151C61A0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F2730/func_151C6290.s")
+s32 func_151C6290(u8 *arg0, s32 arg1, s32 arg2) {
+    if (arg0[4] == 0x5A || arg0[4] == 0x74 || arg0[4] == 0x7A) {
+        return 0;
+    }
+    return 1;
+}

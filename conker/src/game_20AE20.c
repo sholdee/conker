@@ -17,7 +17,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151DE7D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151DE81C.s")
+extern s8 D_8008FE30;
+extern s8 D_8008FD74;
+extern s8 D_800E0B96;
+
+void func_151DE81C(void) {
+    D_8008FD74 = 4;
+    D_800E0B96 = 0;
+    if (D_8008FE30 == 0) {
+        func_1500764C();
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151DE85C.s")
 

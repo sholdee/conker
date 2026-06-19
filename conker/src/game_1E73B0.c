@@ -103,7 +103,9 @@ void func_151BE1E4(struct260 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE558.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE604.s")
+void func_151BE604(s32 arg0, s32 arg1, u8 arg2) {
+    func_15169850(arg1, arg2, arg0 + 0x110, arg0 + 0x114, arg0);
+}
 
 struct Sub151BE644 {
     u8  pad0[0x5];
