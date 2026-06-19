@@ -20,7 +20,17 @@ s32 func_150C682C(u8 *arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F3BA0/func_150C6870.s")
+s32 func_150C68C4(s32 arg0);
+
+void func_150C6870(u8 *arg0) {
+    s32 temp = *(s32 *)((u8 *)arg0 + 0x18);
+    if (*(s32 *)((u8 *)arg0 + 0x70) != 0) {
+        u8 *p = *(u8 **)((u8 *)arg0 + 0x70) + 0x58;
+        p[4] = 1;
+    } else {
+        *(s32 *)((u8 *)arg0 + 0x70) = func_150C68C4(temp);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F3BA0/func_150C68C4.s")
 

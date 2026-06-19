@@ -109,7 +109,18 @@ s32 func_15131B3C(u8 *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15131B7C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15131C2C.s")
+extern s32 (*D_80089878[])(s32 *, s32, u8);
+
+s32 func_15131C2C(s32 *a0, s32 a1, u8 a2) {
+    s32 (*fn)(s32 *, s32, u8);
+
+    if (a0[0x1A] & 0x4000) {
+        fn = D_80089878[*((u8 *)a0 + 0x75)];
+        if (fn != 0) {
+            fn(a0, a1, a2);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15131C84.s")
 

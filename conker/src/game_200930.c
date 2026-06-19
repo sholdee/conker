@@ -41,7 +41,12 @@ void func_151D4668(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D4D04.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D4D58.s")
+void func_151D469C(void *arg0, s32 a1, s32 a2, s32 a3, s32 a4);
+
+void func_151D4D58(void *arg0) {
+    func_151D469C(arg0, 0, 0x50, 0xFF, 1);
+    func_151D469C(arg0, 1, 0x50, 0xFF, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D4DAC.s")
 

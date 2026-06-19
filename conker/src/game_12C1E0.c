@@ -43,6 +43,14 @@ s32 func_150FF6B4(struct127 *arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12C1E0/func_150FFCC8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12C1E0/func_150FFD2C.s")
+void func_15081E0C(struct127 *arg0, s32 arg1, s32 arg2);
+
+void func_150FFD2C(struct127 *arg0, struct127 *arg1, s32 arg2) {
+    if (arg1->id == 0x9F || arg1->id == 0xA0) {
+        if (!(arg1->unk94 & 0x80)) {
+            func_15081E0C(arg1, 4, 0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12C1E0/func_150FFD84.s")

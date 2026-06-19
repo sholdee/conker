@@ -48,7 +48,12 @@ void func_150FAD78(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FB188.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FB1E8.s")
+extern s32 func_151D710C(s32, s32, s32, s32, s32);
+extern void func_15157F80(s32, s32, s32, s32, s32);
+
+void func_150FB1E8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    func_15157F80(func_151D710C(arg0, arg1, arg2, arg3, arg4), arg1, arg2, arg3, arg4);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FB240.s")
 

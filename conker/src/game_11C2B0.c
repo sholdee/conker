@@ -133,7 +133,22 @@ void func_150F03BC(struct210 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F15F8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F1684.s")
+struct func150F1684_sub {
+    s32 unk0;
+    u8 unk4;
+};
+
+void func_150F1684(struct func150F1684_sub *arg0, struct func150F1684_sub *arg1, u8 arg2) {
+    struct func150F1684_sub *temp = (struct func150F1684_sub *)((s32)arg0 + 0x18);
+    s32 word;
+
+    if (arg2 == 0x43) {
+        word = arg1->unk0;
+        if ((temp->unk0 == word) || (arg1->unk4 == temp->unk4)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F16DC.s")
 

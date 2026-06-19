@@ -100,7 +100,20 @@ void func_15158D00(struct102 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15159890.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15159BB0.s")
+void func_15159890(f32 *, f32 *, s32, s32);
+
+void func_15159BB0(f32 arg0, f32 arg1, f32 arg2, s32 arg3, s32 arg4, s32 arg5, u8 *arg6) {
+    f32 sp24[3];
+    f32 sp18[3];
+
+    sp24[0] = arg0;
+    sp24[1] = arg1;
+    sp18[0] = 0.0f;
+    sp18[1] = 0.0f;
+    sp18[2] = 0.0f;
+    sp24[2] = arg2;
+    func_15159890(sp24, sp18, arg6[0xC], arg6[0x1]);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15159C08.s")
 
