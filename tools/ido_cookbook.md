@@ -143,6 +143,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   DUPLICATE the store on the else path. Identify which writes are conditional by the
   likely-bit, not by proximity to the if (e.g. `b=a; if(...)c=K;` when `b=a` is in a
   plain-beqz delay slot).
+- A likely-branch delay slot that REDEFINES a register (e.g. `bnezl ...; addiu v0,a0,0x28`)
+  is NULLIFIED on the not-taken path, so a later load on that fall-through still uses the
+  OLD register value (`lhu off(v0)` reads the PRE-delay-slot `v0`, not `a0+0x28`). Source
+  such a load from the pre-delay-slot expression, not the pointer the delay slot computes;
+  the `!(flag)` test form (not `flag != 0`) gives the bnezl-to-clear shape.
 - `while (i--)` (implicit `!= 0`) blocks IDO's -O2 loop-unrolling that `for(...)` and
   `while(i != 0)` trigger; it also emits `move/beqz` on the raw value instead of an
   `sltu` boolean. Use it for simple countdown loops.

@@ -36,7 +36,21 @@ void func_151D747C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D75C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D7724.s")
+s32 func_151D7724(s32 *arg0) {
+    s32 *v0 = (s32 *)arg0[0x40 / 4];
+    u8 *p = (u8 *)arg0 + 0x28;
+    u16 type;
+
+    if (!(v0[0x94 / 4] & 2)) {
+        type = *(u16 *)((u8 *)v0 + 0x84);
+        if (type != 4 && type != 0xA && type != 0xC) {
+            goto done;
+        }
+    }
+    p[5] &= ~1;
+done:
+    return 1;
+}
 
 s32 func_151D7770(s32 *arg0) {
     u8 *p = (u8 *)arg0 + 0x28;

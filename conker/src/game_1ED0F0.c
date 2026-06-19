@@ -19,7 +19,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C04F8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C05A4.s")
+void func_151D5334(void *, f32, f32, f32, s32, u8, s32);
+
+void func_151C05A4(void *arg0, u8 arg1, s32 arg2) {
+    func_151D5334(arg0, 800.0f, 2000.0f, 0.0005f, 5, arg1, arg2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C05F0.s")
 

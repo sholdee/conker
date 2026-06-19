@@ -45,7 +45,25 @@ s32 func_151C2E4C(GameStruct151C2E4C *a0, GameStruct151C2E4C *a1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C43E0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C4510.s")
+typedef struct {
+    u8 pad0[0x34];
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+} GameStruct151C4510a;
+
+typedef struct {
+    u8 pad0[0x4];
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+} GameStruct151C4510b;
+
+void func_151C4510(GameStruct151C4510a *a0, GameStruct151C4510b *a1, f32 a2) {
+    a0->unk34 += a1->unk4 * a2;
+    a0->unk38 += a1->unk8 * a2;
+    a0->unk3C += a1->unkC * a2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C455C.s")
 

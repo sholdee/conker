@@ -20,7 +20,16 @@ void func_1502C380(void) {
     D_800C3E7A = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502C3BC.s")
+extern u8 D_800CC406[];
+
+s32 func_1502C3BC(s32 arg0) {
+    s32 temp = D_800CC406[arg0 * 0x32C];
+
+    if (temp >= 0x46) {
+        temp = 0xB;
+    }
+    return temp;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502C408.s")
 
