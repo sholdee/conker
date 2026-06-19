@@ -210,6 +210,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Read a `u8`/`u16` param into a WIDER local (`s32 a = arg2;`) to reproduce a
   word home (`sw`, not `sb`) with no re-masking `andi`; the narrow type would home
   byte-width and re-mask on use.
+- Declare a param `s32` and write the mask INLINE at its single use (`arg3 & 0xFF`)
+  rather than typing the param `u8`, when the asm has NO prologue narrow-entry for it:
+  a `u8` param forces IDO to emit an extra entry-narrowing (`andi`) + a homed store of
+  that arg, whereas the `s32`-param-plus-inline-`& 0xFF` form keeps the param wide
+  (no extra entry/home) and masks only where used. Use it when the target masks the
+  arg at the use site but has no spill/narrow of it at function entry.
 - A u8-masked loop counter (`i = (u8)(i + 1)` with a plain `i < N` compare) blocks
   IDO -O2 from turning a per-iteration `sll/addu/lw` address recompute into a
   POINTER induction (`addiu sN,sN,stride`): a plain `i++` makes IDO strength-reduce
@@ -366,6 +372,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   double reads CSE into ONE load cached in a register; the type mismatch defeats CSE
   so IDO emits a fresh reload for the body. Use it when the target loads a field
   twice (a beqz test then a reload) rather than caching the first load.
+- Route a store to a FAR field through a sub-object pointer with a NEGATIVE offset
+  to defeat cross-field alias analysis AND keep the folded store offset: when a near
+  field (e.g. unk5C) is stored while a nearby field (e.g. unk1C) must be RELOADED on
+  the path after that store, write the store as `*(u8*)((u8*)sub - K) = v;` where
+  `sub = &arg->farfield` (so `sub-K` folds to `sb v,off(arg)`). This both (a) folds
+  to the same `sb v,off(base)` a plain member store would, AND (b) defeats IDO's
+  alias analysis so it emits the path-local reload (`lh v1,off2(base)`) after the
+  `sb` — a plain `arg->field = v` member store lets IDO prove no-alias, caches the
+  other field, and DROPS that reload. A held `u8*` pointer for the store forces the
+  reload too but materializes a stray `addiu vN,base,off` base. (Pairs with: assign
+  `sub` BEFORE the conditional block, and reference `sub` at two offsets (0 and 4) so
+  IDO materializes `base+K` into a register rather than folding per-access.)
 - Passing a struct BY VALUE reproduces IDO's word-unrolled do-while struct copy
   before a forwarding call; match the callee's by-value signature, don't pass `&`.
 - When a near-identical SIBLING func already matches, mirror its exact C structure
@@ -1023,3 +1041,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   control. Bail (keep the functionally-correct best candidate); decomp-permuter /
   scheduler-pragma candidate. (Store order of the field copies still MUST match the
   target exactly — reordering them regresses independently of this tie.)
+- Address spill 4-align vs 8-align (`0x1c` vs `0x18` in a `0x20` frame): a NAMED
+  pointer local (`T *p = &glob[i];`) reused across calls is spilled to its own
+  8-ALIGNED slot (lands at e.g. 0x18, leaving 0x1c padding). If the target spills
+  the same reloaded address at the 4-aligned slot ADJACENT to the homed param
+  (0x1c, below a1@0x20), DROP the named pointer and write the index expression
+  INLINE at each use (`((T*)glob)[i].field` repeated); IDO -O2 CSEs it into one
+  register but treats the spill as a 4-aligned temp, packing it top-down next to
+  the param home. Same instructions, only the spill offset flips 0x18->0x1c.

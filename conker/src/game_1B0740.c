@@ -7,7 +7,25 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B0740/func_151838B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B0740/func_15183974.s")
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+} Struct15183974;
+
+void func_15183ACC(s32);
+
+void func_15183974(s32 arg0) {
+    if (((Struct15183974 *)D_800DDE80)[arg0].unk0 == 0) {
+        func_15183ACC(arg0);
+    }
+    if (((Struct15183974 *)D_800DDE80)[arg0 + 1].unk0 == 0) {
+        func_15183ACC(arg0 + 1);
+        ((Struct15183974 *)D_800DDE80)[arg0 + 1].unkC = ((Struct15183974 *)D_800DDE80)[arg0].unkC;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B0740/func_151839F0.s")
 

@@ -35,7 +35,23 @@ s32 func_1507E908(void *arg0, s32 arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E968.s")
+s32 func_1507E968(void *arg0) {
+    u32 *temp;
+    s32 idx;
+    s32 b;
+
+    b = ((u8 *)arg0)[4];
+    idx = (b != 0x96) ? func_150849A0(arg0) : b;
+    if (idx == 0xFF) {
+        return 0;
+    }
+    temp = (u32 *)D_800D1C90[idx];
+    if (temp != 0) {
+        temp -= 2;
+        return temp[1] / 10;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E9E8.s")
 
