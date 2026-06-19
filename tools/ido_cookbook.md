@@ -616,6 +616,17 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   for that arg instead emits `move a0,zero` (score ~200); a function-pointer cast of
   the callee emits `jalr` instead of `jal` (score ~400). Forward the live param when
   the asm has the bare `jal` + `nop` with no arg move.
+- Two SEQUENTIAL calls forwarding the SAME param (`f(arg0); g(arg0);` as a wrapper
+  body): IDO -O2 -g3 homes the param ONCE (`sw a0,off(sp)` in the prologue) and
+  RELOADS it (`lw a0,off(sp)`) before EACH call — the first call can't keep it live
+  in a0 across its own clobber, so the home + per-call reload is the expected shape,
+  not a sign of over-forwarding. Just forward the same arg to both calls; don't try
+  to suppress the home or cache it in a saved register.
+- Zero-a-buffer wrapper: a function whose body is a single `jal bzero`/`jal memset`
+  clearing N bytes of a fixed global/buffer is `bzero(&D_xxxx, N);` (or
+  `memset(&D_xxxx, 0, N)` if the asm passes a 0 middle arg). Declare the global as a
+  local `extern u8 D_xxxx[N];` when no header exposes it; the array-decl `&D_xxxx`
+  yields the bare `%hi/%lo` address arg with the literal size in a1/a2.
 - Forwarder that RE-SIGNS its param before the call homes that param: a thin
   forwarder passing an `s16`/`s8` param UNCHANGED to a callee still emits a frame +
   `sw aN,off(sp)` home for it because the source-level sign-extend (`sll/sra`)

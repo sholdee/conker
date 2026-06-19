@@ -29,7 +29,26 @@ s32 func_150C6D1C(Func150C6D1CArg* arg) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F3BA0/func_150C6D40.s")
+typedef struct {
+    char pad[0x18];
+    s32 unk18;
+} Func150C6D40Inner;
+
+typedef struct {
+    char pad[0x58];
+    Func150C6D40Inner inner58;
+} Func150C6D40Sub;
+
+typedef struct {
+    char pad[0x58];
+    Func150C6D40Sub* unk58;
+} Func150C6D40Arg;
+
+void func_150C6D40(Func150C6D40Arg* arg0) {
+    Func150C6D40Inner* inner = &arg0->unk58->inner58;
+    inner->unk18 = 0;
+    func_151346EC((struct102*)arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F3BA0/func_150C6D68.s")
 

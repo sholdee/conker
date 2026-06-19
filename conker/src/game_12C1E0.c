@@ -13,7 +13,12 @@ struct126 *func_150FF288(struct127 *arg0) {
     return func_1503195C(arg0, 0x82, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12C1E0/func_150FF2AC.s")
+extern f32 D_800A211C;
+void func_15145740(struct127 *arg0, struct17 *arg1, struct17 *arg2, struct17 *arg3, f32 arg4);
+
+void func_150FF2AC(struct127 *arg0, struct17 *arg1, struct17 *arg2, struct17 *arg3) {
+    func_15145740(arg0, arg1, arg2, arg3, D_800A211C);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12C1E0/func_150FF2D4.s")
 

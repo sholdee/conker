@@ -2,6 +2,8 @@
 #include "functions.h"
 #include "variables.h"
 
+extern u8 D_800DCDE0[0x60];
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_191C30/func_15164780.s")
 
@@ -9,7 +11,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_191C30/func_1516489C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_191C30/func_15164EE4.s")
+void func_15164EE4(void) {
+    bzero(D_800DCDE0, 0x60);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_191C30/func_15164F0C.s")
 
