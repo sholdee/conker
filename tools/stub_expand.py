@@ -99,6 +99,9 @@ def expand(n):
     print(f"converting {len(picks)} segments: {[hex(p['off']) for p in picks]}")
     good = try_batch(lines, picks)
     if good:
+        # refresh expected/ so object-diff (iter_match) works for the new stub
+        # files — the current build objects ARE the correct target bytes.
+        sh("cp -r conker/build/src/* conker/expected/build/src/ 2>/dev/null")
         files = " ".join(f"conker/src/game_{p['off']:X}.c" for p in good)
         sh(f"git add conker/conker.us.yaml {files}", cwd=REPO)
         msg = f"yaml: stub {len(good)} game segments (asm->c) for matching\\n\\nROM sha1 unchanged (all GLOBAL_ASM stubs)."

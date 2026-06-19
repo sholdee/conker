@@ -108,9 +108,16 @@ for (let r = 0; r < ROUNDS; r++) {
 
   phase('Integrate')
   if (!matched.length) { log(`round ${r + 1}: no matches to commit`); continue }
-  const integ = await agent(integratePrompt(matched), { label: `integrate:r${r + 1}`, phase: 'Integrate', schema: INTEG_SCHEMA })
-  totalCommitted += (integ && integ.committed ? integ.committed.length : 0)
-  log(`round ${r + 1}: committed ${integ && integ.committed ? integ.committed.length : 0} (ROM ${integ && integ.rom_ok ? 'OK' : 'CHECK!'}) — ${integ ? integ.summary : 'no report'}`)
+  // DETERMINISTIC integration: a single agent runs integrate.py (force-clean
+  // rebuild + ROM gate + bisect + commit). No LLM judgement in the gate — this
+  // is what makes autonomous commits safe (the LLM agent gate was stale-bin-fooled).
+  const pairs = matched.map((m) => `${m.file} ${m.func}`).join(' ')
+  const integ = await agent(
+    `Run EXACTLY this one command and report its full stdout verbatim — do nothing else, edit nothing:\n  python3 ~/conker/tools/integrate.py ${pairs}`,
+    { label: `integrate:r${r + 1}`, phase: 'Integrate', schema: INTEG_SCHEMA })
+  const n = (integ && integ.committed) ? integ.committed.length : 0
+  totalCommitted += n
+  log(`round ${r + 1}: integrate.py — ${integ ? integ.summary : 'no report'}`)
 }
 
 return { rounds: ROUNDS, totalCommitted }

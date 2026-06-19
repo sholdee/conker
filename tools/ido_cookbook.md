@@ -29,6 +29,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Dividing a float by an INT literal (`x/2`) preserves a real `div.s` by 2.0;
   using a FLOAT literal (`x/2.0f`) makes IDO -O2 strength-reduce to `mul.s` by the
   reciprocal (0.5). Pick the literal form that matches the asm's div vs mul.
+- Unsigned modulo: `x % NU` (unsigned literal, or an unsigned `x`) emits `divu`;
+  a signed `x % N` emits `div`. Type the operand/literal to match divu vs div.
+- A `-1` sentinel stored to a field: an `s8`/`s16` field emits `li reg,-1`,
+  whereas a `u8`/`u16` field masks the constant to `li reg,0xff`/`0xffff`. Pick
+  the field's signedness to match the `-1` vs masked immediate in the asm.
 - Unsigned-int-to-float: a `(u32)` cast on the integer source reproduces the
   unsigned conversion idiom (`bgez`, `lui 0x4F800000`, `add.s` 2^32 correction),
   even when the value is loaded via `lbu`. A signed cast omits the correction.
@@ -57,6 +62,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - A two-constant ternary's operand order controls which `li` is emitted FIRST:
   `(cond)?A:B` lays out `li B` then `li A` (matching `slti/bnez`-fallthrough);
   the inverted condition swaps the two `li`s. Pick the form matching the asm order.
+- To force EAGER loading of later call args (e.g. `lbu a2` before a branch, `lbu
+  a3` in its delay slot) that surround a conditional, read those globals/fields
+  into local temps BEFORE the controlling ternary/if; IDO then interleaves their
+  loads with the branch. Computing the condition first defers the arg loads.
+- Switch with sparse/negative case labels: IDO SORTS cases ascending and emits the
+  beq/beql/bnel chain in that sorted order. Write each label in the form that sorts
+  to the target's test order (e.g. `case 0xDE:` not the equal `case -0x22:`); a
+  wrong-signed label sorts to the wrong slot, and an if-else-if chain inlines the
+  FIRST case body instead of the sorted one. Also: ordering the case BODIES in the
+  source (e.g. handled-case, default, shared-cases) can be required to get the exact
+  branch layout without spilling a shared `result` local to the stack; a `default`
+  that simply falls through needs no explicit test.
 - To force a per-iteration reload of a global pointer/value, deref-cast it inline
   IN the loop body; binding it to a local lets IDO hoist it out of the loop.
 - Inlining a value in the for-CONDITION (vs a named `count` local) also pins its
@@ -93,8 +110,17 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - A read-modify-write (`x &= ~m;`) loads the lvalue EARLY, steering the scheduler;
   a plain assignment can't reproduce that load order. If the target loads a
   destination before computing, prefer the compound-assignment form.
+- A compound `x += A*K` (read-modify-write on an accumulator) emits the
+  accumulator-FIRST operand order (`addu dst,x,tmp`) AND schedules the add after a
+  nearby store; a plain `x = x + A*K` reverses the operand order and cannot steer
+  the schedule. Use `+=` when the target adds the destination in as the first
+  operand.
 - Group related locals into ONE local struct to keep a store live; separate
   scalar locals get DCE'd while a struct member used later survives.
+- Defeat DCE of all-but-last stores to a PLAIN global: IDO -O2 drops every store
+  but the last to a bare global. Make each store "observed" by having the NEXT
+  statement READ the global back (e.g. `arr[i] = D_glob;` after `D_glob = ...`);
+  the read value CSEs to the same register (no reload) so each `sw` stays live.
 - Passing `&local` DIRECTLY to multiple calls (no named pointer var) makes IDO
   spill the address to its own 8-aligned temp slot and reload it before the
   later call — matches target spill/reload. A named pointer keeps it in a reg.
@@ -111,6 +137,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   address into a local (`s32 **pp = &arg0;`) and read through `**pp` each time.
 - To force IDO to emit fresh registers + `move`s (e.g. an XOR-swap), use two
   distinct temp locals rather than reusing one — the extra temp pins the moves.
+- The OPERAND ORDER of an equality test steers `bnel`/`beql` register order: `a==b`
+  vs `b==a` swaps which reg is first in the branch (`bnel b,a` vs `bnel a,b`).
+  When a likely-branch's two registers are reversed, flip the comparison operands.
+- To pin the LOAD ORDER of fields feeding a call/compare, bind each to its OWN
+  named temp in the exact sequence the asm loads them (and bind a value that is
+  both compared and stored FIRST so it loads before the others and the store
+  reuses it). Reusing one temp or reordering the binds reorders the loads.
 - Defeat CSE of a duplicated priming load from C: instead of reading `arg0`
   directly, write `p = &arg0[i];` (with i=0) then deref `p` — the indexed address
   blocks the collapse and forces the separate load IDO's target emits.
@@ -132,6 +165,17 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - A param the target loads as a low BYTE of its un-homed caller stack slot wants
   `*((u8*)&arg + 3)` (big-endian byte-3) to emit the exact `lbu off+3(sp)`; neither
   `arg` nor `(u8)arg` produces the `lbu` (both give a full-word `lw`).
+- To read a sub-byte of a wider struct field the PROTOTYPE doesn't expose (e.g. the
+  high byte of a `u16 unkN` accessed as `unkN+1`), cast through a raw byte pointer:
+  `*((u8*)arg + 0xNN) & mask` — don't edit the shared header to add the field.
+- Plain truthiness (`if (x)`/`if (!x)`) keeps a value already live in a register
+  (e.g. v1) across all branch arms; the explicit `x != 0`/`x == 0` form can inject
+  a spurious `move v1,v0` (re-materializing the test value). Use bare truthiness
+  when the asm reuses the existing register with no extra move.
+- To read a struct field that is DECLARED non-float (e.g. `f32`-as-bits or `s32`)
+  AS a float pointer, write `**(f32**)&field` — IDO emits `lw ptr; lwc1 0(ptr)`.
+  This forces the load-pointer-then-`lwc1` pair when several such fields each hold a
+  distinct `f32*` (vs collapsing them into base+offset `lwc1`s off one struct read).
 - Param-type tension with an existing PROTOTYPE: if a forward decl types a param
   `s32`, the definition MUST also be `s32` (a `u8` def is "Incompatible type"
   redeclaration). Match the narrowing at the use site/call cast, not the signature.
@@ -154,6 +198,19 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Switch dispatch through a function-pointer table: a local
   `extern void (*D_xxxx[])(void *);` plus `D_xxxx[idx](arg)` reproduces the
   table-load + `jalr`. (See bail note on case-pointer delay-slot hoisting below.)
+- An EMPTY if-body with a populated else (`if (cond) {} else x = 0;`) reproduces a
+  branch layout where the taken/condition-true path simply skips over the else
+  store — use it (don't invert to `if (!cond) x = 0;`) when the asm branches around
+  an else-only body.
+- A `goto` INTO a following if-block's body merges consecutive same-valued return
+  paths: jumping to a label inside the next block forces IDO's tail-merge so several
+  `return 0;` paths share ONE epilogue (a `bc1t`-to-shared-ret + `bc1fl`-enter-body
+  branch shape) that plain separate `if`s each with their own `return 0;` cannot
+  produce.
+- To deref a struct field the prototype only PARTIALLY declares (e.g. header
+  declares `next`@0x18 but not `prev`@0x1C), define a LOCAL tagged struct with
+  explicit padding (`struct { u8 pad[0x18]; void *next, *prev; }`) to reach the
+  undeclared offsets, rather than editing the shared header.
 - Varargs printf-style wrapper: `#include "libc/stdarg.h"` and a `va_arg` copy loop
   give the exact pointer-bump alignment idiom (`(p+3)&~3` / `(p+7)&~3`); size the
   stack buffer so its last element OVERLAPS the arg-home region (e.g. `s32 buf[17]`
