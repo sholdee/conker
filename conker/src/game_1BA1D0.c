@@ -257,7 +257,23 @@ void func_1519086C(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15191520.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1519187C.s")
+s32 func_1519187C(void *arg0)
+{
+  s16 v0;
+  s32 v1;
+  v0 = *((s16 *) (((u8 *) arg0) + 0x1C));
+  if (v0 < (*((s16 *) (((0, (u8 *) arg0)) + 0x124))))
+  {
+    v1 = v0;
+    v1 *= *((s16 *) (((u8 *) arg0) + 0x126));
+    if (v1 < (*((u8 *) (((u8 *) arg0) + 0x5C))))
+    {
+      *((u8 *) (((u8 *) arg0) + 0x5C)) = v1;
+    }
+  }
+  return 1;
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_151918BC.s")
 
