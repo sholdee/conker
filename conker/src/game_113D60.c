@@ -56,7 +56,16 @@ s32 func_150E8824(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E8854.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E88C0.s")
+extern f32 D_800A1378;
+extern void func_150E8930(void *);
+
+void func_150E88C0(void *arg0) {
+    *(f32 *)((u8 *)arg0 + 0x28) -= D_800BE9A4;
+    if (*(f32 *)((u8 *)arg0 + 0x28) < 0.0f) {
+        *(f32 *)((u8 *)arg0 + 0x28) = (func_150ADA68() * D_800A1378) + 201.0f;
+        func_150E8930(arg0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E8930.s")
 

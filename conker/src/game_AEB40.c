@@ -7,7 +7,18 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15081C20.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15081E0C.s")
+extern void func_1507DF10(struct127 *arg0, s32 arg1);
+
+void func_15081E0C(struct127 *arg0, u16 arg1, u8 arg2) {
+    if (D_800BE616 == 0) {
+        if (arg0->health != 0) {
+            arg0->health = 7;
+        }
+        if ((arg2 == 0) || (arg1 != 0xA)) {
+            func_1507DF10(arg0, arg1);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15081E78.s")
 

@@ -53,7 +53,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A3398.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A3444.s")
+void func_150A3444(s32 a0, s16 a1, s16 a2, s16 a3) {
+    ((struct178 *)*(s32 *)&D_800D3098)[a0].unk0 = a1;
+    *(s16 *)&((struct178 *)*(s32 *)&D_800D3098)[a0].pad2 = a2;
+    ((struct178 *)*(s32 *)&D_800D3098)[a0].unk4 = a3;
+}
 
 s32 func_150A3504(void);
 
