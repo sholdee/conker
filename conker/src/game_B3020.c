@@ -65,7 +65,15 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15088780.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_150887F8.s")
+extern u8 *D_800872A0;
+
+s32 func_150887F8(void) {
+    u8 *p = D_800872A0;
+    if (p == 0) {
+        return 0;
+    }
+    return p[0x46] == 0xFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15088824.s")
 

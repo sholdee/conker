@@ -93,7 +93,12 @@ void func_151BE1E4(struct260 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE644.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE674.s")
+extern void func_151BE644(struct210 *);
+
+void func_151BE674(struct210 *arg0) {
+    func_151BE644(arg0);
+    func_1513CA6C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE6A0.s")
 

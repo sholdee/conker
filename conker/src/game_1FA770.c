@@ -141,7 +141,12 @@ void func_151D1388(struct260 *arg0) {
     func_1514933C(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D13B4.s")
+void func_15149368(struct260 *arg0);
+
+void func_151D13B4(struct260 *arg0) {
+    func_151D1368(arg0);
+    func_15149368(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D13E0.s")
 

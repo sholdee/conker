@@ -95,6 +95,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   preserves `temp`'s register across the body (`bnez v0; move v1,v0`) and gives a
   fallthrough `move v0,zero`. The inverted `if(temp!=0){...return temp;} return 0;`
   flips to `beqz` and adds an instruction. Pick the form matching the branch shape.
+- Equality-against-a-NONZERO-constant 0/1 return: a `return field == K;` (K != 0)
+  emits the `xori reg,reg,K; sltiu reg,reg,1` idiom (XOR the value with K, then a
+  set-if-`< 1` to turn the zeroed-out equal case into 1). Write the bare equality
+  return when the asm shows this `xori`+`sltiu ...,1` pair; an `== 0` test instead
+  collapses to a plain `sltiu reg,reg,1` with no `xori`, and a `!=` flips to a
+  `sltu zero,reg`-style nonzero test. Use the `== K` form to reproduce the xori.
 - Boolean comparison return (`return a < b;` as a 0/1 result): write the BARE
   comparison-return directly. It emits a NON-likely `bc1f` (for a float compare) with
   `li v0,1` falling THROUGH into a single shared `jr ra` epilogue. The `if(cond) ret=1;

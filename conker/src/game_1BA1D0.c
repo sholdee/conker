@@ -30,7 +30,10 @@ void func_1518E4CC(void *arg0) {
     func_15169804(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518E4F8.s")
+void func_1518E4F8(void *arg0) {
+    func_1518E4A0(arg0);
+    func_15169824(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518E524.s")
 
