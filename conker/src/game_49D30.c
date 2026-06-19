@@ -103,7 +103,13 @@ void func_150221E8(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_150228E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15022998.s")
+void func_15022998(s32 *arg0) {
+    if ((*arg0 == 0x1B) || (*arg0 == 4)) {
+        if (D_80086014[*arg0] != 0) {
+            D_80086014[*arg0](arg0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_150229E4.s")
 

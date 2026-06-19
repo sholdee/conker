@@ -21,7 +21,31 @@ void func_150CF530(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CF800.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CFBEC.s")
+struct sub150CFBEC {
+    u8 unk0;
+    u8 pad[3];
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+};
+
+struct par150CFBEC {
+    char pad10[0x10];
+    f32 unk10;
+    char pad14[0x70 - 0x14];
+    struct sub150CFBEC unk70;
+};
+
+void func_150CFBEC(struct par150CFBEC *arg0, f32 *arg1, u8 arg2) {
+    struct sub150CFBEC *temp = &arg0->unk70;
+
+    if (arg2 == 0x52) {
+        temp->unk0 |= 1;
+        temp->unk4 = 0.0f;
+        temp->unk8 = arg0->unk10;
+        temp->unkC = arg1[0] - arg0->unk10;
+    }
+}
 
 extern void func_1515572C(f32 *, s32);
 

@@ -69,6 +69,7 @@ typedef struct {
     u8 unk1C9;
     u8 pad2[0x2C4 - 0x1CA];
     u8 *unk2C4;
+    u8 unk2C8;
 } GameAEB40Struct;
 
 u8 func_150849A0(GameAEB40Struct *a0) {
@@ -79,7 +80,25 @@ u8 func_150849A0(GameAEB40Struct *a0) {
     return a0->unk2C4[0];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_150849CC.s")
+u8 func_150849CC(GameAEB40Struct *a0, s32 *a1) {
+    s32 v1;
+    s32 v0;
+    v0 = a0->unk1C9;
+    if (v0 != 0) {
+        v1 = v0 - 1;
+    } else {
+        v0 = a0->unk2C8;
+        if (v0 != 0) {
+            v1 = v0 - 1;
+        } else {
+            v1 = 0;
+        }
+    }
+    if (a1 != 0) {
+        *a1 = v1;
+    }
+    return a0->unk2C4[v1];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084A18.s")
 

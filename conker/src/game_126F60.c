@@ -26,7 +26,14 @@ void func_150FACE4(struct102 *arg0, s32 arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FAD28.s")
+extern void func_1515F170(s32 arg0, u8 arg1);
+
+void func_150FAD28(void) {
+    func_1515F170(8, 0);
+    func_1515F170(0xB, 1);
+    func_151494E0(*(s32 *)&D_800D3098 + 0x514, 0x30);
+    func_151494E0(0, 0x4D);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FAD78.s")
 

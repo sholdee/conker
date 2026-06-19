@@ -217,7 +217,31 @@ s32 func_1514EB8C(s32 arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514ECE0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514ED3C.s")
+typedef struct Node1514ED3C {
+    char pad0[0x10];
+    s32 key;
+    struct Node1514ED3C *next;
+} Node1514ED3C;
+
+s32 func_1514ED3C(Node1514ED3C *node, s32 key, s32 *out) {
+    s32 found = 0;
+    Node1514ED3C *cur = node;
+    Node1514ED3C *next;
+    if (cur != 0) {
+        do {
+            next = cur->next;
+            if (key == cur->key) {
+                found = 1;
+            } else {
+                cur = next;
+            }
+        } while (cur != 0 && found == 0);
+    }
+    if (out != 0) {
+        *out = (s32) cur;
+    }
+    return found;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514ED8C.s")
 

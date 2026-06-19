@@ -17,7 +17,25 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15086BD0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15086C70.s")
+extern void func_150A3194(s32, s32, s32, s32, s32);
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    s16 unkC;
+    s16 unkE;
+} B3020Struct;
+
+extern B3020Struct *D_800D2350;
+
+void func_15086C70(s32 arg0) {
+    s16 temp = D_800D2350[arg0].unk4;
+    func_150A3194(3, 0xB, D_800D2350[arg0].unk0, D_800D2350[arg0].unk2, temp);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15086CBC.s")
 
