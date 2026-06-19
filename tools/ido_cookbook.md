@@ -947,6 +947,13 @@ Object-level / reloc / 64-bit cases:
   pointer's `lui`+`addiu` eagerly between (lui order `lui p`, addiu order `addiu e`
   first), no declaration order decouples them (lui-hoist order and addiu order stay
   COUPLED to decl order). Bail.
+- Spill-SLOT offset set by TU temp-counter, not source: when the instruction stream is
+  byte-perfect and the ONLY residual is a spill/reload to a different 4-byte slot (e.g.
+  target `sw/lw ...,0x20(sp)` vs your `...,0x24(sp)`), and the SAME character-identical C
+  matches byte-perfect in ANOTHER file, the offset is driven by IDO's per-translation-unit
+  temp/symbol counter — preceding GLOBAL_ASM stubs here vs real C there shift it. No
+  within-function lever (named/register/RMW/pointer temp, arg form, callee return type)
+  moves it. Decompile the neighbors (or run a permuter with TU context); bail on this func.
 - Address spill 4-align vs 8-align (`0x1c` vs `0x18` in a `0x20` frame): a NAMED pointer
   local is spilled to its own 8-ALIGNED slot. If the target spills the reloaded address
   at the 4-aligned slot adjacent to the homed param, DROP the named pointer and write the

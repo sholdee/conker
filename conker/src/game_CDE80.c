@@ -55,6 +55,20 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A3444.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A34B0.s")
+s32 func_150A3504(void);
+
+s32 func_150A34B0(u8 *arg0) {
+    s32 ret;
+
+    if (arg0[0x14] == 1) {
+        return 0;
+    }
+
+    ret = 0;
+    if (!(arg0[0x15] & 3)) {
+        return func_150A3504();
+    }
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A3504.s")

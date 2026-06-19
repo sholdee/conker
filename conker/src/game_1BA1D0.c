@@ -293,4 +293,12 @@ s32 func_1519187C(void *arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15191A84.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15191B8C.s")
+extern s32 D_800A8010;
+
+void func_15191B8C(s32 arg0, u8 arg1) {
+    s32 sp1C;
+
+    sp1C = D_800A8010;
+    func_151494E0(arg0, arg1);
+    func_15169260((s32)&sp1C, 1, arg0, arg1);
+}

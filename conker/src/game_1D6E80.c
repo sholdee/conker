@@ -33,7 +33,32 @@ void func_151AA1F0(void) {
     func_1519F400();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AA210.s")
+struct s_151AA210_arg {
+    char pad0[0x18];
+    s32 unk18;
+    u8 unk1C;
+};
+
+struct s_151AA210_buf {
+    s32 unk0;
+    u8 unk4;
+};
+
+extern void func_15147D64(s32, s32);
+extern void func_1519F3B8(struct s_151AA210_arg *);
+
+void func_151AA210(struct s_151AA210_arg *arg0) {
+    s32 temp;
+    struct s_151AA210_buf sp1C;
+
+    temp = arg0->unk18;
+    sp1C.unk0 = temp;
+    sp1C.unk4 = arg0->unk1C;
+    temp = (s32)&sp1C;
+    func_15147D64(temp, 0xA);
+    func_151494E0(temp, 0xA);
+    func_1519F3B8(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AA264.s")
 
