@@ -11,7 +11,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_15094EA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_15094F40.s")
+extern Gfx D_800873D0[];
+extern s32 D_800D2CA0;
+
+Gfx *func_15094F40(Gfx *arg0) {
+    gSPDisplayList(arg0++, D_800873D0);
+    D_800D2CA0 = 0;
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_15094F70.s")
 

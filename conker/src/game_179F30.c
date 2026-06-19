@@ -73,7 +73,9 @@ void func_1514DDAC(void) {
     func_1514DCAC();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DDCC.s")
+void func_1514DDCC(void) {
+    func_1514DCAC();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DDEC.s")
 

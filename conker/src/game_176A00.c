@@ -43,7 +43,22 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514B844.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514B87C.s")
+extern f32 D_800BE9A4;
+
+struct Foo1514B87C {
+    char pad2C[0x2C];
+    f32 unk2C;
+    f32 unk30;
+    char pad34[0x18];
+    f32 unk4C;
+};
+
+s32 func_1514B87C(struct Foo1514B87C *arg0) {
+    f32 temp = arg0->unk4C * D_800BE9A4;
+    arg0->unk2C = arg0->unk2C + temp;
+    arg0->unk30 = arg0->unk30 + temp;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514B8B0.s")
 

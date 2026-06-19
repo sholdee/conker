@@ -15,7 +15,18 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507EEF4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507EFA0.s")
+void func_1507EFA0(s32 c, u8 *arg1) {
+    s32 i = 4;
+    u8 *p = arg1 + 4;
+    do {
+        if (*p == c) {
+            *p = 0;
+            return;
+        }
+        i--;
+        p--;
+    } while (i >= 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507EFD0.s")
 

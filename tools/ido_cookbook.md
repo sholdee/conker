@@ -304,6 +304,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Store each call's result in its OWN dedicated f32 local (not a reused temp) to
   pin the later operand order (`argN*result` -> f2,f0) and the load order of those
   results into the following expression.
+- Force REUSE of a product across two consumers (don't recompute): when a
+  field*global product feeds two operations (e.g. two adds), bind it to a shared
+  `f32 prod` local and use `prod` in both. Writing the two consumers as separate
+  inline expressions makes IDO RELOAD the global and RECOMPUTE the multiply for each
+  use; the named temp computes the global load + `mul.s` once and reuses it.
 - Casting changes BOTH load width and evaluation order: `*(u8*)(p+0xC)` forces
   `lbu` (vs `lh` for an `s16` struct field) and can force the other operand to be
   evaluated first. Use a raw cast to control which side loads first.
@@ -1114,6 +1119,17 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   into `li tN,0; sw tN,off` pairs (no helper call, just split stores), and the
   split + reg renames are the whole diff. Tell-tale that the project punted: a
   byte-identical sibling left as a raw `asm` segment in the yaml. Bail (stub).
+- `ld`/`sd` only for 64-bit ARITHMETIC, never a memory COPY: IDO 5.3 -mips2 -O2
+  emits a GPR `ld` only when the loaded 64-bit value feeds a 64-bit arithmetic op
+  (e.g. `ld; dsll`). For a store-only `long long`/`s64`/8-aligned copy (value loaded
+  then stored untouched), it ALWAYS word-splits into `lw/lw + sw/sw` pairs — confirmed
+  across `long long*`, `s64*`, 8-aligned struct members, and global-to-global. A
+  target whose copy loop uses bare `ld aN; sd aN` (no intervening op) is therefore
+  unmatchable from any plain-copy C; bail. Secondary: the loop COMPARISON form steers
+  whether IDO inlines memmove — `src != end` triggers an inlined memmove (4-way unroll
+  + `andi 0x1f` alignment guard, large score), while `src < end` yields a clean
+  single-body loop but emits `sltu at; bnez at` instead of a direct `bne a1,a3`. Use
+  `src < end` to avoid the memmove inline when you need the tight loop.
 - Empty-body sign-test guard that survives only with a side effect: when the target
   loads a field and tests its sign to an EMPTY inner if (`lw v0,off(aN); bltz v0,end;
   nop` with no body, v0 unused afterward, function effectively void), NO truly-empty C
