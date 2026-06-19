@@ -93,7 +93,40 @@ void func_1513477C(struct102 *arg0) {
 void func_151348F0(f32 arg0, f32 arg1, s32 arg2, s32 arg3) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15134908.s")
+extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
+
+struct Struct15134908 {
+    u8 pad0[0x10];
+    f32 *unk10;
+    f32 *unk14;
+    f32 *unk18;
+    f32 unk1C;
+    u8 pad20[0xC];
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+};
+
+void *func_15134908(void *arg0, s32 arg1, u8 arg2, s32 arg3) {
+    struct Struct15134908 *temp_v0;
+    struct Struct15134908 *sp24;
+
+    temp_v0 = (struct Struct15134908 *)func_15167A68(0x2A, arg3, arg1 + 0x40, 1, arg2, 1);
+    if (temp_v0 == 0) {
+        return NULL;
+    }
+    *(u8 *)((s32)arg0 + 0x16) |= 2;
+    sp24 = temp_v0;
+    memcpy((s32)temp_v0 + 0x10, arg0, 0x1C);
+    sp24->unk2C = *sp24->unk10;
+    sp24->unk30 = *sp24->unk14;
+    sp24->unk34 = *sp24->unk18;
+    sp24->unk38 = (f32)(1.0f / (sp24->unk1C + sp24->unk1C));
+    sp24->unk3C = 0.0f;
+    return sp24;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_151349D0.s")
 
@@ -267,7 +300,7 @@ s32 func_151368A8(struct102 *arg0) {
 
 extern f32 D_800A461C;
 extern f32 D_800A4620;
-extern void func_15134908(void *, s32, u8, s32);
+extern void *func_15134908(void *, s32, u8, s32);
 
 typedef struct {
     /* 0x00 */ s32 unk00;

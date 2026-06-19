@@ -78,6 +78,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   the chained second test becomes the likely branch with the loop-init in its delay
   slot. (Converse of the separate-ifs rule: pick chained vs separate to match the
   bne/bnel + delay-slot shape.)
+- Merge two `return 0;` tails: a trailing `if (a < K || b < K) return 0; return 1;`
+  (short-circuit `||` of two comparisons) makes the FIRST comparison's `bc1t`
+  branch straight to the SHARED `jr ra; move v0,zero` epilogue. Two SEPARATE
+  `if (a<K) return 0; if (b<K) return 0;` instead emit an inline epilogue for the
+  first return-0 (extra instructions) instead of branching to the shared tail. Use
+  the `||` form when the asm routes both false paths to one epilogue. (The `>=`/`&&`
+  inverse flips the float compare to `c.le.s` — match the asm's `c.lt.s`/`c.le.s`.)
 - A two-constant ternary's operand order controls which `li` is emitted FIRST:
   `(cond)?A:B` lays out `li B` then `li A` (matching `slti/bnez`-fallthrough);
   the inverted condition swaps the two `li`s. Pick the form matching the asm order.
@@ -309,6 +316,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   IDO won't DCE) land in a LATER load's delay slot, make it the LAST statement of its
   block (after the real field writes); an earlier placement schedules it into an
   earlier slot.
+- A zero/constant store materialized LAZILY: when the asm defers an `mtc1 zero`
+  (or constant build) until just before its store, write that store LAST in source
+  even if its memory offset is lower than a neighbor's (e.g. store 0x3C after 0x38).
+  Placing the zero/constant store earlier materializes the value early and perturbs
+  the surrounding f-register allocation; emitting it last lets IDO build it lazily
+  and lands the other constants in the target's registers.
 - Reverse-engineer the TYPES/SIZES of stack-arg locals (and thus the frame size and
   each local's offset) from the CALLEE's asm store widths: a `sh` at the arg pointer
   means `s16[]`, `swc1` means `f32[]`, `sb`/`sw` give `u8`/`s32`. Sizing a local array
@@ -434,6 +447,15 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   a separate `arg0++` statement) makes IDO fold all stores into one base + offset
   (`sw t,0; sw,4; ...; addiu`), far worse. Coupled with a snapshot-count vs frame-size
   tradeoff (more snapshot locals fix a v0/v1 reg but grow the frame). Unsteerable; bail.
+- End-to-end live value with no early C need (Horner `+D` / shared subexpression):
+  when the target keeps an arg/array element live in ONE FPU reg across the whole
+  function — used in an INLINED early subexpression AND as the final trailing add
+  operand — IDO will only load it early if the C creates an early need. If both the
+  early producer is inlined-late and the final use is the last op, IDO loads it late
+  and instead hoists an unrelated later load into the first load's delay slot,
+  cascading into pervasive FPU renames + a swapped load order. You cannot force the
+  early load without a named local, which adds a -g3 home and GROWS the frame.
+  Unsteerable from C; bail, decomp-permuter candidate.
 - Native 64-bit ops in the target (`ld`/`sd`/`dsll32`/`dsrl`/`dsra32` on a u64)
   are UNMATCHABLE under the project's -mips2/-o32 build: IDO lowers `long long`
   shifts to `__ll_lshift`/`__ull_rshift` helper CALLS, never native d-shifts.

@@ -1754,7 +1754,20 @@ void func_1507490C(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_15074980.s")
+void func_15074980(void) {
+    s32 i;
+    struct126 *temp;
+    f32 dist = (f32)(D_800D1580 * 8);
+
+    for (i = 0; i < D_8008FD8C; i++) {
+        if (func_1505A72C(D_800D154C, &D_800CC2D0[i]) < dist) {
+            temp = D_800CC2D0[i].unk31C;
+            if (temp != 0) {
+                temp->chasing = 0x14;
+            }
+        }
+    }
+}
 
 void func_15074A44(void) {
     if (D_800D154C->unk31C != 0) {
