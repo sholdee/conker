@@ -44,7 +44,23 @@ void func_151A4E9C(void *arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A4ECC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A4F7C.s")
+void func_1516972C(struct102 *arg0);
+
+struct struct151A4F7C {
+    s32 unk0;
+    u8 unk4;
+};
+
+void func_151A4F7C(struct102 *arg0, struct102 *arg1, u8 arg2)
+{
+    struct struct151A4F7C *p = (struct struct151A4F7C *)((u8 *)arg0 + 0x28);
+    struct struct151A4F7C *q = (struct struct151A4F7C *)arg1;
+    if (!arg2) {
+        if (q->unk0 == p->unk0 || q->unk4 == p->unk4) {
+            func_1516972C(arg0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A4FD0.s")
 

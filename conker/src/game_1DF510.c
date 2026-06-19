@@ -19,7 +19,15 @@ void func_151B220C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B22C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B22F4.s")
+s32 func_151B22F4(s32 *arg0) {
+    s32 temp = arg0[0x28 / 4];
+    if ((((((s32)temp - (s32)D_800CC2D0) / 0x32C) + 1) == ((struct127 *)arg0[0x30 / 4])->unk65)) {
+        if (((struct127 *)arg0[0x30 / 4])->unk5C == 1) {
+            return 1;
+        }
+    }
+    return 2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B2348.s")
 

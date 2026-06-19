@@ -149,7 +149,19 @@ void func_151903D0(void *arg0) {
     func_15163F50(arg0, (char *)arg0 + 0x18);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15190400.s")
+void func_15190400(struct102 *arg0, void *arg1, u8 arg2) {
+    s32 a, b;
+    u8 c, d;
+    if (arg2 == 0) {
+        a = *(s32 *)((u8 *)arg0 + 0x18);
+        b = *(s32 *)arg1;
+        c = *(u8 *)((u8 *)arg0 + 0x1C);
+        d = *(u8 *)((u8 *)arg1 + 0x4);
+        if (a == b || c == d) {
+            func_1516972C(arg0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15190454.s")
 

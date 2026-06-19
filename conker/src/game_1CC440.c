@@ -2,6 +2,8 @@
 #include "functions.h"
 #include "variables.h"
 
+void func_15143794(s32, s32, f32, f32 *);
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_1519EF90.s")
 
@@ -112,7 +114,9 @@ void func_151A2B84(f32 *in, s32 a1, s32 a2, s32 a3, f32 t, f32 *out) {
     out[2] = in[2] * s;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A2BD0.s")
+void func_151A2BD0(f32 *in, s32 a1, s32 a2, f32 a3, f32 t, f32 *out) {
+    func_15143794((s16) a1, (s16) a2, (1.0f - t) * a3, out);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A2C24.s")
 

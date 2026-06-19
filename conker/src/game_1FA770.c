@@ -101,7 +101,14 @@ s32 func_151CEC10(struct Vec3w151CEC10 *arg0, f32 *arg1, void *arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CF380.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CF844.s")
+struct s151CF844 { s32 pad[0x26]; s32 *unk98p; };
+
+void func_151CF844(struct s151CF844 *arg0, s32 arg1, u8 arg2) {
+    s32 *temp = arg0->unk98p;
+    if (temp[0] != 0) {
+        func_15169850(arg1, arg2, (s32)temp, (s32)temp + 4, (s32)arg0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CF898.s")
 
