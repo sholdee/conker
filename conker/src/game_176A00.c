@@ -59,7 +59,11 @@ void func_1514BE00(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514BE20.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514BF50.s")
+void func_1514BF50(f32 *arg0) {
+    arg0[0x10] = arg0[0xD];
+    arg0[0x11] = arg0[0xE] + 100.0f;
+    arg0[0x12] = arg0[0xF];
+}
 
 void func_1514BF7C(u8 *arg0) {
     func_1514BC08(arg0, arg0 + 0x110);

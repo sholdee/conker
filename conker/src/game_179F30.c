@@ -53,7 +53,11 @@ void func_1514DB98(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DCF4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DD2C.s")
+void func_1514DCAC(void);
+
+void func_1514DD2C(void) {
+    func_1514DCAC();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DD4C.s")
 

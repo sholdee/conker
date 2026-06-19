@@ -53,7 +53,14 @@ void func_151AA1F0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AAB78.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AABA0.s")
+s32 func_151AABA0(u8 *arg0) {
+    s32 ret = 1;
+    if (arg0[0x84] == 0) {
+        ret = 0;
+    }
+    arg0[0x84] = 0;
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AABC4.s")
 
