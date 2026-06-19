@@ -332,6 +332,30 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   stack buffer so its last element OVERLAPS the arg-home region (e.g. `s32 buf[17]`
   where buf[16] would give the wrong frame size) to land the right frame/offset.
 
+## Diagnosing a FALSE non-zero score
+- Jump-table rodata-ref FALSE score: when a switch matches byte-for-byte but the
+  scorer still reports a non-zero score, check whether the diff is ONLY the
+  compiler-jtbl rodata references — IDO emits the jump table as an anonymous LOCAL
+  `.rodata` label, while the target asm references a NAMED global jtbl symbol that
+  lives in a SEPARATELY-split rodata file. The differ renders the unresolved
+  `.rodata -> .text` jump-table refs (`.rodata+0xN` markers, `%hi/%lo(.rodata)` vs
+  `%hi/%lo(jtbl_xxx)`) as diffs, and the score then CASCADES through the following
+  GLOBAL_ASM functions in the same object. Re-run the differ with `-R` /
+  `--no-show-rodata-refs` (suppresses exactly these compiler-jtbl rodata refs): a
+  clean 0 confirms the code is a genuine byte-perfect match. The residual score is
+  a rodata-split representation artifact, not a real instruction diff — fixing it
+  to 0 on the default invocation would require editing the rodata split YAML/data,
+  not the C. Leave the matching C in place and record it as matched.
+
+## Conditional load vs copy-propagation
+- Default-value-in-delay-slot + conditional load: to reproduce a `move aN,v0`
+  default sitting in a `bnez` delay slot FOLLOWED by a conditional load on the
+  taken path (`lw v1,0(t0)`) with the untaken path keeping the default (`move
+  v1,aN`), write it as a TERNARY on the value, e.g.
+  `arg = (cond) ? ((s32*)v)[idx] : v;`. A plain `if/else` lets IDO copy-propagate
+  `v` straight into the destination register and DROP the `move`, losing the
+  delay-slot default. Use the ternary when the asm keeps the move + conditional load.
+
 ## When to BAIL (don't burn iterations)
 - Callee-saved promotion of a cross-call pure pass-through: when the target carries
   a value across a call in a callee-saved reg (`or sN,v0,zero` in the call's delay
