@@ -7,7 +7,16 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_61490/func_150341BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_61490/func_15034340.s")
+s16 *func_15034340(s16 *arg0, s32 arg1) {
+    struct127 *obj = &D_800CC2D0[arg1];
+
+    if (obj->unk1D1 != 0) {
+        *arg0 = 6;
+        arg0 += 2;
+        arg0[-1] = obj->unk1D1 * 200;
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_61490/func_150343B0.s")
 

@@ -14,7 +14,17 @@ void func_15080718(s32 arg0, s32 *arg1, s32 *arg2) {
     *arg1 = arg0 >> 3;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AD9B0/func_15080738.s")
+extern u8 D_800BE580[];
+
+s32 func_15080738(s32 arg0) {
+    s32 idx;
+    s32 mask;
+    func_15080718(arg0, &idx, &mask);
+    if (D_800BE580[idx] & mask) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AD9B0/func_15080784.s")
 

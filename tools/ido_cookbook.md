@@ -676,3 +676,16 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `%lo(D_base+0x4)`. Match it by declaring a SEPARATE `extern` for the +4 symbol
   and indexing that array; writing `base[i].field_at_4` emits `%lo(D_base+0x4)`
   and scores worse.
+- Scheduler-priority hoist of a chain-feeding load vs a constant return: when the
+  target loads a constant FIRST (`lui/lwc1`), THEN a struct-pointer (`lw vN,off(a0)`),
+  fills that load's delay slot with `li v0,1` (the return value), and only then does
+  the long float chain — but IDO instead HOISTS the `lw vN` to the very top (because
+  vN feeds a long multi-load float chain, giving it higher list-scheduling priority)
+  and pushes `li v0,1` to the END — no source transform steers it. Tried: split
+  decl/assign of the pointer temp, scale before/after the load, inline the deref,
+  explicit `s32 ret=1; return ret;`, commuted mul operands, reordered stores. All
+  stay at the same residual or regress. The constant-return-in-the-delay-slot vs
+  chain-priority hoist is an IDO -O2 list-scheduler tie-break source structure cannot
+  control. Bail (keep the functionally-correct best candidate); decomp-permuter /
+  scheduler-pragma candidate. (Store order of the field copies still MUST match the
+  target exactly — reordering them regresses independently of this tie.)

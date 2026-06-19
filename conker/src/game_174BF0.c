@@ -2,6 +2,7 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_800A5760;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_15147740.s")
 
@@ -37,4 +38,6 @@ void func_15147928(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_15147D1C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_15147D64.s")
+void func_15147D64(s32 arg0, u8 arg1) {
+    func_15169260(&D_800A5760, 2, arg0, arg1);
+}
