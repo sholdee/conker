@@ -101,6 +101,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Param homing: a param NEVER homed if only forwarded/used as-is; it IS homed
   (`sw aN,off`) if reassigned. Forward ALL args through to callees to suppress a
   spurious dead-param home; verify against objdump of matched sibling funcs.
+- Selective homing in a forwarding/dispatch call: to home ONLY the later param
+  (e.g. `sw a1` but NOT `sw a0`), forward the EARLIER arg as the call's argument
+  (it passes through a0 with no move and stays un-homed) and leave the later param
+  named-but-unused (IDO -g3 homes it at its own arg slot). Passing the later arg to
+  the call adds a wrong `move a0,aN`+home; passing nothing/`void` homes BOTH;
+  varargs homes ALL arg regs with a larger frame.
 - To reproduce a param HOMED to the stack and reloaded on every use, take its
   address into a local (`s32 **pp = &arg0;`) and read through `**pp` each time.
 - To force IDO to emit fresh registers + `move`s (e.g. an XOR-swap), use two
@@ -154,6 +160,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   where buf[16] would give the wrong frame size) to land the right frame/offset.
 
 ## When to BAIL (don't burn iterations)
+- Callee-saved promotion of a cross-call pure pass-through: when the target carries
+  a value across a call in a callee-saved reg (`or sN,v0,zero` in the call's delay
+  slot, `or v0,sN,zero` at return, with sN saved/restored + a larger frame), IDO
+  -O2 -g3 from C instead SPILLS it to the stack (`sw v0,off`; `lw v0,off`; no sN) —
+  it won't burn a callee-saved register for a value used only at the return. Every C
+  form (named local, `register`, comma-expr `return (r=..., f(), r)`, `if(1)`-wrap)
+  produces the same stack spill; the frame-size + offset cascade is the whole diff.
+  Unsteerable from C; bail, decomp-permuter candidate.
 - If after ~4-6 iterations the ONLY remaining diff is a single register name
   ('r' markers, everything else identical), or a single instruction's delay-slot
   placement, it is almost certainly an irreducible JUSTREG / instruction-schedule
