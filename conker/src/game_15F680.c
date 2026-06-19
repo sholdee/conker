@@ -86,7 +86,17 @@ s32 func_15133A50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133D20.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133DE8.s")
+void func_15133DE8(s32 arg0, s32 arg1, u8 arg2) {
+    s32 temp;
+
+    if (arg2 == 0) {
+        temp = *(s32 *)(arg1 + 0x0);
+        if ((temp == *(s32 *)(arg0 + 0x7C)) ||
+            (*(u8 *)(arg1 + 0x4) == *(u8 *)(arg0 + 0x80))) {
+            func_1516972C((struct102 *)arg0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133E3C.s")
 

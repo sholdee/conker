@@ -23,7 +23,29 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514A380.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514A498.s")
+struct Foo1514A498 {
+    char pad1C[0x1C];
+    s16 unk1C;
+    char pad1E[0xE];
+    f32 unk2C;
+    f32 unk30;
+    char pad34[0x28];
+    u8 unk5C;
+    char pad5D[0xE7];
+    f32 unk144;
+    char pad148[0xE];
+    s16 unk156;
+    s16 unk158;
+};
+
+s32 func_1514A498(struct Foo1514A498 *arg0) {
+    arg0->unk30 = arg0->unk30 - arg0->unk30 * arg0->unk144;
+    arg0->unk2C = arg0->unk2C - arg0->unk2C * arg0->unk144;
+    if (arg0->unk1C < arg0->unk156) {
+        arg0->unk5C = arg0->unk1C * arg0->unk158;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514A4EC.s")
 

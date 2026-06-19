@@ -43,7 +43,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_15116924.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_15116930.s")
+void func_15116930(u8 *arg0, u8 *arg1) {
+    s32 temp;
+    if (arg0[0x4F] & 0x4) {
+        if (!(arg0[0x73] & 0x3) && !(arg0[0x73] & 0x4)) {
+            if (((u8 **)arg1)[0x31C / 4][0x57] == 1) {
+                arg0[0x73] &= 0xFFFC;
+                arg0[0x73] |= 0x2;
+            }
+        }
+    }
+}
 
 extern void func_151169B4(u8 *arg0);
 
