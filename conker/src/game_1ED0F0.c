@@ -90,4 +90,27 @@ s32 func_151C1940(s32 arg0, s32 arg1, Struct151C1940 *arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C1D5C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C1FB8.s")
+struct sp18_151C1FB8 {
+    /* 0x0 */ u8 unk0;
+    /* 0x1 */ u8 unk1;
+    /* 0x2 */ s16 unk2;
+    /* 0x4 */ u8 unk4;
+    /* 0x5 */ u8 unk5;
+    /* 0x6 */ s8 unk6;
+    /* 0x7 */ u8 unk7;
+};
+
+extern void func_151D8868(void *, s32, s32, s32);
+
+void func_151C1FB8(struct127 *arg0) {
+    struct sp18_151C1FB8 sp18;
+
+    if (arg0->camera != 0) {
+        sp18.unk0 = 1;
+        sp18.unk2 = (func_150ADA20() & 7) + 0xD;
+        sp18.unk5 = 1 << arg0->camera->unk23D;
+        sp18.unk4 = (func_150ADA20() % 3U) + 6;
+        sp18.unk6 = -1;
+        func_151D8868(&sp18, 0, 0xFF, 1);
+    }
+}

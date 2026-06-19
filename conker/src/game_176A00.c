@@ -79,7 +79,17 @@ s32 func_1514A498(struct Foo1514A498 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514AD9C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514AF74.s")
+extern f32 D_800BE9A4;
+s32 func_1514AF74(f32 *arg0) {
+    arg0[11] -= arg0[11] * arg0[84];
+    arg0[12] -= arg0[12] * arg0[84];
+    arg0[14] += (arg0[20] * D_800BE9A4) + (((0.5f * arg0[19]) * D_800BE9A4) * D_800BE9A4);
+    arg0[20] += arg0[19] * D_800BE9A4;
+    if ((arg0[11] < 10.0f) || (arg0[12] < 10.0f)) {
+        return 0;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514B034.s")
 

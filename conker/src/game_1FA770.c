@@ -150,7 +150,41 @@ void func_151D0128(ConkerStruct151D0128 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D014C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D08F0.s")
+typedef struct {
+    s32 unk0;
+    u8  unk4;
+} SubA151D08F0;
+
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        u8  b4;
+    } u4;
+    u8  unk8;
+    u8  unk9;
+} ArgB151D08F0;
+
+void func_151D08F0(struct260 *arg0, s32 arg1, u8 arg2) {
+    SubA151D08F0 *temp_v0 = (SubA151D08F0 *)((u8 *)arg0 + 0x28);
+    ArgB151D08F0 *b = (ArgB151D08F0 *)arg1;
+    s32 b0;
+
+    if (arg2 == 0 || arg2 == 0x18) {
+        b0 = b->unk0;
+        if ((b0 == temp_v0->unk0) || (b->u4.b4 == temp_v0->unk4)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    } else if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->unk0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else if (temp_v0->unk0 == b->u4.w4) {
+            temp_v0->unk0 = b->unk0;
+            temp_v0->unk4 = b->unk8;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D09A8.s")
 
