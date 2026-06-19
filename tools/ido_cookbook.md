@@ -445,6 +445,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   BEFORE any inner `if`: gating it behind the branch makes IDO sink the load past the
   base `addiu` and re-derive it as the small offset (`0x3c(temp)`) instead of folding
   to the combined offset off base. Hoist the folded read above the conditional.
+- A stack-local AGGREGATE's slot alignment follows its FIRST member's type: a small
+  struct local whose first member is a `void*`/pointer lands on an 8-aligned slot
+  (e.g. sp+0x28 in a 0x38 frame), whereas making that first member an `s32` drops it
+  to the next 4-aligned slot (e.g. 0x2C). When the target places a small aggregate on
+  an 8-aligned offset, type its leading member as a pointer (not s32); match the asm's
+  slot to pick the member width.
 - Force a sub-word local onto a 4-ALIGNED slot by OVERSIZING it to an array: a bare
   `s16 x` may land at an odd-of-4 offset (e.g. 0x1E), but the target stores it at a
   4-aligned slot (e.g. 0x1C). Declaring `s16 x[2]` (write/read `x[0]`) bumps the
@@ -1070,6 +1076,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   mask/move LATE (or reloads via `lbu`/`lw`) and homes a0/a1 early, the homing order
   is set by IDO's clobber-prep ordering and is unsteerable from C (tried u8/s8/s32
   arg types, `(u8)`cast vs `&0xFF` vs reassign vs temp, eager arg locals). Bail.
+- Eager narrow of a LIVE arg register before a home-clobber: when the target masks
+  an incoming arg register WHILE IT IS STILL LIVE, ahead of the `move aN,aM` that
+  clobbers it (`sw a2,off(sp); andi a3,a2,0xff; move a2,a1`, with the biased copy
+  `addiu a1,a0,K` landing in the jal delay slot), IDO from EVERY C form instead
+  HOMES the arg (`sw aN,off`) and then RELOADS the homed value for the mask: either
+  `lbu a3,off+3(sp)` in the delay slot (u8 param or call-site `(u8)` cast) or
+  `lw a3,off; andi tN,a3,0xff; move a3,tN` (s32 param + inline `& 0xFF`). The param
+  is -g3 word-homed and IDO will not narrow the live register ahead of the clobbering
+  `move`; it always defers and reloads. Tried: s32+inline mask, u8 param, call-site
+  `(u8)` cast, temp-local mask, narrow 4th-param prototype, array-index arg, explicit
+  arg locals — all share the same one-instruction reload-vs-live-register diff. A
+  thin 1-instruction miss; bail (stub), decomp-permuter candidate.
 - Return-phi shape when an intervening call SPILLS the result: the `if(p){...}
   return p;` phi idiom assumes p stays in v0 with no spill. If a call inside the
   body (e.g. `memcpy`) spills the result to the stack, IDO reloads OPTIMALLY into v0

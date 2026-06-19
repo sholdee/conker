@@ -29,7 +29,21 @@ s32 func_150E32D0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, f32 arg5) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1104D0/func_150E35DC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1104D0/func_150E36BC.s")
+void func_150E36BC(s32 arg0, s32 *arg1, s32 *arg2, s32 *arg3) {
+    u8 *temp;
+
+    arg0 -= 1;
+    if ((arg0 >= 0) && (arg0 < 8)) {
+        temp = (u8 *)D_800D99D0[arg0];
+        if (temp != 0) {
+            if (temp[0] == 0x27) {
+                *arg1 = (s32)*(f32 *)(temp + 0x10);
+                *arg2 = (s32)*(f32 *)(temp + 0x14);
+                *arg3 = (s32)*(f32 *)(temp + 0x18);
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1104D0/func_150E3738.s")
 

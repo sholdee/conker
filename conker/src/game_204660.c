@@ -19,7 +19,16 @@ void func_151D7404(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D7450.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D747C.s")
+void func_151D747C(s32 arg0) {
+    struct {
+        s32 unk0;
+        u8 unk4;
+    } sp18;
+
+    sp18.unk0 = arg0;
+    sp18.unk4 = *(u8 *)(arg0 + 0x3B);
+    func_151494E0((s32)&sp18, 0x3D);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D74B0.s")
 

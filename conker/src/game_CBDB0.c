@@ -69,7 +69,19 @@ void func_1509F6B0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F6E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F77C.s")
+void func_1509F77C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    struct127 *temp;
+    s32 x;
+    s32 y;
+    s32 z;
+
+    temp = func_1505EEF4(arg1);
+    x = temp->x_position;
+    y = temp->y_position;
+    z = temp->z_position;
+    func_1000F91C((u16)arg0, 0x7FFF, (s16)arg2, 0, 0,
+                  x, y, z, arg3, arg4);
+}
 
 s32 func_1509F800(s32 arg0, s32 arg1, s32 arg2) {
     arg0 = arg0;

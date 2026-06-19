@@ -11,7 +11,29 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E5C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E6B8.s")
+s32 func_150849A0(void *);
+
+s32 func_1507E6B8(u8 *arg0) {
+    s32 v;
+    s32 b;
+
+    if (arg0[0x1CA] == 0) {
+        return 0;
+    }
+    if (arg0[0x70] == arg0[0x6F]) {
+        return 1;
+    }
+    v = func_150849A0(arg0);
+    b = arg0[0x6F];
+    if (v == 0) {
+        if (b == 0x15) {
+            return 1;
+        }
+    } else if (v == 0x52) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E73C.s")
 
