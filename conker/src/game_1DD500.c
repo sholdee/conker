@@ -35,7 +35,40 @@ s32 func_151B1478(struct260 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DD500/func_151B1918.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DD500/func_151B19A4.s")
+typedef struct {
+    s32 unk0;
+    u8  unk4;
+} SubA151B19A4;
+
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        u8  b4;
+    } u4;
+    u8  unk8;
+    u8  unk9;
+} ArgB151B19A4;
+
+void func_151B19A4(struct260 *arg0, s32 arg1, u8 arg2) {
+    SubA151B19A4 *temp_v0 = (SubA151B19A4 *)((u8 *)arg0 + 0x28);
+    ArgB151B19A4 *b = (ArgB151B19A4 *)arg1;
+    s32 v1 = temp_v0->unk0;
+
+    if (arg2 == 0 || arg2 == 0x13) {
+        if ((v1 == b->unk0) || (b->u4.b4 == temp_v0->unk4)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    } else if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->unk0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else if (temp_v0->unk0 == b->u4.w4) {
+            temp_v0->unk0 = b->unk0;
+            temp_v0->unk4 = b->unk8;
+        }
+    }
+}
 
 void func_151B1A58(struct260 *arg0) {
     func_151B1918(arg0);

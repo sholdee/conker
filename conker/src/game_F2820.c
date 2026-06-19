@@ -77,4 +77,36 @@ void func_150C5CC4(struct102 *arg0, s32 arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F2820/func_150C5D0C.s")
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+} SubA150C5D0C;
+
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        u8 b4;
+    } u4;
+    u8 unk8;
+    u8 unk9;
+} ArgB150C5D0C;
+
+void func_150C5D0C(struct102 *arg0, s32 arg1, u8 arg2) {
+    SubA150C5D0C *temp_v0 = (SubA150C5D0C *)((u8 *)arg0 + 0xC8);
+    ArgB150C5D0C *b = (ArgB150C5D0C *)arg1;
+
+    if (arg2 == 0) {
+        if ((b->unk0 == temp_v0->unk0) || (b->u4.b4 == temp_v0->unk4)) {
+            func_1516972C(arg0);
+        }
+    } else if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->unk0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else if (temp_v0->unk0 == b->u4.w4) {
+            temp_v0->unk0 = b->unk0;
+            temp_v0->unk4 = b->unk8;
+        }
+    }
+}

@@ -37,7 +37,40 @@ s32 func_151BC580(s32 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BC5A4.s")
+typedef struct {
+    s32 unk0;
+    u8  unk4;
+} SubA_151BC5A4;
+
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        u8  b4;
+    } u4;
+    u8  unk8;
+    u8  unk9;
+} ArgB_151BC5A4;
+
+void func_151BC5A4(struct260 *arg0, s32 arg1, u8 arg2) {
+    SubA_151BC5A4 *temp_v0 = (SubA_151BC5A4 *)((u8 *)arg0 + 0x40);
+    ArgB_151BC5A4 *b = (ArgB_151BC5A4 *)arg1;
+    s32 b0 = temp_v0->unk0;
+
+    if (arg2 == 0) {
+        if ((b0 == b->unk0) || (temp_v0->unk4 == b->u4.b4)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    } else if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->unk0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else if (temp_v0->unk0 == b->u4.w4) {
+            temp_v0->unk0 = b->unk0;
+            temp_v0->unk4 = b->unk8;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BC64C.s")
 

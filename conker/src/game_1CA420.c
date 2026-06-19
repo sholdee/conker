@@ -68,7 +68,39 @@ void func_1519D000(struct s_1519CFA0 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E464.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E570.s")
+typedef struct {
+    s32 unk0;
+    u8  unk4;
+} SubA_1519E570;
+
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        u8  b4;
+    } u4;
+    u8  unk8;
+    u8  unk9;
+} ArgB_1519E570;
+
+void func_1519E570(struct260 *arg0, s32 arg1, u8 arg2) {
+    SubA_1519E570 *temp_v0 = (SubA_1519E570 *)((u8 *)arg0 + 0x28);
+    ArgB_1519E570 *b = (ArgB_1519E570 *)arg1;
+
+    if (arg2 == 0) {
+        if ((b->unk0 == temp_v0->unk0) || (b->u4.b4 == temp_v0->unk4)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    } else if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->unk0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else if (temp_v0->unk0 == b->u4.w4) {
+            temp_v0->unk0 = b->unk0;
+            temp_v0->unk4 = b->unk8;
+        }
+    }
+}
 
 void func_1519E61C(struct102 *arg0, s32 arg1, u8 arg2) {
     if (arg2 == 0 || arg2 == 9) {
