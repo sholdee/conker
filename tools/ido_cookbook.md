@@ -473,6 +473,34 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   to 0 on the default invocation would require editing the rodata split YAML/data,
   not the C. Leave the matching C in place and record it as matched.
 
+## Reusing a condition's loaded register as a call arg
+- When the `if` tests a GLOBAL directly (`if (D_xxxx) { ... }`, IDO loads it into
+  v0 via a `beqz`/`beqzl` likely-branch) and the taken block then passes that same
+  global to a call, RE-READ the global into a local temp INSIDE the block
+  (`temp = D_xxxx;`) and pass `temp`. IDO reuses the v0 from the condition load and
+  emits `move a0,v0` for the call. Loading the global into a local BEFORE the if, or
+  storing the condition value in a temp that the `if` tests, instead makes IDO load
+  the value directly into a0 (the diff becomes a0-vs-v0 + `nop` vs `move a0,v0`).
+  Test the global itself in the `if`, then re-read it inside the block.
+
+## Display-list / macro-built constant words
+- Building two display-list words via the F3DEX macro (e.g.
+  `gImmp21(dl, G_MOVEWORD, seg, off, &addr)` producing w0=0xDBxxxxxx, w1=addr)
+  reproduces IDO's interleaved `lui/lui/addiu/ori` schedule — the macro emits the
+  constant word's `ori` AFTER the address's `addiu`. The raw form
+  (`dl->words.w0 = 0xDBxxxxxx; dl->words.w1 = addr;`) instead emits the `ori` BEFORE
+  the `addiu`, a large scheduling diff. Use the macro form when matching gbi-built
+  DL words; don't hand-write the raw word stores.
+- DL-store pointer split: to write a record through one pointer (`move v0,a0`) while
+  separately advancing the list pointer (`a0 += 8`), use a DISTINCT local for the
+  store target and increment the list pointer BEFORE the macro store. A single
+  pointer (or `dl2 = arg0++`) coalesces the two and drops the `move v0,a0`. BUT note
+  the bail tension: increment-BEFORE-store reproduces the `move v0,a0` yet makes
+  IDO's list scheduler HOIST the `addiu aN,aN,8` earlier, while store-first defers
+  the addiu correctly but coalesces away the move. These two requirements are
+  mutually exclusive across every C form — if that one-instruction schedule placement
+  is the only residual, bail, decomp-permuter candidate.
+
 ## Conditional load vs copy-propagation
 - Default-value-in-delay-slot + conditional load: to reproduce a `move aN,v0`
   default sitting in a `bnez` delay slot FOLLOWED by a conditional load on the

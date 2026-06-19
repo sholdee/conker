@@ -3,7 +3,34 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CBE20/func_1519E970.s")
+struct Obj1519E970 {
+    char pad0[0x10];
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1C;
+    s16 unk20;
+    char pad22[0x24 - 0x22];
+    s32 unk24;
+    u8  unk28;
+};
+
+extern struct Obj1519E970 *func_15167A68(s32, s32, s32, s32, s32, s32);
+
+struct Obj1519E970 *func_1519E970(s16 a0, s32 a1, u8 a2, s32 a3, s32 a4, u8 a5, s32 a6) {
+    struct Obj1519E970 *ret = func_15167A68(0x26, a6, 0x2C, 1, a5, 1);
+    if (ret == 0) {
+        return NULL;
+    }
+    ret->unk18 = a3;
+    ret->unk1C = a4;
+    ret->unk20 = a0;
+    ret->unk28 = a2;
+    ret->unk24 = a1;
+    ret->unk10 = 1;
+    ret->unk14 = 0;
+    return ret;
+}
 
 struct Local1519EA04 {
     char pad0[0x10];

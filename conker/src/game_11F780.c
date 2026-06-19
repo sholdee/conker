@@ -19,11 +19,19 @@ void func_150F2390(void *arg0, s32 arg1, s32 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11F780/func_150F23E0.s")
-
 extern f32 sinf(f32);
 extern f32 func_15144B68(f32);
 extern f32 D_800BE9A4;
+
+s32 func_150F23E0(void *arg0) {
+    f32 *p = (f32 *)((u8 *)arg0 + 0x170);
+
+    *(f32 *)((u8 *)arg0 + 0x20) = p[4] * sinf(p[0]);
+    *(f32 *)((u8 *)arg0 + 0x28) = p[5] * sinf(p[1]);
+    p[0] = func_15144B68(p[2] * D_800BE9A4 + p[0]);
+    p[1] = func_15144B68(p[3] * D_800BE9A4 + p[1]);
+    return 1;
+}
 
 struct Arg0 {
     u8 pad[0x50];
