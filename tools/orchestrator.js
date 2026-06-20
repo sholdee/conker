@@ -93,16 +93,17 @@ START FROM CLAUDE'S BEST ATTEMPT — do not restart from scratch:
 
 THE LOOP:
 1. Replace  #pragma GLOBAL_ASM("asm/nonmatchings/${m.file}/${m.func}.s")  in src/${m.file}.c with your candidate C.
-2. Run  ~/conker/tools/iter_match.sh ${m.file} ${m.func}  → prints a diff + "SCORE: N" (0 = perfect). Read the diff (TARGET vs CURRENT; 'r' = register-only), refine, re-run. Up to ~20 iterations — you have budget.
+2. Run  ~/conker/tools/iter_match.sh ${m.file} ${m.func}  → prints a diff + "SCORE: N" (0 = perfect). Read the diff (TARGET vs CURRENT; 'r' = register-only), refine, re-run. Up to ~12 iterations, then STOP — do NOT grind.
 
 HARD RULES (a violation corrupts the shared build tree):
 - ONLY edit src/${m.file}.c. NEVER touch other src/ files or shared headers. Add any missing extern/prototype as a LOCAL decl at the TOP of the file.
 - IDO is C89: declare all locals at the top of their block.
 - NEVER run make / make -C conker / any full build. ONLY iter_match.sh (it builds just your one object; concurrency-safe).
+- Do NOT run the decomp-permuter or any long brute-force/seed search — a background daemon ALREADY permutes register-allocation/JUSTREG ties on spare CPU. Your value is the STRUCTURAL / idiom fix. If after ~12 iterations the ONLY remaining diff is register-only ('r' lines) or a pure instruction-schedule tie, that is permuter territory — harvest and bail (below), do not search.
 
-WHEN DONE:
-- SCORE: 0 → STOP, LEAVE your matching C in the file. Report "MATCHED ${m.func}".
-- Cannot reach 0 → you MUST run  git checkout conker/src/${m.file}.c  to revert ${m.func} to its exact stub line, then report your best score. Leaving non-matching C breaks the shared build. (The deterministic gate re-verifies independently, so only a true SCORE-0 de-stub will be committed.)`
+WHEN DONE (stay within the iteration budget — this phase must not stall the round):
+- SCORE: 0 → STOP, LEAVE your matching C in the file. Report "MATCHED ${m.func}" + a 1-line note on the fix.
+- Cannot reach 0 → FIRST, if your best score was <= 80, harvest the seed: write your best C to ~/conker/.nearmiss/${m.func}.json as JSON {"func","file","score","c"} (python3 -c with json.dump) so the daemon can finish it. THEN run  git checkout conker/src/${m.file}.c  to revert ${m.func} to its exact stub line, and report your best score. Leaving non-matching C breaks the shared build. (The gate re-verifies independently, so only a true SCORE-0 de-stub commits.)`
 
 const integratePrompt = (claimed) => `You are the INTEGRATION gate for the Conker decomp orchestrator. The match agents this round left matching C in these files (one function each); failures already reverted themselves to stubs. Your job: re-verify, ROM-gate, and commit ONLY what truly matches. Be strict — never commit a non-matching tree.
 
