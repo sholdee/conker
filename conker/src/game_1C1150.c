@@ -152,6 +152,20 @@ void func_15195650(s32 arg0, s32 arg1, s32 arg2) {
     func_151B09BC(arg0, arg1, 0x3E8, 0xFF, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15195698.s")
+extern void func_15145A50(struct127 *arg0);
+extern void func_1507CD64(struct127 *arg0, s32 arg1);
+
+void func_15195698(struct127 *arg0, struct127 *arg1, s32 arg2) {
+    if (arg1->health == 0) {
+        if (arg1->unk127 != 0xFF) {
+            func_15136C3C(arg1, 1, 1, 1, 1, 0, 0xFF, 1);
+            func_15145A50(arg1);
+            func_1507CD64(arg1, 6);
+        }
+    }
+    if (arg0->id == 0x47) {
+        arg0->health = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15195738.s")

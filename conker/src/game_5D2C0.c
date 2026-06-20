@@ -2,6 +2,7 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_80097B68;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_1502FE10.s")
 
@@ -114,7 +115,26 @@ s32 func_1503327C(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033328.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_150333A8.s")
+s32 func_150333A8(u8 *arg0, u8 *arg1) {
+    s32 temp;
+
+    if (D_800C35EA == 1) {
+        return 0;
+    }
+    if (arg1[0xAD] != 0) {
+        temp = *(s32 *)(arg1 + 0x31C);
+        if (temp != 0) {
+            *(u8 *)(temp + 0x11A) = 0;
+        }
+        return 1;
+    }
+    if ((*(f32 *)(arg1 + 0x118) != D_80097B68) && (*(f32 *)(arg1 + 0x18) < *(f32 *)(arg1 + 0x118) + 300.0f)) {
+        arg0[3] = 0;
+    } else {
+        arg0[3] = 0xFF;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033440.s")
 

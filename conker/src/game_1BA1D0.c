@@ -216,7 +216,24 @@ s32 func_1518F51C(void *arg0, u8 arg1, s32 arg2, s32 arg3, s8 arg4, s8 arg5, u8 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F5D0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F7C4.s")
+extern f32 func_150ADA68(void);
+extern f32 D_800BE9A4;
+extern s32 (*D_8008D67C[])(void *);
+extern void func_1518F8E0(void *);
+
+struct Obj7C4 { f32 unk0; f32 unk4; f32 unk8; char pad[0x4C]; s8 unk58; };
+
+s32 func_1518F7C4(void *arg0) {
+    struct Obj7C4 *p;
+
+    p = (struct Obj7C4 *)((char *)arg0 + 0x30);
+    p->unk0 += (p->unk4 + func_150ADA68() * p->unk8) * D_800BE9A4;
+    func_1518F8E0(arg0);
+    if (p->unk58 != -1) {
+        return D_8008D67C[p->unk58](arg0);
+    }
+    return 1;
+}
 
 extern void (*D_8008D680[])(void);
 

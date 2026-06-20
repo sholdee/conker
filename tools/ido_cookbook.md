@@ -72,6 +72,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `(s8)v` cast instead emits a sign-extend `sll/sra` pair and a real signed branch.
 - IDO constant-propagates small literals and may rematerialize them even when bound
   to a single local (a known unavoidable diff for absolute-address stores).
+- When the asm references an EXISTING global that holds the value you'd otherwise
+  write as a float literal (`%lo(D_glob)` lwc1 vs a fresh constant), declare a local
+  `extern f32 D_glob;` and reference IT instead of the literal — emitting the literal
+  mints a SPURIOUS new `.rodata` entry that scores as a tiny diff. Recover the symbol
+  from the rodata split, don't write the bare `-10000.0f`.
 
 ## Return values
 - A value still live in v0 (int) or f0 (float) at `jr ra` usually means the function
