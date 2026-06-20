@@ -298,7 +298,40 @@ void func_151BE6A0(struct210 *arg0) {
     func_1513CAA0(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE6CC.s")
+struct S4151BE6CC { s32 w[4]; };
+extern struct S4151BE6CC D_800AA7A8;
+extern f32 D_800AA8AC;
+
+struct Bar151BE6CC {
+    char pad48[0x48];
+    f32 unk48;
+};
+
+struct Obj151BE6CC {
+    char pad18[0x18];
+    u8  unk18;
+    char pad19[0x170 - 0x19];
+    s16 unk170;
+    char pad172[0x2];
+    f32 unk174;
+};
+
+s32 func_151BE6CC(struct Obj151BE6CC *arg0) {
+    s32 dummy;
+    struct S4151BE6CC sp24;
+    struct Bar151BE6CC *v1 = (struct Bar151BE6CC *)((char *)arg0 + 0x110);
+
+    sp24 = D_800AA7A8;
+
+    arg0->unk170 -= D_800BE9E4;
+    if (arg0->unk170 < 0) {
+        arg0->unk18 = sp24.w[func_150ADA20() & 3];
+        arg0->unk170 = (func_150ADA20() & 7) + 3;
+    }
+
+    v1->unk48 = v1->unk48 + (arg0->unk174 - v1->unk48) * D_800AA8AC;
+    return 1;
+}
 
 void func_151BE788(s32 arg0, s32 arg1, u8 arg2) {
     func_15169850(arg1, arg2, arg0 + 0x180, arg0 + 0x184, arg0);

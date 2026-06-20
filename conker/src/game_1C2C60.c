@@ -375,7 +375,39 @@ void func_1519C22C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C26C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C4E4.s")
+typedef struct {
+    char pad0[0x24];
+    f32 unk24;
+    s16 unk28;
+    s16 unk2A;
+} C4E4Sub;
+
+typedef struct {
+    char pad0[0x1C];
+    s16 unk1C;
+    char pad1E[0x2C - 0x1E];
+    f32 unk2C;
+    f32 unk30;
+    char pad34[0x5C - 0x34];
+    u8 unk5C;
+} C4E4Struct;
+
+s32 func_1519C4E4(C4E4Struct *arg0) {
+    s32 i;
+    C4E4Sub *p = (C4E4Sub *)((char *)arg0 + 0x110);
+
+    for (i = D_800BE9E4; i > 0; i--) {
+        arg0->unk2C = arg0->unk2C - arg0->unk2C * p->unk24;
+        arg0->unk30 = arg0->unk30 - arg0->unk30 * p->unk24;
+    }
+    if (arg0->unk1C < p->unk28) {
+        s32 a1 = arg0->unk1C * p->unk2A;
+        if (a1 < arg0->unk5C) {
+            arg0->unk5C = a1;
+        }
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C56C.s")
 

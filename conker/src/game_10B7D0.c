@@ -13,7 +13,16 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10B7D0/func_150DE7C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_10B7D0/func_150DEACC.s")
+s32 func_150DEACC(f32 *arg0) {
+    arg0[13] += arg0[68] * D_800BE9A4;
+    arg0[14] += arg0[69] * D_800BE9A4;
+    arg0[15] += arg0[70] * D_800BE9A4;
+    arg0[71] -= D_800BE9A4;
+    if (arg0[71] < 0.0f) {
+        return 0;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10B7D0/func_150DEB58.s")
 

@@ -243,7 +243,38 @@ void func_151E6BFC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E6C1C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E7DC0.s")
+struct Struct151149AC {
+    char pad0[0x80];
+    s32 unk80;
+};
+extern struct Struct151E5034 *D_8008FDD4;
+extern u8 D_8008FFB0[2][6];
+extern f32 D_800ABA8C;
+struct Struct151149AC *func_151149AC(s32);
+
+void func_151E7DC0(void) {
+    struct Struct151E5034 *sp;
+    struct Struct151149AC *r;
+    s32 i;
+    s32 a;
+
+    sp = D_8008FDD4;
+    if (sp->unk8 < D_800ABA8C && sp->unk3E == 0) {
+        return;
+    }
+    for (i = 0; i != 2; i++) {
+        sp = D_8008FDD4;
+        if (sp->unk3E == 0) {
+            a = D_8008FFB0[i][sp->unk2C];
+        } else {
+            a = D_8008FFB0[i][0];
+        }
+        r = func_151149AC(a);
+        if (r != 0) {
+            r->unk80 = 2;
+        }
+    }
+}
 
 extern s8 D_800E0BE9;
 

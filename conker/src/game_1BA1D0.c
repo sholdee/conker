@@ -88,7 +88,25 @@ void func_1518E4F8(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518E524.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518E5D8.s")
+extern u8 func_150ADA20(void);
+extern void func_151429E0(u8, s32, s32, s32);
+
+void func_1518E5D8(u8 *arg0, u8 *arg1, s32 arg2, s32 arg3, s32 arg4, u8 *arg5, s16 *arg6) {
+    s32 temp;
+
+    if (func_150ADA20() & 1) {
+        *arg1 |= 1;
+    }
+    *arg0 = 0x16;
+    if (func_150ADA20() & 1) {
+        temp = 3;
+    } else {
+        temp = 4;
+    }
+    func_151429E0(temp, arg2, arg3, arg4);
+    *arg5 = 0xC8;
+    *arg6 = 0x401;
+}
 
 extern s32 func_1518D1C0(s32, s32, s32, s32, u8, u8, void *);
 extern u8 D_800A7460[];
