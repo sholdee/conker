@@ -307,9 +307,21 @@ s32 func_151BEE94(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BF81C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BFB2C.s")
+void func_151BFB2C(struct260 *arg0) {
+    s32 i;
+    s32 v;
+    s32 *p = (s32 *)((u8 *)arg0 + 0x28);
 
-extern void func_151BFB2C(struct260 *arg0);
+    if (p[0] != 0) {
+        func_1516972C((struct102 *)p[0]);
+    }
+    for (i = 0; i < 2; i = (u8)(i + 1)) {
+        v = p[i + 1];
+        if (v != 0) {
+            func_1516972C((struct102 *)v);
+        }
+    }
+}
 
 void func_151BFBA4(struct260 *arg0) {
     func_151BFB2C(arg0);

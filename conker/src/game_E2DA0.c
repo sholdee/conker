@@ -68,4 +68,13 @@ s32 func_150B66DC(struct sub150B66DC *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E2DA0/func_150B6754.s")
+extern void func_15182670(s32, s32, s32, s32, s32, s32, s32, s32);
+
+void func_150B6754(u8 arg0, s32 arg1) {
+    u32 temp1;
+    u32 temp0;
+
+    temp0 = func_150ADA20();
+    temp1 = func_150ADA20();
+    func_15182670(0xCC, 0xCC, 0xFF, (u8)(temp0 % 0x38 + 0xC8), temp1 % 0xB + 0xF, 0, arg0, arg1);
+}

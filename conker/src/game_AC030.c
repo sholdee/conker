@@ -10,7 +10,17 @@ void func_1507EB80(u8 *buf, s32 *count, u8 c) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507EBB8.s")
+extern u8 *D_80086C24[];
+extern u8 D_8009BBF0[];
+
+void func_1507EBB8(s32 arg0, s32 *arg1, s32 arg2) {
+    u8 *dst = D_80086C24[arg2];
+    s32 len = D_8009BBF0[arg2];
+    if (*arg1 + len < 40) {
+        bcopy(dst, (u8 *)arg0 + *arg1, len);
+        *arg1 += len;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507EC38.s")
 

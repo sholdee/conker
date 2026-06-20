@@ -102,4 +102,26 @@ void func_150B031C(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150B0348.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150B060C.s")
+extern s32 func_151149AC(u32);
+
+struct Obj150B060C {
+    f32 unk0;
+    f32 unk4;
+    s16 *unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+};
+
+s32 func_150B060C(u8 arg0, struct Obj150B060C *arg1) {
+    arg1->unk8 = (s16 *)func_151149AC(arg0);
+    if (arg1->unk8 == 0) {
+        return 0;
+    }
+    arg1->unk0 = -150.0f;
+    arg1->unk4 = 4.5f;
+    arg1->unkC = (f32)arg1->unk8[8];
+    arg1->unk10 = (f32)arg1->unk8[9];
+    arg1->unk14 = (f32)arg1->unk8[10];
+    return 1;
+}
