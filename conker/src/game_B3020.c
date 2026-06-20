@@ -70,7 +70,34 @@ s32 func_15086D48(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15087CC0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15087DCC.s")
+extern u8 *D_800872A0;
+u8 func_150888A8(u8, u8, s32);
+
+struct Struct15087DCC {
+    char pad0[0x2B];
+    u8 unk2B;
+    u8 unk2C;
+    u8 unk2D;
+    u8 unk2E;
+    s8 unk2F;
+    char pad30[0x84 - 0x30];
+};
+
+void func_15087DCC(s32 arg0, s32 arg1) {
+    struct Struct15087DCC *p;
+    if (D_800872A0 == 0) {
+        return;
+    }
+    p = (struct Struct15087DCC *)(arg0 * sizeof(struct Struct15087DCC) + (s32)D_800872A0);
+    if (arg1 == p->unk2F) {
+        return;
+    }
+    if (arg1 != 0) {
+        p->unk2D = func_150888A8(p->unk2B, p->unk2C, 1);
+        p->unk2E = func_150888A8(p->unk2C, p->unk2D, 1);
+    }
+    p->unk2F = arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15087E54.s")
 
