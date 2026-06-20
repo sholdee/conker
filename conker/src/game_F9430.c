@@ -50,4 +50,13 @@ s32 func_150CC638(CC638Struct *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F9430/func_150CCA7C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F9430/func_150CCCB4.s")
+s32 func_150CCCB4(f32 *arg0) {
+    arg0[14] += arg0[17] * D_800BE9A4;
+    arg0[15] += (arg0[18] * D_800BE9A4) + (((arg0[23] * D_800BE9A4) * D_800BE9A4) * 0.5f);
+    arg0[16] += arg0[19] * D_800BE9A4;
+    arg0[18] += arg0[23] * D_800BE9A4;
+    arg0[8] += arg0[20] * D_800BE9A4;
+    arg0[9] += arg0[21] * D_800BE9A4;
+    arg0[10] += arg0[22] * D_800BE9A4;
+    return 1;
+}

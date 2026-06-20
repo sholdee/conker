@@ -164,14 +164,35 @@ void func_150CFE3C(union par150CFE3C *arg0) {
     inner->unk18[inner->unk15][inner->unk14] = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CFE98.s")
+struct inner150CFE98 {
+    char pad0[0x8];
+    u8 unk8;
+    char pad9[0xC - 0x9];
+    u8 *unkC;
+    u8 *unk10;
+    u8 unk14;
+    u8 unk15;
+};
+
+void func_150CFE98(arg0)
+union par150CFE3C *arg0;
+{
+    struct inner150CFE98 *inner = (struct inner150CFE98 *)((char *)arg0 + 0x28);
+
+    if (*inner->unk10 != 0) {
+        inner->unkC = inner->unk10 + 1;
+        inner->unk14 = func_150CFD84(inner->unk10 + 1, &inner->unk10);
+        inner->unk15 ^= 1;
+        func_150CFE3C(arg0);
+        inner->unk8 |= 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CFF10.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150D0034.s")
 
 extern s32 (*D_800888B0[])(s32 *, s32, u8);
-void func_150CFE98(void);
 
 s32 func_150D00C0(s32 *a0, s32 a1, u8 a2) {
     s32 (*fn)(s32 *, s32, u8);

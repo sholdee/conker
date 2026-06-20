@@ -101,7 +101,37 @@ void func_15158D00(struct102 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158FA4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15159084.s")
+extern f32 D_800A63A0;
+
+typedef struct {
+    u8 pad0[0x18];
+    f32 unk18;
+    u8 pad1C[0xFC];
+    f32 unk118;
+    u8 pad11C[0x1B];
+    u8 unk137;
+    u8 pad138[0x4C];
+    s32 unk184;
+} Struct15159084;
+
+s32 func_15159084(Struct15159084 *arg0, u8 arg1) {
+    s32 ret;
+    s32 flags;
+
+    flags = arg0->unk184 & 0x1F;
+    if ((arg1 == 2) || (arg1 == 3)) {
+        ret = 0;
+    } else {
+        if ((D_800A63A0 == arg0->unk118) && ((flags & 0xA) == 0)) {
+            ret = 1;
+        } else if ((arg0->unk118 < arg0->unk18) || (arg0->unk137 != 0)) {
+            ret = 1;
+        } else {
+            ret = 0;
+        }
+    }
+    return ret;
+}
 
 typedef struct {
     u8 pad0[0x118];

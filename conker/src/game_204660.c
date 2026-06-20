@@ -83,7 +83,19 @@ void func_151D74B0(struct struct127 *arg0, u8 arg1, s8 arg2, u8 arg3, void *arg4
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D7538.s")
+void func_151D7538(s32 arg0, s32 arg1, u8 arg2) {
+    s32 *p = &arg0;
+    s32 q;
+    if (arg2 == 0x3D) {
+        q = *p + 0x40;
+        if ((*(s32 *)q == *(s32 *)arg1) || (*(u8 *)(q + 4) == *(u8 *)(*(s32 *)&arg1 + 4))) {
+            func_1516972C((struct102 *)*p);
+        }
+    } else {
+        q = *p + 0x40;
+        func_15149514(arg1, arg2, q, q + 4, *p);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D75C4.s")
 
