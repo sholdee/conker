@@ -114,7 +114,17 @@ s32 func_15133A50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133B98.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133C58.s")
+s32 func_15133B98(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5);
+
+s32 func_15133C58(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5) {
+    func_15133B98(arg0, arg1, arg2, arg3, arg4, arg5);
+    if (func_150ADA20() & 1) {
+        func_10010F88(((u32)func_150ADA20() % 9) + 0x2DE, 0x2EE0, 0, 0, 0,
+                      (s32)*(f32 *)&arg1, (s32)*(f32 *)&arg2, (s32)*(f32 *)&arg3,
+                      0x1F4, 0x3E8);
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133D20.s")
 

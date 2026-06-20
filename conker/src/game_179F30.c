@@ -17,7 +17,42 @@ extern struct_1514EBA4 *func_15167A68(s32, s32, s32, s32, s32, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514D15C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514D310.s")
+typedef struct Node1514D310 {
+    char pad0[0x10];
+    s32 unk10;
+    struct Node1514D310 *unk14;
+    char pad18[0x4];
+    s16 unk1C;
+} Node1514D310;
+
+typedef struct Cont1514D310 {
+    char pad0[0x2F4];
+    Node1514D310 *unk2F4;
+} Cont1514D310;
+
+typedef struct Struct8008ABE8 {
+    char pad0[0x2];
+    s16 unk2;
+} Struct8008ABE8;
+
+extern void (*D_8008AB58[])(s32);
+extern Struct8008ABE8 *D_8008ABE8[];
+
+s32 func_1514D310(Cont1514D310 *arg0) {
+    Node1514D310 *node;
+    Node1514D310 *next;
+
+    node = arg0->unk2F4;
+    while (node != 0) {
+        next = node->unk14;
+        if (D_8008ABE8[node->unk1C]->unk2 != -1) {
+            D_8008AB58[D_8008ABE8[node->unk1C]->unk2](node->unk10);
+        }
+        func_1516972C((struct102 *) node);
+        node = next;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514D3B0.s")
 

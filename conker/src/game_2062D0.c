@@ -194,7 +194,55 @@ s32 func_151DA6A8(s32 *arg0) {
 }
 #pragma GLOBAL_ASM("asm/nonmatchings/game_2062D0/func_151DA6F8.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_2062D0/func_151DA938.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_2062D0/func_151DAA88.s")
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+} Struct151DAA88_elem;
+
+typedef struct {
+    u8 unk0[0x1];
+    u8 unk1;
+    u8 pad2[0xA];
+    u8 unkC;
+    u8 padD[0x20];
+    s8 unk2D;
+    u8 pad2E[0x66];
+    Struct151DAA88_elem *unk94;
+    u8 *unk98;
+} Struct151DAA88;
+
+typedef struct {
+    f32 unk0;
+    u8 pad4[0x17];
+    u8 unk1B;
+    u8 pad1C[0x4];
+    u8 unk20;
+    u8 pad21[0x2B];
+    f32 unk4C;
+    u8 unk50;
+} Struct151DAA88_v1;
+
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+} Vec3151DAA88;
+
+s32 func_151DAA88(Struct151DAA88 *arg0, f32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5) {
+    Struct151DAA88_v1 *v1 = (Struct151DAA88_v1 *)arg0->unk98;
+    Struct151DAA88_elem *base = arg0->unk94;
+    Vec3151DAA88 sp34;
+
+    sp34.unk0 = base[arg0->unk2D].unk0;
+    sp34.unk4 = arg4;
+    sp34.unk8 = base[arg0->unk2D].unk8;
+    func_151D9FC0(v1->unk50, v1->unk0 * 11.0f * v1->unk4C, v1->unk1B, arg5, (s32)&sp34, arg0->unkC, arg0->unk1);
+    v1->unk20 = 4;
+    return 1;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_2062D0/func_151DAB58.s")
 extern f32 D_800AB4B0;
 

@@ -467,6 +467,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Bind a now-DEAD register's next consumer to its OWN local to make IDO REUSE that dead
   register (e.g. after v0 is spent, `s32 *p = ...; ... = *p;` reuses the freed v0 for
   the load instead of a fresh t3).
+- NOT caching a loop-invariant indexing expression (re-reading e.g.
+  `D_base[node->idx]->field` in BOTH the test and the array-index use) can FLIP the
+  saved-reg/delay-slot order of an array-base invariant vs a hoisted constant: recomputing
+  hoists the base's `lui` first (filling a `beqz` delay slot) and pushes a `-1`/constant to
+  the lowest saved reg, where a cached `idx` local allocated the constant register FIRST.
+  Use when an invariant constant is hoisted one slot too early relative to an array base.
 - Declaring a flag/init local INSIDE the conditional block that first sets it sinks its
   `move reg,zero` init into the TAKEN path (vs an eager pre-branch init). Similarly,
   declaring a nested-if-LOCAL (`s32 u = p->field;`) inside the if-body PULLS that

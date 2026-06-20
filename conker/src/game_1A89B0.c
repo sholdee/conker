@@ -30,7 +30,27 @@ s32 func_1517B7A8(s16 *a0, s16 *a1, s32 *a2, s32 a3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517BBAC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517CFC4.s")
+extern void func_10006240(s32, s32, s32);
+extern void func_10004074(s32);
+
+struct s1517CFC4_a { s32 unk0; s32 unk4; s32 unk8; s32 unkC; };
+
+void func_1517CFC4(void) {
+    s32 i;
+    s32 *q;
+    struct s1517CFC4_a *p;
+
+    for (q = (s32 *)&D_800DD478, p = (struct s1517CFC4_a *)&D_800DDA90, i = 0; i != 15; i++, p++) {
+        if (p->unk8 != 0) {
+            if (q[i * 26] != 0) {
+                func_10006240(p->unk8, q[i * 26], D_8003809C);
+                func_10004074(p->unk8);
+            }
+            p->unk8 = 0;
+        }
+    }
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517D074.s")
 
