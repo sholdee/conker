@@ -133,7 +133,53 @@ s32 func_1501AE94(s32 arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_476D0/func_1501AF44.s")
+void func_1501AF44(f32 *arg0, f32 *arg1, f32 *arg2, f32 *arg3) {
+    f32 t;
+
+    if (*arg0 < 2.0f) {
+        *arg0 = 2.0f;
+    } else {
+        if (((f32)D_800BE620 - 2.0f) < *arg0) {
+            t = (f32)D_800BE620 - 2.0f;
+        } else {
+            t = *arg0;
+        }
+        *arg0 = t;
+    }
+
+    if (*arg2 < 2.0f) {
+        *arg2 = 2.0f;
+    } else {
+        if (((f32)D_800BE620 - 2.0f) < *arg2) {
+            t = (f32)D_800BE620 - 2.0f;
+        } else {
+            t = *arg2;
+        }
+        *arg2 = t;
+    }
+
+    if (*arg1 < 0.0f) {
+        *arg1 = 0.0f;
+    } else {
+        if ((f32)D_800BE624 < *arg1) {
+            t = (f32)D_800BE624;
+        } else {
+            t = *arg1;
+        }
+        *arg1 = t;
+    }
+
+    if (*arg3 < 0.0f) {
+        *arg3 = 0.0f;
+    } else {
+        if ((f32)D_800BE624 < *arg3) {
+            t = (f32)D_800BE624;
+        } else {
+            t = *arg3;
+        }
+        *arg3 = t;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_476D0/func_1501B0A0.s")
 
