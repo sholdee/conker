@@ -296,6 +296,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - INTEGER left-shift-then-narrow `(s16)(x << n)`: when the asm fuses `sll
   tN,x,(16+n); sra dst,tN,16`, write the `(s16)(x << n)` cast. A plain `x << n` emits
   a single `sll reg,n`. (Integer analog of the float-trunc-narrow rule.)
+- `(s16)` of a low byte: `(s16)(r & 0xFF)` emits the full `andi; sll 16; sra 16`
+  narrowing trio, whereas `(s16)(u8)r` (cast through `u8` first) ELIDES the `sll/sra`
+  — the `u8` intermediate already yields a 0-255 value so no sign-extend is needed.
+  Pick the double-cast form when the asm has the bare `andi` without the shift pair.
 - High-halfword extraction: `(x & 0xFFFF0000) >> 16` emits `lui at,0xffff; and; srl
   reg,16`; a plain `x >> 16` or `(u16)(x >> 16)` collapses to a bare `srl`.
 - Bit packing `x * 65537` => `(x << 16) + x`, shift-operand first; type `s16` when the

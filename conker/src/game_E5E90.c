@@ -51,4 +51,76 @@ s32 func_150B9D14(s32 arg0, struct Struct150B9D14 *arg1) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E5E90/func_150B9D8C.s")
+struct Struct150B9D8C {
+    char pad0[0x1];
+    u8  unk1;
+    char pad2[0xA];
+    u8  unkC;
+    char padD[0x83];
+    s32 unk90;
+    char pad94[0x4];
+    s16 unk98;
+    char pad9A[0x2];
+    s16 unk9C;
+    char pad9E[0x2];
+    s16 unkA0;
+    s16 unkA2;
+    char padA4[0x2];
+    s16 unkA6;
+};
+
+struct Struct150B9D8CTmp {
+    s32 unk0;
+    s16 unk4;
+    s8  unk6;
+    char pad7[0x1];
+    s32 unk8;
+    s32 unkC;
+    u8  unk10;
+    u8  unk11;
+    u8  unk12;
+    u8  unk13;
+    u8  unk14;
+    u8  unk15;
+    char pad16[0x2];
+    s32 unk18;
+    char pad1C[0x10];
+};
+
+void func_150B9D8C(struct Struct150B9D8C *arg0) {
+    struct Struct150B9D8CTmp tmp;
+    s32 c;
+    s32 b;
+    s32 a;
+
+    if (arg0->unk98 == -1) {
+        tmp.unk6 = 4;
+        tmp.unk8 = 0;
+        tmp.unkC = 0;
+        tmp.unk0 = 0x11;
+        tmp.unk4 = 0x64;
+        tmp.unk10 = 0xFF;
+        tmp.unk11 = arg0->unk90;
+        tmp.unk12 = 0;
+        tmp.unk13 = 0;
+        tmp.unk14 = 0;
+        tmp.unk15 = 0xFF;
+        tmp.unk18 = 0x30001;
+
+        a = func_150ADA20();
+        b = func_150ADA20();
+        c = func_150ADA20();
+
+        func_1513C4EC((s32)&tmp, 0, 2, 0,
+                      (f32)arg0->unk9C,
+                      (f32)(arg0->unkA6 + 2),
+                      (f32)arg0->unkA0,
+                      (f32)arg0->unkA2,
+                      (f32)arg0->unkA2,
+                      a & 0xFF,
+                      ((c & 1) << 1) + (b & 1),
+                      3, 0xFF, 0,
+                      arg0->unkC,
+                      arg0->unk1);
+    }
+}

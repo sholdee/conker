@@ -257,7 +257,42 @@ void func_151D0F34(void *arg0) {
     func_1513175C(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D0F60.s")
+extern s32 (*D_8008FC30[])(struct127 *, void *);
+
+struct vec3_151D0F60 { f32 x; f32 y; f32 z; };
+
+void func_151D0F60(struct127 *arg0, u8 arg1, u8 arg2, s32 arg3) {
+    struct260 *temp_v0;
+    struct {
+        struct127 *unk0;
+        u8 unk4;
+        u8 pad5[3];
+        s32 unk8;
+        struct vec3_151D0F60 unkC;
+        struct vec3_151D0F60 unk18;
+        struct vec3_151D0F60 unk24;
+        f32 unk30;
+        u8 unk34;
+    } sp34;
+
+    sp34.unk0 = arg0;
+    sp34.unk4 = arg0->unique_id;
+    sp34.unk8 = 0;
+
+    if (D_8008FC30[arg1](arg0, &sp34.unk18) == 0) {
+        sp34.unk18 = *(struct vec3_151D0F60 *)&D_800A5480;
+    }
+
+    sp34.unkC = sp34.unk18;
+    sp34.unk24 = *(struct vec3_151D0F60 *)&D_800A5480;
+    sp34.unk30 = 0.0f;
+    sp34.unk34 = arg1;
+
+    temp_v0 = func_15149130(0x12C, -1, 0x5F, -1, 0, 0x48, (struct37 *)0x38, arg2, arg3);
+    if (temp_v0 != NULL) {
+        memcpy((void *)((s32)temp_v0 + 0x28), &sp34, 0x38);
+    }
+}
 
 s32 func_151D1074(f32 *arg0, f32 *arg1) {
     arg1[0] = arg0[5];
