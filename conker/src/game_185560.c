@@ -15,7 +15,44 @@ s32 func_151581D8(void *arg0, u8 arg1, s32 arg2, u8 arg3, s32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_151582C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_1515858C.s")
+extern void guMtxF2L(f32 mf[4][4], Mtx *m);
+
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+} SubF8;
+
+typedef struct {
+    u8 pad0[0x48];
+    f32 unk48;
+    f32 unk4C;
+    f32 unk50;
+    u8 pad54[0xF8 - 0x54];
+    SubF8 subF8;
+} Obj1515;
+
+s32 func_1515858C(Mtx *arg0, Obj1515 *arg1) {
+    SubF8 *p = &arg1->subF8;
+    f32 sp24[4][4];
+
+    func_150A8050(&sp24, p->unk0, p->unk4, p->unk8);
+    sp24[3][0] = arg1->unk48;
+    sp24[3][1] = arg1->unk4C;
+    sp24[3][2] = arg1->unk50;
+    sp24[0][0] *= p->unkC;
+    sp24[0][1] *= p->unkC;
+    sp24[0][2] *= p->unkC;
+    sp24[1][0] *= p->unkC;
+    sp24[1][1] *= p->unkC;
+    sp24[1][2] *= p->unkC;
+    sp24[2][0] *= p->unkC;
+    sp24[2][1] *= p->unkC;
+    sp24[2][2] *= p->unkC;
+    guMtxF2L(&sp24, arg0);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158684.s")
 

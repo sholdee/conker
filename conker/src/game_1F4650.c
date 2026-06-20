@@ -90,7 +90,24 @@ s32 func_151C9B64(void *arg0, u8 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C9BA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C9DE8.s")
+void func_150BDE90(void *, u8, s32);
+void func_151C9F38(void *, s32, u8, s8, u8);
+void func_151CC524(void *, s32, s32, s32, u8, u8);
+void func_151CC840(void *, s32, s32, s32, u8, u8);
+void func_151CCF08(void *, u8, s8, u8);
+void func_151CB5FC(void *, s32, u8, s8, u8);
+
+void func_151C9DE8(void *arg0, u8 arg1, s8 arg2, u8 arg3, s32 arg4) {
+    func_151C9F38(arg0, 4, arg1, arg2, arg3);
+    func_151CC524(arg0, 0, 0x32, 0xFF, arg1, arg3);
+    func_151CC840(arg0, 0, 0x32, 0xFF, arg1, arg3);
+    func_151CCF08(arg0, arg1, arg2, arg3);
+    func_150BDE90(arg0, arg3, arg4);
+    func_151CB5FC(arg0, 2, arg1, arg2, arg3);
+    if (D_800BE9F0 == 0x27) {
+        D_8008CD00 = 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C9ED4.s")
 

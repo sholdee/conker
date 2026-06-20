@@ -778,6 +778,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   slot ABOVE the struct, growing the frame and pinning the struct at the target's
   offset. Declaring it AFTER places it below (wrong offset). Use before-the-struct to
   bump the frame when it's a word short.
+- Pin an 8-aligned stack ARRAY onto a 4-aligned slot WITHOUT growing the frame by
+  declaring a NAMED POINTER local BEFORE it: the pointer's 8-byte home takes the TOP of
+  locals, pushing the (8-aligned) array DOWN onto the next 4-aligned offset (e.g. matrix
+  at 0x24 not 0x28). Declaring the pointer AFTER the array shifts the array up by 4
+  (every access off by +4); frame size is unchanged either way. (Sibling-pointer analog
+  of the dummy-before-struct rule, but it does NOT grow the frame.)
 - SHRINK a frame that is exactly 8 too large when a stack-struct local passed by address
   has a TAIL word holding a value reloaded later (e.g. a pointer used by a trailing
   memcpy): SPLIT that tail off into a SEPARATE pointer/scalar local. IDO homes the
