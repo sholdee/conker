@@ -115,7 +115,32 @@ s32 func_1518E6D4(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518EF54.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F058.s")
+extern f32 D_800BE9A4;
+s32 func_1518F058(f32 *arg0)
+{
+  f32 t0;
+  f32 t1;
+  f32 t2;
+  int new_var;
+  arg0[0x50] = arg0[0x54] * arg0[0x50];
+  arg0[0x51] += arg0[0x53] * D_800BE9A4;
+  new_var = arg0 && arg0;
+  arg0[0x52] = arg0[0x54] * arg0[0x52];
+  t0 = arg0[0x50] * D_800BE9A4;
+  t1 = arg0[0x51] * D_800BE9A4;
+  t2 = arg0[0x52] * D_800BE9A4;
+  arg0[0xD] = arg0[0xD] + t0;
+  arg0[0xE] = arg0[0xE] + t1;
+  arg0[0xF] = arg0[0xF] + t2;
+  arg0[0x10] = arg0[0x10] + t0;
+  if (new_var && arg0)
+  {
+  }
+  arg0[0x11] = arg0[0x11] + t1;
+  arg0[0x12] = arg0[0x12] + t2;
+  return 1;
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F108.s")
 

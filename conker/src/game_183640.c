@@ -39,7 +39,29 @@ void func_15156FE4(struct102 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157010.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_151571C4.s")
+void func_100043B4(s32 *arg0, u32 arg1);
+extern s32 D_80082FA0;
+void func_151571C4(void *arg0)
+{
+  s32 i;
+  s32 *p;
+  for (i = 0, p = (s32 *) arg0; i <= D_80082FA0; i++, p++)
+  {
+    if (p[0x41] != 0)
+    {
+      func_100043B4((s32 *) p[0x41], 4);
+    }
+  }
+
+  p = (s32 *) ((s32 *) arg0)[0x45];
+  if (((s32 *) arg0)[0x45] != 0)
+  {
+    func_100043B4(p, 4);
+  }
+}
+
+extern void func_151571C4(void *);
+
 
 extern void func_151571C4(void *);
 extern void func_1518CA04(void *);
