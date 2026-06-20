@@ -179,7 +179,23 @@ s32 func_1518F15C(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F45C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F49C.s")
+struct Struct1518F49C {
+    s32 unk0;
+    u8 unk4;
+};
+
+void func_1518F49C(void *arg0, struct Struct1518F49C *arg1, u8 arg2) {
+    func_15169850((s32)arg1, arg2, (s32)arg0 + 0x18, (s32)arg0 + 0x1C, (s32)arg0);
+    if (arg2 == 0x49) {
+        s32 a = *(s32 *)((char *)arg0 + 0x18);
+        s32 b = arg1->unk0;
+        u8 c = *(u8 *)((char *)arg0 + 0x1C);
+        u8 d = arg1->unk4;
+        if (a == b || c == d) {
+            func_1516972C(arg0);
+        }
+    }
+}
 
 extern s32 func_1518FDC4(void *, u8 *, u8);
 extern s32 func_1518F5D0(void *, void *, s16, s8, s8, s8, u8, s32, u8, s32);

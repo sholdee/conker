@@ -40,7 +40,26 @@ void func_15081E0C(struct127 *arg0, u16 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_150837D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_150838EC.s")
+extern s32 allocate_memory(s32, s32, s32, s32);
+
+s32 func_150838EC(struct127 *arg0, u16 arg1, s32 arg2, f32 arg3) {
+    s32 idx;
+
+    idx = arg0->id;
+    if (D_800D1588[idx] == 0) {
+        return 0;
+    }
+    if (((u16 *)D_800C5A90)[idx] == 0) {
+        return 0;
+    }
+    *(s32 *)((s32)arg0 + 0x2D0) = allocate_memory(0x3E0, 1, 2, 0);
+    if (*(s32 *)((s32)arg0 + 0x2D0) == 0) {
+        return 1;
+    }
+    bzero(*(s32 *)((s32)arg0 + 0x2D0), 0x40);
+    func_1505E650(arg0, arg1, arg3, 0.0f, 0.0f, 0.0f, arg2);
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_150839B8.s")
 
@@ -127,5 +146,6 @@ u8 func_150849CC(GameAEB40Struct *a0, s32 *a1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084A18.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084C30.s")
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084CB0.s")

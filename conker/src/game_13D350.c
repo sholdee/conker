@@ -84,7 +84,19 @@ s32 func_15114050(struct131 *arg0, s32 arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_151140C4.s")
+s32 func_151140C4(struct131 *arg0) {
+    s32 i;
+
+    i = 0;
+    if (((u8 *)arg0)[0x4F] & 0x80) {
+        for (; i != 32; i++) {
+            if (D_800DBF94[arg0 - D_800DBEF4] & (1 << i)) {
+                return i;
+            }
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15114188.s")
 
