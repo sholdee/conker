@@ -147,7 +147,32 @@ void func_151D0024(s32 arg0) {
     func_151494E0((s32)&sp18, 0x18);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D0058.s")
+void func_151D0058(struct127 *arg0, u8 arg1, u8 arg2, s32 arg3) {
+    struct260 *temp_v0;
+    struct {
+        struct127 *unk0;
+        u8 unk4;
+        u8 pad5;
+        u16 unk6;
+        f32 unk8;
+        u8 unkC;
+        u8 unkD;
+        u8 padE;
+        u8 padF;
+    } sp3C;
+
+    sp3C.unk0 = arg0;
+    sp3C.unk4 = arg0->unique_id;
+    sp3C.unk8 = (arg0->xz_scale + arg0->y_scale) * 0.5f;
+    sp3C.unkD = arg1;
+    sp3C.unkC = (func_150ADA20() % 0x38U) + 0xC8;
+    sp3C.unk6 = arg0->unk84.uh;
+
+    temp_v0 = func_15149130(0x12C, -1, 0x61, 4, 0, 0x31, (struct37 *)0x10, arg2, arg3);
+    if (temp_v0 != NULL) {
+        memcpy((void *)((s32)temp_v0 + 0x28), &sp3C, 0x10);
+    }
+}
 
 typedef struct {
     char pad84[0x84];

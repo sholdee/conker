@@ -52,7 +52,22 @@ void func_1503EEB8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503EF4C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503EFC4.s")
+extern u8 D_80098914[];
+
+void func_1503EFC4(s32 arg0) {
+    struct106 *p = &D_800C6660[arg0];
+    s32 i;
+    s32 off;
+    s32 count;
+
+    *(s16 *)((s32)p + 0xC) = 0x78;
+    count = D_80098914[*(u8 *)((s32)p + 0xE)];
+    i = 0;
+    off = 0;
+    for (; i < count; i++, off += 0x68) {
+        *(f32 *)(p->unk0 + off + 0x4C) = (f32)((s32)((u32)func_150ADA20() % 0x14) - 5);
+    }
+}
 
 extern void func_1503EB78(void *arg0, f32 arg1, f32 arg2, s32 arg3);
 

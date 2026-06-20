@@ -5,8 +5,6 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B0740/func_15183290.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B0740/func_151838B0.s")
-
 typedef struct {
     s32 unk0;
     s32 unk4;
@@ -15,7 +13,34 @@ typedef struct {
     s32 unk10;
 } Struct15183974;
 
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Inner1502B6BC;
+
+extern u8 D_800DDF69[];
 void func_15183ACC(s32);
+Inner1502B6BC *func_1502B6BC(s32, s32, s32, s32, s32, s32);
+
+void func_151838B0(s32 arg0) {
+    Inner1502B6BC *ret;
+
+    if (((Struct15183974 *)D_800DDE80)[arg0].unk0 == 0) {
+        func_15183ACC(arg0);
+    }
+    if (((Struct15183974 *)D_800DDE80)[arg0 + 1].unk0 == 0) {
+        ret = func_1502B6BC(0, 0, 0, 2, 9, arg0 + 0xAE);
+        if (ret != 0) {
+            ((Struct15183974 *)D_800DDE80)[arg0 + 1].unk0 = (s32)ret;
+            ((Struct15183974 *)D_800DDE80)[arg0 + 1].unk4 = ret->unk0;
+            ((Struct15183974 *)D_800DDE80)[arg0 + 1].unk8 = ret->unk8;
+            ((Struct15183974 *)D_800DDE80)[arg0 + 1].unk10 = 0;
+            ((Struct15183974 *)D_800DDE80)[arg0 + 1].unkC = ((Struct15183974 *)D_800DDE80)[arg0].unkC;
+            D_800DDF69[arg0] = 1;
+        }
+    }
+}
 
 void func_15183974(s32 arg0) {
     if (((Struct15183974 *)D_800DDE80)[arg0].unk0 == 0) {
