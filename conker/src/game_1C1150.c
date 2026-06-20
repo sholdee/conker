@@ -67,7 +67,20 @@ void func_15194AB4(struct127* arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194B1C.s")
+extern s32 func_15134070(struct127*);
+extern void func_15138120(struct127*, s32, s32);
+extern void func_15136C3C(struct127*, s32, s32, s32, s32, s32, s32, s32);
+
+void func_15194B1C(struct127* arg0) {
+    s32 temp;
+
+    temp = func_15134070(arg0);
+    if (temp != 0x63) {
+        func_15138120(arg0, temp, 0);
+    }
+    func_15136C3C(arg0, 1, 1, 1, 1, 1, 0xFF, 1);
+    func_15194AB4(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194B94.s")
 

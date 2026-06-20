@@ -386,7 +386,23 @@ s32 func_1514ED8C(Node1514ED8C *node, Cont1514ED8C *cont) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514EDF0.s")
+void func_1514EDF0(s32 key, Cont1514ED8C *cont) {
+    Node1514ED8C *node;
+    s32 ret;
+    s32 out;
+    u8 found;
+
+    node = cont->unk2F4;
+    out = 0;
+    do {
+        ret = func_1514ED3C((Node1514ED3C *) node, key, &out);
+        found = ret;
+        if (ret) {
+            node = ((Node1514ED8C *) out)->unk14;
+            func_1514ED8C((Node1514ED8C *) out, cont);
+        }
+    } while (found != 0);
+}
 
 struct Struct1514EE70 {
     s32 unk0;

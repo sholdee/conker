@@ -142,7 +142,7 @@ void func_15133DE8(s32 arg0, s32 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133E3C.s")
 
-void func_15133EEC(s32 arg0, u16 arg1, u8 arg2, s32 arg3);
+s32 func_15133EEC(s32 arg0, u16 arg1, u8 arg2, s32 arg3);
 
 void func_15133E84(s32 arg0, void *arg1, s32 arg2) {
     func_15133EEC(arg0, *(u16 *)((u8 *)arg1 + 0x170), *(u8 *)((u8 *)arg1 + 0x172), *(s32 *)((u8 *)arg1 + 0x174));
@@ -154,4 +154,25 @@ void func_15133EB8(s32 arg0, void *arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133EEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133FD8.s")
+typedef struct {
+    u8 unk0[4];
+    u16 unk4;
+    u8 unk6;
+    u8 unk7;
+    s32 unk8;
+} Elem15133FD8B;
+
+typedef u8 Entry15133FD8[8];
+
+s32 func_15133FD8(s32 arg0, void *arg1, s32 arg2) {
+    u8 i;
+    Entry15133FD8 *base;
+    Elem15133FD8B *e;
+
+    base = (Entry15133FD8 *)((u8 *)arg1 + 0x170);
+    for (i = 0; i < (*base)[0]; i++) {
+        e = (Elem15133FD8B *)base[i];
+        arg0 = func_15133EEC(arg0, e->unk4, e->unk6, e->unk8);
+    }
+    return arg0;
+}
