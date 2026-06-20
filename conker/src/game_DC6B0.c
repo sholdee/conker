@@ -71,7 +71,29 @@ s32 func_150AFBF4(struct Obj150AFBF4 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150AFC68.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150AFDB0.s")
+extern void *D_800DCE94;
+
+struct Node150AFDB0 {
+    char pad0[0x8];
+    struct Node150AFDB0 *unk8;
+    char pad0C[0x33];
+    u8 unk3F;
+};
+
+void func_150AFDB0(void) {
+    struct Node150AFDB0 *node;
+
+    D_800DD190++;
+    node = D_800DCE94;
+    while (node != 0) {
+        ((struct Node150AFDB0 **)D_800DD198)[(s8)D_800DD190] = node->unk8;
+        if (node->unk3F == D_800C3E78) {
+            func_1516972C((struct102 *)node);
+        }
+        node = ((struct Node150AFDB0 **)D_800DD198)[(s8)D_800DD190];
+    }
+    D_800DD190--;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150AFE64.s")
 

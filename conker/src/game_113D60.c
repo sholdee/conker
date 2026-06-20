@@ -37,7 +37,24 @@ void func_150E70CC(f32 *arg0, f32 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E70EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E71E4.s")
+extern f32 D_800A1324;
+extern f32 D_800A1328;
+extern f32 D_800A132C;
+extern f32 D_800A1330;
+extern f32 D_800A1334;
+extern f32 D_800A1338;
+extern f32 D_800A133C;
+
+void func_150E71E4(s32 arg0, s32 arg1, f32 *arg2, f32 *out) {
+    out[0] = func_150484A0(arg2[0], arg2[2]);
+    out[2] = D_800A1324;
+    out[4] = func_150ADA68() * D_800A1328;
+    out[6] = func_150ADA68() * D_800A132C;
+    out[1] = D_800A1330;
+    out[3] = D_800A1334;
+    out[5] = func_150ADA68() * D_800A1338;
+    out[7] = func_150ADA68() * D_800A133C;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E7290.s")
 

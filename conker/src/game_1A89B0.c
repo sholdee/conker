@@ -54,7 +54,34 @@ void func_1517CFC4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517D074.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517D578.s")
+struct Entry1517D578 {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    u8  unk6;
+    s16 unk8;
+    s16 unkA;
+    f32 unkC;
+};
+extern struct Entry1517D578 D_800DDD28[];
+
+void func_1517D578(s16 arg0, s16 arg1, s16 arg2, f32 arg3, s32 arg4, s32 arg5, u8 arg6)
+{
+    struct Entry1517D578 *e;
+    u8 idx = D_8008CEB0;
+    if (D_8008CEB0 < 3)
+    {
+        e = &D_800DDD28[idx];
+        e->unk0 = arg0;
+        e->unk2 = arg1;
+        e->unk4 = arg2;
+        e->unkC = arg3;
+        e->unk8 = arg4;
+        e->unkA = arg5;
+        e->unk6 = arg6;
+        D_8008CEB0 = idx + 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517D5FC.s")
 
