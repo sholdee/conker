@@ -18,7 +18,7 @@ Typical coordination between orchestrator runs:
   permuter_daemon.py import_new   # ingest this run's new near-misses
   permuter_daemon.py run 5400     # (re)launch background permuters for next run
 """
-import glob, json, os, subprocess, sys
+import glob, json, os, re, subprocess, sys, time
 
 REPO = os.path.expanduser("~/conker")
 INNER = os.path.join(REPO, "conker")
@@ -72,23 +72,70 @@ def import_new():
             print(f"  imported {func} (seed score {s.get('score','?')})")
     print(f"import_new: {n} new near-misses imported")
 
-def run(seconds):
-    # newest imports first, skip cracked + no-port — so fresh high-value
-    # near-misses get the slots, not the never-cracking old hard cases.
-    dirs = sorted(
+def running_funcs():
+    """Distinct funcs that currently have a live permuter.py process."""
+    r = subprocess.run("ps -eo args", shell=True, capture_output=True, text=True)
+    out = set()
+    for line in r.stdout.splitlines():
+        m = re.search(r"permuter\.py nonmatchings/(func_\w+)", line)
+        if m:
+            out.add(m.group(1))
+    return out
+
+def _eligible(exclude):
+    # newest imports first, skip cracked / no-port / already-running — so fresh
+    # high-value near-misses get the free slots, not never-cracking old cases.
+    return sorted(
         [d for d in glob.glob(os.path.join(NM_DIR, "func_*"))
-         if not cracked(os.path.basename(d)) and not os.path.exists(os.path.join(d, ".noport"))],
+         if not cracked(os.path.basename(d))
+         and not os.path.exists(os.path.join(d, ".noport"))
+         and os.path.basename(d) not in exclude],
         key=os.path.getmtime, reverse=True)
+
+def _launch_one(func, seconds):
+    log = f"/tmp/permd_{func}.log"
+    subprocess.Popen(
+        f"nice -n 19 timeout {seconds} {PY} {PERM}/permuter.py nonmatchings/{func} "
+        f"--best-only --stop-on-zero -j {THREADS} > {log} 2>&1",
+        shell=True, cwd=INNER, start_new_session=True)   # detach so it survives the launcher
+
+def _topup(seconds):
+    """Fill free slots up to MAX_PARALLEL without duplicating running funcs."""
+    running = running_funcs()
+    free = MAX_PARALLEL - len(running)
     launched = 0
-    for d in dirs[:MAX_PARALLEL]:
-        func = os.path.basename(d)
-        log = f"/tmp/permd_{func}.log"
-        subprocess.Popen(
-            f"nice -n 19 timeout {seconds} {PY} {PERM}/permuter.py nonmatchings/{func} "
-            f"--best-only --stop-on-zero -j {THREADS} > {log} 2>&1",
-            shell=True, cwd=INNER, start_new_session=True)   # detach so they survive the launcher
+    for d in (_eligible(running)[:free] if free > 0 else []):
+        _launch_one(os.path.basename(d), seconds)
         launched += 1
-    print(f"run: launched {launched} nice'd permuters ({THREADS} threads each, {seconds}s)")
+    return launched, len(running)
+
+def run(seconds):
+    launched, already = _topup(seconds)
+    print(f"run: launched {launched} nice'd permuters ({already} already running; "
+          f"{THREADS} threads each, {seconds}s)")
+
+PIDFILE = "/tmp/permuter_supervisor.pid"
+
+def supervise(interval=180, per_timeout=3600):
+    """Long-running: keep MAX_PARALLEL permuters alive forever, auto-replacing the
+    dead/cracked/timed-out with the newest seeds. Launch detached (setsid) once;
+    it does NOT import (that touches the build tree) — only permutes what's imported.
+    Self-guards via a pidfile so a second launch is a no-op (no shell self-match)."""
+    if os.path.exists(PIDFILE):
+        try:
+            old = int(open(PIDFILE).read().strip())
+            os.kill(old, 0)                         # alive?
+            print(f"supervise: already running (pid {old}); exiting"); return
+        except (ValueError, OSError):
+            pass                                    # stale/unreadable → take over
+    open(PIDFILE, "w").write(str(os.getpid()))
+    print(f"supervise: maintaining {MAX_PARALLEL} permuters (check every {interval}s, "
+          f"{per_timeout}s each); pid {os.getpid()}")
+    while True:
+        launched, running = _topup(per_timeout)
+        if launched:
+            print(f"supervise: topped up {launched} (was {running} running)", flush=True)
+        time.sleep(interval)
 
 def file_of(func):
     """Find the src/game_*.c that still has this func as a GLOBAL_ASM stub."""
@@ -133,5 +180,7 @@ if __name__ == "__main__":
         run(int(sys.argv[2]))
     elif len(sys.argv) >= 2 and sys.argv[1] == "collect":
         collect()
+    elif len(sys.argv) >= 2 and sys.argv[1] == "supervise":
+        supervise(*(int(a) for a in sys.argv[2:4]))
     else:
         print(__doc__)

@@ -26,7 +26,10 @@ Two engines run in PARALLEL: the **orchestrator** (LLM agents match `GLOBAL_ASM`
 1. APPLY PERMUTER WINS:   python3 tools/apply_wins.py        # collect→port→verify→commit; non-porters auto-.noport
 2. INGEST HARVEST:        python3 tools/permuter_daemon.py import_new
 3. REFILL (if pool low):  python3 tools/stub_expand.py expand 30   (ROM-gated) ; then REGEN RANKING (below) ; force-clean ROM verify
-4. PERMUTERS (if <6 live):python3 tools/permuter_daemon.py run 6000      # nice'd, detached, spare CPU
+4. PERMUTERS: a SUPERVISOR keeps MAX_PARALLEL alive automatically (auto-replaces dead/cracked/timed-out
+   with the newest seeds). Just ensure it's running (safe any time — only permutes what's imported):
+   kill -0 $(cat /tmp/permuter_supervisor.pid 2>/dev/null) 2>/dev/null || \
+     setsid python3 tools/permuter_daemon.py supervise 180 3600 >/tmp/permuter_supervise.log 2>&1 </dev/null &
 5. ORCHESTRATOR:  Workflow { scriptPath: "tools/orchestrator.js", args: {rounds:8, chunk:8, maxi:55} }
 6. WAIT for the completion notification. Repeat.
 ```
@@ -50,8 +53,9 @@ cd conker; for d in asm/nonmatchings/game_*; do for f in "$d"/*.s; do [ -f "$f" 
 - `integrate.py FILE FUNC …` — DETERMINISTIC gate: force-clean build, dual-sha1, bisect out broken funcs, commit good.
 - `stub_expand.py expand N` — flip N pure-asm game segments `asm`→`c` in the yaml + extract → new stubs.
   ROM-gated; auto-bisects rodata/jtbl segments that fail; refreshes `expected/`.
-- `permuter_daemon.py {import_new | run SECS | collect}` — spare-CPU decomp-permuter over `.nearmiss/` seeds
-  (nice 19, detached, newest-first). `import_new` touches the build tree → run only BETWEEN runs.
+- `permuter_daemon.py {import_new | run SECS | collect | supervise [interval] [timeout]}` — spare-CPU decomp-permuter
+  over `.nearmiss/` seeds (nice 19, detached, newest-first). `supervise` = long-running self-restarting pool (pidfile-guarded);
+  `run` one-shot tops up free slots. `import_new` touches the build tree → run only BETWEEN runs.
 - `apply_wins.py` — port + project-re-verify + commit permuter winners (their score-0 is isolated; re-verify!).
 - `ido_cookbook.md` — IDO matching idioms agents read; the orchestrator's distiller MERGES novel ones (no new sections).
 - `setup.sh` — fresh-host bring-up (re-applies n64splat marker-label patch, pins `pycparser<3`, venv).
