@@ -323,7 +323,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   an extra entry-`andi` + a homed store; the `s32`+inline-mask keeps it wide and masks
   only at the use site. Do NOT re-mask an already-`u8`/`u16` param when scaling/indexing
   it (`arg * K`, NOT `(arg & 0xFF) * K`): the explicit `& 0xFF` emits a REDUNDANT andi
-  and shifts the scale onto the wrong register.
+  and shifts the scale onto the wrong register. CONVERSELY, a byte EXTRACTED then STORED
+  through a `u8*` (`*p = (word >> 8) & 0xFF;`) often NEEDS the redundant `& 0xFF` even
+  though the `sb` already truncates: without it IDO uniformly shifts the whole function's
+  temp-register coloring by one slot (a pure 'r'-diff cascade). Add `& 0xFF` to ALL such
+  masked-byte store expressions together to flip the coloring back.
 - Narrow-cast at the CALL SITE (not in the param type) to schedule the masked-byte load
   into the jal DELAY SLOT: declaring a param `s32` and writing `f(..., (u8)arg)` sinks
   the `lbu off(sp)` into the slot, whereas a `u8` param HOISTS it before the branch.

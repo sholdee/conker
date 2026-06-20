@@ -145,4 +145,45 @@ void func_150EA8E0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_117490/func_150EAB10.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_117490/func_150EAE24.s")
+typedef struct {
+    /* 0x00 */ f32 unk0;  /* arg0->0x18 */
+    /* 0x04 */ f32 unk4;  /* arg0->0x1C */
+    /* 0x08 */ f32 unk8;  /* arg0->0x20 */
+    /* 0x0C */ f32 unkC;  /* arg0->0x24 */
+    /* 0x10 */ f32 unk10; /* arg0->0x28 */
+    /* 0x14 */ s32 unk14; /* arg0->0x2C */
+    /* 0x18 */ f32 unk18; /* arg0->0x30 */
+    /* 0x1C */ f32 unk1C; /* arg0->0x34 */
+} struct_EAE24b;
+
+typedef struct {
+    /* 0x00 */ u8  pad0[0x14];
+    /* 0x14 */ s16 *unk14;
+    /* 0x18 */ struct_EAE24b unk18;
+} struct_EAE24;
+
+s32 func_15046C80(f32 *, s32, s32, f32 *);
+
+s32 func_150EAE24(struct_EAE24 *arg0) {
+    struct_EAE24b *p;
+    f32 sp28[3];
+
+    arg0->unk18.unk0 += arg0->unk18.unk8 * D_800BE9A4;
+    arg0->unk18.unk4 += arg0->unk18.unkC * D_800BE9A4;
+    sp28[0] = arg0->unk18.unk0;
+    sp28[1] = arg0->unk18.unk10;
+    sp28[2] = arg0->unk18.unk4;
+    arg0->unk14[7] = (s16)arg0->unk18.unk0;
+    arg0->unk14[9] = (s16)arg0->unk18.unk4;
+    p = &arg0->unk18;
+    if (func_15046C80(sp28, 0, arg0->unk18.unk14, &p->unk1C) != 0) {
+        arg0->unk14[8] = (s16)p->unk1C;
+    } else {
+        arg0->unk14[8] = (s16)p->unk10;
+    }
+    p->unk18 -= D_800BE9A4;
+    if (p->unk18 <= 0.0f) {
+        return 0;
+    }
+    return 1;
+}

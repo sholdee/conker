@@ -88,7 +88,38 @@ void func_1515D6C8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515E278.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515E43C.s")
+struct Node1515E43C {
+    char pad0[0x18];
+    u32 unk18;
+    u32 unk1C;
+};
+
+struct Node1515E43C *func_1515EB84(s32, s32, s32, s32, s32);
+
+void func_1515E43C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, u8 *arg5, u8 *arg6, u8 *arg7) {
+    struct Node1515E43C *node;
+
+    node = func_1515EB84(arg0, arg1, arg2, 0, D_800DCD84);
+    if (node != NULL) {
+        arg4[0] = node->unk18 & 0xFF;
+        arg4[1] = (node->unk18 >> 8) & 0xFF;
+        arg4[2] = (node->unk18 >> 16) & 0xFF;
+        arg5[0] = node->unk1C & 0xFF;
+        arg5[1] = (node->unk1C >> 8) & 0xFF;
+        arg5[2] = (node->unk1C >> 16) & 0xFF;
+        arg6[0] = (node->unk1C >> 24) & 0xFF;
+        arg7[0] = (node->unk18 >> 24) & 0xFF;
+    } else {
+        arg4[0] = ((u8 *)D_800DCD24)[0];
+        arg4[1] = ((u8 *)D_800DCD24)[1];
+        arg4[2] = ((u8 *)D_800DCD24)[2];
+        arg5[0] = D_800DCD28[0];
+        arg5[1] = D_800DCD28[1];
+        arg5[2] = D_800DCD28[2];
+        arg6[0] = D_800DCD3C;
+        arg7[0] = D_800DCD3D;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515E544.s")
 
