@@ -14,8 +14,12 @@ source ../.venv/bin/activate 2>/dev/null
 file="$1"; func="$2"
 obj="build/src/${file}.c.o"
 
+# FORCE a fresh build every time: removing the object defeats make's mtime check,
+# which can otherwise treat a same-second .c edit as "up to date" and diff a STALE
+# matching .o → a false SCORE: 0 that integrate.py later rejects (wasted bisect).
+rm -f "$obj"
 berr=$(make "$obj" 2>&1)
-if [ $? -ne 0 ]; then
+if [ $? -ne 0 ] || [ ! -f "$obj" ]; then
   echo "BUILD-FAIL"
   echo "$berr" | grep -iE "error|undefined|syntax" | head -6
   echo "SCORE: 999999"
