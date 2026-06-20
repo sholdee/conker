@@ -169,7 +169,20 @@ s32 func_15046C00(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15046C80.s")
+s32 func_1504697C(s32, u16, s32, s32);
+
+s32 func_15046C80(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    switch (func_15047004(arg0, arg2, arg3)) {
+    case 0:
+        return func_1504697C(arg0, (u16)arg1, arg2, arg3);
+    case 1:
+        return 0;
+    case 2:
+        return 1;
+    default:
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15046D00.s")
 

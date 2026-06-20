@@ -9,7 +9,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_15094AB8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_15094EA0.s")
+extern Mtx D_800D2CA8[];
+void func_150A7A48(f32 a[4][4], f32 b[4][4], f32 c[4][4]);
+
+void func_15094EA0(s32 arg0) {
+    f32 sp58[4][4];
+    f32 sp18[4][4];
+
+    guMtxL2F(&sp58, &((Mtx *)((s32 *)&D_800DC2A0)[D_800BE9C0])[arg0]);
+    guMtxL2F(&sp18, (Mtx *)((u8 *)((struct259 *)D_800BE628 + arg0) + (D_800BE9C0 << 6) + 0x100));
+    func_150A7A48(&sp58, &sp18, (f32 (*)[4])&D_800D2CA8[arg0]);
+}
 
 extern Gfx D_800873D0[];
 extern s32 D_800D2CA0;
