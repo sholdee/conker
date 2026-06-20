@@ -25,7 +25,27 @@ void func_15146BD8(s32 arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_173D40/func_15146E84.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_173D40/func_15147040.s")
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    s32 unk8;
+} Struct15147040;
+
+extern void func_15146890(Struct15147040 *, s32, s32, u8);
+extern void func_1514C678(f32, f32, s32, f32, s32, s32, s32, s32, s32, f32, s32, s32);
+
+void func_15147040(s32 arg0, s32 arg1, s32 arg2) {
+    Struct15147040 sp44;
+    s16 temp;
+
+    if (*(s32 *)(arg0 + 0x1D4) != 0) {
+        func_15146890(&sp44, arg0, 0, (u8)arg1);
+        temp = (func_150ADA20() % 11U) + 5;
+        func_1514C678(sp44.unk0, sp44.unk4, sp44.unk8,
+                      func_150ADA68() * 11.0f,
+                      0, 0xFF, temp, 0x16, 0, 0.0f, 0, 0xFF);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_173D40/func_151470FC.s")
 

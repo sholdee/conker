@@ -64,7 +64,23 @@ void func_1506AA48(struct127 *arg0, struct s1506AA48 *arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506AAE0.s")
+extern s32 D_800CC260;
+void func_15137610(struct127 *, s32, s32, s32, s32, s32);
+
+void func_1506AAE0(s32 arg0, s32 arg1) {
+    s32 mask;
+    struct127 *ptr;
+
+    mask = D_800CC260;
+    ptr = &D_800CC2D0[0];
+    while (mask != 0) {
+        if (mask & 1) {
+            func_15137610(ptr, (s32)&D_800D1560, (s32)&D_800D1570, 0, 0xFF, 1);
+        }
+        mask >>= 1;
+        ptr++;
+    }
+}
 
 void func_15103E40(struct127 *, struct127 *, struct17 *, u8, u8, u8, u8);
 

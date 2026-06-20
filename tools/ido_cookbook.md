@@ -465,6 +465,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `jal` delay slot with the spill, and reloads it so the trailing test becomes a `beqzl`
   with the reload in ITS delay slot. Reading the field AFTER the call (or inlining the
   test) re-loads from the struct instead.
+- Kept DEAD spill of an unused call result (target `sw v0,off` after a jal, never
+  reloaded): a plain unused local is DCE'd. Keep it live across a LATER jal with an
+  EMPTY `if (temp) { }` — no body code, no branch — so IDO must spill it; then DECL
+  ORDER of temp vs the real result local picks which stack slot the dead spill lands on.
+  (Distinct from the spill-and-reload-for-a-test idiom: here the value is never read.)
 - A single FUNCTION-SCOPE local assigned INDEPENDENTLY in each branch (no value carried
   across arms) unifies the result onto ONE register in every branch. Declaring it
   PER-BLOCK gives a different reg per arm; sharing it LIVE across branches forces a

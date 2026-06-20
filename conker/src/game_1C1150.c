@@ -106,7 +106,23 @@ void func_15194E54(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194EA8.s")
+extern void func_15182670(s32, s32, s32, s32, s32, s32, s32, s32);
+extern void func_15194BF0(s32, struct127*, u8*);
+
+void func_15194EA8(s32 arg0, struct127* arg1, s32 arg2) {
+    u8 sp37;
+    u32 temp1;
+    u32 temp0;
+
+    sp37 = 0;
+    if (arg1->camera != 0) {
+        temp0 = func_150ADA20();
+        temp1 = func_150ADA20();
+        func_15182670(0xFF, 0xFF, 0xFF, 0xFF, temp1 % 0xB + 0x23, arg1->camera->unk23D, 0xFF, 1);
+        if (temp0) { }
+    }
+    func_15194BF0(arg0, arg1, &sp37);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194F48.s")
 

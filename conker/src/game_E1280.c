@@ -3,7 +3,25 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E1280/func_150B3DD0.s")
+extern void func_15147D64(s32, s32);
+
+void func_150B3DD0(void) {
+    u8 sp24[4];
+
+    func_15147D64(0, 5);
+    sp24[0] = 0;
+    func_151494E0((s32)&sp24[0], 0x18);
+    sp24[0] = 2;
+    func_151494E0((s32)&sp24[0], 0x18);
+    sp24[0] = 4;
+    func_151494E0((s32)&sp24[0], 0x18);
+    sp24[0] = 1;
+    func_151494E0((s32)&sp24[0], 0x18);
+    sp24[0] = 3;
+    func_151494E0((s32)&sp24[0], 0x18);
+    sp24[0] = 5;
+    func_151494E0((s32)&sp24[0], 0x18);
+}
 
 extern void func_1000FC18(s32, s16, s16, s16, s32);
 extern void func_151478F4(void *);

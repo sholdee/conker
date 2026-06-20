@@ -158,4 +158,15 @@ void func_151CC290(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CCF08.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CD224.s")
+extern f32 func_151CC1D4(void *);
+
+void func_151CD224(void *arg0) {
+    s32 base = (s32)arg0 + 0x70;
+    f32 ret = func_151CC1D4(arg0);
+    f32 temp = (1.0f - *(f32 *)(base + 0x20) * (ret - *(f32 *)(base + 0x18))) * 75.0f;
+    if (*(u8 *)(base + 0xD) == 5) {
+        *(f32 *)((s32)arg0 + 0x14) = 92.0f + temp;
+    } else if (*(u8 *)(base + 0xD) == 4) {
+        *(f32 *)((s32)arg0 + 0x14) = -92.0f - temp;
+    }
+}
