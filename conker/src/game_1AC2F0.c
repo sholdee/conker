@@ -53,7 +53,21 @@ s32 func_1517EFAC(s32 arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517EFDC.s")
+s32 func_1517EFDC(void) {
+    s32 s1 = -1;
+    s32 s0;
+    s32 v0;
+    for (s0 = 0; s0 <= D_80082FA0; s0++) {
+        if ((func_1517EF00(s0) > 0) || (0.0f < (&D_800DDDC8)[s0])) {
+            s1++;
+        }
+    }
+    v0 = D_80082FA0;
+    if (s1 == v0) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F08C.s")
 

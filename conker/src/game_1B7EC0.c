@@ -3,7 +3,54 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B7EC0/func_1518AA10.s")
+extern void (*D_8008D5C0[])(s32);
+extern s32 D_800BE9E4;
+void func_1516972C(struct102 *arg0);
+
+struct Child1518AA10 {
+    u8  pad0[0x10];
+    s32 unk10;
+    s32 unk14;
+    struct Child1518AA10 *unk18;
+    u8  unk1C;
+};
+
+struct Obj1518AA10 {
+    u8  pad0[0x10];
+    s32 unk10;
+    struct Child1518AA10 *unk14;
+    u8  pad18[0x1C - 0x18];
+    s32 unk1C;
+    u8  pad20[0x22 - 0x20];
+    s16 unk22;
+    u8  unk24;
+};
+
+void func_1518AA10(struct Obj1518AA10 *arg0) {
+    struct Obj1518AA10 *obj;
+    struct Child1518AA10 *child;
+
+    obj = arg0;
+    if (obj->unk1C != 0) {
+        if (obj->unk22 < 0) {
+            child = obj->unk14;
+            if (child->unk18 == 0) {
+                obj->unk10 = 0;
+                obj->unk14 = 0;
+            } else {
+                child->unk18->unk14 = 0;
+                obj->unk14 = child->unk18;
+            }
+            if (child->unk1C != 0) {
+                D_8008D5C0[child->unk1C](child->unk10);
+            }
+            func_1516972C((struct102 *)child);
+            obj->unk1C -= 1;
+        } else if (obj->unk24 & 1) {
+            obj->unk22 -= D_800BE9E4;
+        }
+    }
+}
 
 s32 func_15167A68(s32, s32, s32, s32, s32, s32);
 

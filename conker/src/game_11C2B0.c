@@ -25,7 +25,31 @@ s32 func_150EF784(u8 *arg0, s32 arg1, s32 arg2) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150EF7B0.s")
+void func_150EF7B0(u8 *arg0) {
+    s32 i;
+    s32 v;
+    s32 *p = (s32 *)(arg0 + 0x110);
+
+    for (i = 0; i != 8; i += 4) {
+        v = *(s32 *)((u8 *)p + i + 0x1C);
+        if (v != 0) {
+            func_1516972C((struct102 *)v);
+        }
+    }
+    v = p[9];
+    if (v != 0) {
+        func_1516972C((struct102 *)v);
+    }
+    v = p[10];
+    if (v != 0) {
+        func_1516972C((struct102 *)v);
+    }
+    v = p[11];
+    if (v != 0) {
+        func_1516972C((struct102 *)v);
+    }
+    func_1513CA6C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150EF860.s")
 

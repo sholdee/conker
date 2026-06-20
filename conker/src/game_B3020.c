@@ -74,7 +74,45 @@ s32 func_15086D48(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15087E54.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15087EF0.s")
+extern s8 D_800D23A8;
+extern u8 *D_800872A0;
+
+struct Struct15087EF0 {
+    f32 unk0;
+    char pad4[0xC - 4];
+    f32 unkC;
+    f32 unk10;
+    char pad14[0x84 - 0x14];
+};
+
+struct Struct15087EF0arg1 {
+    char pad0[0x76];
+    s16 unk76;
+};
+
+void func_15087EF0(s32 arg0, struct Struct15087EF0arg1 *arg1) {
+    struct Struct15087EF0 *p;
+    u16 r;
+    if (D_800872A0 == 0) {
+        return;
+    }
+    p = (struct Struct15087EF0 *)(arg0 * sizeof(struct Struct15087EF0) + (s32)D_800872A0);
+    r = func_1505A630(p->unk10, p->unkC, 0);
+    if (D_800D23A8 == 0) {
+        if (p->unk0 < 0.5f) {
+            r = (u16)(r + 0x4A00);
+        } else {
+            r = (u16)(r + 0x3600);
+        }
+    } else {
+        if (0.5f <= p->unk0) {
+            r = (u16)(r + 0x4A00);
+        } else {
+            r = (u16)(r + 0x3600);
+        }
+    }
+    arg1->unk76 = r;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15087FC4.s")
 
