@@ -63,7 +63,25 @@ void func_151D747C(s32 arg0) {
     func_151494E0((s32)&sp18, 0x3D);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D74B0.s")
+void func_151D74B0(struct struct127 *arg0, u8 arg1, s8 arg2, u8 arg3, void *arg4) {
+    struct {
+        s32 unk0;
+        u8 unk4;
+        u8 unk5;
+        u8 unk6;
+    } sp30;
+    struct260 *temp_v0;
+
+    sp30.unk0 = (s32)arg0;
+    sp30.unk4 = arg0->unique_id;
+    sp30.unk5 = arg1;
+    sp30.unk6 = arg2;
+
+    temp_v0 = func_151D71B0(0x12C, 0, 0, 12.0f, (void *)8, arg3, (s32)arg4);
+    if (temp_v0 != NULL) {
+        memcpy((void *)((s32)temp_v0 + 0x40), &sp30, 8);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D7538.s")
 

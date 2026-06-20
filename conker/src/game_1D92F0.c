@@ -122,7 +122,57 @@ void func_151AE264(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AECA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AF270.s")
+typedef struct {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ u8  unk8;
+    /* 0x09 */ u8  pad9[0x3];
+    /* 0x0C */ struct102 *unkC;
+    /* 0x10 */ u8  unk10;
+    /* 0x11 */ u8  pad11[0x3];
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ f32 unk18;
+    /* 0x1C */ f32 unk1C;
+    /* 0x20 */ f32 unk20;
+    /* 0x24 */ f32 unk24;
+    /* 0x28 */ s16 unk28;
+    /* 0x2A */ u8  unk2A;
+    /* 0x2B */ u8  unk2B;
+    /* 0x2C */ s8  unk2C;
+    /* 0x2D */ u8  unk2D;
+} struct_AF270;
+
+extern f32 D_800A9DCC;
+extern f32 D_800A9DD0;
+void func_1516962C(s32, struct102 *, s32);
+void *func_1513418C(struct_AF270 *, s32, u8, s32);
+
+void *func_151AF270(struct102 *arg0, s32 arg1, s32 arg2) {
+    void *result;
+    struct_AF270 sp1C;
+
+    if (arg0 == 0) {
+        return 0;
+    }
+    func_1516962C(0x28, arg0, 0x16);
+    sp1C.unk0 = 0;
+    sp1C.unk4 = 0;
+    sp1C.unk8 = *((u8 *)arg0 + 0x3B);
+    sp1C.unkC = arg0;
+    sp1C.unk10 = 1;
+    sp1C.unk14 = 0.0f;
+    sp1C.unk18 = 0.0f;
+    sp1C.unk1C = 0.0f;
+    sp1C.unk20 = D_800A9DCC;
+    sp1C.unk24 = D_800A9DD0;
+    sp1C.unk2A = 6;
+    sp1C.unk28 = 0x140;
+    sp1C.unk2B = 0xA;
+    sp1C.unk2C = -1;
+    sp1C.unk2D = 9;
+    result = func_1513418C(&sp1C, 0, (u8)arg1, arg2);
+    return result;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AF338.s")
 

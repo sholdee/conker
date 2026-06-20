@@ -21,7 +21,36 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A4900.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A499C.s")
+extern f32 D_800A8D64;
+
+struct frame151A499C {
+    void *unk0;
+    u8 unk4;
+    f32 unk8;
+    f32 unkC;
+    u8 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+};
+
+void func_151A499C(void *arg0, u8 arg1) {
+    struct260 *ret;
+    struct frame151A499C sp2C;
+
+    sp2C.unk0 = arg0;
+    sp2C.unk4 = *((u8 *)arg0 + 0x3B);
+    sp2C.unkC = 0.0f;
+    sp2C.unk10 = 1;
+    sp2C.unk14 = 0.0f;
+    sp2C.unk18 = 0.0f;
+    sp2C.unk1C = 0.0f;
+    sp2C.unk8 = D_800A8D64;
+    ret = func_151491F4(0x12C, -1, 5, 0, 1, 0x20, arg1, 0);
+    if (ret != 0) {
+        memcpy((u8 *)ret + 0x28, &sp2C, 0x20);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A4A38.s")
 

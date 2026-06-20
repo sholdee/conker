@@ -7,13 +7,30 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B2100.s")
 
-void func_151B222C(void);
+void func_151B222C();
 
 void func_151B220C(void) {
     func_151B222C();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B222C.s")
+void func_151B222C(arg0)
+struct260 *arg0;
+{
+    s32 i;
+    s32 v;
+    s32 *p = (s32 *)((u8 *)arg0 + 0x28);
+
+    for (i = 0; i < 3; i = (u8)(i + 1)) {
+        v = p[i + 4];
+        if (v != 0) {
+            func_1516972C((struct102 *)v);
+        }
+    }
+    v = p[7];
+    if (v != 0) {
+        func_1516972C((struct102 *)v);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B229C.s")
 

@@ -15,7 +15,17 @@ void func_150E6ED8(s32 arg0) {
     func_1514470C((&D_800D9A20)[func_150ADA20() & 1], arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E6F18.s")
+extern f32 *D_80088A44[];
+
+void func_150E6F18(f32 *out) {
+    f32 *p;
+    f32 t;
+    p = D_80088A44[(u32)func_150ADA20() % 6];
+    t = func_150ADA68();
+    out[0] = p[0] + (p[3] - p[0]) * t;
+    out[1] = p[1] + (p[4] - p[1]) * t;
+    out[2] = p[2] + (p[5] - p[2]) * t;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E6FAC.s")
 
