@@ -358,7 +358,37 @@ void func_1519072C(void *arg0) {
     func_1518F45C(*pp, 0x49);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15190770.s")
+extern void func_15191B8C(s32, u8);
+extern u8 func_151D8E20(void);
+
+struct Struct15190770Local {
+    s32 unk0;
+    u8 unk4;
+    u8 pad5[0x3];
+};
+
+void *func_15190770(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    void *temp_s0;
+    struct Struct15190770Local sp2C;
+    void *sp38;
+
+    sp2C.unk0 = *(s32 *)arg0;
+    sp2C.unk4 = *(u8 *)(*(s32 *)arg0 + 0x3B);
+    sp38 = arg0;
+    func_15191B8C((s32)&sp2C, 0xE);
+    temp_s0 = func_15167A68(0x20, arg3, arg1 + 0x300, 1, (u8)arg2, 1);
+    if (temp_s0 == 0) {
+        return NULL;
+    }
+    memcpy((s32)temp_s0 + 0x10, sp38, 0xC);
+    *(void **)((s32)temp_s0 + 0x24) = (void *)((s32)temp_s0 + 0x30);
+    *(void **)((s32)temp_s0 + 0x28) = (void *)((s32)temp_s0 + 0x300);
+    *(s32 *)((s32)temp_s0 + 0x20) = 0;
+    *(f32 *)((s32)temp_s0 + 0x1C) = 0.0f;
+    bzero((s32)temp_s0 + 0x30, 0x2D0);
+    *(u8 *)((s32)temp_s0 + 0x2C) = func_151D8E20();
+    return temp_s0;
+}
 
 extern void func_15191400(void *);
 

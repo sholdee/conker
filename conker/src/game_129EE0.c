@@ -36,7 +36,23 @@ s32 *func_150FDBA0(s32 arg0, s16 arg1) {
     return node;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_129EE0/func_150FDC2C.s")
+void func_150FDC2C(struct210 *arg0) {
+    struct102 **p;
+
+    p = (struct102 **)((u8 *)arg0 + 0x110);
+    if (p[9] != 0) {
+        func_1516972C(p[9]);
+    }
+    if (p[10] != 0) {
+        func_1516972C(p[10]);
+    }
+    if (*(u16 *)((u8 *)p + 0x54) != 0) {
+        func_100111C8(*(u16 *)((u8 *)p + 0x54));
+    }
+    if (*(u16 *)((u8 *)p + 0x56) != 0) {
+        func_100111C8(*(u16 *)((u8 *)p + 0x56));
+    }
+}
 
 extern void func_150FDC2C(struct210 *);
 

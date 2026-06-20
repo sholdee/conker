@@ -760,6 +760,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   slot ABOVE the struct, growing the frame and pinning the struct at the target's
   offset. Declaring it AFTER places it below (wrong offset). Use before-the-struct to
   bump the frame when it's a word short.
+- SHRINK a frame that is exactly 8 too large when a stack-struct local passed by address
+  has a TAIL word holding a value reloaded later (e.g. a pointer used by a trailing
+  memcpy): SPLIT that tail off into a SEPARATE pointer/scalar local. IDO homes the
+  separate local into the UNUSED caller incoming-arg-save slot, dropping the frame by 8,
+  while the now-smaller struct keeps the same base offset. (Inverse of the dummy-grow
+  tricks above.)
 - Varargs printf-style wrapper: `#include "libc/stdarg.h"` + a `va_arg` copy loop give
   the pointer-bump alignment idiom (`(p+3)&~3`); size the stack buffer so its last
   element OVERLAPS the arg-home region to land the right frame/offset.

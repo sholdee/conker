@@ -79,7 +79,35 @@ void func_1519F3B8(struct Obj1519F3B8 *arg0) {
     p->unkC = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_1519F400.s")
+struct Obj1519F400 {
+    u8 pad0[0x58];
+    s32 unk58;
+    s32 unk5C;
+    s32 unk60;
+    s32 unk64;
+};
+
+void func_1519F48C();
+void func_151A0928();
+
+void func_1519F400(struct Obj1519F400 *arg0) {
+    s32 *p;
+    p = (s32 *)((u8 *)arg0 + 0x58);
+    if (p[0] != 0) {
+        func_1519F48C(p[0]);
+    }
+    if (p[2] != 0) {
+        func_1519F48C(p[2]);
+    }
+    if (p[1] != 0) {
+        func_151A0928(p[1]);
+        func_1516972C((struct102 *)p[1]);
+    }
+    if (p[3] != 0) {
+        func_151A0928(p[3]);
+        func_1516972C((struct102 *)p[3]);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_1519F48C.s")
 

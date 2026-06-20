@@ -5,7 +5,31 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D3480.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D3D50.s")
+struct Sub151D3D50 {
+    s16 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+};
+
+struct Vec151D3D50 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+};
+
+s32 func_151D3D50(void *arg0) {
+    struct Sub151D3D50 *p = (struct Sub151D3D50 *)((u8 *)arg0 + 0x170);
+    if (p->unk0 > 0) {
+        p->unk4 = p->unk4 + p->unk8 * D_800BE9A4;
+        p->unk4 = func_15144B68(p->unk4);
+        *(f32 *)((u8 *)arg0 + 0x24) = *(f32 *)((u8 *)arg0 + 0x54) + sinf(p->unk4) * p->unkC;
+        p->unk0 = p->unk0 - D_800BE9E4;
+    } else {
+        *(struct Vec151D3D50 *)((u8 *)arg0 + 0x20) = *(struct Vec151D3D50 *)((u8 *)arg0 + 0x50);
+    }
+    return 1;
+}
 
 void func_15143134(void *, s32, s32);
 
