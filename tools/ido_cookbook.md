@@ -1019,6 +1019,13 @@ Schedule / hoist artifacts:
   incoming arg WHILE STILL LIVE, ahead of the `move aN,aM` that clobbers it (`sw a2,off;
   andi a3,a2,0xff; move a2,a1`), IDO from every C form instead HOMES then RELOADS the
   value for the mask. A 1-instruction miss; bail.
+- Debug-home-of-unmasked-original + in-place mask: when the target debug-homes a u8 param's
+  ORIGINAL (un-masked) value to its arg slot AND masks IN PLACE keeping the result in the
+  SAME aN register (`sw a2,off; andi t,a2,0xff; move a2,t`), every C `(u8)arg`/`&=0xFF`/u8-
+  param/byte-local form computes the mask into a TEMP and uses THAT, leaving aN holding the
+  unmasked value so IDO deems the home DEAD and elides the whole prologue (also freeing
+  later scheduling). Not reproducible from C; bail. (Distinct from the live-arg-narrow miss:
+  there is no debug-home and the mask lands in a different reg.)
 - Size-arg homed INTO the call's delay slot then reloaded for a post-call add (`(s32)
   memcpy(dst,src,n)+n` tails): when the target homes the count arg IN the `jal memcpy`
   DELAY SLOT then reloads for the final `addu v0,v0,tN`, IDO from every body homes `a2`
