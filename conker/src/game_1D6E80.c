@@ -197,7 +197,46 @@ s32 func_151AADBC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AADF8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB090.s")
+extern u8   func_150ADA20(void);
+extern f32  func_150ADA68(void);
+
+typedef struct {
+    /* 0x00 */ u8  pad0[0x4];
+    /* 0x04 */ u8  unk4;
+    /* 0x05 */ u8  pad5[0x3];
+    /* 0x08 */ f32 unk8;
+    /* 0x0C */ f32 unkC;
+    /* 0x10 */ f32 unk10;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ s16 unk16;
+    /* 0x18 */ s16 unk18;
+    /* 0x1A */ u8  pad1A[0x2];
+    /* 0x1C */ f32 unk1C;
+} struct_AB090;
+
+typedef struct {
+    /* 0x00 */ u8  pad0[0x24];
+    /* 0x24 */ s32 unk24;
+    /* 0x28 */ u8  pad28[0x88];
+    /* 0xB0 */ struct_AB090 unkB0;
+} struct_AB090_root;
+
+s32 func_151AB090(struct_AB090_root *arg0) {
+    s8 ret = 1;
+    struct_AB090 *v1 = &arg0->unkB0;
+
+    if (*((u8 *)arg0 + 0xB4) == 0) {
+        ret = 0;
+    }
+    v1->unk4 = 0;
+    v1->unk14 -= D_800BE9E4;
+    if (v1->unk14 < 0) {
+        v1->unk14 = (func_150ADA20() % (u32)(v1->unk18 + 1)) + v1->unk16;
+        v1->unk10 = func_150ADA68() * v1->unkC + v1->unk8;
+    }
+    arg0->unk24 += (s32)((v1->unk10 - (f32)arg0->unk24) * v1->unk1C);
+    return ret;
+}
 
 extern s32 func_1513F6C0(void *arg0, s32 arg1, s32 arg2);
 

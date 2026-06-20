@@ -202,7 +202,63 @@ union par150CFE3C *arg0;
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CFF10.s")
+struct frame150CFF10 {
+    u8  unk0;
+    s32 unk4;
+    u8  unk8;
+    s32 unkC;
+    u8 *unk10;
+    u8  unk14;
+    u8  unk15;
+    s32 unk18;
+    s32 unk1C;
+    s32 unk20;
+    u8  unk24;
+    u8  unk25;
+};
+
+extern s32 func_150CFDB8(unsigned char *);
+
+struct out150CFF10 {
+    char pad0[0x18];
+    u8 *unk18;
+    u8 *unk1C;
+    u8 *unk20;
+};
+
+void *func_150CFF10(u8 arg0, s32 arg1, s16 arg2, s32 arg3, s8 arg4, u8 arg5, u8 arg6, void *arg7) {
+    struct frame150CFF10 tmp;
+    struct260 *temp_v0;
+    s32 temp;
+    struct out150CFF10 *base;
+
+    tmp.unk25 = arg5;
+    tmp.unk24 = arg4;
+    tmp.unk15 = 0;
+    tmp.unk8 = 1;
+    tmp.unk4 = arg1;
+    tmp.unkC = arg1;
+    tmp.unk0 = arg0;
+    tmp.unk14 = func_150CFD84((unsigned char *)arg1, &tmp.unk10);
+    tmp.unk18 = 0;
+    tmp.unk1C = 0;
+    tmp.unk20 = 0;
+
+    temp = func_150CFDB8((unsigned char *)arg1) + 1;
+
+    temp_v0 = func_15149130(arg2, -1, -1, 5, 3, 0x47, (struct37 *)(arg3 + 0x2A + (temp - 1) * 2), arg6, (s32)arg7);
+    if (temp_v0 != NULL) {
+        base = (struct out150CFF10 *)((u8 *)temp_v0 + 0x28);
+        memcpy(base, &tmp, 0x28);
+        base->unk20 = (u8 *)base + 0x28;
+        base->unk18 = base->unk20 + arg3;
+        base->unk1C = base->unk18 + temp;
+        *base->unk18 = 0;
+        *base->unk1C = 0;
+        func_150CFE3C((union par150CFE3C *)temp_v0);
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150D0034.s")
 
@@ -223,7 +279,7 @@ s32 func_150D00C0(s32 *a0, s32 a1, u8 a2) {
     }
 }
 
-extern void *func_150CFF10(u8, s32, s16, s32, s32, s32, u8, void *);
+extern void *func_150CFF10(u8, s32, s16, s32, s8, u8, u8, void *);
 
 struct frame150D0134 {
     u8 unk0;

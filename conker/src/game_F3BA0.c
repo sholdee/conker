@@ -7,7 +7,38 @@ void func_1513470C(struct102 *arg0);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F3BA0/func_150C66F0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F3BA0/func_150C673C.s")
+struct Sub150C673C {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ u8 unk4;
+    /* 0x05 */ u8 pad5[3];
+    /* 0x08 */ f32 unk8;
+    /* 0x0C */ f32 unkC;
+    /* 0x10 */ f32 unk10;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ s16 unk16;
+    /* 0x18 */ s16 unk18;
+    /* 0x1A */ s16 unk1A;
+    /* 0x1C */ f32 unk1C;
+};
+
+s32 func_150C673C(u8 *arg0) {
+    s8 ret;
+    struct Sub150C673C *sub;
+
+    ret = 1;
+    sub = (struct Sub150C673C *)(arg0 + 0xB0);
+    if (sub->unk4 == 0) {
+        ret = 0;
+    }
+    sub->unk4 = 0;
+    sub->unk14 -= D_800BE9E4;
+    if (sub->unk14 < 0) {
+        sub->unk14 = (func_150ADA20() % (u32)(sub->unk18 + 1)) + sub->unk16;
+        sub->unk10 = func_150ADA68() * sub->unkC + sub->unk8;
+    }
+    *(s32 *)(arg0 + 0x24) += (s32)((sub->unk10 - (f32)*(s32 *)(arg0 + 0x24)) * sub->unk1C);
+    return ret;
+}
 
 extern s32 func_1513F6C0(void *arg0, s32 arg1, s32 arg2);
 
