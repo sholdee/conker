@@ -57,7 +57,22 @@ s32 func_150A2EE4(s32 a0, s32 a1) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A2FA4.s")
+s32 func_150A2FA4(s32 a0, s32 a1) {
+    struct178 *base;
+    struct108 *p;
+    s32 ret;
+
+    p = &D_800DBFF0[a0];
+    a1 &= 0xFFF;
+    if ((u32)D_800D3094 < (u32)a1) {
+        return 1;
+    }
+    ret = 0;
+    if (((base = (struct178 *)*(s32 *)&D_800D3098)[a1].unk6[0xF] & 3) == 3) {
+        return func_150A2E4C(base + a1, p->unk2F8, p->unk2FC, p->unk300);
+    }
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A3058.s")
 

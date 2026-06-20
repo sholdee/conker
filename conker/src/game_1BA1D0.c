@@ -163,7 +163,22 @@ s32 func_1518F15C(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F49C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F51C.s")
+extern s32 func_1518FDC4(void *, u8 *, u8);
+extern s32 func_1518F5D0(void *, void *, s16, s8, s8, s8, u8, s32, u8, s32);
+extern s32 D_8008D630[];
+
+s32 func_1518F51C(void *arg0, u8 arg1, s32 arg2, s32 arg3, s8 arg4, s8 arg5, u8 arg6, s32 arg7, u8 arg8, s32 arg9) {
+    u8 dummy[4];
+    u8 sp33;
+
+    if (arg0 == 0) {
+        return 0;
+    }
+    if (func_1518FDC4(arg0, &sp33, arg1) == 0) {
+        return 0;
+    }
+    return func_1518F5D0(arg0, (void *)(D_8008D630[sp33] + arg1 * 0x50), (s16)arg2, (s8)arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F5D0.s")
 

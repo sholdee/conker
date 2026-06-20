@@ -9,7 +9,19 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FA1B8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FA468.s")
+void func_150FA468(struct102 *arg0, s32 arg1, u8 arg2) {
+    if (arg2 == 0x4C) {
+        *(s8 *)((s32)arg0 + 0x11) = -1;
+        func_1515D4D4(0, 0, 0, 0xFF);
+    } else if (arg2 == 0x4D) {
+        *(u8 *)((s32)arg0 + 0x11) = 0x1E;
+    } else if (arg2 == 0x4E) {
+        *(s8 *)((s32)arg0 + 0x11) = -1;
+    } else if (arg2 == 0x4F) {
+        *(s8 *)((s32)arg0 + 0x11) = -1;
+        func_1515D4D4(0xFF, 0xFF, 0xFF, 0xFF);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FA520.s")
 

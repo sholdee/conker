@@ -231,7 +231,23 @@ void func_151BE0AC(s32 arg0, s32 arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE138.s")
+void func_151BE138(struct260 *arg0) {
+    struct102 **p;
+
+    p = (struct102 **)((u8 *)arg0 + 0x28);
+    if (p[2] != 0) {
+        func_1516972C(p[2]);
+    }
+    if (p[3] != 0) {
+        func_1516972C(p[3]);
+    }
+    if (p[4] != 0) {
+        func_1516972C(p[4]);
+    }
+    if (p[5] != 0) {
+        func_1516972C(p[5]);
+    }
+}
 
 extern void func_151BE138(struct260 *arg0);
 

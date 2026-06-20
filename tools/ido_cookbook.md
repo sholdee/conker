@@ -510,6 +510,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   addressed destination's `%lo`/`addiu` FIRST, write `DST_B = DST_A = expr;` (IDO
   evaluates right-to-left, materializing `DST_A`'s address first). Two separate
   statements recompute or reverse the order.
+- Embed a global-pointer-load ASSIGNMENT inside the controlling condition (`(base =
+  (T*)*(s32*)&D_glob)[idx]`) to BOTH defer its `%hi` lui to AFTER an intervening index
+  computation (the lui floats one slot too early as a separate prior statement) AND keep
+  `base` a live register variable so a later `base + idx` call-arg emits the
+  index-first `addu a0,idx,base` operand order. A separate statement gets the operand
+  order wrong; a fully-inlined expression mis-places the lui.
 - Hoist a `p = &arg->sub` pointer assignment ONCE above an if/switch chain to keep the
   sub-object base live in a value reg: each branch re-emits `addiu vN,base,off` off vN,
   instead of IDO folding every access to one big `off(base)`. Per-branch reassignment or
@@ -1111,3 +1117,10 @@ Special empty-guard case:
   The ONLY thing preserving the guard is a MEMORY side effect inside the if — but that
   emits an extra store the target lacks. If the lone residual is one extra store vs the
   bare guard, harvest the +1-store form as a permuter seed and bail.
+- Push a lone address-taken sub-word local DOWN one word: a single `u8`/`s32` whose
+  address is taken lands in the TOP free local word (e.g. sp+0x34, byte at 0x37). If the
+  asm wants it one word lower (byte at 0x33, i.e. LSB of word 0x30), declare an UNUSED
+  `u8 dummy[4];` (never read/written) BEFORE it — IDO reserves the higher word for the
+  dummy and drops the real local to the lower word, with NO body change and no frame
+  growth (region already had the slack). (Generalizes the "extra dummy before a struct"
+  rule to a scalar one-word shift.)
