@@ -199,7 +199,41 @@ void func_151A09B4(struct Obj151A09B4 *arg0, struct Arg151A09B4 *arg1, u8 arg2) 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A0A10.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A0AF8.s")
+extern f32 D_800A8D10;
+extern f32 D_800BE9A4;
+extern f32 func_150ADA68(void);
+void func_1514C678(f32, f32, s32, f32, s32, s32, s32, s32, s32, f32, s32, s32);
+
+struct Sub151A0AF8 {
+    f32 unk0;
+    f32 unk4;
+    s32 unk8;
+    u8 unkC;
+    u8 padD[0x10 - 0xD];
+    f32 unk10;
+};
+
+struct Obj151A0AF8 {
+    u8 pad0[0xC];
+    u8 unkC;
+    u8 padD[0x28 - 0xD];
+    struct Sub151A0AF8 unk28;
+};
+
+void func_151A0AF8(struct Obj151A0AF8 *arg0) {
+    struct Sub151A0AF8 *p;
+    arg0->unk28.unk10 += D_800A8D10 * D_800BE9A4;
+    if (1.0f < arg0->unk28.unk10) {
+        p = &arg0->unk28;
+        do {
+            func_1514C678(p->unk0, p->unk4, p->unk8,
+                          func_150ADA68() * 25.0f + 15.0f,
+                          0, 0xFF, 5, 4, p->unkC, 0.0f, 0, arg0->unkC);
+            p->unk10 -= 1.0f;
+        } while (1.0f < p->unk10);
+    }
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A0C0C.s")
 

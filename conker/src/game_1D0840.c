@@ -3,7 +3,68 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A3390.s")
+extern f32 D_800A8D50;
+extern f32 D_800A8D54;
+void func_151A3504(void *, u8);
+void func_151A4590(void *, u8);
+void func_151A499C(void *, u8);
+u16 func_10010154(u16, void *, u16, s16, u16);
+s32 func_15160A58(void *, s32, void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
+
+struct frame151A3390 {
+    s32 unk0;
+    u8 unk4;
+    u8 unk5;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    s16 unk18;
+    s16 unk1A;
+    s16 unk1C;
+    f32 unk20;
+    f32 unk24;
+    u8 unk28;
+    u8 unk29;
+    u8 unk2A;
+    u8 unk2B;
+    u8 unk2C;
+    u8 unk2D;
+    u8 unk2E;
+};
+
+void func_151A3390(void *arg0, u8 arg1) {
+    struct frame151A3390 sp68;
+    f32 sp5C[3];
+
+    sp68.unk0 = (s32)arg0;
+    sp68.unk4 = *((u8 *)arg0 + 0x3B);
+    sp68.unk5 = 1;
+    sp68.unk8 = 0.0f;
+    sp68.unkC = 0.0f;
+    sp68.unk10 = 0.0f;
+    sp68.unk2B = 1;
+    sp68.unk2C = 0xFF;
+    sp68.unk2D = 8;
+    sp68.unk2E = 0x1F;
+    sp68.unk18 = 0xAA;
+    sp68.unk1A = 0x28;
+    sp68.unk1C = 7;
+    sp68.unk28 = 2;
+    sp68.unk29 = 4;
+    sp68.unk2A = 1;
+    sp68.unk14 = D_800A8D50;
+    sp68.unk20 = 30.0f;
+    sp68.unk24 = D_800A8D54;
+    func_151A3504(&sp68, arg1);
+    func_151A4590(arg0, arg1);
+    func_151A499C(arg0, arg1);
+    func_10010154(0x1AA, arg0, 0x55F0, 0x3E8, 0xFA0);
+    sp5C[0] = 0.0f;
+    sp5C[1] = 0.0f;
+    sp5C[2] = 0.0f;
+    func_15160A58(arg0, 1, sp5C, 2, 0x12C, 0x50, 0xFF, 0xFF, 0x75, 0xFF, 0, -1, 0, 0, arg1, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A3504.s")
 
