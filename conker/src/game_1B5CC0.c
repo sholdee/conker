@@ -47,7 +47,38 @@ void func_15188A9C(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B5CC0/func_15188AD0.s")
+typedef struct Node15188AD0 {
+    char pad0[8];
+    s32 *unk8;
+    struct Node15188AD0 *unkC;
+    s32 unk10;
+} Node15188AD0;
+
+extern void func_10004074(Node15188AD0 *arg0);
+
+void func_15188AD0(s32 arg0) {
+    Node15188AD0 *node;
+    Node15188AD0 *prev;
+    Node15188AD0 *next;
+
+    prev = 0;
+    node = (Node15188AD0 *)D_800DF7C8[0];
+    while (node != 0) {
+        next = node->unkC;
+        if (arg0 == node->unk10) {
+            if (prev == 0) {
+                D_800DF7C8[0] = (s32)next;
+            } else {
+                prev->unkC = next;
+            }
+            func_100043B4(node->unk8, 2);
+            func_10004074(node);
+        } else {
+            prev = node;
+        }
+        node = next;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B5CC0/func_15188B74.s")
 

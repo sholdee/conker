@@ -206,7 +206,30 @@ void func_151BD7F4(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BDD8C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE0AC.s")
+typedef struct {
+    s32 unk0;
+    u8  unk4;
+} SubA_151BE0AC;
+
+typedef struct {
+    s32 unk0;
+    u8  b4;
+} ArgB_151BE0AC;
+
+void func_151BE0AC(s32 arg0, s32 arg1, u8 arg2) {
+    s32 *pp = &arg0;
+    s32 t;
+    if (arg2 == 0x3B) {
+        t = *pp + 0x28;
+        if ((*(s32 *)t == *(s32 *)arg1) ||
+            (*(u8 *)(t + 4) == *(u8 *)(pp[1] + 4))) {
+            func_1516972C((struct102 *)*pp);
+        }
+    } else {
+        t = *pp + 0x28;
+        func_15169850(arg1, arg2, t, t + 4, *pp);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE138.s")
 

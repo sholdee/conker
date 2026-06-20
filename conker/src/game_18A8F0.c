@@ -26,7 +26,33 @@ s32 *func_1515D480(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515D4D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515D520.s")
+struct Node1515D520 {
+    struct Node1515D520 *next;
+};
+
+s32 *func_1515D520(void) {
+    struct Node1515D520 *node;
+    struct Node1515D520 *p;
+    struct Node1515D520 *q;
+
+    node = (struct Node1515D520 *)allocate_memory(0x34, 1, 2, 2);
+    if (node != 0) {
+        bzero(node, 0x34);
+        if (D_800DCD78 != 0) {
+            p = (struct Node1515D520 *)D_800DCD78;
+            q = p->next;
+            while (q != 0) {
+                p = q;
+                q = q->next;
+            }
+            p->next = node;
+        } else {
+            D_800DCD78 = (s32)node;
+        }
+        node->next = 0;
+    }
+    return (s32 *)node;
+}
 
 s32 func_1515D5F8(s32, s32, s32, s32, s32, s32, s32, s32, s32, u8);
 

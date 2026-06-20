@@ -29,7 +29,29 @@ void func_15063570(struct127 *arg0) {
     func_1505E650(arg0, 0x221, 1.0f, 0.0f, 0.0f, 0.0f, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_15063628.s")
+struct s15063628 {
+    u8  pad0[0xB0];
+    s32 unkB0;
+    u8  padB4[0x130 - 0xB4];
+    f32 unk130;
+    f32 unk134;
+    f32 unk138;
+    f32 unk13C;
+    f32 unk140;
+    s32 unk144;
+};
+
+void func_15081690(s32, f32, f32, s32, f32, f32, f32, s32, f32, s32, s32, s32, s32, s32, s32);
+void func_150636A4(struct127 *arg0);
+
+void func_15063628(struct127 *arg0, f32 arg1) {
+    struct s15063628 *p = (struct s15063628 *)arg0->unk31C;
+
+    func_15081690(arg0, p->unk13C, p->unk140, p->unk144,
+                  p->unk130, p->unk134, p->unk138, (s32)&p->unkB0,
+                  arg1, 0, 0, 0, -1, 0, 0);
+    func_150636A4(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_150636A4.s")
 

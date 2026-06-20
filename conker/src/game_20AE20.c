@@ -115,7 +115,48 @@ void func_151E4DD8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E4EE8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E5034.s")
+struct Struct151E5034 {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    s16 unk20;
+    char pad22[8];
+    s8 unk2A;
+    s8 unk2B;
+    char pad2C[0x12];
+    s8 unk3E;
+    s8 unk3F;
+    char pad40;
+    s8 unk41;
+    char pad42;
+    s8 unk43;
+    s8 unk44;
+};
+extern struct Struct151E5034 *D_8008FDD4;
+
+void func_151E5034(void) {
+    D_8008FDD4->unk0 = 0.0f;
+    D_8008FDD4->unk4 = 0.0f;
+    D_8008FDD4->unk2B = 0;
+    D_8008FDD4->unk20 = 0;
+    D_8008FDD4->unk3E = 0;
+    D_8008FDD4->unk3F = 0;
+    D_8008FDD4->unk41 = 0;
+    D_8008FDD4->unk43 = 0;
+    D_8008FDD4->unk44 = 0;
+    D_8008FDD4->unk10 = 0.0f;
+    D_8008FDD4->unk2A = 0;
+    D_8008FDD4->unk14 = 0.0f;
+    D_8008FDD4->unk18 = 0.0f;
+    D_8008FDD4->unk1C = 0.0f;
+    D_8008FDD4->unkC = 0.0f;
+    D_8008FDD4->unk8 = 0.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E50C8.s")
 

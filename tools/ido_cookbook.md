@@ -579,6 +579,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   a field written through it, IDO RE-LOADS it (`lw vN,off(base)`) before the next access
   (can't prove no-alias). Reading via a raw `*(s16*)((u8*)p + off)` byte-cast reproduces
   this; don't try to cache the pointer once.
+- A GLOBAL pointer variable written through repeatedly RELOADS the pointer from the global
+  (`lw vN,0(addr)`) before EVERY store, even with NO intervening call — the stores may
+  alias the pointer's own storage. Store straight through `D_glob_ptr->field = v;` (don't
+  cache `p = D_glob_ptr;`) to reproduce the repeated `lw`-then-store pattern.
 - Defeat CSE between a COMPARE's operand load and a later SHIFT of the SAME param/field
   by casting the shift operand `(s32)((u32)arg << k)`: the cast pair forces a distinct
   re-read (`lw a2,off; sll t,a2,k; move a2,t`); a plain `arg << k` reuses the compared
