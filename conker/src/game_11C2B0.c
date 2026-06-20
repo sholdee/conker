@@ -77,7 +77,73 @@ void func_150EF860(u8 *arg0) {
     func_1513CAA0((struct210 *)arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150EF910.s")
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        struct {
+            u8 b4;
+            u8 b5;
+            u8 b6;
+            u8 b7;
+        } b;
+    } u4;
+    u8 unk8;
+    u8 unk9;
+} ArgB_150EF910;
+
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+    u8 pad5[3];
+    s32 unk8;
+    u8 unkC;
+    u8 unkD;
+} SubA_150EF910;
+
+void func_150EF910(void *arg0, s32 arg1, u8 arg2) {
+    ArgB_150EF910 *b = (ArgB_150EF910 *)arg1;
+    SubA_150EF910 *a = (SubA_150EF910 *)((u8 *)arg0 + 0x110);
+    s32 bu0;
+    s32 bu0b;
+    s32 au0;
+    u8 au4;
+    u8 bu4;
+
+    if (arg2 == 0) {
+        au0 = a->unk0;
+        bu0 = b->unk0;
+        au4 = a->unk4;
+        bu4 = b->u4.b.b4;
+        if ((au0 == bu0) || (au4 == bu4)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    } else if (arg2 == 0x2D) {
+        if (a->unk0 == b->unk0) {
+            a->unk0 = b->u4.w4;
+            a->unk4 = b->unk9;
+        } else if (a->unk0 == b->u4.w4) {
+            a->unk0 = b->unk0;
+            a->unk4 = b->unk8;
+        }
+        if (a->unk8 == b->unk0) {
+            a->unk8 = b->u4.w4;
+            a->unkC = b->unk9;
+        } else {
+            if (a->unk8 == b->u4.w4) {
+                a->unk8 = b->unk0;
+                a->unkC = b->unk8;
+            }
+        block2_end: ;
+        }
+    } else if (arg2 == 0x43) {
+        if ((a->unk0 == b->unk0) || (a->unk4 == b->u4.b.b4)) {
+            if (a->unkD == b->u4.b.b5) {
+                func_1516972C((struct102 *)arg0);
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150EFA4C.s")
 

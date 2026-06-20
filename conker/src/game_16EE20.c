@@ -189,7 +189,26 @@ s32 func_151422F8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142314.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151423D8.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142444.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151424F4.s")
+void func_150A8050(f32 (*)[4], f32, f32, f32);
+
+void func_151424F4(Mtx *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9, f32 arg10, f32 arg11) {
+    f32 sp28[4][4];
+
+    func_150A8050(&sp28, arg3, arg4, arg5);
+    sp28[3][0] = arg9;
+    sp28[3][1] = arg10;
+    sp28[3][2] = arg11;
+    sp28[0][0] *= arg6 * arg1;
+    sp28[0][1] *= arg7 * arg1;
+    sp28[0][2] *= arg8 * arg1;
+    sp28[1][0] *= arg6 * arg2;
+    sp28[1][1] *= arg7 * arg2;
+    sp28[1][2] *= arg8 * arg2;
+    sp28[2][0] *= arg6 * arg1;
+    sp28[2][1] *= arg7 * arg1;
+    sp28[2][2] *= arg8 * arg1;
+    guMtxF2L(&sp28, arg0);
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142600.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142838.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142914.s")
