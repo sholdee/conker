@@ -61,7 +61,30 @@ void func_150B6DFC(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B7220.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B73F0.s")
+typedef struct {
+    char pad18[0x18];
+    s16 unk18;
+    s16 unk1A;
+    s32 unk1C;
+    s16 unk20;
+    s16 unk22;
+    s16 unk24;
+    char pad26[6];
+    f32 unk2C;
+    f32 unk30;
+} Struct73F0;
+
+void func_150B73F0(Struct73F0 *a0) {
+    s32 a = a0->unk18;
+    s32 b = a0->unk1A;
+    s32 c = a0->unk20;
+    s32 e = a0->unk22;
+    s32 d = a0->unk1C;
+    s32 n = a0->unk24;
+    s32 t1 = (n << 16) / d;
+    a0->unk2C = (f32)((((c - a) * t1) >> 16) + a);
+    a0->unk30 = (f32)((((e - b) * t1) >> 16) + b);
+}
 
 typedef struct {
     /* 0x00 */ void *unk0;

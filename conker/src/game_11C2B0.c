@@ -51,7 +51,31 @@ void func_150EF7B0(u8 *arg0) {
     func_1513CA6C(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150EF860.s")
+void func_150EF860(u8 *arg0) {
+    s32 i;
+    s32 v;
+    s32 *p = (s32 *)(arg0 + 0x110);
+
+    for (i = 0; i != 8; i += 4) {
+        v = *(s32 *)((u8 *)p + i + 0x1C);
+        if (v != 0) {
+            func_1516979C((struct102 *)v);
+        }
+    }
+    v = p[9];
+    if (v != 0) {
+        func_1516979C((struct102 *)v);
+    }
+    v = p[10];
+    if (v != 0) {
+        func_1516979C((struct102 *)v);
+    }
+    v = p[11];
+    if (v != 0) {
+        func_1516979C((struct102 *)v);
+    }
+    func_1513CAA0((struct210 *)arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150EF910.s")
 

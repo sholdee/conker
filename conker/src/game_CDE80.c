@@ -23,7 +23,27 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A25D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A278C.s")
+s32 func_150A1DA0(u8 *arg0, struct178 *arg1, s32 arg2);
+void func_15172E7C(u8 *arg0, s32 arg1, s32 arg2);
+
+void func_150A278C(u8 *arg0) {
+    struct178 *base;
+    s32 i;
+
+    if (arg0[0x65] != 0) {
+        return;
+    }
+    for (i = 0; i < (u32)D_800D3094; i++) {
+        struct178 *p;
+        base = (struct178 *)*(s32 *)&D_800D3098;
+        if (8 == (s32)base[i].unk6[0xF] >> 2) {
+            if (func_150A1DA0(arg0, &base[i], 0) == 0) {
+                p = (struct178 *)*(s32 *)&D_800D3098 + i;
+                func_15172E7C(arg0, p->unk6[0x11], *(s32 *)&p->unk6[0x12]);
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A2864.s")
 
