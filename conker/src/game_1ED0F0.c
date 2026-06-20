@@ -13,7 +13,19 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C02E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C0360.s")
+void func_150E7FEC(f32, s32, void *, void *, s32, s32, s32, s32, s32, s32, s32, s32);
+
+void func_151C0360(void *arg0, void *arg1, s32 arg2, s32 arg3) {
+    union { u32 w; f64 _a; } r1;
+    f32 sp3C;
+    u32 r2;
+
+    sp3C = func_150ADA68();
+    r1.w = func_150ADA20();
+    r2 = func_150ADA20();
+    func_150E7FEC(sp3C * 75.0f + 75.0f, (u8)((r1.w % 56U) + 200), arg0, arg1,
+                  ((u32)r2 % 205U) + 299, 1, 1, 0, 0, 0, (u8)arg2, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C0418.s")
 

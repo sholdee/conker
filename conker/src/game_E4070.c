@@ -25,7 +25,26 @@ void func_150B6D34(void) {
     D_800D9890 = 3;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B6D78.s")
+extern s32 *D_800D9894;
+extern s32 *D_800D98C0[];
+
+void func_150B6D78(void) {
+    s32 i;
+
+    if (D_800D9894 != 0) {
+        func_1516972C((struct102 *)D_800D9894);
+        D_800D9894 = 0;
+    }
+    i = 0;
+    do {
+        if (D_800D9898[i] != 0) {
+            func_1516972C((struct102 *)D_800D9898[i]);
+            D_800D9898[i] = 0;
+        }
+        i++;
+    } while (&D_800D98C0[0] != &D_800D9898[i]);
+    D_800D9890 = 3;
+}
 
 void func_150B6DFC(void *arg0) {
     *(s16 *)((u8 *)arg0 + 0x34) += D_800BE9E4 * 0x30;

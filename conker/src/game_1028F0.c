@@ -78,7 +78,19 @@ void func_150D5A4C(struct260 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D64E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D65F0.s")
+void func_151A5D58(f32, s32, s32, s32, s32, s32, s32, s32, s32);
+
+void func_150D65F0(s32 arg0, s32 arg1, u8 arg2, s32 arg3) {
+    union { u32 w; f64 _a; } temp_a;
+    f32 temp_f0;
+    u32 temp_b;
+
+    temp_f0 = func_150ADA68();
+    temp_a.w = func_150ADA20();
+    temp_b = func_150ADA20();
+    func_151A5D58(temp_f0 * 100.0f + 150.0f, ((temp_a.w % 71) + 0x82) & 0xFF, arg0, arg1,
+                  (temp_b % 31) + 0x32, 0, 1, arg2, arg3);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D66A4.s")
 

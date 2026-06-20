@@ -13,7 +13,19 @@ void func_150F7F58(struct210 *arg0, s16 arg1) {
     func_15140410(arg0, &arg0->unk110, &arg0->unk11C, arg1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_124920/func_150F7F8C.s")
+extern f32 func_150ADA68(void);
+void func_151541B8(void *, f32, u32, f32, f32, u8, s32);
+void func_151D3F14(void *, u8, s32);
+
+void func_150F7F8C(void *arg0, u8 arg1, s32 arg2) {
+    f32 temp1;
+    f32 temp0;
+
+    temp0 = func_150ADA68();
+    temp1 = func_150ADA68();
+    func_151541B8(arg0, temp0 * 3.0f + 9.0f, 0x3F030C35, temp1 * 70.0f + 70.0f, 0.0f, arg1, arg2);
+    func_151D3F14(arg0, arg1, arg2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_124920/func_150F802C.s")
 
