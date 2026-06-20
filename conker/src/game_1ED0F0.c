@@ -72,7 +72,28 @@ void func_151C1628(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C1654.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C1798.s")
+void func_15143134(void *, s32, s32);
+struct S800AA958 { s32 unk0; s32 unk4; s32 unk8; };
+extern u8 D_800AA954[];
+extern struct S800AA958 D_800AA958[];
+
+void func_151C1798(u8 *arg0, s32 arg1) {
+    s32 index;
+
+    switch (arg0[4]) {
+    case 0x77:
+        index = 1;
+        break;
+    case 0x28:
+        index = 2;
+        break;
+    default:
+        index = 0;
+        break;
+    }
+    func_15143134(&D_800AA958[index], arg1,
+                  *(s32 *)(arg0 + 0x1D4) + (D_800AA954[index] << 6));
+}
 
 void func_151C1814(s32 *arg0, s32 *arg1, u8 arg2) {
     s32 *v0 = (s32 *)((u8 *)arg0 + 0x170);

@@ -26,7 +26,22 @@ extern f32 func_15048A40(u8);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_15115E0C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_15115EDC.s")
+struct S_15115EDC { u8 pad[0x7C]; f32 unk7C; f32 unk80; };
+struct A_15115EDC { u8 pad[0x84]; u16 unk84; };
+void func_15115E0C(struct S_15115EDC *, struct A_15115EDC *);
+void func_15115EDC(struct S_15115EDC *arg0, struct A_15115EDC *arg1) {
+    f32 oldX;
+    f32 oldY;
+    oldX = arg0->unk7C;
+    oldY = arg0->unk80;
+    func_15115E0C(arg0, arg1);
+    if (arg1->unk84 == 0x4B) {
+        oldX = (arg0->unk7C - oldX) * 4.0f;
+        oldY = (arg0->unk80 - oldY) * 4.0f;
+        arg0->unk7C = arg0->unk7C + oldX;
+        arg0->unk80 = arg0->unk80 + oldY;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_15115F68.s")
 

@@ -5,11 +5,19 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_1510FEA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_151102CC.s")
-
 extern s32 D_800BE628;
 void func_150A7A48(f32 a[4][4], f32 b[4][4], f32 c[4][4]);
 void func_151102CC(f32 a0[4][4], f32 a1, f32 a2, f32 a3);
+
+void func_151102CC(f32 arg0[4][4], f32 arg1, f32 arg2, f32 arg3) {
+    f32 sp28[4][4];
+
+    func_150A8050(arg0, 0.0f, arg2, 0.0f);
+    func_150A8050(sp28, arg1, 0.0f, 0.0f);
+    func_150A7A48(arg0, sp28, arg0);
+    func_150A8050(sp28, 0.0f, 0.0f, arg3);
+    func_150A7A48(arg0, sp28, arg0);
+}
 
 void func_15110360(s32 arg0, f32 arg1[4][4], f32 arg2, f32 arg3, f32 arg4) {
     func_151102CC(arg1, arg2, arg3, arg4);

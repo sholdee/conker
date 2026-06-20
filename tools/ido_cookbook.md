@@ -390,6 +390,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Reassign a computed result back INTO a local that already held one of its operands to
   REUSE that operand's register as the destination (e.g. `hi = (hi << 16) | lo;` emits
   `or v0,t,t` reusing `hi`'s register). A fresh local lands the result in a new temp.
+- Cross-call FLOAT spill variant: when a float local is spilled across a `jal`, reloaded,
+  then a product is computed from it, REASSIGN the product back INTO that local (`old =
+  (cur - old) * K; field += old;`). This both coalesces spill-reg==reload-reg (pinning it
+  to f12/f14) AND reuses that reg as the product dest, fixing the both-loads-first pre-call
+  spill order and a `bnel`. Separate temps strand the reload on a higher f-reg.
 - A compound `x += A*K` (RMW accumulator) emits accumulator-FIRST operand order (`addu
   dst,x,tmp`) AND schedules the add after a nearby store; a plain `x = x + A*K` reverses
   the order and can't steer the schedule. Similarly a RMW (`x &= ~m;`) loads the lvalue
