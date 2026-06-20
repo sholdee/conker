@@ -170,7 +170,23 @@ void func_150CFE3C(union par150CFE3C *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150D0034.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150D00C0.s")
+extern s32 (*D_800888B0[])(s32 *, s32, u8);
+void func_150CFE98(void);
+
+s32 func_150D00C0(s32 *a0, s32 a1, u8 a2) {
+    s32 (*fn)(s32 *, s32, u8);
+
+    if (a2 == 0x51) {
+        if (*((u8 *)a0 + 0x28) == *((u8 *)a1)) {
+            func_150CFE98();
+        }
+    } else {
+        fn = D_800888B0[*((u8 *)a0 + 0x4D)];
+        if (fn != 0) {
+            fn(a0, a1, a2);
+        }
+    }
+}
 
 extern void *func_150CFF10(u8, s32, s16, s32, s32, s32, u8, void *);
 

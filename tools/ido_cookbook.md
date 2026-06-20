@@ -557,6 +557,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Force TWO separate loads of the SAME field (condition load + body reload) by giving
   the test and body DIFFERENTLY-TYPED reads: condition `*(s32*)(arg+off) != 0` (int) and
   body `*(u8**)(arg+off)` (pointer). Same-typed reads CSE into ONE load.
+- Non-likely `beqz`+`move aN,v0` from ONE CSE'd load: test the field INLINE and RE-READ
+  the SAME expr+type into a temp inside the taken block (`if (*(T**)(p+off)) { x =
+  *(T**)(p+off); f(x,...); }`) — IDO CSEs both to a single `lw v0; beqz v0; move a0,v0`.
+  A PRE-loaded named temp folds the value straight into a0 and flips to branch-LIKELY
+  (`beqzl`); two differently-typed casts defeat the CSE and double-load.
 - Force a pointer field RELOAD across an intervening call by casting through a VOLATILE
   pointer-to-pointer `*(T *volatile *)((u8*)arg + off)` at BOTH the test and the call:
   the `jal` may modify the struct, so the target reloads `lw aN,off(arg)` (often in the
@@ -702,7 +707,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   (use `x[0]`) bumps alignment to 4 and forces the lower placement, no change to store
   width. Same trick for an address-taken `s32` scalar that IDO 8-byte-aligns into the
   TOP half of an 8-byte slot: `s32 x[2]` (use `x[0]`) forces it onto the low 4-aligned
-  offset, matching both the store offset and the `addiu` of its address.
+  offset, matching both the store offset and the `addiu` of its address. FRAME-GROW
+  variant (body byte-perfect but frame exactly 8 short, e.g. 0x28->0x30): declare an
+  unused-tail array (`f32 x[2]`, use only `x[0]`) — it reserves an 8-aligned addressable
+  slot with NO body change and NO extra spill, unlike a scalar (no growth, gets a reg) or
+  a fully-USED array (extra swc1/lw spill). Cleaner than the named-pointer frame-grow.
 - An extra dummy/return local declared BEFORE a stack struct local reserves a 4-byte
   slot ABOVE the struct, growing the frame and pinning the struct at the target's
   offset. Declaring it AFTER places it below (wrong offset). Use before-the-struct to

@@ -81,7 +81,23 @@ void func_15101328(struct210 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_151022AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_151025F4.s")
+extern f32 D_800BE9A4;
+
+s32 func_151025F4(u8 *arg0, s32 arg1) {
+    f32 *v1 = (f32 *)(arg0 + 0xA8);
+    f32 sin0[2];
+    f32 sin1;
+
+    sin0[0] = sinf(v1[6]);
+    sin1 = sinf(v1[7]);
+    v1[0] = v1[4] * sin0[0] + v1[2];
+    v1[1] = v1[5] * sin1 + v1[3];
+    v1[6] = v1[8] * D_800BE9A4 + v1[6];
+    v1[7] = v1[9] * D_800BE9A4 + v1[7];
+    v1[6] = func_15144B68(v1[6]);
+    v1[7] = func_15144B68(v1[7]);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_151026BC.s")
 
