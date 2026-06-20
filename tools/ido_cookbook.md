@@ -79,6 +79,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `extern f32 D_glob;` and reference IT instead of the literal — emitting the literal
   mints a SPURIOUS new `.rodata` entry that scores as a tiny diff. Recover the symbol
   from the rodata split, don't write the bare `-10000.0f`.
+- Defeat IDO's compile-time fold of a `literal - literal` (or any literal-op-literal)
+  float constant the target instead materializes at RUNTIME (`sub.s` of two lui-built
+  constants, e.g. `77.0 = 76.0f - -1.0f`): bind ONE operand to an f32 LOCAL
+  (`cx = -1.0f; ... (76.0f - cx)*s`). The local still folds into a lui immediate at the
+  use site (no spill/extra load) but blocks the constant-fold, emitting the runtime
+  `sub.s` and REUSING the offset constant elsewhere. Writing the literals directly folds.
 
 ## Return values
 - A value still live in v0 (int) or f0 (float) at `jr ra` usually means the function

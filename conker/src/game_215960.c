@@ -92,7 +92,29 @@ s32 func_151EC178(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151EC648.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151ED09C.s")
+extern u8 D_800E0B97;
+extern Gfx D_80090028;
+extern u8 D_8009181C;
+extern u8 D_80091828;
+Gfx *func_151ED430(Gfx *, void *, s32, s32, s32, s32, f32, s32);
+Gfx *func_15096934(Gfx *);
+
+Gfx *func_151ED09C(Gfx *gfx) {
+    s32 alpha;
+
+    gSPDisplayList(gfx++, &D_80090028);
+    alpha = D_800E0A90 << 2;
+    if (alpha >= 0x100) {
+        alpha = 0xFF;
+    }
+    gDPSetEnvColor(gfx++, 0xFF, 0xFF, 0xFF, alpha);
+    gfx = func_151ED430(gfx, &D_8009181C, 0x92, 0x6C, 8, 3, 1.0f, 0);
+    gDPPipeSync(gfx++);
+    gDPSetCombine(gfx++, 0xFFD3FF, 0xFFA6FF7F);
+    gDPSetEnvColor(gfx++, 0xFF, 0x80, 0x20, (D_800E0B97 * (alpha + 1)) >> 8);
+    gfx = func_151ED430(gfx, &D_80091828, 0x92, 0x6C, 8, 3, 1.0f, 0);
+    return func_15096934(gfx);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151ED1E0.s")
 
