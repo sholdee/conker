@@ -50,7 +50,38 @@ s32 func_150F2480(struct Arg0 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11F780/func_150F2518.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11F780/func_150F25A0.s")
+extern void func_150A8050(f32 (*)[4], f32, f32, f32);
+extern void func_150A7960(f32 *, f32, s32, f32, f32 *, f32 *, f32 *);
+
+struct Sub150F25A0 {
+    u8 pad0[0x20];
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    u8 pad2C[0xC];
+    f32 unk38;
+    f32 unk3C;
+    f32 unk40;
+};
+
+s32 func_150F25A0(struct242 *arg0) {
+    struct Sub150F25A0 **pp;
+    f32 tmp3;
+    f32 tmp2;
+    f32 tmp1;
+    f32 tmp[16];
+
+    pp = (struct Sub150F25A0 **)&arg0->unk18;
+    func_150A8050((f32 (*)[4])&tmp, (*pp)->unk20 * 3.0f, 0.0f, (*pp)->unk28 * 3.0f);
+    tmp[12] = (*pp)->unk38;
+    tmp[13] = (*pp)->unk3C;
+    tmp[14] = (*pp)->unk40;
+    func_150A7960(&tmp[0], 0.0f, 0xC3F78000, 0.0f, &tmp1, &tmp2, &tmp3);
+    arg0->unk14->unkE = (s16)tmp1;
+    arg0->unk14->unk10 = (s16)tmp2;
+    arg0->unk14->unk12 = (s16)tmp3;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11F780/func_150F26A0.s")
 

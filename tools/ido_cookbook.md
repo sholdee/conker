@@ -61,7 +61,9 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   a FLOAT literal (`x/2.0f`) makes IDO strength-reduce to `mul.s` by 0.5. Pick
   the literal form to match the asm's div vs mul.
 - Doubling a float: `x + x` (self-add) emits `add.s fN,fN`; `2.0f * x` emits a
-  `mul.s` by a materialized 2.0. Use `x + x` when the asm doubles via add.
+  `mul.s` by a materialized 2.0. Use `x + x` when the asm doubles via add. On a
+  LEAF, even `2.0f * x` strength-reduces to `add.s` — to FORCE the literal `lui
+  0x4000; mtc1; mul.s` (const as first operand), write `(1.0f + 1.0f) * x`.
 - Unsigned modulo: `x % NU` (unsigned literal or unsigned `x`) emits `divu`; a
   signed `x % N` emits `div`. Type the operand/literal to match.
 - Unsigned-int-to-float: a `(u32)` cast on the integer source reproduces the
@@ -223,6 +225,12 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - A second call whose RETURN is discarded but whose DELAY SLOT does work needs an
   explicit bare `func();`; dropping it because the value is unused deletes the
   delay-slot work too.
+- Force epilogue DUPLICATION when IDO would otherwise sink a conditional's final
+  store into the branch delay slot (target instead reloads `lw ra` in the delay
+  slot and branches PAST the shared restore): wrap the inner arm as `else { if
+  (cond) {...} trailing_label: ; }` with an empty labeled statement. The trailing
+  label blocks the store from filling the slot, so IDO duplicates the `lw
+  ra`-restore. (Steerable form of the "epilogue lw ra duplicated" BAIL below.)
 - Alloc-and-init returning the call's pointer (`p=alloc(); if(p){init} return p;`):
   when the target keeps the alloc result in v0 throughout with NO copy, OMIT the
   explicit trailing `return p;` and fall through — v0 already holds the result (or 0).
@@ -1041,11 +1049,11 @@ Schedule / hoist artifacts:
   fall-through trailing block to the shared epilogue, IDO may DUPLICATE the `lw ra,off(sp)`
   into that branch's delay slot (branching to the post-reload tail) instead of reusing the
   shared reload. C codegen instead fills the slot with the block's last store and branches
-  TO the shared `lw ra` (1 fewer instr). Unsteerable from source (else-if, separate ifs,
-  early `return;`, operand/store reorder all leave it); a matched sibling only gets the
-  duplication because its analogous block ended in a `jal` that clobbered ra. Pure 1-instr
-  delay-slot miss whose +1 shift cascades into an inflated score; harvest as a permuter
-  seed and bail.
+  TO the shared `lw ra` (1 fewer instr). Often steerable via the empty-trailing-label
+  `else { if(...){...} label: ; }` form (see Loops & branches); else-if, separate ifs,
+  early `return;`, operand/store reorder all leave it. If even the labeled form fails,
+  harvest as a permuter seed and bail (a sibling may get the duplication only because its
+  analogous block ended in a `jal` that clobbered ra).
 - End-to-end live value with no early C need (Horner `+D` / shared subexpression): when
   the target keeps an arg/element live in ONE FPU reg across the whole function (used in
   an INLINED early subexpression AND as the final trailing add), IDO loads it late and

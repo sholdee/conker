@@ -106,7 +106,73 @@ void func_15141DA4(void *arg0, s32 arg1, s32 arg2) {
 // }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151420F8.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142180.s")
+struct vec15142180 {
+    /* 0x00 */ s32 unk00;
+    /* 0x04 */ s32 unk04;
+    /* 0x08 */ s32 unk08;
+};
+
+struct conker15142180 {
+    /* 0x00 */ s16 unk00;
+    /* 0x02 */ s16 unk02;
+    /* 0x04 */ s16 unk04;
+    /* 0x06 */ s16 unk06;
+    /* 0x08 */ struct vec15142180 unk08;
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ f32 unk18;
+    /* 0x1C */ f32 unk1C;
+    /* 0x20 */ f32 unk20;
+    /* 0x24 */ f32 unk24;
+    /* 0x28 */ f32 unk28;
+    /* 0x2C */ s16 unk2C;
+    /* 0x2E */ s16 unk2E;
+    /* 0x30 */ s16 unk30;
+    /* 0x32 */ s16 unk32;
+    /* 0x34 */ s16 unk34;
+    /* 0x36 */ s16 unk36;
+    /* 0x38 */ s16 unk38;
+    /* 0x3A */ s16 unk3A;
+    /* 0x3C */ s8 unk3C;
+    /* 0x40 */ f32 unk40;
+    /* 0x44 */ s16 unk44;
+    /* 0x46 */ s16 unk46;
+    /* 0x48 */ s32 unk48;
+};
+
+extern f32 D_800A5470;
+extern f32 D_800A5474;
+
+void func_15153F18(struct conker15142180 *a0, struct vec15142180 *a1, s32 a2, s32 a3, s32 a4);
+
+void func_15142180(u8 arg0, struct vec15142180 *arg1, s32 arg2, f32 arg3, f32 arg4) {
+    struct conker15142180 sp24;
+
+    sp24.unk08 = *arg1;
+    sp24.unk2C = 3;
+    sp24.unk2E = 3;
+    sp24.unk02 = 0xFF;
+    sp24.unk04 = -0x19;
+    sp24.unk06 = 0xA;
+    sp24.unk14 = 2.5f * arg3;
+    sp24.unk18 = (1.0f + 1.0f) * arg3;
+    sp24.unk1C = D_800A5470;
+    sp24.unk20 = D_800A5474;
+    sp24.unk24 = 3.0f * arg4;
+    sp24.unk28 = 3.5f * arg4;
+    sp24.unk00 = 0;
+    sp24.unk30 = 3;
+    sp24.unk32 = 1;
+    sp24.unk34 = 9;
+    sp24.unk36 = 0xF;
+    sp24.unk38 = 0xB4;
+    sp24.unk3A = 0x4B;
+    sp24.unk40 = 0.0f;
+    sp24.unk44 = 0xC;
+    sp24.unk46 = 0x15;
+    sp24.unk48 = arg2;
+    sp24.unk3C = arg0;
+    func_15153F18(&sp24, &sp24.unk08, 0, 0xFF, 1);
+}
 
 s32 func_151422C0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return (arg3 + arg2) >> 1;

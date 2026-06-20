@@ -148,7 +148,51 @@ void func_15158D00(struct102 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158D2C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158FA4.s")
+void func_1519F400(void *);
+
+typedef struct {
+    u8  pad0[0x18];
+    s32 unk18;
+    u8  unk1C;
+} SubA_15158FA4;
+
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        u8  b4;
+    } u4;
+    u8  unk8;
+    u8  unk9;
+} ArgB_15158FA4;
+
+void func_15158FA4(void *arg0, s32 arg1, u8 arg2) {
+    SubA_15158FA4 *a = (SubA_15158FA4 *)arg0;
+    ArgB_15158FA4 *b = (ArgB_15158FA4 *)arg1;
+    s32 t;
+
+    if (arg2 == 0) {
+        if ((b->unk0 == a->unk18) || (b->u4.b4 == a->unk1C)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    } else if (arg2 == 0x2D) {
+        t = b->unk0;
+        if (a->unk18 == t) {
+            a->unk18 = b->u4.w4;
+            a->unk1C = b->unk9;
+        } else {
+            if (a->unk18 == b->u4.w4) {
+                a->unk18 = t;
+                a->unk1C = b->unk8;
+            }
+        dummy_label_15158FA4: ;
+        }
+    } else if (arg2 == 0x4) {
+        if ((b->unk0 == a->unk18) || (b->u4.b4 == a->unk1C)) {
+            func_1519F400(arg0);
+        }
+    }
+}
 
 extern f32 D_800A63A0;
 
