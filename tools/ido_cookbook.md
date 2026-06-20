@@ -788,6 +788,7 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - When a near-identical SIBLING func already matches, mirror its exact C structure (call
   order, arg casts via prototype, last-arg literals) — often a 1-try match.
 - Cluster of HIGH-offset `arg0` fields accessed AFTER a call: assign `T *p = &arg0->sub;` (base = arg0+0x30) BEFORE the `jal` -> IDO homes a0 across the call and rematerializes `v0 = a0+0x30` after, addressing fields via small offsets. Call-crossing analog of hoist-above-branches.
+- IRRECONCILABLE caller/callee signature conflict (same TU, callee NOT in a shared header): when a callee's OWN body homes its params one way (e.g. `swc1 f12/f14` => begins `(f32,f32,...)`) but an in-file CALLER's forwarding call places the opposite class in those slots (e.g. an INTEGER in $a0 via `andi`), no single C signature satisfies both, and IDO REJECTS every decoupling workaround: a block-scope/local extern with a different arg form is "Incompatible type" redeclaration vs the file-scope def; an empty-paren `void f();` is "prototype and non-prototype not compatible" after default-arg promotion; omitting the decl makes the call implicit-int vs the def's return type. So matching the caller forces changing the callee's DEFINITION, which breaks the callee's own match. Not matchable in isolation under "keep the rest of the file matching"; harvest the per-caller body (often byte-perfect) as a permuter seed and bail.
 
 ## Float-arg CSE & zero registers
 - Multiple ZERO float args CSE into one FPU register: passing several `0.0f` args makes
@@ -992,6 +993,13 @@ Schedule / hoist artifacts:
   and keeps the `jal` slot a NOP, store-after-call SPILLS across the call while store-
   before-call matches everything except it fills the jal slot with the store instead of
   the NOP. Bail.
+- INTERIOR (non-tail) conditional call followed by a shared join/tail conservatively
+  SAVES AND RESTORES every incoming arg register around the call (`sw a1/sb a2` before,
+  reload after), even args provably DEAD at the merge that the tail never reads — IDO
+  treats the call as clobbering them while the join keeps them notionally live. Clean C
+  can't reproduce the redundant save/restore (the dead args generate no code); a sibling
+  avoids it only when its call is effectively a TAIL (callee returns immediately, args
+  dead). Harvest as a permuter seed and bail.
 - Branch-likely orientation vs constant-arg-in-delay-slot tension: when the target fires
   a `bnel`/`beql` AND keeps a constant second arg (`move a1,zero`) in the else-call's jal
   delay slot, the `==K`-fallthrough orientation HOISTS the constant (no likely-bit) while

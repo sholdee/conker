@@ -64,7 +64,86 @@ void func_151AA210(struct s_151AA210_arg *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AA30C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AA48C.s")
+typedef struct {
+    /* 0x00 */ u8  unk0;
+    /* 0x01 */ u8  pad1[0x3];
+    /* 0x04 */ void *unk4;
+    /* 0x08 */ u8  unk8;
+    /* 0x09 */ u8  pad9[0x3];
+    /* 0x0C */ f32 unkC;
+    /* 0x10 */ f32 unk10;
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ f32 unk18;
+    /* 0x1C */ f32 unk1C;
+    /* 0x20 */ f32 unk20;
+    /* 0x24 */ u8  unk24;
+    /* 0x25 */ u8  pad25[0x1];
+    /* 0x26 */ s16 unk26;
+    /* 0x28 */ s16 unk28;
+    /* 0x2A */ s16 unk2A;
+    /* 0x2C */ s16 unk2C;
+    /* 0x2E */ u8  unk2E;
+    /* 0x2F */ u8  unk2F;
+    /* 0x30 */ s8  unk30;
+    /* 0x31 */ u8  pad31[0x3];
+    /* 0x34 */ f32 unk34;
+    /* 0x38 */ u8  unk38;
+    /* 0x39 */ s8  unk39;
+} struct_10E4_AA48C;
+
+typedef struct {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ u8  unk4;
+    /* 0x05 */ u8  pad5[0x3];
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ f32 unk10;
+    /* 0x14 */ f32 unk14;
+} struct_AA48C_b;
+
+extern f32 D_800A8FA4;
+extern f32 D_800A8FA8;
+extern void *func_15134DAC(struct_10E4_AA48C *, s32);
+
+void *func_151AA48C(void *arg0, s32 arg1) {
+    struct_10E4_AA48C sp34;
+    void *temp_v0;
+    struct_AA48C_b sp18;
+
+    sp18.unk0 = arg1;
+    sp18.unk4 = 1;
+    sp34.unk0 = *((u8 *)arg0 + 0x3B);
+
+    sp34.unk4 = arg0;
+    sp34.unk8 = 0xF;
+    sp34.unkC = -11.0f;
+    sp34.unk10 = -2.0f;
+    sp34.unk14 = 8.0f;
+    sp34.unk18 = -11.0f;
+    sp34.unk1C = -2.0f;
+    sp34.unk20 = 20.0f;
+    sp34.unk24 = 0;
+    sp34.unk26 = 0x3C;
+    sp34.unk28 = 0x3C;
+    sp34.unk2A = 0x12C;
+    sp34.unk2E = 1;
+    sp34.unk2F = 0;
+    sp34.unk30 = 1;
+    sp34.unk34 = 0.5f;
+    sp34.unk38 = 1;
+    sp34.unk39 = 0;
+
+    sp18.unk8 = 0;
+    sp18.unkC = 0x11111;
+    sp18.unk10 = D_800A8FA4;
+    sp18.unk14 = D_800A8FA8;
+
+    temp_v0 = func_15134DAC(&sp34, 0x18);
+    if (temp_v0 != NULL) {
+        memcpy((u8 *)temp_v0 + 0x80, &sp18, 0x18);
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AA5A4.s")
 

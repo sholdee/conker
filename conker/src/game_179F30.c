@@ -1,6 +1,14 @@
 #include <ultra64.h>
+#define func_15083568 func_15083568_orig
 #include "functions.h"
+#undef func_15083568
 #include "variables.h"
+
+struct St1514DE94 {
+    char pad0[0x38];
+    s32 unk38;
+};
+struct St1514DE94 *func_15083568(struct127 *, s32, f32, s32);
 
 typedef struct struct_1514EBA4 {
     char pad0[0x10];
@@ -217,7 +225,25 @@ void func_1514DE50(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DE88.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DE94.s")
+void func_15160CDC(s32, s32, void *, void *, f32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
+s32 func_15160A58(s32, s32, void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
+extern f32 D_800A5E04;
+extern u8 D_800A58AC;
+extern u8 D_800A58B8;
+extern u8 D_800A58C4;
+extern u8 D_800BE9B4;
+
+void func_1514DE94(s32 arg0) {
+    struct St1514DE94 *temp;
+
+    func_15160CDC(arg0, 0xC, &D_800A58AC, &D_800A58B8, D_800A5E04, 2, 0x12C,
+                  0xFF, 0xFF, 0xFF, 0xFF, 0, 1, 1, 0xFF, 1);
+    temp = func_15083568((struct127 *)arg0, 0x3C, 1.0f, 0);
+    if (D_800BE9B4 == 0) {
+        temp->unk38 = 0x960;
+    }
+    func_1514EC1C(func_15160A58(arg0, 0, &D_800A58C4, 2, 0x12C, 0xB, 0xFF, 0xFF, 0xFF, 2, 0, -1, 0, 0, 0xFF, 1), arg0, 0x19);
+}
 
 s32 func_15083FB0(s32);
 

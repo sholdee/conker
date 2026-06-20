@@ -11,7 +11,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10EF60/func_150E2DA4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_10EF60/func_150E2DB4.s")
+void func_150E1AB0(s32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, u16, s32, s32, s16, s16, s32, u8, s16, s32, s32, u8, f32, f32, f32, f32, f32, f32);
+
+void func_150E2DB4(s32 a0, u8 a1, s16 a2, s32 a3, f32 a4, f32 a5, f32 a6, f32 a7, f32 a8, f32 a9, s16 a10, s16 a11, u16 a12, u8 a13) {
+    func_150E1AB0(0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 40.0f, 400.0f, a12, 39, 1, a10, a11, a0, a1, a2, a3, 0, a13, a4, a5, a6, a7, a8, a9);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10EF60/func_150E2EA4.s")
 
