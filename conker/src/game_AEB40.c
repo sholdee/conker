@@ -65,7 +65,32 @@ s32 func_150838EC(struct127 *arg0, u16 arg1, s32 arg2, f32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15083AC8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15083DA0.s")
+extern u8 D_800D2100;
+
+struct struct258b {
+    u8 pad0[0x28];
+    u8 unk28;
+    u8 pad29[0x7];
+};
+
+s32 func_15083DA0(void) {
+    s32 id;
+    s32 i;
+
+    id = 1;
+    i = 0;
+    while (i < (s32)D_800D2100) {
+        if (id == ((struct struct258b *)D_800D20FC)[i].unk28) {
+            id++;
+            i = 0;
+        }
+        i++;
+    }
+    if (id >= 0x100) {
+        id = 0xFF;
+    }
+    return id;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15083E0C.s")
 

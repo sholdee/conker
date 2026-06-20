@@ -54,7 +54,29 @@ void func_15147A30(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_15147A80.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_15147C4C.s")
+extern void *func_151462C8(void *, void *, u8, void *, s32, s16, void *, s32, void *);
+extern void *(*D_8008A2A4[])(void *, void *, s16);
+
+void *func_15147C4C(void *arg0, void *arg1, s16 arg2) {
+    s32 v0;
+    u8 v1;
+
+    if (*(u16 *)((u8 *)arg1 + 0x1E) & 0x20) {
+        v0 = *(s32 *)((u8 *)arg1 + 0x28);
+    } else {
+        v0 = 0;
+    }
+    arg0 = func_151462C8(arg0, (u8 *)arg1 + 0x34, 0, 0, 0, arg2, (u8 *)arg1 + 0x54, 2, (void *)v0);
+    v1 = *(u8 *)((u8 *)arg1 + 0x31);
+    if (v1 >= 0x13) {
+        func_1516972C((struct102 *)arg1);
+        return arg0;
+    }
+    if (v1 != 0) {
+        return D_8008A2A4[v1](arg1, arg0, arg2);
+    }
+    return arg0;
+}
 
 extern void (*D_8008A390[])(void *, s32, u8);
 

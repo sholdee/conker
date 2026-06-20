@@ -297,7 +297,25 @@ void func_15199954(void *arg0) {
     func_15147928(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15199980.s")
+extern void (*D_8008F8C0[])(void *);
+extern void (*D_8008F8B4[])(void *);
+
+void func_15199980(void *arg0) {
+    s8 *temp;
+    struct102 *p;
+
+    temp = *(s8 **)((u8 *)arg0 + 0x98);
+    if (temp[0x39] != -1) {
+        D_8008F8C0[temp[0x39]](arg0);
+    }
+    if (temp[0x36] != -1) {
+        D_8008F8B4[temp[0x36]](arg0);
+    }
+    p = *(struct102 **)(temp + 0x148);
+    if (p != 0) {
+        func_1516972C(p);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15199A10.s")
 

@@ -92,9 +92,30 @@ struct S150319CC *func_150319CC(s32 arg0, u8 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15031FC8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_150331B8.s")
-
 void func_1503F5B8(s32 arg0, s32 arg1, s32 arg2, f32 arg3, f32 arg4, s32 arg5);
+
+s32 func_150331B8(s32 arg0, s32 arg1) {
+    s32 ptr;
+    s32 temp;
+
+    ptr = *(s32 *)(arg1 + 0x2D0);
+    temp = *(s32 *)(arg0 + 0x48);
+    if (temp == 0) {
+        return 0;
+    }
+    if ((*(s32 *)(arg1 + 0x2E4) & 0xFF) != 0xFF) {
+        func_1503F5B8(temp, 0, *(s32 *)(arg1 + 0x2E4) & 0xFF, 1.0f, 0.0f, 1);
+    }
+    if (ptr != 0) {
+        *(f32 *)(*(s32 *)(arg0 + 0x48) + 8) = *(f32 *)(ptr + 8);
+        temp = *(s32 *)(arg0 + 0x48);
+        if (*(f32 *)(temp + 0x18) <= *(f32 *)(temp + 8)) {
+            *(f32 *)(temp + 8) = *(f32 *)(temp + 0x18) - 1.0f;
+        }
+    }
+    return 0;
+}
+
 
 s32 func_1503327C(s32 arg0, s32 arg1) {
     s32 ptr;

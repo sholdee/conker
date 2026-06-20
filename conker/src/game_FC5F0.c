@@ -98,7 +98,21 @@ void func_150CFC38(f32 arg0) {
     func_1515572C(&sp1C, 0x52);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CFC60.s")
+extern f32 D_800A0878;
+extern f32 D_800A087C;
+
+s32 func_150CFC60(f32 *arg0) {
+    f32 *p = &arg0[28];
+    arg0[4] += p[0] * D_800BE9A4;
+    arg0[5] += (p[1] * D_800BE9A4) + (((0.5f * p[2]) * D_800BE9A4) * D_800BE9A4);
+    p[1] += p[2] * D_800BE9A4;
+    if (p[3] < arg0[5]) {
+        arg0[5] = p[3];
+        p[0] = p[0] * D_800A0878;
+        p[1] = fabsf(p[1]) * D_800A087C;
+    }
+    return 1;
+}
 
 unsigned char *func_150CFD20(unsigned char *arg0) {
     if (*arg0 != 0xBD && *arg0 != 0) {

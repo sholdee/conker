@@ -112,9 +112,29 @@ s32 func_15133A50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133A94.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133B98.s")
+s32 func_15133B98(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5) {
+    f32 temp;
 
-s32 func_15133B98(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5);
+    temp = *(f32 *)(arg0 + 0x14);
+    *(f32 *)(arg0 + 0x3C) = *(f32 *)(arg0 + 0x10) + arg4;
+    *(f32 *)(arg0 + 0x44) = *(f32 *)(arg0 + 0x44) * temp;
+    *(f32 *)(arg0 + 0x48) = *(f32 *)(arg0 + 0x48) * -temp;
+    *(f32 *)(arg0 + 0x4C) = *(f32 *)(arg0 + 0x4C) * temp;
+    *(f32 *)(arg0 + 0x50) = *(f32 *)(arg0 + 0x50) * temp;
+    *(f32 *)(arg0 + 0x54) = *(f32 *)(arg0 + 0x54) * temp;
+    *(f32 *)(arg0 + 0x58) = *(f32 *)(arg0 + 0x58) * temp;
+    if (fabsf(*(f32 *)(arg0 + 0x48)) < 4.0f) {
+        *(s32 *)(arg0 + 0x60) &= -0x6A;
+        *(f32 *)(arg0 + 0x44) = 0.0f;
+        *(f32 *)(arg0 + 0x48) = 0.0f;
+        *(f32 *)(arg0 + 0x4C) = 0.0f;
+        *(f32 *)(arg0 + 0x50) = 0.0f;
+        *(f32 *)(arg0 + 0x54) = 0.0f;
+        *(f32 *)(arg0 + 0x58) = 0.0f;
+        *(f32 *)(arg0 + 0x5C) = 0.0f;
+    }
+    return 1;
+}
 
 s32 func_15133C58(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5) {
     func_15133B98(arg0, arg1, arg2, arg3, arg4, arg5);
