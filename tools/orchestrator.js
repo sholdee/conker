@@ -55,6 +55,7 @@ Target asm: ${REPO}/conker/asm/nonmatchings/${c.file}/${c.func}.s
 THE LOOP:
 0. FIRST: cat ${REPO}/tools/ido_cookbook.md  — proven IDO 5.3 -O2 matching idioms. Apply the relevant ones; obey its "When to BAIL" section.${c.ref_func ? `
 0b. A SIMILAR ALREADY-MATCHED function is your strongest guide (asm similarity ${c.ref_similarity}): its byte-matching C is at /tmp/ref_${c.func}.c and its asm at ${REPO}/conker/asm/nonmatchings/${c.ref_file}/${c.ref_func}.s. READ BOTH FIRST. Diff its asm against YOUR target .s to see what differs; reuse its structure, types, casts, loop/branch shapes, and idioms as a template — adapt offsets/constants/symbols to your function. This is a worked example of exactly the codegen you're targeting.` : ''}
+0c. IF your function builds DISPLAY LISTS (signature has "Gfx *", or the target asm writes packet words via gSP*/gDP* macros or raw stores to ->w0/->w1): READ ${REPO}/.claude/skills/decompile-microcode/f3dex2-reference.md (and s2dex-reference.md for S2DEX/sprites) for the full F3DEX2 command encodings. Hand-write the matching gSP*/gDP* macros against the raw words; do NOT leave raw word stores.
 1. Read the target .s and src/${c.file}.c (neighbor style/types); read structs.h/functions.h/variables.h for types.
 2. Replace the line  #pragma GLOBAL_ASM("asm/nonmatchings/${c.file}/${c.func}.s")  in src/${c.file}.c with your candidate C.
 3. Run:  CONKER_REPO=${REPO} ${REPO}/tools/iter_match.sh ${c.file} ${c.func}   → builds ONLY your object and prints a diff + "SCORE: N" (0 = byte-perfect).
