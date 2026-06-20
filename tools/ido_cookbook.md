@@ -383,6 +383,7 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   Use the flat `q[i*N]` form when the asm computes the row stride and word-scale in two
   steps. (Steers the OPPOSITE way from the byte-stride fold bullets above.)
 - Reverse index-recovery div/multiply round-trip: a `subu;div elemsize;mflo;...;mult elemsize` pair (subtract a base, divide by the element SIZE, multiply back) is IDO recovering an array index from a POINTER param via `&base[ptr - base]` (i.e. `idx = ptr - &base[0]`). Don't try to source it as a plain offset — pass/use the param as the typed element pointer and index relative to the base array.
+- Read-back of a just-stored array element AS A CALL ARG forces the array BASE to materialize: writing `D_arr[i] = ret->field; func(D_arr[i], ...)` (re-reading the element just stored) makes IDO emit the full base materialize (`lui %hi; addiu; addu; sw 0(reg)`) plus a `move tN,v0` of the prior call result. A plain `tmp = ret->field; D_arr[i] = tmp; func(tmp, ...)` FOLDS the address (`lui %hi; addu; sw %lo`) and drops the move. (Distinct from the DCE-defeat read-back, which is about keeping stores live.)
 
 ## Register allocation & evaluation order (the usual "so close" diffs)
 - Multiply/commutative operand order matters: `a*b` vs `b*a` changes which FPU register

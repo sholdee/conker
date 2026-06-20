@@ -130,7 +130,34 @@ void func_1515F170(s32 arg0, u8 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F1B0.s")
+struct Node1515F1B0 {
+    s32 unk0;
+    f32 unk4;
+    f32 unk8;
+    s32 unkC;
+};
+
+struct Node1515F1B0 *func_1515F1B0(s32 arg0) {
+    struct Node1515F1B0 *temp;
+
+    temp = (struct Node1515F1B0 *)func_10003C6C(0x10, 1, 2, 0, 1);
+    if (temp == 0) {
+        return 0;
+    }
+    temp->unk0 = arg0;
+    if (arg0 != 0) {
+        temp->unk4 = func_1514462C(arg0);
+    } else {
+        temp->unk4 = 0.0f;
+    }
+    if (arg0 != 0) {
+        temp->unk8 = func_15144598((struct134 *)arg0);
+    } else {
+        temp->unk8 = 0.0f;
+    }
+    temp->unkC = 0;
+    return temp;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F25C.s")
 

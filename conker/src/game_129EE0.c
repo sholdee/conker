@@ -11,7 +11,22 @@ extern s32 *func_1513EDE4(s32 arg0, s16 arg1);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_129EE0/func_150FCBC0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_129EE0/func_150FCF1C.s")
+extern f32 D_800A1F2C;
+extern void func_15165BB0(s32 *arg0, s32 *arg1, s32 arg2, s32 arg3, f32 arg4);
+
+f32 func_150FCF1C(s32 *arg0) {
+    struct134 *temp;
+    f32 sp20[3];
+
+    temp = D_800D9AA0[0];
+    if (temp == NULL) {
+        return 1.0f;
+    }
+    sp20[0] = (f32)temp->unk0;
+    sp20[1] = (f32)(s16)temp->unk2;
+    sp20[2] = (f32)temp->unk4;
+    func_15165BB0(arg0, (s32 *)sp20, 0x44FAE000, 0x460CB400, D_800A1F2C);
+}
 
 void func_150FCFB0(s32 arg0) {
     func_15103828();

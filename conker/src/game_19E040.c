@@ -38,4 +38,22 @@ void func_151711C4(struct127 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19E040/func_151718F0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19E040/func_15171BF4.s")
+extern void func_150AEEB0(void *);
+extern void func_150BD740(void *, u8, s32);
+extern void func_150CDBB0(void *, u8, s32);
+
+void func_15171BF4(void *arg0, u8 arg1) {
+    switch (((u8 *)arg0)[4]) {
+    case 0x13:
+    case 0x23:
+        func_150AEEB0(arg0);
+        func_10010154(0x69, arg0, 0x7D00, 0xC8, 0x7D0);
+        break;
+    case 0x1E:
+        func_150BD740(arg0, arg1, 1);
+        break;
+    case 0x54:
+        func_150CDBB0(arg0, arg1, 1);
+        break;
+    }
+}

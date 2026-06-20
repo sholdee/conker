@@ -70,7 +70,19 @@ Gfx *func_15110544(Gfx *gfx, s32 a, s32 b, s32 c, s32 d, u8 r, u8 g, u8 bl) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15113E54.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15114050.s")
+extern s32 *D_800DBF94;
+
+s32 func_15114050(struct131 *arg0, s32 arg1) {
+    if (((u8 *)arg0)[0x4F] & 0x80) {
+        if (arg1 == -1) {
+            return 1;
+        }
+        if (D_800DBF94[arg0 - D_800DBEF4] & (1 << arg1)) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_151140C4.s")
 
