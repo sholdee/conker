@@ -35,7 +35,22 @@ void func_150C84F4(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F5800/func_150CA150.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F5800/func_150CA930.s")
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    s32 unk8;
+} Struct150CA930;
+
+extern void func_1514C678(f32, f32, s32, f32, s32, s32, s32, s32, s32, f32, s32, s32);
+
+void func_150CA930(Struct150CA930 *arg0) {
+    s16 temp;
+
+    temp = (func_150ADA20() % 21U) + 10;
+    func_1514C678(arg0->unk0, arg0->unk4, arg0->unk8,
+                  (func_150ADA68() * 59.0f) + 170.0f,
+                  0, 0xFF, temp, 0x13, 0, 0.0f, 0, 0xFF);
+}
 
 typedef struct {
     char pad1C[0x1C];

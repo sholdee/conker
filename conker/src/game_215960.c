@@ -53,7 +53,27 @@ s32 func_151EB930(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151ED90C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151EDB58.s")
+typedef struct {
+    s32 unk0;
+    s32 *unk4[4];
+    u8 unk14;
+    u8 pad15[0xF];
+    s32 unk24;
+} GameStruct151EDB58;
+
+extern void func_1503F7B8(s32);
+
+void func_151EDB58(GameStruct151EDB58 *arg0) {
+    s32 i;
+
+    if (arg0 != 0) {
+        func_1503F7B8(arg0->unk24);
+        func_100043B4((s32 *)arg0, 4);
+        for (i = 0; i < arg0->unk14; i++) {
+            func_100043B4(arg0->unk4[i], 4);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151EDBDC.s")
 
