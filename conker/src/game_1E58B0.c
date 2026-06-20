@@ -94,7 +94,45 @@ s32 func_151B8400(struct arg0_B8400 *arg0) {
     return temp_v0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E58B0/func_151B85AC.s")
+struct vec3w_151B85AC {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+};
+
+struct blk151B85AC {
+    u8 pad0[0x38];
+    struct vec3w_151B85AC unk38;
+};
+
+struct arg0151B85AC {
+    u8 pad0[0x34];
+    struct vec3w_151B85AC unk34;
+    f32 unk40;
+    f32 unk44;
+    f32 unk48;
+    f32 unk4C;
+    f32 unk50;
+    f32 unk54;
+    s32 unk58;
+    u8 pad5C[0xB4];
+    struct blk151B85AC *unk110;
+};
+
+s32 func_151B85AC(struct arg0151B85AC *arg0) {
+    struct blk151B85AC *temp_v0;
+
+    temp_v0 = arg0->unk110;
+    if (temp_v0 != 0) {
+        arg0->unk34 = temp_v0->unk38;
+        arg0->unk40 += arg0->unk4C * D_800BE9A4;
+        arg0->unk44 += arg0->unk50 * D_800BE9A4;
+        arg0->unk48 += arg0->unk54 * D_800BE9A4;
+    } else {
+        arg0->unk58 |= 1;
+    }
+    return 1;
+}
 
 void func_1513FA70(s32, s32);
 

@@ -175,7 +175,39 @@ s32 func_1518F15C(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F1A0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F384.s")
+extern f32 func_150ADA68(void);
+extern f32 D_800A7B74;
+extern f32 D_800A7B78;
+
+struct Struct1518F384 {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    char pad14[0x4];
+    f32 unk18;
+    s16 unk1C;
+    s16 unk1E;
+};
+
+s32 func_1518F384(void *arg0) {
+    struct Struct1518F384 *p;
+
+    p = (struct Struct1518F384 *)((char *)arg0 + 0x110);
+    if (p->unk1C == 0) {
+        p->unk8 = func_150ADA68() * (p->unk0 - p->unk4) + p->unk4;
+        p->unk1C = 1;
+        p = (struct Struct1518F384 *)((char *)arg0 + 0x110);
+    }
+    if (p->unk1E == 0) {
+        p->unk18 = func_150ADA68() * (p->unkC - p->unk10) + p->unk10;
+        p->unk1E = 1;
+    }
+    *(f32 *)((char *)arg0 + 0x30) += (p->unk18 - *(f32 *)((char *)arg0 + 0x30)) * D_800A7B74;
+    *(f32 *)((char *)arg0 + 0x2C) += (p->unk8 - *(f32 *)((char *)arg0 + 0x2C)) * D_800A7B78;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F45C.s")
 
