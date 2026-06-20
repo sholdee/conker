@@ -126,7 +126,32 @@ void func_151A4D88(struct260 *arg0, s32 arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A4E34.s")
+void func_15143134(void *, s32, s32);
+struct struct151A4E34
+{
+  u8 pad0[0x74];
+  u8 unk74;
+  u8 pad75[0x1D4 - 0x75];
+  struct elem151A4E34 *unk1D4;
+};
+s32 func_151A4E34(struct struct151A4E34 **arg0, s32 arg1)
+{
+  struct struct151A4E34 *v0 = arg0[0];
+  unsigned long new_var;
+  s32 v1 = (s32) v0->unk1D4;
+  if (v1 == 0)
+  {
+    return 0;
+  }
+  if ((v0->unk74 & 0xF) == 0xF)
+  {
+    return 0;
+  }
+  new_var = (((((((((*(((u8 *) arg0) + 5)) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF;
+  func_15143134(((u8 *) arg0) + 8, arg1, v1 + (((new_var & 0xFFFF) & 0xFFFF) << 6));
+  return 1;
+}
+
 
 void func_151A4E9C(void *arg0)
 {
