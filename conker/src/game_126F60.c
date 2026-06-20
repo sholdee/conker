@@ -3,7 +3,36 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150F9AB0.s")
+extern s32 D_800BE628;
+extern s32 D_80082FA4;
+void func_15110360(s32 arg0, f32 arg1[4][4], f32 arg2, f32 arg3, f32 arg4);
+Gfx *func_15110544(Gfx *gfx, s32 a, s32 b, s32 c, s32 d, u8 r, u8 g, u8 bl);
+void func_150FB4C0(Gfx *gfx, f32 mtx[4][4]);
+
+typedef struct {
+    u8  pad0[0x24];
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+} Struct150F9AB0;
+
+void func_150F9AB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6) {
+    f32 sp38[4][4];
+    Struct150F9AB0 *temp;
+    Gfx *gfx;
+
+    func_15110360(D_80082FA4, sp38, arg4, arg5, arg6);
+    temp = (Struct150F9AB0 *)((struct259 *)D_800BE628 + D_80082FA4);
+    gfx = func_15110544(arg0, (s32)temp->unk2C, (s32)temp->unk24,
+                        (s32)(temp->unk30 - 1.0f), (s32)temp->unk28, 0, 0, 0);
+    gfx->words.w0 = 0xE7000000;
+    gfx->words.w1 = 0;
+    gfx++;
+    gDPSetOtherMode(gfx++, 0x2C0F, 0x0F0A4004);
+    gDPSetCombine(gfx++, 0x357E6A, 0xFFFFFFFF);
+    func_150FB4C0(gfx, sp38);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150F9BB0.s")
 
