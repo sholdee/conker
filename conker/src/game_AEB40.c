@@ -126,7 +126,41 @@ void func_1508434C(u8 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_150843AC.s")
+void func_100043B4(s32 *arg0, u32 arg1);
+extern s32 D_800D19A0;
+extern s32 D_800D1F80[187];
+extern void func_150843AC(void *arg0, s32 arg1);
+void func_150843AC(void *arg0, s32 arg1)
+{
+  unsigned char new_var;
+  s32 *p;
+  s32 i;
+  u8 idx;
+  if (((*((s32 *) ((((u8 *) arg0) + (arg1 * 8)) + 0x28C))) == 0) && ((*((s32 *) ((((u8 *) arg0) + (arg1 * 8)) + 0x290))) == 0))
+  {
+    return;
+  }
+  new_var = 8;
+  idx = ((u8 *) (*((s32 *) (((u8 *) arg0) + 0x2C4))))[arg1];
+  for (p = (s32 *) (((s8 *) arg0) + (arg1 << 3)), i = 0; i != new_var; p++, i += 4)
+  {
+    s32 cur = *((s32 *) (((u8 *) p) + 0x28C));
+    if (cur != 0)
+    {
+      if (cur != (&D_800D19A0)[idx])
+      {
+        func_100043B4((s32 *) cur, 3);
+      }
+      else
+      {
+        ((u8 *) D_800D1F80)[idx] -= 1;
+      }
+      *((s32 *) (((u8 *) p) + 0x28C)) = 0;
+    }
+  }
+
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084488.s")
 
