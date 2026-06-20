@@ -43,7 +43,43 @@ void func_1503192C(struct127 *arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_1503195C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_150319CC.s")
+struct S150319CC {
+    u8 unk0;
+    u8 pad1[5];
+    u8 unk6;
+    u8 pad7[0x4D];
+    struct S150319CC *unk54;
+};
+struct S150319CC *func_150319CC(s32 arg0, u8 *arg1) {
+    struct S150319CC *var;
+    struct S150319CC *next;
+    u8 key;
+
+    if (arg1 != 0) {
+        var = (struct S150319CC *)D_800C3EE0;
+        if (var != 0) {
+            key = arg1[0x3B];
+            do {
+                next = var->unk54;
+                if ((var->unk0 == key) && (var->unk6 == arg0)) {
+                    return var;
+                }
+                var = next;
+            } while (next != 0);
+        }
+    }
+    var = (struct S150319CC *)D_800C3EE0;
+    if (var != 0) {
+        do {
+            next = var->unk54;
+            if (var->unk6 == arg0) {
+                return var;
+            }
+            var = next;
+        } while (next != 0);
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15031A50.s")
 

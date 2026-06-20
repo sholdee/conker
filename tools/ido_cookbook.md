@@ -655,6 +655,7 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   match the by-value signature, don't pass `&`.
 - `x - x*y` store-back to the SAME field x: write `temp = x; *p = temp - y * *(f32*)&x;` - the memory re-read of x CSE-collapses to f0 (first mul operand), y stays an inline temp reg, result lands fresh. A named `y` shifts every later FP reg by one; `-=`/reassigning `temp` reuses its reg for the result.
 - Defeat CSE of a doubled SIGNED-byte read (sentinel `== -1` test + index use of the same byte) WITHOUT losing signedness: cast ONLY the TEST read `volatile s8 *`, leave the index read plain `s8` - both stay `lb`. Reading the index as `u8` also breaks CSE but emits `lbu` (wrong sign).
+- Force a scaled index (`base + idx*8`) used in BOTH a loop pointer and a bound to RECOMPUTE its `sll`/`addu` rather than CSE into one shared `move`: write the scale as `<<3` (`(s32)base + (idx<<3)`). Any `*8`/`8*` form CSEs the two uses into a single computed pointer; the explicit shift forces the two separate recomputes.
 
 ## Stack frame, homing & params
 - Param homing: a param is NEVER homed if only forwarded/used as-is; it IS homed (`sw

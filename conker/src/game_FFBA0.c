@@ -3,7 +3,27 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FFBA0/func_150D26F0.s")
+void func_150D278C(s32, void*, u8, u8);
+
+struct S150D26F0 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    u8 unk10;
+};
+
+void func_150D26F0(u8 *arg0) {
+    struct S150D26F0 *v1 = (struct S150D26F0 *)(arg0 + 0x28);
+
+    if (arg0[0x78] & 1) {
+        v1->unkC = v1->unkC - D_800BE9E4;
+        if (v1->unkC < 0) {
+            func_150D278C(v1->unk0, &v1->unk10, arg0[0xC], arg0[1]);
+            v1->unkC = func_150ADA20() % (u32)(v1->unk8 + 1) + v1->unk4;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FFBA0/func_150D278C.s")
 
