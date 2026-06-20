@@ -53,7 +53,24 @@ void func_150A278C(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A2AEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A2CA4.s")
+extern u64 D_800D30F0[][3];
+
+s32 func_150A2CA4(u32 arg0) {
+    s32 i;
+
+    arg0 &= 0xFFF;
+    if ((u32)D_800D3094 < arg0) {
+        return -1;
+    }
+    for (i = 0; i != 0x10; i++) {
+        if (*(u16 *)((u8 *)&D_800D2138 + 0x208) & (1 << i)) {
+            if ((D_800D30F0[i][arg0 >> 6] >> (arg0 & 0x3F)) & 1) {
+                return i;
+            }
+        }
+    }
+    return -1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A2D84.s")
 

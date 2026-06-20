@@ -577,6 +577,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   locals get DCE'd while a struct member used later survives.
 - Scope-based init sink: declaring a local INSIDE an `if` body (not at function top) confines its init store to the TAKEN path only; read the outer-scope value on the else-path - matches a branch that stores in one arm but not the other. [banjo-mined]
 - Chained assignment `a = b = c = v;` (or `arr[0]=arr[1]=arr[2]=v;`) materializes `v` ONCE and propagates via `move`s, vs separate assignments that may re-materialize. Use when the asm sets several fields/registers from one value with moves. [banjo-mined]
+- FP-LICM defeated by RECURSION: when the asm loops via a `f(lo,mid); f(mid,hi);` DOUBLE
+  RECURSION (no extra callee-saved FPU regs, frame NOT grown), any explicit C loop
+  (`for`/`while`/`do`/`goto`) instead triggers IDO's float loop-invariant code motion,
+  HOISTING invariant float subexpressions (e.g. `arg+arg`, `0.5f-arg`) into extra
+  callee-saved fp regs and GROWING the frame. The tail-recursion-synthesized loop is built
+  AFTER LICM, so nothing hoists — write the recursion literally, not a loop. (The
+  residual tail loop-rotation it leaves is the unsteerable BAIL below.)
 
 ## CSE & store/load duplication
 - Defeat DCE of intermediate RMW byte stores to the SAME address (`*p |= 0x80; *p &=

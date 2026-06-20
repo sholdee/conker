@@ -1,6 +1,9 @@
 #include <ultra64.h>
+#define func_15048A40 func_15048A40_hdr
 #include "functions.h"
+#undef func_15048A40
 #include "variables.h"
+extern f32 func_15048A40(u8 arg0);
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10B7D0/func_150DE320.s")
@@ -9,7 +12,31 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10B7D0/func_150DE458.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_10B7D0/func_150DE6D8.s")
+extern f32 D_800A0D48;
+extern f32 D_800A0D4C;
+extern f32 D_800A0D50;
+extern f32 D_800A0D54;
+
+struct Struct150DE6D8 {
+    f32 unk0;
+    char pad4[4];
+    f32 unk8;
+    char padC[6];
+    s16 unk12;
+    char pad14[0x68];
+    s32 unk7C;
+    s32 unk80;
+    s32 unk84;
+};
+
+void func_150DE6D8(struct Struct150DE6D8 *arg0) {
+    arg0->unk12 = (s16)(s32)(func_15048A40((u8)(arg0->unk7C >> 3)) * D_800A0D48 + D_800A0D4C);
+    arg0->unk0 = func_15048A40((u8)(arg0->unk80 >> 3)) * D_800A0D50;
+    arg0->unk8 = func_15048A40((u8)(arg0->unk84 >> 3)) * D_800A0D54;
+    arg0->unk7C += D_800BE9E4 * 12;
+    arg0->unk80 += D_800BE9E4 * 16;
+    arg0->unk84 += D_800BE9E4 * 24;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10B7D0/func_150DE7C0.s")
 
