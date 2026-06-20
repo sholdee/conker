@@ -42,7 +42,45 @@ s32 func_1518C540(void* arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B8F40/func_1518C57C.s")
+void func_1516865C(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+s32 func_15168800(s32 arg0, s32 arg1, s32 arg2);
+
+struct Struct1518C57C {
+    u8 pad[0xA8];
+};
+
+struct Elem1518C57C {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    s32 unkC;
+    s32 unk10;
+};
+
+s32 func_1518C57C(void *arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4) {
+    struct Struct1518C57C sp38;
+    void *temp;
+    struct Elem1518C57C *base;
+
+    temp = *(void **)((u8 *)arg0 + 0x98);
+    base = *(struct Elem1518C57C **)((u8 *)arg0 + 0x94);
+    *(s32 *)(sp38.pad + 0x80) = 0;
+    *(s16 *)(sp38.pad + 0x8A) = 0x100;
+    *(s16 *)(sp38.pad + 0x8C) = (s32)base[*(s8 *)((u8 *)arg0 + 0x2D)].unk0;
+    *(s16 *)(sp38.pad + 0x8E) = (s32)arg4;
+    *(s16 *)(sp38.pad + 0x90) = (s32)base[*(s8 *)((u8 *)arg0 + 0x2D)].unk8;
+    *(s16 *)(sp38.pad + 0x94) = (func_150ADA20() % 0x15U) + 0x23;
+    *(s16 *)(sp38.pad + 0x92) = *(s16 *)(sp38.pad + 0x94);
+    *(s8 *)(sp38.pad + 0xA2) = -1;
+    *(s8 *)(sp38.pad + 0xA0) = 0x12;
+    *(s16 *)(sp38.pad + 0x98) = 0xC;
+    *(s8 *)(sp38.pad + 0xA1) = 0;
+    *(s16 *)(sp38.pad + 0x96) = (s32)arg4;
+    func_1516865C(&sp38, 0xFF, 0xFF, 0xFF, 0xFF);
+    func_15168800((s32)&sp38, *(u8 *)((u8 *)arg0 + 0xC), *(u8 *)((u8 *)arg0 + 1));
+    *(s8 *)((u8 *)temp + 0x20) = 4;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B8F40/func_1518C69C.s")
 

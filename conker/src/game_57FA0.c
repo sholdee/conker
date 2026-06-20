@@ -61,36 +61,34 @@ s32 func_1502B5C8(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
     return ret;
 }
 #pragma GLOBAL_ASM("asm/nonmatchings/game_57FA0/func_1502B6BC.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_57FA0/func_1502B7F0.s")
-// void func_1502B7F0(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
-//     s32 sp38;
-//     s32 sp34;
-//     s32 temp_s1;
-//     s32 offset;
-//     s32 i;
-//
-//     sp38 = 1;
-//     offset = &D_00AB1950; // 0xAB1950 - assets offsets table
-//     temp_s1 = &arg2;
-//
-//     i = arg1;
-//     if (i != 0) {
-//         do {
-//             temp_s1 = ALIGN4(temp_s1);
-//             if (sp38 != 0) {
-//                 offset += func_1502AC88(offset, temp_s1, &sp34);
-//             }
-//             sp38 = sp34 & 0xFFFFFFF;
-//             temp_s1 += 1;
-//         } while (i-- != 0);
-//     }
-//
-//     if (sp38 != 0) {
-//         *arg0 = func_1502B350(offset, sp34, &sp38);
-//     } else {
-//         *arg0 = 0;
-//     }
-// }
+s32 func_1502B7F0(s32 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    u8 *offset;
+    s32 *tmp;
+    s32 n;
+    s32 sp38;
+    s32 sp34;
+
+    sp38 = 1;
+    offset = &D_AB1950;
+    tmp = &arg1 + 1;
+
+    for (; arg1 != 0; arg1--) {
+        tmp = (s32 *)(((s32)tmp + 3) & -4) + 1;
+        n = *(tmp - 1);
+        if (sp38 != 0) {
+            offset += func_1502AC88(offset, n, &sp34);
+        }
+        sp38 = sp34 & 0xFFFFFFF;
+    }
+
+    if (sp38 != 0) {
+        *arg0 = func_1502B350(offset, sp34, &sp38);
+    } else {
+        *arg0 = 0;
+    }
+
+    return sp38;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_57FA0/func_1502B8E0.s")
 
