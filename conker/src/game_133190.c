@@ -62,9 +62,27 @@ f32 func_151065EC(f32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_151067B8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15106E78.s")
+extern void (*D_80088C18[])(struct102 *);
+void func_151D5E30(void *arg0);
 
-void func_15106E78(struct102 *arg0);
+void func_15106E78(struct102 *arg0) {
+    void (*fn)(struct102 *);
+    struct102 *p6C;
+
+    fn = D_80088C18[*(u8 *)((u8 *)arg0 + 0x5C)];
+    if (fn != NULL) {
+        fn(arg0);
+    }
+    p6C = *(struct102 **)((u8 *)arg0 + 0x6C);
+    if (p6C != NULL) {
+        func_1516972C(p6C);
+    }
+    p6C = *(struct102 **)((u8 *)arg0 + 0x70);
+    if (p6C != NULL) {
+        func_1516972C(p6C);
+    }
+    func_151D5E30((u8 *)arg0 + 0x74);
+}
 
 void func_15106EF8(struct102 *arg0) {
     func_15106E78(arg0);

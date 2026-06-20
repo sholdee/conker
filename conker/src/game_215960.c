@@ -5,7 +5,41 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151E84B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151E8620.s")
+extern u8 D_800E0B94;
+extern s32 (*D_8008FFC0[])(s32);
+extern s32 D_8003C8E0;
+extern s32 D_80090058;
+extern s16 D_800E0C78;
+extern u8 D_800BE9C0;
+extern s32 D_800BE9C8[];
+extern s32 D_800BEBA4;
+
+s32 func_151E8620(s32 arg0) {
+    s32 cond;
+    s32 orig;
+    s32 idx;
+
+    idx = D_800E0B94;
+    orig = arg0;
+    D_8003C8E0 = 0x9000000;
+    if (D_8008FFC0[idx] != 0) {
+        arg0 = D_8008FFC0[idx](arg0);
+    }
+    if (D_800E0B94 != 0) {
+        D_80090058 = 0;
+        D_800E0C78 = 0;
+    }
+    D_8003C8E0 = 0;
+    if (((arg0 - D_800BE9C8[D_800BE9C0]) >> 3) > D_800BEBA4) {
+        cond = 1;
+    } else {
+        cond = 0;
+    }
+    if (cond) {
+        return orig;
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151E86E4.s")
 

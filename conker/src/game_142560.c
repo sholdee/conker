@@ -273,7 +273,37 @@ void func_1511A738(struct131 *arg0) {
     func_1511A494(arg0, (u8 *)arg0 + 0x80, (u8 *)arg0 + 0x84);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511A7C0.s")
+struct S_1511A7C0 {
+    u8 pad0[0x4];
+    f32 *unk4;
+    u8 pad8[0x8];
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    u8 unk1C;
+    u8 unk1D;
+    u8 unk1E;
+};
+struct A_1511A7C0 {
+    u8 pad0[0x16];
+    u16 unk16;
+    u8 pad18[0x68];
+    struct S_1511A7C0 *unk80;
+};
+void func_1511A7C0(struct A_1511A7C0 *arg0) {
+    struct S_1511A7C0 *v0;
+    s32 i;
+    v0 = arg0->unk80;
+    v0->unk1E = 1;
+    v0->unk10 = 0.0f;
+    v0->unk1C = 0;
+    v0->unk1D = 7;
+    v0->unk14 = 260.0f;
+    v0->unk18 = 100.0f;
+    for (i = 0; i < arg0->unk16; i++) {
+        v0->unk4[i] = 0.0f;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511A838.s")
 

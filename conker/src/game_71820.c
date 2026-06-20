@@ -190,7 +190,25 @@ s32 func_15046C80(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15047004.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_150470B0.s")
+extern s32 func_150A3FC4(f32, f32, s32, s32, s32);
+
+s32 func_150470B0(s32 a0, s32 a1, s32 a2) {
+    f32 sp24;
+
+    if (*(u8 *)(a2 + 0x1C) & 0x4) {
+        if (func_150A3FC4(*(f32 *)a0, *(f32 *)(a0 + 8), 0, a2 + 4, (s32)&sp24)) {
+            if (sp24 <= *(f32 *)&a1) {
+                if (*(f32 *)(a0 + 4) <= sp24) {
+                    *(f32 *)a2 = sp24;
+                    *(u8 *)(a2 + 0x1C) |= 0x2;
+                    return 2;
+                }
+            }
+            return 1;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_1504715C.s")
 

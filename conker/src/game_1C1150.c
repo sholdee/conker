@@ -37,11 +37,23 @@ void func_15194588(s32 arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_151949E0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_151949F4.s")
+extern void func_15104170(s32);
+
+void func_151949F4(arg0, arg1) s32 arg0; struct127 *arg1; {
+    if (D_8008FD90 == 1) {
+        if (arg1->unk127 == 0) {
+            if (D_800E9D00 & 0x8) {
+                if (arg1->unk31C->unk1A0 == 0) {
+                    func_15104170(arg0);
+                    arg1->unk31C->unk1A0 = 0x4B0;
+                }
+            }
+        }
+    }
+}
 
 extern void func_1507DE4C(s32);
 extern void func_15138BC0(s32, s32, s32);
-extern void func_151949F4(s32, s32, s32);
 
 void func_15194A68(s32 arg0, s32 arg1, s32 arg2) {
     func_1507DE4C(arg1);
