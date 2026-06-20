@@ -9,7 +9,15 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_150634E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_15063570.s")
+void func_15063570(struct127 *arg0) {
+    D_800CC2D0[arg0 - D_800CC2D0].unk31C->unk78 = 0x3B;
+    D_800CC2D0[arg0 - D_800CC2D0].unk31C->unk11A = 2;
+    func_15083568(arg0, 0x89, 1.0f, 0);
+    arg0->disable_jump = 0x14;
+    arg0->disable_run = 0;
+    arg0->unk83 = 0;
+    func_1505E650(arg0, 0x221, 1.0f, 0.0f, 0.0f, 0.0f, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_15063628.s")
 

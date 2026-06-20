@@ -372,6 +372,7 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `p = D_glob; p++` local forces an EAGER base load + plain `blez` (wrong reg pair); `&D_glob[i]`
   doesn't reduce at all (sll/addu). (Inverse of the masked-counter-blocks-induction rule.)
 - Distinct `addiu vN,v0,K` + small-offset store (vs a folded `K+m(v0)`): null-check the SOURCE global DIRECTLY (`if (D_glob != 0)`, not a cached temp) to pin it in v0, AND compute the offset pointer into its OWN local via `u8*` arithmetic (`q = (T*)((u8*)D_glob + K)`). A temp null-check, `temp += K`, or `temp[1]` all fold or reuse v0.
+- Reverse index-recovery div/multiply round-trip: a `subu;div elemsize;mflo;...;mult elemsize` pair (subtract a base, divide by the element SIZE, multiply back) is IDO recovering an array index from a POINTER param via `&base[ptr - base]` (i.e. `idx = ptr - &base[0]`). Don't try to source it as a plain offset — pass/use the param as the typed element pointer and index relative to the base array.
 
 ## Register allocation & evaluation order (the usual "so close" diffs)
 - Multiply/commutative operand order matters: `a*b` vs `b*a` changes which FPU register

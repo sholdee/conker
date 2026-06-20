@@ -29,9 +29,38 @@ extern struct_1514EBA4 *func_15167A68(s32, s32, s32, s32, s32, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514D96C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514D978.s")
+s32 func_15158BD0(s32, s32, s32);
+void func_1514EC1C(s32, s32, s32);
 
-void func_1514D978(s32);
+void func_1514D978(s32 arg0) {
+    struct {
+        s32 unk0;
+        s32 unk4;
+        s32 unk8;
+        s32 unkC;
+        f32 unk10;
+        s32 unk14;
+        s32 unk18;
+        s32 unk1C;
+    } sp20;
+    s32 v0;
+
+    sp20.unk0 = 0;
+    sp20.unk4 = 0;
+    sp20.unk8 = 0;
+    sp20.unkC = 0;
+    sp20.unk14 = 0;
+    sp20.unk18 = 0;
+    sp20.unk1C = 0;
+    sp20.unk10 = 12.0f;
+
+    v0 = func_15158BD0(arg0, 1, 0x20);
+    if (v0 != 0) {
+        memcpy((void *)(v0 + 0x58), &sp20, 0x20);
+        func_1514EC1C(v0, arg0, 0x13);
+    }
+}
+
 s32 func_151ACA60(s32, f32, s32);
 void func_1514EC1C(s32, s32, s32);
 
