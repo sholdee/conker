@@ -765,7 +765,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `jal` delay slot and reloaded) by wrapping it in a `union { u32 w; f64 _a; }` and using
   `.w`: the f64 member raises the whole local area's alignment, landing the spill at the
   8-aligned offset (e.g. 0x28, gap at 0x2c) where a plain u32 lands one slot lower. (The
-  alignment-UP analog of the array-oversize 4-align trick below.)
+  alignment-UP analog of the array-oversize 4-align trick below.) When that 8-aligned
+  spill is a KEPT DEAD store (never reloaded, so the f64 member alone gets DCE'd), add a
+  `volatile` integer member and store through it (`union { volatile s32 w; f64 d; }`,
+  use `.w`): f64 aligns the slot, the volatile member keeps the dead store live.
 - Force a sub-word local onto a 4-ALIGNED slot by OVERSIZING it to an array: `s16 x[2]`
   (use `x[0]`) bumps alignment to 4 and forces the lower placement, no change to store
   width. Same trick for an address-taken `s32` scalar that IDO 8-byte-aligns into the

@@ -65,7 +65,85 @@ void func_1519EA04(struct Local1519EA04 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CBE20/func_1519ED24.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CBE20/func_1519ED84.s")
+typedef struct {
+    /* 0x00 */ u8  unk0;
+    /* 0x01 */ u8  unk1;
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ s16 unk4;
+    /* 0x06 */ u8  pad6[2];
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ u8  unk10;
+    /* 0x11 */ u8  unk11;
+    /* 0x12 */ u8  unk12;
+    /* 0x13 */ u8  unk13;
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ f32 unk18;
+    /* 0x1C */ f32 unk1C;
+    /* 0x20 */ f32 unk20;
+    /* 0x24 */ f32 unk24;
+    /* 0x28 */ f32 unk28;
+    /* 0x2C */ f32 unk2C;
+    /* 0x30 */ f32 unk30;
+    /* 0x34 */ f32 unk34;
+    /* 0x38 */ f32 unk38;
+    /* 0x3C */ f32 unk3C;
+    /* 0x40 */ s32 unk40;
+    /* 0x44 */ u8  unk44;
+    /* 0x45 */ u8  unk45;
+    /* 0x46 */ u8  unk46;
+    /* 0x47 */ u8  unk47;
+    /* 0x48 */ s32 unk48;
+    /* 0x4C */ u8  unk4C;
+    /* 0x4D */ u8  pad4D[3];
+    /* 0x50 */ s32 unk50;
+    /* 0x54 */ s16 unk54;
+    /* 0x56 */ s16 unk56;
+} Struct1519ED84;
+
+void func_1519ED84(f32 *arg0, s32 arg1, s16 arg2, u8 arg3, s32 arg4) {
+    Struct1519ED84 sp48;
+    s32 sp44;
+    void *temp_v0;
+
+    sp44 = (s32)arg0;
+    sp48.unk0 = arg1;
+    sp48.unk1 = 0;
+    sp48.unk2 = 0x3B03;
+    sp48.unk4 = arg2;
+    sp48.unk8 = 0;
+    sp48.unkC = 0;
+    sp48.unk10 = 0xFF;
+    sp48.unk11 = 0xFF;
+    sp48.unk12 = 0xFF;
+    sp48.unk13 = 0xFF;
+    sp48.unk14 = arg0[6] * 10.0f;
+    sp48.unk18 = arg0[7] * 10.0f;
+    sp48.unk1C = arg0[0];
+    sp48.unk20 = arg0[1];
+    sp48.unk24 = arg0[2];
+    sp48.unk28 = arg0[3];
+    sp48.unk2C = arg0[4];
+    sp48.unk30 = arg0[5];
+    sp48.unk34 = 1.0f;
+    sp48.unk38 = 1.0f;
+    sp48.unk3C = 1.0f;
+    sp48.unk40 = 0x45C0081;
+    sp48.unk44 = 0xFF;
+    sp48.unk45 = 0xFF;
+    sp48.unk46 = 0;
+    sp48.unk47 = 7;
+    sp48.unk48 = 0;
+    sp48.unk4C = 0xFF;
+    sp48.unk50 = 0;
+    sp48.unk54 = 1;
+    sp48.unk56 = 0xFF;
+
+    temp_v0 = func_1513D2F0(&sp48, &D_800A4AA0, 0x27, 0, 0, 0x17, 0, 3, 0xFF, 4, arg3, arg4);
+    if (temp_v0 != NULL) {
+        memcpy((u8 *)temp_v0 + 0x110, &sp44, 4);
+    }
+}
 
 struct Sub1519EF04 {
     f32 unk0;
