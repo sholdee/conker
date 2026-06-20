@@ -214,7 +214,22 @@ void func_150F10D4(struct210 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F1170.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F15F8.s")
+void func_150F15F8(s32 arg0, s32 arg1, u8 arg2) {
+    s32 *p = &arg0;
+    s32 q;
+    s32 b0;
+
+    if (arg2 == 0x43) {
+        b0 = *(s32 *)arg1;
+        q = *p + 0x28;
+        if ((b0 == *(s32 *)q) || (*(u8 *)(q + 4) == *(u8 *)(*(s32 *)&arg1 + 4))) {
+            func_1516972C((struct102 *)*p);
+        }
+    } else {
+        q = *p + 0x28;
+        func_15149514(arg1, arg2, q, q + 4, *p);
+    }
+}
 
 struct func150F1684_sub {
     s32 unk0;

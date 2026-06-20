@@ -79,7 +79,17 @@ void func_151BBFBC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
                   (r2 % 0xCD) + 0x12B, 1, 1, 0, 0, 0, (u8)arg2, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BC074.s")
+extern f32 D_800AA82C;
+extern u8 D_800AA760;
+extern u8 D_800AA76C;
+void func_15160CDC(s32, s32, void *, void *, f32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
+
+void func_151BC074(s32 arg0) {
+    if (arg0 != 0) {
+        func_15160CDC(arg0, 1, &D_800AA760, &D_800AA76C, D_800AA82C, 2, 0x12C,
+                      0xFF, 0xFF, 0xFF, 0xFF, 1, 0, 0, 0xFF, 1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BC104.s")
 

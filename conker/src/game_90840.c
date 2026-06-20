@@ -7,7 +7,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_15063404.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_150634E4.s")
+void func_150836CC(struct127 *arg0, s32 arg1);
+
+void func_150634E4(struct127 *arg0) {
+    D_800CC2D0[arg0 - D_800CC2D0].unk31C->unk78 = 0;
+    D_800CC2D0[arg0 - D_800CC2D0].unk31C->unk11A = 0;
+    func_150836CC(arg0, 0x1D);
+    func_150836CC(arg0, 0x1E);
+    arg0->disable_jump = 0;
+    arg0->disable_run = 0;
+    arg0->unk83 = 0;
+}
 
 void func_15063570(struct127 *arg0) {
     D_800CC2D0[arg0 - D_800CC2D0].unk31C->unk78 = 0x3B;

@@ -159,7 +159,60 @@ s32 func_150887F8(void) {
     return p[0x46] == 0xFF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15088824.s")
+typedef struct {
+    /* 0x00 */ f32 unk0;
+    /* 0x04 */ f32 unk4;
+    /* 0x08 */ f32 unk8;
+    /* 0x0C */ f32 unkC;
+    /* 0x10 */ f32 unk10;
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ s32 unk18;
+    /* 0x1C */ s32 unk1C;
+    /* 0x20 */ s32 unk20;
+    /* 0x24 */ s16 unk24;
+    /* 0x26 */ u8 unk26;
+    /* 0x27 */ u8 unk27;
+    /* 0x28 */ u8 unk28;
+    /* 0x29 */ u8 unk29;
+    /* 0x2A */ u8 unk2A;
+    /* 0x2B */ u8 unk2B;
+    /* 0x2C */ u8 unk2C;
+    /* 0x2D */ u8 unk2D;
+    /* 0x2E */ u8 unk2E;
+    /* 0x2F */ u8 unk2F;
+    /* 0x30 */ u8 unk30;
+    /* 0x31 */ u8 unk31;
+    /* 0x32 */ u8 unk32;
+    /* 0x33 */ u8 unk33;
+    /* 0x34 */ u8 pad34[0x15];
+    /* 0x49 */ u8 unk49;
+} Struct15088824;
+
+void func_15088824(Struct15088824 *arg0) {
+    arg0->unk2B = 0;
+    arg0->unk2C = 0;
+    arg0->unk2D = 0;
+    arg0->unk2E = 0;
+    arg0->unk28 = 0;
+    arg0->unk1C = 0;
+    arg0->unk18 = 0;
+    arg0->unk20 = -1;
+    arg0->unk2F = 0;
+    arg0->unk8 = 0.0f;
+    arg0->unk0 = 0.5f;
+    arg0->unk4 = 0.5f;
+    arg0->unk24 = 0;
+    arg0->unk26 = 0;
+    arg0->unk27 = 0;
+    arg0->unk31 = 0;
+    arg0->unkC = 0.0f;
+    arg0->unk14 = 0.0f;
+    arg0->unk33 = 2;
+    arg0->unk30 = 0;
+    arg0->unk2A = 0x7F;
+    arg0->unk49 = 0;
+    arg0->unk10 = 1.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_150888A8.s")
 
