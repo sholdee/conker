@@ -6,7 +6,23 @@ struct225 *func_151602C0(Header *header, Header2 *header2, s32 arg2, s32 arg3, s
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F2730/func_151C5280.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F2730/func_151C5588.s")
+extern void func_15102B38(s32, u8, s32, s32, f32 *, s32, s32, f32, s32, s32, s32, s32, u8, s32);
+extern f32 D_800AAABC, D_800AAAC0, D_800AAAC4, D_800AAAC8;
+extern s32 D_800AAA90, D_800AAA9C;
+
+void func_151C5588(s32 arg0, s32 arg1, s16 arg2, u8 arg3, s32 arg4) {
+    f32 sp50[2];
+    union { volatile s32 w; f64 d; } sp48;
+    s32 sp44;
+
+    sp50[1] = (func_150ADA68() * D_800AAABC + 604.0f) * D_800AAAC0;
+    sp50[0] = (func_150ADA68() * 59.0f + 141.0f) * D_800AAAC4;
+    sp44 = func_150ADA20();
+    sp48.w = func_150ADA20();
+    func_15102B38(arg0, 0, (s32)&D_800AAA90, (s32)&D_800AAA9C, sp50,
+                  (sp44 & 3) + 6, 0xFF, func_150ADA68() * 270.0f + D_800AAAC8,
+                  arg1, 0xFF, 0, arg2, arg3, arg4);
+}
 
 void func_151C56A4(f32 *arg0, u8 arg1, s32 arg2) {
     Header header;

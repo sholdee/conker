@@ -382,7 +382,34 @@ void func_15136A50(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
     func_15134908(&sp1C, 0, arg4, arg5);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15136AE4.s")
+extern f32 D_800A4624;
+extern f32 D_800A4628;
+extern f32 D_800A462C;
+void func_151D9014(void *a0, void *a1, s32 a2, f32 a3, s32 sp10, s32 sp14,
+                     f32 sp18, s32 sp1C, f32 sp20, f32 sp24, s32 sp28, s32 sp2C,
+                     s32 sp30, s32 sp34, s32 sp38, s32 sp3C);
+
+void func_15136AE4(f32 a0, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5, u8 *a6) {
+    f32 sp6C[3];
+    f32 sp60[3];
+    f32 r;
+    struct { f32 c; s32 a; u32 b; s32 pad; } sp4C;
+
+    sp6C[0] = a0;
+    sp6C[1] = a1;
+    sp6C[2] = a2;
+    r = (func_150ADA68() * 112.0f + 247.0f) * D_800A4624;
+    sp60[0] = -a3 * r;
+    sp60[1] = -a4 * r;
+    sp60[2] = -a5 * r;
+    sp4C.c = func_150ADA68();
+    sp4C.a = func_150ADA20();
+    sp4C.b = func_150ADA20();
+    func_151D9014(sp6C, sp60, 0, sp4C.c * D_800A4628 + D_800A462C,
+                    (sp4C.a & 0xF) + 25, (sp4C.b % 101) + 155,
+                    func_150ADA68() * 119.0f + 129.0f, 0, 1.0f, 1.0f, 1, 0, 1, 0,
+                    a6[0xC], a6[1]);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15136C3C.s")
 
@@ -408,11 +435,6 @@ extern void func_15137F30(Vec15137 *a0, Vec15137 *a1, Vec15137 *a2, Vec15137 *a3
                           f32 sp10, s32 sp14, Vec15137 *out6C, Vec15137 *out60,
                           Vec15137 *out54, f32 *out50, s16 *out4E, u8 *out4D,
                           f32 *out48);
-extern void func_151D9014(Vec15137 *a0, Vec15137 *a1, s32 a2, s32 a3, s32 sp10,
-                          s32 sp14, f32 sp18, s32 sp1C, f32 sp20, f32 sp24,
-                          s32 sp28, s32 sp2C, s32 sp30, s32 sp34, s32 sp38,
-                          s32 sp3C);
-
 void func_15137E60(Vec15137 *arg0, Vec15137 *arg1, Vec15137 *arg2,
                    Vec15137 *arg3, f32 arg88, s32 *arg8C) {
     Vec15137 sp6C;
@@ -425,7 +447,7 @@ void func_15137E60(Vec15137 *arg0, Vec15137 *arg1, Vec15137 *arg2,
 
     func_15137F30(arg0, arg1, arg2, arg3, arg88, (s32)arg8C, &sp6C, &sp60, &sp54,
                   &sp50, &sp4E, &sp4D, &sp48);
-    func_151D9014(&sp6C, &sp54, 0, *(s32 *)&sp50, sp4E, sp4D, sp48, 0, 1.0f, 1.0f,
+    func_151D9014(&sp6C, &sp54, 0, sp50, sp4E, sp4D, sp48, 0, 1.0f, 1.0f,
                   1, 0, 1, 0, *((u8 *)arg8C + 0xC), *((u8 *)arg8C + 1));
 }
 

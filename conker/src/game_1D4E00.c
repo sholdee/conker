@@ -119,7 +119,66 @@ s32 func_151A9060(u8 *arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D4E00/func_151A90C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D4E00/func_151A91AC.s")
+struct S6_151A91AC { s16 unk0; s16 unk2; s16 unk4; };
+extern struct S6_151A91AC D_8008F9A4;
+
+struct Loc_151A91AC {
+    s32 unk0;
+    s16 unk4;
+    u8  unk6;
+    u8  unk7;
+    s32 unk8;
+    s32 unkC;
+    u8  unk10;
+    u8  unk11;
+    u8  unk12;
+    u8  unk13;
+    u8  unk14;
+    u8  unk15;
+    u8  unk16;
+    u8  unk17;
+    s32 unk18;
+    s32 unk1C;
+    s32 unk20;
+    s32 unk24;
+    s32 unk28;
+};
+
+void func_151A91AC(u8 *arg0, f32 *arg1, s32 arg2, s32 arg3) {
+    struct Loc_151A91AC sp64;
+    f32 fval;
+    struct S6_151A91AC sp58;
+    u32 idx;
+    s32 r3;
+    s32 r2;
+
+    sp58 = D_8008F9A4;
+    fval = func_150ADA68() * 50.0f + 50.0f;
+    idx = (u32)func_150ADA20() % 3U;
+
+    sp64.unk6 = (u8)((s16 *)&sp58)[idx];
+    sp64.unk7 = 0;
+    sp64.unk16 = 0;
+    sp64.unk17 = 7;
+    sp64.unk8 = 0;
+    sp64.unkC = 0;
+    sp64.unk0 = 0x1701;
+    sp64.unk4 = 0x3C;
+    sp64.unk10 = 0xA0;
+    sp64.unk11 = 0xFF;
+    sp64.unk12 = 0;
+    sp64.unk13 = 0;
+    sp64.unk14 = 0;
+    sp64.unk15 = 0xFF;
+    sp64.unk18 = 0x3B0002;
+
+    r2 = func_150ADA20();
+    r3 = func_150ADA20();
+    func_1513C650((s32)&sp64, 1, 0, (s32)(arg0 + 0x58), arg1[0], arg1[1], arg1[2],
+                  fval, fval, r2 & 0xFF,
+                  (r3 & 1) + (func_150ADA20() & 1), 3, 0xFF, 0,
+                  arg0[0xC], arg0[1]);
+}
 
 void func_151A931C(u8 *arg0, s32 arg1, u8 arg2) {
     u8 *ptr;

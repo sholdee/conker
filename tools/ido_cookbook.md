@@ -1124,6 +1124,21 @@ Object-level / reloc / 64-bit cases:
   index expression INLINE at each use; IDO CSEs it into one register but treats the spill
   as a 4-aligned temp. (Same instructions, spill offset flips 0x18->0x1c — steerable, not
   a true bail, but a frequent near-miss.)
+- Address-taken f32 ARRAY that the target 8-aligns into a 16-byte-ROUNDED slot with NO
+  f64 anywhere in its dataflow (scalars packed just below at 0x4C-0x58, a gap, then the
+  array 8-aligned at 0x60): unreproducible. A plain `f32 a[3]` lands 4-aligned; oversizing
+  to `f32 a[4]` forces 8-alignment but pushes the packed scalars +4; every f64/volatile-
+  union to raise alignment WITHOUT growing the frame fails (f64 always consumes 8 and
+  shifts the whole frame +8). IDO's 16-byte slot rounding here is not steerable from C;
+  body is otherwise byte-perfect — harvest as a permuter seed and bail.
+- Extra 8-byte scratch doubleword reserved between the saved-reg area and locals (frame +8,
+  every sp-relative offset uniformly +8, instruction stream otherwise byte-identical): IDO
+  inserts it when a CONSUMED-return-value call (result actually used) is combined with a
+  later call in the same function (a reference sibling avoids it only because all its
+  callees are void / unconsumed). Equivalently, passing TWO struct-pointer args derived
+  from array indexing reserves the slot where a0-only computation does not. No declaration
+  order, union, or grouping suppresses the scratch while keeping the matching stream; it is
+  a frame-base permutation (-0x90->-0x88 style). Harvest as a permuter seed and bail.
 - Phantom 8-byte stack slot from `&local` to >4-arg calls: passing `&local` to calls with
   STACK args can make IDO reserve an unused 8-aligned temp slot between saves and the
   first local (recomputing `addiu aN,sp,off`, no spill), landing the local one word too
