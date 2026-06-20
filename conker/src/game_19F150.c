@@ -43,7 +43,23 @@ struct Obj15171CA0 *func_15171CA0(s16 arg0, u16 arg1, u8 arg2, s32 arg3, s32 arg
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19F150/func_15171D4C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19F150/func_15171F04.s")
+struct Some15171F04 {
+    u8 pad0[6];
+    u16 unk6;
+};
+extern struct Some15171F04 *D_8008CA4C[];
+s32 func_151725FC(void *arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, s32 arg6, s32 arg7);
+
+void func_15171F04(f32 arg0, f32 arg1, f32 arg2, s32 arg3, s16 arg4, u16 arg5, u8 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10, u8 arg11, s32 arg12) {
+    struct Obj15171CA0 *temp;
+
+    temp = func_15171CA0(arg4, arg5, arg6, arg8, arg9, arg10, arg11, arg12);
+    if (temp != NULL) {
+        if (func_151725FC((u8 *)temp + 0x10, arg3, arg0, arg1, arg2, 0.0f, arg7, D_8008CA4C[temp->unk58]->unk6) == 0) {
+            func_1516972C((struct102 *)temp);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19F150/func_15171FC0.s")
 

@@ -942,8 +942,25 @@ void func_150781A4(void) {
     D_800D154C->unk242 = D_800D1893;
 }
 
-// another function with D_800D2104
-#pragma GLOBAL_ASM("asm/nonmatchings/game_A28B0/func_150781F4.s")
+struct func_150781F4_pt { s16 unk0; s16 unk2; s16 unk4; s16 unk6; };
+void func_150781F4(void) {
+    struct func_150781F4_pt *temp_v0;
+    f32 dx;
+    f32 dz;
+    f32 dist;
+    s32 idx;
+
+    idx = D_800D1891 + 1;
+    temp_v0 = &((struct func_150781F4_pt **)D_800D2104)[D_800D154C->unk13F][idx];
+    dx = temp_v0->unk0 - D_800D154C->x_position;
+    dz = temp_v0->unk4 - D_800D154C->z_position;
+    dist = sqrtf((dx * dx) + (dz * dz));
+    dx = (f32)(D_800D1893 << 3);
+    if (((D_800D1892 == 0) && (dist < dx)) ||
+        ((D_800D1892 != 0) && (dist > dx))) {
+        func_15075400(D_800D1890);
+    }
+}
 
 void func_150782CC(void) {
     D_800D154C->unk23E = D_800D1890;

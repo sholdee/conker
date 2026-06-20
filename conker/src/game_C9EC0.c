@@ -66,7 +66,19 @@ void func_1509CCB4(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CDDC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CE64.s")
+void func_1509CE64(void *arg0, void *arg1) {
+    u16 *p;
+    void (*cb)(s32);
+
+    p = (u16 *)arg0;
+    cb = (void (*)(s32))arg1;
+    while (*p != 0xFFFF) {
+        cb(*p);
+        ((u8 *)&D_800D2E70)[*p] = 3;
+        ((u8 *)D_800D2E4C)[*p >> 3] |= (1 << (*p & 7));
+        p++;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CF28.s")
 

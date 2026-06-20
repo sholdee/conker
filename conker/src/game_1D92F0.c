@@ -68,7 +68,31 @@ s32 func_151ACA20(s16 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151ACA60.s")
+extern u8 *func_15167A68(s32, s32, s32, s32, s32, s32);
+s32 func_151ACB38(u8 *arg0, u8 *arg1);
+
+s32 func_151ACA60(u8 *arg0, f32 arg1, s32 arg2) {
+    u8 *temp;
+
+    if (arg0 == 0) {
+        return 0;
+    }
+    temp = func_15167A68(0x30, 0, arg2 + 0x30, 1, 0xFF, 1);
+    if (temp == 0) {
+        return 0;
+    }
+    if (func_151ACB38(arg0, temp + 0x18) == 0) {
+        func_1516979C((struct102 *)temp);
+        return 0;
+    }
+    *(s32 *)(temp + 0x1C) = (s32)arg0;
+    *(u8 *)(temp + 0x20) = arg0[0x3B];
+    *(s32 *)(temp + 0x24) = (struct127 *)arg0 - D_800CC2D0;
+    *(f32 *)(temp + 0x28) = arg1;
+    *(s32 *)(temp + 0x10) = 1;
+    *(s32 *)(temp + 0x14) = 0;
+    return (s32)temp;
+}
 
 s32 func_151ACB38(u8 *arg0, u8 *arg1) {
     s32 ret = 0;

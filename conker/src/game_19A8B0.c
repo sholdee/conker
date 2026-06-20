@@ -1,5 +1,7 @@
 #include <ultra64.h>
+#define func_15048A40 func_15048A40_void_unused
 #include "functions.h"
+#undef func_15048A40
 #include "variables.h"
 
 
@@ -65,7 +67,27 @@ void func_1516F984(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516FE1C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_15170034.s")
+extern u8 func_150ADA20(void);
+extern f32 func_150489B0(u8);
+extern f32 func_15048A40(u8);
+
+void func_15170034(s32 arg0, f32 *arg1, f32 *arg2, f32 *arg3) {
+    s32 mask;
+    f32 r;
+    f32 sp24;
+    f32 sp20;
+    s32 v;
+
+    mask = (arg0 & 0x40) ? 0x3F : 0x7F;
+    v = func_150ADA20() & mask;
+    *arg2 = func_150489B0((u8)v);
+    sp20 = func_15048A40((u8)v);
+    v = func_150ADA20() & 0xFF;
+    sp24 = func_150489B0((u8)v);
+    r = func_15048A40((u8)v);
+    *arg1 = sp20 * r;
+    *arg3 = sp20 * sp24;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_151700D8.s")
 

@@ -482,7 +482,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   callee-saved (s0) promotion.
 - Bind a now-DEAD register's next consumer to its OWN local to make IDO REUSE that dead
   register (e.g. after v0 is spent, `s32 *p = ...; ... = *p;` reuses the freed v0 for
-  the load instead of a fresh t3).
+  the load instead of a fresh t3). FPU analog: assign an UNRELATED later float value into
+  an earlier, now-DEAD float local (`dx = (f32)(K << 3);`) rather than a fresh `thresh`
+  local — IDO reuses that local's freed f-reg (e.g. f2 for the cvt.s.w) where a new local
+  grabs a higher one (f14).
 - NOT caching a loop-invariant indexing expression (re-reading e.g.
   `D_base[node->idx]->field` in BOTH the test and the array-index use) can FLIP the
   saved-reg/delay-slot order of an array-base invariant vs a hoisted constant: recomputing
