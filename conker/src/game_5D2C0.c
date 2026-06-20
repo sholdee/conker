@@ -57,7 +57,24 @@ void func_1503192C(struct127 *arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_150331B8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_1503327C.s")
+void func_1503F5B8(s32 arg0, s32 arg1, s32 arg2, f32 arg3, f32 arg4, s32 arg5);
+
+s32 func_1503327C(s32 arg0, s32 arg1) {
+    s32 ptr;
+
+    ptr = *(s32 *)(arg0 + 0x48);
+    if (ptr == 0) {
+        return 0;
+    }
+    if ((*(u16 *)(ptr + 4) & 0x8000) != 0x8000) {
+        func_1503F5B8(ptr, 0, 0, 1.0f, 0.0f, 1);
+        ptr = *(s32 *)(arg0 + 0x48);
+    }
+    if (*(f32 *)(ptr + 0x18) - 1.0f <= *(f32 *)(ptr + 8)) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033328.s")
 

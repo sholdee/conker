@@ -238,6 +238,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   short-circuited operand. When the tail is a shared epilogue, the `ra`-restore (`lw
   ra,off(sp)`) commonly lands in those `beql` delay slots. Write the test as
   `&&`/nested-if when the asm shows the per-operand twin `beql`s with the ra-reload sunk.
+- Unsigned bound `(u32)x < N` guarding a REAL body: write it as the signed range
+  `x >= 0 && x < N` to emit `bltz x,->skip; slti at,x,N; beqzl at,->skip`. The direct
+  `(u32)x < N` collapses to a single `sltiu`; the split signed form gives the bltz +
+  separate slti + likely-branch shape. (Distinct from the empty-if clamp below, which
+  folds to ONE inverted bltz.)
 - Two-sided index CLAMP to a default: write `if (idx < 0) idx = 0; else if (idx >= N)
   idx = 0;` for the bgez-skip-then-bnezl shape. `idx<0 || idx>=N` and the empty-if
   `if(idx>=0 && idx<N){}else idx=0;` both fold to ONE inverted `bltz`; the nested

@@ -47,7 +47,26 @@ void func_1503D484(struct Elem1503D484 *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503D660.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503D774.s")
+extern struct124 *D_800D1C90[];
+struct124 *func_1502B6BC(s32, s32, s32, s32, s32, s32);
+
+s32 func_1503D774(s32 arg0, s32 arg1) {
+    s32 sp2C;
+    struct124 *r;
+
+    if (D_800D1C90[arg0] != 0) {
+        return 0;
+    }
+    r = func_1502B6BC((s32)&sp2C, 2, 0, 2, 17, arg0);
+    if (r == 0) {
+        D_800D1C90[arg0] = 0;
+        return 2;
+    } else {
+        D_800D1C90[arg0] = r;
+        D_800D1C90[arg0] = r->unk0;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503D804.s")
 

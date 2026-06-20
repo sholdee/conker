@@ -35,7 +35,22 @@ s32 func_151EB930(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151EBB50.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151EC178.s")
+extern s32 D_800E0A90;
+extern s32 *D_800E0BD8;
+void func_15042D94(s32, s32, s32, s32);
+
+s32 func_151EC178(s32 arg0) {
+    s32 temp;
+    if (D_800E0A90 >= 0x5DD) {
+        temp = (D_800E0A90 - 0x5DC) << 3;
+        if (temp >= 0x100) {
+            temp = 0xFF;
+        }
+        func_1504332C(0xFF, 0xFF, 0xFF, temp);
+        func_15042D94(0xDC, 0x130, 1, D_800E0BD8[0x1D0 / 4]);
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151EC1F0.s")
 

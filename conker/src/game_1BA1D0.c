@@ -21,7 +21,52 @@ void func_1518E37C(void *arg0, u8 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518E3C4.s")
+extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
+
+struct Struct1518E3C4 {
+    u8 pad0[0x10];
+    s32 unk10;
+    s32 unk14;
+    u8 pad18[0xC];
+    f32 unk24;
+    s32 unk28;
+    u8 unk2C;
+    u8 unk2D;
+    u8 pad2E[0x2];
+    s32 unk30;
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+    f32 unk40;
+};
+
+void *func_1518E3C4(void *arg0, s32 arg1) {
+    struct Struct1518E3C4 *temp_v1;
+    struct Struct1518E3C4 *sp24;
+
+    if (*(u8 *)(*(s32 *)arg0 + 4) == 0x96) {
+        return NULL;
+    }
+    temp_v1 = (struct Struct1518E3C4 *)func_15167A68(0x21, 1, 0x9EC, 1, (u8)arg1, 1);
+    if (temp_v1 == 0) {
+        return NULL;
+    }
+    sp24 = temp_v1;
+    memcpy((s32)temp_v1 + 0x18, arg0, 0xC);
+    sp24->unk28 = 0;
+    sp24->unk2C = 8;
+    sp24->unk2D = 4;
+    sp24->unk30 = 0;
+    sp24->unk10 = 1;
+    sp24->unk14 = 0;
+    sp24->unk24 = 0.0f;
+    sp24->unk38 = 0.0f;
+    sp24->unk3C = 0.0f;
+    sp24->unk40 = 0.0f;
+    sp24->unk34 = 1.0f;
+    bzero((s32)sp24 + 0x48, 0x960);
+    return sp24;
+}
 
 extern void func_1518E308(void *);
 extern void func_1514EDF0(void *, s32);
