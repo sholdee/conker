@@ -881,6 +881,11 @@ Operand-order / canonicalization cases:
   and the other FRESHLY LOADED, IDO always allocates the fresh load as `rs` and the
   cached as `rt` (`multu fresh,cached`) regardless of C order; naming the fresh value or
   self-assigning the product back both REGRESS. (Integer analog of the float rule.)
+- Two competing CSE'd float values claiming $f0/$f2 in one block: IDO 5.3 gives the LOWER
+  FPR ($f0) to the MEMORY-LOADED global, the higher ($f2) to the `lui`-built literal,
+  regardless of source order or temp introduction. If the target wants literal->$f0/global
+  ->$f2 it is unreachable by C reordering; binding the literal to a NAMED f32 local
+  additionally spills the frame. (Register-assignment analog of the operand-order rules.)
 - IDO never uses `$at` ($1) as a general compiler temp from C: if the target REUSES `$at`
   for some loads (vs a named t-reg for the middle one), no C form reproduces it — IDO
   allocates sequential `$t`/`$v` registers. (Exception: the struct value-copy width trick

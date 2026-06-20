@@ -103,7 +103,71 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C2424.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C251C.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C2558.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C2700.s")
+extern f32 D_800A0274;
+extern f32 D_800A0278;
+extern f32 D_800A027C;
+
+typedef struct {
+    /* 0x10 */ s16 unk10;
+    /* 0x12 */ s16 unk12;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ s16 unk16;
+    /* 0x18 */ f32 unk18[3];
+    /* 0x24 */ s16 unk24;
+    /* 0x26 */ s16 unk26;
+    /* 0x28 */ f32 unk28;
+    /* 0x2C */ f32 unk2C;
+    /* 0x30 */ s16 unk30;
+    /* 0x32 */ s16 unk32;
+    /* 0x34 */ f32 unk34;
+    /* 0x38 */ f32 unk38;
+    /* 0x3C */ u8 unk3C;
+    /* 0x3D */ s8 unk3D;
+    /* 0x3E */ u8 unk3E[2];
+    /* 0x40 */ f32 unk40;
+    /* 0x44 */ f32 unk44;
+    /* 0x48 */ s8 unk48;
+    /* 0x49 */ u8 unk49;
+    /* 0x4A */ u8 unk4A[2];
+    /* 0x4C */ f32 unk4C;
+    /* 0x50 */ s8 unk50;
+    /* 0x51 */ u8 pad51[3];
+    /* 0x54 */ f32 unk54;
+} Struct150C2700;
+
+void func_15150178(Struct150C2700 *arg0, f32 *arg1, s32 arg2, u8 arg3, s32 arg4);
+
+s32 func_150C2700(s32 a0, s32 a1, f32 a2, f32 a3, f32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 argA, s32 argB, s32 argC, s32 argD, u8 argE) {
+    Struct150C2700 sp20;
+
+    sp20.unk18[0] = a2;
+    sp20.unk18[1] = a3;
+    sp20.unk24 = 6;
+    sp20.unk26 = 5;
+    sp20.unk10 = 0x6B;
+    sp20.unk12 = 0x46;
+    sp20.unk14 = -0x1F;
+    sp20.unk16 = 0x2E;
+    sp20.unk30 = 0x64;
+    sp20.unk32 = 0;
+    sp20.unk3C = 0x9B;
+    sp20.unk3D = 0x64;
+    sp20.unk44 = 0.0f;
+    sp20.unk48 = 1;
+    sp20.unk49 = 6;
+    sp20.unk4C = 0.0f;
+    sp20.unk50 = 1;
+    sp20.unk54 = 0.0f;
+    sp20.unk18[2] = arg4;
+    sp20.unk28 = 30.0f;
+    sp20.unk2C = 35.0f;
+    sp20.unk34 = D_800A0274;
+    sp20.unk38 = D_800A0278;
+    sp20.unk40 = D_800A027C;
+    func_15150178(&sp20, sp20.unk18, 0, argE, 1);
+    return 1;
+}
+
 extern f32 D_800A0280;
 extern f32 D_800A0284;
 extern void func_15134908(void *, s32, u8, s32);
