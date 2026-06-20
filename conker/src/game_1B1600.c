@@ -106,7 +106,20 @@ s32 func_151859FC(f32 *arg0) {
     return D_800D3688 < arg0[2];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B1600/func_15185A28.s")
+extern f32 D_800D368C;
+
+struct vtx151857DC *func_15185A28(struct vtx151857DC *a0, struct vtx151857DC *a1, struct vtx151857DC *a2) {
+    f32 t;
+
+    t = (D_800D368C - a0->z) / (a1->z - a0->z);
+    a2->x = a0->x + (a1->x - a0->x) * t;
+    a2->y = a0->y + (a1->y - a0->y) * t;
+    a2->z = D_800D368C;
+    a2->unkC = (s16)((f32)a0->unkC + (f32)(a1->unkC - a0->unkC) * t);
+    a2->unkE = (s16)((f32)a0->unkE + (f32)(a1->unkE - a0->unkE) * t);
+    a2->unk10 = (s16)((f32)a0->unk10 + (f32)(a1->unk10 - a0->unk10) * t);
+    return a2 + 1;
+}
 
 extern f32 D_800D368C;
 

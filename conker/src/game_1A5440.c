@@ -17,7 +17,10 @@ typedef struct Node15178B98 {
     char padC[0x4];
     s32 unk10;
     s32 unk14;
-    char pad18[0x18];
+    s32 unk18;
+    s32 unk1C;
+    s32 unk20;
+    char pad24[0xC];
     s16 unk30;
     char pad32[0x2];
     u8 unk34;
@@ -58,7 +61,28 @@ Node15178B98 *func_15178C34(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A5440/func_15178C9C.s")
+extern f32 sqrtf(f32);
+
+s32 func_15178C9C(u8 arg0, s32 arg1) {
+    Node15178B98 *node;
+    s32 dx;
+    s32 dy;
+    s32 dz;
+    s32 sum;
+
+    node = func_15178B98(arg0);
+    if (node != NULL) {
+        dx = (s32)(D_800CC2D0[arg1].x_position - (f32)node->unk18);
+        dy = (s32)(D_800CC2D0[arg1].y_position - (f32)node->unk1C);
+        dz = (s32)(D_800CC2D0[arg1].z_position - (f32)node->unk20);
+        dx = dx * dx;
+        dy = dy * dy;
+        dz = dz * dz;
+        sum = dx + dy + dz;
+        return (s32)sqrtf((f32)sum);
+    }
+    return 1;
+}
 
 typedef struct Node15178DA4 {
     char pad0[0x8];

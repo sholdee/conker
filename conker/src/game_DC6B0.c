@@ -69,7 +69,17 @@ s32 func_150AFBF4(struct Obj150AFBF4 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150AFC68.s")
+extern void func_1516D99C();
+
+void func_150AFC68(s32 a0, s32 a1, s32 a2, s32 a3, u8 a4, s32 a5) {
+    func_1516D99C(1, 0, 0, 0xD,
+        0, 0, 0, 0, 0, 0, 0, 0,
+        4, 0, 0, 0, 0xFF, 0xFF, 0xFF, 0,
+        0xFF, 0, 1, 0, 0, 0, 0, 0xAA,
+        0xAA, 0xAA, 0xAA, a2, a3, 0, a0, 0xF0,
+        0x50, 0x50, 1, 4, 0, 1, 0, 0,
+        0, a1, 0, a4, a5);
+}
 
 extern void *D_800DCE94;
 
