@@ -9,13 +9,14 @@ export const meta = {
   ],
 }
 
+// Agent-agnostic: the match/distill/integrate steps run as the workflow's DEFAULT
+// agent, so ANY agent runtime drives this identically — no agent-specific code or
+// prompts. `repo` lets any clone path work; the rest are tuning dials.
 const A = typeof args === 'string' ? JSON.parse(args) : (args || {})
 const ROUNDS = A.rounds || 4
 const CHUNK = A.chunk || 8
 const MAXI = A.maxi || 40
 const REPO = A.repo || '~/conker'
-const PART = A.partition || 'all'
-const ATYPE = A.agentType || null
 
 const MATCH_SCHEMA = {
   type: 'object', additionalProperties: false,
@@ -82,71 +83,26 @@ ${notesBlob}
 
 Return a one-line summary (what you added, or "no new idioms").`
 
-const rescuePrompt = (m, c) => `You are Codex, a SECOND decompiler brought in to RESCUE a function Claude could NOT byte-match. Match it to its target IDO 5.3 -O2 -g3 assembly using a real compile+diff loop. Claude's best was SCORE ${m.score} (0 = byte-perfect; lower = closer). A different reasoning approach may crack it.
-
-YOUR FUNCTION: ${m.func}  (in ~/conker/conker/src/${m.file}.c)
-Target asm: ~/conker/conker/asm/nonmatchings/${m.file}/${m.func}.s
-
-START FROM CLAUDE'S BEST ATTEMPT — do not restart from scratch:
-- Claude's near-miss C is at ~/conker/.nearmiss/${m.func}.json (the "c" field), if it scored <= 80. Load it as your starting candidate.
-- What diverged, per Claude: ${JSON.stringify((m.notes || '').slice(0, 500))}${c && c.ref_func ? `
-- A SIMILAR already-matched function (asm similarity ${c.ref_similarity}) is a strong template: its byte-matching C is at /tmp/ref_${m.func}.c and its asm at ~/conker/conker/asm/nonmatchings/${c.ref_file}/${c.ref_func}.s. Diff that asm against your target to see exactly what to change.` : ''}
-- IDO idioms: cat ~/conker/tools/ido_cookbook.md (apply the relevant ones; obey its "When to BAIL").
-
-THE LOOP:
-1. Replace  #pragma GLOBAL_ASM("asm/nonmatchings/${m.file}/${m.func}.s")  in src/${m.file}.c with your candidate C.
-2. Run  ~/conker/tools/iter_match.sh ${m.file} ${m.func}  → prints a diff + "SCORE: N" (0 = perfect). Read the diff (TARGET vs CURRENT; 'r' = register-only), refine, re-run. Up to ~12 iterations, then STOP — do NOT grind.
-
-HARD RULES (a violation corrupts the shared build tree):
-- ONLY edit src/${m.file}.c. NEVER touch other src/ files or shared headers. Add any missing extern/prototype as a LOCAL decl at the TOP of the file.
-- IDO is C89: declare all locals at the top of their block.
-- NEVER run make / make -C conker / any full build. ONLY iter_match.sh (it builds just your one object; concurrency-safe).
-- Do NOT run the decomp-permuter or any long brute-force/seed search — a background daemon ALREADY permutes register-allocation/JUSTREG ties on spare CPU. Your value is the STRUCTURAL / idiom fix. If after ~12 iterations the ONLY remaining diff is register-only ('r' lines) or a pure instruction-schedule tie, that is permuter territory — harvest and bail (below), do not search.
-
-WHEN DONE (stay within the iteration budget — this phase must not stall the round):
-- SCORE: 0 → STOP, LEAVE your matching C in the file. Report "MATCHED ${m.func}" + a 1-line note on the fix.
-- Cannot reach 0 → FIRST, if your best score was <= 80, harvest the seed: write your best C to ~/conker/.nearmiss/${m.func}.json as JSON {"func","file","score","c"} (python3 -c with json.dump) so the daemon can finish it. THEN run  git checkout conker/src/${m.file}.c  to revert ${m.func} to its exact stub line, and report your best score. Leaving non-matching C breaks the shared build. (The gate re-verifies independently, so only a true SCORE-0 de-stub commits.)`
-
-const integratePrompt = (claimed) => `You are the INTEGRATION gate for the Conker decomp orchestrator. The match agents this round left matching C in these files (one function each); failures already reverted themselves to stubs. Your job: re-verify, ROM-gate, and commit ONLY what truly matches. Be strict — never commit a non-matching tree.
-
-CLAIMED MATCHES (func, file): ${JSON.stringify(claimed.map(c => ({ func: c.func, file: c.file })))}
-
-STEPS (run from ~/conker, activate venv: source .venv/bin/activate):
-1. For EACH claimed (func,file): run  ~/conker/tools/iter_match.sh <file> <func>  and read the SCORE line.
-   - SCORE: 0 → keep it.
-   - NOT 0 → that file is suspect: run  git checkout conker/src/<file>.c  to revert it, and exclude that func. (Within a round each file holds at most one new function, so reverting affects only that one.)
-2. If NO functions remain verified, return committed=[], rom_ok=true, summary="nothing to commit". Otherwise:
-3. Full build + ROM gate:  make -C conker && make -C conker replace && make -j   then  sha1sum build/conker.us.z64  — it MUST equal 4cbadd3c4e0729dec46af64ad018050eada4f47a.
-   - If it does NOT match: do NOT commit. Revert the verified files one at a time (git checkout) and rebuild until the ROM matches again, to find the culprit; exclude it. Re-confirm the ROM matches before committing the rest.
-4. Commit: git add the verified conker/src/<file>.c files AND tools/ido_cookbook.md, then
-   git commit -m "game: match <N> functions via orchestrator (round)\n\n<one bullet per func: name + 1-phrase desc>\n\nasm-differ score 0 each; full-ROM sha1 verifies.\n\nCo-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
-   (git identity sholdee@gmail.com on branch decomp/game-matches is already configured.)
-5. Append any of THIS round's near-misses you were told about? (skip — handled elsewhere.)
-
-Return: committed (list of func names actually committed), reverted (funcs you reverted), rom_ok (did the final ROM sha1 match), commit_hash (short hash or ""), summary (one line).`
-
 // ---- the self-driving loop ----
 let totalCommitted = 0
 for (let r = 0; r < ROUNDS; r++) {
   phase('Select')
   // Similarity-based scheduling: prefer stubs with a strong matched reference
   // (writes /tmp/ref_<func>.c for each); falls back to smallest-first to fill.
-  const sel = await agent(`Run EXACTLY: CONKER_REPO=${REPO} CONKER_PARTITION=${PART} python3 ${REPO}/tools/similar_chunk.py ${CHUNK} ${MAXI}\nReturn its stdout JSON array as {"candidates": <array>}, preserving each object's func, file, ref_func, ref_file, ref_similarity fields. Do nothing else — no edits, no other commands.`,
+  const sel = await agent(`Run EXACTLY: CONKER_REPO=${REPO} python3 ${REPO}/tools/similar_chunk.py ${CHUNK} ${MAXI}\nReturn its stdout JSON array as {"candidates": <array>}, preserving each object's func, file, ref_func, ref_file, ref_similarity fields. Do nothing else — no edits, no other commands.`,
     { label: `select:r${r + 1}`, phase: 'Select', schema: CHUNK_SCHEMA })
   const chunk = (sel && sel.candidates) || []
   if (!chunk.length) { log(`round ${r + 1}: candidate pool empty — stopping`); break }
   const withRef = chunk.filter(c => c.ref_func).length
-  log(`round ${r + 1}: ${chunk.length} candidates (${withRef} with matched reference) — ${chunk.map(c => c.ref_func ? `${c.func}~${c.ref_func}(${c.ref_similarity})` : c.func).join(', ')}`)
+  log(`round ${r + 1}: ${chunk.length} candidates (${withRef} with matched reference)`)
 
   phase('Match')
+  // One self-iterating agent per function (distinct files → concurrency-safe).
   const results = (await parallel(chunk.map((c) => () =>
-    agent(matchPrompt(c), { label: `iter:${c.func}`, phase: 'Match', schema: MATCH_SCHEMA,
-      ...(ATYPE ? { agentType: ATYPE } : {}) })
-      .then(x => x && ({ ...x, hadRef: !!c.ref_func }))
+    agent(matchPrompt(c), { label: `iter:${c.func}`, phase: 'Match', schema: MATCH_SCHEMA })
   ))).filter(Boolean)
   const matched = results.filter((x) => x.matched)
-  const mRef = matched.filter(x => x.hadRef).length, nRef = results.filter(x => x.hadRef).length
-  log(`round ${r + 1}: ${matched.length}/${results.length} matched — with-ref ${mRef}/${nRef}, no-ref ${matched.length - mRef}/${results.length - nRef}`)
+  log(`round ${r + 1}: ${matched.length}/${results.length} matched`)
 
   phase('Distill')
   const notesBlob = results.map((x) => `${x.func} [${x.matched ? 'MATCH' : 'miss ' + x.score}]: ${x.notes}`).join('\n')
@@ -156,8 +112,6 @@ for (let r = 0; r < ROUNDS; r++) {
   // DETERMINISTIC integration: integrate.py force-clean rebuilds + dual-SHA1 gates +
   // bisects + commits. It keeps ONLY truly de-stubbed score-0 matches; the rest are
   // skipped/reverted. No LLM judgement in the gate — this makes autonomous commits safe.
-  // (Codex runs as a SEPARATE worktree-isolated parallel engine, not a serial rescue
-  // phase here — serial rescue gated rounds for thin yield at this pool size.)
   if (!matched.length) { log(`round ${r + 1}: no matches to commit`); continue }
   const pairs = matched.map((m) => `${m.file} ${m.func}`).join(' ')
   const integ = await agent(
