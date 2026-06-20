@@ -24,7 +24,28 @@ s32 func_150302F0(void *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15030AF4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15030D54.s")
+extern void *allocate_memory(s32 size, s32 arg1, s32 arg2, s32 arg3);
+void func_15030D54(void *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6)
+{
+  f32 *temp;
+  temp = allocate_memory(0x18, 1, 0, 2);
+  *((f32 **) (((u8 *) arg0) + 0x44)) = temp;
+  if (temp)
+  {
+    temp[((0, (*((s32 *) (((u8 *) arg0) + 0x34))) == 0)) * 0] = arg1;
+    *((f32 *) ((*((s32 *) (((u8 *) arg0) + 0x44))) + 0x4)) = arg2;
+    *((f32 *) ((*((s32 *) (((u8 *) arg0) + 0x44))) + 0x8)) = arg3;
+    *((f32 *) ((*((s32 *) (((u8 *) arg0) + 0x44))) + 0xC)) = arg4;
+    *((f32 *) ((*((s32 *) (((u8 *) arg0) + 0x44))) + 0x10)) = arg5;
+    temp = ((u8 *) arg0) + 0x44;
+    *((f32 *) ((*((s32 *) temp)) + 0x14)) = arg6;
+    if (0, (*((s32 *) (((u8 *) arg0) + 0x34))) == 0)
+    {
+      *((void **) (((u8 *) arg0) + 0x34)) = allocate_memory(0x80, 1, 2, 2);
+    }
+  }
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15030E08.s")
 
