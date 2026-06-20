@@ -1159,5 +1159,30 @@ void func_15062BDC(struct127 *arg0, f32 arg1, f32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_15062D10.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_15062E24.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_15062FC0.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_15063168.s")
+void func_15194FF4(struct127 *, struct127 *, s32);
+
+void func_15063168(struct127 *arg0) {
+    s32 i;
+    s32 self;
+    struct127 *obj;
+
+    self = ((s32)arg0 - (s32)D_800CC2D0) / (s32)sizeof(struct127);
+    for (i = 0; i < D_8008FD8C; i++) {
+        if (i == self) {
+            continue;
+        }
+        if (((1 << i) & D_800CC268) == 0) {
+            continue;
+        }
+        obj = (struct127 *)D_800CC2D0[i].unk31C;
+        if (obj == 0) {
+            continue;
+        }
+        if (((u8 *)obj)[0x1AC] != 0) {
+            continue;
+        }
+        func_15194FF4(arg0, &D_800CC2D0[i], 1);
+    }
+}
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_15063254.s")

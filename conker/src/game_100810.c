@@ -13,7 +13,33 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_100810/func_150D49C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_100810/func_150D4AE0.s")
+extern s32 func_1514654C(struct127 *, struct126 *, s32, void *, void *, s32);
+extern f32 D_800A09D0;
+extern f32 D_800A09DC;
+
+s32 func_150D4AE0(struct17 *arg0, struct17 *arg1, struct127 *arg2, struct126 *arg3) {
+    void *sp30[2];
+    void *sp28[2];
+
+    if (arg2->unk1D4 != 0) {
+        sp30[0] = &D_800A09D0;
+        sp30[1] = &D_800A09DC;
+        sp28[0] = arg0;
+        sp28[1] = (void *)arg1;
+        if (func_1514654C(arg2, arg3, 0, sp30, sp28, 2) != 0) {
+            return 1;
+        }
+        return 0;
+    }
+
+    arg0->unk0 = arg2->x_position;
+    arg0->unk4 = arg2->y_position + 100.0f;
+    arg0->unk8 = arg2->z_position;
+    arg1->unk0 = arg2->x_position;
+    arg1->unk4 = arg2->y_position + 100.0f + 500.0f;
+    arg1->unk8 = arg2->z_position;
+    return 2;
+}
 
 extern void func_150D4C2C(void *);
 extern void func_151478F4(void *);

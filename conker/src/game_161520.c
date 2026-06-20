@@ -345,7 +345,53 @@ s32 func_151368A8(struct102 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15136918.s")
+struct LocalDef15136918 {
+    s32 unk0;
+    s16 unk4;
+    s8  unk6;
+    s8  unk7;
+    s32 unk8;
+    s32 unkC;
+    u8  unk10;
+    u8  unk11;
+    u8  unk12;
+    u8  unk13;
+    u8  unk14;
+    u8  unk15;
+    s8  unk16;
+    s8  unk17;
+    s32 unk18;
+    s32 unk1C;
+    s32 unk20;
+    s32 unk24;
+};
+
+void func_15136918(f32 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4, s32 arg5, f32 *arg6, u8 arg7, s32 arg8) {
+    struct LocalDef15136918 tmp;
+    f64 spPad;
+
+    spPad = arg0;
+    tmp.unk6 = 0x55;
+    tmp.unk0 = 0x300;
+    tmp.unk8 = 0;
+    tmp.unkC = 0;
+    tmp.unk10 = arg1;
+    tmp.unk11 = arg2;
+    tmp.unk12 = 0;
+    tmp.unk13 = 0;
+    tmp.unk14 = 0;
+    tmp.unk15 = 0;
+    tmp.unk18 = 0x280001;
+    tmp.unk16 = 1;
+    tmp.unk17 = 1;
+    if (arg3 == -1) {
+        tmp.unk4 = 0x12C;
+    } else {
+        tmp.unk0 = 0x301;
+        tmp.unk4 = arg3 + 0x20;
+    }
+    func_1513C73C((s32)&tmp, 0xD, 0, arg5, arg6[0], arg6[1], arg6[2], arg0, arg0, arg4, 0, 0, arg7, arg8);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15136A1C.s")
 

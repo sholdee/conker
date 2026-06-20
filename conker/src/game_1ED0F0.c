@@ -5,7 +5,37 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151BFC40.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151BFDA0.s")
+struct Vec3F151BFDA0 { f32 x; f32 y; f32 z; };
+struct Local151BFDA0 {
+    struct Vec3F151BFDA0 unk0;  /* 0x00 (sp 0x24) */
+    f32 unkC;                   /* 0x0C (sp 0x30) */
+    u8 unk10[0x8];              /* 0x10 (sp 0x34) */
+    struct Vec3F151BFDA0 unk18; /* 0x18 (sp 0x3C) */
+    u8 unk24[0x40];             /* 0x24 (sp 0x48) */
+};
+void func_151C0418(f32 *, u8, s32);
+void func_151C04F8(f32 *, u8, s32);
+void func_151C05A4(void *, u8, s32);
+void func_151C05F0(void *, u8, s32);
+void func_151BFC40(void *, f32 *);
+void func_1514FB98(void *, u8, s32);
+
+void func_151BFDA0(struct Vec3F151BFDA0 *arg0, struct Vec3F151BFDA0 *arg1, u8 arg2, u8 arg3, s32 arg4) {
+    struct Local151BFDA0 sp24;
+
+    func_151C0418((f32 *)arg0, arg3, arg4);
+    func_151C04F8((f32 *)arg0, arg3, arg4);
+    func_151C05A4(arg0, arg3, arg4);
+    func_151C05F0(arg0, arg3, arg4);
+    if (arg2 != 0) {
+        sp24.unk0.x = -arg1->x;
+        sp24.unk0.y = -arg1->y;
+        sp24.unk0.z = -arg1->z;
+        func_151BFC40(&sp24.unk10, &sp24.unkC);
+        sp24.unk18 = *arg0;
+        func_1514FB98(&sp24, arg3, arg4);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151BFE84.s")
 

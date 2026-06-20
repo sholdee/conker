@@ -1039,6 +1039,14 @@ Schedule / hoist artifacts:
   delay slot, the `==K`-fallthrough orientation HOISTS the constant (no likely-bit) while
   the `!=K` orientation fires the likely branch but swaps call sites. Neither gets both.
   Bail.
+- Live-comparison feeding a tail-dup of ONE SHARED constant (`cond ? K : K` artifact):
+  when the target keeps a float compare (`c.le.s` + `bc1fl`) whose BOTH branch paths load
+  the SAME constant from a SINGLE shared `lui`, no C form reproduces it — an identical-
+  value ternary / empty-if / `goto` all get the compare CONSTANT-FOLDED AWAY (the
+  comparison vanishes), while textually-distinct constants (`(f32)5.0` vs `5.0f`,
+  `5.00001f`) keep the compare but SPLIT it into two separate constant loads and flip the
+  branch form. Keeping a live compare AND sharing one constant is mutually exclusive from
+  C; harvest as a permuter seed and bail.
 - Loop-rotation / strength-reduction of an indexed reload: when the target converges
   every branch onto ONE shared bottom load (or hoists/duplicates an `arr[i*k]` reload
   into branch delay slots) driven by IDO's induction-variable rewrite, unsteerable. Bail.
