@@ -123,7 +123,31 @@ s32 func_15159120(Struct15159120 *arg0, u8 arg1) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15159184.s")
+typedef struct {
+    u8 pad0[0x18];
+    f32 unk18;
+    u8 pad1C[0xFC];
+    f32 unk118;
+} Struct15159184;
+
+s32 func_15159184(Struct15159184 *arg0, u8 arg1) {
+    s32 ret;
+
+    if ((arg1 == 2) || (arg1 == 3)) {
+        if (D_800C35EA != 1) {
+            ret = 0;
+        } else if ((arg0->unk118 - 75.0f) < arg0->unk18) {
+            ret = 1;
+        } else {
+            ret = 0;
+        }
+    } else if ((arg0->unk118 - 75.0f) < arg0->unk18) {
+        ret = 1;
+    } else {
+        ret = 0;
+    }
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15159230.s")
 

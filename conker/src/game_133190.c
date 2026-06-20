@@ -135,7 +135,26 @@ void func_15107678(struct260 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15107AE0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15107B78.s")
+extern void func_1515C244(struct127 *, f32 *, f32 *, f32 *);
+extern void func_15143794(s32, s32, f32, f32 *);
+extern void func_151C329C(void *, s32, s32);
+
+void func_15107B78(struct127 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    struct { f32 x; f32 y; f32 z; } sp2C;
+    struct { f32 x; f32 y; f32 z; } sp20;
+    f32 sp1C;
+    f32 sp18;
+
+    if (arg0->unk1D4 != NULL) {
+        func_1515C244(arg0, &sp20.x, &sp1C, &sp18);
+        func_15143794((s16)arg1, (s16)arg2, sp1C, &sp2C.x);
+        sp2C.y *= arg0->unkF0;
+        sp2C.x += sp20.x;
+        sp2C.y += sp20.y;
+        sp2C.z += sp20.z;
+        func_151C329C(&sp2C, (u8)arg3, arg4);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15107C1C.s")
 
