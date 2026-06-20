@@ -23,7 +23,22 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516ECAC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516ED68.s")
+extern void func_1516D99C();
+
+void func_1516ED68(s32 a0, s32 a1, u8 a2, s32 a3) {
+    u8 v;
+    v = D_800CC2D4[a0 * 812];
+    if (v != 0x3A) {
+        return;
+    }
+    func_1516D99C(5, 0, 0, 4,
+        0, 0xFF, 0xFF, 0xFF, 0, 0, 0, 0,
+        2, 0, 0, 0, 0, 0, 0, 8,
+        0, 0, 0, 0, 0, 0, 0, 0x124,
+        0x124, 0, 0, a1, 0, 0, a0, 0xC,
+        0, 0, 0x81, 2, 0, 1, 0, 0,
+        0, 5, 0, a2, a3);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516EED4.s")
 
