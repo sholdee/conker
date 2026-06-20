@@ -340,7 +340,63 @@ void func_15159BB0(f32 arg0, f32 arg1, f32 arg2, s32 arg3, s32 arg4, s32 arg5, u
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15159C08.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_1515A11C.s")
+extern float sinf(float angle);
+f32 func_151423D8(u8);
+f32 func_15144B68(f32 arg0);
+extern f32 D_800BE9A4;
+extern s32 D_800BE9E4;
+typedef struct 
+{
+  f32 unkA8;
+  u8 unkAC;
+  u8 unkAD;
+  s8 unkAE;
+  s8 unkAF;
+  f32 unkB0;
+  f32 unkB4;
+  f32 unkB8;
+  f32 unkBC;
+  f32 unkC0;
+  f32 unkC4;
+  f32 unkC8;
+} Sub1515A11C;
+typedef struct 
+{
+  u8 pad0[0x38];
+  f32 unk38;
+  f32 unk3C;
+  u8 pad40[0xC];
+  f32 unk4C;
+  f32 unk50;
+  f32 unk54;
+  u8 pad58[0x50];
+  Sub1515A11C sub;
+} Struct1515A11C;
+extern f32 sinf(f32);
+s32 func_1515A11C(Struct1515A11C *arg0, s32 arg1)
+{
+  Sub1515A11C *s0;
+  f32 temp0;
+  f32 temp1;
+  s0 = &arg0->sub;
+  arg0->sub.unkAC = arg0->sub.unkAC + (arg0->sub.unkAE * D_800BE9E4);
+  arg0->sub.unkAD = arg0->sub.unkAD + (arg0->sub.unkAF * D_800BE9E4);
+  temp0 = func_151423D8(arg0->sub.unkAC - 0x40);
+  temp1 = func_151423D8(s0->unkAD - 0x40);
+  arg0->unk38 = s0->unkA8 + (s0->unkB0 * temp0);
+  arg0->unk3C = s0->unkA8 + (s0->unkB4 * temp1);
+  if ((s0 && s0) && s0)
+  {
+  }
+  s0->unkC4 = s0->unkC4 + (s0->unkC8 * D_800BE9A4);
+  s0->unkC4 = func_15144B68(s0->unkC4);
+  temp0 = sinf(s0->unkC4);
+  arg0->unk4C = s0->unkB8 * temp0;
+  arg0->unk50 = s0->unkBC * temp0;
+  arg0->unk54 = s0->unkC0 * temp0;
+  return 1;
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_1515A238.s")
 
