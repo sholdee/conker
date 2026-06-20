@@ -31,7 +31,19 @@ s32 func_151B1478(struct260 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DD500/func_151B14AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DD500/func_151B1828.s")
+s32 func_151B1828(u8 *arg0) {
+    u8 *p = arg0;
+    f32 *f = (f32 *)(arg0 + 0x110);
+    f32 r1;
+    f32 r2;
+    p[0x120] = *(s8 *)(p + 0x122) * D_800BE9E4 + p[0x120];
+    p[0x121] = *(s8 *)(p + 0x123) * D_800BE9E4 + p[0x121];
+    r1 = func_151423D8((u8)(p[0x120] - 0x40));
+    r2 = func_151423D8((u8)(((u8 *)f)[0x11] - 0x40));
+    *(f32 *)(p + 0x2C) += (f[5] + f[7] * r1 - *(f32 *)(p + 0x2C)) * 0.5f;
+    *(f32 *)(p + 0x30) += (f[6] + f[8] * r2 - *(f32 *)(p + 0x30)) * 0.5f;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DD500/func_151B1918.s")
 
