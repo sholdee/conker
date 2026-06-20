@@ -211,7 +211,26 @@ s32 func_150337E4(void *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_150339C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033AD8.s")
+s32 func_15033BDC();
+
+s32 func_15033AD8(u8 *arg0, u8 *arg1) {
+    if (D_800BE616 != 0) {
+        func_1508B20C(*(f32 *)(arg1 + 0x14), *(f32 *)(arg1 + 0x18), *(f32 *)(arg1 + 0x1C), 900.0f);
+    }
+    if (*(s32 *)(arg0 + 0x38) == 0) {
+        if (*(s32 *)(arg0 + 0x3C) < 0x1E) {
+            *(s32 *)(arg0 + 0x3C) += D_800BE9E4;
+        } else {
+            *(s32 *)(arg0 + 0x3C) = func_1000FA64(0x513,
+                (s16)(s32)*(f32 *)(arg1 + 0x14),
+                (s16)(s32)*(f32 *)(arg1 + 0x18),
+                (s16)(s32)*(f32 *)(arg1 + 0x1C),
+                0x7D00, 0x3E8, 0x1F4, (s32)func_15033BDC, arg0, (s32)arg1, 0, 0);
+            *(s32 *)(arg0 + 0x38) = 0x513;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033BDC.s")
 

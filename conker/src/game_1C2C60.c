@@ -12,7 +12,57 @@ s32 func_15195DD4(s32, s32, s32, s32, s32, s32, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15195868.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15195984.s")
+extern void *func_151957B0(s32, void *, void *);
+extern s32 D_800E08E8;
+extern s32 D_800E08EC;
+
+typedef struct {
+    char pad0[0x8];
+    s16 unk8;
+    s16 unkA;
+    s16 unkC;
+    s16 unkE;
+    s16 unk10;
+    char pad12[0x14 - 0x12];
+    u8 unk14;
+    char pad15[0x18 - 0x15];
+    s32 unk18;
+    s16 unk1C[5];
+    s16 unk26[5];
+} Struct15195984;
+
+void *func_15195984(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    Struct15195984 *v0;
+    s32 i;
+    s32 hi;
+    s32 lo;
+
+    v0 = func_151957B0(0x3C, &D_800E08E8, &D_800E08EC);
+    if (v0 != 0) {
+        v0->unk18 = 0;
+        for (i = 0; i < 5; i++) {
+            v0->unk1C[i] = -1;
+        }
+        for (i = 0; i < 5; i++) {
+            v0->unk26[i] = -1;
+        }
+        v0->unk8 = arg0;
+        hi = ((arg1 >> 12) & 0xFFF) + 2;
+        lo = (arg1 & 0xFFF) + 2;
+        if (arg3 != 0) {
+            hi <<= 1;
+            lo <<= 1;
+        }
+        v0->unkE = (arg2 >> 12) & 0xFFF;
+        v0->unk10 = arg2 & 0xFFF;
+        v0->unkA = hi;
+        v0->unkC = lo;
+        v0->unkE = (u16)v0->unkE << 3;
+        v0->unk10 = (u16)v0->unk10 << 3;
+        v0->unk14 = 1;
+    }
+    return v0;
+}
 
 s16 func_15195A84(s16 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return arg0;

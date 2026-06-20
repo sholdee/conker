@@ -19,7 +19,47 @@ void func_1502AAF8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_57FA0/func_1502B224.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_57FA0/func_1502B350.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_57FA0/func_1502B4A8.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_57FA0/func_1502B5C8.s")
+extern u8 D_AB1950;
+s32 func_1502AC88(u8 *arg0, s32 arg1, s32 *arg2);
+s32 func_1502B350(u8 *arg0, s32 arg1, s32 *arg2);
+
+s32 func_1502B5C8(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 *more;
+    u8 *offset;
+    s32 *tmp;
+    s32 sp40;
+    s32 ret;
+    s32 sp38;
+    s32 n;
+
+    more = &sp40;
+    if (arg0 != 0) {
+        more = arg0;
+    }
+
+    *more = 1;
+    offset = &D_AB1950;
+    tmp = &arg1 + 1;
+
+    if (arg1 != 0) {
+        do {
+            tmp = (s32 *)(((s32)tmp + 3) & -4) + 1;
+            n = *(tmp - 1);
+            if (*more != 0) {
+                offset += func_1502AC88(offset, n, &sp38);
+            }
+            *more = sp38 & 0xFFFFFFF;
+        } while (--arg1 != 0);
+    }
+
+    if (*more != 0) {
+        ret = func_1502B350(offset, sp38, more);
+    } else {
+        ret = 0;
+    }
+
+    return ret;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_57FA0/func_1502B6BC.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_57FA0/func_1502B7F0.s")
 // void func_1502B7F0(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
