@@ -20,7 +20,21 @@ u16 *func_150B58F0(u16 *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E2DA0/func_150B5E34.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E2DA0/func_150B6000.s")
+void func_150B6000(f32 *arg0, u8 arg1, s32 arg2) {
+    Header header;
+    Header2 header2;
+
+    header.unk0 = 3;
+    header.unk1 = -1;
+    header.unk2 = (func_150ADA20() % 9U) + 3;
+    header.unk4 = 0;
+
+    header2.unk0 = (s32) arg0[0];
+    header2.unk4 = (s32) arg0[1];
+    header2.unk8 = (s32) arg0[2];
+
+    func_151602C0(&header, &header2, (func_150ADA20() % 0xC9U) + 0x37, 0xFF, 0xFF, 0xFF, 0xFF, 0, 0, arg1, arg2);
+}
 
 extern void func_15143134(void *, s32, s32);
 extern s32 D_8009FC30;

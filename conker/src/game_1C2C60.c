@@ -87,7 +87,27 @@ void func_15197A7C(u8 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15197AB4.s")
+s32 func_15197AB4(f32 *arg0)
+{
+  int new_var;
+  arg0[0x50] = arg0[0x57] * arg0[0x50];
+  arg0[0x51] += arg0[0x56] * D_800BE9A4;
+  new_var = arg0 && arg0;
+  arg0[0x52] = arg0[0x57] * arg0[0x52];
+  arg0[0x53] = arg0[0x58] * arg0[0x53];
+  arg0[0x54] += arg0[0x56] * D_800BE9A4;
+  arg0[0x55] = arg0[0x58] * arg0[0x55];
+  arg0[0xD] += arg0[0x50] * D_800BE9A4;
+  arg0[0xE] += arg0[0x51] * D_800BE9A4;
+  arg0[0xF] += arg0[0x52] * D_800BE9A4;
+  arg0[0x10] += arg0[0x53] * D_800BE9A4;
+  if (new_var && arg0)
+  {
+  }
+  arg0[0x11] += arg0[0x54] * D_800BE9A4;
+  arg0[0x12] += arg0[0x55] * D_800BE9A4;
+  return 1;
+}
 
 typedef struct {
     char pad0[0x1C];
