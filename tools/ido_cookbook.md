@@ -372,6 +372,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   `p = D_glob; p++` local forces an EAGER base load + plain `blez` (wrong reg pair); `&D_glob[i]`
   doesn't reduce at all (sll/addu). (Inverse of the masked-counter-blocks-induction rule.)
 - Distinct `addiu vN,v0,K` + small-offset store (vs a folded `K+m(v0)`): null-check the SOURCE global DIRECTLY (`if (D_glob != 0)`, not a cached temp) to pin it in v0, AND compute the offset pointer into its OWN local via `u8*` arithmetic (`q = (T*)((u8*)D_glob + K)`). A temp null-check, `temp += K`, or `temp[1]` all fold or reuse v0.
+- Flat-1D-index vs 2D-array for a row-stride access: indexing a flattened `s32 *q` as
+  `q[i*N]` emits a SEPARATE stride multiply + element scale (`multu N; sll 2`), while a
+  true 2D `s32 q[][N]` (or `&q[i][0]`) FOLDS both into one direct `li (4*N)` multiply.
+  Use the flat `q[i*N]` form when the asm computes the row stride and word-scale in two
+  steps. (Steers the OPPOSITE way from the byte-stride fold bullets above.)
 - Reverse index-recovery div/multiply round-trip: a `subu;div elemsize;mflo;...;mult elemsize` pair (subtract a base, divide by the element SIZE, multiply back) is IDO recovering an array index from a POINTER param via `&base[ptr - base]` (i.e. `idx = ptr - &base[0]`). Don't try to source it as a plain offset — pass/use the param as the typed element pointer and index relative to the base array.
 
 ## Register allocation & evaluation order (the usual "so close" diffs)
@@ -544,6 +549,13 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   last): make each store "observed" by having the NEXT statement READ the global back
   (`arr[i] = D_glob;` after `D_glob = ...`); the read CSEs to the same register so each
   `sw` stays live.
+- Force a kept store to stay STANDALONE (own `jr ra;nop`, NOT sunk into the return's
+  delay slot) while keeping ONE epilogue: route the skip path with a FORWARD `goto` to a
+  `label: return;` placed RIGHT AFTER the store (`if (cond) goto ret; field=0; ret:
+  return;`). The join boundary blocks delay-slot sinking, yet there's a single jr. A
+  plain `if(cond){field=0;} return;` or `field=0; return;` SINKS the store into the slot;
+  a two-label (`goto ret0`/`goto end`) variant adds a spurious extra `jr ra`. (Inverse of
+  the dead-store-into-delay-slot rule below.)
 - Dead-store scheduling into a delay slot: to make a kept dead store (`field = 0` IDO
   won't DCE) land in a LATER load's delay slot, make it the LAST statement of its block.
   A zero/constant store materialized LAZILY (`mtc1 zero` just before its store): write
