@@ -5,7 +5,44 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517EE40.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517EF00.s")
+extern u8 D_800DDDAC;
+extern s32 D_800DDDB0;
+extern s32 D_800DDE28;
+extern u8 D_800DDDC0;
+s32 func_1517EF00(s32 arg0)
+{
+  s32 v1;
+  s32 a1;
+  v1 = ((&D_800DDDB0)[arg0] * 255) / a1;
+  if ((&D_800DDDC0)[arg0] != 0)
+  {
+    v1 = (&D_800DDDC0)[arg0];
+  }
+  else
+  {
+    a1 = (&D_800DDE28)[arg0];
+    if (a1 != 0)
+    {
+      v1 = ((&D_800DDDB0)[arg0] * 255) / a1;
+      if (v1 >= 0x100)
+      {
+        v1 = 0xFF;
+      }
+    }
+    else
+    {
+      v1 = 0xFF;
+    }
+    if (((s8 *) (&D_800DDDAC))[arg0] == 0)
+    {
+      v1 = 255 - v1;
+    }
+  }
+  return v1;
+}
+
+extern s32 func_1517EF00(s32);
+
 
 extern s32 func_1517EF00(s32);
 

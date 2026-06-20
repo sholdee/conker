@@ -129,7 +129,35 @@ void func_151AE264(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE590.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE640.s")
+void func_151AE640(s32 *arg0, s32 *arg1, u8 arg2)
+{
+  s32 *ptr = arg0;
+  s32 temp;
+  if (arg2 == ((unsigned short) 0))
+  {
+    temp = arg1[0];
+    if (temp == ptr[0x11])
+    {
+      ptr[0x11] = 0;
+    }
+ dummy_label_988571: ;
+  }
+  else
+    if (arg2 == 0x2D)
+  {
+    temp = arg1[0];
+    if (temp == ptr[0x11])
+    {
+      ptr[0x11] = arg1[1];
+    }
+    else
+      if (arg1[1] == ptr[0x11])
+    {
+      ptr[0x11] = temp;
+    }
+  }
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE6B0.s")
 

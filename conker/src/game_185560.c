@@ -81,7 +81,56 @@ s32 func_15158AFC(Struct15158AFC *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158B3C.s")
+typedef struct 
+{
+  s32 unk0;
+  s32 unk4;
+  u8 unk8;
+  u8 unk9;
+} Struct15158B3Ca;
+typedef struct 
+{
+  u8 pad0[0x40];
+  s32 unk40;
+  u8 unk44;
+} Struct15158B3Cb;
+void func_15158B3C(Struct15158B3Cb *a0, Struct15158B3Ca *a1, u8 a2)
+{
+  s32 v0;
+  if (a2 == 0x2D)
+  {
+    v0 = a1->unk0;
+    if (a0->unk40 == v0)
+    {
+      a0->unk40 = a1->unk4;
+      a0->unk44 = a1->unk9;
+    }
+    else
+    {
+      if (a0->unk40 == a1->unk4)
+      {
+        a0->unk40 = v0;
+        a0->unk44 = a1->unk8;
+      }
+ dummy_label_356969: ;
+    }
+  }
+  else
+    if (a2 == 0)
+  {
+    v0 = a1->unk0;
+    if (a0->unk40 != v0)
+    {
+      if (a0->unk44 != (*(((u8 *) a1) + 4)))
+      {
+        return;
+      }
+    }
+    a0->unk40 = 0;
+    a0->unk44 = 0;
+  }
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158BD0.s")
 
