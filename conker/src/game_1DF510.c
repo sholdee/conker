@@ -58,7 +58,40 @@ void func_151B2EC4(s32 arg0, s32 arg1, u8 arg2) {
     func_15169850(arg1, arg2, arg0 + 0x28, arg0 + 0x2C, arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B2F04.s")
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    u8 unk8;
+    u8 unk9;
+} GameStruct151B2F04a;
+
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+    u8 pad5[3];
+    s32 unk8;
+    u8 unkC;
+} GameStruct151B2F04b;
+
+void func_151B2F04(void *a0, GameStruct151B2F04a *a1, u8 a2) {
+    GameStruct151B2F04b *v0 = (GameStruct151B2F04b *)((u8 *)a0 + 0x28);
+    if (a2 == 0x2D) {
+        if (v0->unk0 == a1->unk0) {
+            v0->unk0 = a1->unk4;
+            v0->unk4 = a1->unk9;
+        } else if (v0->unk0 == a1->unk4) {
+            v0->unk0 = a1->unk0;
+            v0->unk4 = a1->unk8;
+        }
+        if (v0->unk8 == a1->unk0) {
+            v0->unk8 = a1->unk4;
+            v0->unkC = a1->unk9;
+        } else if (v0->unk8 == a1->unk4) {
+            v0->unk8 = a1->unk0;
+            v0->unkC = a1->unk8;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B2FA0.s")
 

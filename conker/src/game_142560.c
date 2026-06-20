@@ -242,7 +242,21 @@ void func_1511A6FC(s32 *arg0) {
     func_1511A494(arg0, (u8 *)arg0 + 0x80, (u8 *)arg0 + 0x84);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511A738.s")
+extern u8 D_800C35EA;
+extern struct131 *D_800DBEF4;
+extern s32 func_15022B08(s32, s32);
+extern void func_151162D4(void *);
+
+void func_1511A738(struct131 *arg0) {
+    if (D_800C35EA == 1) {
+        if (func_15022B08(arg0 - D_800DBEF4, 0) != 0) {
+            *(s32 *)((u8 *)arg0 + 0x7C) = 0;
+            *(f32 *)((u8 *)arg0 + 0x18) = 0.0f;
+        }
+    }
+    func_151162D4(arg0);
+    func_1511A494(arg0, (u8 *)arg0 + 0x80, (u8 *)arg0 + 0x84);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511A7C0.s")
 
