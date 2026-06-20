@@ -693,6 +693,11 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - A stack-local AGGREGATE's slot alignment follows its FIRST member's type: a leading
   `void*`/pointer lands it 8-aligned (e.g. sp+0x28), an `s32` drops it to the next
   4-aligned slot. Type the leading member to match the asm's slot.
+- Force a spilled scalar temp onto the 8-ALIGNED slot (e.g. a call result captured in a
+  `jal` delay slot and reloaded) by wrapping it in a `union { u32 w; f64 _a; }` and using
+  `.w`: the f64 member raises the whole local area's alignment, landing the spill at the
+  8-aligned offset (e.g. 0x28, gap at 0x2c) where a plain u32 lands one slot lower. (The
+  alignment-UP analog of the array-oversize 4-align trick below.)
 - Force a sub-word local onto a 4-ALIGNED slot by OVERSIZING it to an array: `s16 x[2]`
   (use `x[0]`) bumps alignment to 4 and forces the lower placement, no change to store
   width. Same trick for an address-taken `s32` scalar that IDO 8-byte-aligns into the

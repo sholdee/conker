@@ -7,7 +7,7 @@
 # Run from anywhere. Safe to run concurrently with OTHER files (never edit a
 # .c file another agent owns, and never run a full `make`).
 set -uo pipefail
-cd "$HOME/conker/conker"
+cd "${CONKER_REPO:-$HOME/conker}/conker"
 # shellcheck disable=SC1091
 source ../.venv/bin/activate 2>/dev/null
 

@@ -28,15 +28,33 @@ import json
 import os
 import sys
 import re
+import hashlib
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import find_similar as fs  # reuse parsing / similarity / corpus / badness
 
-ROOT = os.path.expanduser("~/conker/conker")
+_REPO = os.environ.get("CONKER_REPO", os.path.expanduser("~/conker"))
+ROOT = os.path.join(_REPO, "conker")
 RANK = "/tmp/game_ranked2.txt"
-LOG = "/tmp/orchestrator_attempted.txt"
+
+# Partitioning: split candidate stubs by file hash so two engines (Claude/Codex)
+# work disjoint sets. "even"|"odd"|"all" (default "all" = no partitioning).
+PARTITION = os.environ.get("CONKER_PARTITION", "all")
+LOG = f"/tmp/orchestrator_attempted_{PARTITION}.txt"
 
 SIM_THRESHOLD = 0.4
+
+
+def file_partition(file):
+    """0 = even, 1 = odd."""
+    return int(hashlib.md5(file.encode()).hexdigest(), 16) % 2
+
+
+def in_partition(file):
+    if PARTITION == "all":
+        return True
+    want = 0 if PARTITION == "even" else 1
+    return file_partition(file) == want
 
 
 def is_stub(file, func):
@@ -59,6 +77,8 @@ def candidate_stubs(maxi, attempted):
         n = int(n)
         file, func = s[:-2].split("/")
         if func in attempted or n < 6 or n > maxi:
+            continue
+        if not in_partition(file):
             continue
         sfile = os.path.join(ROOT, "asm/nonmatchings", s)
         try:

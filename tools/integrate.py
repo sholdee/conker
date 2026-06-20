@@ -17,7 +17,7 @@ Robustness vs the prior agent:
 """
 import os, subprocess, sys
 
-REPO = os.path.expanduser("~/conker")
+REPO = os.environ.get("CONKER_REPO", os.path.expanduser("~/conker"))
 INNER_SHA = "842e3d348e3c8ae0039e2ab367ad492f9b5266d8"
 OUTER_SHA = "4cbadd3c4e0729dec46af64ad018050eada4f47a"
 

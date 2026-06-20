@@ -37,8 +37,9 @@ from dataclasses import dataclass, field
 from typing import List, Dict, Tuple, Optional, Set
 from collections import Counter
 
-ROOT = os.path.expanduser("~/conker/conker")
-CACHE_DIR = os.path.expanduser("~/conker/.cache")
+_REPO = os.environ.get("CONKER_REPO", os.path.expanduser("~/conker"))
+ROOT = os.path.join(_REPO, "conker")
+CACHE_DIR = os.path.join(_REPO, ".cache")
 CACHE_FILE = os.path.join(CACHE_DIR, "find_similar_corpus.json")
 CACHE_VERSION = 2
 
