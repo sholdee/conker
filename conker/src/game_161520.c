@@ -351,7 +351,32 @@ s32 func_15137E10(s32 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15137E60.s")
+typedef struct { f32 x, y, z; } Vec15137;
+
+extern void func_15137F30(Vec15137 *a0, Vec15137 *a1, Vec15137 *a2, Vec15137 *a3,
+                          f32 sp10, s32 sp14, Vec15137 *out6C, Vec15137 *out60,
+                          Vec15137 *out54, f32 *out50, s16 *out4E, u8 *out4D,
+                          f32 *out48);
+extern void func_151D9014(Vec15137 *a0, Vec15137 *a1, s32 a2, s32 a3, s32 sp10,
+                          s32 sp14, f32 sp18, s32 sp1C, f32 sp20, f32 sp24,
+                          s32 sp28, s32 sp2C, s32 sp30, s32 sp34, s32 sp38,
+                          s32 sp3C);
+
+void func_15137E60(Vec15137 *arg0, Vec15137 *arg1, Vec15137 *arg2,
+                   Vec15137 *arg3, f32 arg88, s32 *arg8C) {
+    Vec15137 sp6C;
+    Vec15137 sp60;
+    Vec15137 sp54;
+    f32 sp50;
+    s16 sp4E;
+    u8 sp4D;
+    f32 sp48;
+
+    func_15137F30(arg0, arg1, arg2, arg3, arg88, (s32)arg8C, &sp6C, &sp60, &sp54,
+                  &sp50, &sp4E, &sp4D, &sp48);
+    func_151D9014(&sp6C, &sp54, 0, *(s32 *)&sp50, sp4E, sp4D, sp48, 0, 1.0f, 1.0f,
+                  1, 0, 1, 0, *((u8 *)arg8C + 0xC), *((u8 *)arg8C + 1));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15137F30.s")
 

@@ -2,6 +2,30 @@
 #include "functions.h"
 #include "variables.h"
 
+struct Struct151E5034 {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    s16 unk20;
+    char pad22[8];
+    s8 unk2A;
+    s8 unk2B;
+    s8 unk2C;
+    char pad2D[0x11];
+    s8 unk3E;
+    s8 unk3F;
+    char pad40;
+    s8 unk41;
+    char pad42;
+    s8 unk43;
+    s8 unk44;
+};
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151DD970.s")
 
@@ -43,7 +67,24 @@ void func_151DE81C(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151DE85C.s")
+extern u8 D_800D2E40;
+extern u8 D_800E0B94;
+extern u8 D_8008FD80;
+extern u8 D_8008FDA4;
+extern struct Struct151E5034 *D_8008FDD4;
+void func_1501C730(s32, s32, s32, s32, s32);
+
+void func_151DE85C(void) {
+    D_800D2E40 = 0;
+    func_1501C730(6, 0x1D, 0, 0, 1);
+    D_800E0B94 = 3;
+    D_8008FD80 = 1;
+    D_8008FE28 = 2;
+    D_8008FDA4 = 0;
+    D_8008FDD4->unk3E = 0;
+    D_8008FDD4->unk2B = 5;
+    D_8008FDD4->unk2C = D_8008FDD4->unk2B;
+}
 
 void func_151DE8E8(void) {
 }
@@ -115,28 +156,6 @@ void func_151E4DD8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E4EE8.s")
 
-struct Struct151E5034 {
-    f32 unk0;
-    f32 unk4;
-    f32 unk8;
-    f32 unkC;
-    f32 unk10;
-    f32 unk14;
-    f32 unk18;
-    f32 unk1C;
-    s16 unk20;
-    char pad22[8];
-    s8 unk2A;
-    s8 unk2B;
-    char pad2C[0x12];
-    s8 unk3E;
-    s8 unk3F;
-    char pad40;
-    s8 unk41;
-    char pad42;
-    s8 unk43;
-    s8 unk44;
-};
 extern struct Struct151E5034 *D_8008FDD4;
 
 void func_151E5034(void) {

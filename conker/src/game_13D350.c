@@ -88,7 +88,31 @@ void func_151148A8(f32 arg0[4][4], struct Struct151148A8 *arg1) {
     func_150A7A48(sp18, arg0, arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_1511490C.s")
+struct Struct1511490C {
+    char pad0[0x10];
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    char pad16[2];
+    f32 unk18;
+    char pad1C[0x10];
+    s32 unk2C;
+    s32 unk30;
+    s32 unk34;
+};
+
+void func_150A7CB0(f32 mtx[4][4], s32 x, s32 y, s32 z);
+
+void func_1511490C(f32 arg0[4][4], struct Struct1511490C *arg1) {
+    f32 sp20[4][4];
+
+    func_151148A8(arg0, arg1);
+    arg0[3][0] = arg1->unk10;
+    arg0[3][1] = arg1->unk12 + arg1->unk18;
+    arg0[3][2] = arg1->unk14;
+    func_150A7CB0(sp20, arg1->unk2C, arg1->unk30, arg1->unk34);
+    func_150A7A48(sp20, arg0, arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_151149AC.s")
 

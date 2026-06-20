@@ -36,4 +36,18 @@ s32 func_150D88AC(struct S150D88AC *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_105760/func_150D8A20.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_105760/func_150D8A34.s")
+extern f32 D_800A0B30;
+extern f32 D_800A0B34;
+void func_150D88E0();
+void func_151875E0(f32, f32, f32, s32, s32, s32, f32, f32);
+void func_15165F80(s32, s32, s32, s32, s32, s32, s32, s32, s32);
+
+void func_150D8A34(struct127 *arg0, s32 arg1, s32 arg2) {
+    struct { f32 x; f32 y; f32 z; } sp34;
+
+    if (arg0->unk1D4 != NULL) {
+        func_150D88E0(&sp34, arg0, (u8)arg1);
+        func_151875E0(sp34.x, sp34.y, sp34.z, 0x1E, 0xF, 0x7, D_800A0B30, D_800A0B34);
+        func_15165F80(-1, (s32)sp34.x, (s32)(arg0->unk180 + 4.0f), (s32)sp34.z, 4, 0x32, 0, 0xFF, 0);
+    }
+}

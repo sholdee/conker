@@ -2,6 +2,8 @@
 #include "functions.h"
 #include "variables.h"
 
+extern s16 D_800CC2B2;
+s16 func_15063390(struct127 *arg0);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_15063390.s")
 
@@ -57,7 +59,16 @@ void func_15063628(struct127 *arg0, f32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_150636F0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_150639BC.s")
+s32 func_150639BC(struct127 *arg0) {
+    D_800CC2B2 = arg0->unk7A - arg0->unk31C->unk12 - func_15063390(arg0);
+    if (D_800CC2B2 > 0x3E80) {
+        D_800CC2B2 = 0x3E80;
+    }
+    if (D_800CC2B2 < -0x3E80) {
+        D_800CC2B2 = -0x3E80;
+    }
+    return D_800CC2B2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_15063A38.s")
 
