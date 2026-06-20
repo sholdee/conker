@@ -44,7 +44,60 @@ void func_151C5E74(f32 *a0, f32 *a1, f32 *a2, f32 *a3, f32 arg4, u8 *arg5) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F2730/func_151C5F44.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F2730/func_151C61A0.s")
+struct conker151C61A0 {
+    /* 0x00 */ s16 unk00;
+    /* 0x02 */ s16 unk02;
+    /* 0x04 */ s32 unk04;
+    /* 0x08 */ s16 unk08;
+    /* 0x0A */ s16 unk0A;
+    /* 0x0C */ s16 unk0C;
+    /* 0x0E */ s16 unk0E;
+    /* 0x10 */ f32 unk10;
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ f32 unk18;
+    /* 0x1C */ f32 unk1C;
+    /* 0x20 */ f32 unk20;
+    /* 0x24 */ u8 unk24;
+    /* 0x25 */ s8 unk25;
+    /* 0x26 */ s16 unk26;
+    /* 0x28 */ s16 unk28;
+    /* 0x2C */ f32 unk2C;
+    /* 0x30 */ f32 unk30;
+    /* 0x34 */ f32 unk34;
+    /* 0x38 */ s32 unk38;
+};
+
+void func_15154684(struct conker151C61A0 *arg0, u8 arg1, s32 arg2);
+
+extern f32 D_800AAAF4;
+extern f32 D_800AAAF8;
+extern f32 D_800AAAFC;
+
+void func_151C61A0(s32 a0, s32 a1, u8 a2, s32 a3) {
+    struct conker151C61A0 sp1C;
+
+    sp1C.unk00 = 0xA;
+    sp1C.unk02 = 4;
+    sp1C.unk04 = a0;
+    sp1C.unk08 = 0;
+    sp1C.unk0C = 0xFF;
+    sp1C.unk0A = -0x18;
+    sp1C.unk0E = 0x19;
+    sp1C.unk10 = 5.0f;
+    sp1C.unk14 = 7.0f;
+    sp1C.unk18 = D_800AAAF4;
+    sp1C.unk1C = D_800AAAF8;
+    sp1C.unk20 = D_800AAAFC;
+    sp1C.unk24 = 0xBE;
+    sp1C.unk25 = 0x41;
+    sp1C.unk26 = 0xC8;
+    sp1C.unk28 = 0x96;
+    sp1C.unk2C = 96.0f;
+    sp1C.unk30 = 109.0f;
+    sp1C.unk34 = 1.0f;
+    sp1C.unk38 = a1;
+    func_15154684(&sp1C, a2, a3);
+}
 
 s32 func_151C6290(u8 *arg0, s32 arg1, s32 arg2) {
     if (arg0[4] == 0x5A || arg0[4] == 0x74 || arg0[4] == 0x7A) {
