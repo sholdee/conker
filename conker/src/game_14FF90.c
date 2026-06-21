@@ -578,7 +578,42 @@ void func_15125690(struct108 *arg0, s32 arg1) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_151256BC.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_15125924.s")
+void func_15125924(struct108 *arg0) {
+    s32 temp_v1;
+    s32 temp_a1;
+
+    if (arg0->unk3D4 != NULL) {
+        temp_a1 = (s32) arg0->unk3D4->z_position;
+        temp_v1 = *(u8 *)((u8 *)arg0->unk3D4 + 0x4E);
+    } else {
+        temp_a1 = 0;
+        temp_v1 = 0;
+    }
+
+    if ((arg0->unk2C & 0x40) == 0) {
+        if (((arg0->unk84 & 0x4000) != 0) || (arg0->unk3D0->unk102 != 0)) {
+            if (func_15125490(arg0) != 0) {
+                if ((temp_v1 == 0) && (temp_a1 == 0)) {
+                    if (func_15123934(arg0, 0x80, 1, 1, 0xD) != 0) {
+                        if (arg0->unk6C8 == 0) {
+                            func_15124B18(arg0);
+                            arg0->unk5F0 |= 0x1000;
+                        }
+                    }
+                    return;
+                }
+            }
+            if ((arg0->unk2C & 0x80) != 0) {
+                func_151239CC(arg0, 0xD);
+                arg0->unk190 = 0.0f;
+            }
+            if ((arg0->unk5F0 & 0x1000) != 0) {
+                arg0->unk5F0 &= ~0x1000;
+                arg0->unk348 = (*(f32 *)((u8 *)arg0 + 0x344) = arg0->unk2FC - arg0->unk354);
+            }
+        }
+    }
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_15125A6C.s")
 // NON-MATCHING: miles away
 // void func_15125A6C(struct108 *arg0) {
