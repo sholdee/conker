@@ -4,6 +4,7 @@
 
 
 extern u8 D_80084930;
+extern u8 D_800848D0[];
 
 #define WGFX(pkt, a, b)             \
 {                                   \
@@ -30,7 +31,31 @@ Gfx *func_150412C0(Gfx *gfx) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6E770/func_150413FC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6E770/func_15041480.s")
+s32 func_15041480(u8 arg0) {
+    s32 i;
+
+    for (i = 0; ; ) {
+        if (arg0 == D_800848D0[i]) {
+            return i;
+        }
+        if (arg0 == D_800848D0[i + 1]) {
+            return i + 1;
+        }
+        if (arg0 == D_800848D0[i + 2]) {
+            return i + 2;
+        }
+        if (arg0 == D_800848D0[i + 3]) {
+            return i + 3;
+        }
+        i += 4;
+        if (i != 0x50) {
+            continue;
+        }
+        break;
+    }
+
+    return i;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6E770/func_15041508.s")
 

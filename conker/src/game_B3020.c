@@ -2,6 +2,8 @@
 #include "functions.h"
 #include "variables.h"
 
+extern s8 D_800D239A;
+s32 func_1508802C();
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15085B70.s")
 
@@ -176,7 +178,29 @@ void func_15087FEC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508802C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_150880F8.s")
+s32 func_150880F8(s32 arg0, s32 arg1) {
+    s8 *p;
+    struct127 *obj;
+    s32 ret;
+
+    ret = 0;
+    if (D_800872A0 == 0) {
+        return 0;
+    }
+
+    p = (s8 *)(arg0 * 0x84 + (s32)D_800872A0);
+    obj = &D_800CC2D0[p[0x31]];
+    if (p[0x30] == 0) {
+        ret = func_1508802C(p, obj, arg1);
+    } else if (p[0x30] == 1) {
+        p[0x30] = 2;
+        obj->immune = 0xFF;
+    }
+
+    p[0x2A] = D_800D239A;
+    D_800D239A++;
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_150881CC.s")
 

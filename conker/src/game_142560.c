@@ -4,6 +4,7 @@
 #undef func_15048A40
 #include "variables.h"
 extern f32 func_15048A40(u8);
+extern void func_15188010(s32, f32 *);
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151150B0.s")
@@ -353,7 +354,23 @@ void func_1511A7C0(struct A_1511A7C0 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511B7D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511BA24.s")
+struct Obj1511BA24 {
+    u8 pad0[0x3C];
+    s32 unk3C;
+    u8 pad40[0x4A];
+    u8 unk8A;
+};
+
+void func_1511BA24(struct Obj1511BA24 *arg0) {
+    f32 sp1C;
+
+    sp1C = 0.0f;
+    func_15188010(arg0->unk3C, &sp1C);
+    arg0->unk8A = sp1C * 255.0f;
+    if (arg0->unk8A == 0) {
+        arg0->unk8A = 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511BB04.s")
 

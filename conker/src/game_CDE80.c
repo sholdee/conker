@@ -158,7 +158,22 @@ s32 func_150A2FA4(s32 a0, s32 a1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A3194.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A32B4.s")
+s32 func_150A32B4(struct178 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    u8 sp24[0x32C];
+    u8 pad[8];
+
+    *(f32 *)&sp24[0x14] = (f32)arg1;
+    *(f32 *)&sp24[0x2C] = (f32)arg1;
+    *(f32 *)&sp24[0x18] = (f32)arg2;
+    *(f32 *)&sp24[0x180] = (f32)arg2;
+    *(f32 *)&sp24[0x30] = (f32)arg2;
+    *(f32 *)&sp24[0x1C] = (f32)arg3;
+    *(f32 *)&sp24[0x34] = (f32)arg3;
+    if (func_150A1DA0(sp24, arg0, 0) == 0) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A3330.s")
 
