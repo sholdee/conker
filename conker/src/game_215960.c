@@ -2,6 +2,15 @@
 #include "functions.h"
 #include "variables.h"
 
+extern s32 D_800E0A74;
+extern u8 D_800E0B96;
+extern u8 D_800E0B97;
+extern Gfx D_80090028;
+extern u8 D_800917F8;
+extern u8 D_80091804;
+extern u8 D_80091810;
+Gfx *func_151ED430(Gfx *, void *, s32, s32, s32, s32, f32, s32);
+Gfx *func_15096934(Gfx *);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151E84B0.s")
 
@@ -86,7 +95,56 @@ s32 func_151EC178(s32 arg0) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151EC1F0.s")
+Gfx *func_151EC1F0(Gfx *gfx) {
+    s32 alpha;
+    s32 temp;
+
+    if (D_800BE9F0 == 0x21) {
+        return gfx;
+    }
+
+    gSPDisplayList(gfx++, &D_80090028);
+    temp = D_800E0A90;
+    alpha = temp;
+    if (alpha >= 0x12D) {
+        temp = 0x1AC;
+        alpha = temp - alpha;
+        alpha <<= 1;
+        if (alpha < 0) {
+            alpha = 0;
+        }
+    } else {
+        alpha = temp << 3;
+        if (alpha >= 0x100) {
+            alpha = 0xFF;
+        }
+    }
+
+    if (alpha != 0) {
+        gDPSetEnvColor(gfx++, 0xFF, 0xFF, 0xFF, alpha);
+        gfx = func_151ED430(gfx, &D_800917F8, 0x92, 0x63, 5, 6, 1.0f, 0);
+    }
+
+    gDPSetEnvColor(gfx++, 0xFF, 0xFF, 0xFF, 0xFF);
+    gfx = func_151ED430(gfx, &D_80091804, 0x92, 0xCB, 5, 2, 1.0f, 0);
+    gDPSetCombine(gfx++, 0xFFD3FF, 0xFFA6FF7F);
+    gDPSetEnvColor(gfx++, 0x20, 0xFF, 0x20, D_800E0B97);
+    gfx = func_151ED430(gfx, &D_80091810, 0x92, 0xCB, 5, 2, 1.0f, 0);
+    gfx = func_15096934(gfx);
+
+    alpha = 0x1EA - D_800E0A74;
+    if (alpha < 0) {
+        alpha = 0;
+    } else {
+        alpha <<= 4;
+        if (alpha >= 0x100) {
+            alpha = 0xFF;
+        }
+    }
+    alpha = 0xFF - alpha;
+    D_800E0B96 = alpha;
+    return gfx;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151EC3E8.s")
 

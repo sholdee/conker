@@ -9,6 +9,38 @@ extern f32 D_800A0AE8;
 void func_151C04F8(f32 *, u8, s32);
 void func_151C05A4(f32 *, u8, s32);
 void func_151C05F0(f32 *, u8, s32);
+void func_151BFC40(void *, f32 *);
+void func_1514FB98(void *, u8, s32);
+void func_1514FBFC(void *, u8, s32);
+
+struct Vec3F150D728C {
+    f32 x;
+    f32 y;
+    f32 z;
+};
+
+struct Copy18_150D728C {
+    u8 bytes[0x10];
+    u16 unk10;
+};
+
+struct Local150D728C_FBFC {
+    struct Vec3F150D728C unk0;
+    struct Copy18_150D728C unkC;
+    u8 pad1E[2];
+    f32 unk20;
+    u8 unk24[0x8];
+    struct Vec3F150D728C unk2C;
+    u8 unk38[0x40];
+};
+
+struct Local150D728C_FB98 {
+    struct Vec3F150D728C unk0;
+    f32 unkC;
+    u8 unk10[0x8];
+    struct Vec3F150D728C unk18;
+    u8 unk24[0x40];
+};
 
 typedef struct {
     /* 0x0 */ s32 a;
@@ -82,4 +114,27 @@ void func_150D7120(f32 *arg0, u8 arg1, s32 arg2) {
     func_1514FCE8(&sp1C, arg1, arg2);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1045D0/func_150D728C.s")
+void func_150D728C(struct Copy18_150D728C *arg0, struct Vec3F150D728C *arg1, struct Vec3F150D728C *arg2, u8 arg3, s32 arg4) {
+    struct Local150D728C_FBFC sp90;
+    struct Local150D728C_FB98 sp2C;
+
+    func_151C04F8((f32 *)arg1, arg3, arg4);
+    func_151C05A4((f32 *)arg1, arg3, arg4);
+    func_151C05F0((f32 *)arg1, arg3, arg4);
+    if (arg0 != 0) {
+        sp90.unk0.x = -arg2->x;
+        sp90.unk0.y = -arg2->y;
+        sp90.unk0.z = -arg2->z;
+        sp90.unkC = *arg0;
+        sp90.unk2C = *arg1;
+        func_151BFC40(&sp90.unk24, &sp90.unk20);
+        func_1514FBFC(&sp90, arg3, arg4);
+    } else {
+        sp2C.unk0.x = -arg2->x;
+        sp2C.unk0.y = -arg2->y;
+        sp2C.unk0.z = -arg2->z;
+        func_151BFC40(&sp2C.unk10, &sp2C.unkC);
+        sp2C.unk18 = *arg1;
+        func_1514FB98(&sp2C, arg3, arg4);
+    }
+}
