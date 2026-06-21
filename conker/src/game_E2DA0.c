@@ -2,6 +2,35 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_8009FC98;
+extern f32 D_8009FC9C;
+void func_150B5A3C(f32 *arg0, u8 arg1, u8 arg2);
+void func_150B60E0(s32 *arg0, s32 arg1);
+
+typedef struct Obj150B5950 {
+    s32 unk0;
+    u8 pad4[0x10];
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    u8 pad20[0x1B];
+    u8 unk3B;
+    u8 pad3C[0x198];
+    s32 unk1D4;
+} Obj150B5950;
+
+typedef struct Arg150B5950 {
+    u8 unk0;
+    u8 unk1;
+    u8 pad2[0xA];
+    u8 unkC;
+    u8 padD;
+    s16 unkE;
+    u8 pad10[0x18];
+    Obj150B5950 *unk28;
+    u8 unk2C;
+} Arg150B5950;
+
 
 u16 *func_150B58F0(u16 *arg0, s32 arg1) {
     if (D_800C35EA == 1) {
@@ -12,7 +41,32 @@ u16 *func_150B58F0(u16 *arg0, s32 arg1) {
     return arg0 + 2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E2DA0/func_150B5950.s")
+void func_150B5950(Arg150B5950 *arg0) {
+    vertex *sp28p;
+    vertex sp28;
+    Obj150B5950 *obj;
+
+    obj = arg0->unk28;
+    sp28p = &sp28;
+    if ((obj->unk0 == 0) || (obj->unk3B != arg0->unk2C)) {
+        arg0->unkE = -1;
+        return;
+    }
+
+    if (obj->unk1D4 != 0) {
+        if (func_150ADA68() < D_8009FC98) {
+            sp28.x = obj->unk14;
+            sp28.y = obj->unk18;
+            sp28.z = obj->unk1C;
+            func_150B5A3C((f32 *)sp28p, arg0->unkC, arg0->unk1);
+        }
+
+        if (func_150ADA68() < D_8009FC9C) {
+            func_150B60E0((s32 *)obj, (s32)sp28p);
+            func_150B5A3C((f32 *)sp28p, arg0->unkC, arg0->unk1);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E2DA0/func_150B5A3C.s")
 

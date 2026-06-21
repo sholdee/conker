@@ -4,6 +4,13 @@
 
 extern s32 (*D_8008AE00[])(void *);
 
+typedef struct {
+    f32 m[4][4];
+} MtxF15158920;
+
+extern MtxF15158920 D_8008AE18;
+extern f32 D_800A6070;
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_151580B0.s")
 
 s32 func_151580B0(void *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4, u8 arg5, s32 arg6);
@@ -88,7 +95,28 @@ s32 func_1515858C(Mtx *arg0, Obj1515 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158684.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158920.s")
+s32 func_15158920(Mtx *arg0, Obj1515 *arg1) {
+    f32 scale;
+    f32 (*unused)[4];
+    f32 sp18[4][4];
+
+    *(MtxF15158920 *)sp18 = D_8008AE18;
+    scale = arg1->subF8.unk0 * D_800A6070;
+    sp18[3][0] = arg1->unk48;
+    sp18[3][1] = arg1->unk4C;
+    sp18[3][2] = arg1->unk50;
+    sp18[0][0] *= scale;
+    sp18[0][1] *= scale;
+    sp18[0][2] *= scale;
+    sp18[1][0] *= scale;
+    sp18[1][1] *= scale;
+    sp18[1][2] *= scale;
+    sp18[2][0] *= scale;
+    sp18[2][1] *= scale;
+    sp18[2][2] *= scale;
+    guMtxF2L(sp18, arg0);
+    return 1;
+}
 
 void func_15158A20(struct102 *arg0) {
     s32 i;
