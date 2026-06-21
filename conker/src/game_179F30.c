@@ -327,7 +327,33 @@ void func_1514E87C(void) {
     func_1515F10C();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514E89C.s")
+s32 func_1514E89C(arg0, arg1, arg2)
+s32 arg0;
+s32 arg1;
+s32 arg2;
+{
+    s32 flags;
+
+    switch (arg1) {
+    case 0:
+        flags = *(s32 *) (arg0 + 0x10);
+        if (flags & 1) {
+            *(s32 *) (arg0 + 0x10) = flags & ~1;
+        } else {
+            *(s32 *) (arg0 + 0x10) = flags | 1;
+        }
+        break;
+    case 2:
+        *(s32 *) (arg0 + 0x10) = *(s32 *) (arg0 + 0x10) & ~1;
+        break;
+    case 1:
+        *(s32 *) (arg0 + 0x10) = *(s32 *) (arg0 + 0x10) | 1;
+        break;
+    default:
+        return 0;
+    }
+    return 1;
+}
 
 s32 func_1514E89C();
 

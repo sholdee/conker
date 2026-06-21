@@ -302,7 +302,49 @@ void func_151A11CC(f32 arg0, f32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A1998.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A1E34.s")
+struct Sub151A1E34 {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    s16 unkC;
+    s16 unkE;
+    s16 unk10;
+    s16 unk12;
+};
+
+struct Obj151A1E34 {
+    u8 pad0[0x34];
+    s16 unk34;
+    s16 unk36;
+    s16 unk38;
+    u8 pad3A[0x3F - 0x3A];
+    u8 unk3F;
+    u8 pad40[0x50 - 0x40];
+    struct Sub151A1E34 unk50;
+};
+
+void func_151A1E34(struct Obj151A1E34 *arg0) {
+    s16 temp_v1;
+    struct Sub151A1E34 *temp_v0;
+
+    temp_v0 = &arg0->unk50;
+    temp_v1 = arg0->unk38;
+    if (arg0->unk50.unk4 < temp_v1) {
+        arg0->unk3F = (u32)(temp_v0->unk2 - temp_v1) * (u32)temp_v0->unk0;
+    }
+    if (temp_v0->unkA < temp_v1) {
+        arg0->unk34 = arg0->unk36 = (u32)(temp_v0->unk8 - temp_v1) * (u32)temp_v0->unk6;
+    }
+    if (temp_v1 < temp_v0->unkC) {
+        arg0->unk3F = (u32)temp_v1 * (u32)temp_v0->unkE;
+    }
+    if (temp_v1 < temp_v0->unk10) {
+        arg0->unk34 = arg0->unk36 = (u32)temp_v1 * (u32)temp_v0->unk12;
+    }
+}
 
 struct Src151A1EE8 {
     u8 unk0;
