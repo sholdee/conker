@@ -1227,3 +1227,5 @@ Special empty-guard case:
 ## Post-cutover distilled
 - Float clamp-to-one: when target compares with `1.0f` but later materializes a separate
   `lui 0x3f80; mtc1` for the clamped f32, write `x = 1` (int), not `x = 1.0f` (CSEs/reuses compare const).
+- 64-bit helper reloc control: when `(u64)K * D64 / C` emits the right `__ll_mul`/`__ull_div`
+  sequence but the low word folds as `D64+4`, call helpers explicitly: `__ull_div(__ll_mul(KULL, *(s32*)&D64, D64_lo), CULL)`. Type `__ll_mul` as `(u64,s32,s32)`, not four `s32`s, to keep the high-half/zero materialization.
