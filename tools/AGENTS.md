@@ -13,6 +13,9 @@ The matching now runs on **Codex** (zero Claude tokens), via a shell mirror of t
   `permuter_daemon.py import_new` → relaunch `orchestrator_codex.sh` → `git push sholdee decomp/game-matches`.
 - **Cookbook is TIERED:** `ido_cookbook.md` = 182-line CORE (always read); `ido_reference.md` = full
   270-bullet set (grep on-demand). Codex/Claude prompts read core + grep reference.
+- **DISTILL (back on):** `orchestrator_codex.sh` ends each run with a codex distill step — skims the run's
+  `/tmp/codexm_*.log`, APPENDS only genuinely-novel idioms to `ido_reference.md` under `## Post-cutover distilled`.
+  Append-only guard (new file must start with old + ≤2KB growth, else revert) + reverts stray edits; self-commits.
 - **Fork port (DONE — 42/70 committed):** sibling-fork matches were ported via `port_fork.py` (per-func
   iter_match filter) → integrate.py. Re-running yields ~0 (the other 28 fail in our tree on header/struct
   drift); skip unless ~/conker-llm-fork advances materially.

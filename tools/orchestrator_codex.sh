@@ -35,6 +35,19 @@ WHEN DONE:
 EOF
 }
 
+distill_prompt() {  # reads this run's match logs; appends only genuinely-novel idioms to the reference
+  cat <<EOF
+You curate $REPO/tools/ido_reference.md, a grep-on-demand set of transferable IDO 5.3 -O2 matching idioms. It is MATURE — your DEFAULT is to make NO edit.
+
+This run's match agents left reasoning logs at /tmp/codexm_*.log (each is one function's compile+diff loop). Skim them for a matching TECHNIQUE that is genuinely NOVEL and TRANSFERABLE — a codegen idiom, a register-shaping trick, a diff-reading insight — NOT already covered, even loosely, by an existing bullet. READ $REPO/tools/ido_reference.md FIRST. Ignore function-specific facts (addresses, constants, per-function offsets). When in doubt, add NOTHING.
+
+If (and ONLY if) you found something genuinely new:
+- APPEND to the END of $REPO/tools/ido_reference.md. If there is no "## Post-cutover distilled" heading at the end, add that heading line first, then your bullet(s) beneath it.
+- One or two TIGHT lines per idiom; at most a few bullets total. NEVER modify, reorder, or delete any existing line — APPEND ONLY.
+- Edit ONLY ido_reference.md. Touch no other file; run no build.
+EOF
+}
+
 for r in $(seq 1 "$ROUNDS"); do
   echo "=== round $r: SELECT ==="
   CONKER_REPO="$REPO" python3 tools/similar_chunk.py "$CHUNK" "$MAXI" \
@@ -55,4 +68,24 @@ for c in json.load(sys.stdin): print(c['func'], c['file'])" > /tmp/codex_chunk.t
   pairs=$(awk '{print $2" "$1}' /tmp/codex_chunk.txt | tr '\n' ' ')
   CONKER_REPO="$REPO" python3 tools/integrate.py $pairs
 done
+
+echo "=== DISTILL (codex, append-only to ido_reference.md) ==="
+cp tools/ido_reference.md /tmp/ref_before.md
+distill_prompt > /tmp/codex_distill_prompt.txt
+timeout 900 codex exec --full-auto --cd "$REPO" "$(cat /tmp/codex_distill_prompt.txt)" > /tmp/codex_distill.log 2>&1
+git checkout -- conker/src/ tools/ido_cookbook.md 2>/dev/null   # undo any stray distill edits outside the reference
+python3 - <<'PY'
+before = open('/tmp/ref_before.md').read(); after = open('tools/ido_reference.md').read()
+if not after.startswith(before) or len(after) > len(before) + 2000:
+    open('tools/ido_reference.md', 'w').write(before); print("DISTILL: guard tripped (rewrite/bloat) — reverted reference")
+elif len(after) > len(before):
+    print(f"DISTILL: appended {len(after)-len(before)} chars of new idioms")
+else:
+    print("DISTILL: no new idiom this run")
+PY
+if ! git diff --quiet tools/ido_reference.md; then
+  git add tools/ido_reference.md && git commit -q -m "cookbook: distill novel idioms into reference (codex, append-only)"
+  echo "DISTILL: committed reference update"
+fi
+
 echo "=== codex orchestrator: done ($ROUNDS rounds) ==="
