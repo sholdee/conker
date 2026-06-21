@@ -5,6 +5,34 @@
 #include "variables.h"
 extern f32 func_15048A40(u8);
 extern void func_15188010(s32, f32 *);
+extern s32 func_151149AC(u32);
+
+struct Struct1511F31CArg {
+    u8 pad0[0x10];
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    u8 pad16[0x28];
+    u16 unk3E;
+    u8 pad40[0x14];
+    u16 unk54;
+};
+
+struct Struct1511490C {
+    char pad0[0x10];
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    char pad16[2];
+    f32 unk18;
+    char pad1C[0x10];
+    s32 unk2C;
+    s32 unk30;
+    s32 unk34;
+};
+
+extern void func_1511490C(f32 arg0[4][4], struct Struct1511490C *arg1);
+extern void func_150A7960(f32 *arg0, f32 arg1, s32 arg2, f32 arg3, f32 *arg4, f32 *arg5, f32 *arg6);
 
 struct Obj151151FC {
     f32 unk0;
@@ -505,7 +533,25 @@ void func_1511CB2C(s32 arg0, f32 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511EF40.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511F31C.s")
+void func_1511F31C(struct Struct1511F31CArg *arg0) {
+    f32 sp3C[21];
+    struct Struct1511490C *temp_v0;
+    u32 temp_id;
+
+    temp_id = arg0->unk3E;
+    if (arg0->unk54 == 0x8005) {
+        if (D_800BE9F0 == 0x35) {
+            temp_v0 = (struct Struct1511490C *)func_151149AC(temp_id & 0xFF);
+            if (temp_v0 != NULL) {
+                func_1511490C((f32 (*)[4])&sp3C[3], temp_v0);
+                func_150A7960(&sp3C[3], -3.0f, 0x435F0000, 549.0f, &sp3C[2], &sp3C[1], &sp3C[0]);
+                arg0->unk10 = (s16)sp3C[2];
+                arg0->unk12 = (s16)sp3C[1];
+                arg0->unk14 = (s16)sp3C[0];
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511F3E8.s")
 

@@ -4,6 +4,7 @@
 
 
 s32 *allocate_memory(s32, s32, s32, s32);
+s32 func_150A1DA0(u8 *, struct178 *, s32);
 
 s32 *func_1515D440(void) {
     s32 *temp;
@@ -94,7 +95,12 @@ struct Node1515E43C {
     u32 unk1C;
 };
 
-struct Node1515E43C *func_1515EB84(s32, s32, s32, s32, s32);
+struct Node1515EB84 {
+    struct Node1515EB84 *next;
+    struct178 *unk4;
+};
+
+struct Node1515E43C *func_1515EB84(s32, s32, s32, s32, struct Node1515EB84 *);
 
 void func_1515E43C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, u8 *arg5, u8 *arg6, u8 *arg7) {
     struct Node1515E43C *node;
@@ -125,7 +131,33 @@ void func_1515E43C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, u8 *arg5, u
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515E888.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515EB84.s")
+struct Node1515E43C *func_1515EB84(s32 arg0, s32 arg1, s32 arg2, s32 arg3, struct Node1515EB84 *node) {
+    u8 sp34[0x32C];
+    struct178 *entry;
+
+    *(f32 *)&sp34[0x14] = (f32)arg0;
+    *(f32 *)&sp34[0x18] = (f32)arg1;
+    *(f32 *)&sp34[0x180] = (f32)arg1;
+    *(f32 *)&sp34[0x2C] = (f32)arg0;
+    *(f32 *)&sp34[0x30] = (f32)arg1;
+    *(f32 *)&sp34[0x1C] = (f32)arg2;
+    *(f32 *)&sp34[0x34] = (f32)arg2;
+
+    while (node != 0) {
+        entry = node->unk4;
+        if (entry->unk6[0xE] == 0) {
+            if ((arg3 == 0) || (((*(u32 *)&entry->unk6[0x12] >> 24) & arg3) != 0)) {
+                if ((0x18 == ((s32)entry->unk6[0xF] >> 2)) || ((*(u32 *)&entry->unk6[0x12] >> 31) == 0)) {
+                    if (func_150A1DA0(sp34, entry, 0) == 0) {
+                        return (struct Node1515E43C *)node->unk4;
+                    }
+                }
+            }
+        }
+        node = node->next;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515EC78.s")
 
