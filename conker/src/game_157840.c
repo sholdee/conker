@@ -2,6 +2,16 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+} struct1512ABF8;
+
+extern struct1512ABF8 D_80089590[];
+extern u8 D_800DC0C0[];
+extern struct1512ABF8 D_800DC200[][4];
 extern s16 D_800DC204[];
 extern s16 D_800DC206[];
 
@@ -10,7 +20,45 @@ void func_1512C150(struct108 *arg0);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512A390.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512ABF8.s")
+void func_1512ABF8(void) {
+    f32 temp_f2;
+    f32 temp_f0;
+    s32 temp_a1;
+    s32 temp_a2;
+    s32 temp_t1;
+    s32 temp_t2;
+    u8 i;
+    u8 j;
+    register struct1512ABF8 *src;
+    struct1512ABF8 *temp_v0;
+
+    temp_f2 = 0.75f;
+    temp_f0 = 0.5f;
+    src = D_80089590;
+    temp_t2 = 0x1E;
+    temp_t1 = 0x1B;
+
+    for (temp_a1 = D_80082FA0, temp_a2 = D_800BE9F0, i = 0; i < 4; i++) {
+        j = 0;
+        do {
+            temp_v0 = &D_800DC200[i][j];
+            *temp_v0 = src[j];
+
+            if ((temp_a1 > 0) && (temp_a1 < 4)) {
+                temp_v0->unk0 = temp_v0->unk0 * temp_f0;
+                temp_v0->unk2 = temp_v0->unk2 * temp_f0;
+            }
+
+            if ((temp_t1 == temp_a2) || (temp_t2 == temp_a2)) {
+                temp_v0->unk0 = temp_v0->unk0 * temp_f2;
+                temp_v0->unk2 = temp_v0->unk2 * temp_f2;
+            }
+            j++;
+        } while (j < 4);
+    }
+
+    bzero(D_800DC0C0, 0x130);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512AD54.s")
 

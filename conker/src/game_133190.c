@@ -19,10 +19,85 @@ void func_151070F8(struct260 *arg0, s32 arg1, s32 arg2, f32 arg3);
 void func_15107A20(struct127 *arg0, s32 arg1, s32 arg2, struct Vec15107A20 *arg3, struct Vec15107A20 *arg4);
 void func_15107AE0(struct Vec15107A20 *arg0, struct Vec15107A20 *arg1, struct Vec15107A20 *arg2, struct Vec15107A20 *arg3);
 void func_15107F54(s32 *arg0, u8 arg1, void *arg2, s32 arg3);
+void func_15106214(struct102 *arg0);
+void func_15106610(struct102 *arg0);
+
+struct S1510608CVec {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+};
+
+struct S1510608CChild {
+    u8 pad0[0x40];
+    struct S1510608CVec unk40;
+};
+
+struct S1510608C {
+    u8 pad0[0x10];
+    s16 unk10;
+    u8 unk12;
+    u8 pad13;
+    struct S1510608CVec unk14;
+    u8 pad20[0x38 - 0x20];
+    struct S1510608CVec unk38;
+    s8 unk44;
+    u8 pad45[0x54 - 0x45];
+    s16 unk54;
+    s16 unk56;
+    u8 pad58[0x68 - 0x58];
+    s16 unk68;
+    u8 pad6A[0x6C - 0x6A];
+    struct S1510608CChild *unk6C;
+    struct S1510608CChild *unk70;
+};
+
+extern s32 (*D_80088C10[])(struct S1510608C *arg0, u8 *arg1);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15105CE0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_1510608C.s")
+void func_1510608C(struct S1510608C *arg0) {
+    s32 (*fn)(struct S1510608C *, u8 *);
+    u8 sp2B;
+    struct S1510608CChild *child;
+
+    sp2B = 0;
+    if (arg0->unk44 != -1) {
+        fn = D_80088C10[arg0->unk44];
+        if (fn != NULL) {
+            if (fn(arg0, &sp2B) == 0) {
+                func_1516972C((struct102 *)arg0);
+            }
+        }
+    }
+
+    if (arg0->unk12 & 1) {
+        arg0->unk10 -= D_800BE9E4;
+        if (arg0->unk10 < 0) {
+            func_1516972C((struct102 *)arg0);
+        }
+    }
+
+    if (sp2B != 0) {
+        func_15106214((struct102 *)arg0);
+    }
+
+    arg0->unk68 -= D_800BE9E4;
+    if (arg0->unk68 < 0) {
+        func_15106610((struct102 *)arg0);
+        arg0->unk68 = (func_150ADA20() % (u32)(arg0->unk56 + 1)) + arg0->unk54;
+    }
+
+    child = arg0->unk6C;
+    if (child != NULL) {
+        child->unk40 = arg0->unk14;
+    }
+
+    child = arg0->unk70;
+    if (child != NULL) {
+        child->unk40 = arg0->unk38;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_151061E0.s")
 
