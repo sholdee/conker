@@ -101,7 +101,21 @@
 // }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C2424.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C251C.s")
+s32 func_150C251C(void *arg0) {
+    void *temp_v0 = *(void **)((s32)arg0 + 0x98);
+    s32 temp_v1 = *(s16 *)((s32)arg0 + 0x1C) << 3;
+    s32 temp_t7;
+
+    if (temp_v1 >= 0x100) {
+        temp_v1 = 0xFF;
+    }
+    temp_t7 = temp_v1 & 0xFF;
+    *(u8 *)((s32)temp_v0 + 0x1B) = temp_v1;
+    if (temp_t7 < 0) {
+        return 0;
+    }
+    return 1;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C2558.s")
 extern f32 D_800A0274;
 extern f32 D_800A0278;
@@ -246,7 +260,24 @@ s32 func_150C2FCC(f32 *arg0) {
 //     return 1;
 // }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C3160.s")
+Gfx *func_150C3160(Gfx *arg0, void *arg1) {
+    s32 temp_v0;
+    s32 temp_v1;
+    s32 temp_a0;
+    f32 temp_f0;
+
+    temp_v0 = *(s32 *)((s32)arg1 + 0x2E8);
+    temp_f0 = (temp_v0 != 0) ? ((f32)*(s32 *)((s32)arg1 + 0x2E4) / (f32)temp_v0) : 1.0f;
+    temp_f0 = 1.0f - temp_f0;
+    temp_v1 = (s32)((500.0f * temp_f0) + 2.0f);
+    temp_a0 = 2 - *(s32 *)((s32)arg1 + 0x2EC);
+    *(s32 *)((s32)arg1 + 0x2EC) = temp_v1 / 3;
+    while (temp_a0 < 0) {
+        temp_a0 += 0x40;
+    }
+    gDPSetTileSize(arg0++, 4, temp_v1, temp_a0, 0x1FE, 0x03E);
+    return arg0;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C3230.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C3574.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EF410/func_150C3994.s")

@@ -1039,7 +1039,18 @@ struct225 *func_15163414(Header *header, f32* arg1, f32* arg2, f32* arg3, s8 arg
     return temp_v0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18D770/func_15163504.s")
+s32 func_15163504(struct225 *arg0) {
+    s32 ret;
+
+    ret = 1;
+    arg0->unk14->unkE = *(f32 *)*(s32 *)((s32)arg0 + 0x18);
+    arg0->unk14->unk10 = *(f32 *)*(s32 *)((s32)arg0 + 0x1C);
+    arg0->unk14->unk12 = *(f32 *)*(s32 *)((s32)arg0 + 0x20);
+    if (*(volatile s8 *)((s32)arg0 + 0x24) != -1) {
+        return D_8008B36C[*(volatile s8 *)((s32)arg0 + 0x24)]();
+    }
+    return ret;
+}
 // NON-MATCHING: something is missing..
 // s32 func_15163504(struct225 *arg0) {
 //     s32 ret = 1;
@@ -1053,7 +1064,14 @@ struct225 *func_15163414(Header *header, f32* arg1, f32* arg2, f32* arg3, s8 arg
 //     return ret;
 // }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18D770/func_151635A8.s")
+void func_151635A8(struct225 *arg0, s32 arg1, u8 arg2) {
+    void (**temp_v0)(struct225 *, s32, u8);
+
+    temp_v0 = (void (**)(struct225 *, s32, u8))D_8008B370;
+    if (temp_v0[*(volatile u8 *)((s32)arg0 + 0x25)] != NULL) {
+        temp_v0[*(volatile u8 *)((s32)arg0 + 0x25)](arg0, arg1, arg2);
+    }
+}
 // NON-MATCHING: similar issue to func_15163504
 // void func_151635A8(struct225 *arg0, s32 arg1, u8 arg2) {
 //     s32 (*func)(s32) = D_8008B370[arg0->unk25];
@@ -1278,7 +1296,30 @@ s32 func_15163F50(struct225 *arg0, struct225 *arg1) {
 
 // ???
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18D770/func_15163FEC.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18D770/func_151640C0.s")
+void func_151640C0(struct225 *arg0, void *arg1, u8 arg2) {
+    struct225 **sp18;
+    void **sp1C;
+    s32 temp_v1;
+    s32 temp_v0;
+    s32 temp_a0;
+    s32 temp_a1;
+    u8 temp_a3;
+    u8 temp_a2;
+    sp18 = &arg0;
+    sp1C = &arg1;
+    if (arg2 == 0x29) {
+        temp_v1 = *(s32 *)((s32)*sp1C + 4);
+        temp_v0 = (s32)*sp18;
+        temp_a0 = *(s32 *)temp_v1;
+        temp_a1 = *(s32 *)(temp_v0 + 0x18);
+        temp_v0 += 0x18;
+        temp_a2 = *(u8 *)(temp_v0 + 4);
+        temp_a3 = *(u8 *)(temp_v1 + 4);
+        if ((temp_a1 == temp_a0) || (temp_a2 == temp_a3) || (temp_a3 == *(u8 *)(temp_a1 + 0x3B))) {
+            func_1516972C(*sp18);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18D770/func_15164134.s")
 

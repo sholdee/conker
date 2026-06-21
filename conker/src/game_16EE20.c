@@ -187,7 +187,21 @@ s32 func_151422F8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142314.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151423D8.s")
+f32 func_151423D8(u8 arg0) {
+    s32 temp_v1;
+    s32 temp_v0 = arg0;
+    u16 temp_t0;
+    if (temp_v0 & 0x40) {
+        temp_v1 = 0x40 - (temp_v0 & 0x3F);
+    } else {
+        temp_v1 = temp_v0 & 0x3F;
+    }
+    temp_t0 = temp_v0 & 0xC0;
+    if ((temp_t0 == 0) || (temp_t0 == 0xC0)) {
+        return D_8009A220[temp_v1];
+    }
+    return -D_8009A220[temp_v1];
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142444.s")
 void func_150A8050(f32 (*)[4], f32, f32, f32);
 
@@ -210,10 +224,49 @@ void func_151424F4(Mtx *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, 
     guMtxF2L(&sp28, arg0);
 }
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142600.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142838.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142914.s")
+void func_15142838(Mtx *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8) {
+    f32 mtx[4][4];
+
+    func_150A8050(mtx, arg3, arg4, arg5);
+    mtx[3][0] = arg6;
+    mtx[3][1] = arg7;
+    mtx[3][2] = arg8;
+    mtx[0][0] *= arg1;
+    mtx[0][1] *= arg1;
+    mtx[0][2] *= arg1;
+    mtx[1][0] *= arg2;
+    mtx[1][1] *= arg2;
+    mtx[1][2] *= arg2;
+    mtx[2][0] *= arg1;
+    mtx[2][1] *= arg1;
+    mtx[2][2] *= arg1;
+    guMtxF2L(mtx, arg0);
+}
+void func_15142914(f32 mtx[4][4], f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8) {
+    func_150A8050(mtx, arg3, arg4, arg5);
+    mtx[3][0] = arg6;
+    mtx[3][1] = arg7;
+    mtx[3][2] = arg8;
+    mtx[0][0] *= arg1;
+    mtx[0][1] *= arg1;
+    mtx[0][2] *= arg1;
+    mtx[1][0] *= arg2;
+    mtx[1][1] *= arg2;
+    mtx[1][2] *= arg2;
+    mtx[2][0] *= arg1;
+    mtx[2][1] *= arg1;
+    mtx[2][2] *= arg1;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151429E0.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142A5C.s")
+s32 func_15142A5C(struct127 *arg0) {
+    void *temp_v0 = arg0->unk2D0;
+    s32 ret = 0;
+
+    if (*(s16 *)((s32)temp_v0 + 0x3C) > 0) {
+        return 1;
+    }
+    return ret;
+}
 f32 func_15142A80(f32 arg0) {
     return ((1.0f - arg0) * (arg0 - 2.0f) * arg0) * D_800A5624;
 }
@@ -231,7 +284,9 @@ f32 func_15142B44(f32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142CF0.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142E24.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142FBC.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143044.s")
+s16 func_15143044(u8 arg0, s32 arg1) {
+    return 0x7FFF - arg0;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_1514306C.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143134.s")
 
@@ -372,7 +427,13 @@ s32 func_15143E08(struct127 *arg0) {
     return (((s32) arg0->unk7A >> 8) + 64) & 0xFF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143E24.s")
+s32 func_15143E24(struct127 *arg0) {
+    struct126 *temp_v1 = arg0->unk31C;
+    if (temp_v1 != NULL) {
+        return (s16)((arg0->unk7A - temp_v1->unk12) >> 8);
+    }
+    return (s16)(arg0->unk7A >> 8);
+}
 f32 func_15143E64(struct17 *arg0) {
     f32 x = arg0->unk0;
     f32 y = arg0->unk4;
@@ -578,7 +639,27 @@ void func_15145548(struct17 *arg0, struct17 *arg1, struct17 *arg2, struct17 *arg
         *arg3 = *arg0;
     }
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_1514563C.s")
+s32 func_1514563C(struct17 *arg0, struct17 *arg1, struct17 *arg2, struct17 *arg3, f32 *arg4) {
+    f32 sp1C[1];
+    f32 denom;
+    f32 dot0;
+    f32 dot1;
+
+    if (arg4 == NULL) {
+        arg4 = &sp1C[-3];
+    }
+    denom = (arg1->unk0 * arg1->unk0) + (arg1->unk4 * arg1->unk4) + (arg1->unk8 * arg1->unk8);
+    if (denom == 0.0f) {
+        return 0;
+    }
+    dot0 = (arg1->unk0 * arg0->unk0) + (arg1->unk4 * arg0->unk4) + (arg1->unk8 * arg0->unk8);
+    dot1 = (arg1->unk0 * arg2->unk0) + (arg1->unk4 * arg2->unk4) + (arg1->unk8 * arg2->unk8);
+    *arg4 = (dot1 - dot0) / denom;
+    arg3->unk0 = arg0->unk0 + (*arg4 * arg1->unk0);
+    arg3->unk4 = arg0->unk4 + (*arg4 * arg1->unk4);
+    arg3->unk8 = arg0->unk8 + (*arg4 * arg1->unk8);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15145740.s")
 // NON-MATCHING: 90% there
