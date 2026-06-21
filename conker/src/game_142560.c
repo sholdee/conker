@@ -561,7 +561,48 @@ void func_1511CB2C(s32 arg0, f32 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511E780.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511EC50.s")
+struct Obj1511EC50 {
+    u8 pad0[0x12];
+    s16 unk12;
+    u8 pad14[0x28];
+    s32 unk3C;
+    u8 pad40[0x2E];
+    s8 unk6E;
+    u8 pad6F[0xD];
+    s32 unk7C;
+    s32 unk80;
+    f32 unk84;
+};
+
+void func_1511EC50(struct Obj1511EC50 *arg0) {
+    f32 step;
+    f32 limit;
+
+    if (arg0->unk7C == 0) {
+        arg0->unk84 = (f32)arg0->unk12;
+    }
+
+    step = (f32)D_800BE9E4 * 4.0f;
+    if (arg0->unk3C != 0) {
+        step = step * 0.25f;
+    }
+
+    if (arg0->unk80 != 0) {
+        arg0->unk12 = (s32)((f32)arg0->unk12 + (step * 5.0f));
+        limit = arg0->unk84 + 500.0f;
+        if (limit < (f32)arg0->unk12) {
+            arg0->unk12 = (s32)limit;
+            arg0->unk6E = 1;
+        }
+    } else {
+        limit = arg0->unk84;
+        arg0->unk12 = (s32)((f32)arg0->unk12 - step);
+        if ((f32)arg0->unk12 < limit) {
+            arg0->unk12 = (s32)limit;
+        }
+    }
+    arg0->unk7C = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511ED84.s")
 
