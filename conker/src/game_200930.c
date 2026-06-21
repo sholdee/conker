@@ -3,6 +3,7 @@
 #include "variables.h"
 
 extern void (*D_8008FC70[])(void *, s16, void *);
+extern void *func_151D8868(void *arg0, s32 arg1, s32 arg2, s32 arg3);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D3480.s")
 
@@ -168,7 +169,49 @@ void func_151D5148(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D5334.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D5404.s")
+struct S151D5404_30 {
+    u8 unk0;
+    u8 pad1;
+    s16 unk2;
+    u8 unk4;
+    u8 unk5;
+    u8 unk6;
+    u8 pad7;
+};
+
+struct S151D5404_38 {
+    struct17 unk0;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    u8 unk18;
+    u8 pad19[7];
+};
+
+void func_151D5404(struct17 *arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
+    struct S151D5404_38 sp38;
+    struct S151D5404_30 sp30;
+    void *temp_v0;
+    s32 i;
+
+    sp38.unk0 = *arg0;
+    sp38.unkC = arg1;
+    sp38.unk10 = arg2;
+    sp38.unk14 = arg3;
+    sp30.unk0 = 1;
+    sp30.unk2 = (func_150ADA20() % (u32)((s16)arg5 + 1)) + (s16)arg4;
+    sp30.unk4 = 0;
+    sp30.unk6 = 0;
+
+    for (i = 0; i < D_80082FA0 + 1; i++) {
+        sp30.unk5 = 1 << i;
+        sp38.unk18 = i;
+        temp_v0 = func_151D8868(&sp30, 0x1C, 0xFF, 0);
+        if (temp_v0 != NULL) {
+            memcpy((u8 *)temp_v0 + 0x18, &sp38, 0x1C);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D5514.s")
 

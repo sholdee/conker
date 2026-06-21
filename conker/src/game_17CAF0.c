@@ -2,16 +2,8 @@
 #include "functions.h"
 #include "variables.h"
 
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514F640.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514F6E8.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514F808.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514F8F8.s")
-
 struct Vec3F { f32 x; f32 y; f32 z; };
+struct Local1514F6E8 { u8 unk0; u8 pad1[3]; struct Vec3F unk4; struct Vec3F unk10; struct Vec3F unk1C; f32 unk28; };
 struct Arg1514FB98 { u8 pad[0xC]; f32 unkC; u8 unk10[0x4]; };
 struct Arg1514FBFC { struct Vec3F unk0; struct Vec3F unkC; f32 unk18; f32 unk1C; f32 unk20; u8 unk24[0x4]; };
 extern s32 func_15146078(struct Arg1514FB98 *, struct Vec3F *, struct Vec3F *);
@@ -19,6 +11,41 @@ extern s32 func_15144E80(struct Vec3F *, struct Vec3F *, struct Vec3F *, struct 
 extern f32 func_15144A74(struct Vec3F *, struct Vec3F *);
 extern s32 func_15145128(struct Vec3F *, struct Vec3F *, f32 *, f32 *);
 extern void func_1514F8F8(void *, void *, struct Vec3F *, struct Vec3F *, f32, u8, s32);
+
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514F640.s")
+
+s32 func_1514F6E8(struct Local1514F6E8 *arg0) {
+    if (!(arg0->unk0 & 1)) {
+        if (func_15145128(&arg0->unk4, &arg0->unk4, NULL, NULL) == 0) {
+            return 0;
+        }
+        arg0->unk4.x *= 1000.0f;
+        arg0->unk4.y *= 1000.0f;
+        arg0->unk4.z *= 1000.0f;
+        arg0->unk0 |= 1;
+    }
+    if (!(arg0->unk0 & 2)) {
+        if (func_15146078((struct Arg1514FB98 *)&arg0->unk4, &arg0->unk10, &arg0->unk1C) == 0) {
+            return 0;
+        }
+        arg0->unk0 |= 6;
+    }
+    if (!(arg0->unk0 & 4)) {
+        if (func_15145128(&arg0->unk10, &arg0->unk10, NULL, NULL) == 0) {
+            return 0;
+        }
+        if (func_15145128(&arg0->unk1C, &arg0->unk1C, NULL, NULL) == 0) {
+            return 0;
+        }
+        arg0->unk0 |= 4;
+    }
+    return 1;
+}
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514F808.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514F8F8.s")
 
 void func_1514FB98(struct Arg1514FB98 *arg0, u8 arg1, s32 arg2) {
     struct Vec3F sp34;

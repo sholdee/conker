@@ -2,8 +2,58 @@
 #include "functions.h"
 #include "variables.h"
 
+extern s32 (*D_8008B078[])(void *);
+extern s32 (*D_8008B07C[])(void *);
+s32 func_1514401C(u8, void *, void *, u8);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_188F90/func_1515BAE0.s")
+typedef struct {
+    u8 pad0[0x10];
+    u8 unk10;
+    u8 unk11;
+    u8 unk12;
+    u8 pad13;
+    s16 unk14;
+    u8 pad16[0x2];
+    s32 unk18;
+    s32 unk1C;
+    u8 pad20[0x18];
+    s8 unk38;
+    s8 unk39;
+} Struct1515BAE0;
+
+void func_1515BAE0(Struct1515BAE0 *arg0) {
+    s32 temp;
+    u8 failed;
+
+    failed = 0;
+    if (arg0->unk11 & 1) {
+        arg0->unk14 -= D_800BE9E4;
+        if (arg0->unk14 < 0) {
+            failed = 1;
+        }
+    }
+    if (failed == 0) {
+        temp = arg0->unk38;
+        if (temp != -1) {
+            if (D_8008B078[temp](arg0) == 0) {
+                failed = 1;
+            }
+        }
+        if (arg0->unk1C != 0) {
+            failed = func_1514401C(arg0->unk10, &arg0->unk1C, &arg0->unk18, arg0->unk12);
+        }
+    }
+    if (failed) {
+        temp = arg0->unk39;
+        if (temp != -1) {
+            if (D_8008B07C[temp](arg0) != 0) {
+                func_1516972C((struct102 *) arg0);
+            }
+        } else {
+            func_1516972C((struct102 *) arg0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_188F90/func_1515BBF0.s")
 
