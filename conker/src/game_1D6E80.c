@@ -3,6 +3,32 @@
 #include "variables.h"
 
 extern s32 func_151EF610(void);
+extern f32 D_800A8F88;
+extern s32 func_15045800(f32 *, s32, f32, s32);
+extern s32 func_151ABE40(f32 *, s32, s32, s32, s32);
+extern s32 func_10010FFC(s32, s32, s32, s32, s32, s32);
+extern void func_151AA264(void *, s32);
+extern void func_151ABE00(void *);
+
+typedef struct {
+    u8 pad0[0x14];
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    u8 pad20[0xF8];
+    f32 unk118;
+} struct_151A9EC0_inner;
+
+typedef struct {
+    u8 pad0;
+    u8 unk1;
+    u8 pad2[0xA];
+    u8 unkC;
+    u8 padD[0xB];
+    struct_151A9EC0_inner *unk18;
+    u8 pad1C[0x18];
+    f32 unk34;
+} struct_151A9EC0_arg;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151A99D0.s")
 
@@ -14,7 +40,28 @@ extern s32 func_151EF610(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151A9DC0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151A9EC0.s")
+void func_151A9EC0(u8 *arg0) {
+    u8 *v1 = *((u8 **)(arg0 + 0x18));
+    f32 sp30[3];
+    s32 temp;
+
+    goto dummy_label_151A9EC0; dummy_label_151A9EC0: ;
+    sp30[0] = *((f32 *)(v1 + 0x14));
+    if (D_800A8F88 < (*((f32 *)(v1 + 0x118)))) {
+        sp30[1] = (*((f32 *)(v1 + 0x118))) + 100.0f;
+    } else {
+        sp30[1] = (*((f32 *)(v1 + 0x18))) + 150.0f;
+    }
+    sp30[2] = *((f32 *)(v1 + 0x1C));
+    temp = (s32)(arg0 + 0x34);
+    if (func_15045800(sp30, 0, sp30[1] - 300.0f, temp) != 0) {
+        sp30[1] = *((f32 *)(arg0 + 0x34));
+        func_151ABE40(sp30, temp, 2, arg0[0xC], arg0[0x1]);
+        func_10010FFC(0, 8, 0x6978, 0, 0, (s32)v1);
+    }
+    func_151AA264(v1, temp);
+    func_151ABE00(v1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151A9FC8.s")
 

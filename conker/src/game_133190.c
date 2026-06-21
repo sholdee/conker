@@ -3,7 +3,19 @@
 #include "variables.h"
 
 struct Vec15107A20 { f32 x; f32 y; f32 z; };
+struct Vec15106F98 { f32 x; f32 y; f32 z; };
+struct S15106F98Points { struct Vec15106F98 unk0[4]; };
+struct S15106F98Payload {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    struct Vec15106F98 *unkC;
+    struct S15106F98Points unk10;
+    u8 unk40;
+    u8 pad41[3];
+};
 
+void func_151070F8(struct260 *arg0, s32 arg1, s32 arg2, f32 arg3);
 void func_15107A20(struct127 *arg0, s32 arg1, s32 arg2, struct Vec15107A20 *arg3, struct Vec15107A20 *arg4);
 void func_15107AE0(struct Vec15107A20 *arg0, struct Vec15107A20 *arg1, struct Vec15107A20 *arg2, struct Vec15107A20 *arg3);
 void func_15107F54(s32 *arg0, u8 arg1, void *arg2, s32 arg3);
@@ -110,7 +122,28 @@ void func_15106F50(struct102 *arg0, s32 arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15106F98.s")
+struct260 *func_15106F98(struct Vec15106F98 *arg0, struct Vec15106F98 *arg1, s32 arg2, struct S15106F98Points *arg3, f32 arg4, u8 arg5, u8 arg6, s32 arg7) {
+    struct260 *temp_v0;
+    struct S15106F98Payload sp40;
+    struct S15106F98Payload *data;
+
+    sp40.unk0 = (1 << arg2) + 1;
+    sp40.unk8 = 0;
+    sp40.unk4 = 0;
+    sp40.unk10 = *arg3;
+    sp40.unk40 = arg5;
+
+    temp_v0 = func_15149130(0, -1, 0x3E, -1, 0, 0x30, (struct37 *)(sp40.unk0 * 12 + 0x48), arg6, arg7);
+    if (temp_v0 != NULL) {
+        data = (struct S15106F98Payload *)((u8 *)temp_v0 + 0x28);
+        memcpy(data, &sp40, 0x44);
+        data->unkC = (struct Vec15106F98 *)((u8 *)data + 0x48);
+        data->unkC[0] = *arg0;
+        data->unkC[sp40.unk0 - 1] = *arg1;
+        func_151070F8(temp_v0, 0, (s16)(sp40.unk0 - 1), arg4);
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_151070F8.s")
 

@@ -1,7 +1,24 @@
 #include <ultra64.h>
 #include "functions.h"
+#define D_800CBE00 D_800CBE00_s32
 #include "variables.h"
+#undef D_800CBE00
 
+
+struct conker15044A28 {
+    struct conker15044A28 *next;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    u8 unkC;
+    u8 unkD;
+    u8 unkE;
+};
+
+extern struct conker15044A28 *D_800CBE00[];
+extern s32 (*D_80085E80[])(struct conker15044A28 *);
+extern void (*D_80085E8C[])(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044370.s")
 
@@ -18,7 +35,62 @@ void func_15044658(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044964.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044A28.s")
+void func_15044A28(void) {
+    struct conker15044A28 *node;
+    struct conker15044A28 *prev;
+    struct conker15044A28 *next;
+    volatile s32 *delta;
+    s32 (**funcs0)(struct conker15044A28 *);
+    void (**funcs1)(void);
+    s32 timer;
+    s32 type;
+    s32 countdown;
+    s32 delay;
+    s32 minusOne;
+
+    node = D_800CBE00[0];
+    prev = 0;
+    minusOne = -1;
+    if (node != 0) {
+        delta = &D_800BE9E4;
+        funcs0 = D_80085E80;
+        funcs1 = D_80085E8C;
+        do {
+            countdown = node->unkE;
+            type = node->unkC;
+            next = node->next;
+            if (countdown == 0) {
+                if (funcs0[type](node) != 0) {
+                    funcs1[node->unkD]();
+                }
+            } else {
+                delay = countdown - *delta;
+                if (delay < 0) {
+                    delay = 0;
+                }
+                node->unkE = delay;
+            }
+            timer = node->unk4;
+            if (timer != minusOne) {
+                timer -= *delta;
+                if (timer <= 0) {
+                    if (prev == 0) {
+                        D_800CBE00[0] = node->next;
+                    } else {
+                        prev->next = node->next;
+                    }
+                    func_100043B4((s32 *)node, 2);
+                } else {
+                    node->unk4 = timer;
+                    prev = node;
+                }
+            } else {
+                prev = node;
+            }
+            node = next;
+        } while (node != 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044B78.s")
 
