@@ -4,6 +4,7 @@
 #include "variables.h"
 
 s32 func_151D9450(void *arg0p, void *arg1);
+s32 func_15131918(s32 arg0, s32 arg1);
 
 
 u8 func_151D8E20(void) {
@@ -445,7 +446,58 @@ void func_151DB4CC(struct218 *arg0) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_2062D0/func_151DB5D0.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_2062D0/func_151DB97C.s")
+
+typedef struct {
+    u8 unk0;
+    u8 pad1[7];
+    u8 unk8;
+    u8 unk9;
+    u8 unkA;
+    u8 unkB;
+    u8 unkC;
+    u8 unkD;
+    u8 padE[2];
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+} Struct151DB97C;
+
+typedef struct {
+    u32 unk0;
+} Struct151DB97CDelta;
+
+s32 func_151DB97C(u8 *arg0, s32 arg1) {
+    Struct151DB97C *p;
+    volatile Struct151DB97CDelta *delta;
+    f32 sp24;
+    f32 sp20;
+
+    if (!(arg0[0xA8] & 2)) {
+        p = (Struct151DB97C *)(arg0 + 0xA8);
+    } else {
+        func_15131918((s32)(arg0 + 0x58), *(s32 *)(arg0 + 0xAC));
+        p = (Struct151DB97C *)(arg0 + 0xA8);
+    }
+
+    delta = (volatile Struct151DB97CDelta *)&D_800BE9E4;
+    if (p->unk0 & 1) {
+        p->unk8 = p->unk8 + (p->unkB * delta->unk0);
+        p->unk9 = p->unk9 + (p->unkC * delta->unk0);
+        p->unkA = p->unkA + (p->unkD * delta->unk0);
+
+        sp20 = func_151423D8((u8)(p->unk8 - 0x40));
+        sp24 = func_151423D8((u8)(p->unk9 - 0x40));
+        {
+            f32 sp28;
+
+            sp28 = func_151423D8((u8)(p->unkA - 0x40));
+            *(f32 *)(arg0 + 0x4C) = p->unk10 * sp20;
+            *(f32 *)(arg0 + 0x50) = p->unk14 * sp24;
+            *(f32 *)(arg0 + 0x54) = p->unk18 * sp28;
+        }
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_2062D0/func_151DBAA8.s")
 

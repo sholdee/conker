@@ -2,6 +2,10 @@
 #include "functions.h"
 #include "variables.h"
 
+struct vtx151857DC;
+extern struct vtx151857DC *(*D_8008D498[])(struct vtx151857DC *, struct vtx151857DC *, struct vtx151857DC *);
+extern s32 (*D_8008D4C0[])(struct vtx151857DC *);
+
 extern f32 D_800D3688;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B1600/func_15184150.s")
@@ -147,7 +151,39 @@ s32 func_15185DAC(f32 *arg0) {
     return arg0[1] > 0.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B1600/func_15185DD4.s")
+struct vtx151857DC *func_15185DD4(struct vtx151857DC *arg0, s32 arg1, s32 arg2, struct vtx151857DC *arg3) {
+    struct vtx151857DC *cur;
+    struct vtx151857DC *prev;
+    struct vtx151857DC *(*emit)(struct vtx151857DC *, struct vtx151857DC *, struct vtx151857DC *);
+    s32 (*test)(struct vtx151857DC *);
+    s32 i;
+
+    prev = &arg0[arg1 - 1];
+    emit = D_8008D498[arg2];
+    test = D_8008D4C0[arg2];
+    cur = arg0;
+    i = 0;
+    if (arg1 > 0) {
+        do {
+            if (test(cur) != 0) {
+                if (test(prev) != 0) {
+                    *arg3++ = *cur;
+                } else {
+                    arg3 = emit(prev, cur, arg3);
+                    *arg3++ = *cur;
+                }
+            } else {
+                if (test(prev) != 0) {
+                    arg3 = emit(prev, cur, arg3);
+                }
+            }
+            i++;
+            prev = cur;
+            cur++;
+        } while (i != arg1);
+    }
+    return arg3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B1600/func_15185F24.s")
 

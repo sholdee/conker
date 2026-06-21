@@ -4,6 +4,15 @@
 
 extern s16 D_800CC2B2;
 s16 func_15063390(struct127 *arg0);
+void func_15143134(void *, f32 *, s32);
+void func_1506AC8C(struct127 *, s32, void *);
+
+struct func_15063B64_sp28 {
+    struct127 *unk0;
+    f32 unk4[3];
+    s32 unk10;
+    volatile s32 unk14;
+};
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_15063390.s")
 
@@ -83,7 +92,35 @@ s32 func_150639BC(struct127 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_15063A38.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_15063B64.s")
+void func_15063B64(struct127 *arg0) {
+    struct func_15063B64_sp28 sp28;
+
+    if ((arg0->id == 0x75) || (arg0->id == 0xB1)) {
+        sp28.unk14 = 0x64;
+    } else {
+        sp28.unk14 = 0x2C;
+    }
+
+    if (func_1503195C(arg0, sp28.unk14, 0) != 0) {
+        if (arg0->unk1D4 != 0) {
+            func_15143134(0, sp28.unk4, (s32)arg0->unk1D4 + 0x100);
+        } else {
+            sp28.unk4[0] = arg0->x_position;
+            sp28.unk4[1] = arg0->y_position;
+            sp28.unk4[2] = arg0->z_position;
+        }
+
+        sp28.unk10 = ((s32)arg0 - (s32)D_800CC2D0) / (s32)sizeof(struct127) + 1;
+        sp28.unk0 = arg0;
+        func_1506AC8C(arg0, 0xB, &sp28);
+        func_150836CC(arg0, sp28.unk14);
+
+        if (arg0->unk31C->grenade_count != 0) {
+            arg0->unk31C->grenade_count--;
+        }
+        arg0->unk31C->unk11A = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_15063C60.s")
 
