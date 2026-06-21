@@ -2,6 +2,7 @@
 #include "functions.h"
 #include "variables.h"
 
+extern u8 D_1A37E0[];
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510CB10.s")
 
@@ -11,7 +12,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510D0EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510D374.s")
+s32 func_1510D374(s32 arg0) {
+    s32 sum;
+    s32 i;
+
+    sum = (s32)D_1A37E0;
+    for (i = 0; i < arg0; i++) {
+        sum += ((u16 *)D_80091D20)[i];
+    }
+
+    return sum;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510D404.s")
 
