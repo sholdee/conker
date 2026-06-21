@@ -2,6 +2,9 @@
 #include "functions.h"
 #include "variables.h"
 
+s32 func_1507E908(void *, s32);
+void func_1507EA44(void *, s32, s32);
+extern struct124 *D_800D1C90[];
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E2B0.s")
 
@@ -9,7 +12,34 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E500.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E5C8.s")
+void func_1507E5C8(u8 *arg0, s32 arg1) {
+    u8 *temp;
+
+    temp = (u8 *)func_1507E908(arg0, arg0[0x6F]);
+    if (temp != 0) {
+        func_1507EA44(arg0, temp[4], *(u16 *)(temp + 6));
+        if (temp[2] != arg0[0x134]) {
+            arg0[0x134] = temp[2];
+            if (arg1 == 0) {
+                arg0[0x135] = temp[3];
+            } else {
+                arg0[0x135] = arg1;
+            }
+        }
+        arg0[0x6C] = temp[0] + 0xA;
+        arg0[0x6D] = temp[1] + 0xA;
+        if (temp[8] != 0) {
+            arg0[0x68] = temp[8];
+        } else {
+            arg0[0x68] = *(u8 *)((s32)D_800D1C90[arg0[4]] + 0x3B);
+        }
+        if (temp[9] != 0) {
+            arg0[0x69] = temp[9];
+        } else {
+            arg0[0x69] = *(u8 *)((s32)D_800D1C90[arg0[4]] + 0x3C);
+        }
+    }
+}
 
 s32 func_150849A0(void *);
 

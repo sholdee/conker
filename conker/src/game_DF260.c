@@ -41,4 +41,33 @@ void func_150B1EE0(struct127 *arg0, struct df260a *arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_DF260/func_150B1F90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_DF260/func_150B2340.s")
+void func_150B2340(struct108 *arg0) {
+    s32 temp1;
+    s32 temp2;
+
+    temp1 = func_1509BE40(0, func_1509BE40(0, 0x2007, 0xB7) | 0x2000, 0xBC);
+    temp2 = func_1509BE40(0, 0x2000, 0xBB);
+
+    if (func_1509BE40(0, 0x5043, 0x1A) != 0) {
+        if (func_1509BE40(0, 0x5045, 0x1A) != 0) {
+            arg0->unk84 |= 0x4000;
+        }
+        arg0->unk84 |= 0x400000;
+        arg0->unk190 = 0.0f;
+    } else {
+        if (func_1509BE40(1, 0x4030, 6, 0x2000) != 0) {
+            arg0->unk190 = 235.0f;
+        } else {
+            arg0->unk348 = 114.0f;
+            arg0->unk34C = 114.0f;
+            arg0->unk374 = 384.0f;
+            arg0->unk190 = 60.0f;
+        }
+    }
+
+    if ((temp1 != 0) && (temp2 != -1)) {
+        arg0->unk5F0 |= 0x100;
+    } else {
+        arg0->unk5F0 &= ~0x100;
+    }
+}

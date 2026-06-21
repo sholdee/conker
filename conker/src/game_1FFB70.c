@@ -47,6 +47,34 @@ void func_151D2718(s16 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FFB70/func_151D275C.s")
+void func_151D275C(struct Obj151D26C0 *arg0) {
+    s32 temp_v0;
+    s32 temp_t5;
+
+    temp_t5 = 0x80;
+    arg0->unkE += (u32)D_800BE9E4 * (temp_v0 = arg0->unk16);
+
+    if ((temp_v0 > 0) && (arg0->unkE >= 0xED)) {
+        arg0->unk14 = (0x128 - arg0->unkE) << 2;
+        if (arg0->unk14 < 0) {
+            arg0->unk14 = 0;
+        }
+    } else {
+        arg0->unk14 = (*(volatile s16 *)&arg0->unkE) * 2;
+    }
+
+    if (arg0->unk14 >= 0x80) {
+        arg0->unk14 = temp_t5;
+    }
+
+    arg0->unk12++;
+    if (arg0->unk12 >= 0x100) {
+        arg0->unk12 -= 0x100;
+    }
+
+    if ((arg0->unkE >= 0x12D) || (arg0->unkE < 0)) {
+        func_1516972C((struct102 *)arg0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FFB70/func_151D2830.s")
