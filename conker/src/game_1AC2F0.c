@@ -3,7 +3,29 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517EE40.s")
+extern u8 D_800DDDA0[];
+extern u8 D_800DDDC0;
+
+void func_1517EE40(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s8 arg4, s32 arg5) {
+    u8 *p;
+
+    if ((s8)arg4 == ((s8 *)&D_800DDDAC)[arg5]) {
+        if ((&D_800DDDB0)[arg5] >= (&D_800DDE28)[arg5]) {
+            if (((u8 *)&D_800DDDC0)[arg5] == 0) {
+                return;
+            }
+        }
+    }
+
+    p = &D_800DDDA0[arg5 * 3];
+    p[1] = arg1;
+    p[2] = arg2;
+    p[0] = arg0;
+    (&D_800DDE28)[arg5] = arg3;
+    (&D_800DDDB0)[arg5] = 0;
+    ((s8 *)&D_800DDDAC)[arg5] = (s8)arg4;
+    ((u8 *)&D_800DDDC0)[arg5] = 0;
+}
 
 extern u8 D_800DDDAC;
 extern s32 D_800DDDB0;

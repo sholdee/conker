@@ -3,7 +3,41 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_173D40/func_15146890.s")
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    s32 unk8;
+} Struct15147040;
+
+extern s32 func_15142314(s32, s32, Struct15147040 *);
+extern void func_1504715C(s32, s32);
+extern s32 func_15046C80(f32 *, s32, f32, s32);
+
+s32 func_15146890(Struct15147040 *arg0, s32 arg1, s32 arg2, u8 arg3) {
+    f32 sp2C[3];
+    s32 temp_a1;
+
+    if ((arg3 != 1) && (arg3 != 2)) {
+        return 0;
+    }
+
+    if (arg3 == 1) {
+        temp_a1 = 0x13;
+    } else {
+        temp_a1 = 0x17;
+    }
+
+    func_15142314(*(s32 *)(arg1 + 0x1D4), temp_a1, arg0);
+    if (arg2 == 0) {
+        return 1;
+    }
+
+    sp2C[0] = arg0->unk0;
+    sp2C[1] = arg0->unk4 + 10.0f;
+    sp2C[2] = *(f32 *)&arg0->unk8;
+    func_1504715C(arg2, arg1);
+    return func_15046C80(sp2C, 0, arg0->unk4 - 50.0f, arg2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_173D40/func_15146970.s")
 
@@ -25,13 +59,7 @@ void func_15146BD8(s32 arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_173D40/func_15146E84.s")
 
-typedef struct {
-    f32 unk0;
-    f32 unk4;
-    s32 unk8;
-} Struct15147040;
-
-extern void func_15146890(Struct15147040 *, s32, s32, u8);
+extern s32 func_15146890(Struct15147040 *, s32, s32, u8);
 extern void func_1514C678(f32, f32, s32, f32, s32, s32, s32, s32, s32, f32, s32, s32);
 
 void func_15147040(s32 arg0, s32 arg1, s32 arg2) {

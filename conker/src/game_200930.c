@@ -125,7 +125,24 @@ void func_151D469C(void *arg0, s32 a1, s32 a2, s32 a3, s32 a4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D4794.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D4C38.s")
+void func_151D4C38(void *arg0, struct S151D469C *arg1, u8 arg2) {
+    struct S151D469C *p;
+
+    p = (struct S151D469C *)((u8 *)arg0 + 0x28);
+    if (arg2 == 0x3C) {
+        if ((arg1->unk0 == p->unk0) || (arg1->unk4 == p->unk4)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    } else if (arg2 == 4) {
+        if ((arg1->unk0 == p->unk0) || (arg1->unk4 == p->unk4)) {
+            p->unk10 = p->unk10 & ~1;
+        }
+block_151D4C38:
+        ;
+    } else {
+        func_15149514((s32)arg1, arg2, (s32)p, (s32)&p->unk4, (s32)arg0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D4D04.s")
 
