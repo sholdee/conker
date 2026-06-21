@@ -4,6 +4,20 @@ Match every `game` function to byte-identical IDO 5.3 `-O2 -g3` asm. Branch `dec
 Two engines run in PARALLEL: the **orchestrator** (LLM agents match `GLOBAL_ASM` stubs) and the
 **permuter daemon** (cracks JUSTREG residue on spare CPU). You coordinate them BETWEEN runs.
 
+## CURRENT MODE — Codex engine (rationing Claude tokens)
+The matching now runs on **Codex** (zero Claude tokens), via a shell mirror of the orchestrator:
+- **Run:** `bash tools/orchestrator_codex.sh 8 90 8` (chunk maxi rounds) as a tracked background task →
+  one completion notification. Uses `codex exec --full-auto` for matching; similar_chunk + integrate.py
+  are the deterministic glue. `maxi 90` is the bytes/hour sweet spot (55→43, 90→51, 120→44 bytes/min).
+- **Cadence each gap (lean — minimal Claude tokens):** force-clean ROM gate → `apply_wins.py` →
+  `permuter_daemon.py import_new` → relaunch `orchestrator_codex.sh` → `git push sholdee decomp/game-matches`.
+- **Cookbook is TIERED:** `ido_cookbook.md` = 182-line CORE (always read); `ido_reference.md` = full
+  270-bullet set (grep on-demand). Codex/Claude prompts read core + grep reference.
+- **One-time pending:** `python3 tools/port_fork.py ~/conker-llm-fork/conker | xargs -r python3 tools/integrate.py`
+  — ports ~70 functions matched in the sibling fork (~/conker-llm-fork) but stubbed here; the gate keeps only true matches. Do once at a gap.
+- **Backup remote:** `sholdee` → https://github.com/sholdee/conker (branch decomp/game-matches). `git push sholdee` each gap.
+- The Claude Workflow `orchestrator.js` still exists (agent-agnostic) if switching back from Codex.
+
 ## INVARIANTS — learned the hard way; violating these corrupts commits
 1. **Act ONLY on a workflow's completion NOTIFICATION.** `ps`/output-size checks LIE (a workflow shows
    no process between agent spawns). Acting early ⇒ your build races the running one ⇒ stale-bin ⇒ bad commit.
