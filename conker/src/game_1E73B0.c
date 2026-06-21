@@ -3,6 +3,7 @@
 #include "variables.h"
 
 s32 func_1513FAB4(void *arg0, s32 arg1, f32 *arg2, s16 arg3);
+extern f32 D_800AA8E0;
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151B9F00.s")
@@ -483,7 +484,39 @@ void func_151BE824(struct210 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE850.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BEB20.s")
+struct S151BEB20 {
+    u8 pad0[0x54];
+    f32 unk54;
+    f32 unk58;
+    f32 unk5C;
+    u8 pad60[0x7C - 0x60];
+    f32 mat[1][4][4];
+    u8 padBC[0x120 - 0xBC];
+    f32 unk120;
+};
+
+s32 func_151BEB20(struct S151BEB20 *arg0) {
+    f32 m;
+
+    func_150A8050(arg0->mat[D_800BE9C0], 0.0f, arg0->unk120, 0.0f);
+
+    m = D_800AA8E0;
+    arg0->mat[D_800BE9C0][3][0] = arg0->unk54;
+    arg0->mat[D_800BE9C0][3][1] = arg0->unk58;
+    arg0->mat[D_800BE9C0][3][2] = arg0->unk5C;
+
+    arg0->mat[D_800BE9C0][0][0] *= m;
+    arg0->mat[D_800BE9C0][0][1] *= m;
+    arg0->mat[D_800BE9C0][0][2] *= m;
+    arg0->mat[D_800BE9C0][1][0] *= m;
+    arg0->mat[D_800BE9C0][1][1] *= m;
+    arg0->mat[D_800BE9C0][1][2] *= m;
+    arg0->mat[D_800BE9C0][2][0] *= m;
+    arg0->mat[D_800BE9C0][2][1] *= m;
+    arg0->mat[D_800BE9C0][2][2] *= m;
+
+    return 1;
+}
 
 s32 func_151BEC94(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) {
     *arg4 = 1;
