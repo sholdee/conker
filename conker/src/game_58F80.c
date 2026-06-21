@@ -3,6 +3,9 @@
 #include "variables.h"
 
 
+extern u16 D_800C4ED0[];
+extern void *allocate_memory(s32, s32, s32, s32);
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502BAD0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502BD84.s")
@@ -120,7 +123,22 @@ void func_1502EA98(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502F490.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502F948.s")
+void func_1502F948(u8 *arg0) {
+    s32 idx;
+    void *temp;
+
+    if ((*(u32 *)(arg0 + 0xF8) & 0x4000) && (*(void **)(arg0 + 0x264) != 0) && (*(void **)(arg0 + 0x1D4) != 0)) {
+        idx = arg0[4];
+        if (*(void **)(arg0 + 0x1D8) == 0) {
+            temp = allocate_memory(D_800C4ED0[idx] << 6, 1, 1, 2);
+            *(void **)(arg0 + 0x1D8) = temp;
+            if (temp == 0) {
+                return;
+            }
+        }
+        bcopy(*(void **)(arg0 + 0x1D4), *(void **)(arg0 + 0x1D8), D_800C4ED0[idx] << 6);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502F9FC.s")
 

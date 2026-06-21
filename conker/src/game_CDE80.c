@@ -154,7 +154,34 @@ s32 func_150A2FA4(s32 a0, s32 a1) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A3058.s")
+s32 func_150A3058(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
+    u8 pad[4];
+    u8 sp48[0x32C];
+    struct178 *base;
+    s32 i;
+
+    *(f32 *)&sp48[0x14] = (f32)arg1;
+    *(f32 *)&sp48[0x2C] = (f32)arg1;
+    *(f32 *)&sp48[0x18] = (f32)arg2;
+    *(f32 *)&sp48[0x180] = (f32)arg2;
+    *(f32 *)&sp48[0x30] = (f32)arg2;
+    *(f32 *)&sp48[0x1C] = (f32)arg3;
+    *(f32 *)&sp48[0x34] = (f32)arg3;
+
+    for (i = 0; i < (u32)D_800D3094; i++) {
+        base = (struct178 *)*(s32 *)&D_800D3098;
+        if (base[i].unk6[0xE] == 0) {
+            if (3 == ((s32)base[i].unk6[0xF] >> 2)) {
+                if (base[i].unk6[0x11] == arg0) {
+                    if (func_150A1DA0(sp48, &base[i], 0) == 0) {
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A3194.s")
 
