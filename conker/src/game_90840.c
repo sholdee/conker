@@ -132,7 +132,24 @@ void func_15063B64(struct127 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_150642AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_150649A0.s")
+void func_150649A0(s32 arg0, s32 arg1) {
+    struct127 *objects;
+    struct197 *dst;
+    struct197 *src;
+
+    objects = D_800CC2D0;
+    dst = objects[arg1].unk2D0;
+    src = objects[arg0].unk2D0;
+
+    if (dst != 0) {
+        if (src != 0) {
+            dst->unk8 = src->unk8;
+            if (dst->unk18 <= dst->unk8) {
+                dst->unk8 = dst->unk18 - 1.0f;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_15064A14.s")
 

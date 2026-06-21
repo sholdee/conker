@@ -46,7 +46,23 @@ s32 func_1502C3BC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502CCFC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502D54C.s")
+void func_1502D54C(s32 arg0, s32 *arg1) {
+    u8 *temp_v0;
+
+    temp_v0 = (u8 *)&D_800CC2D0[arg0];
+    if ((temp_v0[0x66] & 0xC) == 4) {
+        arg1[0] = (temp_v0[0x1E0] + temp_v0[0x1DD]) / 2;
+        arg1[1] = (temp_v0[0x1E1] + temp_v0[0x1DE]) / 2;
+        arg1[2] = (temp_v0[0x1E2] + temp_v0[0x1DF]) / 2;
+        arg1[0] = 0xFF - arg1[0];
+        arg1[1] = 0xFF - arg1[1];
+        arg1[2] = 0xFF - arg1[2];
+        return;
+    }
+    arg1[2] = 0xFF;
+    arg1[1] = 0xFF;
+    arg1[0] = 0xFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502D630.s")
 
