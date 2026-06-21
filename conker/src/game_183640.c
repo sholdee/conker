@@ -95,7 +95,25 @@ s32 func_15157860(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157898.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157918.s")
+s32 func_15157918(u8 *arg0) {
+    f32 *arg1;
+
+    arg1 = (f32 *)(arg0 + 0x120);
+    func_150A8050((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)), arg1[0], arg1[1], arg1[2]);
+    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[3][0] = *(f32 *)(arg0 + 0x54);
+    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[3][1] = *(f32 *)(arg0 + 0x58);
+    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[3][2] = *(f32 *)(arg0 + 0x5C);
+    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[0][0] *= arg1[3];
+    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[0][1] *= arg1[3];
+    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[0][2] *= arg1[3];
+    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[1][0] *= arg1[3];
+    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[1][1] *= arg1[3];
+    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[1][2] *= arg1[3];
+    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[2][0] *= arg1[3];
+    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[2][1] *= arg1[3];
+    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[2][2] *= arg1[3];
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157AA8.s")
 

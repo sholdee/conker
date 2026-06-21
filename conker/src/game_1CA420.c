@@ -5,10 +5,89 @@
 
 extern void func_15147D64(u8 *arg0, s32 arg1);
 extern void func_1519E3BC(void *arg0, s16 arg1, u8 arg2, u8 arg3);
-extern s32 func_1519D030(void *arg0, s32 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5);
+extern s32 func_1519D030(void *arg0, s32 arg1, s16 arg2, u8 arg3, u8 arg4, s32 arg5);
 extern s32 func_1514ED3C(s32 arg0, s32 arg1, s32 *arg2);
 extern s32 func_1514EC1C(s32 arg0, s32 arg1, s16 arg2);
 extern s32 D_800E0920;
+extern s32 func_15147A80(void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
+extern s32 func_1519E304(void *, void *, f32, f32, f32, f32);
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Vec1519D030;
+
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    u8 unk8;
+    u8 pad9[3];
+    s32 unkC;
+    u8 unk10;
+    u8 pad11[3];
+    Vec1519D030 unk14;
+    s16 unk20;
+    s16 unk22;
+    s16 unk24;
+    u8 pad26[2];
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+    s16 unk38;
+    s16 unk3A;
+    u8 unk3C;
+    u8 unk3D;
+    u8 unk3E;
+    u8 unk3F;
+} D_800A8B80_Entry;
+
+extern D_800A8B80_Entry D_800A8B80[];
+
+typedef struct {
+    Vec1519D030 unk0;
+    s16 unkC;
+    u16 unkE;
+    s32 unk10;
+    u8 unk14;
+    u8 unk15;
+    u8 pad16[2];
+} Header1519D030;
+
+typedef struct {
+    void *unk0;
+    u8 unk4;
+    u8 unk5;
+    u8 unk6;
+    u8 unk7;
+    Vec1519D030 unk8;
+    Vec1519D030 unk14;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+    u8 unk40;
+    u8 pad41;
+    s16 unk42;
+    s16 unk44;
+    s16 unk46;
+    s16 unk48;
+    s16 unk4A;
+    u8 unk4C;
+    u8 pad4D[3];
+    f32 unk50;
+    f32 unk54;
+    f32 unk58;
+    u8 unk5C;
+    u8 unk5D;
+    u8 unk5E;
+    u8 unk5F;
+} Payload1519D030;
 
 typedef struct Obj1519E464 {
     s32 unk0;
@@ -87,7 +166,67 @@ void func_1519D000(struct s_1519CFA0 *arg0) {
     func_15147928(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519D030.s")
+s32 func_1519D030(void *arg0, s32 arg1, s16 arg2, u8 arg3, u8 arg4, s32 arg5) {
+    s32 pad_dummy;
+    Header1519D030 header;
+    Payload1519D030 payload;
+    s32 temp_v0;
+    D_800A8B80_Entry *entry;
+    s32 flag;
+
+    entry = &D_800A8B80[arg1];
+
+    if (arg0 == NULL) {
+        return 0;
+    }
+
+    payload.unk20 = 0.0f;
+    payload.unk50 = ((struct127 *)arg0)->x_position;
+    payload.unk54 = ((struct127 *)arg0)->y_position;
+    payload.unk58 = ((struct127 *)arg0)->z_position;
+    payload.unk0 = arg0;
+    payload.unk4 = ((struct127 *)arg0)->unique_id;
+    payload.unk6 = 2;
+    payload.unk7 = 0;
+    payload.unk4C = arg1;
+    header.unkC = arg2;
+    payload.unk2C = 0.0f;
+
+    flag = (arg3 != 0) ? 1 : 0;
+    header.unkE = flag | 2;
+
+    payload.unk24 = entry->unk0;
+    payload.unk28 = entry->unk4;
+    payload.unk40 = entry->unk8;
+    header.unk15 = entry->unkC;
+    payload.unk5 = entry->unk10;
+    payload.unk8 = entry->unk14;
+    payload.unk42 = entry->unk20;
+    payload.unk44 = entry->unk22;
+    payload.unk46 = entry->unk24;
+    payload.unk38 = entry->unk28;
+    payload.unk34 = entry->unk2C;
+    payload.unk30 = entry->unk30;
+    payload.unk3C = entry->unk34;
+    payload.unk48 = entry->unk38;
+    payload.unk4A = entry->unk3A;
+    payload.unk5C = entry->unk3C;
+    payload.unk5D = entry->unk3D;
+    payload.unk5E = entry->unk3E;
+    payload.unk5F = entry->unk3F;
+
+    if (func_1519E304(&payload, &header.unk0, 0.0f, 0.0f, 0.0f, 1.0f) != 0) {
+        payload.unk14 = header.unk0;
+        header.unkE |= 4;
+    }
+
+    header.unk10 = 4;
+    temp_v0 = func_15147A80(&header, 0x60, 0x24, 3, 3, 3, 0, 0, 0, arg4, arg5);
+    if (temp_v0 != 0) {
+        memcpy((void *)*(s32 *)((u8 *)temp_v0 + 0x98), &payload, 0x60);
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519D240.s")
 
