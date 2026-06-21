@@ -2,6 +2,9 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_800AAED4;
+extern f32 D_800AAED8;
+extern void func_15145974(struct17 *, f32 *, f32 *);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C71A0.s")
 
@@ -165,7 +168,37 @@ void func_151CC290(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CC524.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CC77C.s")
+s32 func_151CC77C(void *arg0) {
+    register f32 *temp_a1;
+    register f32 *temp_a2;
+    struct {
+        f32 sp20;
+        f32 sp24;
+        s32 pad28;
+        s32 pad2C;
+    } sp20;
+    void *temp_v0;
+    void *temp_v1;
+
+    temp_v0 = *(void **)((s32)arg0 + 0x70);
+    temp_v1 = *(void **)((s32)temp_v0 + 0x3D0);
+    if (temp_v1 == NULL) {
+        return 0;
+    }
+    temp_v0 = *(void **)((s32)temp_v1 + 0x31C);
+    temp_a1 = &sp20.sp24;
+    temp_a2 = &sp20.sp20;
+    if (temp_v0 == NULL) {
+        return 0;
+    }
+    func_15145974((struct17 *)((s32)temp_v0 + 0x130), temp_a1, temp_a2);
+    if (*(u8 *)((s32)arg0 + 0x20) == 0x9A) {
+        *(f32 *)((s32)arg0 + 0x60) = -((sp20.sp24 * D_800AAED4) * 2560.0f) * 2.0f;
+    } else {
+        *(f32 *)((s32)arg0 + 0x64) = ((sp20.sp20 * D_800AAED8) * 2560.0f) * 2.0f;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CC840.s")
 
