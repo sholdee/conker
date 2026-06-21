@@ -119,7 +119,22 @@ s32 func_150A2FA4(s32 a0, s32 a1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A3330.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A3398.s")
+void func_150A3398(s32 arg0, u16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    typedef u8 entry[0x34];
+
+    if (arg1 & 1) {
+        (*(entry **)&D_800D3098)[arg0][0x17] = arg2;
+    }
+    if (arg1 & 2) {
+        *(s32 *)&(*(entry **)&D_800D3098)[arg0][0x18] = arg3;
+    }
+    if (arg1 & 4) {
+        *(s32 *)&(*(entry **)&D_800D3098)[arg0][0x1C] = arg4;
+    }
+    if (arg1 & 8) {
+        *(s32 *)&(*(entry **)&D_800D3098)[arg0][0x20] = arg5;
+    }
+}
 
 void func_150A3444(s32 a0, s16 a1, s16 a2, s16 a3) {
     ((struct178 *)*(s32 *)&D_800D3098)[a0].unk0 = a1;

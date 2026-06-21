@@ -47,9 +47,23 @@ void func_15086C70(s32 arg0) {
     func_150A3194(3, 0xB, D_800D2350[arg0].unk0, D_800D2350[arg0].unk2, temp);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15086CBC.s")
-
 extern s16 D_80087290;
+
+s32 func_15086CBC(s32 arg0, f32 *arg1, f32 *arg2, f32 *arg3) {
+    if (arg0 < 0) {
+        goto fail;
+    }
+
+    if (arg0 >= D_80087290) {
+fail:
+        return 0;
+    }
+
+    *arg1 = D_800D2350[arg0].unk0;
+    *arg2 = D_800D2350[arg0].unk2;
+    *arg3 = D_800D2350[arg0].unk4;
+    return 1;
+}
 
 s32 func_15086D48(s32 arg0) {
     s32 i;

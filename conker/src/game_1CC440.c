@@ -3,6 +3,7 @@
 #include "variables.h"
 
 void func_15143794(s32, s32, f32, f32 *);
+s32 func_1510F8CC(s32);
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_1519EF90.s")
@@ -197,7 +198,54 @@ void func_151A09B4(struct Obj151A09B4 *arg0, struct Arg151A09B4 *arg1, u8 arg2) 
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A0A10.s")
+struct Obj151A0A10 {
+    u8 pad0[0x14];
+    f32 unk14;
+    u8 pad18[0x1C - 0x18];
+    f32 unk1C;
+    u8 pad20[0x180 - 0x20];
+    f32 unk180;
+    s32 unk184;
+};
+
+struct Payload151A0A10 {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    u8 unkC;
+    u8 padD[0x10 - 0xD];
+    f32 unk10;
+};
+
+void func_151A0A10(struct Obj151A0A10 *arg0, s32 arg1, u8 arg2, s32 arg3) {
+    struct260 *temp_v0;
+    struct Payload151A0A10 sp38;
+
+    if (arg0 != NULL) {
+        sp38.unk0 = arg0->unk14;
+        sp38.unk8 = arg0->unk1C;
+        if (D_800C35EA != 1) {
+            sp38.unk4 = arg0->unk180;
+            sp38.unk10 = 0.0f;
+            switch (func_1510F8CC(arg0->unk184)) {
+            case 10:
+                sp38.unkC = 0;
+                break;
+            case 15:
+            case 17:
+                sp38.unkC = 1;
+                break;
+            default:
+                sp38.unkC = 0;
+                break;
+            }
+            temp_v0 = func_151491F4((s16)arg1, -1, 1, 1, 0, 0x14, (u8)arg2, arg3);
+            if (temp_v0 != NULL) {
+                memcpy((u8 *)temp_v0 + 0x28, &sp38, 0x14);
+            }
+        }
+    }
+}
 
 extern f32 D_800A8D10;
 extern f32 D_800BE9A4;
