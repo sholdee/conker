@@ -2,6 +2,10 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_800D9C10[][4][4];
+void func_150A7A48(f32 a[4][4], f32 b[4][4], f32 c[4][4]);
+void func_1501B22C(s32 arg0);
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_138520/func_1510B070.s")
 
@@ -25,7 +29,19 @@ void func_1510B32C(s32 arg0, f32 arg1, f32 arg2, f32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_138520/func_1510B5F8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_138520/func_1510B690.s")
+void func_1510B690(void) {
+    s32 i;
+    f32 sp4C[4][4];
+    f32 (*d9d10)[4][4];
+
+    d9d10 = (f32 (*)[4][4])D_800D9D10;
+    for (i = 0; i <= D_80082FA0; i = (s16)(i + 1)) {
+        guMtxL2F(sp4C, (Mtx *)&((struct259 *)D_800BE628)[i].unkB8[(D_800BE9C0 << 6) + 0x48]);
+        guMtxL2F(D_800D9C10[i], (Mtx *)(((s32 *)&D_800DC2A0)[D_800BE9C0] + (i << 6)));
+        func_150A7A48(D_800D9C10[i], sp4C, d9d10[i]);
+        func_1501B22C(i);
+    }
+}
 
 extern s32 D_800BE628;
 extern u8 D_800BE9C0;
