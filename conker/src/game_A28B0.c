@@ -1524,7 +1524,37 @@ void func_1507A47C(void) {
 //     D_800D154C->unk94 |= (D_800D1890 << 0x18) | (D_800D1891 << 0x10) | (D_800D1892 << 8) | D_800D1893;
 // }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_A28B0/func_1507A528.s")
+void func_1507A528(void) {
+    s32 phi_a0;
+    s32 temp_a1;
+
+    if (D_800D1890 == 0) {
+        D_800D154C->unk221 = D_800D1891;
+    } else if (D_800D1890 == 1) {
+        D_800D154C->unk221 = -D_800D154C->unk221;
+    } else if (D_800D1890 == 2) {
+        if (D_800D1892 != 0) {
+            phi_a0 = D_800D1892;
+        } else {
+            phi_a0 = (*(u8 **)&D_800D2108)[*(u8 *)((u8 *)D_800D154C + 0x13F)] - 1;
+        }
+        D_800D154C->unk221 = -D_800D154C->unk221;
+        temp_a1 = D_800D154C->unk21E + D_800D154C->unk221;
+        if (D_800D154C->unk221 > 0) {
+            temp_a1 += D_800D1893;
+        } else {
+            temp_a1 -= D_800D1893;
+        }
+        if (temp_a1 >= phi_a0) {
+            temp_a1 = temp_a1 - phi_a0;
+        } else {
+            if (temp_a1 < 0) {
+                temp_a1 = temp_a1 + phi_a0;
+            }
+        }
+        D_800D154C->unk21E = temp_a1;
+    }
+}
 // NON-MATCHING: 99% there..
 // void func_1507A528(void) {
 //     s32 phi_a0;

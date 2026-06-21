@@ -9,6 +9,16 @@ extern u8 D_800DD434;
 extern u16 D_800DD436;
 extern s32 D_800DD440;
 extern u8 D_800DD446;
+extern f32 sqrtf(f32);
+
+typedef struct {
+    u8 pad0[0x9C];
+    s16 unk9C;
+    s16 unk9E;
+    s16 unkA0;
+    u8 padA2[0x12];
+    u8 unkB4;
+} struct15179CB0;
 
 void func_15178EB0(void) {
     D_800DD434 = 0;
@@ -67,4 +77,14 @@ void func_15179AB8(void)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A6360/func_15179B14.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A6360/func_15179CB0.s")
+void func_15179CB0(struct15179CB0 *arg0)
+{
+    f32 temp_f2;
+    f32 temp_f12;
+    f32 temp_f0;
+
+    temp_f2 = (f32)arg0->unkA0 - D_800DBFF0->unk300;
+    temp_f12 = (f32)arg0->unk9C - D_800DBFF0->unk2F8;
+    temp_f0 = sqrtf((temp_f2 * temp_f2) + (temp_f12 * temp_f12));
+    arg0->unkB4 = (u32)(255.0f - ((160.0f * temp_f0) / 1000.0f));
+}
