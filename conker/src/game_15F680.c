@@ -4,6 +4,12 @@
 
 void func_15132444(struct102 *arg0);
 s32 func_1513264C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 arg5, s32 arg6);
+extern u8 D_800C3E90;
+
+typedef struct {
+    u8 pad[4];
+    f32 m[4][4];
+} PaddedMtxF15133A94;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_151321D0.s")
 
@@ -110,7 +116,40 @@ s32 func_15133A50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133A94.s")
+s32 func_15133A94(Mtx *arg0, u8 *arg1) {
+    struct127 *obj;
+    struct255 *mtx;
+    PaddedMtxF15133A94 sp18;
+    u8 *src;
+
+    obj = *(struct127 **)(arg1 + 0x7C);
+    if ((obj == NULL) || (obj->interaction_state == 0) || (obj->id == 0xFF) ||
+        (arg1[0x80] != *(u8 *)((u8 *)obj + 0x3B))) {
+        return -1;
+    }
+    mtx = obj->unk1D4;
+    if (mtx == NULL) {
+        return 0;
+    }
+    if ((obj->unk74 & 0xF) == 0xF) {
+        return 0;
+    }
+    if (D_800C3E90) {
+        src = (u8 *)mtx;
+        src += arg1[0x170] << 6;
+        memcpy(arg0, src, 0x40);
+        return 1;
+    }
+    src = (u8 *)mtx;
+    src += arg1[0x170] << 6;
+    memcpy(sp18.m, src, 0x40);
+    sp18.m[0][3] = 0.0f;
+    sp18.m[1][3] = 0.0f;
+    sp18.m[2][3] = 0.0f;
+    sp18.m[3][3] = 1.0f;
+    guMtxF2L(sp18.m, arg0);
+    return 1;
+}
 
 s32 func_15133B98(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5) {
     f32 temp;

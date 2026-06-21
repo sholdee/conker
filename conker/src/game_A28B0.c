@@ -1942,7 +1942,20 @@ void func_1507B958(void) {
     D_800D154C->unkB0 = D_800D1890;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_A28B0/func_1507B974.s")
+void func_1507B974(void) {
+    struct127 *phi_v1;
+
+    phi_v1 = D_800D154C;
+    if (D_800D154C->unk65 != 0) {
+        phi_v1 = &D_800CC2D0[D_800D154C->unk65 - 1];
+    }
+    if (D_800D1891 == *(u16 *)((u8 *)D_800D2104[phi_v1->unk13F] + (phi_v1->unk21E * 8) + (D_800D1893 << 3) + 6)) {
+        D_800D1892 ^= 1;
+    }
+    if (D_800D1892 != 0) {
+        func_15075400(D_800D1890);
+    }
+}
 // NON-MATCHING: dont think D_800D2104 is correct
 // void func_1507B974(void) {
 //     struct127 *phi_v1;

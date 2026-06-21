@@ -2,8 +2,31 @@
 #include "functions.h"
 #include "variables.h"
 
+extern s32 *D_800DBF94;
+extern s32 func_151149AC(u32);
+extern s32 func_1505D024(struct127 *, s32, u16, s32);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150AF200.s")
+void func_150AF200(s32 arg0, s32 arg1) {
+    struct131 *temp;
+    s32 idx;
+
+    if (D_800CC3D4[0] != 0) {
+        return;
+    }
+
+    temp = (struct131 *)func_151149AC(arg0 & 0xFF);
+    idx = temp - D_800DBEF4;
+    if (D_800DBF94[idx] & 1) {
+        func_1505D024(&D_800CC2D0[0], 0x3F, 0x6E00, -1);
+        return;
+    }
+
+    temp = (struct131 *)func_151149AC((u8)arg1);
+    idx = temp - D_800DBEF4;
+    if (D_800DBF94[idx] & 1) {
+        func_1505D024(&D_800CC2D0[0], 0x3F, 0xEE00, -1);
+    }
+}
 
 extern void func_151CF898(void *, f32, f32);
 

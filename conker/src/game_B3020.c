@@ -3,6 +3,8 @@
 #include "variables.h"
 
 extern s8 D_800D239A;
+extern s8 D_800D2398;
+extern s8 D_800D2399;
 s32 func_1508802C();
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15085B70.s")
@@ -266,7 +268,47 @@ s32 func_15088270(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_150883B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508855C.s")
+struct Struct1508855C {
+    char pad0[0x31];
+    s8 unk31;
+    char pad32[0x84 - 0x32];
+};
+
+s32 func_1508855C(struct127 *arg0) {
+    u8 *base;
+    s32 index;
+    s32 i;
+    s32 limit;
+    struct Struct1508855C *p;
+
+    index = ((s32)arg0 - (s32)D_800CC2D0) / (s32)sizeof(struct127);
+    base = D_800872A0;
+    if (base == 0) {
+        return -1;
+    }
+
+    if (index == 0) {
+        return 0;
+    }
+
+    i = 1;
+    limit = D_800D2398 + D_800D2399;
+    p = (struct Struct1508855C *)(base + sizeof(struct Struct1508855C));
+    if (limit < 2) {
+        goto fail;
+    }
+
+    do {
+        if (index == p->unk31) {
+            return i;
+        }
+        i++;
+        p++;
+    } while (i < limit);
+
+fail:
+    return -1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_150885EC.s")
 
