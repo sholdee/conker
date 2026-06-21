@@ -275,7 +275,50 @@ void func_15198C60(void) {
     func_10010F30(0x1AA, 0x7FFF, 0x40, 0, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15198C90.s")
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    char padC[0x24 - 0xC];
+} Struct15198C90Vec;
+
+typedef struct {
+    char pad0[0x66];
+    u16 unk66;
+} Struct15198C90Sound;
+
+typedef struct {
+    char pad0[0x2C];
+    s8 unk2C;
+    s8 unk2D;
+    char pad2E[0x94 - 0x2E];
+    Struct15198C90Vec *unk94;
+    Struct15198C90Sound *unk98;
+} Struct15198C90;
+
+void func_15198C90(Struct15198C90 *arg0) {
+    Struct15198C90Vec *temp_v1;
+    Struct15198C90Sound *temp_v2;
+    u16 temp_a0;
+    s32 temp_t6;
+    s32 temp_t7;
+
+    temp_v2 = arg0->unk98;
+    temp_v1 = arg0->unk94;
+
+    if (arg0->unk2C != 0) {
+        temp_a0 = temp_v2->unk66;
+        if (temp_a0 != 0) {
+            temp_t6 = 0x1388;
+            temp_t7 = 0x1F4;
+            func_1000F91C(temp_a0, 0x7FFF, 0, 0, 0,
+                          ((Struct15198C90Vec *)((u8 *)temp_v1 + (arg0->unk2D * 0x24)))->unk0,
+                          ((Struct15198C90Vec *)((u8 *)temp_v1 + (arg0->unk2D * 0x24)))->unk4,
+                          ((Struct15198C90Vec *)((u8 *)temp_v1 + (arg0->unk2D * 0x24)))->unk8,
+                          temp_t7, temp_t6);
+        }
+    }
+}
 
 void func_15198D40(s8 *arg0) {
     u8 *temp = *(u8 **)(arg0 + 0x98);

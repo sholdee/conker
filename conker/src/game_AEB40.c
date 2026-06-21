@@ -2,6 +2,9 @@
 #include "functions.h"
 #include "variables.h"
 
+extern struct172 D_80086CC4[];
+extern void func_150302F0(struct127 *arg0, s32 arg1);
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15081690.s")
 
@@ -36,7 +39,35 @@ void func_15081E0C(struct127 *arg0, u16 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15083568.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_150836CC.s")
+void func_150836CC(struct127 *arg0, s32 arg1) {
+    struct172 *temp_s2;
+    s32 i;
+    u8 *temp_v1;
+
+    func_150302F0(arg0, arg1);
+    arg1--;
+    temp_s2 = &D_80086CC4[arg1];
+    i = 0;
+    temp_v1 = (u8 *)*(s32 *)temp_s2;
+    if (i < temp_s2->unk4) {
+        u8 *temp_s0;
+        struct127 *temp_v0;
+
+        temp_s0 = temp_v1;
+        do {
+            if (temp_s0[3] == 0) {
+                temp_v0 = func_1505F0AC(temp_s0[0]);
+                if (temp_v0 != 0) {
+                    if (temp_v0->unk65 == ((arg0 - D_800CC2D0) + 1)) {
+                        func_15060F28(temp_v0, 0);
+                    }
+                }
+            }
+            i++;
+            temp_s0 += 0x10;
+        } while (i < temp_s2->unk4);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_150837D4.s")
 
