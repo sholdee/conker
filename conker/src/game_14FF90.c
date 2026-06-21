@@ -67,7 +67,14 @@ void func_151220D0(struct108 *arg0);
 void func_15122170(struct108 *arg0);
 void func_15122440(struct108 *arg0);
 void func_15122980(struct108 *arg0);
+void func_151219D0(struct108 *arg0);
+void func_151236D0(struct108 *arg0);
+void func_151256BC(struct108 *arg0);
+s32 func_15126378(struct108 *arg0);
+s32 func_15128030(struct108 *arg0);
 void func_15129934(struct108 *arg0);
+void func_1512A360(u8 *arg0);
+void func_1512E4B0(struct108 *arg0);
 void func_1512DEA4(struct108 *arg0);
 
 
@@ -781,7 +788,54 @@ void func_151284C4(struct108 *arg0) {
         }
     }
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_15128540.s")
+s32 func_15128540(struct108 *arg0) {
+    s32 temp_v0;
+
+    if (func_151253CC(arg0) != 0) {
+        return 1;
+    }
+
+    if (func_15128030(arg0) != 0) {
+        return 0;
+    }
+
+    temp_v0 = arg0->unk2C;
+    if ((temp_v0 & 0x80000) != 0) {
+        func_1512A360((u8 *)arg0);
+        *(struct167 *)&arg0->unk2BC = *(struct167 *)&arg0->unk2A4;
+        func_151256BC(arg0);
+        func_151236D0(arg0);
+        func_151284C4(arg0);
+        return 1;
+    }
+
+    if ((temp_v0 & 0x100000) != 0) {
+        func_1512E4B0(arg0);
+        func_151236D0(arg0);
+        func_151284C4(arg0);
+        return 1;
+    }
+
+    if ((temp_v0 & 0x200000) != 0) {
+        func_151219D0(arg0);
+        func_151236D0(arg0);
+        func_151284C4(arg0);
+        return 1;
+    }
+
+    if ((temp_v0 & 0x400000) != 0) {
+        func_1512D380((s32)arg0);
+        func_151236D0(arg0);
+        func_151284C4(arg0);
+        return 1;
+    }
+
+    if (func_15126378(arg0) != 0) {
+        func_151284C4(arg0);
+        return 1;
+    }
+    return 0;
+}
 
 void func_15128680(struct108 *arg0) {
 }
