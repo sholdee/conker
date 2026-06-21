@@ -6,6 +6,13 @@
 extern f32 func_15048A40(u8);
 extern void func_15188010(s32, f32 *);
 
+struct Obj151151FC {
+    f32 unk0;
+    u8 pad4[0x38];
+    s32 unk3C;
+    u8 pad40[0x20];
+    f32 unk60;
+};
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151150B0.s")
 
@@ -13,7 +20,17 @@ extern void func_15188010(s32, f32 *);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511515C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151151FC.s")
+void func_151151FC(struct Obj151151FC *arg0) {
+    arg0->unk60 = (f32)((arg0->unk3C >> 16) * D_800BE9E4) * 0.00390625f;
+    arg0->unk0 = arg0->unk0 + arg0->unk60;
+    if (arg0->unk0 < 0.0f) {
+        arg0->unk0 = arg0->unk0 + 360.0f;
+        return;
+    }
+    if (arg0->unk0 >= 360.0f) {
+        arg0->unk0 = arg0->unk0 - 360.0f;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511529C.s")
 

@@ -100,4 +100,27 @@ s32 func_150D22F4(s32 arg0, s32 arg1, s32 arg2) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FF5C0/func_150D2374.s")
+struct sub150D2374 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s16 unkC;
+    s16 unkE;
+    f32 unk10;
+    f32 unk14;
+    u8 unk18;
+    u8 unk19;
+};
+
+void func_150D2374(u8 *arg0) {
+    struct sub150D2374 *p;
+    s32 temp;
+
+    p = (struct sub150D2374 *)(arg0 + 0x28);
+    p->unk8 -= D_800BE9E4;
+    if (p->unk8 < 0) {
+        temp = func_150ADA20();
+        func_150D2110((s16)((temp % (u32)(p->unkE + 1)) + p->unkC), p->unk10, p->unk14, p->unk18, p->unk19, arg0[0xC], arg0[1]);
+        p->unk8 = (func_150ADA20() % (u32)(p->unk4 + 1)) + p->unk0;
+    }
+}

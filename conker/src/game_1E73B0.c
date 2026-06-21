@@ -2,6 +2,8 @@
 #include "functions.h"
 #include "variables.h"
 
+s32 func_1513FAB4(void *arg0, s32 arg1, f32 *arg2, s16 arg3);
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151B9F00.s")
 
@@ -339,7 +341,43 @@ void func_151BE1E4(struct260 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE210.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE4B8.s")
+typedef struct {
+    s32 unk0;
+    u8 pad4[0x37];
+    u8 unk3B;
+} Obj151BE4B8;
+
+typedef struct {
+    Obj151BE4B8 *unk0;
+    u8 unk4;
+    u8 pad5[0x3B];
+    f32 unk40;
+    f32 unk44;
+    u8 pad48[0xC];
+    f32 unk54;
+    u8 unk58;
+} Sub151BE4B8;
+
+s32 func_151BE4B8(void *arg0, s16 arg1) {
+    Obj151BE4B8 *temp_v0;
+    Sub151BE4B8 *sub;
+    f32 sp20[2];
+
+    sub = (Sub151BE4B8 *)((u8 *)arg0 + 0x110);
+    temp_v0 = sub->unk0;
+    if ((temp_v0->unk3B != sub->unk4) || (temp_v0->unk0 == 0)) {
+        func_1516972C((struct102 *)arg0);
+        return 0;
+    }
+
+    if (!(sub->unk58 & 1)) {
+        return 0;
+    }
+
+    sp20[0] = sub->unk40 * sub->unk54;
+    sp20[1] = sub->unk44 * sub->unk54;
+    return func_1513FAB4(arg0, 0, sp20, arg1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BE558.s")
 

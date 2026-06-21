@@ -11,6 +11,29 @@ typedef struct {
 extern MtxF15158920 D_8008AE18;
 extern f32 D_800A6070;
 
+typedef struct {
+    struct WORD words[10];
+} Struct1515A974PayloadWords;
+
+typedef struct {
+    struct UBYTES4 first;
+    Struct1515A974PayloadWords rest;
+} Struct1515A974Payload;
+
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    Struct1515A974Payload payload;
+} Struct1515A974Row;
+
+extern Struct1515A974Row D_800A636C[];
+
+typedef struct {
+    Struct1515A974Payload payload;
+    s32 pad2C[2];
+    struct183 tmp;
+} Struct1515A974Locals;
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_151580B0.s")
 
 s32 func_151580B0(void *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4, u8 arg5, s32 arg6);
@@ -478,7 +501,33 @@ s32 func_1515A920(struct102 *arg0, s32 *arg1) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_1515A974.s")
+void func_1515A974(struct102 *volatile arg0, s32 arg1) {
+    Struct1515A974Locals local;
+    void *ret;
+    s32 idx;
+
+    idx = ((u8 *)arg0)[0x1F];
+    if (idx <= 0) {
+        local.tmp.unk0 = 0xF;
+        local.tmp.unk4 = (s32)arg0;
+        local.tmp.unk8 = D_800A636C[idx].unk0;
+        local.tmp.unkC = D_800A636C[idx].unk4;
+        local.tmp.unk10 = 0.0f;
+        local.tmp.unk14 = 0.0f;
+        local.tmp.unk18 = 0.0f;
+        local.tmp.unk1C = 0.0f;
+        local.tmp.unk20 = 0.0f;
+        local.tmp.unk24 = 0;
+        local.tmp.unk25 = -1;
+        local.tmp.unk26 = 2;
+        local.payload.first = D_800A636C[idx].payload.first;
+        local.payload.rest = D_800A636C[idx].payload.rest;
+        ret = func_151A8B20(&local.tmp, -1, 0x2C, 0xFF, 0);
+        if (ret != NULL) {
+            memcpy((u8 *)ret + 0x80, &local.payload, 0x2C);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_1515AA84.s")
 
