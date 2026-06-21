@@ -2,6 +2,19 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct {
+    u8 *unk0;
+    s32 unk4;
+} struct_game_197C20_0;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+} struct_game_197C20_1;
+
+extern struct_game_197C20_0 *D_800DD254;
+extern struct_game_197C20_0 *D_800DD258;
+
 
 s32 func_1516A770(u8 *arg0) {
     s32 count = 1;
@@ -22,7 +35,49 @@ s32 func_1516A770(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_197C20/func_1516B6BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_197C20/func_1516C878.s")
+u8 *func_1516C878(struct_game_197C20_1 *arg0, s32 arg1, s16 arg2) {
+    u8 *temp_v1;
+    u8 *sp0;
+    s32 temp_v0;
+    s32 temp_a0;
+
+    switch (arg2) {
+    case 0:
+        temp_v1 = D_800DD254[arg0->unk4].unk0;
+        break;
+    case 1:
+        temp_v1 = D_800DD258[arg0->unk4].unk0;
+        break;
+    case 2:
+        temp_v1 = (u8 *)arg0->unk4;
+        break;
+    default:
+        temp_v1 = sp0;
+        break;
+    }
+
+    temp_v0 = 0;
+    if (arg1 > 0) {
+        temp_a0 = temp_v1[0];
+        do {
+            temp_v0++;
+            if (temp_a0 != 0) {
+                do {
+                    temp_a0 = temp_v1[1];
+                    temp_v1++;
+                } while (temp_a0 != 0);
+            }
+            if (temp_a0 == 0) {
+                do {
+                    temp_a0 = temp_v1[1];
+                    temp_v1++;
+                } while (temp_a0 == 0);
+            }
+        } while (temp_v0 != arg1);
+    }
+
+    return temp_v1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_197C20/func_1516C934.s")
 

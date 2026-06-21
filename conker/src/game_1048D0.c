@@ -7,7 +7,27 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1048D0/func_150D74DC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1048D0/func_150D758C.s")
+void func_150D758C(s32 arg0, u8 *arg1, u8 arg2) {
+    if (arg2 == 0x36) {
+        switch (*arg1) {
+            case 0:
+                break;
+            case 1:
+                *(s32 *)(arg0 + 0x58) &= ~2;
+                return;
+            case 2:
+                *(s32 *)(arg0 + 0x58) &= ~2;
+                return;
+            case 3:
+                *(u8 *)(arg0 + 0x28) = 0;
+                *(s32 *)(arg0 + 0x58) |= 2;
+                *(u8 *)(arg0 + 0x29) = 0xFF;
+                *(u8 *)(arg0 + 0x2A) = 0;
+                return;
+        }
+        *(s32 *)(arg0 + 0x58) &= ~2;
+    }
+}
 
 extern u16 D_800D9910;
 

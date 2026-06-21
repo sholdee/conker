@@ -113,7 +113,28 @@ void func_1511172C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15112A80.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15113180.s")
+void func_15113180(void) {
+    s32 i;
+    s32 offset;
+    struct131 *temp_a0;
+
+    i = 0;
+    offset = 0;
+    if (D_800DBEF0 > 0) {
+        do {
+            temp_a0 = (struct131 *)((u8 *)D_800DBEF4 + offset);
+            temp_a0->unk6F &= ~0x40;
+            temp_a0 = (struct131 *)((u8 *)D_800DBEF4 + offset);
+            if (((temp_a0->unk6F & 0xF) != 0) || ((((u8 *)temp_a0)[0x70] & 4) == 4)) {
+                if (*(s32 *)((u8 *)temp_a0 + 0x38) != 0) {
+                    temp_a0->unk6F |= 0x40;
+                }
+            }
+            i++;
+            offset += 0xA0;
+        } while (i < D_800DBEF0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15113218.s")
 
