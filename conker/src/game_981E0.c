@@ -5,6 +5,7 @@
 
 void func_15131D4C(s32 arg0, s32 arg1);
 s32 func_1000F568(s32 arg0, s32 arg1);
+extern s32 func_151EF610(void);
 extern s32 D_800D187C;
 
 struct func_1506C32C_stack {
@@ -352,7 +353,28 @@ void func_1506BCA0(void) {
 }
 
 // ???
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_1506BCC8.s")
+void func_1506BCC8(void) {
+    struct127 *temp_v1;
+    f32 temp_f0;
+
+    temp_v1 = D_800D154C;
+    if (temp_v1->interaction_state == 0x16) {
+        if (temp_v1->y_position == temp_v1->unk180) {
+            D_800D154C->y_velocity = (func_151EF610() % 8) + D_800D1580;
+            temp_v1 = D_800D154C;
+            if (temp_v1->xz_velocity != 0.0f) {
+                temp_v1->y_velocity = temp_v1->y_velocity * (temp_v1->xz_velocity / 40.0f);
+            } else {
+                temp_v1->y_velocity = 0.0f;
+            }
+        }
+    } else {
+        temp_f0 = temp_v1->y_position - temp_v1->unk180;
+        if ((-5.0f < temp_f0) && (temp_f0 < 5.0f)) {
+            temp_v1->y_velocity = (f32) D_800D1580;
+        }
+    }
+}
 
 void func_1506BDE8(void) {
     if (D_800D154C->y_position < D_80099C40) {

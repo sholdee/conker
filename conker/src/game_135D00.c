@@ -10,6 +10,10 @@ extern f32 D_800A2470;
 extern f32 D_800A2474;
 extern f32 D_800A2478;
 extern f32 D_800A247C;
+extern f32 D_800A2480;
+extern f32 D_800A2484;
+extern f32 D_800A2488;
+extern f32 D_800A248C;
 f32 sinf(f32);
 f32 func_15144B68(f32);
 void func_15108B80(void *);
@@ -61,7 +65,24 @@ void func_15108BC0(struct Arg0_15108BC0 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_135D00/func_15108C38.s")
+s32 func_15108C38(struct Arg0_15108AB4 *arg0) {
+    u8 *v0 = (((u8 *)arg0) + arg0->off) + 0xF8;
+
+    *(f32 *)(v0 + 0x8) = *(f32 *)(v0 + 0x8) + D_800A2480 * D_800BE9A4;
+    *(f32 *)(v0 + 0xC) = *(f32 *)(v0 + 0xC) + D_800A2484 * D_800BE9A4;
+    *(f32 *)(v0 + 0x8) = func_15144B68(*(f32 *)(v0 + 0x8));
+    *(f32 *)(v0 + 0xC) = func_15144B68(*(f32 *)(v0 + 0xC));
+    *(f32 *)(v0 + 0x0) = sinf(*(f32 *)(v0 + 0x8)) * D_800A2488;
+    *(f32 *)(v0 + 0x4) = sinf(*(f32 *)(v0 + 0xC)) * D_800A248C;
+    func_15108B80(arg0);
+    func_15108BC0((struct Arg0_15108BC0 *)arg0);
+    if (*(u8 *)(v0 + 0x20) != 0) {
+        *(u8 *)((u8 *)arg0 + 0x12) = 4;
+    } else {
+        *(u8 *)((u8 *)arg0 + 0x12) = 2;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_135D00/func_15108D24.s")
 
