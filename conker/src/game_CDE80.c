@@ -17,7 +17,37 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A1DA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A23E4.s")
+void func_150A23E4(struct178 *arg0) {
+    s32 var_t0;
+    s32 var_v1;
+    u8 temp_t1;
+    s32 temp_t3;
+    s32 temp_t4;
+    u32 temp_v0;
+
+    if (*(s32 *)&arg0->unk6[0x1A] == 0) {
+        var_v1 = 0;
+        var_t0 = 8;
+        if ((arg0->unk6[0xF] & 3) == 0) {
+            var_v1 = 0x8000;
+        }
+        temp_t1 = arg0->unk6[0x11];
+        temp_t3 = temp_t1 & 0x7F;
+        if ((s32)temp_t1 >> 7) {
+            var_t0 = 0x108;
+        }
+        temp_t4 = temp_t3 * 327;
+        temp_v0 = *(u32 *)&arg0->unk6[0x16];
+        func_1000FA64(temp_v0 >> 16, arg0->unk0, arg0->pad2, arg0->unk4, temp_t4,
+            *(s32 *)&arg0->unk6[0x12] | var_v1, temp_v0 & 0xFFFF, 0, 0, 0, var_t0, 0);
+        *(s32 *)&arg0->unk6[0x1A] = 1;
+trailing_label:
+        ;
+        return;
+    }
+    *(s32 *)&arg0->unk6[0x1A] = 1;
+    return;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A24C0.s")
 

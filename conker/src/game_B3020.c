@@ -224,7 +224,41 @@ s32 func_15088270(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_150885EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508868C.s")
+extern s32 D_800D2394;
+extern s8 D_800D2398;
+extern s8 D_800D2399;
+typedef struct Struct15088824 Struct15088824;
+void func_15088824();
+
+s32 func_1508868C(s32 arg0) {
+    s32 i;
+    s32 offset;
+    s32 base;
+
+    base = (s32)D_800872A0;
+    if (base == 0) {
+        return -1;
+    }
+
+    offset = 1;
+    i = 0;
+    if (D_800D2399 > 0) {
+        do {
+            if ((D_800D2394 & offset) == 0) {
+                D_800D2394 |= offset;
+                i += D_800D2398;
+                offset = i * 0x84;
+                func_15088824(offset + base);
+                D_800872A0[offset + 0x30] = 1;
+                D_800872A0[offset + 0x31] = (arg0 - (s32)D_800CC2D0) / (s32)sizeof(struct127);
+                return i;
+            }
+            i++;
+            offset <<= 1;
+        } while (i < D_800D2399);
+    }
+    return -1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15088780.s")
 
@@ -238,7 +272,7 @@ s32 func_150887F8(void) {
     return p[0x46] == 0xFF;
 }
 
-typedef struct {
+struct Struct15088824 {
     /* 0x00 */ f32 unk0;
     /* 0x04 */ f32 unk4;
     /* 0x08 */ f32 unk8;
@@ -265,7 +299,7 @@ typedef struct {
     /* 0x33 */ u8 unk33;
     /* 0x34 */ u8 pad34[0x15];
     /* 0x49 */ u8 unk49;
-} Struct15088824;
+};
 
 void func_15088824(Struct15088824 *arg0) {
     arg0->unk2B = 0;

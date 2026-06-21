@@ -2,6 +2,7 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_800A0068;
 
 void func_150BDE90(void *arg0, u8 arg1, s32 arg2) {
     struct {
@@ -69,7 +70,37 @@ void func_150BE210(struct131 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_EB340/func_150BE2E8.s")
+void func_150BE2E8(s16 *arg0) {
+    f32 temp_f12;
+    f32 temp_f2;
+    f32 temp_f0;
+    f32 temp_f14;
+    f32 temp_f16;
+    f32 temp_f18;
+    f32 temp_f20;
+    f32 temp_f22;
+
+    temp_f0 = arg0[0x3E];
+    temp_f2 = arg0[0x3F];
+    temp_f12 = arg0[0x40];
+    temp_f14 = arg0[0x41];
+    temp_f16 = arg0[0x42];
+    temp_f18 = arg0[0x43];
+    temp_f20 = arg0[0x1E] * 0.00006103515625f;
+    temp_f22 = arg0[0x1F] * 0.00006103515625f;
+    temp_f20 -= temp_f20 * D_800A0068;
+    temp_f22 += temp_f20 * D_800BE9E4;
+
+    arg0[0x8] = (s32)((temp_f14 - temp_f0) * temp_f22 + temp_f0);
+    arg0[0x9] = (s32)((temp_f16 - temp_f2) * temp_f22 + temp_f2);
+    arg0[0xA] = (s32)((temp_f18 - temp_f12) * temp_f22 + temp_f12);
+    if (1.0f < temp_f22) {
+        temp_f22 = 1;
+    }
+
+    arg0[0x1E] = (s32)(temp_f20 * 16384.0f);
+    arg0[0x1F] = (s32)(temp_f22 * 16384.0f);
+}
 
 s16 *func_150BE438(s16 *arg0, s32 arg1) {
     arg0[0] = 0x68;
