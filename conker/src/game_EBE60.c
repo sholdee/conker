@@ -17,6 +17,9 @@ extern f32 D_800A00C0;
 extern f32 D_800A00C4;
 extern f32 D_800A00C8;
 extern f32 D_800A00CC;
+extern f32 D_800A00D0;
+extern f32 D_800A00D4;
+extern f32 D_800A00D8;
 
 s32 func_150BE9B0(f32 *arg0, s32 arg1, s32 arg2, u8 arg3) {
     f32 sp2C[3];
@@ -118,7 +121,23 @@ s32 func_150BED28(s32 arg0, s32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_EBE60/func_150BED4C.s")
+void func_150BED4C(s32 arg0, s32 arg1, s32 arg2) {
+    Struct150BEACC sp4C;
+    s32 sp2C[8];
+    s32 temp_a3;
+
+    temp_a3 = (u8)arg1;
+    if (*(s32 *)(arg0 + 0x1D4) != 0) {
+        if (func_150BEC30((f32 *)&sp4C, arg0, (s32)&sp2C[-1], temp_a3) != 0) {
+            func_15141F78(0xB, (struct157 *)&sp2C[-1], ((f32)arg2 * D_800A00D0) * 2,
+                          (u8)(u32)(*(f32 *)(arg0 + 0x40) * D_800A00D4),
+                          (struct157 *)&sp4C, temp_a3);
+            if (arg2 >= 0x4C) {
+                func_15142180(2, &sp4C, sp2C[5], 3.232000113f, D_800A00D8);
+            }
+        }
+    }
+}
 
 void func_150BEEB0(struct108 *arg0) {
     if (func_1509BE40(1, 0x4063, 6, 0x2000) || func_1509BE40(1, 0x4001, 6, 0x9000)) {
