@@ -6,6 +6,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_168A90/func_1513B5E0.s")
 extern s32 (*D_80089C18[])(struct102 *);
+extern s32 (*D_80089C28[])(struct102 *, s16);
+
+#define WGFX168A90(pkt, a, b)       \
+{                                   \
+    Gfx *_g = (Gfx *)(pkt);         \
+    _g->words.w0 = (u32)(a);        \
+    _g->words.w1 = (u32)(b);        \
+}
 
 void func_1513B798(struct102 *arg0) {
     s32 idx;
@@ -29,7 +37,28 @@ void func_1513B798(struct102 *arg0) {
         func_1516972C(arg0);
     }
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_168A90/func_1513B83C.s")
+Gfx *func_1513B83C(Gfx *arg0, struct102 *arg1, s16 arg2) {
+    s32 idx;
+    u8 *ptr;
+
+    ptr = (u8 *)arg1;
+    if ((ptr[0x10] & 2) && !(ptr[0x49] & (1 << arg2))) {
+        return arg0;
+    }
+
+    idx = *(s8 *)(ptr + 0x12);
+    if (idx != -1) {
+        if (D_80089C28[idx](arg1, arg2) == 0) {
+            return arg0;
+        }
+    }
+
+    WGFX168A90(arg0++, 0xDA380003, (s32)ptr + (D_800BE9C0 << 6) + 0x78);
+    WGFX168A90(arg0++, 0xDB060004, *(u32 *)((s32)ptr + (D_800BE9C0 << 4) + (arg2 << 2) + 0x58));
+    WGFX168A90(arg0++, 0xDE000000, *(u32 *)(ptr + 0x54));
+
+    return arg0;
+}
 
 s32 func_1513B968(s32 arg0, s32 arg1) {
     // FIXME: &arg0->unk_120[D_800BE9C0]

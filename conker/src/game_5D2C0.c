@@ -201,7 +201,37 @@ s32 func_150333A8(u8 *arg0, u8 *arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033440.s")
+s32 func_15033440(u8 *arg0, u8 *arg1) {
+    s32 state;
+
+    state = arg0[1];
+    if (state == 0x27) {
+        goto add_delta;
+    }
+    if (state == 0x29) {
+        goto clear;
+    }
+    if (state != 0x35) {
+        goto done;
+    }
+
+add_delta:
+    if (arg1[5] != 5) {
+        goto done;
+    }
+    arg0[2] = 0;
+    *(s16 *)(arg0 + 0x22) += D_800BE9E4 * 0xAAA;
+    goto done;
+
+clear:
+    if (arg1[5] != 5) {
+        goto done;
+    }
+    arg0[2] = 0;
+
+done:
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_150334B8.s")
 

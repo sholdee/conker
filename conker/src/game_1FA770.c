@@ -2,6 +2,9 @@
 #include "functions.h"
 #include "variables.h"
 
+void *func_151CD4C0();
+void func_151CE47C();
+
 
 struct260 *func_151CD2C0(void *arg0, u8 arg1, s32 arg2) {
     struct260 *temp_v0;
@@ -45,7 +48,39 @@ void func_151CD394(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CD3CC.s")
+typedef struct {
+    void *unk0;
+    s32 unk4;
+    void *unk8;
+    u8 unkC;
+} Sub151CD3CC;
+
+void func_151CD3CC(struct260 *arg0, s32 arg1, u8 arg2) {
+    Sub151CD3CC *sub;
+    volatile s32 unused[3];
+
+    sub = (Sub151CD3CC *)((s32)arg0 + 0x28);
+    if (arg2 == 0x17) {
+        if (sub->unk4 == *(s32 *)arg1) {
+            if (sub->unk8 == NULL) {
+                sub->unk8 = func_151CD4C0(sub->unk0, sub->unkC, sub->unk4, arg0->pad0[0xC], arg0->pad0[1]);
+                *(u8 *)((s32)sub->unk0 + 0x14) = 0;
+            dummy_label_151CD3CC_1: ;
+            }
+        }
+    } else if (arg2 == 0x18) {
+        if (sub->unk4 == *(s32 *)arg1) {
+            if (sub->unk8 != NULL) {
+                func_151CE47C(sub->unk8);
+            }
+        }
+    } else if (arg2 == 0x23) {
+        if (sub->unk4 == *(s32 *)arg1) {
+            sub->unk8 = NULL;
+            *(u8 *)((s32)sub->unk0 + 0x14) = 1;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CD4C0.s")
 
