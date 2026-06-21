@@ -2,6 +2,7 @@
 #include "functions.h"
 #include "variables.h"
 
+extern s32 (*D_8008AE00[])(void *);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_151580B0.s")
 
@@ -11,7 +12,38 @@ s32 func_151581D8(void *arg0, u8 arg1, s32 arg2, u8 arg3, s32 arg4) {
     return func_151580B0(arg0, 0, 0, arg1, arg2, arg3, arg4);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158224.s")
+typedef struct {
+    u8 pad0[0x10];
+    u8 unk10;
+    u8 pad11;
+    s8 unk12;
+    u8 pad13;
+    s16 unk14;
+} Struct15158224;
+
+void func_15158224(Struct15158224 *arg0) {
+    s32 temp;
+    u8 failed;
+
+    failed = 0;
+    if (arg0->unk10 & 1) {
+        arg0->unk14 -= D_800BE9E4;
+        if (arg0->unk14 < 0) {
+            failed = 1;
+        }
+    }
+    if (failed == 0) {
+        temp = arg0->unk12;
+        if (temp != -1) {
+            if (D_8008AE00[temp](arg0) == 0) {
+                failed = 1;
+            }
+        }
+    }
+    if (failed) {
+        func_1516972C((struct102 *) arg0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_151582C8.s")
 

@@ -13,8 +13,12 @@
 
 struct Vec3F { f32 x; f32 y; f32 z; };
 struct Arg1514FB98 { u8 pad[0xC]; f32 unkC; u8 unk10[0x4]; };
+struct Arg1514FBFC { struct Vec3F unk0; struct Vec3F unkC; f32 unk18; f32 unk1C; f32 unk20; u8 unk24[0x4]; };
 extern s32 func_15146078(struct Arg1514FB98 *, struct Vec3F *, struct Vec3F *);
-extern void func_1514F8F8(void *, struct Arg1514FB98 *, struct Vec3F *, struct Vec3F *, f32, u8, s32);
+extern s32 func_15144E80(struct Vec3F *, struct Vec3F *, struct Vec3F *, struct Vec3F *);
+extern f32 func_15144A74(struct Vec3F *, struct Vec3F *);
+extern s32 func_15145128(struct Vec3F *, struct Vec3F *, f32 *, f32 *);
+extern void func_1514F8F8(void *, void *, struct Vec3F *, struct Vec3F *, f32, u8, s32);
 
 void func_1514FB98(struct Arg1514FB98 *arg0, u8 arg1, s32 arg2) {
     struct Vec3F sp34;
@@ -25,7 +29,29 @@ void func_1514FB98(struct Arg1514FB98 *arg0, u8 arg1, s32 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514FBFC.s")
+void func_1514FBFC(struct Arg1514FBFC *arg0, u8 arg1, s32 arg2) {
+    struct Vec3F sp5C;
+    f32 sp58;
+    f32 sp54;
+    struct Vec3F sp48;
+    f32 sp44;
+    f32 sp40;
+    struct Vec3F sp34;
+    f32 sp30;
+    f32 sp2C;
+
+    if (func_15144E80(&arg0->unkC, &sp5C, &sp48, &sp34) != 0) {
+        func_15145128(&sp5C, &sp5C, &sp58, &sp54);
+        func_15145128(&sp48, &sp48, &sp44, &sp40);
+        func_15145128(&sp34, &sp34, &sp30, &sp2C);
+        if (func_15144A74(&sp34, &arg0->unk0) < 0.0f) {
+            sp34.x = -sp34.x;
+            sp34.y = -sp34.y;
+            sp34.z = -sp34.z;
+        }
+        func_1514F8F8(arg0->unk24, &sp34, &sp5C, &sp48, arg0->unk20, arg1, arg2);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514FCE8.s")
 

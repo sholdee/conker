@@ -2,8 +2,74 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_800AA97C;
+extern f32 D_800AA980;
+extern f32 D_800AA984;
+extern f32 D_800AA988;
+extern f32 D_800AA98C;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151BFC40.s")
+typedef struct {
+    /* 0x00 */ s32 unk00;
+    /* 0x04 */ s32 unk04;
+    /* 0x08 */ u8  pad08[0xC];
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ f32 unk18;
+    /* 0x1C */ f32 unk1C;
+    /* 0x20 */ f32 unk20;
+    /* 0x24 */ f32 unk24;
+    /* 0x28 */ f32 unk28;
+    /* 0x2C */ s32 unk2C;
+    /* 0x30 */ s32 unk30;
+    /* 0x34 */ f32 unk34;
+    /* 0x38 */ f32 unk38;
+    /* 0x3C */ f32 unk3C;
+    /* 0x40 */ f32 unk40;
+    /* 0x44 */ s16 unk44;
+    /* 0x46 */ s16 unk46;
+    /* 0x48 */ s16 unk48;
+    /* 0x4A */ s16 unk4A;
+    /* 0x4C */ s16 unk4C;
+    /* 0x4E */ s16 unk4E;
+    /* 0x50 */ s8  unk50;
+} Struct151BFC40;
+
+void func_151BFC40(void *arg0, f32 *arg1) {
+    Struct151BFC40 *temp = arg0;
+
+    temp->unk00 = 3;
+    temp->unk04 = 4 >> ((D_80082FA0 >= 2) ? 1 : 0);
+    arg1[0] = 494.0f;
+    temp->unk14 = D_800AA97C;
+    temp->unk18 = D_800AA980;
+    temp->unk1C = 45.0f;
+    temp->unk20 = 53.0f;
+    temp->unk24 = 203.0f;
+    temp->unk28 = 414.0f;
+    temp->unk2C = 7;
+    temp->unk30 = 3 >> ((D_80082FA0 >= 2 || D_8008FD8C >= 8) ? 1 : 0);
+    temp->unk34 = 15.0f;
+    temp->unk38 = D_800AA984;
+    temp->unk3C = D_800AA988;
+    temp->unk40 = D_800AA98C;
+    temp->unk44 = 25;
+    temp->unk46 = 15;
+    temp->unk48 = 100;
+    temp->unk4A = 100;
+    temp->unk4C = 12;
+    temp->unk4E = 20;
+
+    if (D_80082FA0 < 2) {
+        if (D_8008FD8C < 8) {
+            goto zero;
+        }
+    }
+
+    temp->unk50 = -1;
+    return;
+
+zero:
+    temp->unk50 = 0;
+}
 
 struct Vec3F151BFDA0 { f32 x; f32 y; f32 z; };
 struct Local151BFDA0 {

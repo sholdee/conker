@@ -2,10 +2,63 @@
 #include "functions.h"
 #include "variables.h"
 
+extern void *allocate_memory();
+extern void func_10004074();
+extern void func_15188A58();
+
+typedef struct Node1518894C {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+    u8 unk4;
+    char pad5[1];
+    s16 unk6;
+    void *unk8;
+    struct Node1518894C *unkC;
+    s32 unk10;
+} Node1518894C;
+
+extern Node1518894C *D_800DF7CC;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B5CC0/func_15188810.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B5CC0/func_1518894C.s")
+void func_1518894C(s32 arg0, s32 arg1, s32 arg2) {
+    Node1518894C *node;
+    void *mem;
+
+    node = D_800DF7CC;
+    while (node != 0) {
+        if (arg0 == node->unk10) {
+            if (node->unk6 < arg1) {
+                node->unk6 = arg1;
+            }
+            node->unk4 = arg2;
+            return;
+        }
+        node = node->unkC;
+    }
+
+    node = allocate_memory(0x14, 1, 0, 0);
+    if (node != 0) {
+        mem = allocate_memory(0x180, 1, 1, 0);
+        if (mem == 0) {
+            func_10004074(node);
+            return;
+        }
+
+        node->unk0 = 1;
+        node->unk1 = 3;
+        node->unk2 = 0;
+        node->unk3 = 0x14;
+        node->unk4 = arg2;
+        node->unk6 = arg1;
+        node->unk8 = mem;
+        node->unk10 = arg0;
+        bzero(mem, 0x180);
+        func_15188A58(node, &D_800DF7CC);
+    }
+}
 
 typedef struct Node15188A58 {
     char pad0[12];
