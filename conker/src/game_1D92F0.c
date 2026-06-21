@@ -183,7 +183,35 @@ void func_151AE640(s32 *arg0, s32 *arg1, u8 arg2)
 }
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE6B0.s")
+extern f32 D_800A9D70;
+s32 func_15045800(f32 *arg0, s32 arg1, f32 arg2, s32 arg3);
+s32 func_151ABE40(f32 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+s32 func_10010FFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void func_151AE6B0(u8 *arg0)
+{
+  u8 *v1 = *((u8 **) (arg0 + 0x18));
+  f32 sp30[3];
+  s32 temp;
+ goto dummy_label_19982; dummy_label_19982: ;
+  sp30[0] = *((f32 *) (v1 + 0x14));
+  if (D_800A9D70 < (*((f32 *) (v1 + 0x118))))
+  {
+    sp30[1] = (*((f32 *) (v1 + 0x118))) + 100.0f;
+  }
+  else
+  {
+    sp30[1] = (*((f32 *) (v1 + 0x18))) + 150.0f;
+  }
+  sp30[2] = *((f32 *) (v1 + 0x1C));
+  temp = (s32) (arg0 + 0x34);
+  if (func_15045800(sp30, 0, sp30[1] - 300.0f, temp) != 0)
+  {
+    sp30[1] = *((f32 *) (arg0 + 0x34));
+    func_151ABE40(sp30, temp, 5, arg0[0xC], arg0[0x1]);
+    func_10010FFC(0, 0x11, 0x5208, 0, 0, (s32) v1);
+  }
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE7B0.s")
 
