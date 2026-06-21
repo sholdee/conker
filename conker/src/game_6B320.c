@@ -2,6 +2,9 @@
 #include "functions.h"
 #include "variables.h"
 
+extern s32 func_1503EF4C(s32 arg0, s32 arg1, s32 arg2);
+extern struct106 D_800C666C[];
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503DE70.s")
 
@@ -94,7 +97,23 @@ void func_1503F108(s32 arg0) {
     *(f32 *)(p->unk0 + 0x1EC) = 10.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503F16C.s")
+void func_1503F16C(s32 arg0) {
+    struct106 *p;
+
+    p = &D_800C666C[arg0];
+    (*(s16 *)p) = 0x12C;
+    if (func_1503EF4C(2, 0, arg0)) {
+        D_800CC2D0[arg0].unk94 |= 0x40;
+        D_800CC2D0[arg0].unk94 &= ~0x200;
+    }
+    if (func_1503EF4C(2, 1, arg0)) {
+        D_800CC2D0[arg0].unk94 |= 0x80;
+        D_800CC2D0[arg0].unk94 &= ~0x100;
+    }
+    if (func_1503EF4C(2, 2, arg0)) {
+        D_800CC2D0[arg0].unk94 &= ~0x400;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503F2B0.s")
 
