@@ -5,11 +5,65 @@
 
 extern f32 D_800A8D50;
 extern f32 D_800A8D54;
-void func_151A3504(void *, u8);
+
+struct vec151A3504 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+};
+
+struct frame151A3504 {
+    void *unk0;
+    u8 unk4;
+    u8 unk5;
+    u8 pad6[0x2];
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    s16 unk18;
+    s16 unk1A;
+    s16 unk1C;
+    u8 pad1E[0x2];
+    f32 unk20;
+    f32 unk24;
+    u8 unk28;
+    u8 unk29;
+    u8 unk2A;
+    u8 unk2B;
+    u8 unk2C;
+    u8 unk2D;
+    u8 unk2E;
+    u8 pad2F;
+    u8 unk30;
+    u8 pad31[0x3];
+    struct vec151A3504 unk34;
+    f32 unk40;
+    u8 unk44;
+    u8 pad45[0x3];
+    f32 unk48;
+    u8 unk4C;
+    u8 pad4D[0x3];
+};
+
+struct header151A3504 {
+    struct vec151A3504 unk0;
+    s16 unkC;
+    u16 unkE;
+    s32 unk10;
+    u8 unk14;
+    u8 unk15;
+    u8 pad16[0x2];
+};
+
+struct260 *func_151A3504(struct frame151A3504 *, u8);
 void func_151A4590(void *, u8);
 void func_151A499C(void *, u8);
 u16 func_10010154(u16, void *, u16, s16, u16);
 s32 func_15160A58(void *, s32, void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
+extern s32 func_15147A80(void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
+struct struct151A4E34;
+s32 func_151A4E34(struct struct151A4E34 **arg0, s32 arg1);
 
 struct frame151A3390 {
     s32 unk0;
@@ -66,7 +120,38 @@ void func_151A3390(void *arg0, u8 arg1) {
     func_15160A58(arg0, 1, sp5C, 2, 0x12C, 0x50, 0xFF, 0xFF, 0x75, 0xFF, 0, -1, 0, 0, arg1, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A3504.s")
+struct260 *func_151A3504(struct frame151A3504 *arg0, u8 arg1) {
+    s32 pad_dummy;
+    struct header151A3504 sp8C;
+    struct frame151A3504 sp3C;
+    struct260 *temp_v0;
+
+    if (arg0->unk0 == NULL) {
+        return NULL;
+    }
+
+    memcpy(&sp3C, arg0, 0x30);
+    sp3C.unk44 = 0;
+    sp8C.unk15 = 0x32;
+    sp8C.unkE = 2;
+    sp8C.unkC = 0x3E8;
+    sp3C.unk30 = 6;
+    sp3C.unk4C = 0;
+    sp3C.unk40 = 0.0f;
+    sp3C.unk48 = 0.0f;
+
+    if (func_151A4E34((struct struct151A4E34 **)&sp3C, (s32)&sp8C) != 0) {
+        sp3C.unk34 = sp8C.unk0;
+        sp8C.unkE |= 4;
+    }
+
+    sp8C.unk10 = 8;
+    temp_v0 = (struct260 *)func_15147A80(&sp8C, 0x50, 0x18, 6, 6, 6, 0, 0, 0, arg1, 0);
+    if (temp_v0 != NULL) {
+        memcpy((void *)*(s32 *)((u8 *)temp_v0 + 0x98), &sp3C, 0x50);
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A361C.s")
 

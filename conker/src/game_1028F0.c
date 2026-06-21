@@ -3,6 +3,12 @@
 #include "variables.h"
 
 
+extern f32 D_800A0AB8;
+extern f32 D_800A0ABC;
+extern f32 D_800A0AC0;
+extern f32 D_800A0AC4;
+extern f32 D_800A0AC8;
+
 void func_150D5440(void *arg0, u8 arg1, s32 arg2) {
     struct {
         void *unk0;
@@ -86,7 +92,66 @@ void func_150D6388(void *arg0, u8 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D6434.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D64E8.s")
+typedef struct {
+    /* 0x00 */ s32 unk00;
+    /* 0x04 */ s32 unk04;
+    /* 0x08 */ u8  pad08[0xC];
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ f32 unk18;
+    /* 0x1C */ f32 unk1C;
+    /* 0x20 */ f32 unk20;
+    /* 0x24 */ f32 unk24;
+    /* 0x28 */ f32 unk28;
+    /* 0x2C */ s32 unk2C;
+    /* 0x30 */ s32 unk30;
+    /* 0x34 */ f32 unk34;
+    /* 0x38 */ f32 unk38;
+    /* 0x3C */ f32 unk3C;
+    /* 0x40 */ f32 unk40;
+    /* 0x44 */ s16 unk44;
+    /* 0x46 */ s16 unk46;
+    /* 0x48 */ s16 unk48;
+    /* 0x4A */ s16 unk4A;
+    /* 0x4C */ s16 unk4C;
+    /* 0x4E */ s16 unk4E;
+    /* 0x50 */ s8  unk50;
+} Struct150D64E8;
+
+void func_150D64E8(Struct150D64E8 *arg0, f32 *arg1) {
+    arg0->unk00 = 6;
+    arg0->unk04 = 3;
+    arg1[0] = D_800A0AB8;
+    arg0->unk14 = D_800A0ABC;
+    arg0->unk18 = D_800A0AC0;
+    arg0->unk1C = 150.0f;
+    arg0->unk20 = 105.0f;
+    arg0->unk24 = 396.0f;
+    arg0->unk28 = 612.0f;
+    arg0->unk2C = 4;
+    arg0->unk30 = 3;
+    arg0->unk34 = 25.0f;
+    arg0->unk38 = D_800A0AC4;
+    arg0->unk3C = -2.0f;
+    arg0->unk40 = D_800A0AC8;
+    arg0->unk44 = 20;
+    arg0->unk46 = 30;
+    arg0->unk48 = 100;
+    arg0->unk4A = 100;
+    arg0->unk4C = 12;
+    arg0->unk4E = 20;
+
+    if (D_80082FA0 < 2) {
+        if (D_8008FD8C < 8) {
+            goto zero;
+        }
+    }
+
+    arg0->unk50 = -1;
+    return;
+
+zero:
+    arg0->unk50 = 0;
+}
 
 void func_151A5D58(f32, s32, s32, s32, s32, s32, s32, s32, s32);
 

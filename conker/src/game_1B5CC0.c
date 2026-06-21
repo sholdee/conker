@@ -82,7 +82,52 @@ void func_15188AD0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B5CC0/func_15188B74.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B5CC0/func_15188D00.s")
+typedef struct Node15188D00 {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+    char pad4[4];
+    s32 unk8;
+    struct Node15188D00 *unkC;
+    s32 unk10;
+    s32 unk14;
+} Node15188D00;
+
+extern Mtx D_80089470;
+extern Gfx *(*D_8008D590[])(Gfx *, Node15188D00 *, s16);
+
+#define WGFX15188D00(pkt, a, b)     \
+{                                   \
+    Gfx *_g = (Gfx *)(pkt);         \
+    _g->words.w0 = (u32)(a);        \
+    _g->words.w1 = (u32)(b);        \
+}
+
+Gfx *func_15188D00(Gfx *gfx, s32 idx, s16 arg2) {
+    Node15188D00 *node;
+    Gfx *(**callbacks)(Gfx *, Node15188D00 *, s16);
+    s16 tmp;
+
+    tmp = arg2;
+    node = (Node15188D00 *)D_800DF7C8[idx];
+    if (node == 0) {
+        return gfx;
+    }
+
+    WGFX15188D00(gfx++, 0xDA380003, &D_80089470);
+    WGFX15188D00(gfx++, 0xD9FFFFFF, 0x00200004);
+    WGFX15188D00(gfx++, 0xD9EEFFFF, 0x00000000);
+    WGFX15188D00(gfx++, 0xE7000000, 0x00000000);
+    WGFX15188D00(gfx++, 0xE2001E01, 0x00000000);
+    WGFX15188D00(gfx++, 0xEC000000, 0x000000FF);
+    callbacks = D_8008D590;
+    while (node != 0) {
+        gfx = callbacks[node->unk0](gfx, node, tmp);
+        node = node->unkC;
+    }
+    return gfx;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B5CC0/func_15188E48.s")
 
