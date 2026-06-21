@@ -6,9 +6,13 @@ Two engines run in PARALLEL: the **orchestrator** (LLM agents match `GLOBAL_ASM`
 
 ## CURRENT MODE — Codex engine (rationing Claude tokens)
 The matching now runs on **Codex** (zero Claude tokens), via a shell mirror of the orchestrator:
-- **Run:** `bash tools/orchestrator_codex.sh 8 90 8` (chunk maxi rounds) as a tracked background task →
+- **Run:** `bash tools/orchestrator_codex.sh 8 150 8` (chunk maxi rounds) as a tracked background task →
   one completion notification. Uses `codex exec --full-auto` for matching; similar_chunk + integrate.py
-  are the deterministic glue. `maxi 90` is the bytes/hour sweet spot (55→43, 90→51, 120→44 bytes/min).
+  are the deterministic glue.
+- **MAXI regime (size cap, RAISE as bands deplete):** ≤90 was the early sweet spot but is now EXHAUSTED
+  (run 9 starved). Unattempted runway as of run 10: 91-150≈559, 151-250≈488, 251-400≈280, 400+≈210. Now at
+  `maxi 150`; when round-1 candidates drop below ~8 again, bump to 250, then 400, etc. Bigger funcs = lower
+  match rate but more bytes each.
 - **Cadence each gap (lean — minimal Claude tokens):** force-clean ROM gate → `apply_wins.py` →
   `permuter_daemon.py import_new` → relaunch `orchestrator_codex.sh` → `git push sholdee decomp/game-matches`.
 - **Cookbook is TIERED:** `ido_cookbook.md` = 182-line CORE (always read); `ido_reference.md` = full
