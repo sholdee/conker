@@ -2,15 +2,51 @@
 #include "functions.h"
 #include "variables.h"
 
+extern u8 D_80088B80;
+extern s32 D_800A1F70;
+extern s32 D_800A1F88;
+extern s32 func_15145EA4(s32 *arg0, s32 *arg1, s32 arg2, s32 arg3);
+void func_151D3E6C(struct127 *arg0, struct17 *arg1, struct17 *arg2, s32 arg3);
+void func_151D3F14(struct17 *arg0, u8 arg1, s32 arg2);
+void func_150FE0B8(struct127 *arg0, struct17 *arg1, s32 arg2, s32 arg3);
+void func_150FE288(struct127 *arg0);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12B250/func_150FDDA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12B250/func_150FDF38.s")
+void func_150FDF38(struct127 *arg0, s32 arg1, s32 arg2, struct17 *arg3, struct17 *arg4) {
+    struct17 sp44;
+    struct17 sp38;
+    s32 sp30[2];
+    s32 sp28[2];
+
+    if (arg0 != 0) {
+        if (arg0->unk1D4 != 0) {
+            sp30[0] = (s32)&D_800A1F70;
+            sp30[1] = (s32)&D_800A1F88;
+            sp28[0] = (s32)&sp44;
+            sp28[1] = (s32)&sp38;
+            func_15145EA4(sp30, sp28, (s32)arg0->unk1D4 + (D_80088B80 << 6), 2);
+        } else {
+            sp44.unk0 = arg0->x_position;
+            sp44.unk4 = arg0->y_position + 56.0f;
+            sp44.unk8 = arg0->z_position;
+            sp38 = sp44;
+        }
+        func_151D3E6C(arg0, &sp44, &sp38, (D_800BE9F0 == 0x2B) ? 0x28 : 0x1E);
+        func_151D3F14(&sp44, ((u8 *)&arg1)[3], arg2);
+        func_150FE0B8(arg0, &sp44, ((u8 *)&arg1)[3], arg2);
+        func_150FE288(arg0);
+        if (arg3 != 0) {
+            *arg3 = sp44;
+        }
+        if (arg4 != 0) {
+            *arg4 = sp38;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12B250/func_150FE0B8.s")
 
-extern u8 D_80088B80;
-extern s32 D_800A1F70;
 void func_151D3E04(s32, s32, s32*, s32, f32);
 
 void func_150FE248(s32 arg0, s32 arg1, s32 arg2) {

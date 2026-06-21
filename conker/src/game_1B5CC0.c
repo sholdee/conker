@@ -133,7 +133,84 @@ void func_15188AD0(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B5CC0/func_15188B74.s")
+typedef struct Node15188B74 {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+    char pad4[2];
+    s16 unk6;
+    char pad8[4];
+    struct Node15188B74 *unkC;
+} Node15188B74;
+
+extern void (*D_8008D580[])(Node15188B74 *);
+extern void (*D_8008D588[])(Node15188B74 *);
+
+void func_15188B74(s32 idx) {
+    Node15188B74 *node;
+    Node15188B74 *prev;
+    Node15188B74 *next;
+    volatile s32 *delta;
+    s32 *head;
+    void (**funcs0)(Node15188B74 *);
+    void (**funcs1)(Node15188B74 *);
+    s32 countdown;
+    s32 fade;
+    s32 maxFade;
+
+    head = &D_800DF7C8[idx];
+    node = (Node15188B74 *)*head;
+    funcs1 = D_8008D588;
+    prev = 0;
+    if (node != 0) {
+        funcs0 = D_8008D580;
+        delta = &D_800BE9E4;
+        maxFade = 0xFF;
+        do {
+            countdown = node->unk6;
+            next = node->unkC;
+            if (countdown != 0) {
+                node->unk6 = countdown - *delta;
+                countdown = node->unk6;
+            }
+            if (countdown < 0) {
+                node->unk6 = 0;
+            }
+            funcs0[node->unk0](node);
+
+            fade = node->unk3;
+            if (node->unk6 != 0) {
+                if (fade != maxFade) {
+                    fade += *delta << 4;
+                    if (fade >= 0x100) {
+                        fade = maxFade;
+                    }
+                    node->unk3 = fade;
+                }
+                prev = node;
+            } else if (fade != 0) {
+                fade -= *delta << 3;
+                if (fade < 0) {
+                    fade = 0;
+                }
+                if (fade == 0) {
+                    if (prev == 0) {
+                        *head = (s32)next;
+                    } else {
+                        prev->unkC = next;
+                    }
+                    funcs1[node->unk0](node);
+                    func_10004074((Node15188AD0 *)node);
+                } else {
+                    node->unk3 = fade;
+                    prev = node;
+                }
+            }
+            node = next;
+        } while (node != 0);
+    }
+}
 
 typedef struct Node15188D00 {
     u8 unk0;
