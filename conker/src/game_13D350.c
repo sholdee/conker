@@ -4,6 +4,7 @@
 #undef func_1502B7F0
 #include "variables.h"
 
+extern u8 D_800DBEA8[];
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_1510FEA0.s")
 
@@ -42,7 +43,17 @@ Gfx *func_15110544(Gfx *gfx, s32 a, s32 b, s32 c, s32 d, u8 r, u8 g, u8 bl) {
     gfx = func_1501A6CC(gfx, a, b, c, d);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15110600.s")
+Gfx *func_15110600(Gfx *gfx, s32 arg1, s32 arg2, s32 arg3) {
+    s32 temp_v0;
+
+    temp_v0 = D_800BE9F0;
+    if ((temp_v0 == 0x1B) || (temp_v0 == 0x1E) ||
+        ((temp_v0 == 0x31) && (*(u8 *)&D_800DBFF0->unk3D4->unk78 == 3))) {
+        gfx = func_15110544(gfx, 2, 0, D_800BE620 - 2, D_800BE624,
+                            D_800DBEA8[0], D_800DBEA8[1], D_800DBEA8[2]);
+    }
+    return gfx;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_151106A8.s")
 

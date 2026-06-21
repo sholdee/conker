@@ -2,8 +2,56 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct {
+    u8 pad0[0x8];
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    u8 pad20[0x30];
+} Struct15189900Arg;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B6DB0/func_15189900.s")
+typedef struct {
+    u8 pad0[0x10];
+    Struct15189900Arg unk10;
+    s16 unk60;
+    u8 pad62[0x2];
+    f32 unk64;
+    f32 unk68;
+    s32 unk6C;
+    u8 unk70;
+} Struct15189900Obj;
+
+extern Struct15189900Obj *func_15167A68(s32, s32, s32, s32, s32, s32);
+extern void func_1510F800(s32);
+
+
+void func_15189900(Struct15189900Arg *arg0, s32 arg1) {
+    Struct15189900Obj *temp_v0;
+    s32 var_v0;
+
+    temp_v0 = func_15167A68(0x1A, 1, 0x78, 1, 0xFF, 1);
+    if (temp_v0 != 0) {
+        memcpy(&temp_v0->unk10, arg0, 0x50);
+        func_1510F800(0);
+        temp_v0->unk6C = func_1510FD20((s32)(temp_v0->unk10.unk8 + (temp_v0->unk10.unk14 * 0.5f)), (s32)(temp_v0->unk10.unk10 + (temp_v0->unk10.unk1C * 0.5f)));
+        if ((u8)arg1 != 0) {
+            var_v0 = 1;
+        } else {
+            var_v0 = 0;
+        }
+        temp_v0->unk70 = var_v0;
+        temp_v0->unk60 = 0;
+        temp_v0->unk64 = 0.0f;
+        if (temp_v0->unk10.unk18 < 0.0f) {
+            temp_v0->unk68 = temp_v0->unk10.unkC + temp_v0->unk10.unk18;
+        } else {
+            temp_v0->unk68 = temp_v0->unk10.unkC;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B6DB0/func_15189A00.s")
 

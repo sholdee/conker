@@ -215,7 +215,35 @@ void func_151C1628(void *arg0) {
     func_1513259C(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C1654.s")
+void func_151D40D4(struct Vec3F151BFDA0 *, s32, s32, s32, s32, s32, s32, s32);
+void func_151D42E8(struct Vec3F151BFDA0 *, s32, s32, s32, s32);
+
+void func_151C1654(struct Vec3F151BFDA0 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    void (*callback)(s32, s32, s32);
+    u8 temp;
+
+    callback = (void (*)(s32, s32, s32)) D_800E0934;
+    if (callback != NULL) {
+        callback((s32)arg0->x, (s32)arg0->y, (s32)arg0->z);
+    }
+
+    temp = (u8)arg3;
+    if (temp != 0) {
+        switch (temp) {
+        case 1:
+            func_151D42E8(arg0, arg1, arg2, arg4, 0x24);
+            return;
+        case 2:
+            func_151D42E8(arg0, arg1, arg2, arg4, 0x25);
+            return;
+        case 3:
+            func_151D40D4(arg0, arg1, arg2, 0, arg4, 0x16, 0x26, 0);
+            return;
+        }
+    }
+
+    func_151D40D4(arg0, arg1, arg2, 0, arg4, 0x16, 0x15, 0);
+}
 
 void func_15143134(void *, s32, s32);
 struct S800AA958 { s32 unk0; s32 unk4; s32 unk8; };
