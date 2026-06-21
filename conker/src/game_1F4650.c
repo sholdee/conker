@@ -6,6 +6,7 @@ extern f32 D_800AAED4;
 extern f32 D_800AAED8;
 extern f32 D_800AAEA8;
 extern void func_15145974(struct17 *, f32 *, f32 *);
+extern void func_1000FD38(void *, void *, s32);
 extern s32 func_151C87E0(s32, s32);
 extern void func_151C899C(s32, s32);
 
@@ -81,7 +82,60 @@ s32 func_151C87AC(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C9198.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C94D4.s")
+void func_151C94D4(void *arg0) {
+    register s32 temp_s0;
+    s32 temp_a0;
+
+    temp_s0 = (s32)arg0 + 0x110;
+    if (*(s32 *)((s32)arg0 + 0x13C) != 0) {
+        func_1516972C(*(struct102 **)(temp_s0 + 0x2C));
+        func_1000FD38(func_151C87AC, (void *)temp_s0, 0);
+    }
+
+    temp_s0 = *(s32 *)&arg0;
+    temp_a0 = *(s32 *)(temp_s0 + 0x144);
+    temp_s0 = temp_s0 + 0x110;
+    if (temp_a0 != 0) {
+        func_1516972C((struct102 *)temp_a0);
+    }
+
+    temp_a0 = *(s32 *)(temp_s0 + 0x38);
+    if (temp_a0 != 0) {
+        func_1516972C((struct102 *)temp_a0);
+    }
+
+    temp_a0 = *(s32 *)(temp_s0 + 0x3C);
+    if (temp_a0 != 0) {
+        func_1516972C((struct102 *)temp_a0);
+    }
+
+    temp_a0 = *(s32 *)(temp_s0 + 0x40);
+    if (temp_a0 != 0) {
+        func_1516972C((struct102 *)temp_a0);
+    }
+
+    temp_a0 = *(s32 *)(temp_s0 + 0x44);
+    if (temp_a0 != 0) {
+        func_1516972C((struct102 *)temp_a0);
+    }
+
+    temp_a0 = *(s32 *)(temp_s0 + 0x48);
+    if (temp_a0 != 0) {
+        func_1516972C((struct102 *)temp_a0);
+    }
+
+    temp_a0 = *(s32 *)(temp_s0 + 0x4C);
+    if (temp_a0 != 0) {
+        func_1516972C((struct102 *)temp_a0);
+    }
+
+    temp_a0 = *(s32 *)(temp_s0 + 0x50);
+    if (temp_a0 != 0) {
+        func_1516972C((struct102 *)temp_a0);
+    }
+
+    func_1513CA6C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C95D8.s")
 
