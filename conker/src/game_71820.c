@@ -33,7 +33,45 @@ void func_15044658(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_150448D0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044964.s")
+s32 func_15044964(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
+    struct conker15044A28 *node;
+    struct conker15044A28 *head;
+    struct conker15044A28 *tail;
+    struct conker15044A28 *next;
+    s32 ret;
+
+    ret = allocate_memory(arg0, 1, 0, 0);
+    if (ret == 0) {
+        return 0;
+    }
+
+    node = (struct conker15044A28 *)ret;
+    node->next = 0;
+    node->unk4 = arg2;
+    node->unkC = arg1;
+    node->unkD = arg4;
+    node->unkE = arg3;
+    node->unk6 = arg5;
+    node->unk8 = arg6;
+    node->unkA = arg7;
+
+    head = D_800CBE00[0];
+    if (head == 0) {
+        D_800CBE00[0] = node;
+    } else {
+        next = head->next;
+        tail = head;
+        if (next != 0) {
+            do {
+                tail = next;
+                next = next->next;
+            } while (next != 0);
+        }
+        tail->next = node;
+    }
+
+    return ret;
+}
 
 void func_15044A28(void) {
     struct conker15044A28 *node;

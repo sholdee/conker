@@ -3,6 +3,8 @@
 #include "functions.h"
 #include "variables.h"
 
+void func_151A9390(s32 arg0, s32 arg1, struct134 *arg2, s32 arg3, f32 arg4, f32 arg5, s32 arg6, s32 arg7, s32 arg8);
+
 
 void func_15012FE0(void) {
     D_800BE570 = 0;
@@ -143,7 +145,49 @@ s32 func_1501407C(s32 arg0) {
 //     }
 // }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_15014144.s")
+s32 func_15014144(struct134 *arg0) {
+    s32 flags;
+    s32 bit8;
+    s32 bit4;
+    s32 bit2;
+    s32 bit1;
+    s32 bit16;
+
+    flags = arg0->unk18;
+
+    if (flags & 8) {
+        bit8 = 8;
+    } else {
+        bit8 = 0;
+    }
+
+    if (flags & 4) {
+        bit4 = 4;
+    } else {
+        bit4 = 0;
+    }
+
+    if (flags & 2) {
+        bit2 = 0;
+    } else {
+        bit2 = 2;
+    }
+
+    if (flags & 1) {
+        bit1 = 1;
+    } else {
+        bit1 = 0;
+    }
+
+    if (flags & 0x10) {
+        bit16 = 0x10;
+    } else {
+        bit16 = 0;
+    }
+
+    func_151A9390((u8)(bit16 | bit1 | bit2 | bit4 | bit8), *((u8 *)arg0 + 0x1F), arg0, 0, *(f32 *)&D_8009667C, 100.0f, -1, 0xFF, 1);
+    return 1;
+}
 
 s32 func_15014220(struct16 *arg0) {
     struct {

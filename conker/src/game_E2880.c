@@ -2,8 +2,33 @@
 #include "functions.h"
 #include "variables.h"
 
+extern void func_151D2AB0(s32);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E2880/func_150B53D0.s")
+struct260 *func_150B53D0(void *arg0, s16 arg1, u8 arg2, s32 arg3) {
+    struct260 *temp_v0;
+    struct {
+        void *unk0;
+        u8 unk4;
+        f32 unk8;
+        f32 unkC;
+    } sp3C;
+
+    if (arg0 == NULL) {
+        return NULL;
+    }
+
+    sp3C.unk0 = arg0;
+    sp3C.unk4 = *((u8 *)arg0 + 0x3B);
+    sp3C.unk8 = 0.0f;
+    sp3C.unkC = 0.0f;
+
+    temp_v0 = func_15149130((arg1 == -1) ? 0x12C : arg1, -1, 0x24, -1, (arg1 == -1) ? 0 : 1, 0x23, (struct37 *)0x10, arg2, arg3);
+    if (temp_v0 != NULL) {
+        memcpy((void *)((s32)temp_v0 + 0x28), &sp3C, 0x10);
+        func_151D2AB0(6);
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E2880/func_150B54A8.s")
 
