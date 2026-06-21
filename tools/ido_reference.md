@@ -1229,3 +1229,5 @@ Special empty-guard case:
   `lui 0x3f80; mtc1` for the clamped f32, write `x = 1` (int), not `x = 1.0f` (CSEs/reuses compare const).
 - 64-bit helper reloc control: when `(u64)K * D64 / C` emits the right `__ll_mul`/`__ull_div`
   sequence but the low word folds as `D64+4`, call helpers explicitly: `__ull_div(__ll_mul(KULL, *(s32*)&D64, D64_lo), CULL)`. Type `__ll_mul` as `(u64,s32,s32)`, not four `s32`s, to keep the high-half/zero materialization.
+- One-off full-word reload of a homed param: after the arg is already homed, `tmp = *(s32 *)&arg0;`
+  forces a plain `lw` from the arg slot; plain `tmp = (s32)arg0` may reuse the old reg, while `volatile` can add address code.
