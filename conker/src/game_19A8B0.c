@@ -21,7 +21,44 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516E8CC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516ECAC.s")
+s32 func_1516ECAC(s32 arg0) {
+    s32 temp_v0;
+    s32 temp_v1;
+    s32 temp_a1;
+    s32 temp;
+
+    temp_v0 = *(u8 *)(arg0 + 0x24);
+    temp_v1 = *(u8 *)(arg0 + 0x1F);
+    if (temp_v0 != 0) {
+        if (temp_v1 != 0xFF) {
+            temp_v1 += D_800BE9E4 << 7;
+            if (temp_v1 >= 0x100) {
+                temp_v1 = 0xFF;
+            }
+            *(u8 *)(arg0 + 0x1F) = temp_v1;
+            temp_v0 = *(volatile u8 *)(arg0 + 0x24);
+        }
+    } else {
+        if (temp_v1 != 0) {
+            temp_v1 -= D_800BE9E4 * *(u8 *)(arg0 + 0x26);
+            if (temp_v1 < 0) {
+                temp_v1 = 0;
+            }
+            *(u8 *)(arg0 + 0x1F) = temp_v1;
+            temp_v0 = *(volatile u8 *)(arg0 + 0x24);
+        }
+    }
+
+    if ((temp_v0 == 0) && (temp_v1 == 0)) {
+        return 1;
+    }
+
+    temp_a1 = *(u8 *)(arg0 + 0x2D) | (*(u8 *)(arg0 + 0x2C) << 8);
+    temp = (temp_a1 * temp_v1) >> 7;
+    *(s16 *)(arg0 + 0x16) = temp;
+    *(s16 *)(arg0 + 0x14) = temp;
+    return 0;
+}
 
 extern void func_1516D99C();
 

@@ -15,7 +15,26 @@ void func_150ED234(f32 *arg0, f32 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11A680/func_150ED298.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11A680/func_150ED578.s")
+void func_150ED578(struct127 *arg0) {
+    struct126 *temp_v0;
+    s32 idx;
+    struct127 *temp_v1;
+    struct108 *camera;
+
+    temp_v0 = arg0->unk31C;
+    if ((temp_v0 != 0) && (temp_v0->unk84 == 0)) {
+        idx = D_800BE616 ? arg0->unk127 : arg0->unk124;
+        if ((*(u16 *)(((s32 *)D_800BE728[0])[idx]) & 0x10) != 0) {
+            temp_v1 = &D_800CC2D0[idx];
+            if (temp_v1->unk31C->pad196[1] != 0) {
+                camera = temp_v1->camera;
+                if (camera != 0) {
+                    arg0->pad2FC[0] |= 1 << camera->unk23D;
+                }
+            }
+        }
+    }
+}
 
 extern void func_15062FC0(struct127 *, s32, s32, s32, s32, s32, s32, s32);
 

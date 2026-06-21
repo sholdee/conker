@@ -233,7 +233,66 @@ done:
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_150334B8.s")
+s32 func_150334B8(arg0, arg1)
+u8 *arg0;
+s16 arg1;
+{
+    Gfx *gfx;
+    s32 count;
+    s32 i;
+    s32 w0;
+    s32 w1;
+    s32 width;
+    s32 s;
+    s32 t;
+    s32 height;
+    s32 offset;
+
+    gfx = 0;
+    count = 0;
+    offset = 0;
+    if (arg0[1] == 0x37) {
+        gfx = **(Gfx ***)(arg0 + 0x24);
+        count = 4;
+        offset = -0x64;
+    }
+    if (gfx != 0) {
+        i = 0;
+        if (count != 0) {
+            do {
+                count--;
+                if (*(s8 *)((i << 3) + (u8 *)gfx) != -0xE) {
+                    do {
+                    } while (*(s8 *)((u8 *)gfx + (++i << 3)) != -0xE);
+                }
+                if (count != 0) {
+                    i++;
+                }
+            } while (count != 0);
+        }
+
+        w0 = gfx[i].words.w0;
+        w1 = gfx[i].words.w1;
+        width = ((w1 >> 12) & 0xFFF) + 2;
+        s = ((w0 >> 12) & 0xFFF) + offset;
+        t = w0 & 0xFFF;
+        if (s >= width) {
+            s -= width;
+        }
+        if (s < 0) {
+            s += width;
+        }
+        height = (w1 & 0xFFF) + 2;
+        if (t >= height) {
+            t -= height;
+        }
+        if (t < 0) {
+            t += height;
+        }
+        gfx[i].words.w0 = (G_SETTILESIZE << 24) | ((s & 0xFFF) << 12) | (t & 0xFFF);
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_150335C8.s")
 

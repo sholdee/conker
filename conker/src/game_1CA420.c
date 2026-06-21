@@ -4,15 +4,19 @@
 
 
 extern void func_15147D64(u8 *arg0, s32 arg1);
+extern void func_1519E3BC(void *arg0, s16 arg1, u8 arg2, u8 arg3);
 extern s32 func_1519D030(void *arg0, s32 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5);
 extern s32 func_1514ED3C(s32 arg0, s32 arg1, s32 *arg2);
 extern s32 func_1514EC1C(s32 arg0, s32 arg1, s16 arg2);
+extern s32 D_800E0920;
 
 typedef struct Obj1519E464 {
     s32 unk0;
     u8 pad4[0x37];
     u8 unk3B;
-    u8 pad3C[0x198];
+    u8 pad3C[0x48];
+    u16 unk84;
+    u8 pad86[0x14E];
     s32 unk1D4;
     u8 pad1D8[0x11C];
     s32 unk2F4;
@@ -183,7 +187,33 @@ void func_1519E688(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E6BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E754.s")
+void func_1519E754(Arg1519E464 *arg0) {
+    Sub1519E464 *sub;
+    u8 invalid;
+
+    invalid = 0;
+    sub = &arg0->unk28;
+    if (arg0->unk28.unk0->unk0 == 0) {
+        invalid = 1;
+    }
+    if (sub->unk0->unk3B != sub->unk4) {
+        invalid = 1;
+    }
+    if (invalid == 0) {
+        sub->unk8 += D_800BE9E4;
+        if (sub->unk0->unk84 != 0x7C) {
+            invalid = 1;
+            if (sub->unk8 >= 0xC9) {
+                func_1519E3BC(sub->unk0, 0x12C, arg0->unkC, arg0->unk1);
+            }
+        }
+    }
+    if (invalid != 0) {
+        D_800E0920 = 0;
+        arg0->unkE = -1;
+        arg0->unkD |= 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E818.s")
 
@@ -198,8 +228,6 @@ void func_1519E8F8(struct260 *arg0) {
     func_1514EDF0(arg0, *(s32 *)((u8 *)arg0 + 0x28));
     func_15149368(arg0);
 }
-
-extern s32 D_800E0920;
 
 void func_1519E924(struct260 *arg0) {
     D_800E0920 = 0;

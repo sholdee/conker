@@ -6,11 +6,16 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F5420.s")
 
 struct Struct150F5590 {
-    char pad0[0x24];
+    char pad0[0x18];
+    s32 unk18;
+    s32 unk1C;
+    char pad20[0x24 - 0x20];
     s16 unk24;
     char pad26[0x38 - 0x26];
     s16 unk38;
     s16 unk3A;
+    char pad3C[0x45 - 0x3C];
+    u8 unk45;
 };
 
 void func_150F55C8(struct Struct150F5590 *);
@@ -22,7 +27,35 @@ void func_150F5590(struct Struct150F5590 *arg0) {
     func_150F55C8(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F55C8.s")
+void func_150F55C8(struct Struct150F5590 *arg0) {
+    s32 temp_t2;
+    s32 temp_v0;
+    s32 temp_a1;
+    s32 temp_a3;
+    s32 temp_t1;
+    s32 temp_t0;
+    s32 temp_t6;
+    s32 temp_t7;
+    s32 temp_t4;
+
+    temp_v0 = arg0->unk1C & 0xFFFF;
+    temp_a1 = arg0->unk18 >> 16;
+    temp_a3 = arg0->unk18 & 0xFFFF;
+    temp_t0 = arg0->unk1C >> 16;
+    temp_t1 = temp_v0 - temp_a1;
+    temp_t2 = arg0->unk24;
+
+    if (temp_t1 < temp_t2) {
+        temp_t6 = temp_v0 - temp_t2;
+        temp_t7 = temp_t6 * 0xFF;
+        arg0->unk45 = temp_t7 / temp_a1;
+    } else if ((temp_t1 - temp_a3) < temp_t2) {
+        arg0->unk45 = 0xFF;
+    } else {
+        temp_t4 = temp_t2 * 0xFF;
+        arg0->unk45 = temp_t4 / temp_t0;
+    }
+}
 
 void func_15179008(s32);
 

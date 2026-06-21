@@ -6,6 +6,7 @@
 extern f32 func_15048A40(u8);
 extern void func_15188010(s32, f32 *);
 extern s32 func_151149AC(u32);
+extern f32 D_800A2F8C;
 
 struct Struct1511F31CArg {
     u8 pad0[0x10];
@@ -60,6 +61,17 @@ struct Obj1511515C {
     f32 unk64;
 };
 
+struct Obj151152A8 {
+    u8 pad0[0x12];
+    s16 unk12;
+    u8 pad14[0x28];
+    s32 unk3C;
+    u8 pad40[0xF];
+    u8 unk4F;
+    u8 pad50[0x2C];
+    s32 unk7C;
+};
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151150B0.s")
 
 void func_151150BC(struct Obj151150BC *arg0) {
@@ -100,7 +112,29 @@ void func_151151FC(struct Obj151151FC *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511529C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151152A8.s")
+void func_151152A8(u8 *arg0) {
+    s32 target;
+    s32 current;
+    s32 step;
+    s32 *targetPtr;
+
+    targetPtr = (s32 *)(arg0 + 0x7C);
+    target = *targetPtr;
+    if (target == 0) {
+        target = *(s16 *)(arg0 + 0x12);
+        *targetPtr = target;
+    }
+    current = *(s16 *)(arg0 + 0x12);
+    if ((arg0[0x4F] & 0xFF) & 4) {
+        step = *(s32 *)(arg0 + 0x3C);
+        if ((target - current) < (s16)step) {
+            *(s16 *)(arg0 + 0x12) = current - ((s16)(step >> 16) * D_800BE9E4);
+            return;
+        }
+    } else {
+        *(s16 *)(arg0 + 0x12) = (s32)((f32)current + ((f32)(target - current) * D_800A2F8C * (f32)D_800BE9E4));
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_15115368.s")
 
