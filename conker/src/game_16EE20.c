@@ -3,6 +3,9 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_800A5698;
+extern f32 D_800A569C;
+
 
 void func_15141970(struct37 *arg0) {
     func_1514EDF0(arg0, arg0->unk2C);
@@ -479,7 +482,31 @@ f32 func_15144528(f32 arg0, f32 arg1, f32 arg2) {
     return arg0;
 }
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15144598.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_1514462C.s")
+f32 func_1514462C(s32 arg0) {
+    struct169 *temp_a0;
+    s32 temp_t6;
+    f32 temp_f2;
+    f32 temp_f0;
+
+    temp_a0 = (struct169 *)arg0;
+    temp_t6 = temp_a0->unk15 & 3;
+    switch (temp_t6) {
+    default:
+        temp_f2 = 1.0f;
+        break;
+    case 2:
+        temp_f2 = (f32)(temp_a0->unk6 * temp_a0->unk8 * temp_a0->unkA);
+        break;
+    case 0:
+        temp_f2 = (f32)(temp_a0->unk6 * temp_a0->unk6) * D_800A5698 * (f32)temp_a0->unk8;
+        break;
+    case 1:
+        temp_f0 = (f32)temp_a0->unk6;
+        temp_f2 = ((temp_f0 * D_800A569C) * temp_f0) * temp_f0;
+        break;
+    }
+    return temp_f2;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_1514470C.s")
 f32 func_15144A74(struct17 *arg0, struct17 *arg1) {
     return arg0->unk0 * arg1->unk0 + arg0->unk4 * arg1->unk4 + arg0->unk8 * arg1->unk8;

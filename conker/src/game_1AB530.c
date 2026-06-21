@@ -10,6 +10,16 @@ typedef struct Node_1517E134 {
     struct Node_1517E134 *next;
 } Node_1517E134;
 
+typedef struct Node_1517E1AC {
+    char pad0[0xC];
+    f32 unkC;
+    f32 unk10;
+    char pad14[0x10];
+    struct Node_1517E1AC *next;
+    char pad28[0x2];
+    u16 unk2A;
+} Node_1517E1AC;
+
 extern void func_10004074(void);
 
 void func_1517E134(Node_1517E134 *arg0) {
@@ -40,7 +50,41 @@ void func_1517E134(Node_1517E134 *arg0) {
     func_10004074();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AB530/func_1517E1AC.s")
+void func_1517E1AC(void) {
+    Node_1517E1AC *cur;
+    s32 *width;
+    s32 *height;
+    s32 *framebuffer;
+    s32 screenWidth;
+    s32 ix;
+    s32 iy;
+    f32 x;
+    f32 y;
+    f32 zero;
+
+    cur = (Node_1517E1AC *)D_800DDD64;
+    framebuffer = (s32 *)((s32)&D_800BE9C4);
+    if (cur != NULL) {
+        width = (s32 *)((s32)&D_800BE620);
+        height = (s32 *)((s32)&D_800BE624);
+        zero = 0.0f;
+        do {
+            x = cur->unkC;
+            if (zero <= x) {
+                screenWidth = *width;
+                if (x < (f32)screenWidth) {
+                    y = cur->unk10;
+                    if ((zero <= y) && (y < (f32)*height)) {
+                        iy = (s32)y;
+                        ix = (s32)x;
+                        cur->unk2A = *(((u16 *)*framebuffer) + ix + (iy * screenWidth));
+                    }
+                }
+            }
+            cur = cur->next;
+        } while (cur != NULL);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AB530/func_1517E28C.s")
 

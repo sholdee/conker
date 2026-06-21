@@ -5,6 +5,9 @@
 extern s16 D_800DC204[];
 extern s16 D_800DC206[];
 
+void func_15123A54(struct108 *arg0);
+void func_1512C150(struct108 *arg0);
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512A390.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512ABF8.s")
@@ -72,7 +75,34 @@ s32 func_1512B630(struct108 *arg0, struct Struct1512B5FC *arg1, s32 arg2, s32 ar
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512BB10.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512C068.s")
+void func_1512C068(struct108 *arg0) {
+    f32 temp_f14;
+    f32 temp_f2;
+    f32 temp_f12;
+    f32 temp_f0;
+
+    if (arg0->unk390 < 180.0f) {
+        temp_f14 = 2.0f;
+    } else {
+        temp_f14 = -2.0f;
+    }
+
+    if ((arg0->unk2C != 0x80) && (arg0->unk2C != 0x40)) {
+        temp_f2 = arg0->unk2F8 - arg0->unk2BC;
+        temp_f12 = arg0->unk300 - arg0->unk2C4;
+        temp_f0 = sqrtf((temp_f2 * temp_f2) + (temp_f12 * temp_f12));
+        *(f32 *)arg0->pad370 = temp_f0;
+
+        if (temp_f0 < 42.0f) {
+            arg0->unk384 = arg0->unk37C - (45.0f * temp_f14);
+            arg0->unk5CC = 0.0f;
+            func_15123A54(arg0);
+            arg0->unk240 |= 2;
+        }
+    }
+
+    func_1512C150(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512C150.s")
 
