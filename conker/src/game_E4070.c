@@ -88,7 +88,8 @@ void func_150B73F0(Struct73F0 *a0) {
 
 typedef struct {
     /* 0x00 */ void *unk0;
-    /* 0x04 */ u8  pad4[0x10];
+    /* 0x04 */ void *unk4;
+    /* 0x08 */ u8  pad8[0xC];
     /* 0x14 */ s16 unk14;
     /* 0x16 */ s16 unk16;
     /* 0x18 */ s16 unk18;
@@ -114,6 +115,9 @@ typedef struct {
 } struct_7484;
 
 extern u8 D_800918DC;
+extern u8 D_800918E8;
+extern u8 D_800918F4;
+extern u8 D_80091900;
 struct102 *func_15169968(struct_7484 *);
 
 void func_150B7484(void) {
@@ -198,7 +202,57 @@ void func_150B768C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B76BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B77A8.s")
+void func_150B77A8(void) {
+    struct_7484 sp24;
+
+    if (D_800D9898[1] != 0) {
+        func_1516972C((struct102 *)D_800D9898[1]);
+        D_800D9898[1] = 0;
+    }
+
+    sp24.unk1C = 60.0f;
+    sp24.unk20 = 170.0f;
+    sp24.unk2C = 0x40;
+    sp24.unk2E = 0x40;
+    sp24.unk30 = 4;
+    sp24.unk0 = &D_800918F4;
+    sp24.unk4 = &D_80091900;
+    sp24.unk14 = 0;
+    sp24.unk16 = 0;
+    sp24.unk18 = 0;
+    sp24.unk31 = 0;
+    sp24.unk24 = -0x800;
+    sp24.unk26 = 9;
+    sp24.unk32 = 0xFF;
+    sp24.unk33 = 0;
+    sp24.unk34 = 0;
+    sp24.unk35 = 0xFF;
+    sp24.unk36 = 0xD;
+    sp24.unk37 = 0x12;
+    sp24.unk38 = 2;
+    sp24.unk39 = 3;
+    sp24.unk28 = 0x1000;
+    sp24.unk2A = 0x1000;
+    if (D_800D9898[4] != 0) {
+        func_1516972C((struct102 *)D_800D9898[4]);
+    }
+    D_800D9898[4] = (s32 *)func_15169968(&sp24);
+
+    sp24.unk24 = 0;
+    sp24.unk26 = 0;
+    sp24.unk2C = 0x58;
+    sp24.unk2E = 0x40;
+    sp24.unk30 = 0;
+    sp24.unk36 = 7;
+    sp24.unk37 = 0x11;
+    sp24.unk0 = &D_800918E8;
+    sp24.unk38 = 1;
+    if (D_800D9898[8] != 0) {
+        func_1516972C((struct102 *)D_800D9898[8]);
+    }
+    D_800D9898[8] = (s32 *)func_15169968(&sp24);
+    D_800D9890 = 3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B791C.s")
 

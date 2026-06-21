@@ -21,6 +21,70 @@ typedef struct struct_1514EBA4 {
 } struct_1514EBA4;
 
 extern struct_1514EBA4 *func_15167A68(s32, s32, s32, s32, s32, s32);
+extern f32 D_800A5E08;
+extern f32 D_800A5E0C;
+s32 func_15189FF0(void *, void *, void *, s32, s32, s32, s32);
+extern void func_151D74B0(s32, s32, s32, s32, s32);
+
+typedef struct Struct1514E00C_2C {
+    /* 0x00 */ f32 unk00;
+    /* 0x04 */ f32 unk04;
+    /* 0x08 */ f32 unk08;
+    /* 0x0C */ f32 unk0C;
+    /* 0x10 */ f32 unk10;
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ s32 unk18;
+    /* 0x1C */ u8 unk1C;
+    /* 0x1D */ u8 unk1D;
+    /* 0x1E */ s8 unk1E;
+    /* 0x1F */ u8 pad1F;
+} Struct1514E00C_2C;
+
+typedef struct Struct1514E00C_4C {
+    /* 0x00 */ u8 unk00;
+    /* 0x01 */ u8 pad01;
+    /* 0x02 */ u16 unk02;
+    /* 0x04 */ s16 unk04;
+    /* 0x06 */ u8 pad06[2];
+    /* 0x08 */ s32 unk08;
+    /* 0x0C */ s32 unk0C;
+    /* 0x10 */ u8 unk10;
+    /* 0x11 */ u8 unk11;
+    /* 0x12 */ u8 unk12;
+    /* 0x13 */ u8 unk13;
+    /* 0x14 */ u8 pad14[8];
+    /* 0x1C */ f32 unk1C;
+    /* 0x20 */ f32 unk20;
+    /* 0x24 */ f32 unk24;
+    /* 0x28 */ f32 unk28;
+    /* 0x2C */ f32 unk2C;
+    /* 0x30 */ f32 unk30;
+    /* 0x34 */ u8 pad34[0xC];
+    /* 0x40 */ s32 unk40;
+    /* 0x44 */ u8 pad44;
+    /* 0x45 */ u8 unk45;
+    /* 0x46 */ u8 pad46[0x12];
+} Struct1514E00C_4C;
+
+typedef struct Struct1514E00C_A4 {
+    /* 0x00 */ f32 unk00;
+    /* 0x04 */ f32 unk04;
+    /* 0x08 */ f32 unk08;
+    /* 0x0C */ f32 unk0C;
+    /* 0x10 */ f32 unk10;
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ f32 unk18;
+    /* 0x1C */ f32 unk1C;
+    /* 0x20 */ f32 unk20;
+    /* 0x24 */ u8 pad24[0x24];
+    /* 0x48 */ f32 unk48;
+    /* 0x4C */ u8 pad4C[8];
+    /* 0x54 */ u8 unk54;
+    /* 0x55 */ u8 unk55;
+    /* 0x56 */ u8 unk56;
+    /* 0x57 */ u8 unk57;
+    /* 0x58 */ u8 pad58[4];
+} Struct1514E00C_A4;
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514CA80.s")
@@ -294,7 +358,59 @@ void func_1514DFD0(u8 *arg0) {
     arg0[0x101] |= 0x34;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514E00C.s")
+void func_1514E00C(s32 arg0) {
+    Struct1514E00C_A4 spA4;
+    Struct1514E00C_4C sp4C;
+    Struct1514E00C_2C sp2C;
+
+    sp4C.unk00 = 3;
+    sp4C.unk08 = 0;
+    sp4C.unk0C = 0;
+    sp4C.unk40 = 0x12002;
+    sp4C.unk04 = 0;
+    sp4C.unk45 = 0xFF;
+    sp4C.unk10 = 0xFF;
+    sp4C.unk11 = 0x8E;
+    sp4C.unk12 = 0x19;
+    sp4C.unk13 = 0xFF;
+    sp4C.unk02 = 0x401;
+    sp4C.unk1C = 0.0f;
+    sp4C.unk20 = 0.0f;
+    sp4C.unk24 = 0.0f;
+    sp4C.unk28 = 0.0f;
+    sp4C.unk2C = 0.0f;
+    sp4C.unk30 = 0.0f;
+
+    spA4.unk00 = 20.0f;
+    spA4.unk04 = 20.0f;
+    spA4.unk08 = 20.0f;
+    spA4.unk0C = 20.0f;
+    spA4.unk10 = 0.0f;
+    spA4.unk14 = 0.0f;
+    spA4.unk18 = 0.5f;
+    spA4.unk1C = 0.5f;
+    spA4.unk20 = D_800A5E08;
+
+    sp2C.unk1D = ((u8 *)arg0)[0x3B];
+    sp2C.unk00 = 35.0f;
+    sp2C.unk04 = 27.0f;
+    sp2C.unk0C = 35.0f;
+    sp2C.unk10 = 27.0f;
+    sp2C.unk18 = arg0;
+    sp2C.unk1C = 6;
+    spA4.unk54 = 0;
+    spA4.unk55 = 0;
+    spA4.unk56 = 0;
+    spA4.unk57 = 0;
+    sp2C.unk1E = -1;
+
+    sp2C.unk08 = 59.0f;
+    sp2C.unk14 = D_800A5E0C;
+    spA4.unk48 = 1.0f;
+
+    func_1514EC1C(func_15189FF0(&sp4C, &spA4, &sp2C, 2, 0, 0, 0), arg0, 6);
+    func_151D74B0(arg0, 5, -1, 0xFF, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514E194.s")
 
