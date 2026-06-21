@@ -2,8 +2,47 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct {
+    u8 pad0[0x94];
+    s32 unk94;
+    u8 pad98[0x13C];
+    s32 unk1D4;
+} struct_150EEE00_arg0;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150EEE00.s")
+extern u8 D_800A1638[];
+extern u8 D_800A163C[];
+extern f32 D_800A15F0[][3];
+
+void *func_150EEF80(struct_150EEE00_arg0 *, u8, u8, s32);
+void func_15143134(void *, void *, s32);
+void func_151602C0(Header *, Header2 *, s32, s32, s32, s32, s32, s32, s32, u8, s32);
+void func_150F0A24(f32 *);
+
+void func_150EEE00(struct_150EEE00_arg0 *arg0, u8 arg1) {
+    f32 sp54[3];
+    Header sp4C;
+    Header2 sp40;
+    s32 temp_v1;
+
+    if (D_800A163C[arg1] & arg0->unk94) {
+        return;
+    }
+
+    func_150EEF80(arg0, arg1, 0xFF, 1);
+    temp_v1 = arg0->unk1D4;
+    if (temp_v1 != 0) {
+        func_15143134(D_800A15F0[arg1], sp54, temp_v1 + (D_800A1638[arg1] << 6));
+        sp4C.unk0 = 3;
+        sp4C.unk1 = -1;
+        sp4C.unk2 = (func_150ADA20() % 3U) + 4;
+        sp4C.unk4 = 0;
+        sp40.unk0 = (s32) sp54[0];
+        sp40.unk4 = (s32) sp54[1];
+        sp40.unk8 = (s32) sp54[2];
+        func_151602C0(&sp4C, &sp40, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0, 0, 0xFF, 1);
+        func_150F0A24(sp54);
+    }
+}
 
 void func_150EEF40(struct210 *arg0, u8 arg1) {
     s8 sp18[6];
