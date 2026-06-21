@@ -2,6 +2,9 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_800A6FC0;
+extern f32 D_800A6FC4;
+void func_151717FC(struct127 *, f32, f32, f32, f32, f32, s32, s32, s32, s32, f32, s32, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19E040/func_15170B90.s")
 
@@ -32,7 +35,28 @@ void func_151711C4(struct127 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19E040/func_15171200.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19E040/func_15171600.s")
+void func_15171600(struct127 *arg0, s32 arg1, s32 arg2) {
+    u8 temp;
+
+    switch (((u8 *)arg0)[0x72]) {
+    case 0xEB:
+        temp = arg1;
+        func_151717FC(arg0, 400.0f, 500.0f, 0.0f, D_800A6FC0, 0.0f, 2, 5, 0x14, 0x14, 1.0f, temp, arg2);
+        break;
+    case 0xF6:
+        temp = arg1;
+        func_151717FC(arg0, 200.0f, 400.0f, -1800.0f, -1000.0f, -1200.0f, 2, 5, 4, 0xA, 1.0f, temp, arg2);
+        break;
+    case 0xF8:
+        temp = arg1;
+        func_151717FC(arg0, 100.0f, 160.0f, -2500.0f, D_800A6FC4, 0.0f, 2, 5, 4, 4, 0.5f, temp, arg2);
+        break;
+    case 0xF9:
+        temp = arg1;
+        func_151717FC(arg0, 200.0f, 100.0f, 100.0f, -300.0f, 0.0f, 1, 5, 4, 4, 1.0f, temp, arg2);
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19E040/func_151717FC.s")
 
