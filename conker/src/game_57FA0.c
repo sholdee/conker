@@ -5,6 +5,10 @@
 
 #include "macros.h"
 
+extern void *allocate_memory(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+extern void func_10004074(void *arg0);
+extern s32 func_10006240(void *arg0, void *arg1, u32 arg2);
+
 void func_1502AAF0(void) {
 }
 
@@ -47,7 +51,38 @@ s32 func_1502B020(s32 *arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 #pragma GLOBAL_ASM("asm/nonmatchings/game_57FA0/func_1502B110.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_57FA0/func_1502B224.s")
+s32 func_1502B224(s32 arg0, void *arg1, u32 arg2, u32 arg3) {
+    u32 size;
+    void *buf;
+    s32 expected;
+
+    size = ((arg2 & 0x0FFFFFFF) + 1) & ~1;
+    if (arg3 != 0) {
+        if (arg3 < size) {
+            size = arg3;
+        }
+    }
+
+    if ((arg2 & 0x70000000) == 0x10000000) {
+        buf = allocate_memory(size, 1, 2, 2);
+        if (buf == 0) {
+            return 0;
+        }
+
+        func_10004514(arg0, buf, (size + 0xF) & ~0xF, 1);
+        expected = *(s32 *)buf & 0x7FFFFFFF;
+        if ((size = func_10006240(buf, arg1, D_8003809C)) == expected) {
+        } else {
+            D_8003C8E0 = 0x0C000036;
+            func_150AD770();
+        }
+        func_10004074(buf);
+        return size;
+    }
+
+    func_10004514(arg0, arg1, (size + 0xF) & ~0xF, 1);
+    return size;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_57FA0/func_1502B350.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_57FA0/func_1502B4A8.s")
 extern u8 D_AB1950;

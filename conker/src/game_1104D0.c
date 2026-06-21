@@ -36,7 +36,32 @@ s32 func_150E3414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s3
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1104D0/func_150E3514.s")
+void func_150E3514(u8 *arg0) {
+    s32 temp;
+    s32 *slot;
+    u16 id;
+
+    temp = arg0[0x48];
+    if (temp >= 0) {
+        slot = &D_800D99D0[temp];
+        if (*slot == (s32)arg0) {
+            *slot = 0;
+        }
+    }
+
+    id = *(u16 *)(arg0 + 0x4A);
+    if (id != 0) {
+        func_100111C8(id);
+        *(u16 *)(arg0 + 0x4A) = 0;
+        func_10010F88(0x2D7, 0x5DC0, 0, 0, 0,
+                      (s32)*(f32 *)(arg0 + 0x28),
+                      (s32)*(f32 *)(arg0 + 0x2C),
+                      (s32)*(f32 *)(arg0 + 0x30),
+                      0x3E8, 0x1770);
+    }
+
+    func_1516972C((struct102 *)arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1104D0/func_150E35DC.s")
 

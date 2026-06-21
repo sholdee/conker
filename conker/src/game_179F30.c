@@ -329,15 +329,54 @@ void func_1514E87C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514E89C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514E920.s")
+s32 func_1514E89C();
 
-void func_1514E920(void);
+s32 func_1514E920(arg0, arg1, arg2)
+s32 arg0;
+s32 arg1;
+s32 arg2;
+{
+    u8 *sub;
+    s32 flags;
+    u8 *ptr;
+
+    sub = (u8 *) arg0 + 0x110;
+    switch (arg1) {
+    case 0:
+        flags = *(s32 *) (arg0 + 0x10);
+        if (flags & 1) {
+            *(s32 *) (arg0 + 0x10) = flags & ~1;
+            ptr = *(u8 **) (sub + 0x44);
+            if (ptr != 0) {
+                ptr[0x30] = 0;
+            }
+        } else {
+            *(s32 *) (arg0 + 0x10) = flags | 1;
+        }
+        break;
+    case 2:
+        *(s32 *) (arg0 + 0x10) = *(s32 *) (arg0 + 0x10) & ~1;
+        ptr = *(u8 **) (sub + 0x44);
+        if (ptr != 0) {
+            ptr[0x30] = 0;
+        }
+        break;
+    case 1:
+        *(s32 *) (arg0 + 0x10) = *(s32 *) (arg0 + 0x10) | 1;
+        break;
+    default:
+        return func_1514E89C(arg0, arg1, arg2);
+    }
+    return 1;
+}
+
+s32 func_1514E920();
 
 void func_1514E9DC(void) {
     func_1514E920();
 }
 
-void func_1514E89C(void);
+s32 func_1514E89C();
 
 void func_1514E9FC(void) {
     func_1514E89C();

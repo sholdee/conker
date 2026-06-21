@@ -2,6 +2,7 @@
 #include "functions.h"
 #include "variables.h"
 
+extern s32 (*D_800888A0[])(struct260 *);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CF140.s")
 
@@ -357,7 +358,24 @@ void *func_150CFF10(u8 arg0, s32 arg1, s16 arg2, s32 arg3, s8 arg4, u8 arg5, u8 
     return temp_v0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150D0034.s")
+s32 func_150D0034(s32 arg0, struct260 *arg1, s32 arg2) {
+    u8 *temp_v1;
+    s32 ret;
+
+    if (*(volatile s8 *)((u8 *)arg1 + 0x4C) == -1) {
+        temp_v1 = (u8 *)arg1 + 0x28;
+    } else {
+        ret = D_800888A0[*(s8 *)((u8 *)arg1 + 0x4C)](arg1);
+        if (ret == 0) {
+            arg1->unkE = -1;
+            return arg0;
+        }
+        temp_v1 = (u8 *)arg1 + 0x28;
+    }
+
+    temp_v1[8] &= ~1;
+    return arg0;
+}
 
 extern s32 (*D_800888B0[])(s32 *, s32, u8);
 

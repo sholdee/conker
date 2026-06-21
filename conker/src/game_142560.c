@@ -14,9 +14,28 @@ struct Obj151151FC {
     f32 unk60;
 };
 
+struct Obj151150BC {
+    u8 pad0[0x8];
+    f32 unk8;
+    u8 padC[0x30];
+    s32 unk3C;
+    u8 pad40[0x28];
+    f32 unk68;
+};
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151150B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151150BC.s")
+void func_151150BC(struct Obj151150BC *arg0) {
+    arg0->unk68 = (f32)((arg0->unk3C >> 16) * D_800BE9E4) * 0.00390625f;
+    arg0->unk8 = arg0->unk8 + arg0->unk68;
+    if (arg0->unk8 < 0.0f) {
+        arg0->unk8 = arg0->unk8 + 360.0f;
+        return;
+    }
+    if (arg0->unk8 >= 360.0f) {
+        arg0->unk8 = arg0->unk8 - 360.0f;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511515C.s")
 
