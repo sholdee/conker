@@ -530,7 +530,50 @@ void func_1519BF8C(void) {
     func_10010F30(0x1AA, 0x7FFF, 0x40, 0, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519BFBC.s")
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    char padC[0x28 - 0xC];
+} Struct1519BFBCVec;
+
+typedef struct {
+    char pad0[0x130];
+    u16 unk130;
+} Struct1519BFBCSound;
+
+typedef struct {
+    char pad0[0x2C];
+    s8 unk2C;
+    s8 unk2D;
+    char pad2E[0x94 - 0x2E];
+    Struct1519BFBCVec *unk94;
+    Struct1519BFBCSound *unk98;
+} Struct1519BFBC;
+
+void func_1519BFBC(Struct1519BFBC *arg0) {
+    Struct1519BFBCVec *temp_v1;
+    Struct1519BFBCSound *temp_v2;
+    u16 temp_a0;
+    s32 temp_t6;
+    s32 temp_t7;
+
+    temp_v2 = arg0->unk98;
+    temp_v1 = arg0->unk94;
+
+    if (arg0->unk2C != 0) {
+        temp_a0 = temp_v2->unk130;
+        if (temp_a0 != 0) {
+            temp_t6 = 0x1388;
+            temp_t7 = 0x1F4;
+            func_1000F91C(temp_a0, 0x7FFF, 0, 0, 0,
+                          ((Struct1519BFBCVec *)((u8 *)temp_v1 + (arg0->unk2D * 0x28)))->unk0,
+                          ((Struct1519BFBCVec *)((u8 *)temp_v1 + (arg0->unk2D * 0x28)))->unk4,
+                          ((Struct1519BFBCVec *)((u8 *)temp_v1 + (arg0->unk2D * 0x28)))->unk8,
+                          temp_t7, temp_t6);
+        }
+    }
+}
 
 void func_1519C06C(u8 *arg0) {
     u8 *temp = *(u8 **)(arg0 + 0x98);

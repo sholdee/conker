@@ -6,6 +6,7 @@ struct Vec15107A20 { f32 x; f32 y; f32 z; };
 
 void func_15107A20(struct127 *arg0, s32 arg1, s32 arg2, struct Vec15107A20 *arg3, struct Vec15107A20 *arg4);
 void func_15107AE0(struct Vec15107A20 *arg0, struct Vec15107A20 *arg1, struct Vec15107A20 *arg2, struct Vec15107A20 *arg3);
+void func_15107F54(s32 *arg0, u8 arg1, void *arg2, s32 arg3);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15105CE0.s")
 
@@ -225,7 +226,38 @@ void func_15107B78(struct127 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15107C1C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15107E48.s")
+struct S15107E48 {
+    struct127 *unk0;
+    u8 unk4;
+    u8 pad5[3];
+    u8 unk8[0xC];
+    u8 unk14;
+};
+
+s32 func_15107E48(struct127 *arg0, u8 *arg1) {
+    struct S15107E48 *data;
+    struct127 *obj;
+    struct Vec15107A20 oldPos;
+
+    data = (struct S15107E48 *)arg0->unk60;
+    obj = data->unk0;
+    if ((obj->interaction_state == 0) || (obj->unique_id != data->unk4)) {
+        return 0;
+    }
+    if (obj->unk1D4 == NULL) {
+        return 0;
+    }
+    *arg1 = 0;
+    oldPos = *(struct Vec15107A20 *)&arg0->x_position;
+    func_15107F54((s32 *)obj, data->unk14, data->unk8, (s32)(struct Vec15107A20 *)&arg0->x_position);
+    if ((oldPos.x == arg0->x_position) && (oldPos.y == arg0->y_position) && (oldPos.z == arg0->z_position)) {
+        goto ret1;
+    }
+    *arg1 = 1;
+    func_15107AE0((struct Vec15107A20 *)&arg0->x_position, (struct Vec15107A20 *)&arg0->unk38, (struct Vec15107A20 *)&arg0->y_velocity, (struct Vec15107A20 *)&arg0->old_x_position);
+ret1:
+    return 1;
+}
 
 void func_15143134(void *, s32, s32);
 

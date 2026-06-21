@@ -2,6 +2,14 @@
 #include "functions.h"
 #include "variables.h"
 
+extern u8 D_800A3FE6[];
+extern f32 D_800A4830;
+extern f32 D_800A4834;
+extern f32 D_800A4838;
+extern f32 D_800A483C;
+extern f32 D_800A4840;
+extern void func_15153F18(void *, void *, s32, u8, s32);
+
 // requires jump table
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15134070.s")
 
@@ -516,7 +524,76 @@ s32 func_151380B4(s32 *arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15138120.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_151382E0.s")
+typedef struct {
+    s32 unk00;
+    s32 unk04;
+    s32 unk08;
+} Vec151382E0;
+
+typedef struct {
+    s16 unk00;
+    s16 unk02;
+    s16 unk04;
+    s16 unk06;
+    Vec151382E0 unk08;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    s16 unk2C;
+    s16 unk2E;
+    s16 unk30;
+    s16 unk32;
+    s16 unk34;
+    s16 unk36;
+    s16 unk38;
+    s16 unk3A;
+    s8 unk3C;
+    f32 unk40;
+    s16 unk44;
+    s16 unk46;
+    s32 unk48;
+} LocalDef151382E0;
+
+void func_151382E0(Vec151382E0 *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4) {
+    LocalDef151382E0 tmp;
+    s32 temp_v0;
+
+    temp_v0 = D_800A3FE6[arg1 << 4];
+    if (temp_v0 != 2) {
+        tmp.unk08 = *arg0;
+        tmp.unk14 = D_800A4830;
+        tmp.unk18 = D_800A4834;
+        tmp.unk1C = D_800A4838;
+        tmp.unk20 = D_800A483C;
+        tmp.unk24 = 4.0f;
+        tmp.unk28 = 9.0f;
+        tmp.unk2C = 0x12;
+        tmp.unk2E = 7;
+        tmp.unk02 = 0xFF;
+        tmp.unk00 = 0;
+        tmp.unk04 = -0x3F;
+        tmp.unk06 = 0x4E;
+        tmp.unk30 = 3;
+        tmp.unk32 = 3;
+        tmp.unk34 = 0x14;
+        tmp.unk36 = 0x1E;
+        tmp.unk38 = 0x9B;
+        tmp.unk3A = 0x64;
+        tmp.unk44 = 0x10;
+        tmp.unk46 = 0xF;
+        tmp.unk48 = 0;
+        tmp.unk40 = D_800A4840;
+        if (temp_v0 == 1) {
+            tmp.unk3C = 1;
+        } else {
+            tmp.unk3C = 0;
+        }
+        func_15153F18(&tmp, &tmp.unk08, arg2, arg3, arg4);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15138424.s")
 
