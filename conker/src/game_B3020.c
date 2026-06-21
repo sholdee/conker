@@ -264,7 +264,49 @@ s32 func_15088270(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_150882B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_150882E4.s")
+struct Struct150882E4 {
+    char pad0[8];
+    f32 unk8;
+    char padC[0x24 - 0xC];
+    s16 unk24;
+    char pad26[3];
+    s8 unk29;
+    char pad2A[0x84 - 0x2A];
+};
+
+s32 func_150882E4(s32 arg0, s32 arg1) {
+    struct Struct150882E4 *p;
+    struct Struct150882E4 *iter;
+    s32 i;
+    s32 wanted;
+
+    if (D_800872A0 == 0) {
+        return 0x10;
+    }
+
+    p = (struct Struct150882E4 *)(arg0 * sizeof(struct Struct150882E4) + (s32)D_800872A0);
+    wanted = p->unk29 + arg1;
+    i = 0;
+    if (D_800D2398 > 0) {
+        iter = (struct Struct150882E4 *)D_800872A0;
+        do {
+            if (wanted == iter->unk29) {
+                if (i != arg0) {
+                    arg0 = (p->unk24 << 4) + (s32)(p->unk8 * 16.0f);
+                    arg0 = arg0 - (iter->unk24 << 4) - (s32)(iter->unk8 * 16.0f);
+                    if (arg0 < 0) {
+                        arg0 = -arg0;
+                    }
+                    return (arg0 << 8) | i;
+                }
+            }
+            i++;
+            iter++;
+        } while (i < D_800D2398);
+    }
+
+    return 0x10;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_150883B0.s")
 

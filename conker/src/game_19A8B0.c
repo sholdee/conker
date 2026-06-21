@@ -4,6 +4,8 @@
 #undef func_15048A40
 #include "variables.h"
 
+extern void func_1516F864(s32);
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516D400.s")
 
@@ -125,7 +127,44 @@ void func_1516F984(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516FBCC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516FD50.s")
+s32 func_1516FD50(s32 arg0) {
+    s32 temp_a1;
+    s32 temp_v0;
+    s32 temp;
+
+    temp_a1 = *(u8 *)(arg0 + 0x24);
+    temp_v0 = *(u8 *)(arg0 + 0x1F);
+    if (temp_a1 != 0) {
+        if (temp_v0 != 0xFF) {
+            temp_v0 += D_800BE9E4 << 4;
+            if (temp_v0 >= 0x100) {
+                temp_v0 = 0xFF;
+            }
+            *(u8 *)(arg0 + 0x1F) = temp_v0;
+            temp_a1 = *(volatile u8 *)(arg0 + 0x24);
+        }
+    } else {
+        if (temp_v0 != 0) {
+            temp_v0 -= D_800BE9E4 << 3;
+            if (temp_v0 < 0) {
+                temp_v0 = 0;
+            }
+            *(u8 *)(arg0 + 0x1F) = temp_v0;
+        }
+        temp = (temp_v0 << 9) >> 8;
+        *(s16 *)(arg0 + 0x16) = temp;
+        *(s16 *)(arg0 + 0x14) = temp;
+        temp_a1 = *(volatile u8 *)(arg0 + 0x24);
+    }
+
+    if ((temp_a1 == 0) && (temp_v0 == 0)) {
+        return 1;
+    }
+
+    func_1516F864(arg0);
+    *(s16 *)(arg0 + 0x18) = *(s8 *)(arg0 + 0x2C) + *(s16 *)(arg0 + 0x18);
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516FE1C.s")
 

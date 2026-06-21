@@ -3,7 +3,33 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1048D0/func_150D7420.s")
+void func_150D7420(s32 arg0, u8 *arg1, u8 arg2) {
+    if (arg2 == 0x36) {
+        switch (*arg1) {
+            case 0:
+                break;
+            case 1:
+                *(s32 *)(arg0 + 0x58) |= 2;
+                *(u8 *)(arg0 + 0x28) = 0xFF;
+                *(u8 *)(arg0 + 0x29) = 0;
+                *(u8 *)(arg0 + 0x2A) = 0;
+                return;
+            case 2:
+                *(s32 *)(arg0 + 0x58) |= 2;
+                *(u8 *)(arg0 + 0x28) = 0xFF;
+                *(u8 *)(arg0 + 0x29) = 0;
+                *(u8 *)(arg0 + 0x2A) = 0;
+                return;
+            case 3:
+                *(u8 *)(arg0 + 0x28) = 0;
+                *(s32 *)(arg0 + 0x58) |= 2;
+                *(u8 *)(arg0 + 0x29) = 0xFF;
+                *(u8 *)(arg0 + 0x2A) = 0;
+                return;
+        }
+        *(s32 *)(arg0 + 0x58) &= ~2;
+    }
+}
 
 void func_150D74DC(s32 arg0, u8 *arg1, u8 arg2) {
     if (arg2 == 0x36) {

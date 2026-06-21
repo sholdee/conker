@@ -13,6 +13,7 @@ extern s32 func_151ABE40(f32 *, s32, s32, s32, s32);
 extern s32 func_10010FFC(s32, s32, s32, s32, s32, s32);
 extern void func_151AA264(void *, s32);
 extern void func_151ABE00(void *);
+extern void *func_15190770(void *, s32, s32, s32);
 
 typedef struct {
     u8 pad0[0x14];
@@ -380,7 +381,28 @@ done_sound:
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB828.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB854.s")
+void func_151AB854(u8 *arg0) {
+    u8 *v1;
+    struct185 tmp;
+
+    v1 = *(u8 **)(arg0 + 0x18);
+    if ((v1[4] == 0) || (v1[4] == 1) || (v1[4] == 2) || (v1[4] == 3) || (v1[4] == 4) || (v1[4] == 0x96)) {
+        tmp.unk0 = (struct127 *)v1;
+        tmp.unk4 = v1[0x3B];
+        tmp.unk6 = 0x12C;
+        tmp.unk8 = 0;
+        tmp.unk9 = 0;
+        if (v1[4] == 0x96) {
+            tmp.unkA = 3;
+        } else {
+            tmp.unkA = 0;
+        }
+        if (v1[0x127] != 0xFF) {
+            *(s16 *)(*(u8 **)(v1 + 0x31C) + 0x66) = 0x1F4;
+        }
+        func_15190770(&tmp, 0, arg0[0xC], arg0[1]);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB920.s")
 
