@@ -394,7 +394,35 @@ void func_15190550(void *arg0, s32 arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_151905BC.s")
+extern s32 func_1505D024(void *, s32, u16, s32);
+
+struct Struct151905BC {
+    u8  pad0[0x10];
+    u8  *unk10;
+    u8  pad14[0x7C];
+    s32 unk90;
+    s32 unk94;
+    struct127 *unk98;
+};
+
+s32 func_151905BC(struct Struct151905BC *arg0) {
+    s32 *p;
+    u8 *temp;
+
+    arg0->unk94 += D_800BE9E4;
+    p = &arg0->unk90;
+    while (p[1] >= p[0]) {
+        func_1505D024(arg0->unk10, 0x60021, 0, (struct127 *)p[2] - D_800CC2D0);
+        p[1] -= p[0];
+    }
+    temp = *(u8 **)(arg0->unk10 + 0x31C);
+    if (temp != NULL) {
+        if (temp[0x84] == 0) {
+            *(s16 *)(temp + 0x46) = 0x3E8;
+        }
+    }
+    return 1;
+}
 
 void func_151906C4(void *arg0) {
     u8 *temp;
