@@ -4,6 +4,28 @@
 
 extern struct172 D_80086CC4[];
 extern void func_150302F0(struct127 *arg0, s32 arg1);
+extern s32 D_80086CAC[];
+extern void func_15036C70(struct127 *arg0);
+
+typedef struct {
+    u8 pad0[0x2];
+    s16 unk2;
+    u8 unk4;
+    u8 unk5;
+    u8 pad6[0xC];
+    u8 unk12;
+    u8 pad13[0x16];
+    u8 unk29;
+    u16 unk2A;
+    u8 pad2C[0x7];
+    s8 unk33;
+    s32 unk34;
+    u8 unk38;
+    u8 unk39;
+    u8 pad3A;
+    u8 unk3B;
+    u8 unk3C;
+} GameAEB40Def;
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15081690.s")
@@ -92,7 +114,46 @@ s32 func_150838EC(struct127 *arg0, u16 arg1, s32 arg2, f32 arg3) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_150839B8.s")
+void func_150839B8(struct127 *arg0, s32 arg1, void *arg2) {
+    GameAEB40Def *temp_v0;
+    u16 temp_v1;
+
+    if (arg1 != 0xFF) {
+        temp_v0 = (GameAEB40Def *)D_800D1C90[arg1];
+        if (arg2 != 0) {
+            temp_v1 = *(u16 *)((u8 *)arg2 + 0x2C);
+            if (temp_v1 == 0) {
+                *(u16 *)((u8 *)arg0 + 0x10) = temp_v0->unk2A;
+            } else {
+                if (temp_v1 == 1) {
+                    *(u16 *)((u8 *)arg0 + 0x10) = 0;
+                } else {
+                    *(u16 *)((u8 *)arg0 + 0x10) = temp_v1;
+                }
+            }
+            if (D_800BE9F0 == 0x1D) {
+                *(u16 *)((u8 *)arg0 + 0x10) = 0x3E8;
+            }
+        } else {
+            *(u16 *)((u8 *)arg0 + 0x10) = 0;
+        }
+        *((u8 *)arg0 + 0x13B) = temp_v0->unk39;
+        arg0->unk2CB = temp_v0->unk33;
+        arg0->unk2CC = temp_v0->unk34;
+        arg0->unk5 = temp_v0->unk12;
+        *((u8 *)arg0 + 0x68) = temp_v0->unk3B;
+        *((u8 *)arg0 + 0x69) = temp_v0->unk3C;
+        *(s16 *)((u8 *)arg0 + 0x160) = temp_v0->unk2;
+        if (temp_v0->unk4 != 0) {
+            *(s32 *)((u8 *)arg0 + 0x2C4) = D_80086CAC[temp_v0->unk5];
+            *((u8 *)arg0 + 0x2C8) = temp_v0->unk4;
+        }
+        arg0->unk2C9 = *((u8 *)arg0 + 0x2C8) + temp_v0->unk38;
+        if (temp_v0->unk29 != 0) {
+            func_15036C70(arg0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15083AC8.s")
 

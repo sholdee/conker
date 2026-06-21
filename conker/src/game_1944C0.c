@@ -3,6 +3,7 @@
 #include "functions.h"
 #include "variables.h"
 
+extern void (*D_8008CA20[])(struct102 *);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167010.s")
 // NON-MATCHING: not hugely far away
@@ -47,7 +48,42 @@ void func_15167AD8(s32 arg0, s32 arg1, s32 arg2) {
         *(u8 *)(temp + 0x23) = 0xFF;
     }
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167B44.s")
+void func_15167B44(struct102 *arg0) {
+    s32 temp_v0;
+    s32 temp_v1;
+    s32 temp_a1;
+    s32 temp_a2;
+
+    temp_v0 = *(u8 *)((u8 *)arg0 + 0x24);
+    if (temp_v0 != 0) {
+        D_8008CA20[temp_v0](arg0);
+    }
+
+    temp_v1 = *(s8 *)((u8 *)arg0 + 0x22);
+    if (temp_v1 > 0) {
+        temp_v0 = *(u8 *)((u8 *)arg0 + 0x23);
+        if (temp_v1 < temp_v0) {
+            *(u8 *)((u8 *)arg0 + 0x23) = temp_v0 - temp_v1;
+        } else {
+            *(s16 *)((u8 *)arg0 + 0x14) = *(u8 *)(*(s32 *)((u8 *)arg0 + 0x10) + 4) << 8;
+        }
+    } else if (temp_v1 < 0) {
+        temp_a1 = -temp_v1;
+        temp_a2 = *(s16 *)((u8 *)arg0 + 0x14);
+        if ((temp_a2 / 0x100) >= (*(u8 *)(*(s32 *)((u8 *)arg0 + 0x10) + 4) - 1)) {
+            temp_v0 = *(u8 *)((u8 *)arg0 + 0x23);
+            if (temp_a1 < temp_v0) {
+                *(u8 *)((u8 *)arg0 + 0x23) = temp_v0 - temp_a1;
+                *(s16 *)((u8 *)arg0 + 0x14) = temp_a2 - *(s16 *)((u8 *)arg0 + 0x16);
+            }
+        }
+    }
+
+    *(s16 *)((u8 *)arg0 + 0x14) += *(s16 *)((u8 *)arg0 + 0x16);
+    if ((*(s16 *)((u8 *)arg0 + 0x14) / 0x100) >= *(u8 *)(*(s32 *)((u8 *)arg0 + 0x10) + 4)) {
+        func_1516972C(arg0);
+    }
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167C58.s")
 s32 func_15167D84(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     s32 temp;

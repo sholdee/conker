@@ -61,6 +61,15 @@ extern f32 D_800A35A4;
 extern f32 D_800A35A8;
 extern f32 D_800A35AC;
 
+void func_15120158(struct108 *arg0);
+void func_15121C80(struct108 *arg0, f32 arg1);
+void func_151220D0(struct108 *arg0);
+void func_15122170(struct108 *arg0);
+void func_15122440(struct108 *arg0);
+void func_15122980(struct108 *arg0);
+void func_15129934(struct108 *arg0);
+void func_1512DEA4(struct108 *arg0);
+
 
 #if 0
 f32 D_800A34B0[4][2] = {
@@ -720,7 +729,40 @@ void func_15127FEC(struct108 *arg0, s32 arg1, s32 arg2) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_15128030.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_151283B8.s")
+void func_151283B8(struct108 *arg0) {
+    switch (arg0->unk2C) {
+    case 0x80:
+        func_15122440(arg0);
+        break;
+    case 0x40:
+        func_15129934(arg0);
+        break;
+    case 1:
+        func_15122980(arg0);
+        break;
+    case 8:
+        func_15121C80(arg0, 0.0f);
+        break;
+    case 2:
+        func_151220D0(arg0);
+        break;
+    case 0x400:
+        func_15122170(arg0);
+        break;
+    case 0x800:
+        func_15122980(arg0);
+        break;
+    case 0x100:
+        func_15120158(arg0);
+        break;
+    case 0x800000:
+        func_1512DEA4(arg0);
+        break;
+    case 0x2000:
+        break;
+    }
+}
+
 void func_151284C4(struct108 *arg0) {
     struct127 *temp_v0;
 
