@@ -2,12 +2,79 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_800A578C;
+extern f32 D_800A5790;
+extern void func_1513F680();
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_15149550.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_15149838.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_15149A94.s")
+struct Foo15149A94Inner {
+    char pad0[0x8];
+    f32 unk8;
+    char padC[0x14];
+    f32 unk20;
+    char pad24[0x20];
+    f32 unk44;
+};
+
+struct Foo15149A94 {
+    char pad1C[0x1C];
+    s16 unk1C;
+    char pad1E[0xE];
+    f32 unk2C;
+    f32 unk30;
+    char pad34[0x24];
+    s32 unk58;
+    char pad5C[0x14];
+    u8 unk70;
+    u8 unk71;
+    u8 unk72;
+    u8 unk73;
+    u8 unk74;
+    char pad75[0x9B];
+    struct Foo15149A94Inner unk110;
+    u8 unk158;
+};
+
+s32 func_15149A94(u8 *arg0) {
+    struct Foo15149A94Inner *temp_v0;
+    s32 var_v1;
+    s32 flags;
+
+    flags = *(u8 *)(arg0 + 0x74);
+    var_v1 = 1;
+    temp_v0 = (struct Foo15149A94Inner *)(arg0 + 0x110);
+    if (!(flags & 2)) {
+        *(f32 *)(arg0 + 0x2C) += (temp_v0->unk8 - *(f32 *)(arg0 + 0x2C)) * temp_v0->unk44;
+        if ((temp_v0->unk8 * D_800A578C) < *(f32 *)(arg0 + 0x2C)) {
+            *(u8 *)(arg0 + 0x74) |= 2;
+            flags = *(u8 *)(arg0 + 0x74);
+        } else {
+            var_v1 = 0;
+            flags = *(u8 *)(arg0 + 0x74);
+        }
+    }
+    if (!(flags & 8)) {
+        *(f32 *)(arg0 + 0x30) += (temp_v0->unk20 - *(f32 *)(arg0 + 0x30)) * temp_v0->unk44;
+        if ((temp_v0->unk20 * D_800A5790) < *(f32 *)(arg0 + 0x30)) {
+            *(u8 *)(arg0 + 0x74) |= 8;
+        } else {
+            var_v1 = 0;
+        }
+    }
+    if (var_v1) {
+        func_1513F680(arg0, *(u8 *)(arg0 + 0x70), 0xD, *(u8 *)(arg0 + 0x72), *(u8 *)(arg0 + 0x73));
+    }
+    if (*(s16 *)(arg0 + 0x1C) < 5) {
+        func_1513F680(arg0, *(u8 *)(arg0 + 0x70), *(u8 *)(arg0 + 0x158), *(u8 *)(arg0 + 0x72), *(u8 *)(arg0 + 0x73));
+        *(s16 *)(arg0 + 0x1C) = 0x64;
+        *(s32 *)(arg0 + 0x58) &= -2;
+    }
+    return 1;
+}
 
 struct Foo15149BF4 {
     char pad0[0x2C];

@@ -4,11 +4,74 @@
 
 
 extern u16 D_800C4ED0[];
+typedef struct {
+    u8 unk0;
+    u8 pad1[0xF];
+} D_800C666FEntry;
+
+extern D_800C666FEntry D_800C666F[];
 extern void *allocate_memory(s32, s32, s32, s32);
+extern void func_1502C608(s32);
+extern void func_1502DF38(s32, s32);
+extern void func_1502E4C4(s32);
+extern void func_1502EAFC(struct127 *);
+extern void func_1502EEF4(s32);
+extern void func_1502F264(s32);
+extern void func_1502FBE8(struct127 *);
+extern void func_150345E4(s32);
+extern void func_1503A08C(struct127 *);
+extern void func_1503A830(struct127 *);
+extern void func_1503DF48(s32);
+extern void func_150A4B04(struct127 *);
+extern void func_1517AD00(s32, s32, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502BAD0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502BD84.s")
+void func_1502BD84(struct127 *arg0, s32 arg1) {
+    arg0->unk1D4 = NULL;
+    if (arg0->unk5 == 5) {
+        func_1502DF38(arg1, 1);
+        return;
+    }
+    if (arg0->id == 0xFF) {
+        return;
+    }
+    if (arg0->unk5 == 3) {
+        return;
+    }
+    if (arg0->unk5 == 2) {
+        func_1502C608(arg1);
+        return;
+    }
+    if (arg0->unk1C9 != 0) {
+        func_1502FBE8(arg0);
+    }
+    func_1502E4C4(arg1);
+    func_1502DF38(arg1, 0);
+    func_1503A08C(arg0);
+    if (arg0->unk1D4 == NULL) {
+        arg0->unk1FC = 2;
+    } else {
+        func_150345E4(arg1);
+        func_1503A830(arg0);
+    }
+    if (D_800C666F[arg1].unk0 != 0) {
+        func_1503DF48(arg1);
+    }
+    if (arg0->interaction_state != 0) {
+        func_1502EEF4(arg1);
+        func_1502F264(arg1);
+        if (*(u8 *)((u8 *)arg0 + 0xA4) != 0) {
+            func_1502EAFC(arg0);
+        }
+        if ((arg0->unkF8 & 0x4000) != 0) {
+            func_150A4B04(arg0);
+        }
+        if (*(s32 *)((u8 *)arg0 + 0x260) != 0) {
+            func_1517AD00(*(u8 *)((u8 *)arg0 + 0x134), *(u8 *)((u8 *)arg0 + 0x135), arg1);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502BEE4.s")
 

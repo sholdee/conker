@@ -4,6 +4,8 @@
 
 
 extern f32 D_80098250;
+extern f32 D_8009862C;
+extern s16 D_800C3FF4[];
 
 typedef struct {
     u8 pad0[0x324];
@@ -29,7 +31,38 @@ void func_15036C70(GameStruct_15036C70 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_15037698.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_15037880.s")
+s32 func_15037880(s32 arg0, f32 *arg1) {
+    struct127 *obj;
+    s32 temp;
+    f32 dx;
+    f32 dz;
+
+    obj = &D_800CC2D0[arg0];
+    temp = obj->unk2F8 & 7;
+    if (temp == 1) {
+        arg1[0] = D_800DBFF0->unk2F8;
+        arg1[1] = D_800DBFF0->unk2FC;
+        arg1[2] = D_800DBFF0->unk300;
+        return 1;
+    }
+    if (temp == 2) {
+        if (obj->unk5 == 4) {
+            dx = obj->x_position - (f32)D_800C3FF4[0];
+            dz = obj->z_position - (f32)D_800C3FF4[2];
+            if (D_8009862C < (dx * dx) + (dz * dz)) {
+                return 1;
+            }
+        }
+        arg1[0] = D_800C3FF4[0];
+        arg1[1] = D_800C3FF4[1];
+        arg1[2] = D_800C3FF4[2];
+        return 1;
+    }
+    if (temp == 3) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_150379DC.s")
 
