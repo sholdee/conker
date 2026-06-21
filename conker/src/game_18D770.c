@@ -29,6 +29,7 @@ void func_151617C4(struct225 *arg0);
 void func_151617E4(struct225 *arg0);
 void func_15161804(struct225 *arg0);
 void func_15161860(struct225 *arg0);
+void func_151618BC(u16 arg0, s16 arg1, u8 arg2, s32 arg3, struct17 *arg4, s16 arg5, s16 arg6);
 struct225 *func_151619A0(s32 arg0, s16 arg1, u8 arg2, s32 arg3);
 s32  func_15161A68(struct225 *arg0);
 struct225 *func_15161E24(struct127 *arg0, u8 arg1, u8 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, u8 arg8, s32 arg9);
@@ -577,30 +578,15 @@ void func_15161860(struct225 *arg0) {
     D_8008B2B0[arg0->unk12](arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18D770/func_151618BC.s")
-// void func_151618BC(u16 arg0, s16 arg1, u8 arg2, s32 arg3, void *arg4, s16 arg5, s16 arg6) {
-//     ? sp38;
-//     ? *temp_t6;
-//     void *temp_t7;
-//     void *phi_t7;
-//     ? *phi_t6;
-//
-//     phi_t7 = &D_800A66E4;
-//     phi_t6 = &sp38;
-// loop_1:
-//     temp_t7 = phi_t7 + 0xC;
-//     temp_t6 = phi_t6 + 0xC;
-//     temp_t6->unk-C = (s32) *phi_t7;
-//     temp_t6->unk-8 = (s32) temp_t7->unk-8;
-//     temp_t6->unk-4 = (s32) temp_t7->unk-4;
-//     phi_t7 = temp_t7;
-//     phi_t6 = temp_t6;
-//     if (temp_t7 != (&D_800A66E4 + 0x24)) {
-//         goto loop_1;
-//     }
-//     temp_t6->unk0 = (s32) temp_t7->unk0;
-//     func_10010F88((sp + ((func_150ADA20() % 0xAU) * 4))->unk38, arg0, arg1, arg2, arg3, (s32) arg4->unk0, (s32) arg4->unk4, (s32) arg4->unk8, (?32) arg5, (?32) arg6);
-// }
+void func_151618BC(u16 arg0, s16 arg1, u8 arg2, s32 arg3, struct17 *arg4, s16 arg5, s16 arg6) {
+    typedef struct {
+        s32 unk0[10];
+    } temp151618BC;
+    temp151618BC sp38;
+
+    sp38 = *(temp151618BC *)D_800A66E4;
+    func_10010F88(sp38.unk0[func_150ADA20() % 10U], arg0, arg1, arg2, arg3, (s32)arg4->unk0, (s32)arg4->unk4, (s32)arg4->unk8, arg5, arg6);
+}
 
 struct225 *func_151619A0(s32 arg0, s16 arg1, u8 arg2, s32 arg3) {
     struct225 *temp_v0;

@@ -16,6 +16,12 @@ void func_150F7F58(struct210 *arg0, s16 arg1) {
 extern f32 func_150ADA68(void);
 void func_151541B8(void *, f32, u32, f32, f32, u8, s32);
 void func_151D3F14(void *, u8, s32);
+struct126 *func_150FF288(struct127 *);
+s32 func_150FF6E0(struct17 *, struct17 *, struct17 *, struct17 *, struct17 *, struct127 *, struct126 *);
+void func_150FF474(struct17 *, struct17 *, s32, s32);
+void func_151D4408(struct17 *, struct17 *, void *, struct127 *, f32, s32, s32);
+
+typedef u8 Func150F9950Entry[0x40];
 
 void func_150F7F8C(void *arg0, u8 arg1, s32 arg2) {
     f32 temp1;
@@ -70,4 +76,20 @@ void func_150F97C0(struct260 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_124920/func_150F97EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_124920/func_150F9950.s")
+void func_150F9950(struct127 *arg0, s32 arg1, s32 arg2) {
+    struct17 sp60[6];
+    struct17 sp54;
+    struct17 sp48;
+    struct17 sp3C;
+    struct17 sp30;
+    struct126 *temp;
+
+    temp = func_150FF288(arg0);
+    if (temp != 0) {
+        if (func_150FF6E0(sp60, &sp54, &sp48, &sp3C, &sp30, arg0, temp) != 0) {
+            func_151D3F14(&sp54, ((u8 *)&arg1)[3], arg2);
+            func_151D4408(&sp48, &sp3C, (*(Func150F9950Entry **)&arg0->unk1D4)[*((u8 *)temp + 2)], arg0, 1.0f, ((u8 *)&arg1)[3], arg2);
+            func_150FF474(&sp54, sp60, ((u8 *)&arg1)[3], arg2);
+        }
+    }
+}

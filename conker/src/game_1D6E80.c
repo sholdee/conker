@@ -2,6 +2,7 @@
 #include "functions.h"
 #include "variables.h"
 
+extern s32 func_151EF610(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151A99D0.s")
 
@@ -145,7 +146,19 @@ void *func_151AA48C(void *arg0, s32 arg1) {
     return temp_v0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AA5A4.s")
+s32 func_151AA5A4(u8 *arg0) {
+    *(s32 *)(arg0 + 0x88) = 0;
+    if (func_150ADA20() & 1) {
+        func_10010F88(0xA, 0x55F0, (s16)((func_151EF610() % 0x4B0) - 0x258), 0, 0,
+                      (s32)*(f32 *)(arg0 + 0x58), (s32)*(f32 *)(arg0 + 0x5C),
+                      (s32)*(f32 *)(arg0 + 0x60), 0x1F4, 0x9C4);
+        return 1;
+    }
+    func_10010F88(0xB, 0x55F0, (s16)((func_151EF610() % 0x4B0) - 0x258), 0, 0,
+                  (s32)*(f32 *)(arg0 + 0x58), (s32)*(f32 *)(arg0 + 0x5C),
+                  (s32)*(f32 *)(arg0 + 0x60), 0x1F4, 0x9C4);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AA6D8.s")
 
