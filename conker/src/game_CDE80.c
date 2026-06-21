@@ -47,7 +47,20 @@ void func_150A278C(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A2864.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A2940.s")
+void func_150A2940(s32 arg0, s32 arg1, s32 arg2) {
+    typedef u8 entry[0x34];
+
+    arg0 &= 0xFFF;
+    if ((u32)arg0 < (u32)D_800D3094) {
+        if (arg1 != -1) {
+            *(s32 *)&(*(entry **)&D_800D3098)[arg0][0x18] = arg1;
+        }
+        if (arg2 != -1) {
+            (*(entry **)&D_800D3098)[arg0][0x17] = arg2;
+        }
+        *(s32 *)&(*(entry **)&D_800D3098)[arg0][0x1C] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A29C8.s")
 

@@ -457,7 +457,69 @@ void func_1513E2A4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_1513E2AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_1513E6E8.s")
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+} struct_func_1513E6E8_110;
+
+typedef struct {
+    u8 pad0[0x34];
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+    f32 unk40;
+    f32 unk44;
+    f32 unk48;
+    f32 unk4C;
+    f32 unk50;
+    f32 unk54;
+    s32 unk58;
+    u8 pad5C;
+    u8 unk5D;
+    u8 pad5E[0xB2];
+    struct_func_1513E6E8_110 unk110;
+} struct_func_1513E6E8;
+
+s32 func_1513E6E8(struct_func_1513E6E8 *arg0) {
+    struct_func_1513E6E8_110 *temp_v0;
+    s32 temp_v1;
+
+    temp_v0 = &arg0->unk110;
+    temp_v1 = arg0->unk58;
+    if (temp_v1 & 0x20) {
+        temp_v0->unkC = temp_v0->unkC + (temp_v0->unk2C * D_800BE9A4);
+        temp_v1 = arg0->unk58;
+    }
+    if (temp_v1 & 0x40) {
+        arg0->unk34 = arg0->unk34 + (temp_v0->unk8 * D_800BE9A4);
+        temp_v1 = *(volatile s32 *)((u8 *)arg0 + 0x58);
+        arg0->unk38 = arg0->unk38 + (temp_v0->unkC * D_800BE9A4);
+        arg0->unk3C = arg0->unk3C + (temp_v0->unk10 * D_800BE9A4);
+    }
+    if (temp_v1 & 0x80) {
+        arg0->unk40 = arg0->unk40 + (temp_v0->unk14 * D_800BE9A4);
+        temp_v1 = *(volatile s32 *)((u8 *)arg0 + 0x58);
+        arg0->unk44 = arg0->unk44 + (temp_v0->unk18 * D_800BE9A4);
+        arg0->unk48 = arg0->unk48 + (temp_v0->unk1C * D_800BE9A4);
+    }
+    if (temp_v1 & 0x100) {
+        arg0->unk4C = arg0->unk4C + (temp_v0->unk20 * D_800BE9A4);
+        arg0->unk50 = arg0->unk50 + (temp_v0->unk24 * D_800BE9A4);
+        arg0->unk54 = arg0->unk54 + (temp_v0->unk28 * D_800BE9A4);
+    }
+    arg0->unk5D = 0xFF;
+    return 1;
+}
 // s32 func_1513E6E8(void *arg0) {
 //     void *temp_v0;
 //     void *temp_v0_2;
