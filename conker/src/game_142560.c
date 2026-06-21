@@ -574,6 +574,17 @@ struct Obj1511EC50 {
     f32 unk84;
 };
 
+struct Obj1511ED84 {
+    u8 pad0[0x14];
+    s16 unk14;
+    u8 pad16[0x5C];
+    u8 unk72;
+    u8 pad73[0x9];
+    s32 unk7C;
+    s32 unk80;
+    f32 unk84;
+};
+
 void func_1511EC50(struct Obj1511EC50 *arg0) {
     f32 step;
     f32 limit;
@@ -604,7 +615,49 @@ void func_1511EC50(struct Obj1511EC50 *arg0) {
     arg0->unk7C = 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511ED84.s")
+void func_1511ED84(struct Obj1511ED84 *arg0) {
+    f32 step;
+    f32 limit;
+    s32 direction;
+
+    if (arg0->unk7C == 0) {
+        arg0->unk84 = (f32)arg0->unk14;
+    }
+
+    step = (f32)D_800BE9E4 * 4.0f;
+    direction = 1 - (arg0->unk72 & 1);
+
+    if (arg0->unk80 != 0) {
+        if (direction & 1) {
+            arg0->unk14 = (s32)((f32)arg0->unk14 + step);
+            limit = arg0->unk84;
+            if (limit < (f32)arg0->unk14) {
+                arg0->unk14 = (s32)limit;
+            }
+        } else {
+            limit = arg0->unk84;
+            arg0->unk14 = (s32)((f32)arg0->unk14 - step);
+            if ((f32)arg0->unk14 < limit) {
+                arg0->unk14 = (s32)limit;
+            }
+        }
+    } else {
+        if (direction & 1) {
+            arg0->unk14 = (s32)((f32)arg0->unk14 - step);
+            limit = arg0->unk84 - 350.0f;
+            if ((f32)arg0->unk14 < limit) {
+                arg0->unk14 = (s32)limit;
+            }
+        } else {
+            arg0->unk14 = (s32)((f32)arg0->unk14 + step);
+            limit = arg0->unk84 + 350.0f;
+            if (limit < (f32)arg0->unk14) {
+                arg0->unk14 = (s32)limit;
+            }
+        }
+    }
+    arg0->unk7C = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511EF40.s")
 
