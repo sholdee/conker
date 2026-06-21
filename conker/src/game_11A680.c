@@ -2,6 +2,8 @@
 #include "functions.h"
 #include "variables.h"
 
+extern void func_151254F4(struct108 *arg0, s32 arg1);
+extern void func_1517F488(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11A680/func_150ED1D0.s")
 
@@ -71,7 +73,32 @@ void func_150ED638(struct127 *arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11A680/func_150ED748.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11A680/func_150EEC84.s")
+void func_150EEC84(struct127 *arg0) {
+    struct108 *camera;
+    struct127 *obj;
+    s32 idx;
+
+    arg0->unk5 = 3;
+    arg0->unkE4 = 0;
+    arg0->immune = 0xFF;
+    arg0->pad320[8] = 0;
+    if (arg0->camera != 0) {
+        camera = arg0->camera;
+        idx = 0;
+        if (camera->unk23D == 3) {
+            idx = 1;
+        }
+        func_151254F4(camera, idx);
+        arg0->unk31C->unk78 = 0x29;
+        *(u16 *)((u8 *)D_800BE748 + (idx * 6)) &= ~0x10;
+        obj = &D_800CC2D0[idx];
+        obj->pad2FC[0] |= 1 << camera->unk23D;
+        if (obj->pad10A != 0) {
+            func_1517F488(0xFF, 0, 0, 0xB4, 0x14, camera->unk23D);
+            obj->pad10A = 0;
+        }
+    }
+}
 
 extern void func_151045E0(void *, s32, f32);
 extern void func_15052590(void);

@@ -2,8 +2,46 @@
 #include "functions.h"
 #include "variables.h"
 
+extern u8 *D_800D199C;
+s32 func_15080738(s32 arg0);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AD9B0/func_15080500.s")
+void func_15080500(struct127 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    struct127 *temp;
+    s32 idx;
+    s32 mask;
+
+    if (arg0 != NULL) {
+        if (arg0->interaction_state != 0) {
+            if (arg0->unk127 != 0xFF) {
+                if ((arg3 == 0x2B) || (arg3 == 0x2C)) {
+                    D_800D1940 = arg3;
+                    D_800D199C = (u8 *)arg1;
+                    arg3 = 0x2A;
+                } else if (func_15080738(arg3)) {
+                    idx = arg3 >> 3;
+                    mask = 1 << (arg3 & 7);
+                    D_800D1940 = arg3;
+                    if (!(D_800D2E60[idx] & mask)) {
+                        arg3 = 0x1A;
+                    }
+                }
+
+                if (arg2 == 0) {
+                    temp = (struct127 *)arg0->unk31C;
+                    if (!(temp->unk74 & 0x80)) {
+                        temp->unk74 = arg3;
+                    }
+                } else {
+                    temp = (struct127 *)arg0->unk31C;
+                    if (!(*(u8 *)&temp->pad75 & 0x80)) {
+                        *(u8 *)&temp->pad75 = arg3;
+                        *(u8 *)((u8 *)arg0->unk31C + 0x7A) = (arg1 - *(s32 *)&D_800D3098) / 0x34;
+                    }
+                }
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AD9B0/func_15080620.s")
 
