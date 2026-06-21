@@ -1,7 +1,9 @@
 #include <ultra64.h>
 #define func_15083568 func_15083568_orig
+#define func_1514D3B0 func_1514D3B0_orig
 #include "functions.h"
 #undef func_15083568
+#undef func_1514D3B0
 #include "variables.h"
 
 struct St1514DE94 {
@@ -39,12 +41,16 @@ typedef struct Cont1514D310 {
 } Cont1514D310;
 
 typedef struct Struct8008ABE8 {
-    char pad0[0x2];
+    s16 unk0;
     s16 unk2;
+    s16 unk4;
+    s16 unk6;
 } Struct8008ABE8;
 
 extern void (*D_8008AB58[])(s32);
+extern s32 (*D_8008AB64[])(s32, s32, s32);
 extern Struct8008ABE8 *D_8008ABE8[];
+s32 func_1514D4B8(s32, s32);
 
 s32 func_1514D310(Cont1514D310 *arg0) {
     Node1514D310 *node;
@@ -62,7 +68,28 @@ s32 func_1514D310(Cont1514D310 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514D3B0.s")
+s32 func_1514D3B0(Cont1514D310 *arg0, s16 arg1, s32 arg2, s32 arg3) {
+    Node1514D310 *node;
+    s32 result;
+
+    node = arg0->unk2F4;
+    result = 0;
+    if (node != 0) {
+        do {
+            if ((arg1 == node->unk1C) || (func_1514D4B8(D_8008ABE8[arg1]->unk4, node->unk1C) != 0)) {
+                if (D_8008ABE8[node->unk1C]->unk0 != -1) {
+                    if (D_8008AB64[D_8008ABE8[node->unk1C]->unk0](node->unk10, arg2, arg3) != 0) {
+                        result = 1;
+                    } else {
+                        result = 0;
+                    }
+                }
+            }
+            node = node->unk14;
+        } while (node != 0);
+    }
+    return result;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514D4B8.s")
 
