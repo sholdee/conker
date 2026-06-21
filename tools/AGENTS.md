@@ -13,8 +13,9 @@ The matching now runs on **Codex** (zero Claude tokens), via a shell mirror of t
   `permuter_daemon.py import_new` → relaunch `orchestrator_codex.sh` → `git push sholdee decomp/game-matches`.
 - **Cookbook is TIERED:** `ido_cookbook.md` = 182-line CORE (always read); `ido_reference.md` = full
   270-bullet set (grep on-demand). Codex/Claude prompts read core + grep reference.
-- **One-time pending:** `python3 tools/port_fork.py ~/conker-llm-fork/conker | xargs -r python3 tools/integrate.py`
-  — ports ~70 functions matched in the sibling fork (~/conker-llm-fork) but stubbed here; the gate keeps only true matches. Do once at a gap.
+- **Fork port (DONE — 42/70 committed):** sibling-fork matches were ported via `port_fork.py` (per-func
+  iter_match filter) → integrate.py. Re-running yields ~0 (the other 28 fail in our tree on header/struct
+  drift); skip unless ~/conker-llm-fork advances materially.
 - **Backup remote:** `sholdee` → https://github.com/sholdee/conker (branch decomp/game-matches). `git push sholdee` each gap.
 - The Claude Workflow `orchestrator.js` still exists (agent-agnostic) if switching back from Codex.
 
