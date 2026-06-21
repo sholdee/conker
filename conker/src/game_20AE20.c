@@ -26,6 +26,9 @@ struct Struct151E5034 {
     s8 unk44;
 };
 
+extern s16 D_800E0A80;
+extern void func_1501D348(s32, s32, s32, s32, s32);
+s32 func_1517EFDC(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151DD970.s")
 
@@ -315,4 +318,21 @@ void func_151E7EF8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E82B8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E83E8.s")
+void func_151E83E8(void) {
+    if (D_800E0A80 == 0) {
+        D_800E0A80 = -1;
+        func_1501D348(0x1D, 6, 0, 0, 0);
+    }
+    func_151E530C();
+    if (func_1517EFDC() == 0) {
+        D_800E0A90 = 0;
+    }
+    if (D_800E0A90 >= 0x65) {
+        func_151E5034();
+        D_8008FDA4 = 0;
+        D_800E0B94 = 1;
+        D_800E0A90 = 0;
+        D_800D2E40 = 0;
+        func_1501C730(6, 0x21, 0, 0, 1);
+    }
+}

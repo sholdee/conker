@@ -396,7 +396,39 @@ s32 func_15159184(Struct15159184 *arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_151592B8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15159370.s")
+s32 func_15159370(struct127 *arg0, u8 *arg1) {
+    s32 ret;
+
+    ret = 0;
+    if (D_800BE616 != 0) {
+        *arg1 = 0;
+        ret = 1;
+    }
+    if (arg0->unique_id == 1) {
+        *arg1 = 0;
+        ret = 1;
+    }
+    if ((arg0->unk5 == 5) || (arg0->unk5 == 2)) {
+        *arg1 = 1;
+        ret = 1;
+    }
+    switch (arg0->id) {
+    case 8:
+        *arg1 = 2;
+        ret = 1;
+        break;
+    case 10:
+        *arg1 = 3;
+        ret = 1;
+        break;
+    case 0x29:
+    case 0x2A:
+        *arg1 = 4;
+        ret = 1;
+        break;
+    }
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_1515942C.s")
 

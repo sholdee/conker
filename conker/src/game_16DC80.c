@@ -3,6 +3,9 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef void (*Callback_151416E8)(void *, s32, u8);
+extern Callback_151416E8 D_8008A02C[];
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16DC80/func_151407D0.s")
 
@@ -104,7 +107,36 @@ s32 func_15141564(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16DC80/func_151415D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16DC80/func_151416E8.s")
+void func_151416E8(void *arg0, s32 arg1, s32 arg2) {
+    Callback_151416E8 *callbacks;
+    u8 *v1;
+
+    callbacks = D_8008A02C;
+    if (((Callback_151416E8 volatile *)callbacks)[*(volatile u8 *)((u8 *)arg0 + 0x168)] != 0) {
+        callbacks[*(volatile u8 *)((u8 *)arg0 + 0x168)](arg0, arg1, (u8)arg2);
+    }
+
+    v1 = (u8 *)arg0 + 0x110;
+    switch ((u8)arg2) {
+    case 0x22:
+    case 0x24:
+    case 0x25:
+        if (*(u8 *)arg1 == v1[0x58]) {
+            switch ((u8)arg2) {
+            case 0x22:
+                func_1516972C((struct102 *)arg0);
+                break;
+            case 0x24:
+                ((s8 *)v1)[0x59] = -1;
+                break;
+            case 0x25:
+                v1[0x59] = 2;
+                break;
+            }
+        }
+        break;
+    }
+}
 
 // ???
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16DC80/func_151417C4.s")
