@@ -3,6 +3,16 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct {
+    s32 unk0;
+    u16 unk4;
+    u16 unk6;
+    u16 unk8;
+    u16 unkA;
+} struct1513FFF4_80090B60;
+
+extern struct1513FFF4_80090B60 D_80090B60[];
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_1513C060.s")
 
@@ -619,7 +629,57 @@ void func_1513FA70(s32 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_1513FAB4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_1513FFF4.s")
+typedef struct {
+    u8 pad0[0x8];
+    s16 unk8;
+    s16 unkA;
+    u8 padC[0x4];
+} struct1513FFF4;
+
+void func_1513FFF4(struct1513FFF4 *arg0, u8 arg1, u8 arg2) {
+    struct1513FFF4_80090B60 *temp_v0;
+    u16 temp_v1;
+    u16 temp_a0;
+    s32 temp;
+
+    if (arg1 != 0xFF) {
+        temp_v0 = &D_80090B60[arg1];
+        temp_v1 = temp_v0->unk6 - 1;
+        temp_a0 = temp_v0->unk8 - 1;
+
+        if (arg2 & 1) {
+            temp = temp_v1 << 6;
+        } else {
+            temp = 0;
+        }
+        arg0[3].unk8 = temp;
+        arg0[0].unk8 = temp;
+
+        if (arg2 & 1) {
+            temp = 0;
+        } else {
+            temp = temp_v1 << 6;
+        }
+        arg0[2].unk8 = temp;
+        arg0[1].unk8 = temp;
+
+        if (arg2 & 2) {
+            temp = temp_a0 << 6;
+        } else {
+            temp = 0;
+        }
+        arg0[1].unkA = temp;
+        arg0[0].unkA = temp;
+
+        if (arg2 & 2) {
+            temp = 0;
+        } else {
+            temp = temp_a0 << 6;
+        }
+        arg0[3].unkA = temp;
+        arg0[2].unkA = temp;
+    }
+}
 
 typedef struct {
     u8  pad0[6];
