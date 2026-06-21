@@ -5,6 +5,8 @@
 extern f32 D_800AAED4;
 extern f32 D_800AAED8;
 extern void func_15145974(struct17 *, f32 *, f32 *);
+extern s32 func_151C87E0(s32, s32);
+extern void func_151C899C(s32, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C71A0.s")
 
@@ -26,7 +28,41 @@ void func_151C8674(s32 arg0, s32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C86AC.s")
+void func_151C86AC(s32 arg0, s32 arg1, u8 arg2) {
+    s32 *arg0p;
+    s32 temp_v0;
+    s32 temp_v1;
+
+    arg0p = &arg0;
+    switch (arg2) {
+    case 0x20:
+        temp_v0 = *arg0p + 0x110;
+        if ((*(u8 *)(temp_v0 + 0x86) & 0x10) && (*(s32 *)(temp_v0 + 0x28) == *(s32 *)(arg1 + 4))) {
+            if (func_151C87E0(*(s32 *)arg1, *arg0p) != 0) {
+                func_151C899C(*(s32 *)arg1, *arg0p);
+            }
+        }
+        break;
+    case 0x3A:
+        temp_v0 = *arg0p;
+        temp_v0 += 0x110;
+        if (*(s32 *)(temp_v0 + 0x28) == *(s32 *)arg1) {
+            temp_v1 = *(u8 *)(arg1 + 4);
+            switch (temp_v1) {
+            case 0:
+                *(u8 *)(temp_v0 + 0x86) |= 2;
+                break;
+            case 1:
+                *(u8 *)(temp_v0 + 0x86) &= ~2;
+                break;
+            case 2:
+                func_151C899C(0, *arg0p);
+                break;
+            }
+        }
+        break;
+    }
+}
 
 s32 func_151C87AC(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s16 *arg6) {
     void *temp = *(void **)((s32)arg0 + 0x18);

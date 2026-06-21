@@ -2,12 +2,46 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_800A1BD8;
+extern f32 sinf(f32);
+
+struct Func150F7E20Sub {
+    u8 pad0[0x18];
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+};
+
+struct Func150F7E20Obj {
+    u8 pad0[0x2C];
+    f32 unk2C;
+    f32 unk30;
+    u8 pad34[0x28];
+    u8 unk5C;
+};
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_124920/func_150F7470.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_124920/func_150F78B4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_124920/func_150F7E20.s")
+s32 func_150F7E20(struct Func150F7E20Obj *arg0) {
+    f32 temp;
+    struct Func150F7E20Sub *sub;
+
+    sub = (struct Func150F7E20Sub *)((u8 *)arg0 + 0x110);
+    arg0->unk5C = sub->unk18 * D_800A1BD8;
+    temp = (sinf(sub->unk1C) * sub->unk28) + sub->unk24;
+    arg0->unk30 = temp;
+    arg0->unk2C = temp;
+    sub->unk1C = func_15144B68(sub->unk1C + (sub->unk20 * D_800BE9A4));
+    sub->unk18 -= D_800BE9A4;
+    if (sub->unk18 < 0.0f) {
+        return 0;
+    }
+    return 1;
+}
 
 void func_150F7F58(struct210 *arg0, s16 arg1) {
     func_15140410(arg0, &arg0->unk110, &arg0->unk11C, arg1);
