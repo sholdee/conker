@@ -75,7 +75,62 @@ void func_1515BF7C(struct225 *arg0) {
     func_15169824((struct102 *)arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_188F90/func_1515BFA8.s")
+struct Struct1515BFA8Src {
+    s32 unk0;
+    u8 pad4[0x10];
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    u8 pad20[0x1B];
+    u8 unk3B;
+};
+
+struct Vec1515BFA8 {
+    f32 x;
+    f32 y;
+    f32 z;
+};
+
+struct Struct1515BFA8 {
+    u8 pad0[0x18];
+    struct Struct1515BFA8Src *unk18;
+    u8 unk1C;
+    u8 unk1D;
+    s16 unk1E;
+    struct Vec1515BFA8 unk20;
+    struct Vec1515BFA8 unk2C;
+    struct Vec1515BFA8 unk38;
+};
+
+void func_1515BFA8(struct Struct1515BFA8 *arg0) {
+    s32 remove;
+    struct Struct1515BFA8Src *src;
+
+    remove = 0;
+    if (arg0->unk1D & 1) {
+        arg0->unk1E -= D_800BE9E4;
+        if (arg0->unk1E < 0) {
+            remove = 1;
+        }
+    }
+    src = arg0->unk18;
+    if ((src->unk0 == 0) || (src->unk3B != arg0->unk1C)) {
+        remove = 1;
+    }
+    if (remove == 0) {
+        arg0->unk2C = arg0->unk20;
+        src = arg0->unk18;
+        arg0->unk20.x = src->unk14;
+        arg0->unk20.y = src->unk18;
+        arg0->unk20.z = src->unk1C;
+        arg0->unk38.x = (arg0->unk2C.x - arg0->unk20.x) * D_800BE9A8;
+        arg0->unk38.y = (arg0->unk2C.y - arg0->unk20.y) * D_800BE9A8;
+        arg0->unk38.z = (arg0->unk2C.z - arg0->unk20.z) * D_800BE9A8;
+    }
+    if (remove != 0) {
+        func_1516972C((struct102 *)arg0);
+    }
+}
 
 void func_1515C0B8(s32 arg0, s32 arg1, u8 arg2) {
     func_15169850(arg1, arg2, arg0 + 0x18, arg0 + 0x1C, arg0);

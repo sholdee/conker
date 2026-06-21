@@ -8,6 +8,18 @@ extern s32 D_800DBDC8;
 extern f32 D_800DBDCC;
 extern f32 D_800DBDD0;
 
+typedef struct unkfunc_1510FE30 {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    u16 unk6;
+    s16 unk8;
+    s16 unkA;
+    s16 unkC;
+} unkfunc_1510FE30;
+
+extern unkfunc_1510FE30 *D_800DBE48;
+
 extern void func_150A6760(s32);
 extern void func_150F33F8(s32);
 extern s32 func_1510FE30(s32);
@@ -71,4 +83,31 @@ void func_1510FC34(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13BB20/func_1510FD20.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13BB20/func_1510FE30.s")
+s32 func_1510FE30(s32 arg0) {
+    unkfunc_1510FE30 *temp_v0;
+    s32 temp_v1;
+    s16 temp_a1;
+
+    temp_v0 = D_800DBE48;
+    temp_v1 = 0;
+
+    while (temp_v0 != NULL) {
+        if ((s32)temp_v0 == arg0) {
+            return temp_v1;
+        }
+        temp_a1 = temp_v0->unkC;
+        if (temp_a1 != 0) {
+            temp_v0 = (unkfunc_1510FE30 *)((u8 *)temp_v0 + temp_a1);
+        } else {
+            temp_a1 = temp_v0->unk4;
+            if (temp_a1 != 0) {
+                temp_v0 = (unkfunc_1510FE30 *)((u8 *)temp_v0 + temp_a1);
+                temp_v1++;
+            } else {
+                temp_v0 = NULL;
+            }
+        }
+    }
+
+    return 0;
+}
