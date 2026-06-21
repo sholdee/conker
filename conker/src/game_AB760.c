@@ -3,6 +3,10 @@
 #include "variables.h"
 
 s32 func_1507E908(void *, s32);
+s32 func_1507E968(void *);
+void func_1507E5C8(u8 *, s32);
+void *func_1507E9F8(void *, s32 *);
+s32 func_150302F0(void *, s32);
 void func_1507EA44(void *, s32, s32);
 extern struct124 *D_800D1C90[];
 
@@ -10,7 +14,27 @@ extern struct124 *D_800D1C90[];
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E3C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E500.s")
+void func_1507E500(u8 *arg0, s32 arg1, s32 arg2) {
+    u8 *temp;
+    u8 *temp2;
+
+    if (arg1 < func_1507E968(arg0)) {
+        temp = (u8 *)func_1507E908(arg0, arg0[0x6F]);
+        if (temp[4] != 0) {
+            temp2 = func_1507E9F8(arg0, 0);
+            if (temp2 != 0) {
+                func_150302F0(arg0, temp2[temp[4] - 1]);
+            }
+        }
+        arg0[0x6F] = arg1;
+        func_1507E5C8(arg0, arg2);
+        if (arg2 != 0) {
+            arg0[0x135] = arg2;
+        } else {
+            arg0[0x135] = ((u8 *)func_1507E908(arg0, arg1))[3];
+        }
+    }
+}
 
 void func_1507E5C8(u8 *arg0, s32 arg1) {
     u8 *temp;

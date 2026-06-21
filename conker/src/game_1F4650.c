@@ -4,6 +4,7 @@
 
 extern f32 D_800AAED4;
 extern f32 D_800AAED8;
+extern f32 D_800AAEA8;
 extern void func_15145974(struct17 *, f32 *, f32 *);
 extern s32 func_151C87E0(s32, s32);
 extern void func_151C899C(s32, s32);
@@ -164,7 +165,21 @@ void func_151C9DE8(void *arg0, u8 arg1, s8 arg2, u8 arg3, s32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CB49C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CB510.s")
+void func_151CB510(void *arg0) {
+    void *temp_v0;
+    s32 base;
+    f32 target;
+
+    temp_v0 = *(void **)((s32)arg0 + 0x70);
+    if ((*(u16 *)*(s32 *)((s32)temp_v0 + 0x36C) & 0x2000) && (base = (s32)arg0 + 0x70, *(u16 *)(*(s32 *)((s32)temp_v0 + 0x3D4) + 0x19E) == 0)) {
+        target = *(f32 *)(base + 8);
+    } else {
+        target = 0.0f;
+        base = (s32)arg0 + 0x70;
+    }
+    *(f32 *)(base + 4) += (target - *(f32 *)(base + 4)) * D_800AAEA8;
+    *(u8 *)((s32)arg0 + 0x2E) = (u32)*(f32 *)(base + 4);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CB5FC.s")
 

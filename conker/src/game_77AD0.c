@@ -790,8 +790,41 @@ void func_1505371C(struct127 *arg0) {
     arg0->unk40 = ((s16) (arg0->unk7A + 16384)) * 0.005493164f;
 }
 
-// ???
-#pragma GLOBAL_ASM("asm/nonmatchings/game_77AD0/func_15053750.s")
+void func_15053750(struct127 *arg0) {
+    f32 temp_f2;
+    f32 temp_f16;
+    s32 phi_v0;
+
+    temp_f2 = arg0->unk154 - arg0->xz_scale;
+    if (temp_f2 != 0.0f) {
+        temp_f16 = arg0->unk15C;
+        if (fabsf(temp_f2) < temp_f16) {
+            func_15062BDC(arg0, arg0->unk154, arg0->y_scale);
+        } else {
+            if (temp_f2 < 0.0f) {
+                phi_v0 = -1;
+            } else {
+                phi_v0 = 1;
+            }
+            func_15062BDC(arg0, ((f32) phi_v0 * temp_f16) + arg0->xz_scale, arg0->y_scale);
+        }
+    }
+
+    temp_f2 = arg0->unk158 - arg0->y_scale;
+    if (temp_f2 != 0.0f) {
+        temp_f16 = arg0->unk15C;
+        if (fabsf(temp_f2) < temp_f16) {
+            func_15062BDC(arg0, arg0->xz_scale, arg0->unk158);
+        } else {
+            if (temp_f2 < 0.0f) {
+                phi_v0 = -1;
+            } else {
+                phi_v0 = 1;
+            }
+            func_15062BDC(arg0, arg0->xz_scale, ((f32) phi_v0 * temp_f16) + arg0->y_scale);
+        }
+    }
+}
 
 void func_15053894(struct127 *arg0) {
     arg0->unk7F += 1;
