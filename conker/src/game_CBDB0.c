@@ -2,6 +2,7 @@
 #include "functions.h"
 #include "variables.h"
 
+extern struct127 *func_1505EEF4();
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509E900.s")
 
@@ -38,7 +39,34 @@ s32 func_1509F33C(s32 arg0, s32 arg1, s32 arg2) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F354.s")
+s32 func_1509F354(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s16 arg5, s32 arg6) {
+    struct127 *temp;
+    s32 range;
+    u8 idx;
+
+    temp = func_1505EEF4(arg4);
+    if ((u32)arg3 >= 0x8000U) {
+        arg3 = 0x7FFF;
+    }
+    if (temp == 0) {
+        return arg2;
+    }
+    if (func_10010894(temp) == 0) {
+        if (arg2 == 0) {
+            arg2 = (u32)-1 >> -(u8)(arg1 - arg0 + 1);
+        }
+        range = (u8)(arg1 - arg0 + 1);
+        do {
+            idx = (u8)(func_150ADA20() % (u32)range);
+        } while (((1 << idx) & arg2) == 0);
+
+        range = idx;
+        if (func_10010344((u16)(idx + arg0), temp, arg3, arg5, arg6) != 0) {
+            arg2 ^= 1 << range;
+        }
+    }
+    return arg2;
+}
 
 extern s32 func_151149AC(u32);
 extern s32 func_1000F568(s32, u8);

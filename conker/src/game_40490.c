@@ -4,6 +4,9 @@
 #include "variables.h"
 
 void func_151A9390(s32 arg0, s32 arg1, struct134 *arg2, s32 arg3, f32 arg4, f32 arg5, s32 arg6, s32 arg7, s32 arg8);
+extern void (*D_80082F28[])(struct16 *, f32);
+extern f32 D_80096650;
+extern u8 D_800C35E8;
 
 
 void func_15012FE0(void) {
@@ -48,7 +51,36 @@ s32 func_1501396C(struct16 *arg0) {
 // another struct
 #pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_150139AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_15013C38.s")
+s32 func_15013C38(struct16 *arg0) {
+    s32 idx;
+    f32 temp_f;
+    void (*func)(struct16 *, f32);
+
+    arg0->unk16 |= 4;
+    idx = *(s32 *)&arg0->unk18;
+
+    if ((((u8 *)D_800D2E4C)[0x11] & 4) && (D_800BE9F0 == 0x13)) {
+        return 1;
+    }
+
+    if (D_800C35EA == 1) {
+        if ((D_800C35E8 == 0xF) || (D_800C35E8 == 0x10) || (D_800C35E8 == 0x11)) {
+            return 1;
+        }
+    }
+
+    if (idx >= 6) {
+        return 1;
+    }
+
+    func = D_80082F28[idx];
+    if (func != NULL) {
+        temp_f = (f32)arg0->unk1C * D_80096650;
+        func(arg0, temp_f);
+    }
+
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_15013D38.s")
 // #NON-MATCHING: looks close but think its wrong
