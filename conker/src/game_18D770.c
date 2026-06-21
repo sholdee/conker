@@ -312,7 +312,56 @@ struct225 *func_15160A58(void *arg0, u8 arg1, void *arg2, u8 arg3, s16 arg4, s32
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18D770/func_15160B74.s")
 
 // another struct definition
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18D770/func_15160CDC.s")
+struct225 *func_15160CDC(struct127 *arg0, u8 arg1, struct vec3w_15160A58 *arg2, struct vec3w_15160A58 *arg3, f32 arg4, u8 arg5, s16 arg6, s32 arg7, s32 arg8, s32 arg9, s32 argA, u8 argB, u8 argC, u8 argD, u8 argE, s32 argF) {
+    struct225 *temp_v0;
+    Header header;
+    struct {
+        struct127 *unk0;
+        u8 unk4;
+        u8 unk5;
+        u8 pad6[0x2];
+        struct vec3w_15160A58 unk8;
+        struct vec3w_15160A58 unk14;
+        f32 unk20;
+        u8 unk24;
+        u8 unk25;
+        u8 pad26[0x2];
+    } sp4C;
+    Header2 header2;
+    s32 sp3C;
+    s32 sp38;
+
+    if (arg0 == NULL) {
+        return NULL;
+    }
+
+    header.unk0 = arg5;
+    header.unk1 = 6;
+    header.unk2 = arg6;
+    header.unk4 = 0x11;
+
+    sp4C.unk0 = arg0;
+    sp4C.unk4 = arg0->unique_id;
+    sp4C.unk5 = arg1;
+    sp4C.unk8 = *arg2;
+    sp4C.unk14 = *arg3;
+    sp4C.unk20 = arg4;
+
+    sp3C = (argB != 0) ? 1 : 0;
+    sp38 = (argD != 0) ? 2 : 0;
+    sp4C.unk24 = sp38 | sp3C;
+    sp4C.unk25 = argC;
+
+    header2.unk0 = 0;
+    header2.unk4 = 0;
+    header2.unk8 = 0;
+
+    temp_v0 = func_151602C0(&header, &header2, arg7, arg8, arg9, argA, 0xFF, 0, sizeof(sp4C), argE, argF);
+    if (temp_v0 != NULL) {
+        memcpy(&temp_v0->unk18, &sp4C, sizeof(sp4C));
+    }
+    return temp_v0;
+}
 
 // similar to func_15160B74
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18D770/func_15160E30.s")

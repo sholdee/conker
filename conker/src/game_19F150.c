@@ -2,6 +2,11 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 cosf(f32);
+extern f32 sinf(f32);
+extern f32 D_800A7154;
+extern f32 D_800A7158;
+extern void func_1510E82C(s32 *, s32, f32 *, s32, s32 *, s32, f32, f32, f32, f32, s32, s32);
 
 struct Obj15171CA0 {
     char pad0[0x16];
@@ -67,4 +72,29 @@ void func_15171F04(f32 arg0, f32 arg1, f32 arg2, s32 arg3, s16 arg4, u16 arg5, u
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19F150/func_151725FC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19F150/func_15172B20.s")
+s32 func_15172B20(void *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5, s32 arg6, u8 arg7) {
+    struct sp15172B20 {
+        s32 unk0;
+        f32 unk4;
+        s32 unk8;
+        s32 unkC;
+    };
+    f32 temp_f0;
+    f32 temp_f6;
+    struct sp15172B20 sp40;
+    f32 temp_f12;
+
+    temp_f12 = (arg4 - 90.0f) * D_800A7154;
+    temp_f6 = cosf(temp_f12);
+    temp_f0 = sinf(temp_f12);
+    arg1 += (f32) arg5 * temp_f0;
+    arg3 += (f32) arg5 * temp_f6;
+    func_1510E82C(&sp40.unk0, 0, &sp40.unk4, 0, &sp40.unk8, 0, arg1, arg2, arg3, arg2, 0, 0);
+    if (sp40.unk0 == 0) {
+        return 0;
+    }
+    if (sp40.unk4 == D_800A7158) {
+        return 0;
+    }
+    return func_151725FC(arg0, sp40.unk0, arg1, sp40.unk4, arg3, arg4, arg6, arg7);
+}
