@@ -4,6 +4,15 @@
 #include "variables.h"
 
 void func_15131D4C(s32 arg0, s32 arg1);
+s32 func_1000F568(s32 arg0, s32 arg1);
+extern s32 D_800D187C;
+
+struct func_1506C32C_stack {
+    s32 sp24;
+    s32 sp28;
+    s32 sp2C;
+    s32 sp30;
+};
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_1506AD30.s")
@@ -383,7 +392,43 @@ void func_1506BF1C(void) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_1506BF5C.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_1506C32C.s")
+
+void func_1506C32C(void) {
+    s32 cmd;
+    struct func_1506C32C_stack values;
+    s32 index;
+    s32 temp;
+
+    if (D_800D187C != 0) {
+        D_800D187C--;
+        cmd = D_800D1580;
+        values.sp24 = D_800D187C & 0x7FF;
+        values.sp28 = cmd & 0x7FF;
+        values.sp2C = (cmd >> 11) & 0x7FF;
+        values.sp30 = (cmd >> 22) & 0x7FF;
+
+        if (values.sp30 != 0) {
+            index = 4;
+        } else if (values.sp2C != 0) {
+            index = 3;
+        } else if (values.sp28 != 0) {
+            index = 2;
+        } else {
+            index = 0;
+        }
+
+        if (index != 0) {
+            index = func_1000F568(values.sp24, index) - values.sp24;
+        }
+
+        temp = *(&values.sp24 + index);
+        if (temp != 0) {
+            D_800D187C &= 0xFFFEF800;
+            D_800D1580 = temp | D_800D187C;
+            func_1506BF5C();
+        }
+    }
+}
 
 void func_1506C418(void) {
     func_10010A3C(D_800D154C);

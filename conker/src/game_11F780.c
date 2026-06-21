@@ -85,4 +85,17 @@ s32 func_150F25A0(struct242 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11F780/func_150F26A0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11F780/func_150F2994.s")
+void func_150F2994(s32 arg0, s32 arg1) {
+    s32 i;
+
+    for (i = 0; i < 0xE; i++) {
+        func_1509BFB0(0, i + 0x4016, arg1);
+    }
+    func_1509BFB0(0, 0x405D, arg1);
+    func_1509BFB0(0, 0x405F, arg1);
+    if (((u8 *)D_800D2E4C)[0x15] & 8) {
+        func_1509BFB0(0, 0x4063, arg1);
+        func_1509BFB0(0, 0x4064, arg1);
+        func_1509BFB0(0, 0x4065, arg1);
+    }
+}

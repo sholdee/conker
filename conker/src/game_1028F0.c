@@ -181,6 +181,61 @@ void func_150D6C98(f32 *arg0, f32 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D6E60.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D6F0C.s")
+typedef struct {
+    /* 0x00 */ struct127 *unk0;
+    /* 0x04 */ u8 unk4;
+    /* 0x05 */ u8 pad5[3];
+    /* 0x08 */ f32 unk8;
+    /* 0x0C */ f32 unkC;
+    /* 0x10 */ f32 unk10;
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ f32 unk18;
+} Struct150D6F0C_A8;
+
+typedef struct {
+    /* 0x00 */ u8 pad0[0x2B];
+    /* 0x2B */ u8 unk2B;
+    /* 0x2C */ u8 pad2C[0xC];
+    /* 0x38 */ f32 unk38;
+    /* 0x3C */ f32 unk3C;
+    /* 0x40 */ f32 unk40[3];
+    /* 0x4C */ u8 pad4C[0x5C];
+    /* 0xA8 */ Struct150D6F0C_A8 unkA8;
+} Struct150D6F0C;
+
+s32 func_150D6F0C(Struct150D6F0C *arg0, s32 arg1) {
+    Struct150D6F0C_A8 *temp_v0;
+    struct127 *temp_a3;
+    f32 temp_f2;
+
+    temp_v0 = &arg0->unkA8;
+    temp_a3 = temp_v0->unk0;
+
+    if (temp_a3->interaction_state == 0) {
+        goto return_zero;
+    }
+
+    do {
+        if (temp_a3->unique_id == temp_v0->unk4) {
+            break;
+        }
+return_zero:
+        return 0;
+    } while (0);
+
+    func_150D6C98((f32 *)temp_a3, arg0->unk40);
+
+    temp_f2 = sqrtf(temp_v0->unk8) * temp_v0->unk10;
+    arg0->unk3C = temp_f2;
+    arg0->unk38 = temp_f2;
+
+    arg0->unk2B = (u32)(temp_v0->unk14 - ((temp_v0->unk18 * temp_v0->unk8) * temp_v0->unk8));
+    temp_v0->unk8 = temp_v0->unk8 + D_800BE9A4;
+
+    if (temp_v0->unkC < temp_v0->unk8) {
+        return 0;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D7068.s")

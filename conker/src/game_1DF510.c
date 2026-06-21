@@ -2,6 +2,32 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct GameStruct151B2100Sub {
+    struct127 *unk0;
+    u8 unk4;
+    u8 pad5[3];
+    struct127 *unk8;
+    u8 unkC;
+    u8 unkD;
+    u8 padE[2];
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1C;
+} GameStruct151B2100Sub;
+
+typedef struct GameStruct151B2100 {
+    u8 pad0[0xE];
+    s16 unkE;
+    u8 pad10[0x18];
+    GameStruct151B2100Sub unk28;
+} GameStruct151B2100;
+
+s32 func_151B22F4(s32 *arg0);
+void func_151B222C();
+void func_151B2348(s32 *arg0);
+void func_151B2690(s32 *arg0);
+
 
 void func_151B2060(void *arg0) {
     struct260 *temp_v0;
@@ -34,7 +60,34 @@ void func_151B2060(void *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B2100.s")
+void func_151B2100(GameStruct151B2100 *arg0) {
+    GameStruct151B2100Sub *sub;
+    struct127 *obj0;
+    struct127 *obj1;
+    u8 old;
+
+    obj0 = arg0->unk28.unk0;
+    obj1 = arg0->unk28.unk8;
+    sub = &arg0->unk28;
+    if ((obj0->interaction_state == 0) || (obj0->id == 0xFF) || (obj0->unique_id != sub->unk4) ||
+        (obj1->interaction_state == 0) || (obj1->id == 0xFF) || (obj1->unique_id != sub->unkC)) {
+        arg0->unkE = -1;
+        return;
+    }
+
+    old = sub->unkD;
+    sub->unkD = func_151B22F4((s32 *)arg0);
+    if (sub->unkD != old) {
+        func_151B222C(arg0);
+        if (sub->unkD == 1) {
+            func_151B2348((s32 *)arg0);
+        }
+
+        if ((sub->unkD == 2) || (sub->unkD == 0)) {
+            func_151B2690((s32 *)arg0);
+        }
+    }
+}
 
 void func_151B222C();
 
