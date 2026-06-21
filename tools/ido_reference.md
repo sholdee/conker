@@ -1223,3 +1223,7 @@ Special empty-guard case:
   dummy and drops the real local to the lower word, with NO body change and no frame
   growth (region already had the slack). (Generalizes the "extra dummy before a struct"
   rule to a scalar one-word shift.)
+
+## Post-cutover distilled
+- Float clamp-to-one: when target compares with `1.0f` but later materializes a separate
+  `lui 0x3f80; mtc1` for the clamped f32, write `x = 1` (int), not `x = 1.0f` (CSEs/reuses compare const).
