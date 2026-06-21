@@ -4,6 +4,7 @@
 
 extern s32 (*D_8008FAF0[])(void *, void *, s32);
 extern s32 (*D_8008FAF8[])(void *);
+extern f32 D_800AA3AC;
 
 typedef struct {
     u8 pad0[0x10];
@@ -17,6 +18,23 @@ typedef struct {
     u8 pad2E[0x6];
     s8 unk34;
 } Struct151B3184;
+
+typedef struct {
+    s32 unk0;
+    u8 pad4[0x10];
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    u8 pad20[0x1B];
+    u8 unk3B;
+} Struct151B3F28Inner;
+
+typedef struct {
+    u8 pad0[0x10];
+    u8 unk10;
+    u8 pad11[0x13F];
+    Struct151B3F28Inner *unk150;
+} Struct151B3F28;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E0560/func_151B30B0.s")
 
@@ -75,7 +93,44 @@ void func_151B3A34(struct102 *arg0, s32 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E0560/func_151B3CF0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E0560/func_151B3F28.s")
+s32 func_151B3F28(Struct151B3F28 *arg0, f32 *arg1, u8 arg2) {
+    Struct151B3F28Inner **temp_v0;
+    s32 ret;
+
+    ret = 1;
+    if (arg2 == 0) {
+        goto no_arg;
+    }
+
+    temp_v0 = &arg0->unk150;
+    if ((*temp_v0)->unk0 == 0) {
+        goto failed;
+    }
+    if (*(u8 *)((u8 *) temp_v0 + 4) != (*temp_v0)->unk3B) {
+        goto failed;
+    }
+    arg1[0] = (*temp_v0)->unk14;
+    arg1[1] = (*temp_v0)->unk18;
+    arg1[2] = (*temp_v0)->unk1C;
+    arg0->unk10 &= ~4;
+    goto done;
+
+failed:
+    ret = 0;
+    arg0->unk10 |= 0xC;
+failed_after_store:
+    goto final_return;
+
+no_arg:
+    arg1[0] = 0.0f;
+    arg1[1] = D_800AA3AC;
+    arg1[2] = 0.0f;
+    arg0->unk10 &= ~8;
+
+done:
+final_return:
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E0560/func_151B3FDC.s")
 

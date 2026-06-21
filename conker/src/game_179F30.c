@@ -50,7 +50,7 @@ typedef struct Struct8008ABE8 {
 extern void (*D_8008AB58[])(s32);
 extern s32 (*D_8008AB64[])(s32, s32, s32);
 extern Struct8008ABE8 *D_8008ABE8[];
-s32 func_1514D4B8(s32, s32);
+s32 func_1514D4B8(s16, s16);
 
 s32 func_1514D310(Cont1514D310 *arg0) {
     Node1514D310 *node;
@@ -91,7 +91,22 @@ s32 func_1514D3B0(Cont1514D310 *arg0, s16 arg1, s32 arg2, s32 arg3) {
     return result;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514D4B8.s")
+s32 func_1514D4B8(s16 arg0, s16 arg1) {
+    if (arg0 == -1) {
+        return 0;
+    }
+    if (arg0 == arg1) {
+        return 1;
+    }
+
+    if (func_1514D4B8(D_8008ABE8[arg0]->unk6, arg1) != 0) {
+        return 1;
+    }
+    if (func_1514D4B8(D_8008ABE8[arg0]->unk4, arg1) != 0) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514D564.s")
 

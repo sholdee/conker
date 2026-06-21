@@ -5,6 +5,10 @@
 
 extern u8 D_80084930;
 extern u8 D_800848D0[];
+extern u8 D_80085930;
+extern u8 D_80085931;
+extern u8 D_80085932;
+extern u8 D_80085933[];
 
 #define WGFX(pkt, a, b)             \
 {                                   \
@@ -65,4 +69,55 @@ s32 func_15041480(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6E770/func_150428D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6E770/func_15042C40.s")
+s32 func_15042C40(u8 arg0) {
+    s32 i;
+    u8 c;
+    u8 *ptr;
+    s32 original;
+
+    original = arg0;
+    if ((original >= 0x61) && (original < 0x7B)) {
+        c = original - 0x20;
+    } else {
+        c = original;
+    }
+
+    if (original == 0x20) {
+        return 0x60;
+    }
+
+    i = 3;
+    if (D_80085930 == c) {
+        return 0;
+    }
+    if (D_80085931 == c) {
+        return 1;
+    }
+    if (D_80085932 == c) {
+        return 2;
+    }
+
+    ptr = D_80085933;
+    for (i = 3; ; ) {
+        if (c == ptr[0]) {
+            return i;
+        }
+        if (c == ptr[1]) {
+            return i + 1;
+        }
+        if (c == ptr[2]) {
+            return i + 2;
+        }
+        if (c == ptr[3]) {
+            return i + 3;
+        }
+        i += 4;
+        ptr += 4;
+        if (i != 0x5F) {
+            continue;
+        }
+        break;
+    }
+
+    return original;
+}

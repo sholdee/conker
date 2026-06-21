@@ -859,16 +859,15 @@ void func_15077DA0(void) {
     D_800D154C->unk21E = D_800D1890;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_A28B0/func_15077DBC.s")
-// ???
-// void func_15077DBC(void) {
-//     if (D_800D1890 != 0xFA) {
-//         D_800D154C->unk21E = D_800D1890;
-//     }
-//     D_800D154C->x_position = D_800D2104[(D_800D154C->unk13F) + (D_800D154C->unk21E)]->unk8;
-//     D_800D154C->y_position = D_800D2104[(D_800D154C->unk13F) + (D_800D154C->unk21E)]->unkA;
-//     D_800D154C->z_position = D_800D2104[(D_800D154C->unk13F) + (D_800D154C->unk21E)]->unkC;
-// }
+struct func_15077DBC_pt { s16 unk0; s16 unk2; s16 unk4; s16 unk6; };
+void func_15077DBC(void) {
+    if (D_800D1890 != 0xFA) {
+        D_800D154C->unk21E = D_800D1890;
+    }
+    D_800D154C->x_position = (((struct func_15077DBC_pt **)D_800D2104)[D_800D154C->unk13F] + D_800D154C->unk21E)[1].unk0;
+    D_800D154C->y_position = (((struct func_15077DBC_pt **)D_800D2104)[D_800D154C->unk13F] + D_800D154C->unk21E)[1].unk2;
+    D_800D154C->z_position = (((struct func_15077DBC_pt **)D_800D2104)[D_800D154C->unk13F] + D_800D154C->unk21E)[1].unk4;
+}
 
 void func_15077E9C(void) {
     s32 tmp = ((D_800D1890 << 8) + D_800D1891);
