@@ -7,6 +7,10 @@ extern f32 D_8009FC9C;
 extern f32 D_8009FCA0;
 extern f32 D_8009FCA4;
 extern f32 D_8009FCA8;
+extern f32 D_8009FCAC;
+extern f32 D_8009FCB0;
+extern f32 D_8009FCB4;
+extern f32 D_8009FCB8;
 void func_150B5A3C(f32 *arg0, u8 arg1, s32 arg2);
 void func_150B5E34(f32 *arg0, u8 arg1, s32 arg2);
 void func_150B6000(f32 *arg0, u8 arg1, s32 arg2);
@@ -198,7 +202,66 @@ void func_150B5A3C(f32 *arg0, u8 arg1, s32 arg2) {
     func_150B6000(arg0, arg1, arg2);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E2DA0/func_150B5C38.s")
+void func_150B5C38(f32 *arg0, u8 arg1, s32 arg2) {
+    Struct150B5A3C sp1C;
+
+    sp1C.unk00 = 0xD;
+    sp1C.unk04 = 8;
+    sp1C.unk08 = *(*(Struct3W_E2DA0 **)&arg0);
+    sp1C.unk14 = D_8009FCAC;
+    sp1C.unk18 = D_8009FCB0;
+    sp1C.unk1C = D_8009FCB4;
+    sp1C.unk20 = D_8009FCB8;
+    sp1C.unk24 = 152.0f;
+    sp1C.unk28 = 100.0f;
+    sp1C.unk2C = 0;
+    sp1C.unk2E = 0xFF;
+    sp1C.unk30 = -0x14;
+    sp1C.unk32 = 0x32;
+    sp1C.unk34 = 3;
+    sp1C.unk38 = 2;
+    sp1C.unk3C = 0x14;
+    sp1C.unk3E = 0xF;
+    sp1C.unk40 = 1;
+    sp1C.unk42 = 4;
+    sp1C.unk43 = 2;
+    sp1C.unk44 = 3;
+    sp1C.unk45 = 0xFF;
+    sp1C.unk46 = 0xFF;
+    sp1C.unk47 = 0xB4;
+    sp1C.unk48 = 0xFF;
+    sp1C.unk49 = 0;
+    sp1C.unk4A = 0;
+    sp1C.unk4B = 0;
+    sp1C.unk4C = 0;
+    sp1C.unk4D = 0xFF;
+    sp1C.unk4E = 0xFF;
+    sp1C.unk4F = 0xB4;
+    sp1C.unk50 = 0xFF;
+    sp1C.unk51 = 0;
+    sp1C.unk52 = 0;
+    sp1C.unk53 = 0;
+    sp1C.unk54 = 0;
+    sp1C.unk55 = 0xFF;
+    sp1C.unk56 = 0;
+    sp1C.unk57 = 3;
+    sp1C.unk58 = 0x24;
+    sp1C.unk5C = 0x200005;
+    sp1C.unk60 = 0x60600;
+    sp1C.unk64 = 8;
+    sp1C.unk66 = 0x1F;
+    sp1C.unk68 = 1;
+    sp1C.unk6A = 0;
+    sp1C.unk6C = 1.0f;
+    sp1C.unk70 = -1;
+    sp1C.unk71 = 0;
+    sp1C.unk72 = -1;
+    sp1C.unk73 = -1;
+
+    func_15152B38(&sp1C, arg1, arg2);
+    func_150B5E34(arg0, arg1, arg2);
+    func_150B6000(arg0, arg1, arg2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E2DA0/func_150B5E34.s")
 
