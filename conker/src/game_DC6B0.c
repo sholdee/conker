@@ -5,6 +5,9 @@
 extern s32 *D_800DBF94;
 extern s32 func_151149AC(u32);
 extern s32 func_1505D024(struct127 *, s32, u16, s32);
+extern void func_150A7960(f32 *, f32, f32, f32, f32 *, f32 *, f32 *);
+extern void func_150E1AB0(s32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, u16, s32, s32, s16, s16, s32, u8, s16, s32, s32, u8, f32, f32, f32, f32, f32, f32);
+extern void func_150E2DB4(struct127 *, u8, s16, s32, f32, f32, f32, f32, f32, f32, s16, s16, u16, u8);
 
 void func_150AF200(s32 arg0, s32 arg1) {
     struct131 *temp;
@@ -128,7 +131,38 @@ void func_150AFDB0(void) {
     D_800DD190--;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150AFE64.s")
+void func_150AFE64(s32 arg0) {
+    f32 spA4;
+    f32 spA0;
+    f32 sp9C;
+    f32 sp98;
+    f32 sp94;
+    f32 sp90;
+    s32 idx;
+    f32 *mtx;
+    f32 zero;
+
+    if (D_800D154C->unk1D4 != 0) {
+        if (arg0 == 0) {
+            idx = 3;
+        } else {
+            idx = 2;
+        }
+
+        zero = 0.0f;
+        mtx = (f32 *)((u8 *)D_800D154C->unk1D4 + (idx << 6));
+        spA4 = zero;
+        spA0 = zero;
+        sp9C = -20.0f;
+        func_150A7960(mtx, spA4, spA0, sp9C, &spA4, &spA0, &sp9C);
+        sp98 = zero;
+        sp94 = zero;
+        sp90 = -150.0f;
+        func_150A7960(mtx, sp98, sp94, sp90, &sp98, &sp94, &sp90);
+        func_150E1AB0(0, spA4, spA0, sp9C, sp98, sp94, sp90, 40.0f, zero, 2.0f, 120.0f, 0x3C, 0x23, 0, 0, 0, 0, 0, 0, 0, 0, 0, zero, zero, zero, zero, zero, zero);
+        func_150E2DB4(D_800D154C, D_800D154C->unique_id, (s16)idx, -1, zero, zero, -39.0f, zero, zero, -150.0f, 3, 0xFF, 4, 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150B003C.s")
 

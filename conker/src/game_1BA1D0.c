@@ -3,6 +3,8 @@
 #include "variables.h"
 
 void func_1518E308(void *);
+extern f32 D_800A8004;
+extern struct225 *func_151602C0(Header *, Header2 *, s32, s32, s32, s32, u8, u8, s32, u8, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518CD20.s")
 
@@ -322,7 +324,72 @@ s32 func_1518FC44(void *arg0, struct Vec3i2 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1519003C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1519021C.s")
+struct Struct1519021CArg1 {
+    u8 pad0[0x14];
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    u8 pad20[0x1B];
+    u8 unk3B;
+};
+
+struct Struct1519021CData {
+    struct Struct1519021CArg1 *unk0;
+    u8 unk4;
+    u8 pad5[3];
+};
+
+struct Struct1519021CLocal {
+    s32 unk0;
+    f32 unk4[8];
+    struct Struct1519021CData unk24;
+    Header unk2C;
+    s32 pad34;
+};
+
+struct225 *func_1519021C(s32 arg0, struct Struct1519021CArg1 *arg1, u8 arg2, s16 arg3, u8 arg4, s32 arg5) {
+    struct Struct1519021CLocal sp58;
+    Header2 header2;
+    struct225 *temp_v0;
+
+    if (arg2 >= 0x18) {
+        return 0;
+    }
+
+    sp58.unk4[0] = D_800A67C0[arg2];
+    sp58.unk4[1] = D_800A6760[arg2];
+    sp58.unk4[2] = D_800A6820[arg2];
+    sp58.unk4[3] = 1.0f;
+    sp58.unk4[5] = 5.0f;
+    sp58.unk4[4] = 0.0f;
+    sp58.unk4[7] = 0.0f;
+    sp58.unk4[6] = D_800A8004;
+    sp58.unk0 = arg0;
+
+    sp58.unk2C.unk0 = ((arg3 == -1) ? 0 : 1) | 2;
+    sp58.unk2C.unk1 = 0x12;
+    if (arg3 == -1) {
+        sp58.unk2C.unk2 = 0x12C;
+    } else {
+        sp58.unk2C.unk2 = arg3;
+    }
+    sp58.unk2C.unk4 = 0x25;
+
+    sp58.unk24.unk0 = arg1;
+    sp58.unk24.unk4 = arg1->unk3B;
+
+    header2.unk0 = arg1->unk14;
+    header2.unk4 = arg1->unk18;
+    header2.unk8 = arg1->unk1C;
+
+    temp_v0 = func_151602C0(&sp58.unk2C, &header2, 0, 0xFF, 0xD1, 0, 0xFF, 0, 0x30, arg4, arg5);
+    if (temp_v0 != 0) {
+        memcpy((s32)temp_v0 + 0x18, &sp58.unk24, sizeof(sp58.unk24));
+        memcpy((s32)temp_v0 + 0x20, sp58.unk4, sizeof(sp58.unk4));
+        memcpy((s32)temp_v0 + 0x40, &sp58.unk0, sizeof(sp58.unk0));
+    }
+    return temp_v0;
+}
 
 extern void func_15163DEC(void *, void *);
 extern s32 func_15163F50(void *, void *);
