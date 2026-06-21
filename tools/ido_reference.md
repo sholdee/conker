@@ -1,8 +1,8 @@
-# IDO 5.3 -O2 Matching Cookbook — Full Reference
+# IDO 5.3 -O2 Matching Cookbook
 
-Full consolidated set of transferable IDO 5.3 (`-O2 -g3`) matching idioms,
-organized by section. This is the grep-on-demand tier; the tight subset lives in
-cookbook_core.md. Every distinct technique is preserved here.
+Transferable idioms for matching IDO 5.3 (`-O2 -g3`) codegen, distilled from
+matched functions. Read this before iterating; append NEW generalizable idioms
+(not function-specific facts) after a batch. Keep entries tight and general.
 
 ## Language / syntax (compile errors)
 - C89 ONLY: declare ALL locals at the TOP of their block, before any statement.
@@ -692,6 +692,7 @@ cookbook_core.md. Every distinct technique is preserved here.
   also reproduces IDO's word-unrolled do-while struct copy before a forwarding call;
   match the by-value signature, don't pass `&`.
 - `x - x*y` store-back to the SAME field x: write `temp = x; *p = temp - y * *(f32*)&x;` - the memory re-read of x CSE-collapses to f0 (first mul operand), y stays an inline temp reg, result lands fresh. A named `y` shifts every later FP reg by one; `-=`/reassigning `temp` reuses its reg for the result.
+- Same value into TWO adjacent narrow fields WITHOUT a frame-growing temp: when one rand/computed value feeds two s16/byte fields, store it DIRECT to one field then read THAT field back from memory to store the other (`p->b = rand; p->a = *(s16*)&p->b;`). The memory-reload keeps the value in a caller-saved temp; a named temp shared across both stores SPILLS and grows the frame.
 - Defeat CSE of a doubled SIGNED-byte read (sentinel `== -1` test + index use of the same byte) WITHOUT losing signedness: cast ONLY the TEST read `volatile s8 *`, leave the index read plain `s8` - both stay `lb`. Reading the index as `u8` also breaks CSE but emits `lbu` (wrong sign).
 - Force a scaled index (`base + idx*8`) used in BOTH a loop pointer and a bound to RECOMPUTE its `sll`/`addu` rather than CSE into one shared `move`: write the scale as `<<3` (`(s32)base + (idx<<3)`). Any `*8`/`8*` form CSEs the two uses into a single computed pointer; the explicit shift forces the two separate recomputes.
 - Defeat CSE of a struct-INDEX MULTIPLY (`idx*sizeof`) shared between two sites that both index the SAME global by writing the second site in a DIFFERENT AST SHAPE: array-member-with-computed-byte-index `&((Struct*)base)[idx].member[expr]` vs the first site's pointer-add `(Struct*)base + idx`. Only the differing member-index AST forces the per-site multiply recompute; casting to a distinct same-size struct type, writing an explicit `idx*SIZE`, or binding the base to a local (which hoists the load) all FAIL to split the CSE.
@@ -1018,6 +1019,13 @@ Schedule / hoist artifacts:
   incoming arg WHILE STILL LIVE, ahead of the `move aN,aM` that clobbers it (`sw a2,off;
   andi a3,a2,0xff; move a2,a1`), IDO from every C form instead HOMES then RELOADS the
   value for the mask. A 1-instruction miss; bail.
+- Debug-home-of-unmasked-original + in-place mask: when the target debug-homes a u8 param's
+  ORIGINAL (un-masked) value to its arg slot AND masks IN PLACE keeping the result in the
+  SAME aN register (`sw a2,off; andi t,a2,0xff; move a2,t`), every C `(u8)arg`/`&=0xFF`/u8-
+  param/byte-local form computes the mask into a TEMP and uses THAT, leaving aN holding the
+  unmasked value so IDO deems the home DEAD and elides the whole prologue (also freeing
+  later scheduling). Not reproducible from C; bail. (Distinct from the live-arg-narrow miss:
+  there is no debug-home and the mask lands in a different reg.)
 - Size-arg homed INTO the call's delay slot then reloaded for a post-call add (`(s32)
   memcpy(dst,src,n)+n` tails): when the target homes the count arg IN the `jal memcpy`
   DELAY SLOT then reloads for the final `addu v0,v0,tN`, IDO from every body homes `a2`
