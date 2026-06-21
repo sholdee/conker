@@ -4,6 +4,8 @@
 
 s32 func_151149AC(u32);
 void func_1516441C(struct225 *arg0, struct227 *arg1);
+void func_15187FC0(s32 arg0, s32 *arg1);
+void func_15188010(s32 arg0, f32 *arg1);
 
 struct225 *func_151602C0(Header *header, Header2 *header2, s32 arg2, s32 arg3, s32 arg4, s32 arg5, u8 arg6, u8 arg7, s32 offset, u8 arg9, s32 argA);
 struct225 *func_1516037C(Header *src, struct226 *arg1, s32 size, u8 arg3, s32 arg4);
@@ -1126,7 +1128,17 @@ void func_1516387C(s32 arg0, u8 arg1, s8 arg2, s16 arg3, u8 arg4, s32 offset, u8
     func_1516037C(&tmp, arg0, offset, arg6, arg7);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18D770/func_151638E0.s")
+s32 func_151638E0(struct225 *arg0) {
+    struct227 *temp_v1;
+    s32 sp20[3];
+    f32 sp1C;
+
+    temp_v1 = &arg0->unk18;
+    func_15187FC0(*(s32 *)temp_v1, sp20);
+    func_15188010(*(s32 *)temp_v1, &sp1C);
+    arg0->unk14->unk2F = temp_v1->unk4 + (temp_v1->unk8 * sp1C);
+    return 1;
+}
 // NON-MATCHING: struct isnt quite right..
 // s32 func_151638E0(struct225 *arg0) {
 //     struct227 *temp_v1;

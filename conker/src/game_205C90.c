@@ -4,6 +4,18 @@
 
 
 extern u8 D_80084060[];
+extern struct17 *func_15144B34(s32);
+extern f32 func_15143E64(struct17 *);
+
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    u8 unk18;
+} Struct151D8C00;
 
 s32 func_151D87E0(u8 arg0) {
     u8 v;
@@ -41,13 +53,34 @@ void func_151D8BB4(struct102 *arg0) {
     func_15169824(arg0);
 }
 
-void func_151D8C00(void *, void *);
+void func_151D8C00(u8 *, Struct151D8C00 *);
 
 void func_151D8BE0(u8 *arg0) {
     func_151D8C00(arg0, arg0 + 0x18);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_205C90/func_151D8C00.s")
+void func_151D8C00(u8 *arg0, Struct151D8C00 *arg1) {
+    f32 temp_f12;
+    struct17 sp28;
+    struct17 *temp_v0;
+    f32 temp_f0;
+
+    temp_v0 = func_15144B34(arg1->unk18);
+    sp28.unk0 = arg1->unk0 - temp_v0->unk0;
+    sp28.unk4 = arg1->unk4 - temp_v0->unk4;
+    sp28.unk8 = arg1->unk8 - temp_v0->unk8;
+
+    temp_f0 = func_15143E64(&sp28);
+    if (temp_f0 < arg1->unkC) {
+        temp_f12 = 1.0f;
+    } else if (arg1->unkC + arg1->unk10 < temp_f0) {
+        temp_f12 = 0.0f;
+    } else {
+        temp_f12 = 1.0f - (temp_f0 - arg1->unkC) * arg1->unk14;
+    }
+
+    arg0[0x12] = (u32)(temp_f12 * 8.0f);
+}
 
 void func_151D8D5C(struct102 *arg0, s32 arg1, u8 arg2) {
     if (arg2 == 0x58) {

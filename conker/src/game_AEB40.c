@@ -123,7 +123,32 @@ s32 func_15083DA0(void) {
     return id;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15083E0C.s")
+s32 func_15083E0C(u8 id) {
+    s32 i;
+    s32 offset;
+    struct struct258b *base;
+    struct struct258b *ptr;
+
+    if (id == 0) {
+        return -1;
+    }
+
+    i = 0;
+    if ((s32)D_800D2100 > 0) {
+        base = (struct struct258b *)D_800D20FC;
+        offset = 0;
+        ptr = base;
+        do {
+            i++;
+            if (ptr->unk28 == id) {
+                return ((s32)((u8 *)offset + (s32)base) - (s32)base) / 0x30;
+            }
+            offset += sizeof(struct struct258b);
+            ptr++;
+        } while (i < (s32)D_800D2100);
+    }
+    return -1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15083E90.s")
 

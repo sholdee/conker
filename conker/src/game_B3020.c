@@ -176,7 +176,29 @@ void func_15087FEC(s32 arg0, s32 arg1) {
     p->unk4 = (f32)arg1 * (1.0f / 256.0f);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508802C.s")
+s32 func_1508802C(s8 *arg0, struct127 *arg1, s32 arg2) {
+    struct126 *temp_v0;
+
+    temp_v0 = arg1->unk31C;
+    if (temp_v0->unk120 != 0) {
+        return 1;
+    }
+
+    if ((D_800D18A0 & (1 << (arg1 - D_800CC2D0))) != 0) {
+        return 1;
+    }
+
+    temp_v0->unk84 = 1;
+    arg1->interaction_state = 0xC;
+    arg1->unk232 = arg2;
+    D_800D154C = arg1;
+    D_800C3E78 = arg0[0x31];
+    arg1->unk218 = func_1507BB28(0, arg2);
+    arg1->unk21C = 0;
+    arg1->immune = 0xFF;
+    arg0[0x30] = 2;
+    return 0;
+}
 
 s32 func_150880F8(s32 arg0, s32 arg1) {
     s8 *p;

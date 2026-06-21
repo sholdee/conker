@@ -1,7 +1,10 @@
 #include <ultra64.h>
+#define func_10010F30 func_10010F30_void
 #include "functions.h"
+#undef func_10010F30
 #include "variables.h"
 
+extern s32 func_10010F30(s32, u16, u8, s16, u8);
 extern s32 func_151EF610(void);
 extern f32 D_800A8F88;
 extern f32 D_800A8FEC;
@@ -336,7 +339,40 @@ void func_151AB1C4(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB3A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB6B8.s")
+typedef struct {
+    u8 pad0[0x4];
+    u8 unk4;
+    u8 pad5;
+    u16 unk6;
+} Struct151AB6B8;
+
+s32 func_151AB6B8(u8 *arg0) {
+    u8 ret;
+    Struct151AB6B8 *temp_v1;
+
+    ret = 1;
+    temp_v1 = (Struct151AB6B8 *)(arg0 + 0x58);
+    if (*(u16 *)(arg0 + 0x5E) != 0) {
+        if (D_800DBFF0->unk5F0 & 1) {
+        } else {
+            func_100111C8(temp_v1->unk6);
+            temp_v1->unk6 = 0;
+            goto done_sound;
+        }
+    }
+    if (temp_v1->unk6 == 0) {
+        if (D_800DBFF0->unk5F0 & 1) {
+            temp_v1->unk6 = func_10010F30(0x355, 0x7D00, 0x40, 0, 0);
+        }
+    }
+
+done_sound:
+    if (temp_v1->unk4 == 0) {
+        ret = 0;
+    }
+    temp_v1->unk4 = 0;
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB788.s")
 

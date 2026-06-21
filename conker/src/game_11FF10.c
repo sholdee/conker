@@ -3,6 +3,31 @@
 #include "variables.h"
 
 extern f32 D_800A1970;
+extern f32 D_800A1950[];
+
+void func_15143134(void *, f32 *, s32);
+
+typedef struct {
+    /* 0x00 */ struct127 *unk0;
+    /* 0x04 */ u8 unk4;
+    /* 0x05 */ u8 pad5[3];
+    /* 0x08 */ f32 unk8;
+    /* 0x0C */ f32 unkC;
+    /* 0x10 */ f32 unk10;
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ f32 unk18;
+} Struct150F3214_110;
+
+typedef struct {
+    /* 0x000 */ u8 pad0[0x2C];
+    /* 0x02C */ f32 unk2C;
+    /* 0x030 */ f32 unk30;
+    /* 0x034 */ f32 unk34[3];
+    /* 0x040 */ u8 pad40[0x1C];
+    /* 0x05C */ u8 unk5C;
+    /* 0x05D */ u8 pad5D[0xB3];
+    /* 0x110 */ Struct150F3214_110 unk110;
+} Struct150F3214;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11FF10/func_150F2A60.s")
 
@@ -36,7 +61,44 @@ void func_150F3194(s32 arg0, s32 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11FF10/func_150F31D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11FF10/func_150F3214.s")
+s32 func_150F3214(Struct150F3214 *arg0) {
+    Struct150F3214_110 *temp_v0;
+    struct127 *temp_v1;
+    f32 temp_f2;
+
+    temp_v0 = &arg0->unk110;
+    temp_v1 = temp_v0->unk0;
+
+    if (temp_v1->interaction_state == 0) {
+        goto return_zero;
+    }
+
+    do {
+        if (temp_v1->unique_id != temp_v0->unk4) {
+            goto return_zero;
+        }
+
+        if (temp_v1->unk1D4 != NULL) {
+            break;
+        }
+return_zero:
+        return 0;
+    } while (0);
+
+    func_15143134(D_800A1950, arg0->unk34, (s32)temp_v1->unk1D4 + 0x3C0);
+
+    temp_f2 = sqrtf(temp_v0->unk8) * temp_v0->unk10;
+    arg0->unk30 = temp_f2;
+    arg0->unk2C = temp_f2;
+
+    arg0->unk5C = (u32)(temp_v0->unk14 - ((temp_v0->unk18 * temp_v0->unk8) * temp_v0->unk8));
+    temp_v0->unk8 = temp_v0->unk8 + D_800BE9A4;
+
+    if (temp_v0->unkC < temp_v0->unk8) {
+        return 0;
+    }
+    return 1;
+}
 
 void func_150F337C(s32 arg0, s16 arg1) {
     func_15140410(arg0, arg0 + 0x12C, arg0 + 0x138, arg1);
