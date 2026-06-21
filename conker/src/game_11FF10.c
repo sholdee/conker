@@ -2,6 +2,7 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_800A1970;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11FF10/func_150F2A60.s")
 
@@ -43,7 +44,19 @@ void func_150F337C(s32 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11FF10/func_150F33B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11FF10/func_150F33F8.s")
+void func_150F33F8(s32 arg0) {
+    s16 *temp_v0_2;
+
+    if (D_800DBFF0[arg0].unk300 < D_800A1970) {
+        if (D_800DBFF0[arg0].unk2FC > 840.0f) {
+            temp_v0_2 = (s16 *)D_800D9A40;
+            *temp_v0_2 |= 1 << arg0;
+            return;
+        }
+        temp_v0_2 = (s16 *)D_800D9A40;
+        *temp_v0_2 &= ~(1 << arg0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11FF10/func_150F34A0.s")
 

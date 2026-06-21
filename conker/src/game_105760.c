@@ -2,6 +2,7 @@
 #include "functions.h"
 #include "variables.h"
 
+void func_150A7960(f32 *, f32, f32, f32, f32 *, f32 *, f32 *);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_105760/func_150D82B0.s")
 
@@ -32,13 +33,50 @@ s32 func_150D88AC(struct S150D88AC *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_105760/func_150D88E0.s")
+s32 func_150D88E0(void *arg0, struct127 *arg1, u8 arg2) {
+    struct {
+        f32 z;
+        f32 y;
+        f32 x;
+        s32 temp_a1;
+    } sp30;
+
+    switch (arg2) {
+    case 3:
+        sp30.temp_a1 = 0x12;
+        sp30.x = -7.0f;
+        sp30.z = 30.0f;
+        break;
+    case 4:
+        sp30.temp_a1 = 0x15;
+        sp30.x = -4.0f;
+        sp30.z = 35.0f;
+        break;
+    case 5:
+        sp30.temp_a1 = 0xF;
+        sp30.x = 5.0f;
+        sp30.z = 20.0f;
+        break;
+    case 6:
+        sp30.temp_a1 = 0x18;
+        sp30.x = 5.0f;
+        sp30.z = 31.0f;
+        break;
+    }
+
+    sp30.y = 0.0f;
+    func_150A7960((f32 *)((u8 *)arg1->unk1D4 + (sp30.temp_a1 << 6)), sp30.x, sp30.y, sp30.z, &sp30.x, &sp30.y, &sp30.z);
+    ((f32 *)arg0)[0] = sp30.x;
+    ((f32 *)arg0)[1] = sp30.y;
+    ((f32 *)arg0)[2] = sp30.z;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_105760/func_150D8A20.s")
 
 extern f32 D_800A0B30;
 extern f32 D_800A0B34;
-void func_150D88E0();
+s32 func_150D88E0(void *, struct127 *, u8);
 void func_151875E0(f32, f32, f32, s32, s32, s32, f32, f32);
 void func_15165F80(s32, s32, s32, s32, s32, s32, s32, s32, s32);
 
