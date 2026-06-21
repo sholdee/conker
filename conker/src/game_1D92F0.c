@@ -2,6 +2,10 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_800A9D84;
+extern f32 D_800A9D88;
+void func_151AE984(f32 *, f32, f32, f32, s32, u8);
+void func_151AEAB4(f32 *, s32, u8);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151ABE40.s")
 
@@ -215,7 +219,31 @@ void func_151AE6B0(u8 *arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE7B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE890.s")
+void func_151AE890(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, u8 *arg6) {
+    f32 sp2C[3];
+    register f32 temp_f0;
+
+    sp2C[0] = arg0;
+    sp2C[1] = arg1;
+    sp2C[2] = arg2;
+    temp_f0 = func_150ADA68();
+    if (temp_f0 < D_800A9D84) {
+        return;
+    }
+    if (temp_f0 < 0.25f) {
+        register s32 temp_a1;
+
+        temp_f0 = func_150ADA68();
+        temp_a1 = (0.0f < temp_f0) ? 1 : 0;
+        func_151AEAB4(sp2C, temp_a1, arg6[0xC]);
+    } else {
+        register s32 temp_v0;
+
+        temp_f0 = func_150ADA68();
+        temp_v0 = (D_800A9D88 < temp_f0) ? 1 : 0;
+        func_151AE984(sp2C, arg3, arg4, arg5, temp_v0, arg6[0xC]);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE984.s")
 

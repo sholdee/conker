@@ -1,5 +1,7 @@
 #include <ultra64.h>
+#define func_1502B7F0 func_1502B7F0__proto
 #include "functions.h"
+#undef func_1502B7F0
 #include "variables.h"
 
 
@@ -48,7 +50,49 @@ Gfx *func_15110544(Gfx *gfx, s32 a, s32 b, s32 c, s32 d, u8 r, u8 g, u8 bl) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15110CFC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_1511172C.s")
+extern s32 *D_800DBE80;
+extern s32 *D_800891BC[];
+s32 func_1502B7F0();
+void func_10004074();
+void func_1510D694(s32);
+void func_15111858(void);
+
+void func_1511172C(s32 arg0) {
+    s32 i;
+    struct104 *var_v0;
+    struct104 * volatile *var_s3;
+    s32 **var_s0;
+
+    var_s3 = (struct104 * volatile *)&D_800B0DF0;
+    if (arg0 == 1) {
+        var_s3 = (struct104 * volatile *)&D_800B0DF0;
+        (*var_s3)->unk8 = 1;
+        var_s0 = &D_800DBE80;
+        if (D_800DBE80 != 0) {
+            s32 *temp_v0;
+
+            temp_v0 = D_800DBE80;
+            func_10004074(temp_v0);
+        }
+        func_15111858();
+        return;
+    }
+
+    var_v0 = *var_s3;
+    if (arg0 != var_v0->unk9) {
+        if (var_v0->unk8 == 4) {
+            if (D_80038080 != 0) {
+                for (i = 0; i != 0x168; i++) {
+                    func_1510D694(D_800891BC[(*var_s3)->unk9][0] + i);
+                }
+            }
+            var_s0 = &D_800DBE80;
+            func_10004074(*var_s0);
+            (*var_s3)->unk9 = arg0;
+            func_1502B7F0(var_s0, 2, 0xD, (*var_s3)->unk9);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15111858.s")
 
