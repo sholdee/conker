@@ -3,6 +3,7 @@
 #include "variables.h"
 
 extern f32 D_80097B68;
+extern f32 D_800970DC;
 extern u8 D_800BEA0C;
 void func_1000FD38(void *, void *, s32);
 s32 func_15033BDC();
@@ -112,7 +113,52 @@ struct S150319CC *func_150319CC(s32 arg0, u8 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15031E2C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15031E7C.s")
+s32 func_15031E7C(u8 *arg0, struct127 *arg1) {
+    struct197 *anim;
+    Gfx *gfx;
+    s32 count;
+    s32 i;
+    f32 scale;
+
+    anim = arg1->unk2D0;
+    if (anim == 0) {
+        return 0;
+    }
+
+    gfx = **(Gfx ***)(arg0 + 0x24);
+    if (gfx == 0) {
+        return 0;
+    }
+
+    if (arg1->unk84.uh == 0x55) {
+        scale = 1.0f;
+    } else if (arg1->unk84.uh == 0x56) {
+        scale = 0.0f;
+    } else {
+        if ((0.0f <= anim->unk8) && (anim->unk8 <= 120.0f)) {
+            scale = anim->unk8 * D_800970DC;
+            scale = 1.0f - scale;
+        } else {
+            scale = 0.0f;
+        }
+    }
+
+    i = 0;
+    count = 4;
+    do {
+        count--;
+        if (*(s8 *)((i << 3) + (u8 *)gfx) != -0xE) {
+            do {
+            } while (*(s8 *)((u8 *)gfx + (++i << 3)) != -0xE);
+        }
+        if (count != 0) {
+            i++;
+        }
+    } while (count != 0);
+
+    gfx[i].words.w0 = (G_SETTILESIZE << 24) | (2 << 12) | ((s32)((25.0f * scale) + 2.0f) & 0xFFF);
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15031FC8.s")
 
