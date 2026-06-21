@@ -31,6 +31,14 @@ extern s16 D_8008FDCC;
 extern u8 **D_800E0BD8;
 extern void func_1501D348(s32, s32, s32, s32, s32);
 s32 func_1517EFDC(void);
+extern s32 D_800E0A90;
+extern u8 D_8008FE28;
+extern s8 D_800E0B96;
+extern u8 D_800D2E40;
+extern u8 D_800E0B94;
+extern s16 D_800E0B9A;
+void func_1501C730(s32, s32, s32, s32, s32);
+void func_151E530C(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151DD970.s")
 
@@ -42,7 +50,42 @@ s32 func_1517EFDC(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151DDC20.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151DE6D4.s")
+void func_151DE6D4(void) {
+    s32 timer;
+
+    func_151E530C();
+    D_800CC2D0[0].unk25C |= 0x200;
+    D_800CC2D0[0].y_position = 1000.0f;
+
+    if (D_80000300 == 0) {
+        D_800E0A90 = 0;
+    }
+
+    timer = D_800E0A90;
+    if (timer >= 0x14B) {
+        if (D_800E0B9A & 0x8000) {
+            if (timer >= 0x1E0) {
+            } else {
+                timer = D_800E0A90 = 0x1E0;
+            }
+            if (timer < 0x259) {
+            } else {
+                if (timer >= 0x2D0) {
+                } else {
+                    timer = D_800E0A90 = 0x2D0;
+                }
+            }
+        }
+    }
+
+    if (timer >= 0x349) {
+        D_8008FE28 = 2;
+        D_800E0B94 = 1;
+        D_800D2E40 = 0;
+        func_1501C730(6, 0x21, 0, 0, 1);
+        *(u8 *)&D_800E0B96 = 0xFF;
+    }
+}
 
 extern s32 D_800E0A90;
 extern u8 D_800E0B97;

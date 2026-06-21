@@ -3,6 +3,8 @@
 #include "variables.h"
 
 extern s32 func_1503EF4C(s32 arg0, s32 arg1, s32 arg2);
+extern void func_1503E260(s32 arg0);
+extern void func_1503ECA0(s32 arg0);
 extern struct106 D_800C666C[];
 
 
@@ -115,7 +117,34 @@ void func_1503F16C(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503F2B0.s")
+struct func_1503F2B0_s {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s16 unkC;
+    s8 padE[2];
+};
+
+void func_1503F2B0(s32 arg0) {
+    struct func_1503F2B0_s *p;
+
+    func_1503ECA0(arg0);
+    p = (struct func_1503F2B0_s *)&D_800C6660[arg0];
+    p->unkC -= D_800BE9E4;
+    if (p->unkC > 0) {
+        return;
+    }
+    func_1503E260(arg0);
+    if (func_1503EF4C(2, 0, arg0)) {
+        D_800CC2D0[arg0].unk94 |= 8;
+    }
+    if (func_1503EF4C(2, 1, arg0)) {
+        D_800CC2D0[arg0].unk94 |= 4;
+    }
+    if (func_1503EF4C(2, 2, arg0)) {
+        D_800CC2D0[arg0].unk94 |= 2;
+    }
+}
 
 extern u8 D_800C3E90;
 extern void func_1503E5F8();
