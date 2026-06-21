@@ -263,4 +263,45 @@ s32 func_1515FC34(struct127 *arg0, s32 arg1) {
     return func_1505D024(arg0, 0x33, 0xC000, -1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515FC60.s")
+struct Struct1515FC60 {
+    s16 unk0;
+    u8 pad2[2];
+    s16 unk4;
+    s16 unk6;
+    u8 pad8[0x14];
+    u32 unk1C;
+};
+
+union Union1515FC60 {
+    f32 f;
+    f32 pad[2];
+};
+
+extern f32 D_800A6534;
+s32 func_150AD960(s32, s32, s32, s32);
+void func_15136C3C(struct127 *, s32, s32, s32, s32, s32, s32, s32);
+void func_1507CD64(struct127 *, s32);
+
+void func_1515FC60(struct127 *arg0, struct Struct1515FC60 *arg1) {
+    f32 temp_f0;
+    union Union1515FC60 temp_f18;
+    s32 temp_v0;
+
+    if (arg0->unk31C != NULL) {
+        if (arg0->unk31C->unk120 == 0) {
+            temp_v0 = arg1->unk1C;
+            if (temp_v0 != 0) {
+                temp_f18.f = (f32)(u32)temp_v0 * D_800A6534;
+                temp_v0 = func_150AD960(arg1->unk0, arg1->unk4, (s32)arg0->x_position, (s32)arg0->z_position);
+                temp_f0 = ((f32)arg1->unk6 * temp_f18.f) - (f32)arg0->unkE4;
+                if (temp_f0 > (f32)temp_v0) {
+                    return;
+                }
+            }
+            func_1505D024(arg0, 0x2F, 0, -1);
+            func_15136C3C(arg0, 1, 1, 1, 1, 0, 0xFF, 1);
+            func_15145A50(arg0);
+            func_1507CD64(arg0, 6);
+        }
+    }
+}

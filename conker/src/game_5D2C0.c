@@ -158,7 +158,27 @@ s32 func_1503327C(s32 arg0, s32 arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033328.s")
+s32 func_15033328(s32 arg0, s32 arg1) {
+    s32 delta;
+
+    if (D_800C35EA == 1) {
+        return 0;
+    }
+    if (*(u8 *)(arg1 + 0xAD) == 0) {
+        if (*(f32 *)(arg1 + 0x118) < *(f32 *)(arg1 + 0x180)) {
+            delta = D_800BE9E4;
+            arg1 = *(s32 *)(arg0 + 0x38);
+            if (delta < arg1) {
+                *(s32 *)(arg0 + 0x38) = arg1 - delta;
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+    }
+    *(s32 *)(arg0 + 0x38) = 0x1E;
+    return 0;
+}
 
 s32 func_150333A8(u8 *arg0, u8 *arg1) {
     s32 temp;
