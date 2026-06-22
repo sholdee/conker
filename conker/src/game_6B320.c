@@ -6,6 +6,56 @@ extern s32 func_1503EF4C(s32 arg0, s32 arg1, s32 arg2);
 extern void func_1503E260(s32 arg0);
 extern void func_1503ECA0(s32 arg0);
 extern struct106 D_800C666C[];
+extern s8 *D_80084454[];
+extern u8 D_800C666E[];
+extern f32 sqrtf(f32);
+extern void func_150499A0(f32 arg0[4][4], f32 arg1[4][4]);
+extern void func_150A7A48(f32 arg0[4][4], f32 arg1[4][4], f32 arg2[4][4]);
+extern void func_1503E5F8();
+
+struct func_1503E3C4_s {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+    f32 unk40;
+    f32 unk44;
+    f32 unk48;
+    f32 unk4C;
+    f32 unk50;
+    u8 pad54[0x14];
+};
+
+struct func_1503E3C4_mtx {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+};
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503DE70.s")
@@ -38,7 +88,54 @@ s32 func_1503E1F4(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503E260.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503E3C4.s")
+void func_1503E3C4(s32 arg0, s32 arg1, s32 arg2, struct func_1503E3C4_s *arg3, s32 arg4) {
+    struct func_1503E3C4_mtx sp94;
+    struct func_1503E3C4_mtx sp54;
+    struct127 *obj;
+    s32 idx;
+    f32 len;
+    f32 dx;
+    f32 dy;
+    f32 dz;
+
+    obj = &D_800CC2D0[arg0];
+    bcopy((void *)((u8 *)obj->unk1D4 + ((arg1 + arg2) << 6)), (u8 *)&sp94 - 4, 0x40);
+    if (arg4 != 0) {
+        idx = -1;
+    } else {
+        idx = D_80084454[D_800C666E[arg0 * 0x10]][arg1];
+    }
+    if (idx != -1) {
+        func_150499A0((f32 (*)[4])((u8 *)obj->unk1D4 + (idx << 6)), (f32 (*)[4])((u8 *)&sp54 - 4));
+        ((f32 *)((u8 *)&sp94 - 4))[7] = 0.0f;
+        ((f32 *)((u8 *)&sp94 - 4))[3] = 0.0f;
+        ((f32 *)((u8 *)&sp94 - 4))[11] = 0.0f;
+        ((f32 *)((u8 *)&sp94 - 4))[15] = 1.0f;
+        func_150A7A48((f32 (*)[4])((u8 *)&sp94 - 4), (f32 (*)[4])((u8 *)&sp54 - 4), (f32 (*)[4])((u8 *)&sp94 - 4));
+    }
+    func_1503E5F8((u8 *)&sp94 - 4, &arg3->unk0, &arg3->unk4, &arg3->unk8, &arg3->unkC, &arg3->unk10, &arg3->unk14, &arg3->unk18, &arg3->unk1C, &arg3->unk20);
+    arg3->unk24 = arg3->unk0;
+    arg3->unk28 = arg3->unk4;
+    arg3->unk2C = arg3->unk8;
+    arg3->unk30 = arg3->unkC;
+    arg3->unk34 = arg3->unk10;
+    arg3->unk38 = arg3->unk14;
+    arg3->unk3C = arg3->unk18;
+    arg3->unk40 = arg3->unk1C;
+    arg3->unk44 = arg3->unk20;
+
+    dx = arg3->unk0 - obj->x_position;
+    dy = (arg3->unk28 - obj->y_position) - 30.0f;
+    dz = arg3->unk2C - obj->z_position;
+    len = sqrtf((dx * dx) + (dy * dy) + (dz * dz));
+    if (len == 0.0f) {
+        len = 1.0f;
+    }
+    len = 1.0f / len;
+    arg3->unk48 = dx * len;
+    arg3->unk4C = dy * len;
+    arg3->unk50 = dz * len;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503E5F8.s")
 

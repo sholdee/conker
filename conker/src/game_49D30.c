@@ -13,6 +13,25 @@ extern u8 D_800C3C99;
 extern u8 D_800C3C9C;
 extern u8 D_800D2E40;
 extern s32 func_1501D2C4(s32, s32);
+extern f32 D_800969D8;
+extern f32 D_800969DC;
+
+typedef struct {
+    f32 unk0;
+    u8 pad4[0x3C];
+} struct_game49D30_0;
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    u16 unk6;
+} struct_game49D30_1;
+
+extern struct_game49D30_0 *D_800C3A50[];
+extern struct_game49D30_1 *D_800C3868[][30];
+extern void func_1501F72C(s32, f32, f32 *, s32, s32 *);
+extern void func_1501FFE8(f32 *, struct_game49D30_1 *, s32, u16);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501C880.s")
 
@@ -105,7 +124,36 @@ check_mode_1d:
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501FC8C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501FE68.s")
+void func_1501FE68(s32 arg0, f32 arg1, f32 *arg2, s32 arg3) {
+    f32 temp_f12;
+    f32 sp6C[6];
+    s32 sp60[3];
+    f32 sp30[10];
+    f32 temp_f14;
+    register f32 temp_f0;
+
+    if (D_800C35C8[arg3][arg0] >= 2) {
+        if (arg1 > 100.0f) {
+            arg1 = 100.0f;
+        }
+        if (arg1 < 0.0f) {
+            arg1 = 0.0f;
+        }
+
+        temp_f0 = D_800C3A50[arg3][arg0].unk0 * arg1 * D_800969D8;
+        func_1501F72C(arg0, temp_f0, sp6C, arg3, sp60);
+
+        if (D_800C3868[arg3][arg0][sp60[0]].unk6 == 0) {
+            temp_f12 = sp6C[0] - sp6C[3];
+            temp_f14 = sp6C[2] - sp6C[5];
+        } else {
+            func_1501FFE8(sp30 - 2, D_800C3868[arg3][arg0], sp60[0], D_800C35C8[arg3][arg0]);
+            temp_f12 = sp30[4] - sp30[1];
+            temp_f14 = sp30[6] - sp30[3];
+        }
+        *arg2 = func_150484A0(temp_f12, temp_f14) * D_800969DC;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501FFE8.s")
 

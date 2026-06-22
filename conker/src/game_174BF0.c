@@ -3,6 +3,29 @@
 #include "variables.h"
 
 extern f32 D_800A5760;
+extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
+extern s32 *func_1515D480(s32);
+extern s32 *func_1515D440(void);
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1C;
+    s32 unk20;
+} Struct15147A80Copy;
+
+typedef struct {
+    u8 pad0[0x94];
+    u8 *unk94;
+    u8 *unk98;
+    u8 pad9C[4];
+    u8 unkA0[1];
+} Struct15147A80Obj;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_15147740.s")
 
@@ -52,7 +75,62 @@ void func_15147A30(void *arg0) {
     D_8008A340[idx](arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_15147A80.s")
+void *func_15147A80(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, void *arg8, s32 arg9, s32 argA) {
+    void *temp_v0;
+    u8 phi_v0;
+    s32 size;
+    s32 i;
+
+    size = *(u8 *)((u8 *)arg0 + 0x15) * arg2;
+    if (*(u16 *)((u8 *)arg0 + 0xE) & 0x40) {
+        phi_v0 = 0x4D;
+    } else {
+        phi_v0 = 0x22;
+    }
+
+    temp_v0 = func_15167A68(phi_v0, argA, arg1 + size + 0xA0, 1, (u8)arg9, 1);
+    if (temp_v0 == NULL) {
+        return NULL;
+    }
+
+    *(s32 *)((u8 *)temp_v0 + 0x98) = (s32)((u8 *)temp_v0 + 0xA0);
+    *(s32 *)((u8 *)temp_v0 + 0x94) = *(s32 *)((u8 *)temp_v0 + 0x98) + arg1;
+    memcpy((u8 *)temp_v0 + 0x10, arg0, 0x1C);
+    *(u8 *)((u8 *)temp_v0 + 0x2C) = 0;
+    *(u8 *)((u8 *)temp_v0 + 0x2D) = 0;
+    *(u8 *)((u8 *)temp_v0 + 0x2E) = 0;
+    *(u8 *)((u8 *)temp_v0 + 0x2F) = arg3;
+    *(u8 *)((u8 *)temp_v0 + 0x30) = arg4;
+    *(u8 *)((u8 *)temp_v0 + 0x31) = arg5;
+
+    if (arg8 != NULL) {
+        *(Struct15147A80Copy *)((u8 *)temp_v0 + 0x60) = *(Struct15147A80Copy *)arg8;
+    } else {
+        *(u8 *)((u8 *)temp_v0 + 0x7C) = 0;
+    }
+
+    *(s32 *)((u8 *)temp_v0 + 0x34) = arg6;
+    *(s32 *)((u8 *)temp_v0 + 0x50) = arg7;
+    *(u8 *)((u8 *)temp_v0 + 0x38) = 0;
+
+    for (i = 0; i < 4; i++) {
+        *(s32 *)((u8 *)temp_v0 + 0x3C + (i * 4)) = 0;
+    }
+    *(s32 *)((u8 *)temp_v0 + 0x4C) = 0;
+
+    if (arg6 != 0) {
+        for (i = 0; i <= D_80082FA0; i++) {
+            *(s32 **)((u8 *)temp_v0 + 0x3C + (i * 4)) = func_1515D480(arg6);
+        }
+        *(s32 **)((u8 *)temp_v0 + 0x4C) = func_1515D440();
+    }
+
+    *(f32 *)((u8 *)temp_v0 + 0x54) = 0.0f;
+    *(f32 *)((u8 *)temp_v0 + 0x58) = 0.0f;
+    *(f32 *)((u8 *)temp_v0 + 0x5C) = 0.0f;
+    bzero((u8 *)temp_v0 + 0x84, 0x10);
+    return temp_v0;
+}
 
 extern void *func_151462C8(void *, void *, u8, void *, s32, s16, void *, s32, void *);
 extern void *(*D_8008A2A4[])(void *, void *, s16);

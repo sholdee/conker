@@ -11,57 +11,80 @@ typedef struct {
     u16 unkA;
 } struct1513FFF4_80090B60;
 
+typedef struct {
+    u8 pad0[0x8];
+    s16 unk8;
+    s16 unkA;
+    u8 padC[0x4];
+} struct1513FFF4;
+
+typedef struct {
+    u8  pad0[6];
+    u16 unk6;
+    u8  pad8[4];
+    s8  unkC;
+    s8  unkD;
+    s8  unkE;
+    s8  unkF;
+} Dst151400D0;
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    u16 unk8;
+} Src151400D0;
+
 extern struct1513FFF4_80090B60 D_80090B60[];
+void func_1513FFF4(struct1513FFF4 *arg0, u8 arg1, u8 arg2);
+void func_151400D0(Dst151400D0 *dst, Src151400D0 *src);
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_1513C060.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_1513C350.s")
-// NON-MATCHING: JUSTREG: final 3 lines :(
-// struct210 *func_1513C350(struct210 *arg0, s32 arg1, u8 arg2, u8 arg3, u8 arg4, s32 arg5, s32 arg6, struct167 *arg7, s32 arg8, u8 arg9, s32 argA) {
-//     struct210 *temp_v0;
-//     u8 phi_v0;
-//     s32 i;
-//
-//     if (arg1 == 0) {
-//         arg1 = &D_800A4AA0;
-//     }
-//     if (arg0->unk0 & 0x40000) {
-//         phi_v0 = 0x4A;
-//     } else {
-//         phi_v0 = 0x1B;
-//     }
-//     temp_v0 = func_15167A68(phi_v0, argA, arg8 + 0xB0, 1, arg9, 1);
-//     if (temp_v0 == 0) {
-//         return NULL;
-//     }
-//     memcpy(&temp_v0->unk18.i.unk0, arg0, 0x28); // memcpy
-//     func_1513FFF4(&temp_v0->unk40, temp_v0->unk1E, arg4);
-//     func_151400D0(&temp_v0->unk40, arg1);
-//     temp_v0->unk80 = arg2;
-//     temp_v0->unk81 = arg3;
-//     temp_v0->unk84 = arg5;
-//     temp_v0->unk10 = 1;
-//     temp_v0->unk14 = 0;
-//     temp_v0->unkA0 = arg6;
-//     for (i = 0; i < 4; i++) {
-//         temp_v0->unk8C[i] = 0;
-//     }
-//
-//     temp_v0->unk9C = 0;
-//     if (arg5) {
-//         for (i = 0; i <= D_80082FA0; i++) {
-//             temp_v0->unk8C[i] = func_1515D480(arg5);
-//         }
-//         temp_v0->unk9C = func_1515D440();
-//     }
-//     if (arg7) {
-//         temp_v0->unkA4[0] = arg7->unk0;
-//         temp_v0->unkA4[1] = arg7->unk4;
-//         temp_v0->unkA4[2] = arg7->unk8;
-//     }
-//     return temp_v0;
-// }
+struct210 *func_1513C350(struct210 *arg0, s32 arg1, u8 arg2, u8 arg3, u8 arg4, s32 arg5, s32 arg6, struct167 *arg7, s32 arg8, u8 arg9, s32 argA) {
+    struct210 *temp_v0;
+    u8 phi_v0;
+    s32 i;
+
+    if (arg1 == 0) {
+        arg1 = &D_800A4AA0;
+    }
+    if (arg0->unk0 & 0x40000) {
+        phi_v0 = 0x4A;
+    } else {
+        phi_v0 = 0x1B;
+    }
+    temp_v0 = func_15167A68(phi_v0, argA, arg8 + 0xB0, 1, arg9, 1);
+    if (temp_v0 == 0) {
+        return NULL;
+    }
+    memcpy(&temp_v0->unk18.i.unk0, arg0, 0x28);
+    func_1513FFF4(&temp_v0->unk40, temp_v0->unk1E, arg4);
+    func_151400D0(&temp_v0->unk40, arg1);
+    temp_v0->unk80 = arg2;
+    temp_v0->unk81 = arg3;
+    temp_v0->unk84 = arg5;
+    temp_v0->unk10 = 1;
+    temp_v0->unk14 = 0;
+    temp_v0->unkA0 = arg6;
+    for (i = 0; i < 4; i++) {
+        temp_v0->unk8C[i] = 0;
+    }
+
+    temp_v0->unk9C = 0;
+    if (arg5) {
+        for (i = 0; i <= D_80082FA0; i++) {
+            temp_v0->unk8C[i] = func_1515D480(arg5);
+        }
+        temp_v0->unk9C = func_1515D440();
+    }
+    if (arg7) {
+        *(struct167 *)temp_v0->unkA4 = *arg7;
+    }
+    return temp_v0;
+}
 
 struct210 *func_1513C4EC(s32 arg0, s32 arg1, u8 arg2, u8 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, u8 arg9, u8 argA, s32 argB, s32 argC, s32 argD, u8 argE, s32 argF) {
     s32 temp_v0;
@@ -629,13 +652,6 @@ void func_1513FA70(s32 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_169510/func_1513FAB4.s")
 
-typedef struct {
-    u8 pad0[0x8];
-    s16 unk8;
-    s16 unkA;
-    u8 padC[0x4];
-} struct1513FFF4;
-
 void func_1513FFF4(struct1513FFF4 *arg0, u8 arg1, u8 arg2) {
     struct1513FFF4_80090B60 *temp_v0;
     u16 temp_v1;
@@ -680,24 +696,6 @@ void func_1513FFF4(struct1513FFF4 *arg0, u8 arg1, u8 arg2) {
         arg0[2].unkA = temp;
     }
 }
-
-typedef struct {
-    u8  pad0[6];
-    u16 unk6;
-    u8  pad8[4];
-    s8  unkC;
-    s8  unkD;
-    s8  unkE;
-    s8  unkF;
-} Dst151400D0;
-
-typedef struct {
-    s16 unk0;
-    s16 unk2;
-    s16 unk4;
-    s16 unk6;
-    u16 unk8;
-} Src151400D0;
 
 void func_151400D0(Dst151400D0 *dst, Src151400D0 *src) {
     dst[0].unk6 = src[0].unk8;
