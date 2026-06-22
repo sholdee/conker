@@ -162,7 +162,28 @@ s32 func_1518F058(f32 *arg0)
 }
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F108.s")
+struct Struct1518F108 {
+    char pad1C[0x1C];
+    s16 unk1C;
+    char pad1E[0xE];
+    f32 unk2C;
+    f32 unk30;
+    char pad34[0x28];
+    u8 unk5C;
+    char pad5D[0xF7];
+    f32 unk154;
+    s16 unk158;
+    s16 unk15A;
+};
+
+s32 func_1518F108(struct Struct1518F108 *arg0) {
+    arg0->unk30 = arg0->unk30 - arg0->unk30 * arg0->unk154;
+    arg0->unk2C = arg0->unk2C - arg0->unk2C * arg0->unk154;
+    if (arg0->unk1C < arg0->unk158) {
+        arg0->unk5C = arg0->unk1C * arg0->unk15A;
+    }
+    return 1;
+}
 
 s32 func_1518F15C(void *arg0) {
     f32 temp;

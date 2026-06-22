@@ -11,10 +11,19 @@ extern u8 *D_800E0A28;
 extern s32 D_800E0A2C;
 
 s32 func_151DD4E0(OSMesgQueue *arg0, u8 arg1, u8 *arg2);
+s32 func_151DCFD8(s32 arg0);
 s64 __ll_mul(u64 arg0, s32 arg1, s32 arg2);
 u64 __ull_div(u64 arg0, u64 arg1);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20A3A0/func_151DCEF0.s")
+void func_151DCEF0(s32 arg0, u8 arg1, s32 arg2, s32 arg3) {
+    while (func_151DCFD8(1) != 0) {
+    }
+    D_800E0A20 = arg0;
+    D_800E0A24 = arg1;
+    D_800E0A28 = arg2;
+    D_800E0A2C = arg3;
+    osSetTimer(&D_80042A58, __ull_div(__ll_mul(0x2EE0LL, *(s32 *)&D_8002BD10, D_8002BD14), 1000000ULL), 0, &__osEepromTimerQ, &D_80042A90);
+}
 
 s32 func_151DCFD8(s32 arg0) {
     OSMesgQueue *queue;
