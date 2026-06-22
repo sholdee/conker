@@ -105,7 +105,14 @@ void func_150F337C(s32 arg0, s16 arg1) {
     func_15140410(arg0, arg0 + 0x12C, arg0 + 0x138, arg1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11FF10/func_150F33B0.s")
+void func_150F33B0(struct131 *arg0) {
+    if (D_800DBFF0->unk300 < -2000.0f) {
+        *(u8*)&arg0->unk4F &= ~1;
+        return;
+    }
+
+    *(u8*)&arg0->unk4F = (*(u8*)&arg0->unk4F & 0xFF) | 1;
+}
 
 void func_150F33F8(s32 arg0) {
     s16 *temp_v0_2;

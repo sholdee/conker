@@ -56,7 +56,26 @@ void func_1507EFA0(s32 c, u8 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507F454.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507F4C0.s")
+s32 func_1507F4C0(s32 arg0) {
+    s32 pad;
+    s32 base;
+    u32 mod;
+
+    if (arg0 == 0) {
+        base = 0xB4;
+        mod = 0x3C;
+    } else if (D_800BE9F0 == 0x31) {
+        return 0;
+    } else if (arg0 == 1) {
+        base = 0x3C;
+        mod = 0x3C;
+    } else {
+        base = 0;
+        mod = 0x1E;
+    }
+
+    return func_150ADA20() % mod + base;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507F54C.s")
 
