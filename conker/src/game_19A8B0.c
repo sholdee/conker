@@ -6,6 +6,39 @@
 
 extern void func_1516F864(s32);
 
+struct Obj1516D4E8 {
+    char pad0[0xE];
+    s16 unkE;
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    s16 unk16;
+    s16 unk18;
+    u8 unk1A;
+    u8 unk1B;
+    u8 unk1C;
+    u8 unk1D;
+    u8 unk1E;
+    u8 unk1F;
+    u8 unk20;
+    u8 unk21;
+    u8 unk22;
+    u8 unk23;
+    u8 unk24;
+    u8 unk25;
+    u8 unk26;
+    u8 unk27;
+    u8 unk28;
+    u8 unk29;
+    u8 unk2A;
+    u8 unk2B;
+    u8 unk2C;
+    u8 unk2D;
+    u8 unk2E;
+    u8 unk2F;
+    s32 unk30;
+};
+
 struct Obj1516D99C {
     char pad0[0xE];
     s16 unkE;
@@ -59,6 +92,7 @@ struct Obj1516D99C {
 };
 
 extern struct Obj1516D99C *func_15167A68(s32, s32, s32, s32, s32, s32);
+extern s32 func_150448D0(s32, s32, s32, s32, s32, s32, s32, s32, s32);
 
 #define LOW_S16(arg) (*(s16 *)((u8 *)&(arg) + 2))
 #define LOW_U16(arg) (*(u16 *)((u8 *)&(arg) + 2))
@@ -67,7 +101,56 @@ extern struct Obj1516D99C *func_15167A68(s32, s32, s32, s32, s32, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516D400.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516D4E8.s")
+void func_1516D4E8(
+    s32 arg0, s32 arg1, s32 arg2, s32 arg3,
+    s32 arg4, s32 arg5, s32 arg6, s32 arg7,
+    s32 arg8, s32 arg9, s32 arg10, s32 arg11,
+    s32 arg12, s32 arg13, s32 arg14, s32 arg15,
+    s32 arg16, s32 arg17, s32 arg18, s32 arg19,
+    s32 arg20, s32 arg21, s32 arg22, s32 arg23,
+    s32 arg24, s32 arg25, s32 arg26, s32 arg27,
+    volatile s32 arg28, s32 arg29, s32 arg30) {
+    struct Obj1516D4E8 *ret;
+    s32 temp_a2;
+
+    ret = (struct Obj1516D4E8 *)func_15167A68(arg27 != 0 ? 0x67 : 0x12, arg30, 0x34, 0, LOW_U8(arg29), 1);
+    if (ret != NULL) {
+        ret->unkE = LOW_S16(arg0);
+        ret->unk10 = LOW_S16(arg1);
+        ret->unk12 = LOW_S16(arg2);
+        ret->unk1A = LOW_U8(arg3);
+        ret->unk1B = LOW_U8(arg4);
+        ret->unk1C = LOW_U8(arg5);
+        ret->unk1D = LOW_U8(arg6);
+        ret->unk1E = LOW_U8(arg7);
+        ret->unk1F = LOW_U8(arg8);
+        ret->unk20 = LOW_U8(arg9);
+        ret->unk21 = LOW_U8(arg10);
+        ret->unk22 = LOW_U8(arg11);
+        ret->unk23 = LOW_U8(arg12);
+        ret->unk14 = LOW_S16(arg23);
+        ret->unk16 = LOW_S16(arg24);
+        ret->unk24 = LOW_U8(arg25);
+        ret->unk18 = LOW_S16(arg26);
+        ret->unk25 = 0;
+        ret->unk26 = LOW_U8(arg13);
+        ret->unk27 = LOW_U8(arg14);
+        ret->unk28 = LOW_U8(arg15);
+        temp_a2 = arg28;
+        ret->unk29 = LOW_U8(arg16);
+        ret->unk2A = LOW_U8(arg17);
+        ret->unk2B = LOW_U8(arg18);
+        ret->unk2C = LOW_U8(arg19);
+        ret->unk2D = LOW_U8(arg20);
+        ret->unk2E = LOW_U8(arg21);
+        ret->unk2F = LOW_U8(arg22);
+        if (temp_a2 != 0) {
+            ret->unk30 = func_150448D0(-1, 0, temp_a2, 0x14, 0x14, 0x14, 0, (s32) &ret->unkE, (s32) &ret->unk14);
+        } else {
+            ret->unk30 = 0;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516D678.s")
 
