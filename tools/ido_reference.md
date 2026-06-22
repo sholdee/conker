@@ -1232,3 +1232,4 @@ Special empty-guard case:
 - One-off full-word reload of a homed param: after the arg is already homed, `tmp = *(s32 *)&arg0;`
   forces a plain `lw` from the arg slot; plain `tmp = (s32)arg0` may reuse the old reg, while `volatile` can add address code.
 - Boolean temp stored to a byte/stack field: when target wants explicit default/override (`move v0,zero; beqz; ...; li v0,1; sb v0,off`), assign a `s32 flag` with full `if/else` then store it. Direct boolean/ternary stores can shrink to a branch-likely store.
+- Inline equality compare can split a global's address setup from its value load: `if (D_left == complex_rhs)` may hoist `D_left`'s `%hi` before the RHS address chain but delay its `lbu`/`lh` until the compare. Binding the left value to a local loads it too early.
