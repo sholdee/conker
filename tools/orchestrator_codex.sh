@@ -8,9 +8,6 @@ REPO="$HOME/conker"
 CHUNK="${1:-8}"; MAXI="${2:-90}"; ROUNDS="${3:-8}"
 cd "$REPO"; . .venv/bin/activate
 
-# Recursively kill a process and all descendants (NOT the detached, shared codex broker).
-killtree() { local p; for p in $(pgrep -P "$1" 2>/dev/null); do killtree "$p"; done; kill -9 "$1" 2>/dev/null; }
-
 match_prompt() {  # $1=func  $2=file  (heredoc expands the paths; no $ / backticks remain)
   cat <<EOF
 You are matching ONE function in the mkst/conker N64 decompilation (IDO 5.3, -O2 -g3) to byte-identical assembly, using a real compile+diff loop.
@@ -61,21 +58,16 @@ for c in json.load(sys.stdin): print(c['func'], c['file'])" > /tmp/codex_chunk.t
   [ -s /tmp/codex_chunk.txt ] || { echo "round $r: candidate pool empty -- stopping"; break; }
   echo "round $r: $(wc -l < /tmp/codex_chunk.txt) candidates"
 
-  echo "=== round $r: MATCH (codex exec --full-auto, parallel; terminate on score-0 capture) ==="
+  echo "=== round $r: MATCH (codex exec --full-auto, parallel, distinct files) ==="
   rm -f /tmp/match_func_*.c   # clear stale; only THIS round's score-0 snapshots will exist
   while read -r func file; do
     match_prompt "$func" "$file" > "/tmp/codexp_${func}.txt"
     ( timeout 2400 codex exec --full-auto --cd "$REPO" "$(cat /tmp/codexp_${func}.txt)" \
         > "/tmp/codexm_${func}.log" 2>&1 ) &
-    sub=$!
-    # the INSTANT iter_match captures a score-0 snapshot, terminate codex: the match is already
-    # secured, so further work only wastes tokens + wall-clock (and risks over-running away from it).
-    ( while kill -0 "$sub" 2>/dev/null; do
-        [ -f "/tmp/match_${func}.c" ] && { killtree "$sub"; break; }
-        sleep 2
-      done ) &
   done < /tmp/codex_chunk.txt
-  wait
+  wait   # NOTE: can't safely kill codex mid-work — its work runs in a DETACHED broker, so killing
+         # the `codex exec` client orphans the broker. Over-run waste is tolerated; snapshot/restore
+         # below still captures the match regardless of codex's post-0 edits.
 
   # CAPTURE confirmed matches: restore each func's source from its score-0 snapshot, defeating
   # codex over-running past SCORE 0 and destroying the match (~55% of found matches were lost this way).

@@ -24,9 +24,10 @@ The matching now runs on **Codex** (zero Claude tokens), via a shell mirror of t
   editing PAST `SCORE: 0` and destroys the match. `iter_match.sh` now snapshots `src/<file>.c` to
   `/tmp/match_<func>.c` the instant it prints SCORE 0; the orchestrator clears stale snapshots before MATCH and
   RESTORES each file from its snapshot after MATCH (before integrate). Deterministic — immune to whatever codex
-  does after. A per-worker WATCHER also kills codex (`killtree`) the instant its snapshot appears — stops the
-  over-run, so rounds finish when all funcs hit 0 instead of waiting out the wasted post-match iterations
-  (big token + wall-clock saving). (Prompt also hard-stops at 0; tertiary.) TODO parity: restore in orchestrator.js.
+  does after. (Prompt also hard-stops at 0; secondary.) NOTE: can't kill codex on capture to stop the over-run —
+  its work runs in a DETACHED broker, so killing the `codex exec` client orphans the broker (it keeps editing →
+  chaos). Over-run waste (codex tokens + wall-clock) is tolerated; the snapshot still captures the match. TODO
+  parity: restore in orchestrator.js.
 - **SEEDS (`similar_chunk.py` writes them; both orchestrators read them):** per picked func it writes the top-3
   similar matched functions' C → `/tmp/ref_`, `/tmp/ref2_`, `/tmp/ref3_<func>.c`, AND an m2c structural draft →
   `/tmp/m2c_<func>.c` (best-effort `--context`, falls back to raw). Prompts use refs for style + m2c for structure,
