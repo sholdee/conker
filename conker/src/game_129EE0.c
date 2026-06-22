@@ -5,9 +5,44 @@
 #include "variables.h"
 
 extern s32 *func_1513EDE4(s32 arg0, s16 arg1);
+extern void func_150FCBC0(s32 arg0);
+extern s32 func_1000EC24();
+extern void func_15164F0C(s32 arg0, u8 arg1, s32 arg2, s32 arg3, s32 arg4);
+extern void func_151D8868(void *arg0, s32 arg1, s32 arg2, s32 arg3);
 
+struct sp44_150FCA30 {
+    u8 unk0;
+    u8 unk1;
+    s16 unk2;
+    u8 unk4;
+    u8 unk5;
+    s8 unk6;
+    u8 unk7;
+};
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_129EE0/func_150FCA30.s")
+void func_150FCA30(void) {
+    s32 i;
+    struct sp44_150FCA30 sp44;
+
+    func_150FCBC0(0);
+    func_150FCBC0(1);
+    func_150FCBC0(2);
+
+    func_1000FA64(0x2B8, -0x7F6, 0x618, -0xA47, 0x6D60, 0x2328, 0x1B58, (s32)func_1000EC24, (void *)0x2D, 0, 0, 0);
+    func_1000FA64(0x2B7, -0x13F, -0x111, -0xD5B, 0x6D60, 0x2328, 0x1B58, (s32)func_1000EC24, 0, 0, 0, 0);
+    func_1000FA64(0x2B6, 0x5EF, 0x3B3, -0xA49, 0x6D60, 0x2328, 0x1B58, (s32)func_1000EC24, (void *)0x5A, 0, 0, 0);
+
+    for (i = 0; i < D_80082FA0 + 1; i++) {
+        func_15164F0C(4, i, 0, 0xFF, 1);
+    }
+
+    sp44.unk0 = 1;
+    sp44.unk2 = 0x64;
+    sp44.unk5 = 0xF;
+    sp44.unk4 = 8;
+    sp44.unk6 = -1;
+    func_151D8868(&sp44, 0, 0xFF, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_129EE0/func_150FCBC0.s")
 

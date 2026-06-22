@@ -1,6 +1,8 @@
 #include <ultra64.h>
 
+#define func_150ADA20 func_150ADA20_u8_proto
 #include "functions.h"
+#undef func_150ADA20
 #include "variables.h"
 
 void func_15131D4C(s32 arg0, s32 arg1);
@@ -14,6 +16,29 @@ struct func_1506C32C_stack {
     s32 sp2C;
     s32 sp30;
 };
+
+typedef struct Vec3w_15070D24 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Vec3w_15070D24;
+
+typedef struct Stack_15070D24 {
+    Header2 header2;
+    Header header;
+    u8 pad16[2];
+    f32 sp64[3];
+    f32 sp70[2];
+    Vec3w_15070D24 sp78;
+    Vec3w_15070D24 sp84;
+} Stack_15070D24;
+
+extern Vec3w_15070D24 D_80099B88;
+extern Vec3w_15070D24 D_80099B94;
+extern f32 D_80099F2C;
+extern s32 func_150ADA20(void);
+extern void func_15143134(void *, void *, s32);
+extern void func_15102B38(s32, u8, s32, s32, f32 *, s32, s32, f32, s32, s32, s32, s32, u8, s32);
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_1506AD30.s")
@@ -1251,7 +1276,41 @@ void func_15070D00(s32 arg0) {
     func_15070C40(0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_15070D24.s")
+void func_15070D24(s32 arg0) {
+    Stack_15070D24 sp4C;
+
+    sp4C.sp84 = D_80099B88;
+    sp4C.sp78 = D_80099B94;
+
+    if (D_800D154C->unk1D4 == 0) {
+        return;
+    }
+
+    if ((D_800D154C->unk74 & 0xF) == 0xF) {
+        return;
+    }
+
+    sp4C.sp70[0] = (func_150ADA68() * 101.0f) + 151.0f;
+    sp4C.sp70[1] = (func_150ADA68() * 4.0f) + 4.0f;
+
+    func_15143134(&sp4C.sp84, sp4C.sp64, (s32)D_800D154C->unk1D4 + 0x40);
+
+    func_15102B38((s32)D_800D154C, 1, (s32)&sp4C.sp84, (s32)&sp4C.sp78, sp4C.sp70,
+                  ((func_150ADA20() + 0U) % 6U) + 5, ((func_150ADA20() + 0U) % 0x9CU) + 0x64,
+                  (func_150ADA68() * 2496.0f) + D_80099F2C,
+                  (s32)sp4C.sp64, 0xFF, 0, -1, 0xFF, 0);
+
+    sp4C.header.unk0 = 3;
+    sp4C.header.unk1 = -1;
+    sp4C.header.unk2 = (func_150ADA20() % 6U) + 0xA;
+    sp4C.header.unk4 = 0;
+
+    sp4C.header2.unk0 = (s32)sp4C.sp64[0];
+    sp4C.header2.unk4 = (s32)sp4C.sp64[1];
+    sp4C.header2.unk8 = (s32)sp4C.sp64[2];
+
+    func_151602C0(&sp4C.header, &sp4C.header2, (func_150ADA20() % 0xC9U) + 0x37, 0xFF, 0xFF, 0xFF, 0xFF, 0, 0, 0xFF, 0);
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_15070F60.s")
 void func_15071230(s32 arg0) {
     func_15070F60(0);
@@ -1417,7 +1476,7 @@ void func_15071888(s32 arg0) {
 }
 
 extern u32 D_80099BB8;
-void func_15143134(void *, s32, s32);
+void func_15143134(void *, void *, s32);
 void func_151C329C(s32 arg0, s32 arg1, s32 arg2);
 
 void func_150718E4(s32 arg0) {
@@ -1428,7 +1487,7 @@ void func_150718E4(s32 arg0) {
     sp20 = D_80099BB8;
     if ((D_800D154C->unk1D4 != 0) || ((D_800D154C->unk74 & 0xF) == 0xF)) {
         p = sp24;
-        func_15143134(&D_800A5480, (s32)p,
+        func_15143134(&D_800A5480, p,
                       (((s32)((u8 *)&sp20)[func_150ADA20() & 3]) << 6) + (s32)D_800D154C->unk1D4);
         sp24[1] = D_800D154C->unk180 + 20.0f;
         func_151C329C((s32)p, 0xFF, 1);
