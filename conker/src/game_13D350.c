@@ -5,6 +5,16 @@
 #include "variables.h"
 
 extern u8 D_800DBEA8[];
+Gfx *func_15110544(Gfx *gfx, s32 a, s32 b, s32 c, s32 d, u8 r, u8 g, u8 bl);
+Gfx *func_1501A6CC(Gfx *arg0, s32 a, s32 b, s32 c, s32 d);
+
+typedef struct {
+    u8  pad0[0x24];
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+} Struct151103C8;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_1510FEA0.s")
 
@@ -27,7 +37,28 @@ void func_15110360(s32 arg0, f32 arg1[4][4], f32 arg2, f32 arg3, f32 arg4) {
     func_150A7A48(arg1, (f32 (*)[4])((u8 *)((struct259 *)D_800BE628 + arg0) + 0xBC), arg1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_151103C8.s")
+Gfx *func_151103C8(Gfx *gfx, s32 arg1, s32 arg2, s32 arg3) {
+    Struct151103C8 *temp;
+
+    temp = (Struct151103C8 *)((struct259 *)D_800BE628 + D_80082FA4);
+    gfx = func_15110544(gfx, (s32)temp->unk2C, (s32)temp->unk24,
+                        (s32)(temp->unk30 - 1.0f), (s32)temp->unk28,
+                        D_800DBEA8[0], D_800DBEA8[1], D_800DBEA8[2]);
+    if (D_80082FA0 != 0) {
+        if (D_80082FA4 == 0) {
+            gDPPipeSync(gfx++);
+            gfx = (Gfx *)func_1501A490((s32)gfx, 0xFF, 0, 0, 0, 0);
+            gDPSetFillColor(gfx++, 0x10001);
+            gfx = func_1501A6CC(gfx, 0, (D_800BE624 >> 1) - 6, D_800BE620,
+                                (D_800BE624 >> 1) + 6);
+            if (D_80082FA0 != 1) {
+                gfx = func_1501A6CC(gfx, (D_800BE620 >> 1) - 1, 0,
+                                    (D_800BE620 >> 1) + 1, D_800BE624);
+            }
+        }
+    }
+    return gfx;
+}
 
 Gfx *func_1501A680(Gfx *arg0);
 Gfx *func_1501A6CC(Gfx *arg0, s32 a, s32 b, s32 c, s32 d);
