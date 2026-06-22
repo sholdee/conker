@@ -1236,7 +1236,43 @@ void func_15079390(void) {
     func_1514D3B0(D_800D154C, tmp0, tmp1, tmp2);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_A28B0/func_150793D8.s")
+void func_150793D8(void) {
+    f32 sp34;
+    f32 sp30;
+    f32 sp2C;
+    volatile s16 pad0;
+    volatile s16 pad1;
+    volatile s16 pad2;
+    s16 x;
+    s16 z;
+
+    x = (s16)(s32)D_800CC2D0->x_position;
+    z = (s16)(s32)D_800CC2D0->z_position;
+    if ((x < -1180) || (x >= 1181) || (z < -1180) || (z >= 1181)) {
+        x = 0;
+        z = 0;
+    }
+
+    func_1505A184(func_150ADA20(), 550.0f, 0.0f, &sp34, &sp30, &sp2C);
+
+    x = (s16)(s32)((f32)x + sp34);
+    z = (s16)(s32)((f32)z + sp30);
+    if (x < -1200) {
+        x = -1200;
+    }
+    if (x >= 1201) {
+        x = 1200;
+    }
+    if (z < -1200) {
+        z = -1200;
+    }
+    if (z >= 1201) {
+        z = 1200;
+    }
+
+    *(s16 *)((u8 *)D_800D2104[D_800D154C->unk13F] + (D_800D1890 * 8) + 8) = x;
+    *(s16 *)((u8 *)D_800D2104[D_800D154C->unk13F] + (D_800D1890 * 8) + 0xC) = z;
+}
 
 void func_15079570(void) {
     f32 temp;
