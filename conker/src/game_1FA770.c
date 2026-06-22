@@ -5,6 +5,13 @@
 void *func_151CD4C0();
 void func_151CE47C();
 
+extern f32 D_800AB020;
+extern f32 D_800AB024;
+extern f32 D_800D9860;
+extern f32 func_15144AA8(s32);
+extern struct17 *func_15144B34(s32);
+extern s32 func_15046C80(f32 *, s32, f32, f32 *);
+
 
 struct260 *func_151CD2C0(void *arg0, u8 arg1, s32 arg2) {
     struct260 *temp_v0;
@@ -167,7 +174,52 @@ void func_151CF844(struct s151CF844 *arg0, s32 arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CF898.s")
+typedef struct {
+    char pad0[0x23D];
+    u8 unk23D;
+} ConkerStruct151CF898Camera;
+
+typedef struct {
+    struct17 vec;
+    f32 unkC;
+} ConkerStruct151CF898Payload;
+
+void func_151CF898(struct127 *arg0, f32 arg1, f32 arg2) {
+    ConkerStruct151CF898Camera *camera;
+    struct17 sp58;
+    struct17 *pos;
+    f32 yaw;
+    f32 angle;
+    f32 distance;
+    ConkerStruct151CF898Payload sp38;
+    struct260 *temp_v0;
+
+    camera = (ConkerStruct151CF898Camera *)arg0->camera;
+    if (camera != NULL) {
+        if (func_150ADA68() < D_800AB020) {
+            pos = func_15144B34(camera->unk23D);
+            yaw = func_15144AA8(camera->unk23D);
+            angle = ((func_150ADA68() * 80.0f) + (yaw - 40.0f)) * D_800AB024;
+            distance = func_150ADA68() * 2000.0f;
+
+            sp58.unk0 = pos->unk0 - (sinf(angle) * distance);
+            sp58.unk4 = arg1;
+            sp58.unk8 = pos->unk8 - (cosf(angle) * distance);
+
+            if (func_15046C80((f32 *)&sp58, 0, arg2, &D_800D9860) != 0) {
+                sp58.unk4 = D_800D9860;
+                sp38.vec = sp58;
+                sp38.unkC = 0.0f;
+
+                temp_v0 = func_15149130((s16)((func_150ADA20() % 0x83U) + 0x33),
+                                        -1, 0x20, -1, 1, 0, (struct37 *)0x10, 0xFF, 1);
+                if (temp_v0 != NULL) {
+                    memcpy((u8 *)temp_v0 + 0x28, &sp38, 0x10);
+                }
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CFA4C.s")
 
