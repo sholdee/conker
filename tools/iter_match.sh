@@ -30,3 +30,6 @@ diff=$(python3 ../tools/asm-differ/diff.py -o "$func" 2>&1)
 score=$(echo "$diff" | grep -oE "CURRENT \(([0-9]+)\)" | grep -oE "[0-9]+" | head -1)
 echo "$diff"
 echo "SCORE: ${score:-unknown}"
+# Capture the matching source the INSTANT it hits 0, so a later over-running edit
+# can't destroy the match — the orchestrator restores from this snapshot before integrate.
+[ "${score:-x}" = "0" ] && cp "src/${file}.c" "/tmp/match_${func}.c" 2>/dev/null

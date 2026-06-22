@@ -20,6 +20,11 @@ The matching now runs on **Codex** (zero Claude tokens), via a shell mirror of t
 - **DISTILL (back on):** `orchestrator_codex.sh` ends each run with a codex distill step — skims the run's
   `/tmp/codexm_*.log`, APPENDS only genuinely-novel idioms to `ido_reference.md` under `## Post-cutover distilled`.
   Append-only guard (new file must start with old + ≤2KB growth, else revert) + reverts stray edits; self-commits.
+- **MATCH CAPTURE (defeats codex over-run — was losing ~55% of found matches):** codex `--full-auto` keeps
+  editing PAST `SCORE: 0` and destroys the match. `iter_match.sh` now snapshots `src/<file>.c` to
+  `/tmp/match_<func>.c` the instant it prints SCORE 0; the orchestrator clears stale snapshots before MATCH and
+  RESTORES each file from its snapshot after MATCH (before integrate). Deterministic — immune to whatever codex
+  does after. (Prompt also hard-stops at 0; that's secondary.) TODO parity: add the restore to orchestrator.js.
 - **SEEDS (`similar_chunk.py` writes them; both orchestrators read them):** per picked func it writes the top-3
   similar matched functions' C → `/tmp/ref_`, `/tmp/ref2_`, `/tmp/ref3_<func>.c`, AND an m2c structural draft →
   `/tmp/m2c_<func>.c` (best-effort `--context`, falls back to raw). Prompts use refs for style + m2c for structure,

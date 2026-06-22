@@ -32,7 +32,7 @@ HARD RULES (a violation corrupts the shared build tree):
 - NEVER run make / make -C conker / any full build. ONLY iter_match.sh.
 
 WHEN DONE:
-- SCORE: 0 -> STOP and LEAVE the matching C in the file.
+- SCORE: 0 -> YOU ARE FINISHED. STOP IMMEDIATELY: run NO further commands, make NO further edits, do NOT "verify" or "clean up". The instant iter_match prints SCORE: 0 the match is already captured for you; ANY further edit risks moving away from it and losing the match. Just stop.
 - Cannot reach 0 -> FIRST, if your best SCORE was <= 80 OR <= half the instruction count of the target .s (a structurally-close attempt worth keeping for later), write the best-scoring C to $REPO/.nearmiss/$1.json as JSON with keys func,file,score,c (use python3 -c with json.dump) -- but ONLY if that file does not already exist or its stored "score" is HIGHER than yours (keep-the-best: never replace a better prior attempt with a worse one). THEN revert: make $REPO/conker/src/$2.c contain exactly the original stub line  #pragma GLOBAL_ASM("asm/nonmatchings/$2/$1.s")  again. Leaving non-matching C breaks the build; reverting on failure is MANDATORY.
 EOF
 }
@@ -59,12 +59,19 @@ for c in json.load(sys.stdin): print(c['func'], c['file'])" > /tmp/codex_chunk.t
   echo "round $r: $(wc -l < /tmp/codex_chunk.txt) candidates"
 
   echo "=== round $r: MATCH (codex exec --full-auto, parallel, distinct files) ==="
+  rm -f /tmp/match_func_*.c   # clear stale; only THIS round's score-0 snapshots will exist
   while read -r func file; do
     match_prompt "$func" "$file" > "/tmp/codexp_${func}.txt"
     ( timeout 2400 codex exec --full-auto --cd "$REPO" "$(cat /tmp/codexp_${func}.txt)" \
         > "/tmp/codexm_${func}.log" 2>&1 ) &
   done < /tmp/codex_chunk.txt
   wait
+
+  # CAPTURE confirmed matches: restore each func's source from its score-0 snapshot, defeating
+  # codex over-running past SCORE 0 and destroying the match (~55% of found matches were lost this way).
+  while read -r func file; do
+    [ -f "/tmp/match_${func}.c" ] && cp "/tmp/match_${func}.c" "$REPO/conker/src/${file}.c"
+  done < /tmp/codex_chunk.txt
 
   echo "=== round $r: INTEGRATE (deterministic gate) ==="
   pairs=$(awk '{print $2" "$1}' /tmp/codex_chunk.txt | tr '\n' ' ')
