@@ -15,6 +15,41 @@ extern f32 D_800A15F0[][3];
 extern s32 (*D_8008FD00)(s32, u8);
 extern f32 D_800A1830;
 extern f32 D_800A1834;
+extern f32 D_800A1870;
+extern f32 D_800A1874;
+extern f32 sinf(f32);
+
+typedef struct {
+    u8 pad0[0x14];
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    u8 pad20[0x1B];
+    u8 unk3B;
+} Struct150F0E48Src;
+
+typedef struct {
+    Struct150F0E48Src *unk0;
+    u8 unk4;
+    u8 pad5[3];
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+} Struct150F0E48Sub;
+
+typedef struct {
+    u8 pad0[0x2B];
+    u8 unk2B;
+    u8 pad2C[0xC];
+    f32 unk38;
+    f32 unk3C;
+    f32 unk40;
+    f32 unk44;
+    f32 unk48;
+    u8 pad4C[0x5C];
+    Struct150F0E48Src *unkA8;
+    u8 unkAC;
+} Struct150F0E48Obj;
 
 void *func_150EEF80(struct_150EEE00_arg0 *, u8, u8, s32);
 void func_15143134(void *, void *, s32);
@@ -495,7 +530,30 @@ void func_150F088C(struct260 *arg0, s32 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F0BEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F0E48.s")
+s32 func_150F0E48(Struct150F0E48Obj *arg0, s32 arg1) {
+    Struct150F0E48Sub *sub;
+    Struct150F0E48Src *src;
+
+    sub = (Struct150F0E48Sub *)((u8 *)arg0 + 0xA8);
+    src = sub->unk0;
+    if (src->unk3B != sub->unk4) {
+        return 0;
+    }
+
+    arg0->unk40 = src->unk14;
+    arg0->unk44 = src->unk18;
+    arg0->unk48 = src->unk1C;
+    sub->unk8 += D_800A1870 * D_800BE9A4;
+    sub->unkC += D_800A1874 * D_800BE9A4;
+    sub->unk10 += 0.25f * D_800BE9A4;
+    sub->unk8 = func_15144B68(sub->unk8);
+    sub->unkC = func_15144B68(sub->unkC);
+    sub->unk10 = func_15144B68(sub->unk10);
+    arg0->unk38 = (sinf(sub->unk8) * 243.0f) + 780.0f;
+    arg0->unk3C = (sinf(sub->unkC) * 243.0f) + 780.0f;
+    arg0->unk2B = (sinf(sub->unk10) * 50.0f) + 200.0f;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F1020.s")
 
