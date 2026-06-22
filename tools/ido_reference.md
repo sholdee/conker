@@ -1239,3 +1239,5 @@ Special empty-guard case:
   use into `%lo(D)` but target materializes `&D` once and reloads `0(base)` each time, cast to a `volatile` one-field struct pointer and read the field repeatedly.
 - One-time loop-invariant scalar reads can move later in the pre-loop schedule if placed
   in the `for` initializer (`for (a = G1, b = G2, i = 0; ... )`): IDO keeps single pre-loop `lw`s while allowing earlier base-address setup to finish first.
+- Fixed-signature stack-arg walk: when the asm scans extra word args with `p=&last+1`;
+  `p=(s32*)(((s32)p+3)&-4)+1; v=*(p-1)`, hand-roll that pointer walk instead of `...`/`va_list` to avoid the variadic frame/homes.
