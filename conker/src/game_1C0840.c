@@ -45,4 +45,29 @@ void func_15193390(volatile s32 arg0) {
     *(s16 *)((u8 *)arg0 + 0xE) = (func_150ADA20() & 0x7F) + 0x64;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C0840/func_151934B4.s")
+void func_151934B4(struct42 *arg0) {
+    f32 sp38[4];
+
+    if (arg0->unkA4 < arg0->unk96) {
+        arg0->unkA4 = ((*(s16 *)((u8 *)arg0 + 0xAA) >> 2) * 24) / 3;
+        arg0->unkA2 = ((*(s16 *)((u8 *)arg0 + 0xAA) >> 2) * 6) / 3;
+        *(s16 *)((u8 *)arg0 + 0xAA) = *(s16 *)((u8 *)arg0 + 0xAA) + D_800BE9E4;
+        return;
+    }
+
+    arg0->unk94++;
+    if (arg0->unk94 >= 0x15) {
+        arg0->unk94 = 0x14;
+    }
+
+    arg0->unk9E = arg0->unk9E - (((s32)((u32) arg0->unk94 * D_800BE9E4)) >> 1);
+    if (arg0->unk9E < arg0->unkA6) {
+        if (*(s8 *)((u8 *)arg0 + 0xB3) == 1) {
+            sp38[0] = (f32)arg0->unk9C;
+            sp38[1] = (f32)arg0->unkA6;
+            sp38[2] = (f32)*(s16 *)((u8 *)arg0 + 0xA0);
+            func_151DBCBC(5, 30.0f, 0xFF, 0, sp38, *(u8 *)((u8 *)arg0 + 0xC), *(u8 *)((u8 *)arg0 + 1));
+        }
+        *(s16 *)((u8 *)arg0 + 0x98) = -1;
+    }
+}

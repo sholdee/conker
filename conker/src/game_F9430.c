@@ -167,7 +167,17 @@ s32 func_150CC6B8(s32 arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5,
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F9430/func_150CC8D4.s")
+s32 func_150CC8D4(u8 *arg0, s32 arg1) {
+    f32 *scale;
+    s32 i;
+
+    scale = (f32 *)(arg0 + 0xA8);
+    for (i = D_800BE9E4; i != 0; i--) {
+        *(f32 *)(arg0 + 0x58) *= *scale;
+        *(f32 *)(arg0 + 0x60) *= *scale;
+    }
+    return 1;
+}
 
 s32 func_150CCA7C(s32 arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5,
                   s32 arg6, s32 arg7, s16 arg8, s32 arg9, s32 arg10, s32 arg11,

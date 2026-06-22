@@ -204,7 +204,24 @@ s32 func_150CBABC(s32 arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5, s3
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F8590/func_150CBCE0.s")
+typedef struct {
+    char pad0[0x58];
+    f32 unk58;
+    char pad5C[0x60 - 0x5C];
+    f32 unk60;
+} Func150CBCE0;
+
+s32 func_150CBCE0(Func150CBCE0 *arg0, s32 arg1) {
+    s32 i;
+    volatile f32 *scale;
+
+    scale = (volatile f32 *)((u8 *)arg0 + 0xA8);
+    for (i = D_800BE9E4; i != 0; i--) {
+        arg0->unk58 *= *scale;
+        arg0->unk60 *= *scale;
+    }
+    return 1;
+}
 
 s32 func_150CBE88(f32 *arg0) {
     arg0[14] += arg0[17] * D_800BE9A4;

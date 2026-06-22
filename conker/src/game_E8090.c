@@ -7,7 +7,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E8090/func_150BAFEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E8090/func_150BB260.s")
+s32 func_150BB260(void *arg0, s32 arg1) {
+    s32 i;
+    f32 *scale;
+
+    scale = (f32 *)((u8 *)arg0 + 0xA8);
+    for (i = D_800BE9E4; i != 0; i--) {
+        *(f32 *)((u8 *)arg0 + 0x58) *= *scale;
+        *(f32 *)((u8 *)arg0 + 0x60) *= *scale;
+    }
+    return 1;
+}
 
 extern void func_1513F6C0(void *arg0, s32 arg1, s32 arg2);
 

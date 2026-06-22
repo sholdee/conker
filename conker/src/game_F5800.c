@@ -281,7 +281,17 @@ s32 func_150CAA04(s32 arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5,
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F5800/func_150CAC28.s")
+s32 func_150CAC28(f32 *arg0, s32 arg1) {
+    volatile f32 *scale;
+    s32 i;
+
+    scale = (f32 *)((u8 *)arg0 + 0xA8);
+    for (i = D_800BE9E4; i != 0; i--) {
+        arg0[22] *= *scale;
+        arg0[24] *= *scale;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F5800/func_150CADD0.s")
 
