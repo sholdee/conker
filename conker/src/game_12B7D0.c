@@ -4,6 +4,7 @@
 
 extern u8 D_80088B94;
 extern s32 D_800A1FC8;
+extern f32 D_800A1FEC;
 extern s32 D_800A1FE0;
 extern f32 D_800A1FF0;
 extern f32 D_800A1FF4;
@@ -14,8 +15,37 @@ void func_151D3F14(struct17 *arg0, u8 arg1, s32 arg2);
 void func_150FE604(struct127 *arg0, struct17 *arg1, s32 arg2, s32 arg3);
 void func_150FE7D4(struct127 *arg0);
 extern void func_15102B38(s32, u8, s32, s32, f32 *, s32, s32, f32, s32, s32, s32, s32, u8, s32);
+void func_15145740(struct127 *arg0, struct17 *arg1, struct17 *arg2, struct17 *arg3, f32 arg4);
+void func_150FE49C(struct127 *arg0, s32 arg1, s32 arg2, struct17 *arg3, struct17 *arg4);
+s32 func_151C229C(struct17 *arg0, struct17 *arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9, f32 arg10, s32 arg11, struct127 *arg12, s32 arg13, s32 arg14, s32 arg15, s32 arg16, s32 arg17, s32 arg18, s32 arg19, s32 arg20, f32 arg21, s32 arg22, s32 arg23, s32 arg24, s32 arg25, s32 arg26);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12B7D0/func_150FE320.s")
+s32 func_150FE320(struct127 *arg0, s32 arg1, s32 arg2) {
+    s32 unused;
+    struct17 spA8;
+    struct17 sp9C;
+    struct17 sp90;
+    struct17 sp84;
+    s32 temp_v0;
+    f32 rand1;
+    f32 rand0;
+
+    if (arg0 == 0) {
+        return 0;
+    }
+
+    func_15145740(arg0, &sp84, &spA8, 0, 0.0f);
+    func_150FE49C(arg0, ((u8 *)&arg1)[3], arg2, &sp9C, &sp90);
+
+    rand0 = func_150ADA68();
+    rand1 = func_150ADA68();
+    temp_v0 = func_150ADA20();
+
+    return func_151C229C(&sp90, &sp84, 0, 0, 0, 0, 300.0f, D_800A1FEC,
+                         rand0 * 10.0f + 25.0f,
+                         rand1 * 200.0f + 600.0f, 50.0f,
+                         (temp_v0 % 0x38U) + 0xC8, arg0, 1, 1, 0, 0xFF, 1, 1,
+                         0, 0x23, 0.0f, 0xFF, -1, 0, ((u8 *)&arg1)[3], arg2);
+}
 
 void func_150FE49C(struct127 *arg0, s32 arg1, s32 arg2, struct17 *arg3, struct17 *arg4) {
     struct17 sp3C;

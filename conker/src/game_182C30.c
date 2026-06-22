@@ -3,6 +3,16 @@
 #include "variables.h"
 
 
+struct LL155FD4 {
+    u8 pad0[0x8];
+    struct LL155FD4 *unk8;
+    u8 padC[0x4];
+    u8 unk10;
+};
+
+extern u8 D_800DCE50[];
+
+
 extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
 void func_1518C900(s32);
 
@@ -81,6 +91,22 @@ void func_15155F90(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_182C30/func_15155FD4.s")
+u8 *func_15155FD4(s32 arg0) {
+    s32 i;
+    struct LL155FD4 *node;
+
+    i = 0;
+    do {
+        node = *(struct LL155FD4 **)&D_800DCE50[i + 0x140];
+        i += 0x1A0;
+        while (node != NULL) {
+            if (arg0 == node->unk10) {
+                return (u8 *)node;
+            }
+            node = node->unk8;
+        }
+    } while ((u8 *)&D_800DD190 != &D_800DCE50[i]);
+    return NULL;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_182C30/func_15156028.s")
