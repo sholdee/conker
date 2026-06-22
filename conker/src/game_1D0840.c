@@ -5,6 +5,7 @@
 
 extern f32 D_800A8D50;
 extern f32 D_800A8D54;
+extern f32 D_800A8D60;
 
 struct vec151A3504 {
     s32 unk0;
@@ -59,6 +60,7 @@ struct header151A3504 {
 struct260 *func_151A3504(struct frame151A3504 *, u8);
 void func_151A4590(void *, u8);
 void func_151A499C(void *, u8);
+struct260 *func_15130374(void *, u8, s32, u8, s32);
 u16 func_10010154(u16, void *, u16, s16, u16);
 s32 func_15160A58(void *, s32, void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
 extern s32 func_15147A80(void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
@@ -161,7 +163,107 @@ struct260 *func_151A3504(struct frame151A3504 *arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A4590.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A4638.s")
+void func_151A4638(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, void *arg6) {
+    struct260 *ret;
+    struct {
+        s16 sp28[6];
+        u8 pad34[4];
+        struct {
+            s32 unk00;
+            s32 unk04;
+            s16 unk08;
+            s16 unk0A;
+            s32 unk0C;
+            s32 unk10;
+            u8 unk14;
+            u8 unk15;
+            u8 unk16;
+            u8 unk17;
+            u8 unk18;
+            u8 unk19;
+            u8 unk1A;
+            u8 unk1B;
+            u8 unk1C;
+            u8 unk1D;
+            s16 unk1E;
+            s16 unk20;
+            s16 unk22;
+            f32 unk24;
+            f32 unk28;
+            f32 unk2C;
+            f32 unk30;
+            f32 unk34;
+            f32 unk38;
+            u8 pad3C[0xC];
+            f32 unk48;
+            f32 unk4C;
+            f32 unk50;
+            f32 unk54;
+            s32 unk58;
+            u8 pad5C[4];
+            u8 unk60;
+            u8 unk61;
+            u8 unk62;
+            s8 unk63;
+        } sp38;
+        u8 pad9C[8];
+    } stack;
+
+    stack.sp38.unk1D = 0x27;
+    stack.sp38.unk08 = 0x1401;
+    stack.sp38.unk00 = 0x200005;
+    stack.sp38.unk04 = 0;
+    stack.sp38.unk0A = (func_150ADA20() % 5U) + 0xF;
+    stack.sp38.unk0C = 0;
+    stack.sp38.unk10 = 0;
+    stack.sp38.unk14 = 0x8A;
+    stack.sp38.unk15 = 0;
+    stack.sp38.unk16 = 0;
+    stack.sp38.unk17 = 0xFF;
+    stack.sp38.unk18 = 0;
+    stack.sp38.unk19 = 0;
+    stack.sp38.unk1A = 0;
+    stack.sp38.unk1E = 1;
+    stack.sp38.unk20 = 0xFF;
+    stack.sp38.unk22 = 1;
+    stack.sp38.unk24 = 1.0f;
+
+    stack.sp38.unk28 = stack.sp38.unk2C = (func_150ADA68() * 50.0f) + 500.0f;
+    stack.sp38.unk30 = arg0;
+    stack.sp38.unk34 = arg1;
+    stack.sp38.unk38 = arg2;
+    stack.sp38.unk48 = -arg3 * (D_800A8D60 * D_800BE9A8);
+    stack.sp38.unk4C = -arg4 * (D_800A8D60 * D_800BE9A8);
+    stack.sp38.unk50 = -arg5 * (D_800A8D60 * D_800BE9A8);
+    stack.sp38.unk58 = 0xD;
+    stack.sp38.unk60 = 1;
+    stack.sp38.unk61 = 1;
+    stack.sp38.unk54 = 0.0f;
+
+    if (func_150ADA20() & 1) {
+        stack.sp38.unk58 |= 0x40;
+    }
+
+    if (func_150ADA20() & 1) {
+        stack.sp38.unk58 |= 0x80;
+    }
+
+    stack.sp38.unk1B = 0xFF;
+    stack.sp38.unk1C = 0xFF;
+    stack.sp38.unk62 = 0;
+    stack.sp38.unk63 = -1;
+    stack.sp28[0] = 0x10;
+    stack.sp28[1] = 0xF;
+    stack.sp28[2] = 0xD;
+    stack.sp28[3] = 0x13;
+    stack.sp28[4] = 0x11;
+    stack.sp28[5] = -0x18;
+
+    ret = func_15130374(&stack.sp38, 0, 0xC, *((u8 *)arg6 + 0xC), 1);
+    if (ret != 0) {
+        memcpy((u8 *)ret + 0xA8, stack.sp28, 0xC);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A483C.s")
 
