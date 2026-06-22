@@ -12,7 +12,7 @@ typedef struct {
 } GameC9EC0Struct;
 
 extern GameC9EC0Struct D_80087430[];
-
+extern GameC9EC0Struct D_80088420[];
 s32 func_1509CA10(s32 arg0) {
     return D_80087430[arg0].unk0;
 }
@@ -46,7 +46,29 @@ s32 func_1509CA78(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CA98.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CB68.s")
+s32 func_1509CB68(void) {
+    s32 count;
+    s32 i;
+
+    count = 0;
+    i = 0;
+    do {
+        if (D_80087430[i].unk0 != 0) {
+            count++;
+        }
+        if (D_80087430[i + 1].unk0 != 0) {
+            count++;
+        }
+        if (D_80087430[i + 2].unk0 != 0) {
+            count++;
+        }
+        if (D_80087430[i + 3].unk0 != 0) {
+            count++;
+        }
+        i += 4;
+    } while (D_80088420 != &D_80087430[i]);
+    return count;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CBD4.s")
 
