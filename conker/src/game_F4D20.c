@@ -43,7 +43,13 @@ void func_150C78E0(GameObj150C78E0 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F4D20/func_150C7930.s")
+void func_150C7930(GameObj150C78E0 *arg0) {
+    SubObj150C78E0 *temp;
+
+    temp = (SubObj150C78E0 *)((u8 *)D_800DBEF4 + 0x1E0);
+    arg0->unk3C = temp->unk3C & 0xFFFF0000;
+    func_151150BC(arg0);
+}
 
 extern s32 func_15116110(GameObj150C78E0 *);
 
