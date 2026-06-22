@@ -1237,3 +1237,5 @@ Special empty-guard case:
   stack slot but the target passes/uses a lower base, declare the smaller byte buffer and set `p = (T*)(buf - bias)`; access/pass through `p` to emit the lower `addiu sp,K` without growing the frame.
 - Repeated scalar global reloads through one base: if direct/non-volatile reads fold each
   use into `%lo(D)` but target materializes `&D` once and reloads `0(base)` each time, cast to a `volatile` one-field struct pointer and read the field repeatedly.
+- One-time loop-invariant scalar reads can move later in the pre-loop schedule if placed
+  in the `for` initializer (`for (a = G1, b = G2, i = 0; ... )`): IDO keeps single pre-loop `lw`s while allowing earlier base-address setup to finish first.
