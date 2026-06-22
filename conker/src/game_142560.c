@@ -811,7 +811,62 @@ void func_1511F768(s32 *arg0, s32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511F788.s")
+struct Obj1511F788 {
+    u8 pad0[0x12];
+    s16 unk12;
+    u8 pad14[0x4];
+    f32 unk18;
+    u8 pad1C[0x20];
+    s32 unk3C;
+    u8 pad40[0x1C];
+    s16 unk5C;
+    u8 pad5E[0x10];
+    s8 unk6E;
+    u8 pad6F[0xD];
+    s32 unk7C;
+    s32 unk80;
+    s32 unk84;
+};
+
+union Temp1511F788 {
+    struct {
+        f32 pad;
+        s32 w;
+    } s;
+    f64 d;
+};
+
+void func_1511F788(struct Obj1511F788 *arg0) {
+    s32 dummy;
+    union Temp1511F788 temp;
+    s16 initial;
+    s32 state;
+
+    initial = (s16)(s32)((f32)arg0->unk12 + arg0->unk18);
+    temp.s.w = arg0->unk3C;
+    temp.s.w = (temp.s.w * 0x3C) / 0x3C;
+    if (D_800BE9B4 != 0) {
+        arg0->unk7C = func_150ADA20() & 0xFFFF;
+    }
+
+    arg0->unk18 = cosf((f32)arg0->unk7C * 0.0054931640625f) * 25.0f;
+    state = arg0->unk80;
+    arg0->unk7C = arg0->unk7C + (D_800BE9E4 * 10);
+
+    if (state == 1) {
+        arg0->unk84 = arg0->unk84 + D_800BE9E4;
+        if (temp.s.w < arg0->unk84) {
+            arg0->unk80 = 2;
+        }
+    } else if (state == 2) {
+        arg0->unk12 = arg0->unk12 - D_800BE9E4;
+        if (arg0->unk12 < -10000) {
+            ((u8 *)arg0)[0x6E] = 1;
+        }
+    }
+
+    arg0->unk5C = (s32)(((f32)arg0->unk12 + arg0->unk18) - (f32)initial);
+}
 
 extern s32 func_151149AC(u32);
 

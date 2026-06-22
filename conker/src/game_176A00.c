@@ -4,6 +4,9 @@
 
 extern f32 D_800A578C;
 extern f32 D_800A5790;
+extern f32 D_800A5888;
+extern f32 D_800A588C;
+extern f32 D_800A5890;
 extern void func_1513F680();
 extern void func_151D5D60();
 
@@ -310,9 +313,62 @@ s32 func_1514B8B0(struct Foo1514B8B0 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514B8E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514BC08.s")
+struct Foo1514BC08Obj {
+    char pad0[0x24];
+    s32 unk24;
+    char pad28[0x4];
+    f32 unk2C;
+    f32 unk30;
+};
 
-extern void func_1514BC08(void *, void *);
+struct Foo1514BC08Sub {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+};
+
+s32 func_1514BC08(void *arg0, void *arg1) {
+    struct Foo1514BC08Obj *obj;
+    struct Foo1514BC08Sub *sub;
+
+    obj = arg0;
+    sub = arg1;
+    sub->unk1C -= D_800BE9A4;
+    if (sub->unk1C < 0.0f) {
+        sub->unk1C = func_150ADA68() * 4.0f;
+        sub->unk10 = func_150ADA68() * sub->unk8 + sub->unk0;
+    }
+    obj->unk2C = obj->unk2C + ((sub->unk10 - obj->unk2C) * D_800A5888);
+    sub->unk20 -= D_800BE9A4;
+    if (sub->unk20 < 0.0f) {
+        sub->unk20 = func_150ADA68() * 9.0f;
+        if (func_150ADA20() & 1) {
+            sub->unk14 = func_150ADA68() * sub->unkC + sub->unk4;
+        } else {
+            sub->unk14 = func_150ADA68() * sub->unk18 + sub->unk4;
+        }
+    }
+    obj->unk30 = obj->unk30 + ((sub->unk14 - obj->unk30) * D_800A588C);
+    sub->unk30 -= D_800BE9A4;
+    if (sub->unk30 < 0.0f) {
+        sub->unk30 = func_150ADA68() * 7.0f;
+        sub->unk2C = func_150ADA68() * sub->unk28 + sub->unk24;
+    }
+    sub->unk34 = sub->unk34 + ((sub->unk2C - sub->unk34) * D_800A5890);
+    obj->unk24 = sub->unk34;
+    return 1;
+}
 
 void func_1514BE00(u8 *arg0) {
     func_1514BC08(arg0, arg0 + 0x110);
