@@ -1231,3 +1231,4 @@ Special empty-guard case:
   sequence but the low word folds as `D64+4`, call helpers explicitly: `__ull_div(__ll_mul(KULL, *(s32*)&D64, D64_lo), CULL)`. Type `__ll_mul` as `(u64,s32,s32)`, not four `s32`s, to keep the high-half/zero materialization.
 - One-off full-word reload of a homed param: after the arg is already homed, `tmp = *(s32 *)&arg0;`
   forces a plain `lw` from the arg slot; plain `tmp = (s32)arg0` may reuse the old reg, while `volatile` can add address code.
+- Boolean temp stored to a byte/stack field: when target wants explicit default/override (`move v0,zero; beqz; ...; li v0,1; sb v0,off`), assign a `s32 flag` with full `if/else` then store it. Direct boolean/ternary stores can shrink to a branch-likely store.
