@@ -4,6 +4,19 @@
 
 extern void (*D_8008FC70[])(void *, s16, void *);
 extern void *func_151D8868(void *arg0, s32 arg1, s32 arg2, s32 arg3);
+extern f32 D_800AB1D4;
+extern f32 D_800AB1D8;
+extern f32 D_800AB1DC;
+extern f32 D_800AB1E0;
+extern f32 D_800AB1E4;
+extern f32 D_800AB1E8;
+extern f32 D_800AB1EC;
+extern f32 D_800AB1F0;
+extern f32 D_800AB1F4;
+extern f32 D_800AB1F8;
+
+void func_1503F404(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+s32 func_15132A4C(void *, s32, s32, s32, u8, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D3480.s")
 
@@ -69,7 +82,108 @@ void func_151D3F14(f32 *arg0, u8 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D42E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D4408.s")
+struct S151D4408Temps {
+    f32 unk00;
+    f32 unk04;
+    f32 unk08;
+    f32 unk0C;
+    f32 unk10;
+    f32 unk14;
+    s32 pad18;
+};
+
+struct S151D4408 {
+    f32 unk00;
+    f32 unk04;
+    f32 unk08;
+    f32 unk0C;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    struct17 unk28;
+    struct17 unk34;
+    f32 unk40;
+    f32 unk44;
+    f32 unk48;
+    f32 unk4C;
+    s32 unk50;
+    s16 unk54;
+    s16 unk56;
+    u8 unk58;
+    u8 pad59[3];
+    s32 unk5C;
+    u8 unk60;
+    u8 unk61;
+    u8 unk62;
+    u8 unk63;
+    u8 unk64;
+    u8 unk65;
+    u8 unk66;
+    u8 unk67;
+    u8 unk68;
+    u8 pad69;
+    u8 unk6A;
+    u8 pad6B;
+    struct127 *unk6C;
+    u8 unk70;
+    u8 pad71;
+    s16 unk72;
+    s16 unk74;
+    s32 pad78;
+};
+
+void func_151D4408(struct17 *arg0, struct17 *arg1, void *arg2, struct127 *arg3, f32 arg4, u8 arg5, s32 arg6) {
+    struct S151D4408 sp54;
+    struct S151D4408Temps sp38;
+    f32 r;
+
+    func_1503F404(arg2, &sp38.unk0C, &sp38.unk10, &sp38.unk14, &sp54.unk10, &sp54.unk14, &sp54.unk18, &sp38.unk00, &sp38.unk04, &sp38.unk08);
+    sp54.unk10 += 180.0f;
+block_151D4408:
+    r = func_150ADA68();
+
+    sp54.unk00 = 1.0f;
+    sp54.unk04 = 1.0f;
+    sp54.unk0C = D_800AB1D4 * arg4;
+    sp54.unk08 = sp54.unk0C;
+    sp54.unk1C = 1.0f;
+    sp54.unk20 = 1.0f;
+    sp54.unk24 = 1.0f;
+    sp54.unk28 = *arg0;
+
+    r = (r * 105.0f + 199.0f) * D_800AB1D8;
+    sp54.unk34.unk0 = arg1->unk0 * r;
+    sp54.unk34.unk4 = arg1->unk4 * r;
+    sp54.unk34.unk8 = arg1->unk8 * r;
+
+    sp54.unk40 = (func_150ADA68() * D_800AB1DC + D_800AB1E0) * D_800AB1E4;
+    sp54.unk44 = 0.0f;
+    sp54.unk48 = (func_150ADA68() * D_800AB1E8 + D_800AB1EC) * D_800AB1F0;
+    sp54.unk4C = (func_150ADA68() * 320.0f + D_800AB1F4) * D_800AB1F8;
+    sp54.unk50 = 0x29E8;
+    sp54.unk54 = (func_150ADA20() & 7) + 0x1C;
+    sp54.unk56 = 0x25;
+    sp54.unk58 = 0;
+    sp54.unk5C = 0;
+    sp54.unk60 = 0xFF;
+    sp54.unk61 = 8;
+    sp54.unk62 = 0;
+    sp54.unk63 = 0;
+    sp54.unk64 = 0;
+    sp54.unk65 = 0;
+    sp54.unk66 = 0;
+    sp54.unk67 = 0;
+    sp54.unk68 = 2;
+    sp54.unk6A = 1;
+    sp54.unk6C = arg3;
+    sp54.unk70 = arg3->unique_id;
+    sp54.unk72 = 6;
+    sp54.unk74 = 0x2A;
+    func_15132A4C(&sp54, 3, 0xFF, 0, arg5, arg6);
+}
 
 struct S151D4668 {
     void *unk0;
