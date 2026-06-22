@@ -141,7 +141,80 @@ void func_150EA8E0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_117490/func_150EA904.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_117490/func_150EA944.s")
+typedef struct {
+    /* 0x00 */ f32 unk0;
+    /* 0x04 */ f32 unk4;
+    /* 0x08 */ f32 unk8;
+    /* 0x0C */ u8  padC[0x4];
+    /* 0x10 */ s16 unk10;
+    /* 0x12 */ s16 unk12;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ u8  pad16[0x26];
+    /* 0x3C */ s32 unk3C;
+    /* 0x40 */ u8  pad40[0x1A];
+    /* 0x5A */ s16 unk5A;
+    /* 0x5C */ s16 unk5C;
+    /* 0x5E */ s16 unk5E;
+    /* 0x60 */ f32 unk60;
+    /* 0x64 */ f32 unk64;
+    /* 0x68 */ f32 unk68;
+    /* 0x6C */ u8  pad6C[0x2];
+    /* 0x6E */ u8  unk6E;
+    /* 0x6F */ u8  pad6F[0x4];
+    /* 0x73 */ u8  unk73;
+    /* 0x74 */ u8  pad74[0x8];
+    /* 0x7C */ s32 unk7C;
+    /* 0x80 */ u8  pad80[0xA];
+    /* 0x8A */ u8  unk8A;
+} struct_EA944;
+
+void func_150EA944(struct_EA944 *arg0) {
+    f32 temp_f0;
+    f32 temp_f2;
+    s32 temp_v0;
+
+    if ((arg0->unk73 & 3) == 3) {
+        temp_f0 = (f32)D_800BE9E4;
+
+        arg0->unk0 += arg0->unk60 * temp_f0;
+        temp_f2 = arg0->unk0;
+        if (temp_f2 < 0.0f) {
+            arg0->unk0 = temp_f2 + 360.0f;
+        } else if (temp_f2 >= 360.0f) {
+            arg0->unk0 = temp_f2 - 360.0f;
+        }
+
+        arg0->unk4 += arg0->unk64 * temp_f0;
+        temp_f2 = arg0->unk4;
+        if (temp_f2 < 0.0f) {
+            arg0->unk4 = temp_f2 + 360.0f;
+        } else if (temp_f2 >= 360.0f) {
+            arg0->unk4 = temp_f2 - 360.0f;
+        }
+
+        arg0->unk8 += arg0->unk68 * temp_f0;
+        temp_f2 = arg0->unk8;
+        if (temp_f2 < 0.0f) {
+            arg0->unk8 = temp_f2 + 360.0f;
+        } else if (temp_f2 >= 360.0f) {
+            arg0->unk8 = temp_f2 - 360.0f;
+        }
+
+        temp_v0 = arg0->unk8A;
+        arg0->unk5C = arg0->unk5C - ((u32)arg0->unk3C * D_800BE9E4);
+        arg0->unk10 = arg0->unk10 + ((u32)arg0->unk5A * D_800BE9E4);
+        arg0->unk7C += (u32)arg0->unk5C * D_800BE9E4;
+        arg0->unk12 = arg0->unk7C >> 3;
+        arg0->unk14 = arg0->unk14 + ((u32)arg0->unk5E * D_800BE9E4);
+
+        temp_v0 -= D_800BE9E4 << 2;
+        if (temp_v0 > 0) {
+            arg0->unk8A = temp_v0;
+        } else {
+            arg0->unk6E = 1;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_117490/func_150EAB10.s")
 

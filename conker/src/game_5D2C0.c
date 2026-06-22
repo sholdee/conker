@@ -1,5 +1,7 @@
 #include <ultra64.h>
+#define func_15083568 func_15083568_orig
 #include "functions.h"
+#undef func_15083568
 #include "variables.h"
 
 extern f32 D_80097B68;
@@ -7,6 +9,9 @@ extern f32 D_800970DC;
 extern u8 D_800BEA0C;
 void func_1000FD38(void *, void *, s32);
 s32 func_15033BDC();
+u8 *func_15083568(struct127 *, s32, f32, s32);
+extern void func_150A7A48(f32 arg0[4][4], f32 arg1[4][4], f32 arg2[4][4]);
+extern void func_1503E5F8();
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_1502FE10.s")
 
@@ -340,7 +345,67 @@ s16 arg1;
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_150335C8.s")
+void *func_150335C8(struct127 *arg0, struct127 *arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    u8 *temp_v0;
+    f32 sp124[4][4];
+    f32 spE4[4][4];
+    f32 spA4[4][4];
+    f32 sp64[4][4];
+    f32 sp60;
+    f32 sp5C;
+    f32 sp58;
+    f32 sp54;
+    f32 sp50;
+    f32 sp4C;
+    f32 sp48;
+    f32 sp44;
+    f32 sp40;
+    f32 scale;
+
+    if (arg1->unk1D4 == 0) {
+        return 0;
+    }
+
+    temp_v0 = func_15083568(arg1, arg2, 1.0f, 0);
+    if (temp_v0 != 0) {
+        temp_v0[2] = arg3;
+        *(f32 *)(temp_v0 + 0x40) = arg0->xz_scale;
+
+        if (arg4 != 0) {
+            temp_v0[0x16] = temp_v0[0x16] & ~4;
+        } else {
+            temp_v0[0x16] = temp_v0[0x16] | 4;
+        }
+
+        guMtxL2F(sp124, (Mtx *)((u8 *)arg1->unk1D4 + (arg3 << 6)));
+        func_15048B10((s32)sp124, (s32)spE4);
+
+        scale = arg0->xz_scale;
+        func_150A9B0C(spA4, arg0->unkB8, arg0->unk40, arg0->unkC4, scale, arg0->y_scale, scale);
+
+        spA4[3][0] = arg0->x_position;
+        spA4[3][1] = arg0->y_position;
+        spA4[3][2] = arg0->z_position;
+        spA4[0][3] = 0.0f;
+        spA4[1][3] = 0.0f;
+        spA4[2][3] = 0.0f;
+        spA4[3][3] = 1.0f;
+
+        func_150A7A48(spA4, spE4, sp64);
+        func_1503E5F8(sp64, &sp60, &sp5C, &sp58, &sp48, &sp44, &sp40, &sp54, &sp50, &sp4C);
+
+        if (arg5 != 0) {
+            sp58 = 0.0f;
+            sp5C = 0.0f;
+            sp60 = 0.0f;
+        }
+
+        func_15030D54(temp_v0, sp60, sp5C, sp58, sp48, sp44, sp40);
+        return temp_v0;
+    }
+
+    return 0;
+}
 
 s32 func_1503378C(u8 *arg0, s16 *arg1) {
     u16 temp = (u16)arg1[0x42];
