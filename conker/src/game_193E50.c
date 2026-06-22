@@ -2,8 +2,40 @@
 #include "functions.h"
 #include "variables.h"
 
+extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
+extern void func_1517E05C(s32, s32, s32);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_193E50/func_151669A0.s")
+void func_151669A0(s32 arg0, s32 arg1, s32 arg2, f32 arg3, s32 arg4, s32 arg5) {
+    u8 *temp_v0;
+    s32 temp_s0;
+    s32 i;
+    f32 temp_f24;
+    f32 temp_f26;
+    f32 temp_f28;
+
+    temp_v0 = func_15167A68(0xD, arg5, 0xE0, 1, (u8)arg4, 1);
+    if (temp_v0 != 0) {
+        temp_v0[0xD0] = 0xA;
+        *(s16 *)(temp_v0 + 0xD2) = arg0;
+        *(s16 *)(temp_v0 + 0xD4) = arg1;
+        *(s16 *)(temp_v0 + 0xD6) = arg2;
+        *(f32 *)(temp_v0 + 0xD8) = arg3;
+
+        temp_s0 = func_150ADA20() & 0x7F;
+        temp_f24 = arg0;
+        temp_f26 = arg1;
+        temp_f28 = arg2;
+        for (i = 0; i != 0xC0; i += 0x40) {
+            if (arg3 != 1.0f) {
+                func_15043D90((Mtx *)(temp_v0 + i + 0x10), 0.0f, temp_s0, 0.0f, arg3, arg3, arg3, temp_f24, temp_f26, temp_f28);
+            } else {
+                func_15043E68((Mtx *)(temp_v0 + i + 0x10), 0.0f, temp_s0, 0.0f, temp_f24, temp_f26, temp_f28);
+            }
+            temp_s0 += (func_150ADA20() & 0x3F) + 0x5A;
+        }
+        func_1517E05C(arg0, arg1, arg2);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_193E50/func_15166B50.s")
 
