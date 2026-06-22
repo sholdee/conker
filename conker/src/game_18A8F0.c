@@ -7,6 +7,7 @@
 
 s32 *allocate_memory(s32, s32, s32, s32);
 s32 func_150A1DA0(u8 *, struct178 *, s32);
+extern f32 D_800A6530;
 
 s32 *func_1515D440(void) {
     s32 *temp;
@@ -303,7 +304,52 @@ void func_1515F5C4(s32 arg0, s32 arg1) {
     func_1515D4D4(temp_v1, temp_t0, temp_t1, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F850.s")
+struct Stack1515F850 {
+    s32 pad14;
+    s32 pad18;
+    u8 sp1C;
+    u8 sp1D;
+    u8 sp1E;
+    u8 pad1F;
+    f32 sp20;
+    f32 sp24;
+    f32 sp28;
+};
+
+void func_1515F850(s32 arg0, s32 arg1) {
+    volatile s32 pad;
+    struct Stack1515F850 stack;
+    f32 temp_f0;
+    f32 temp_f14;
+    f32 temp_f16;
+    f32 temp_f18;
+
+    stack.sp1C = ((u8 *)&D_800DCD20)[0];
+    stack.sp1D = ((u8 *)&D_800DCD20)[1];
+    stack.sp1E = ((u8 *)&D_800DCD20)[2];
+    temp_f0 = sinf(D_800DCDA0);
+    temp_f14 = (temp_f0 * 29.5f) + 127.5f;
+    temp_f16 = (temp_f0 * 71.0f) + 109.0f;
+    stack.sp28 = temp_f14;
+    stack.sp24 = temp_f16;
+    temp_f18 = (temp_f0 * 26.0f) + 26.0f;
+    stack.sp20 = temp_f18;
+    D_800DCDA0 += D_800A6530 * D_800BE9A4;
+    D_800DCDA0 = func_15144B68(D_800DCDA0);
+    if (stack.sp28 != D_800DCD94) {
+        D_800DCD94 += (stack.sp28 - D_800DCD94) * 0.5f;
+        stack.sp1C = (u8)(u32)D_800DCD94;
+    }
+    if (stack.sp24 != D_800DCD98) {
+        D_800DCD98 += (stack.sp24 - D_800DCD98) * 0.5f;
+        stack.sp1D = (u8)(u32)D_800DCD98;
+    }
+    if (stack.sp20 != D_800DCD9C) {
+        D_800DCD9C += (stack.sp20 - D_800DCD9C) * 0.5f;
+        stack.sp1E = (u8)(u32)D_800DCD9C;
+    }
+    func_1515D4D4(stack.sp1C, stack.sp1D, stack.sp1E, 0);
+}
 
 long func_1515FB70(u8 *a0, u8 *a1)
 {
