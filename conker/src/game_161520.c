@@ -3,6 +3,8 @@
 #include "variables.h"
 
 extern u8 D_800A3FE6[];
+extern u8 D_800A4058[];
+extern u8 D_800A4068[];
 extern f32 D_800A4830;
 extern f32 D_800A4834;
 extern f32 D_800A4838;
@@ -553,7 +555,77 @@ s32 func_151380B4(s32 *arg0, s32 arg1, s32 arg2) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15138120.s")
+typedef struct {
+    u8 unk00;
+    u8 pad01[3];
+    struct127 *unk04;
+    u8 unk08;
+    u8 pad09[3];
+    f32 unk0C;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    u8 unk24;
+    u8 pad25;
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    u8 unk2E;
+    u8 unk2F;
+    s8 unk30;
+    u8 pad31[3];
+    f32 unk34;
+    u8 unk38;
+    s8 unk39;
+    u8 pad3A[2];
+} Local15138120;
+
+void func_15138120(struct127 *arg0, s32 arg1, u8 arg2) {
+    Local15138120 tmp;
+
+    if (D_800A3FD8[(arg1 << 4) + 0xE] != 2) {
+        tmp.unk00 = arg0->unique_id;
+        tmp.unk04 = arg0;
+        if (arg2) {
+            tmp.unk08 = 0xC;
+        } else {
+            tmp.unk08 = 1;
+        }
+        tmp.unk24 = 2;
+        tmp.unk26 = 0x28;
+        tmp.unk28 = 0x10;
+        tmp.unk0C = 0.0f;
+        tmp.unk10 = 0.0f;
+        tmp.unk14 = 0.0f;
+        tmp.unk18 = 0.0f;
+        tmp.unk20 = 0.0f;
+        tmp.unk1C = 20.0f;
+        if ((D_800A4058 == &D_800A3FD8[arg1 << 4]) || (D_800A4068 == &D_800A3FD8[arg1 << 4])) {
+            tmp.unk2A = (arg0->unk94 & 0xE) ? 0x78 : 0xF0;
+        } else {
+            tmp.unk2A = 0x258;
+        }
+        tmp.unk2E = 5;
+        if (D_800A3FD8[(arg1 << 4) + 0xE] == 0) {
+            tmp.unk2F = 5;
+        } else {
+            tmp.unk2F = 6;
+        }
+        tmp.unk30 = -1;
+        tmp.unk38 = 0;
+        tmp.unk39 = -1;
+        tmp.unk34 = 1.0f;
+        tmp.unk2C = func_1000FA64(0x4FE, (s16)(s32)arg0->x_position,
+                                  (s16)(s32)arg0->y_position,
+                                  (s16)(s32)arg0->z_position, 0x5DC0,
+                                  0x258, 0x12C, (s32)func_1000EBC4,
+                                  (void *)0x78, 0, 0, 0);
+        func_15134DAC(&tmp, 0);
+    }
+}
 
 typedef struct {
     s32 unk00;
