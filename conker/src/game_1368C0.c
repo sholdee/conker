@@ -2,6 +2,43 @@
 #include "functions.h"
 #include "variables.h"
 
+struct Vec3F15109C20 {
+    f32 x;
+    f32 y;
+    f32 z;
+};
+
+struct Arg15109C20 {
+    u8 pad0;
+    u8 unk1;
+    u8 pad2[0xA];
+    u8 unkC;
+    u8 padD[0x6];
+    u8 unk13;
+    u8 pad14[0x14];
+    void *unk28;
+};
+
+struct Arg15109C20Sub {
+    u8 pad0[0x3B];
+    u8 unk3B;
+};
+
+extern f32 D_800A2650;
+extern f32 D_800A2654;
+extern f32 D_800A2658;
+extern f32 D_800A265C;
+extern f32 D_800A2660;
+extern f32 D_800A2664;
+extern f32 D_800A2668;
+extern f32 D_800A266C;
+extern f32 D_800A2670;
+extern f32 D_800A2674;
+extern f32 D_800A2678;
+extern f32 D_800A267C;
+extern f32 D_800A2680;
+extern void func_15132A4C(void *, s32, s32, s32, u8, s32);
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1368C0/func_15109410.s")
 
@@ -9,7 +46,107 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1368C0/func_15109848.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1368C0/func_15109C20.s")
+void func_15109C20(struct Arg15109C20 *arg0, struct Vec3F15109C20 *arg1, s32 arg2, s32 arg3, s32 arg4, struct Vec3F15109C20 *arg5) {
+    s32 padA4;
+    struct Arg15109C20Sub *sub;
+    f32 scale;
+    s32 pad98;
+    struct {
+        f32 unk00;
+        f32 unk04;
+        f32 unk08;
+        f32 unk0C;
+        f32 unk10;
+        f32 unk14;
+        f32 unk18;
+        f32 unk1C;
+        f32 unk20;
+        f32 unk24;
+        struct Vec3F15109C20 unk28;
+        f32 unk34;
+        f32 unk38;
+        f32 unk3C;
+        f32 unk40;
+        f32 unk44;
+        f32 unk48;
+        f32 unk4C;
+        s32 unk50;
+        s16 unk54;
+        s16 unk56;
+        u8 unk58;
+        u8 pad59[3];
+        s32 unk5C;
+        u8 unk60;
+        u8 unk61;
+        u8 unk62;
+        u8 unk63;
+        u8 unk64;
+        u8 unk65;
+        u8 unk66;
+        u8 unk67;
+        u8 unk68;
+        u8 pad69;
+        u8 unk6A;
+        u8 pad6B;
+        struct Arg15109C20Sub *unk6C;
+        u8 unk70;
+        u8 pad71;
+        s16 unk72;
+        s16 unk74;
+        u8 pad76[2];
+    } sp20;
+
+    sub = arg0->unk28;
+    scale = ((func_150ADA68() * D_800A2650) + D_800A2654) * D_800A2658;
+    sp20.unk00 = 1.0f;
+    sp20.unk04 = 1.0f;
+    sp20.unk08 = sp20.unk0C = ((func_150ADA68() * D_800A265C) + D_800A2660) * D_800A2664;
+    sp20.unk10 = func_150ADA68() * 360.0f;
+    sp20.unk14 = func_150ADA68() * 360.0f;
+    sp20.unk18 = func_150ADA68() * 360.0f;
+    sp20.unk1C = 1.0f;
+    sp20.unk20 = 1.0f;
+    sp20.unk24 = 1.0f;
+    sp20.unk28 = *arg1;
+    sp20.unk34 = arg5->x * scale;
+    sp20.unk38 = arg5->y * scale;
+    sp20.unk3C = arg5->z * scale;
+    sp20.unk40 = ((func_150ADA68() * D_800A2668) + D_800A266C) * D_800A2670;
+    sp20.unk44 = 0.0f;
+    sp20.unk48 = ((func_150ADA68() * D_800A2674) + D_800A2678) * D_800A267C;
+    sp20.unk4C = ((func_150ADA68() * 124.0f) + -231.0f) * D_800A2680;
+    sp20.unk50 = 0x29E8;
+    sp20.unk54 = (func_150ADA20() % 15U) + 0x14;
+
+    if (func_150ADA20() & 1) {
+        sp20.unk56 = 0x23;
+    } else {
+        sp20.unk56 = 0x24;
+    }
+
+    sp20.unk58 = 0;
+    sp20.unk5C = 0;
+    sp20.unk60 = 0xFF;
+    sp20.unk61 = 8;
+    sp20.unk62 = 0;
+    sp20.unk63 = 0;
+    sp20.unk64 = 0;
+    sp20.unk65 = 0;
+    sp20.unk66 = 0;
+    sp20.unk67 = 0;
+    sp20.unk68 = 2;
+    if (arg0->unk13 == 0x1A) {
+        sp20.unk6A = 1;
+    } else {
+        sp20.unk6A = 2;
+    }
+    sp20.unk6C = sub;
+    sp20.unk70 = sub->unk3B;
+    sp20.unk72 = 0xA;
+    sp20.unk74 = 0x19;
+
+    func_15132A4C(&sp20, 3, 0xFF, 0, arg0->unkC, arg0->unk1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1368C0/func_15109ED4.s")
 
