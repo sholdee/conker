@@ -53,5 +53,10 @@ structs, `0x01/0x02/0x05`-prefixed command words. Same method — decode via @s2
 
 ## Notes
 - Consult `include/2.0L/PR/gbi.h` for exact macro signatures and the `G_*` flag constants.
+- For LOW-LEVEL command constants the public `gbi.h` doesn't expose — `gSPMoveMem`/`gSPMoveWord`
+  indices (`G_MV_MMTX/PMTX/VIEWPORT/LIGHT/MATRIX`, `G_MWO_*`), struct sizes (`lightSize`,
+  `inputVtxSize`), and vertex-field offsets (`VTX_IN_*`) — see @gbi_internal.h (from the matching
+  F3DEX2 microcode disassembly). Use it to identify which macro produced a raw move/light/matrix word.
+  The full microcode disasm (definitive command-processing reference) lives at `~/f3dex2/f3dex2.s` if installed.
 - Match neighbor functions' style: pointer name, struct-field access (define/extend structs
   rather than pointer arithmetic), and macro choice.

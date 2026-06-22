@@ -27,9 +27,11 @@ The matching now runs on **Codex** (zero Claude tokens), via a shell mirror of t
 - **RETENTION:** harvest best-C when `score ≤ 80 OR ≤ ½ instr count` (size-fair). Every attempt is logged to
   `tools/attempts.tsv` (func,file,best_score,size) — committed + pushed. `.nearmiss/*.json` best-C seeds are
   tracked + backed up. Permuter `import_new` keeps its ≤80 filter (no wasted CPU on uncrackable seeds).
-- **RE-ATTEMPT play (gated on m2c proving out):** the attempted-log (`/tmp/orchestrator_attempted_*.txt`) excludes
-  past failures. Once m2c-seed shows a real lift, `rm` that log to re-open EVERY still-stubbed function for a fresh
-  m2c-seeded shot (safe — only stubs re-open; matched funcs aren't stubs). Potentially hundreds of functions.
+- **RE-ATTEMPT (ACTIVE — m2c validated +18% on run 18):** `rm /tmp/orchestrator_attempted_*.txt` re-opens every
+  still-stubbed function (safe — only stubs re-open). `similar_chunk.py` then prioritizes **near-miss funcs first,
+  lowest prior score first** (closest), and seeds each with its OWN best-C at `/tmp/prev_<func>.c` (#1) on top of
+  m2c + top-3 refs. Prompts: step 0e starts the agent FROM /tmp/prev_<func>.c. Run at high maxi (400) so most
+  near-misses are eligible. Closest near-misses (score 2-8) crack first; stop/raise when yield decays.
 - **Fork port (DONE — 42/70 committed):** sibling-fork matches were ported via `port_fork.py` (per-func
   iter_match filter) → integrate.py. Re-running yields ~0 (the other 28 fail in our tree on header/struct
   drift); skip unless ~/conker-llm-fork advances materially.

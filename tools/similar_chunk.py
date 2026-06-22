@@ -30,6 +30,7 @@ import sys
 import re
 import hashlib
 import subprocess
+import glob
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -165,7 +166,9 @@ def main():
 
     # Score every eligible stub against the corpus; keep its top-3 strong refs.
     scored = []  # (similarity, n, file, func, [(ref_func, ref_file), ...])
+    row_file = {}
     for n, file, func in rows:
+        row_file[func] = file
         spath = os.path.join(ROOT, "asm/nonmatchings", file, func + ".s")
         query = fs.parse_asm_file(spath, func, file)
         if query is None:
@@ -180,10 +183,29 @@ def main():
     # Highest similarity first; distinct files only.
     scored.sort(key=lambda r: (-r[0], r[1], r[3]))
 
+    # RE-ATTEMPT priority: eligible stubs we have a prior near-miss for go FIRST, closest
+    # (lowest prior score) first — each later seeded with its own best-C at /tmp/prev_<func>.c.
+    # Only takes effect once the attempted-log is cleared (normally these are excluded as
+    # already-attempted), so it doesn't change steady-state selection.
+    nearmiss = {}
+    for p in glob.glob(os.path.join(_REPO, ".nearmiss", "*.json")):
+        try:
+            d = json.load(open(p)); nearmiss[d["func"]] = d
+        except Exception:
+            pass
+    scored_by_func = {s[3]: s for s in scored}
+    nm_order = sorted((f for f in nearmiss if f in row_file),
+                      key=lambda f: nearmiss[f].get("score", 999))
+    ordered, seen_q = [], set()
+    for func in nm_order:
+        ordered.append(scored_by_func.get(func, (0.0, 0, row_file[func], func, [])))
+        seen_q.add(func)
+    ordered += [s for s in scored if s[3] not in seen_q]
+
     picked = []
     seen_files = set()
     picked_funcs = set()
-    for sim, n, file, func, refs in scored:
+    for sim, n, file, func, refs in ordered:
         if file in seen_files:
             continue
         ref_cs = []
@@ -241,6 +263,16 @@ def main():
             except OSError:
                 pass
         _write_m2c_seed(p["func"], p["file"], ctx)
+        # prior best-C seed (re-attempt): start the agent from its own closest attempt
+        pp = f"/tmp/prev_{p['func']}.c"
+        nm = nearmiss.get(p["func"])
+        try:
+            if nm and nm.get("c"):
+                open(pp, "w").write(f"/* your previous best attempt: SCORE {nm.get('score','?')} -- refine THIS toward 0 */\n{nm['c']}")
+            elif os.path.exists(pp):
+                os.remove(pp)
+        except OSError:
+            pass
 
     # Persist so the next chunk doesn't repeat these.
     with open(LOG, "a") as f:
