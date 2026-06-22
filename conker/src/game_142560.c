@@ -10,6 +10,9 @@ extern f32 D_800A2F8C;
 extern void *allocate_memory(s32, s32, s32, s32);
 extern f32 D_800A3210;
 extern f32 D_800A3214;
+extern f32 D_800A2FF4;
+extern f32 D_800A2FF8;
+extern f32 D_800A2FFC;
 
 struct Struct1511F31CArg {
     u8 pad0[0x10];
@@ -21,6 +24,8 @@ struct Struct1511F31CArg {
     u8 pad40[0x14];
     u16 unk54;
 };
+
+extern void func_1511F31C(struct Struct1511F31CArg *arg0);
 
 struct Struct1511490C {
     char pad0[0x10];
@@ -332,6 +337,19 @@ struct Obj15117798 {
     f32 unk8;
 };
 
+struct Obj15117DA4 {
+    f32 unk0;
+    f32 unk4;
+    u8 pad8[0x8];
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    u8 pad16[0x28];
+    u16 unk3E;
+    u8 pad40[0x14];
+    u16 unk54;
+};
+
 void func_15117798(struct Obj15117798 *arg0) {
     arg0->unk8 = func_15117518((struct Obj151174F0 *)arg0, arg0->unk8);
 }
@@ -354,7 +372,42 @@ void func_15117D3C(u8 *arg0, u8 *arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_15117DA4.s")
+void func_15117DA4(struct Obj15117DA4 *arg0, f32 arg1, f32 arg2, f32 arg3, f32 *arg4) {
+    f32 angle;
+    f32 s;
+    f32 c;
+    f32 temp_z;
+    f32 temp_x;
+
+    if (arg0->unk54 == 0x8006) {
+        if (D_800BE9F0 == 0x35) {
+            arg0 = (struct Obj15117DA4 *)func_151149AC(0xFD);
+            func_1511F31C((struct Struct1511F31CArg *)arg0);
+            arg2 = D_800A2FF4;
+            arg1 = 0.0f;
+            arg3 = 0.0f;
+        }
+    }
+
+    angle = arg0->unk0 * D_800A2FF8;
+    s = sinf(angle);
+    c = cosf(angle);
+    arg4[0] = arg1;
+    arg4[1] = (arg2 * c) - (arg3 * s);
+    arg4[2] = (arg2 * s) + (arg3 * c);
+
+    angle = arg0->unk4 * D_800A2FFC;
+    s = sinf(angle);
+    c = cosf(angle);
+    temp_x = arg4[0];
+    temp_z = arg4[2];
+    arg4[0] = (temp_z * s) + (temp_x * c);
+    arg4[2] = (temp_z * c) + (-temp_x * s);
+
+    arg4[0] = *(volatile f32 *)&arg4[0] + arg0->unk10;
+    arg4[1] = *(volatile f32 *)&arg4[1] + arg0->unk12;
+    arg4[2] = *(volatile f32 *)&arg4[2] + arg0->unk14;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_15117F3C.s")
 
