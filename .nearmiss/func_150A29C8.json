@@ -1,0 +1,6 @@
+{
+ "func": "func_150A29C8",
+ "file": "game_CDE80",
+ "score": 70,
+ "c": "s32 func_150A29C8(a0, a1)\ns32 a0;\ns32 a1;\n{\n    a1 &= 0xFFF;\n    if ((u32)D_800D3094 < (u32)a1) {\n        return 1;\n    }\n    if ((u32)a0 < 0x10 && ((u16)D_800D2340 & (1 << a0))) {\n        if ((D_800D30F0[(u32)a0][(u32)a1 >> 6] >> (u32)(a1 & 0x3F)) & 1) {\n            return 0;\n        }\n        return 1;\n    }\n    return func_150A1DA0((u8 *)&D_800CC2D0[a0], &((struct178 *)*(s32 *)&D_800D3098)[a1], 1);\n}\n/* requires: extern u64 D_800D30F0[16][3]; above the function */"
+}

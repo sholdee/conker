@@ -1,0 +1,6 @@
+{
+  "func": "func_151C6D70",
+  "file": "game_1F3780",
+  "score": 428,
+  "c": "struct blk12_C6D70 { s32 a; s32 b; s32 c; };\nextern void func_15102B38(s32, u8, struct blk12_C6D70 *, struct blk12_C6D70 *, f32 *, s32, s32, f32, s32, s32, s32, s32, u8, s32);\nextern u32 D_800AAB00[];\nextern struct blk12_C6D70 D_800AAB08[];\nextern struct blk12_C6D70 D_800AAB20[];\nextern f32 D_800AAC10, D_800AAC14, D_800AAC18, D_800AAC1C, D_800AAC20;\n\nvoid func_151C6D70(s32 a0, s32 a1, s32 a2, s16 a3, u8 arg4, s32 arg5) {\n    f32 sp50[2];\n    volatile s32 sp48;\n    s32 sp44;\n\n    sp50[1] = func_150ADA68() * D_800AAC10 + D_800AAC14;\n    sp50[0] = func_150ADA68() * D_800AAC18 + D_800AAC1C;\n    sp44 = func_150ADA20();\n    sp48 = func_150ADA20();\n    func_15102B38(a0, (D_800AAB00[(u8)a1] >> 6) & 0xFF, &D_800AAB08[(u8)a1],\n                  &D_800AAB20[(u8)a1], sp50, (sp44 & 3) + 6, 0xFF,\n                  func_150ADA68() * 270.0f + D_800AAC20, a2, 0xFF, 0, (s16)a3,\n                  arg4, arg5);\n}"
+}

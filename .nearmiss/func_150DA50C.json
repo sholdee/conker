@@ -1,0 +1,6 @@
+{
+  "func": "func_150DA50C",
+  "file": "game_105FC0",
+  "score": 255,
+  "c": "typedef struct {\n    s32 unk0;\n    u8 unk4;\n    char pad5[0x3C - 0x5];\n    f32 unk3C;\n} SubA_150DA50C;\n\ntypedef struct {\n    s32 unk0;\n    union {\n        u8 b4;\n        s32 w4;\n    } u4;\n    union {\n        f32 f8;\n        struct {\n            u8 b8;\n            u8 b9;\n        } s;\n    } u8;\n} ArgB_150DA50C;\n\nvoid func_150DA50C(void *arg0, s32 arg1, u8 arg2) {\n    SubA_150DA50C *temp_v1 = *(SubA_150DA50C **)((u8 *)arg0 + 0x98);\n    ArgB_150DA50C *b = (ArgB_150DA50C *)arg1;\n    if (arg2 == 0x44) {\n        if ((b->unk0 == temp_v1->unk0) || (b->u4.b4 == temp_v1->unk4)) {\n            temp_v1->unk3C = b->u8.f8;\n        }\n    } else if (arg2 == 0) {\n        if ((temp_v1->unk0 == b->unk0) || (temp_v1->unk4 == b->u4.b4)) {\n            func_1516972C(arg0);\n        }\n    } else if (arg2 == 0x2D) {\n        if (temp_v1->unk0 == b->unk0) {\n            temp_v1->unk0 = b->u4.w4;\n            temp_v1->unk4 = b->u8.s.b9;\n        } else if (temp_v1->unk0 == b->u4.w4) {\n            temp_v1->unk0 = b->unk0;\n            temp_v1->unk4 = b->u8.s.b8;\n        }\n    }\n}"
+}

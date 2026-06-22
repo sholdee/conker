@@ -1,0 +1,6 @@
+{
+  "func": "func_150843AC",
+  "file": "game_AEB40",
+  "score": 30,
+  "c": "void func_150843AC(void *arg0, s32 arg1) {\n    s32 *p;\n    s32 i;\n    u8 idx;\n\n    if ((*(s32 *)((u8 *)arg0 + arg1 * 8 + 0x28C) == 0) &&\n        (*(s32 *)((u8 *)arg0 + arg1 * 8 + 0x290) == 0)) {\n        return;\n    }\n\n    idx = ((u8 *)*(s32 *)((u8 *)arg0 + 0x2C4))[arg1];\n    for (p = (s32 *)((s8 *)arg0 + (arg1 << 3)), i = 0; i != 8; p++, i += 4) {\n        s32 cur = *(s32 *)((u8 *)p + 0x28C);\n        if (cur != 0) {\n            if (cur != (&D_800D19A0)[idx]) {\n                func_100043B4((s32 *)cur, 3);\n            } else {\n                ((u8 *)D_800D1F80)[idx] -= 1;\n            }\n            *(s32 *)((u8 *)p + 0x28C) = 0;\n        }\n    }\n}"
+}

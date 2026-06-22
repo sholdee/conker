@@ -1,0 +1,6 @@
+{
+  "func": "func_1508CA88",
+  "file": "game_B3020",
+  "score": 110,
+  "c": "extern s8 *D_800D23B0;\n\ns32 func_1508CA88(void) {\n    s8 temp;\n\n    D_800D23B0[0x1703]++;\n    temp = D_800D23B0[0x1703];\n    if (temp >= D_8008FD90) {\n        D_800D23B0[0x1703] = 0;\n        temp = D_800D23B0[0x1703];\n    }\n    return temp;\n}\n"
+}

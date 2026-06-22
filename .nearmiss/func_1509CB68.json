@@ -1,0 +1,6 @@
+{
+  "func": "func_1509CB68",
+  "file": "game_C9EC0",
+  "score": 10,
+  "c": "s32 func_1509CB68(void) {\n    s32 count = 0;\n    s32 i;\n\n    for (i = 0; i < 204; i++) {\n        if (D_80087430[i].unk0 != 0) {\n            count++;\n        }\n    }\n    return count;\n}"
+}

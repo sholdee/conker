@@ -1,0 +1,6 @@
+{
+  "func": "func_151162D4",
+  "file": "game_142560",
+  "score": 179,
+  "c": "struct S_151162D4 {\n    u8  pad0[0x12];\n    s16 unk12;\n    u8  pad14[0x4];\n    f32 unk18;\n    u8  pad1C[0x20];\n    s32 unk3C;\n    u8  pad40[0x1C];\n    s16 unk5C;\n    u8  pad5E[0x1E];\n    s32 unk7C;\n};\n\nextern f32 cosf(f32);\nextern s32 D_800BE9E4;\n\nvoid func_151162D4(void *arg0p) {\n    struct S_151162D4 *arg0 = arg0p;\n    f32 flo;\n    s16 temp;\n    s32 hi;\n\n    temp = (s16) ((f32) arg0->unk12 + arg0->unk18);\n    hi = (arg0->unk3C >> 16) & 0xFFFF;\n    flo = (f32) (s16) arg0->unk3C;\n    arg0->unk18 = cosf((f32) arg0->unk7C * 0.0054931640625f) * flo;\n    arg0->unk7C += hi * D_800BE9E4;\n    arg0->unk5C = (s16) (((f32) arg0->unk12 + arg0->unk18) - (f32) temp);\n}\n"
+}

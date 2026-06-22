@@ -1,0 +1,6 @@
+{
+  "func": "func_150B71A8",
+  "file": "/home/ethan/conker/conker/src/game_E4070.c",
+  "score": 30,
+  "c": "typedef struct {\n    char pad0[0x38];\n    s16 unk38;\n    s16 unk3A;\n} Struct71A8;\n\nvoid func_150B71A8(Struct71A8 *arg0) {\n    s32 temp_v0;\n    s32 temp_v1;\n\n    temp_v1 = 0x1000;\n    temp_v0 = arg0->unk38;\n    if (temp_v1 == temp_v0) {\n    } else {\n        arg0->unk38 = temp_v0 + (D_800BE9E4 * 0x100);\n        if (arg0->unk38 >= 0x1001) {\n            arg0->unk38 = temp_v1;\n        }\n        return;\n    }\n    temp_v0 = arg0->unk3A;\n    if (temp_v1 != temp_v0) {\n        arg0->unk3A = temp_v0 + (D_800BE9E4 * 0x100);\n        if (arg0->unk3A >= 0x1001) {\n            arg0->unk3A = temp_v1;\n        }\n    }\n}"
+}

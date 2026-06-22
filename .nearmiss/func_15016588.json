@@ -1,0 +1,6 @@
+{
+  "func": "func_15016588",
+  "file": "conker/src/game_439B0.c",
+  "score": 70,
+  "c": "extern u8 D_800BE580[];\nvoid func_15016588(void) {\n    u8 *bits;\n    register volatile u8 *byte;\n    s32 idx;\n    s32 i;\n    s32 mask;\n    s32 value;\n\n    bits = D_800BE580;\n    bzero(bits, 8);\n\n    byte = &D_800BEAAB;\n    idx = -1;\n    i = 0;\n\n    do {\n        if ((i & 7) == 0) {\n            mask = 1;\n            idx++;\n        } else {\n            mask = mask << 1;\n        }\n\n        func_1502B020(&value, 3, 0x1A, *byte, i);\n        i++;\n        if (value != 0) {\n            bits[idx] |= mask;\n        }\n    } while (i != 0x43);\n}\n"
+}

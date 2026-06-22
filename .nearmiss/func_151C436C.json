@@ -1,0 +1,6 @@
+{
+  "func": "func_151C436C",
+  "file": "game_1EF500",
+  "score": 110,
+  "c": "extern f32 D_800AAA7C;\n\nvoid func_151C436C(s32 a0, f32 *a1, s32 a2) {\n    f32 tx;\n    f32 ty;\n    f32 tz;\n    f32 factor;\n\n    if (a2 > 0) {\n        tx = a1[7];\n        ty = a1[8];\n        tz = a1[9];\n        factor = D_800AAA7C;\n        do {\n            a1[4] = a1[4] + (tx - a1[4]) * factor;\n            a1[5] = a1[5] + (ty - a1[5]) * factor;\n            a1[6] = a1[6] + (tz - a1[6]) * factor;\n            a2--;\n        } while (a2 > 0);\n    }\n}\n"
+}

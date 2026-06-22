@@ -1,0 +1,6 @@
+{
+  "func": "func_1501E400",
+  "file": "game_49D30",
+  "score": 26,
+  "c": "extern s32 D_800C35B0[];\nextern s32 D_800C35B8[];\nextern u8 D_800C35C0[];\nextern s32 D_800C3640[];\nextern u8 D_800C3A58;\nextern u16 D_800C3C8E;\nextern void func_1501E1B4(s32);\nextern void func_15080228(void);\nextern s32 func_151F2CDC(void);\n\nvoid func_1501E400(s32 arg0) {\n    register s32 unused;\n    s32 temp_a2;\n\n    if (D_800C3A58 != 0) {\n        D_800C3A58--;\n    }\n\n    temp_a2 = arg0 * 4;\n    *(s32 *)((u8 *)D_800C35B8 + temp_a2) = *(s32 *)((u8 *)D_800C35B0 + temp_a2);\n\n    if ((&D_800C35EA)[arg0] == 1) {\n        func_1501E1B4(arg0);\n\n        if ((arg0 != 0) || (D_800BEAC0 == 0)) {\n            *(s32 *)((u8 *)D_800C35B0 + temp_a2) += D_800BEA08;\n        }\n\n        if (D_800C35C0[arg0] == 0) {\n            if (D_800C3C8E == *(s32 *)((u8 *)D_800C35B8 + temp_a2)) {\n                if (D_800C3C8E != *(s32 *)((u8 *)D_800C35B0 + temp_a2)) {\n                    *(s32 *)((u8 *)D_800C35B8 + temp_a2) = -1;\n                }\n            }\n        }\n\n        if (func_151F2CDC() == 1) {\n            func_15080228();\n        }\n\n        if (*(s32 *)((u8 *)D_800C35B0 + temp_a2) >= *(s32 *)((u8 *)D_800C3640 + temp_a2)) {\n            *(s32 *)((u8 *)D_800C35B0 + temp_a2) = *(s32 *)((u8 *)D_800C3640 + temp_a2);\n        }\n    }\n}\n"
+}

@@ -1,0 +1,6 @@
+{
+  "func": "func_150356C8",
+  "file": "game_61D10",
+  "score": 2,
+  "c": "extern u8 D_800C3F00;\n\nstruct Foo { u8 unk0[12]; };\nextern struct Foo D_800C3F08[];\n\nstruct Foo *func_150356C8(void) {\n    u8 temp = D_800C3F00;\n    if (temp == 15) {\n        return 0;\n    }\n    D_800C3F00 = temp + 1;\n    return (struct Foo *)((u8 *)D_800C3F08 + (u8)(temp + 1) * 12 - 12);\n}"
+}

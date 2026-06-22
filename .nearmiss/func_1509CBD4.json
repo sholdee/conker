@@ -1,0 +1,6 @@
+{
+ "func": "func_1509CBD4",
+ "file": "game_C9EC0",
+ "score": 105,
+ "c": "extern GameC9EC0Struct D_8008743C[];\ns32 func_1509CBD4(s32 arg0);\n\ns32 func_1509CBD4(s32 arg0) {\n    u16 *p;\n    u16 *q;\n    s32 v;\n    s32 res;\n\n    q = (u16 *)D_8008743C[arg0].unk0;\n    if (0xFFFF != *q) {\n        v = *q & 0xFFFF;\n        p = q;\n        do {\n            res = func_1509CBD4(v);\n            v = *p;\n            if (!(((u8 *)D_800D2E4C)[v >> 3] & (1 << (v & 7))) || res == 0) {\n                return 0;\n            }\n            v = p[1];\n            p++;\n        } while (0xFFFF != v);\n    }\n    return 1;\n}\n"
+}

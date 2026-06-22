@@ -1,0 +1,6 @@
+{
+  "func": "func_151A9CA0",
+  "file": "/home/ethan/conker/conker/src/game_1D6E80.c",
+  "score": 10,
+  "c": "extern f32 D_800A8F80;\n\nvoid func_151A9CA0(u8 *arg0) {\n    u8 *v1 = *((u8 **)(arg0 + 0x18));\n    f32 sp30[3];\n\n    if ((*((u8 **)(v1 + 0x31C)) != 0) && ((*((u8 **)(v1 + 0x31C)))[0x95] != 0)) {\n        return;\n    }\n\n    goto dummy_label_151A9CA0; dummy_label_151A9CA0: ;\n    sp30[0] = *((f32 *)(v1 + 0x14));\n    if (D_800A8F80 < (*((f32 *)(v1 + 0x118)))) {\n        sp30[1] = (*((f32 *)(v1 + 0x118))) + 100.0f;\n    } else {\n        sp30[1] = (*((f32 *)(v1 + 0x18))) + 150.0f;\n    }\n    sp30[2] = *((f32 *)(v1 + 0x1C));\n    *(s32 *)&sp30[-1] = (s32)(arg0 + 0x34);\n    if (func_15045800(sp30, 0, sp30[1] - 300.0f, *(s32 *)&sp30[-1]) != 0) {\n        sp30[1] = *((f32 *)(arg0 + 0x34));\n        func_151ABE40(sp30, *(s32 *)&sp30[-1], 1, arg0[0xC], arg0[0x1]);\n        func_10010FFC(0, 8, 0x6978, 0, 0, (s32)v1);\n    }\n    func_151AA264(v1, *(s32 *)&sp30[-1]);\n    func_151ABE00(v1);\n}\n"
+}

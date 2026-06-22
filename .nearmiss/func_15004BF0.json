@@ -1,0 +1,6 @@
+{
+  "func": "func_15004BF0",
+  "file": "conker/src/game_30E90.c",
+  "score": 60,
+  "c": "s32 func_15004BF0(s32 arg0) {\n    s32 i;\n    s32 ret;\n    s32 count;\n    struct131 *base;\n\n    if (arg0 == 0) {\n        arg0 = D_800DBF00;\n        i = arg0;\n        ret = 1;\n        count = D_800DBEF0;\n        if (i < count) {\n            base = D_800DBEF4;\n            do {\n                if (ret == ((u8 *)base + (i * 0xA0))[0x72]) {\n                    ret++;\n                    i = arg0 - 1;\n                }\n                if (ret >= 0x100) {\n                    ret = 0xFF;\n                    break;\n                }\n                i++;\n            } while (i < count);\n        }\n    } else {\n        arg0 = 0xFF - D_800DBF00;\n        ret = arg0;\n        count = D_800DBEF0;\n        i = 0;\n        if (count > 0) {\n            base = D_800DBEF4;\n            do {\n                if (ret == ((u8 *)base + (i * 0xA0))[0x72]) {\n                    ret--;\n                    i = -1;\n                }\n                i++;\n                if (ret <= 0) {\n                    ret = arg0;\n                    break;\n                }\n            } while (i < count);\n        }\n    }\n\n    return ret;\n}\n"
+}

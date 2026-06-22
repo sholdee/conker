@@ -1,0 +1,6 @@
+{
+  "func": "func_1507F4C0",
+  "file": "game_AC030",
+  "score": 26,
+  "c": "s32 func_1507F4C0(s32 arg0) {\n    s32 base;\n    u32 mod;\n    if (arg0 == 0) {\n        base = 0xB4;\n        mod = 0x3C;\n    } else if (D_800BE9F0 == 0x31) {\n        return 0;\n    } else if (arg0 == 1) {\n        base = 0x3C;\n        mod = 0x3C;\n    } else {\n        base = 0;\n        mod = 0x1E;\n    }\n    return func_150ADA20() % mod + base;\n}"
+}

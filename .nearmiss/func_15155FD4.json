@@ -1,0 +1,6 @@
+{
+  "func": "func_15155FD4",
+  "file": "game_182C30",
+  "score": 50,
+  "c": "extern u8 D_800DCE50[];\nextern s8 D_800DD190;\n\nstruct LL155FD4 {\n    u8 pad0[0x8];\n    struct LL155FD4 *unk8;\n    u8 padC[0x4];\n    u8 unk10;\n};\n\nu8 *func_15155FD4(s32 arg0) {\n    struct LL155FD4 *node;\n    u8 *p;\n\n    p = D_800DCE50;\n    do {\n        node = *(struct LL155FD4 **)(p + 0x140);\n        p += 0x1A0;\n        while (node != NULL) {\n            if (arg0 == node->unk10) {\n                return (u8 *)node;\n            }\n            node = node->unk8;\n        }\n    } while (p != (u8 *)&D_800DD190);\n    return NULL;\n}\n"
+}

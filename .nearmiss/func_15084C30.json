@@ -1,0 +1,6 @@
+{
+  "func": "func_15084C30",
+  "file": "game_AEB40",
+  "score": 35,
+  "c": "struct AEB40C30Sub {\n    u8 pad0[0x8];\n    f32 unk8;\n    u8 pad2[0xC];\n    f32 unk18;\n};\nstruct AEB40C30 {\n    u8 pad0[0x4];\n    u8 unk4;\n    u8 pad2[0x2C8];\n    struct AEB40C30Sub *unk2D0;\n};\n\nvoid func_15084C30(struct AEB40C30 *arg0) {\n    struct AEB40C30Sub *sp1C;\n    if (arg0->unk4 == 0x94) {\n        sp1C = arg0->unk2D0;\n        sp1C->unk8 = (f32)((u32)func_150ADA20() % (u32)(s32)sp1C->unk18);\n    }\n}\n"
+}

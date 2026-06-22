@@ -20,6 +20,16 @@ The matching now runs on **Codex** (zero Claude tokens), via a shell mirror of t
 - **DISTILL (back on):** `orchestrator_codex.sh` ends each run with a codex distill step — skims the run's
   `/tmp/codexm_*.log`, APPENDS only genuinely-novel idioms to `ido_reference.md` under `## Post-cutover distilled`.
   Append-only guard (new file must start with old + ≤2KB growth, else revert) + reverts stray edits; self-commits.
+- **SEEDS (`similar_chunk.py` writes them; both orchestrators read them):** per picked func it writes the top-3
+  similar matched functions' C → `/tmp/ref_`, `/tmp/ref2_`, `/tmp/ref3_<func>.c`, AND an m2c structural draft →
+  `/tmp/m2c_<func>.c` (best-effort `--context`, falls back to raw). Prompts use refs for style + m2c for structure,
+  with guardrails (never copy verbatim; m2c types are guesses). Both engines benefit since both call similar_chunk.
+- **RETENTION:** harvest best-C when `score ≤ 80 OR ≤ ½ instr count` (size-fair). Every attempt is logged to
+  `tools/attempts.tsv` (func,file,best_score,size) — committed + pushed. `.nearmiss/*.json` best-C seeds are
+  tracked + backed up. Permuter `import_new` keeps its ≤80 filter (no wasted CPU on uncrackable seeds).
+- **RE-ATTEMPT play (gated on m2c proving out):** the attempted-log (`/tmp/orchestrator_attempted_*.txt`) excludes
+  past failures. Once m2c-seed shows a real lift, `rm` that log to re-open EVERY still-stubbed function for a fresh
+  m2c-seeded shot (safe — only stubs re-open; matched funcs aren't stubs). Potentially hundreds of functions.
 - **Fork port (DONE — 42/70 committed):** sibling-fork matches were ported via `port_fork.py` (per-func
   iter_match filter) → integrate.py. Re-running yields ~0 (the other 28 fail in our tree on header/struct
   drift); skip unless ~/conker-llm-fork advances materially.

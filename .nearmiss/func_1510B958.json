@@ -1,0 +1,6 @@
+{
+  "func": "func_1510B958",
+  "file": "game_138520",
+  "score": 10,
+  "c": "extern f32 D_800D35E0;\nextern f32 D_800D35E4;\n\nvoid func_1510B958(s32 arg0) {\n    struct259 *p = (struct259 *)D_800BE628 + arg0;\n\n    D_800D35E0 = *(f32 *)((u8 *)p + 0x64) + (*(f32 *)((u8 *)p + 0x74) / *(f32 *)((u8 *)p + 0x6C) - 1.0f) * -1.0f;\n    D_800D35E4 = *(f32 *)((u8 *)p + 0x68) + (*(f32 *)((u8 *)p + 0x78) / *(f32 *)((u8 *)p + 0x70) - 1.0f) * -1.0f;\n}\n"
+}

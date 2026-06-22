@@ -1,0 +1,6 @@
+{
+  "func": "func_15154C90",
+  "file": "conker/src/game_17CAF0.c",
+  "score": 60,
+  "c": "typedef struct {\n    u8 pad0[0x22];\n    s16 unk22;\n    u16 unk24;\n    s16 unk26;\n    s16 unk28;\n    u8 pad2A[0x4];\n    u8 unk2E;\n    u8 pad2F[0x39];\n    u8 unk68;\n} Struct15154C90;\n\nextern s32 (*D_8008ACC8[])(void *);\n\nvoid func_15154C90(Struct15154C90 *arg0) {\n    s32 temp;\n    s8 failed;\n\n    failed = 0;\n    if (arg0->unk24 & 1) {\n        arg0->unk22 -= D_800BE9E4;\n        if (arg0->unk22 < 0) {\n            failed = 1;\n        }\n    }\n    temp = arg0->unk68 & 0xF;\n    if (temp != 0) {\n        if (failed == 0) {\n            s32 ret;\n\n            ret = D_8008ACC8[temp](arg0);\n            if (ret == 0) {\n                failed = 1;\n            }\n        }\n    }\n    if (arg0->unk24 & 8) {\n        s32 temp2;\n\n        temp = arg0->unk22;\n        if (temp < arg0->unk26) {\n            temp2 = arg0->unk28;\n            temp = (s16)(temp * (u32)temp2);\n            if (temp < arg0->unk2E) {\n                arg0->unk2E = temp;\n            }\n        }\n    }\n    if (failed) {\n        func_1516972C((struct102 *) arg0);\n    }\n}\n"
+}

@@ -1,0 +1,6 @@
+{
+  "func": "func_151600D8",
+  "file": "game_18D250",
+  "score": 120,
+  "c": "extern char D_800A6540[];\nextern char D_800A6548[];\nextern char D_800A657C[];\nextern char D_800A6584[];\nextern char D_800A65B8[];\nextern char D_800A65C0[];\nextern char D_800A65F4[];\nextern char D_800A65FC[];\nextern char D_800A6630[];\nextern char D_800A663C[];\nextern f32 D_800A6674;\nextern f32 D_800A6678;\nextern f32 D_800A667C;\nextern f32 D_800A6680;\n\ns32 func_151600D8(void *arg0) {\n    f32 *p;\n    s32 i;\n\n    p = (f32 *)((s32)arg0 + 0x18);\n    i = 0;\n    p[0] = (f32)func_151422DC(i, D_800A6540, -2000, 2000, 0, D_800A6548, 0x1C4) * D_800A6674;\n    i = 1;\n    p[1] = (f32)func_151422DC(i, D_800A657C, -2000, 2000, 0, D_800A6584, 0x1C9) * D_800A6678;\n    i++;\n    p[2] = (f32)func_151422DC(i++, D_800A65B8, 0, 2000, 500, D_800A65C0, 0x1CE) * D_800A667C;\n    p[3] = (f32)func_151422DC(i++, D_800A65F4, 0, 2000, 500, D_800A65FC, 0x1D3) * D_800A6680;\n    *(s32 *)&p[4] = func_151422DC(i, D_800A6630, 0, 0x10000, 0x10000, D_800A663C, 0x1D9);\n    return 1;\n}"
+}

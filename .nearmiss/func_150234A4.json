@@ -1,0 +1,6 @@
+{
+  "func": "func_150234A4",
+  "file": "/home/ethan/conker/conker/src/game_49D30.c",
+  "score": 70,
+  "c": "struct163 *func_150234A4(s32 arg0, s32 arg1) {\n    struct163 *end;\n    struct163 *found;\n    struct163 *empty;\n    struct163 *var_a2;\n\n    arg0 += 1;\n    found = 0;\n    empty = 0;\n    end = &D_800C3D48;\n    var_a2 = D_800C3CA0;\n\n    do {\n        if (arg0 == (s16)var_a2->unk0) {\n            if (arg1 != 0) {\n                if (var_a2->unkC != 0) {\n                    empty = D_800C3CA0;\n                    func_15023440(D_800C3CA0, 1);\n                    break;\n                }\n            }\n            found = var_a2;\n            break;\n        }\n        if ((s16)var_a2->unk0 == 0) {\n            empty = var_a2;\n            if (arg1 != 0) {\n                if (var_a2->unkC != 0) {\n                    func_15023440(var_a2, 1);\n                }\n            }\n            break;\n        }\n        var_a2++;\n    } while (var_a2 != end);\n\n    if (var_a2 == end) {\n        empty = D_800C3CA0;\n        func_15023440(D_800C3CA0, 1);\n    }\n\n    if (found != 0) {\n        return found;\n    }\n\n    if (empty != 0) {\n        empty->unk0 = arg0;\n    }\n\n    return empty;\n}"
+}

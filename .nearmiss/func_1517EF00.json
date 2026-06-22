@@ -1,0 +1,6 @@
+{
+  "func": "func_1517EF00",
+  "file": "game_1AC2F0",
+  "score": 450,
+  "c": "extern u8 D_800DDDC0;\ns32 func_1517EF00(s32 arg0) {\n    s32 v1;\n    s32 a1;\n\n    if ((&D_800DDDC0)[arg0] != 0) {\n        v1 = (&D_800DDDC0)[arg0];\n    } else {\n        a1 = (&D_800DDE28)[arg0];\n        if (a1 != 0) {\n            v1 = ((&D_800DDDB0)[arg0] * 255) / a1;\n            if (v1 >= 0x100) {\n                v1 = 0xFF;\n            }\n        } else {\n            v1 = 0xFF;\n        }\n        if (((s8 *)&D_800DDDAC)[arg0] == 0) {\n            v1 = 255 - v1;\n        }\n    }\n    return v1;\n}"
+}

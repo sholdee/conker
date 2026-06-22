@@ -1,0 +1,6 @@
+{
+  "func": "func_1518F45C",
+  "file": "game_1BA1D0",
+  "score": 290,
+  "c": "struct foo_1518F45C { s32 unk0; };\nextern struct foo_1518F45C D_800A74D4;\n\nvoid func_1518F45C(s32 arg0, u8 arg1) {\n    struct foo_1518F45C sp1C;\n    sp1C = D_800A74D4;\n    func_15169260((s32)&sp1C, 1, arg0, arg1);\n}"
+}

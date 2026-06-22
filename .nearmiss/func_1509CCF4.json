@@ -1,0 +1,6 @@
+{
+  "func": "func_1509CCF4",
+  "file": "game_C9EC0",
+  "score": 10,
+  "c": "extern GameC9EC0Struct D_80087440[];\n\ns32 func_1509CCF4(s32 arg0) {\n    u16 *p;\n    s32 count;\n\n    count = 0;\n    p = (u16 *)D_80087440[arg0].unk0;\n    while (*p != 0xFFFF) {\n        ((u8 *)D_800D2E4C)[*p >> 3] |= (1 << (*p & 7));\n        if (((u8 *)&D_800D2E70)[*p] != 3) {\n            ((u8 *)&D_800D2E70)[*p] = 3;\n            func_1509CCB4(*p);\n            count++;\n        }\n        p++;\n    }\n    return count;\n}\n"
+}

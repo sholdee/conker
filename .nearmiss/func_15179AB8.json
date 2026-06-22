@@ -1,0 +1,6 @@
+{
+  "func": "func_15179AB8",
+  "file": "game_1A6360",
+  "score": 35,
+  "c": "void func_15179AB8(void) {\n    s32 i;\n    s32 off;\n    s32 **p;\n    s32 *obj;\n\n    i = (s16)D_800DD436 - 1;\n    if (i < 0) {\n        return;\n    }\n    off = i * 4;\n    p = (s32 **)((u8 *)D_800DD440 + off);\n    do {\n        obj = *p;\n        if (obj != 0) {\n            if (!(obj[36] & 0x2)) {\n                obj[36] |= 0x2;\n                return;\n            }\n        }\n        off -= 4;\n        p--;\n    } while (off >= 0);\n}\n"
+}

@@ -1,0 +1,6 @@
+{
+  "func": "func_151A9060",
+  "file": "game_1D4E00",
+  "score": 55,
+  "c": "extern void (*D_8008F984[])(void);\n\ns32 func_151A9060(u8 *arg0) {\n    s32 idx;\n\n    arg0[0x16] |= 0x4;\n    idx = *(s32 *)(arg0 + 0x18);\n    if (idx < 0 || idx >= 8) {\n        return 1;\n    }\n    if (D_8008F984[idx]) {\n        D_8008F984[idx]();\n    }\n    return 1;\n}\n"
+}

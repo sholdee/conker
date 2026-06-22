@@ -1,0 +1,6 @@
+{
+  "func": "func_150EA904",
+  "file": "game_117490",
+  "score": 20,
+  "c": "void func_150EA904(s32 arg0, s32 arg1) {\n    u8 *p = (u8 *)D_800DBEF4 + arg1 * sizeof(struct131);\n    if (p[0x72] == 0xE0) {\n        p[0x73] |= 3;\n    }\n}"
+}

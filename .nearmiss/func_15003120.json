@@ -1,0 +1,6 @@
+{
+  "func": "func_15003120",
+  "file": "game_305D0",
+  "score": 175,
+  "c": "typedef struct {\n    s32 unk0;\n    s32 unk4;\n    s32 unk8;\n} Struct15003120;\n\nvoid func_15003120(s32 arg0, s32 arg1, s32 arg2) {\n    s32 count;\n    s32 i;\n\n    ((s32 *)D_800B0E30[0])[arg0] = arg2;\n    ((u8 *)((s32 *)D_800B0E34)[0])[arg0] = 0;\n    if (arg2 == 0) {\n        return;\n    }\n\n    ((s32 *)D_800B0E30[0])[arg0] += arg1;\n\n    count = 0;\n    i = 0;\n    if (((Struct15003120 *)((s32 *)D_800B0E30[0])[arg0])->unk0 != 0) {\n        do {\n            ((Struct15003120 *)((s32 *)D_800B0E30[0])[arg0])[i].unk0 += arg1;\n            ((Struct15003120 *)((s32 *)D_800B0E30[0])[arg0])[i].unk4 += arg1;\n            count++;\n            i++;\n        } while (((Struct15003120 *)((s32 *)D_800B0E30[0])[arg0])[i].unk0 != 0);\n    }\n    ((u8 *)((s32 *)D_800B0E34)[0])[arg0] = count;\n}"
+}

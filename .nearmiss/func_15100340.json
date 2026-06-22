@@ -1,0 +1,6 @@
+{
+  "func": "func_15100340",
+  "file": "/home/ethan/conker/conker/src/game_12D7F0.c",
+  "score": 30,
+  "c": "typedef struct {\n    u8 unk0[5];\n} Struct15100340;\n\nextern Struct15100340 D_80088BC0;\nextern void func_151616D0(u8, u8, s32);\n\nvoid func_15100340(s32 arg0) {\n    volatile s32 pad;\n    Struct15100340 sp44 = D_80088BC0;\n    s32 i;\n    u8 *ptr;\n    u8 value;\n    s32 threshold;\n\n    if (arg0 == 0) {\n        ptr = D_800BE500;\n        D_800DD405++;\n        i = 0;\n        do {\n            threshold = (*ptr != 0) ? 0x46 : 0x23;\n            if (((u32)func_150ADA20() % 0x3E8U) < (u32)threshold) {\n                value = *(u8 *)((s32)ptr + 0) ^ 1;\n                *ptr = value;\n                if ((u8)value != 0) {\n                    func_151616D0(sp44.unk0[i], 0x18, 0);\n                } else {\n                    func_151616D0(sp44.unk0[i], 0x1C, 0);\n                    func_151616D0(sp44.unk0[i], 0x17, 0);\n                }\n            }\n            i++;\n            ptr++;\n        } while (i != 5);\n    }\n}\n"
+}

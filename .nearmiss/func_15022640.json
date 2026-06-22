@@ -1,0 +1,6 @@
+{
+  "func": "func_15022640",
+  "file": "game_49D30",
+  "score": 380,
+  "c": "extern u8 D_800C354A[];\nextern u8 D_800C3550[];\n\nvoid func_15022640(s32 arg0, s32 arg1) {\n    u8 *countPtr;\n    s32 i;\n    s32 count;\n    register s32 end;\n    u8 *ptr;\n\n    countPtr = &D_800C354A[arg1];\n    i = 0;\n    count = *countPtr;\n    if (count > 0) {\n        end = count;\n        ptr = &D_800C3550[arg1 * 30];\nloop:\n        if (arg0 == *ptr) {\n            return;\n        }\n        i++;\n        ptr++;\n        if (i < end) {\n            goto loop;\n        }\n    }\n\n    D_800C3550[(arg1 * 30) + count] = arg0;\n    *countPtr = count + 1;\n}\n"
+}

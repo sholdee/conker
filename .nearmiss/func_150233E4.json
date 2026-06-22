@@ -1,0 +1,6 @@
+{
+  "func": "func_150233E4",
+  "file": "game_49D30",
+  "score": 30,
+  "c": "typedef struct {\n    s16 unk0;\n    u8  pad2[0x32];\n    s32 unk34;\n} struct163b;\n\nextern void func_1516D2E0(s32);\nextern struct163b D_800C3D48;\n\nvoid func_150233E4(void) {\n    struct163b *ptr;\n\n    ptr = (struct163b *)D_800C3CA0;\n    do {\n        if (ptr->unk0 != 0) {\n            func_1516D2E0(ptr->unk34);\n            ptr->unk34 = 0;\n            ptr->unk0 = 0;\n        }\n        ptr++;\n    } while (ptr != &D_800C3D48);\n}\n"
+}

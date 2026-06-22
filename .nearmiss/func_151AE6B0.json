@@ -1,0 +1,6 @@
+{
+  "func": "func_151AE6B0",
+  "file": "game_1D92F0",
+  "score": 3,
+  "c": "extern f32 D_800A9D70;\ns32 func_15045800(f32 *arg0, s32 arg1, f32 arg2, s32 arg3);\ns32 func_151ABE40(f32 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);\ns32 func_10010FFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);\n\nvoid func_151AE6B0(u8 *arg0) {\n    u8 *v1 = *(u8 **)(arg0 + 0x18);\n    f32 sp30[3];\n    s32 temp;\n\n    sp30[0] = *(f32 *)(v1 + 0x14);\n    if (D_800A9D70 < *(f32 *)(v1 + 0x118)) {\n        sp30[1] = *(f32 *)(v1 + 0x118) + 100.0f;\n    } else {\n        sp30[1] = *(f32 *)(v1 + 0x18) + 150.0f;\n    }\n    sp30[2] = *(f32 *)(v1 + 0x1C);\n\n    temp = (s32)(arg0 + 0x34);\n    if (func_15045800(sp30, 0, sp30[1] - 300.0f, temp) != 0) {\n        sp30[1] = *(f32 *)(arg0 + 0x34);\n        func_151ABE40(sp30, temp, 5, arg0[0xC], arg0[0x1]);\n        func_10010FFC(0, 0x11, 0x5208, 0, 0, (s32)v1);\n    }\n}\n"
+}

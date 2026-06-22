@@ -1,0 +1,6 @@
+{
+  "func": "func_15178EFC",
+  "file": "game_1A6360",
+  "score": 75,
+  "c": "extern u16 D_800DD430;\nextern u16 D_800DD444;\nextern void func_1516972C(struct102 *);\nextern void func_10004074(void *);\n\nvoid func_15178EFC(s32 arg0) {\n    s32 v;\n    u8 *base;\n    s32 i;\n\n    if (arg0 == 2) {\n        D_800DD434 = 0;\n        D_800DD446 = 0;\n        if ((base = (u8 *) D_800DD440) != 0) {\n            i = 0;\n            do {\n                v = *(s32 *)(base + i);\n                if (v != 0) {\n                    func_1516972C((struct102 *) v);\n                    *(s32 *)((u8 *)D_800DD440 + i) = 0;\n                    base = (u8 *) D_800DD440;\n                }\n                i += 4;\n            } while (i != 0x4B0);\n            func_10004074((void *) base);\n            D_800DD440 = 0;\n        }\n        func_100111C8(D_800DD430);\n        D_800DD444 = 0;\n        D_800DD436 = 0;\n    } else if (arg0 == 3) {\n        if ((s8) D_800DD446 == 0) {\n            D_800DD444 = 0x258;\n        } else if (3 == (s8) D_800DD446) {\n            D_800DD446 = 1;\n        }\n        D_800DD434 = arg0;\n    } else {\n        D_800DD434 = arg0;\n    }\n}"
+}

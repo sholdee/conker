@@ -1,0 +1,6 @@
+{
+  "func": "func_150ED1D0",
+  "file": "game_11A680",
+  "score": 34,
+  "c": "f32 func_150ED1D0(f32 arg0, f32 arg1) {\n    f32 a = func_15144BC8(arg0);\n    f32 b = func_15144BC8(arg1);\n    f32 c = func_15144BC8(b - a);\n    if (180.0f < c) {\n        c = -360.0f + c;\n    }\n    return c;\n}"
+}

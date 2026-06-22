@@ -29,13 +29,59 @@ import os
 import sys
 import re
 import hashlib
+import subprocess
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
 import find_similar as fs  # reuse parsing / similarity / corpus / badness
 
 _REPO = os.environ.get("CONKER_REPO", os.path.expanduser("~/conker"))
 ROOT = os.path.join(_REPO, "conker")
 RANK = "/tmp/game_ranked2.txt"
+
+
+def _m2c_context():
+    """Generate the m2c context file once (best-effort); return its path or None.
+    Preprocesses the standard game includes so m2c can resolve project types."""
+    ctx, src = "/tmp/m2c_ctx.c", "/tmp/m2c_ctxsrc.c"
+    try:
+        open(src, "w").write('#include <ultra64.h>\n#include "functions.h"\n'
+                             '#include "variables.h"\n#include "macros.h"\n')
+        r = subprocess.run(
+            ["cpp", "-nostdinc", "-undef", "-D_LANGUAGE_C", "-DF3DEX_GBI_2",
+             "-I", os.path.join(ROOT, "include"),
+             "-I", os.path.join(ROOT, "include/2.0L"),
+             "-I", os.path.join(ROOT, "include/2.0L/PR"), src],
+            capture_output=True, text=True)
+        if r.returncode == 0 and r.stdout.strip():
+            open(ctx, "w").write(r.stdout)
+            return ctx
+    except Exception:
+        pass
+    return None
+
+
+def _write_m2c_seed(func, file, ctx):
+    """Run m2c on the function's asm -> /tmp/m2c_<func>.c (best-effort structural draft)."""
+    mp = f"/tmp/m2c_{func}.c"
+    spath = os.path.join(ROOT, "asm/nonmatchings", file, func + ".s")
+    cmd = ["python3", os.path.join(HERE, "mips_to_c", "m2c.py")]
+    if ctx:
+        cmd += ["--context", ctx]
+    cmd.append(spath)
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
+        out = (r.stdout or "").strip()
+        if out:
+            open(mp, "w").write(out)
+            return
+    except Exception:
+        pass
+    if os.path.exists(mp):
+        try:
+            os.remove(mp)
+        except OSError:
+            pass
 
 # Partitioning: split candidate stubs by file hash so two engines (Claude/Codex)
 # work disjoint sets. "even"|"odd"|"all" (default "all" = no partitioning).
@@ -117,18 +163,19 @@ def main():
                 file_text[file] = ""
         return file_text[file]
 
-    # Score every eligible stub against the corpus; keep its best strong ref.
-    scored = []  # (similarity, n, file, func, ref_func, ref_file)
+    # Score every eligible stub against the corpus; keep its top-3 strong refs.
+    scored = []  # (similarity, n, file, func, [(ref_func, ref_file), ...])
     for n, file, func in rows:
         spath = os.path.join(ROOT, "asm/nonmatchings", file, func + ".s")
         query = fs.parse_asm_file(spath, func, file)
         if query is None:
             continue
-        best = fs.rank(query, corpus, top_n=1, threshold=SIM_THRESHOLD,
+        best = fs.rank(query, corpus, top_n=3, threshold=SIM_THRESHOLD,
                        drop_low_quality=True)
         if best:
-            sim, cand, _ = best[0]
-            scored.append((sim, n, file, func, cand.name, cand.file))
+            sim = best[0][0]
+            refs = [(cand.name, cand.file) for _s, cand, _ in best]
+            scored.append((sim, n, file, func, refs))
 
     # Highest similarity first; distinct files only.
     scored.sort(key=lambda r: (-r[0], r[1], r[3]))
@@ -136,18 +183,23 @@ def main():
     picked = []
     seen_files = set()
     picked_funcs = set()
-    for sim, n, file, func, ref_func, ref_file in scored:
+    for sim, n, file, func, refs in scored:
         if file in seen_files:
             continue
-        ref = corpus_by_name.get(ref_func)
-        ref_c = fs.extract_c_body(c_text(ref_file), ref_func) or "" if ref else ""
+        ref_cs = []
+        for rfunc, rfile in refs[:3]:
+            r = corpus_by_name.get(rfunc)
+            ref_cs.append((fs.extract_c_body(c_text(rfile), rfunc) or "") if r else "")
+        ref_func, ref_file = refs[0]
         picked.append({
             "func": func,
             "file": file,
             "ref_func": ref_func,
             "ref_file": ref_file,
             "ref_similarity": round(sim, 3),
-            "ref_c": ref_c,
+            "ref_c": ref_cs[0] if ref_cs else "",
+            "ref2_c": ref_cs[1] if len(ref_cs) > 1 else "",
+            "ref3_c": ref_cs[2] if len(ref_cs) > 2 else "",
         })
         seen_files.add(file)
         picked_funcs.add(func)
@@ -167,31 +219,37 @@ def main():
                 "ref_file": "",
                 "ref_similarity": 0.0,
                 "ref_c": "",
+                "ref2_c": "",
+                "ref3_c": "",
             })
             seen_files.add(file)
             picked_funcs.add(func)
             if len(picked) >= count:
                 break
 
-    # Write each reference C body to a file the match agent reads directly, so
-    # large bodies never flow through the orchestrator's structured output.
+    # Write each reference C body + an m2c structural draft to files the match
+    # agent reads directly, so large bodies never flow through structured output.
+    ctx = _m2c_context()
     for p in picked:
-        rp = f"/tmp/ref_{p['func']}.c"
-        try:
-            if p["ref_c"]:
-                open(rp, "w").write(p["ref_c"])
-            elif os.path.exists(rp):
-                os.remove(rp)              # clear any stale ref from a prior run
-        except OSError:
-            pass
+        for key, suffix in (("ref_c", "ref"), ("ref2_c", "ref2"), ("ref3_c", "ref3")):
+            rp = f"/tmp/{suffix}_{p['func']}.c"
+            try:
+                if p.get(key):
+                    open(rp, "w").write(p[key])
+                elif os.path.exists(rp):
+                    os.remove(rp)          # clear any stale ref from a prior run
+            except OSError:
+                pass
+        _write_m2c_seed(p["func"], p["file"], ctx)
 
     # Persist so the next chunk doesn't repeat these.
     with open(LOG, "a") as f:
         for p in picked:
             f.write(p["func"] + "\n")
 
-    # Emit lightweight records (ref_c stays on disk at /tmp/ref_<func>.c).
-    print(json.dumps([{k: v for k, v in p.items() if k != "ref_c"} for p in picked]))
+    # Emit lightweight records (ref bodies stay on disk at /tmp/{ref,ref2,ref3,m2c}_<func>.c).
+    drop = {"ref_c", "ref2_c", "ref3_c"}
+    print(json.dumps([{k: v for k, v in p.items() if k not in drop} for p in picked]))
 
 
 if __name__ == "__main__":

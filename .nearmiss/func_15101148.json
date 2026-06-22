@@ -1,0 +1,6 @@
+{
+  "func": "func_15101148",
+  "file": "game_12DAB0",
+  "score": 35,
+  "c": "void func_15101148(void *arg0) {\n    void **pp;\n    struct102 **p;\n    struct102 *temp;\n\n    pp = &arg0;\n    if (*(struct102 **)((u8 *)*pp + 0x138) != 0) {\n        temp = *(struct102 **)((u8 *)*pp + 0x138);\n        func_1516979C(temp);\n    }\n    p = (struct102 **)((u8 *)*pp + 0x110);\n    if (*(struct102 **)((u8 *)*pp + 0x13C) != 0) {\n        func_1516979C(*(struct102 **)((u8 *)*pp + 0x13C));\n    }\n    if (p[9] != 0) {\n        func_1516979C(p[9]);\n    }\n    if (p[0xC] != 0) {\n        func_1516979C(p[0xC]);\n    }\n    if (p[0xD] != 0) {\n        func_1516979C(p[0xD]);\n    }\n    func_1513CAA0((struct210 *)*pp);\n}\n"
+}

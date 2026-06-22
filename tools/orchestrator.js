@@ -54,7 +54,8 @@ Target asm: ${REPO}/conker/asm/nonmatchings/${c.file}/${c.func}.s
 
 THE LOOP:
 0. FIRST: cat ${REPO}/tools/ido_cookbook.md  — the CORE IDO 5.3 -O2 idioms + a When-to-BAIL checklist; apply the relevant ones. For a stubborn diff or a specific instruction pattern not in the core, grep ${REPO}/tools/ido_reference.md (the full idiom set).${c.ref_func ? `
-0b. A SIMILAR ALREADY-MATCHED function is your strongest guide (asm similarity ${c.ref_similarity}): its byte-matching C is at /tmp/ref_${c.func}.c and its asm at ${REPO}/conker/asm/nonmatchings/${c.ref_file}/${c.ref_func}.s. READ BOTH FIRST. Diff its asm against YOUR target .s to see what differs; reuse its structure, types, casts, loop/branch shapes, and idioms as a template — adapt offsets/constants/symbols to your function. This is a worked example of exactly the codegen you're targeting.` : ''}
+0b. WORKED EXAMPLES (asm similarity ${c.ref_similarity}): the byte-matching C of the 3 most similar already-matched functions is at /tmp/ref_${c.func}.c, /tmp/ref2_${c.func}.c, /tmp/ref3_${c.func}.c (read whichever exist), with the closest one's asm at ${REPO}/conker/asm/nonmatchings/${c.ref_file}/${c.ref_func}.s. Diff each against YOUR target .s; reuse their structure, casts, loop/branch shapes, and idioms as templates — adapt offsets/constants/symbols to your function. Use for style; do NOT force your function into their exact shape or copy verbatim.` : ''}
+0d. m2c DRAFT: if /tmp/m2c_${c.func}.c exists, read it — a STRUCTURAL skeleton m2c decompiled from your target asm. Control flow + call structure are usually right, but TYPES are guesses (?, raw temp_/var_ names) and it can mis-analyze complex switches/loops. Keep the structure, re-derive types from the asm/headers, rewrite into idiomatic IDO C (use the refs for style). NEVER submit m2c output verbatim — verify every construct against the diff.
 0c. IF your function builds DISPLAY LISTS (signature has "Gfx *", or the target asm writes packet words via gSP*/gDP* macros or raw stores to ->w0/->w1): READ ${REPO}/.claude/skills/decompile-microcode/f3dex2-reference.md (and s2dex-reference.md for S2DEX/sprites) for the full F3DEX2 command encodings. Hand-write the matching gSP*/gDP* macros against the raw words; do NOT leave raw word stores.
 1. Read the target .s and src/${c.file}.c (neighbor style/types); read structs.h/functions.h/variables.h for types.
 2. Replace the line  #pragma GLOBAL_ASM("asm/nonmatchings/${c.file}/${c.func}.s")  in src/${c.file}.c with your candidate C.
@@ -68,7 +69,7 @@ HARD RULES (a violation corrupts the shared build tree):
 
 WHEN DONE:
 - SCORE: 0 → STOP, LEAVE the matching C in the file, return matched=true, file="${c.file}", final_c=your function.
-- Cannot reach 0 → FIRST, if your best SCORE was <= 80 (a near miss worth permuting), harvest the seed: mkdir -p ${REPO}/.nearmiss, then write the best-scoring C you reached to ${REPO}/.nearmiss/${c.func}.json as JSON {"func","file","score","c"} (use python3 -c with json.dump so the C string is escaped correctly). THEN REVERT src/${c.file}.c so ${c.func} is exactly its original stub line  #pragma GLOBAL_ASM("asm/nonmatchings/${c.file}/${c.func}.s")  again, and return matched=false with best score. Leaving non-matching C would break the build; reverting on failure is MANDATORY. (The harvested seed feeds a background decomp-permuter pass on spare CPU.)`
+- Cannot reach 0 → FIRST, if your best SCORE was <= 80 OR <= half the target's instruction count (a structurally-close attempt worth keeping for later), harvest the seed: mkdir -p ${REPO}/.nearmiss, then write the best-scoring C you reached to ${REPO}/.nearmiss/${c.func}.json as JSON {"func","file","score","c"} (use python3 -c with json.dump so the C string is escaped correctly). THEN REVERT src/${c.file}.c so ${c.func} is exactly its original stub line  #pragma GLOBAL_ASM("asm/nonmatchings/${c.file}/${c.func}.s")  again, and return matched=false with best score. Leaving non-matching C would break the build; reverting on failure is MANDATORY. (The harvested seed feeds a background decomp-permuter pass on spare CPU.)`
 
 const distillPrompt = (notesBlob) => `You curate ${REPO}/tools/ido_cookbook.md, a TIGHT set of transferable IDO 5.3 -O2 matching idioms. It is already MATURE (~250 idioms) and the idiom set has largely plateaued, so your DEFAULT is to make NO edit. Read the file first.
 
@@ -104,6 +105,11 @@ for (let r = 0; r < ROUNDS; r++) {
   ))).filter(Boolean)
   const matched = results.filter((x) => x.matched)
   log(`round ${r + 1}: ${matched.length}/${results.length} matched`)
+
+  // durable provenance: record (func, file, best_score, size) for EVERY attempt this round
+  const prov = results.map((x) => `${x.func} ${x.file} ${x.score}`).join('\n')
+  await agent(`Append attempt provenance to ${REPO}/tools/attempts.tsv. For EACH line below ("func file score"), compute size = grep -cE '^[[:space:]]+/\\*' ${REPO}/conker/asm/nonmatchings/<file>/<func>.s , then append ONE tab-separated row  func<TAB>file<TAB>score<TAB>size  using >> (NEVER overwrite, run no build, edit nothing else). Lines:\n${prov}\nReport only "logged N".`,
+    { label: `prov:r${r + 1}`, phase: 'Integrate' })
 
   phase('Distill')
   const notesBlob = results.map((x) => `${x.func} [${x.matched ? 'MATCH' : 'miss ' + x.score}]: ${x.notes}`).join('\n')

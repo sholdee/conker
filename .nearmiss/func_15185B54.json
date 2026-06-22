@@ -1,0 +1,6 @@
+{
+  "func": "func_15185B54",
+  "file": "game_1B1600",
+  "score": 115,
+  "c": "struct ClipVtx {\n    f32 x;\n    f32 y;\n    f32 z;\n    s16 c0;\n    s16 c1;\n    s16 c2;\n    s16 pad;\n};\n\nvoid func_15185B54(struct ClipVtx *a, struct ClipVtx *b, struct ClipVtx *out) {\n    f32 t;\n\n    t = a->x / (a->x - b->x);\n    out->x = 0.0f;\n    out->y = a->y + (b->y - a->y) * t;\n    out->z = a->z + (b->z - a->z) * t;\n    out->c0 = (s16)((f32)a->c0 + (f32)(b->c0 - a->c0) * t);\n    out->c1 = (s16)((f32)a->c1 + (f32)(b->c1 - a->c1) * t);\n    out->c2 = (s16)((f32)a->c2 + (f32)(b->c2 - a->c2) * t);\n}\n"
+}

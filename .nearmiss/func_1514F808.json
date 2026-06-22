@@ -1,0 +1,6 @@
+{
+  "func": "func_1514F808",
+  "file": "game_17CAF0",
+  "score": 8,
+  "c": "struct Struct1514F808 { f32 unk0,unk4,unk8,unkC,unk10,unk14,unk18,unk1C,unk20,unk24,unk28; };\nextern void func_15143874(s32, f32, f32 *, f32 *);\nvoid func_1514F808(struct Struct1514F808 *arg0, f32 arg1, f32 *arg2) {\n    f32 b;\n    f32 a;\n    s32 val;\n\n    val = func_150ADA20();\n    func_15143874((s16)(val & 0xFF), func_150ADA68() * arg0->unk28, &a, &b);\n    arg2[0] = (((arg0->unk10 * a) + (arg0->unk1C * b)) + arg0->unk4) * arg1;\n    arg2[1] = (((arg0->unk14 * a) + (arg0->unk20 * b)) + arg0->unk8) * arg1;\n    arg2[2] = (((arg0->unk18 * a) + (arg0->unk24 * b)) + arg0->unkC) * arg1;\n}"
+}

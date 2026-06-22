@@ -1,0 +1,6 @@
+{
+  "func": "func_1505EFD0",
+  "file": "game_83300",
+  "score": 10,
+  "c": "extern u8 D_800CC3F7;\nextern struct127 D_800CC5FC;\n\nstruct127 *func_1505EFD0(s32 arg0) {\n    struct127 *ptr;\n    s32 i;\n\n    ptr = &D_800CC5FC;\n    if (D_800CC2D0[0].interaction_state != 0) {\n        if (arg0 == D_800CC3F7) {\n            return (struct127 *)(D_800CC2D4 - 4);\n        }\n    }\n\n    for (i = 1; i < 25; i++, ptr++) {\n        if ((ptr->interaction_state != 0) && (arg0 == ptr->unk127)) {\n            return ptr;\n        }\n    }\n    return NULL;\n}"
+}

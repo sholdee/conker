@@ -1,0 +1,6 @@
+{
+  "func": "func_1505F0AC",
+  "file": "/home/ethan/conker/conker/src/game_83300.c",
+  "score": 10,
+  "c": "struct127 *func_1505F0AC(s32 arg0) {\n    struct127 *ptr;\n    s32 i;\n\n    ptr = D_800CC5FC;\n    if (D_800CC2D0[0].interaction_state != 0) {\n        if (arg0 == D_800CC2D4[0]) {\n            return (struct127 *)(D_800CC2D4 - 4);\n        }\n    }\n\n    for (i = 1; i != 25; i++, ptr++) {\n        if (ptr->interaction_state != 0) {\n            if (arg0 == ptr->id) {\n                return ptr;\n            }\n        }\n    }\n\n    return 0;\n}\n"
+}

@@ -1,0 +1,6 @@
+{
+  "func": "func_15108D24",
+  "file": "game_135D00",
+  "score": 45,
+  "c": "extern f32 D_800A2490;\nextern u8 D_800BE9C0;\n\nstruct Arg0_15108D24 {\n    u8 pad[0x50];\n    s32 off;\n};\n\ns32 func_15108D24(struct Arg0_15108D24 *arg0, s32 arg1) {\n    f32 sp20[4][4];\n    u8 *v0 = (((u8 *) arg0) + arg0->off) + 0xF8;\n\n    func_150A8050(&sp20, *(f32 *)(v0 + 0x0), 0.0f, *(f32 *)(v0 + 0x4));\n    sp20[3][1] = *(f32 *)(v0 + 0x10);\n    sp20[0][0] *= D_800A2490;\n    sp20[0][1] *= D_800A2490;\n    sp20[0][2] *= D_800A2490;\n    sp20[1][0] *= D_800A2490;\n    sp20[1][1] *= D_800A2490;\n    sp20[1][2] *= D_800A2490;\n    sp20[2][0] *= D_800A2490;\n    sp20[2][1] *= D_800A2490;\n    sp20[2][2] *= D_800A2490;\n    guMtxF2L(&sp20, (Mtx *)(((D_800BE9C0 << 6) + ((u8 *) arg0)) + 0x78));\n    return 1;\n}\n"
+}

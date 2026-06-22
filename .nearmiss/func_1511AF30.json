@@ -1,0 +1,6 @@
+{
+  "func": "func_1511AF30",
+  "file": "/home/ethan/conker/conker/src/game_142560.c",
+  "score": 45,
+  "c": "extern f32 D_800A3188;\nextern f32 D_800A318C;\nextern f32 D_800A3190;\nextern f32 D_800A3194;\n\nstruct Obj1511AF30 {\n    f32 unk0;\n    u8 pad4[0x38];\n    s32 unk3C;\n    u8 pad40[0x3C];\n    f32 unk7C;\n    f32 unk80;\n    f32 unk84;\n};\n\nvoid func_1511AF30(struct Obj1511AF30 *arg0) {\n    f32 temp_f0;\n    f32 target;\n    f32 current;\n    f32 diff;\n    s32 step;\n    s32 random;\n\n    temp_f0 = (f32)arg0->unk3C;\n    target = 75.0f * temp_f0 * D_800A3188;\n    current = arg0->unk7C;\n    if (target != current) {\n        diff = target - current;\n        if (fabsf(diff) < 1.0f) {\n            arg0->unk7C = target;\n        } else {\n            step = (diff < 0.0f) ? -1 : 1;\n            arg0->unk7C = current + (f32)step;\n        }\n        arg0->unk80 = 0.0f;\n    } else {\n        random = func_150ADA20() % 1000U;\n        if (random < 500) {\n            arg0->unk84 = (f32)random * 5.0f * temp_f0 * D_800A318C * D_800A3190;\n        }\n        diff = arg0->unk84 - arg0->unk80;\n        arg0->unk80 = arg0->unk80 + (diff * D_800A3194);\n    }\n    arg0->unk0 = arg0->unk7C + arg0->unk80;\n}\n"
+}

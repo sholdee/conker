@@ -1,0 +1,1 @@
+{"func": "func_151D10E4", "file": "game_1FA770", "score": 1150, "c": "extern u8 D_800AAF9C[][12];\nvoid func_15143134(void *, s32, s32);\n\ns32 func_151D10E4(void *arg0, s32 arg1, s32 arg2) {\n    s32 temp = *(s32 *)((s32)arg0 + 0x1D4);\n\n    if (temp == 0) {\n        return 0;\n    }\n    func_15143134(&D_800AAF9C[arg2 & 0xFF], arg1, temp);\n    return 1;\n}"}

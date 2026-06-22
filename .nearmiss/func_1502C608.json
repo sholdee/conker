@@ -1,0 +1,6 @@
+{
+  "func": "func_1502C608",
+  "file": "/home/ethan/conker/conker/src/game_58F80.c",
+  "score": 10,
+  "c": "struct Some1502C608 {\n    u8 pad0[4];\n    u8 unk4;\n};\nextern struct Some1502C608 *D_8008CA4C[];\n\nvoid func_1502C608(s32 arg0) {\n    struct127 *obj;\n    register s16 *unk60;\n    s32 limit;\n    s16 v1;\n    s16 a2;\n\n    if (D_800BEAC0 == 0) {\n        obj = &D_800CC2D0[arg0];\n        unk60 = (s16 *)&obj->unk60;\n        v1 = unk60[0];\n        a2 = unk60[1];\n        if (obj->unk7 != 0) {\n            limit = D_8008CA4C[func_1502C3BC(arg0)]->unk4 << 8;\n            v1 = (s16)(v1 + a2);\n            if (v1 >= limit) {\n                v1 = (s16)(v1 - limit);\n            } else if (v1 < 0) {\n                v1 = (s16)(v1 + limit);\n            }\n            unk60[0] = v1;\n        }\n    }\n}\n"
+}

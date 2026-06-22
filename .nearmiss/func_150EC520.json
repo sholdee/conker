@@ -1,0 +1,6 @@
+{
+  "func": "func_150EC520",
+  "file": "/home/ethan/conker/conker/src/game_1199D0.c",
+  "score": 10,
+  "c": "void func_150EC520(void *arg0) {\n    if (func_151464B8(*(s16 **)((u8 *)arg0 + 0x30)) == 0) {\n        struct_150EC520_arg0_28 *temp_s0;\n\n        temp_s0 = (struct_150EC520_arg0_28 *)((u8 *)arg0 + 0x28);\n\n        temp_s0->unkC += ((D_800A1570 + (func_150ADA68() * D_800A1574)) * temp_s0->unk4) * D_800BE9A4;\n\n        if (temp_s0->unkC > 1.0f) {\n            struct260 *temp_v0;\n            s32 pad;\n            f32 sp68[5];\n\n            sp68[4] = 0.0f;\n            do {\n                func_151432BC(temp_s0->unk0, &sp68[1], &sp68[3], &sp68[0], &sp68[2]);\n\n                temp_v0 = func_15149130((s16)(((u32)func_150ADA20() % 0x83U) + 0x50), -1, 0x5A, -1, 1, 0, (struct37 *)0x10, *((u8 *)arg0 + 0xC), *((u8 *)arg0 + 1));\n                if (temp_v0 != NULL) {\n                    memcpy((u8 *)temp_v0 + 0x28, &sp68[1], 0x10);\n                }\n\n                temp_s0->unkC -= 1.0f;\n            } while (temp_s0->unkC > 1.0f);\n        }\n    }\n}\n"
+}

@@ -1,0 +1,1 @@
+{"func": "func_151ACB60", "file": "game_1D92F0", "score": 200, "c": "s32 func_151AE3A8(u8 *arg0);\n\ns32 func_151ACB60(u8 *arg0) {\n    s32 v0 = *(s32 *)(*(s32 *)(*(s32 *)(arg0 + 0x1C) + 0x31C) + 0x9C);\n    if (v0 != 0) {\n        return func_151AE3A8(arg0);\n    }\n}"}

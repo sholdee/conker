@@ -1,0 +1,6 @@
+{
+  "func": "func_1502AB04",
+  "file": "/home/ethan/conker/conker/src/game_57FA0.c",
+  "score": 10,
+  "c": "typedef struct {\n    s32 unk0;\n    s32 unk4;\n    s32 unk8;\n    s32 unkC;\n} struct_game_57FA0_0;\n\ntypedef struct {\n    s32 unk0;\n    s32 unk4;\n} struct_game_57FA0_1;\n\nextern struct_game_57FA0_0 D_800C3D68[];\nextern u8 D_800C3EA0;\n\nvoid func_1502AB04(s32 arg0, s32 *arg1, s32 arg2, s32 arg3) {\n    struct_game_57FA0_0 *entry;\n    struct_game_57FA0_1 *payload;\n    struct_game_57FA0_1 *src;\n    u32 count;\n    u32 i;\n\n    count = arg0;\n    if (count != 0) {\n        bcopy(&D_800C3D68[count], D_800C3D68, ((-(s32)count) << 4) + 0x100);\n    }\n\n    for (i = 0x10 - count; i < 0x10; i++) {\n        entry = &D_800C3D68[i];\n        payload = (struct_game_57FA0_1 *)&entry->unk8;\n        src = (struct_game_57FA0_1 *)arg1;\n        *payload = *src;\n        arg1 += 2;\n        entry->unk4 = arg2;\n        entry->unk0 = arg3;\n        arg3 += 8;\n    }\n}\n"
+}

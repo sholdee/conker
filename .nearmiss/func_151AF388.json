@@ -1,0 +1,6 @@
+{
+  "func": "func_151AF388",
+  "file": "game_1D92F0",
+  "score": 1300,
+  "c": "extern f32 D_800A9DD4;\nextern f32 D_800A9DD8;\nextern f32 D_800A9DDC;\nextern f32 D_800A9DE0;\nvoid func_151D9014(void *a0, void *a1, s32 a2, f32 a3, s32 sp10, s32 sp14,\n                     f32 sp18, s32 sp1C, f32 sp20, f32 sp24, s32 sp28, s32 sp2C,\n                     s32 sp30, s32 sp34, s32 sp38, s32 sp3C);\n\nvoid func_151AF388(void *a0, f32 a1, f32 a2, f32 a3, s32 arg4) {\n    f32 d;\n    f32 sp60[3];\n    u8 sp5F;\n    struct { f32 c; s32 a; u32 b; s32 pad; } sp4C;\n\n    d = D_800A9DD4;\n\n    sp60[0] = -a1 * d;\n    sp60[1] = -a2 * d;\n    sp60[2] = -a3 * d;\n    sp5F = (func_150ADA20() & 1) ? 1 : 0;\n    sp4C.c = func_150ADA68();\n    sp4C.a = func_150ADA20();\n    sp4C.b = func_150ADA20();\n    func_151D9014(a0, sp60, 0, sp4C.c * D_800A9DDC + D_800A9DE0,\n                    (sp4C.a & 0xF) + 10, (sp4C.b % 45) + 137,\n                    func_150ADA68() * 202.0f + 142.0f, sp5F, D_800A9DD8,\n                    D_800A9DD8, 0, 0, 1, 0, (u8)arg4, 1);\n}"
+}

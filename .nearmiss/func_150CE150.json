@@ -1,0 +1,6 @@
+{
+  "func": "func_150CE150",
+  "file": "game_FB600",
+  "score": 240,
+  "c": "extern void *func_1515FF74(void *, s32, u8, s32);\nextern f32 D_800A07FC;\n\nstruct Sub150CE150 {\n    s8 unk0;\n    s8 unk1;\n    s8 unk2;\n    s8 pad3;\n    s16 unk4;\n    s8 unk6;\n    s8 pad7;\n};\n\nstruct Buf150CE150 {\n    void *unk0;\n    u8 unk4;\n    s8 pad5;\n    s8 pad6;\n    s8 pad7;\n    f32 unk8;\n    f32 unkC;\n    s32 unk10;\n    s8 unk14;\n    char pad15[0x8F0 - 0x15];\n};\n\nvoid *func_150CE150(void *arg0, s16 arg1, u8 arg2, s32 arg3) {\n    struct Sub150CE150 sp910;\n    struct Buf150CE150 sp20;\n    void *temp_v0;\n\n    if (arg0 == NULL) {\n        return NULL;\n    }\n\n    sp20.unk8 = D_800A07FC;\n    sp910.unk4 = arg1;\n    sp910.unk0 = 1;\n    sp910.unk1 = 1;\n    sp910.unk2 = 0;\n    sp910.unk6 = 2;\n    sp20.unk10 = 0x2710;\n    sp20.unk14 = 0;\n    sp20.unkC = D_800A07FC;\n    sp20.unk0 = arg0;\n    sp20.unk4 = *(u8 *)((s32)arg0 + 0x3B);\n\n    temp_v0 = func_1515FF74(&sp910, 0x8F0, arg2, arg3);\n    if (temp_v0 != NULL) {\n        temp_v0 = memcpy((void *)((s32)temp_v0 + 0x18), &sp20, 0x8F0);\n    }\n    return temp_v0;\n}"
+}

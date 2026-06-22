@@ -1,0 +1,6 @@
+{
+  "func": "func_150C5E0C",
+  "file": "game_F3270",
+  "score": 69,
+  "c": "s32 func_150C5E0C(u8 *arg0) {\n    u8 *p = (u8 *)arg0 + 0xB0;\n    s8 ret = 1;\n\n    if (arg0[0xB4] == 0) {\n        ret = 0;\n    }\n    *(u8 *)(p + 0x4) = 0;\n    *(s16 *)(p + 0x14) -= D_800BE9E4;\n    if (*(s16 *)(p + 0x14) < 0) {\n        *(s16 *)(p + 0x14) = *(s16 *)(p + 0x16) + (func_150ADA20() % (u32)(*(s16 *)(p + 0x18) + 1));\n        *(f32 *)(p + 0x10) = func_150ADA68() * *(f32 *)(p + 0xC) + *(f32 *)(p + 0x8);\n    }\n    *(s32 *)((u8 *)arg0 + 0x24) += (s32)((*(f32 *)(p + 0x10) - (f32)*(s32 *)((u8 *)arg0 + 0x24)) * *(f32 *)(p + 0x1C));\n    return ret;\n}\n"
+}

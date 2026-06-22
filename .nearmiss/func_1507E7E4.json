@@ -1,0 +1,6 @@
+{
+  "func": "func_1507E7E4",
+  "file": "/home/ethan/conker/conker/src/game_AB760.c",
+  "score": 40,
+  "c": "void func_1507E7E4(u8 *arg0, u8 arg1, u8 arg2, u16 arg3, s32 arg4) {\n    u8 *temp;\n    u8 *temp2;\n    s32 old;\n\n    old = arg0[0x6F];\n    if ((old != (u8)arg1) || (arg0[0x71] != arg2) || (*(u16 *)(arg0 + 0x72) != (u16)arg3)) {\n        if (arg2 != 3) {\n            if (*(u8 *)((s32)arg0 + 0x70) != old) {\n                if (arg1 != old) {\n                    if (*(u16 *)(arg0 + 0x72) != 0) {\n                        if (arg0[0x71] >= arg2) {\n                            return;\n                        }\n                    }\n                }\n            }\n        }\n\n        if ((u8)arg1 < func_1507E968(arg0)) {\n            temp = (u8 *)func_1507E908(arg0, arg0[0x6F]);\n            if (temp[4] != 0) {\n                temp2 = func_1507E9F8(arg0, 0);\n                if (temp2 != 0) {\n                    func_150302F0(arg0, temp2[temp[4] - 1]);\n                }\n            }\n            arg0[0x6F] = (u8)arg1;\n            *(u16 *)(arg0 + 0x72) = (u16)arg3;\n            arg0[0x71] = arg2;\n            func_1507E5C8(arg0, arg4);\n        }\n    }\n}"
+}

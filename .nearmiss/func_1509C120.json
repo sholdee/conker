@@ -1,0 +1,6 @@
+{
+  "func": "func_1509C120",
+  "file": "/home/ethan/conker/conker/src/game_C8950.c",
+  "score": 27,
+  "c": "extern void *allocate_memory(s32 arg0, s32 arg1, s32 arg2, s32 arg3);\nextern void func_10004074();\n\nvoid func_1509C120(void) {\n    struct102 *unused;\n    struct102 *sp38[4];\n    struct102 *old;\n    s32 i;\n    s32 idx;\n\n    idx = func_150ADA20() & 3;\n    old = D_800D2E4C;\n    if (old != 0) {\n        if ((func_150ADA20() & 4) == 0) {\n            return;\n        }\n    }\n\n    for (i = 0; i <= idx; i++) {\n        sp38[i] = allocate_memory(0x1B, 0xFF, 2, 0);\n    }\n\n    for (i = 0; i <= idx; i++) {\n        if (i != idx) {\n            func_10004074(sp38[i]);\n        }\n    }\n\n    D_800D2E4C = sp38[idx];\n    if (old != 0) {\n        bcopy(old, D_800D2E4C, 0x1B);\n        func_10004074(old);\n    }\n}\n"
+}

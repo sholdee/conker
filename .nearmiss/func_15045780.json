@@ -1,0 +1,6 @@
+{
+  "func": "func_15045780",
+  "file": "game_71820",
+  "score": 766,
+  "c": "s32 func_15045F8C(struct conker15045714 *arg0, f32 arg1, s32 *arg2, s32 arg3);\n\ns32 func_15045780(struct conker15045714 *arg0, u16 arg1, f32 arg2, s32 arg3) {\n    s32 sp1C;\n    s32 sp18;\n\n    if (arg0->unk4 < arg2) {\n        *((u8 *)arg3 + 0x1C) &= ~2;\n        return 0;\n    }\n    func_15045714(arg0, arg1, &sp1C, (s32)&sp18);\n    return func_15045F8C(arg0, arg2, &sp18, arg3);\n}"
+}

@@ -1,0 +1,6 @@
+{
+  "func": "func_150A2D84",
+  "file": "/home/ethan/conker/conker/src/game_CDE80.c",
+  "score": 60,
+  "c": "s32 func_150A2D84(s32 arg0, s32 arg1) {\n    typedef u8 entry[0x34];\n    struct108 *p;\n    u8 sp18[0x32C];\n\n    p = &D_800DBFF0[arg0];\n    arg1 &= 0xFFF;\n    if ((u32)D_800D3094 < (u32)arg1) {\n        return 1;\n    }\n    *(f32 *)&sp18[0x14] = p->unk2F8;\n    *(f32 *)&sp18[0x18] = p->unk2FC;\n    *(f32 *)&sp18[0x1C] = p->unk300;\n    *(f32 *)&sp18[0x180] = *(f32 *)&sp18[0x18];\n    *(f32 *)&sp18[0x2C] = p->unk304;\n    *(f32 *)&sp18[0x30] = p->unk308;\n    *(f32 *)&sp18[0x34] = p->unk30C;\n    return func_150A1DA0(sp18, (struct178 *)&(*(entry **)&D_800D3098)[arg1], 0);\n}\n"
+}

@@ -1,0 +1,6 @@
+{
+  "func": "func_1507C22C",
+  "file": "/home/ethan/conker/conker/src/game_A9260.c",
+  "score": 60,
+  "c": "extern s32 func_150229E4(struct127 *arg0);\nvoid func_1507BDB0(struct197 *arg0, f32 arg1, struct127 *arg2, s32 arg3);\n\nvoid func_1507C22C(s32 arg0) {\n    struct127 *obj = D_800CC2D0;\n    do {\n        if (obj->interaction_state == 0) {\n            continue;\n        }\n        if (obj->unk25C & 0x200) {\n            continue;\n        }\n        if (arg0 != 0 && obj->unk5 != 4) {\n            continue;\n        }\n        if (D_800C3638 != 0 && *(u8 *)&D_800C3654 == 0) {\n            if (func_150229E4(obj) == 0) {\n                continue;\n            }\n        }\n        if (obj->unk2D0 == 0) {\n            continue;\n        }\n        if (obj->unk2FA == 0) {\n            continue;\n        }\n        func_1507BDB0(obj->unk2D0, obj->unk48, obj, arg0);\n    } while (++obj != (struct127 *)&D_800D121C);\n}\n"
+}

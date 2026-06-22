@@ -1,0 +1,6 @@
+{
+  "func": "func_15030310",
+  "file": "/home/ethan/conker/conker/src/game_5D2C0.c",
+  "score": 71,
+  "c": "s32 func_15030310(void *arg0, s32 arg1, s32 arg2) {\n    void *var;\n    void *next;\n    s32 ret;\n    s32 all;\n\n    if (((u8 *)arg0)[0x3B] == 0) {\n        return 0;\n    }\n\n    var = (void *)D_800C3EE0;\n    ret = 0;\n    all = 0xFF;\n    if (var != 0) {\n        do {\n            next = *(void **)((u8 *)var + 0x54);\n            if (((u8 *)arg0)[0x3B] == *(u8 *)var) {\n                if (arg1 == ((u8 *)var)[6]) {\n                    if (arg2 == all) {\n                    } else if (arg2 != 0) {\n                        arg2--;\n                        var = next;\n                        continue;\n                    }\n                    func_15030158(var, 0);\n                    ret = 1;\n                    if (arg2 == 0) {\n                        break;\n                    }\n                }\n            }\n            var = next;\n        } while (var != 0);\n    }\n\n    return ret;\n}\n"
+}

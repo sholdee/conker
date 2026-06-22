@@ -1,0 +1,6 @@
+{
+  "func": "func_1509CA98",
+  "file": "/home/ethan/conker/conker/src/game_C9EC0.c",
+  "score": 60,
+  "c": "s32 func_1509CA98(s32 arg0) {\n    s32 i;\n    GameC9EC0Struct *ptr;\n\n    i = 0;\n    ptr = D_80087430;\nloop:\n    if (ptr[0].unk0 && arg0 == ((ptr[0].unk4 & 0x1FFFFFFF) + 1)) {\n        return i;\n    }\n    if (ptr[1].unk0 && arg0 == ((ptr[1].unk4 & 0x1FFFFFFF) + 1)) {\n        return i + 1;\n    }\n    if (ptr[2].unk0 && arg0 == ((ptr[2].unk4 & 0x1FFFFFFF) + 1)) {\n        return i + 2;\n    }\n    if (ptr[3].unk0 && arg0 == ((ptr[3].unk4 & 0x1FFFFFFF) + 1)) {\n        return i + 3;\n    }\n    i += 4;\n    ptr += 4;\n    if (i != 0xCC) {\n        goto loop;\n    }\n\n    return 0xCC;\n}\n"
+}

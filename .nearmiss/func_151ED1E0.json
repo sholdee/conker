@@ -1,0 +1,6 @@
+{
+  "func": "func_151ED1E0",
+  "file": "game_215960",
+  "score": 30,
+  "c": "extern u8 D_800E0B96;\nGfx *func_1501A6CC(Gfx *arg0, s32 a, s32 b, s32 c, s32 d);\n\nGfx *func_151ED1E0(Gfx *gfx) {\n    if (D_800E0B96 == 0) {\n        return gfx;\n    }\n    gDPPipeSync(gfx++);\n    gDPSetOtherMode(gfx++, 0x082C3F, 0x504340);\n    gDPSetCombine(gfx++, 0xFFFFFF, 0xFFFEFB7D);\n    gDPSetColor(gfx++, G_SETENVCOLOR, D_800E0B96);\n    return func_1501A6CC(gfx, 0, 0, D_800BE620, D_800BE624);\n}\n"
+}

@@ -1,0 +1,6 @@
+{
+  "func": "func_150C5370",
+  "file": "game_F2820",
+  "score": 180,
+  "c": "extern void *func_15167A68(s32, s32, s32, s32, s32, s32);\nextern f32 func_15143E64(struct17 *);\n\nvoid *func_150C5370(void *arg0, s32 arg1) {\n    void *temp_v1;\n    struct17 sp20;\n\n    temp_v1 = func_15167A68(0x46, 0, arg1 + 0xC8, 1, 0xFF, 1);\n    if (temp_v1 == 0) {\n        return NULL;\n    }\n    memcpy((s32)temp_v1 + 0x18, arg0, 0x24);\n    sp20.unk0 = *(f32 *)((s32)temp_v1 + 0x18) - *(f32 *)((s32)temp_v1 + 0x24);\n    sp20.unk4 = *(f32 *)((s32)temp_v1 + 0x1C) - *(f32 *)((s32)temp_v1 + 0x28);\n    sp20.unk8 = *(f32 *)((s32)temp_v1 + 0x20) - *(f32 *)((s32)temp_v1 + 0x2C);\n    *(f32 *)((s32)temp_v1 + 0xC0) = func_15143E64(&sp20);\n    *(s32 *)((s32)temp_v1 + 0x10) = 1;\n    *(s32 *)((s32)temp_v1 + 0x14) = 0;\n    return temp_v1;\n}\n"
+}

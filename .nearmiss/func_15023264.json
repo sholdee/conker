@@ -1,0 +1,6 @@
+{
+  "func": "func_15023264",
+  "file": "/home/ethan/conker/conker/src/game_49D30.c",
+  "score": 65,
+  "c": "s32 func_15023264(s32 arg0, s32 arg1) {\n    s32 i;\n    s32 best;\n    s32 result;\n    s32 score;\n    s16 *found;\n    u8 **entry;\n    u8 *ptr;\n    u8 *records;\n\n    result = -1;\n    best = 0x1869F;\n\n    i = 0;\n    if (D_800C363A[arg0] > 0) {\n        entry = &D_800C3688[(arg0 * 15) * 2];\n        do {\n            ptr = *entry;\n            if (ptr != 0) {\n                found = 0;\n                score = func_15023BB0(ptr + 0x18, 3, i, &found, 0, 0, 0, 0, 0, 0, arg0);\n                if (found != 0) {\n                    if (score < best) {\n                        best = score;\n                        result = found[1];\n                    }\n                }\n            }\n            i++;\n            entry++;\n        } while (i < D_800C363A[arg0]);\n    }\n\n    if (result == -1) {\n        result = 0;\n        i = 0;\n        if (i < D_800C363A[arg0]) {\n            records = D_800C35F0[arg0];\n            do {\n                if (*(u16 *)records == 1) {\n                    result = i;\n                    break;\n                }\n                i++;\n                records += 8;\n            } while (i < D_800C363A[arg0]);\n        }\n    }\n\n    return result;\n}"
+}

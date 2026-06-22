@@ -1,0 +1,6 @@
+{
+  "func": "func_1509F4E8",
+  "file": "game_CBDB0",
+  "score": 60,
+  "c": "void func_1509F4E8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {\n    struct178 *e;\n    s32 h;\n\n    e = &((struct178 *)*(s32 *)&D_800D3098)[arg3];\n    h = *(s16 *)&e->unk6[0];\n    if ((u32)arg4 >= (u32)h) {\n        arg4 = h - 1;\n    }\n    func_10010F88(func_1000F568(arg0, (u8)(arg1 - arg0 + 1)), (u16)arg2, 0, 0, 0, e->unk0, e->pad2, e->unk4, arg4, h);\n}"
+}

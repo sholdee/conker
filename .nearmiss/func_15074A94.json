@@ -1,0 +1,6 @@
+{
+  "func": "func_15074A94",
+  "file": "/home/ethan/conker/conker/src/game_981E0.c",
+  "score": 75,
+  "c": "void func_15074A94(void) {\n    f32 temp_f0;\n    f32 phi_f2;\n    f32 range;\n    f32 tmp;\n\n    temp_f0 = func_1505A72C(&D_800CC2D0, D_800D154C);\n\n    if (D_800D154C->unk148 < D_8009A0E8) {\n        D_800D154C->unk148 = D_800D154C->unk154;\n    }\n\n    if (temp_f0 < 200.0f) {\n        phi_f2 = D_8009A0EC;\n    } else {\n        if (D_8009A0F0 < temp_f0) {\n            phi_f2 = D_800D154C->unk148;\n        } else {\n            tmp = D_8009A0F4;\n            phi_f2 = D_800D154C->unk148;\n            range = phi_f2 - tmp;\n            phi_f2 = ((temp_f0 - 200.0f) / D_8009A0F8) * range + tmp;\n        }\n    }\n    D_800D154C->unk154 = D_800D154C->unk158 = phi_f2;\n    D_800D154C->unk15C = D_8009A0FC;\n}\n"
+}

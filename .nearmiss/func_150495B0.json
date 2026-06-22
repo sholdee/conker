@@ -1,0 +1,6 @@
+{
+  "func": "func_150495B0",
+  "file": "game_76A60",
+  "score": 236,
+  "c": "void func_150495B0(f32 *a0, f32 a1, f32 *a2, f32 a3, f32 a4, f32 a5) {\n    f32 t;\n    f32 sign;\n    f32 cur;\n\n    t = a1 - *a0;\n    sign = (t < 0.0f) ? -1.0f : 1.0f;\n    t = t * a3;\n    *a2 = *a2 + (t - *a2) * a4 * a5;\n    cur = *a0 + *a2 * a5;\n    if ((a1 < cur ? -1.0f : 1.0f) == sign) {\n        *a0 = cur;\n    } else {\n        *a0 = a1;\n        *a2 = 0.0f;\n    }\n}\n"
+}

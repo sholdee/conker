@@ -1,0 +1,6 @@
+{
+  "func": "func_151A7950",
+  "file": "game_1D4E00",
+  "score": 35,
+  "c": "extern void *func_15167A68(s32, s32, s32, s32, u8, s32);\n\nstruct Elem151A7950 {\n    f32 a;\n    f32 b;\n    f32 c;\n    s32 d;\n    s32 e;\n    s32 f;\n};\n\nstruct Arg151A7950 {\n    s16 unk0;\n    s16 unk2;\n};\n\nstruct Struct151A7950 {\n    s16 unk0;\n    s16 unk2;\n    u8  pad4[0xE];\n    s16 unk12;\n    u8  pad14[0x4C];\n    struct Elem151A7950 *unk60;\n    struct Elem151A7950 *unk64;\n    f32 unk68;\n    u8  pad6C[0x10];\n    s32 unk7C;\n    struct Elem151A7950 unk80[1];\n};\n\nvoid *func_151A7950(struct Arg151A7950 *arg0, s32 arg1, u8 arg2, s32 arg3) {\n    struct Struct151A7950 *sp2C;\n    s32 m;\n\n    m = arg0->unk2 * 3;\n    sp2C = (struct Struct151A7950 *)func_15167A68(0x2D, arg3, (m << 3) + arg1 + 0x80, 1, arg2, 1);\n    if (sp2C == 0) {\n        return NULL;\n    }\n    memcpy((s32)sp2C + 0x10, arg0, 0x50);\n    sp2C->unk64 = sp2C->unk80;\n    sp2C->unk60 = &sp2C->unk64[arg0->unk2];\n    sp2C->unk68 = 0.0f;\n    sp2C->unk64->a = 0.0f;\n    sp2C->unk64->b = 0.0f;\n    sp2C->unk64->c = 0.0f;\n    sp2C->unk64[arg0->unk2 - 1].a = 0.0f;\n    sp2C->unk64[arg0->unk2 - 1].b = 0.0f;\n    sp2C->unk64[arg0->unk2 - 1].c = 1.0f;\n    bzero((u8 *)sp2C + 0x6C, 0x10);\n    sp2C->unk7C = (sp2C->unk12 << 6) + 0x140;\n    return sp2C;\n}"
+}

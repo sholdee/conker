@@ -1,0 +1,6 @@
+{
+  "func": "func_150C2424",
+  "file": "game_EF410",
+  "score": 130,
+  "c": "extern f32 D_800A0268;\nextern f32 D_800A026C;\nvoid func_1514C470(f32, f32, f32, f32, f32, f32, f32, s32, s32, f32, s32, u8);\n\nvoid func_150C2424(u8 arg0) {\n    f32 temp_f;\n\n    temp_f = func_150ADA68();\n    func_1514C470(D_800A0268, -490.0f, -328.0f, D_800A0268, -490.0f, 328.0f,\n                  temp_f * 8.0f + 8.0f, 1, 0, 0.0f, 0, arg0);\n    temp_f = func_150ADA68();\n    func_1514C470(D_800A026C, -560.0f, -580.0f, 8117.0f, -560.0f, -580.0f,\n                  temp_f * 3.0f + 4.0f, 3, 0, 0.0f, 0, arg0);\n}\n"
+}

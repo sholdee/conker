@@ -1,0 +1,6 @@
+{
+  "func": "func_15030D54",
+  "file": "game_5D2C0",
+  "score": 60,
+  "c": "extern void *allocate_memory(s32 size, s32 arg1, s32 arg2, s32 arg3);\n\nvoid func_15030D54(void *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6) {\n    f32 *temp;\n\n    temp = allocate_memory(0x18, 1, 0, 2);\n    *(f32 **)((u8 *)arg0 + 0x44) = temp;\n    if (temp != 0) {\n        temp[0] = arg1;\n        *(f32 *)(*(s32 *)((u8 *)arg0 + 0x44) + 0x4) = arg2;\n        *(f32 *)(*(s32 *)((u8 *)arg0 + 0x44) + 0x8) = arg3;\n        *(f32 *)(*(s32 *)((u8 *)arg0 + 0x44) + 0xC) = arg4;\n        *(f32 *)(*(s32 *)((u8 *)arg0 + 0x44) + 0x10) = arg5;\n        *(f32 *)(*(s32 *)((u8 *)arg0 + 0x44) + 0x14) = arg6;\n        if (*(s32 *)((u8 *)arg0 + 0x34) == 0) {\n            *(void **)((u8 *)arg0 + 0x34) = allocate_memory(0x80, 1, 2, 2);\n        }\n    }\n}\n"
+}

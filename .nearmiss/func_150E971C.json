@@ -1,0 +1,6 @@
+{
+  "func": "func_150E971C",
+  "file": "conker/src/game_113D60.c",
+  "score": 73,
+  "c": "extern s32 func_151337C0(f32 *);\n\ns32 func_150E971C(f32 *arg0) {\n    struct157 tmp;\n    f32 *temp_v1;\n\n    func_151337C0(arg0);\n    temp_v1 = (f32 *)((u8 *)arg0 + 0x170);\n    if (arg0[15] < temp_v1[0]) {\n        if ((((s32 *)temp_v1)[1] & 0x1F) == 0xA) {\n            f32 temp_f2;\n\n            temp_f2 = (func_150ADA68() * 20.0f) + 20.0f;\n\n            tmp.unk6 = 0xB;\n            tmp.unk7 = 0;\n            tmp.unk0 = 0x9701;\n            tmp.unk4 = 0x64;\n            tmp.unk8 = 0;\n            tmp.unkC = 0;\n            *(u8 *)&tmp.unk10 = 0xFF;\n            *(u8 *)&tmp.unk11 = 0xFF;\n            *(u8 *)&tmp.unk12 = 0xFF;\n            *(u8 *)&tmp.unk13 = 0xFF;\n            *(u8 *)&tmp.unk14 = 0xFF;\n            *(u8 *)&tmp.unk15 = 0xFF;\n            tmp.unk18 = 0x3B0003;\n            tmp.unk16 = 0;\n            tmp.unk17 = 7;\n            tmp.unk22 = 0x14;\n            tmp.unk24 = 0xC;\n\n            func_1513C73C((s32)&tmp, 0, 0, (s32)(temp_v1 + 2), arg0[14], temp_v1[0] + 5.0f, arg0[16], temp_f2, temp_f2, func_150ADA20() & 0xFF, 0, 0, *(u8 *)((u8 *)arg0 + 0xC), *(u8 *)((u8 *)arg0 + 1));\n        }\n        return 0;\n    }\n    return 1;\n}"
+}

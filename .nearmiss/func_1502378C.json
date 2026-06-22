@@ -1,0 +1,6 @@
+{
+  "func": "func_1502378C",
+  "file": "game_49D30",
+  "score": 45,
+  "c": "void func_1504A730(void);\nvoid func_1507E73C(struct127 *);\ns32 func_150229E4(struct127 *);\nvoid func_1502178C(struct127 *, s32, s32);\nvoid func_15061B4C(void);\nvoid func_1507FEA0(struct127 *);\n\nvoid func_1502378C(void) {\n    struct127 *obj;\n    s32 i;\n    s32 active;\n\n    obj = D_800CC2D0;\n    i = 0;\n    if (*(u8 *)&D_800C3654 != 0) {\n        func_1504A730();\n        return;\n    }\n\n    active = 1;\n    do {\n        if (obj->interaction_state != 0) {\n            D_800C3E78 = i;\n            func_15022998((s32 *)obj);\n            func_1507E73C(obj);\n            if (func_150229E4(obj) != 0) {\n                func_1502178C(obj, 0, -1);\n                func_150627D4(obj);\n                func_1507FEA0(obj);\n                obj->unk2FF = active;\n            }\n        }\n        i++;\n        obj++;\n    } while (i != 0x19);\n\n    func_15061B4C();\n}\n"
+}

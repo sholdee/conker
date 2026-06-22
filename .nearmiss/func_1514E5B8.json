@@ -1,0 +1,6 @@
+{
+  "func": "func_1514E5B8",
+  "file": "game_179F30",
+  "score": 25,
+  "c": "extern s32 D_800A58E4;\ns32 func_1518D1C0(s32, s32, s32, s32, s32, s32, s32 *);\ns32 func_1515D5F8(s32, s32, s32, s32, s32, s32, s32, s32, s32, u8);\nvoid func_1514EC1C(s32, s32, s32);\n\nvoid func_1514E5B8(s32 arg0) {\n    s32 v0;\n    s32 temp;\n\n    v0 = func_1518D1C0(arg0, 5, 0, 1, 0xFF, 1, &D_800A58E4);\n    func_1514EC1C(v0, arg0, 0xD);\n    temp = arg0 + 0x14;\n    v0 = func_1515D5F8(-0x8000, temp >> 16, temp & 0xFFFF, 5, 0xFF, 0xFF, 0xFF, 0xFF, 0, 0);\n    func_1514EC1C(v0, arg0, 0x18);\n}\n"
+}

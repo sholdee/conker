@@ -1,0 +1,6 @@
+{
+"func": "func_1510E670",
+"file": "game_13BB20",
+"score": 20,
+"c": "typedef struct {\n    f32 x;\n    f32 y;\n    f32 z;\n} Vec3f_E670;\n\ntypedef struct {\n    s16 x;\n    s16 y;\n    s16 z;\n} Vec3s_E670;\n\ntypedef struct {\n    s16 *unk0;\n    s16 *unk4;\n    s16 *unk8;\n} struct_E670_inner;\n\ntypedef struct {\n    s32 unk0;\n    struct_E670_inner *unk4;\n    s32 unk8;\n    s32 unkC;\n} struct_E670;\n\nextern void func_150AD8B0(Vec3f_E670 *, Vec3f_E670 *, Vec3f_E670 *);\n\ns32 func_1510E670(s32 arg0) {\n    struct_E670_inner *t0;\n    s32 t1;\n    Vec3s_E670 *p0;\n    Vec3s_E670 *p1;\n    Vec3s_E670 *p2;\n    Vec3f_E670 sp38;\n    Vec3f_E670 sp2C;\n    Vec3f_E670 sp20;\n\n    t0 = ((struct_E670 *)&D_800D3300)[arg0].unk4;\n    t1 = ((struct_E670 *)&D_800D3300)[arg0].unk8;\n    if (t0 != 0) {\n        p0 = (Vec3s_E670 *)((s32)t0->unk0 + t1);\n        p1 = (Vec3s_E670 *)((s32)t0->unk4 + t1);\n        p2 = (Vec3s_E670 *)((s32)t0->unk8 + t1);\n        sp38.x = p1->x - p0->x;\n        sp38.y = p1->y - p0->y;\n        sp38.z = p1->z - p0->z;\n        sp2C.x = p2->x - p0->x;\n        sp2C.y = p2->y - p0->y;\n        sp2C.z = p2->z - p0->z;\n        func_150AD8B0(&sp38, &sp2C, &sp20);\n        if (sp20.y < 0.0f) {\n            return 0;\n        }\n        return 1;\n    }\n    return 0;\n}\n"
+}

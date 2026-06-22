@@ -1,0 +1,6 @@
+{
+  "func": "func_151AA30C",
+  "file": "/home/ethan/conker/conker/src/game_1D6E80.c",
+  "score": 61,
+  "c": "extern f32 D_800A8F98;\nextern f32 D_800A8F9C;\nextern f32 D_800A8FA0;\nextern s32 func_1515A920(void *, s32 *);\nextern void func_1515A238(f32 *, f32 *, f32, f32, s32, f32, s32, s32, s32, s32, s32);\n\nvoid func_151AA30C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, struct_151A9EC0_arg *arg6) {\n    f32 sp5C[3];\n    f32 sp50[3];\n    s32 sp48;\n    s32 sp40;\n    f32 sp3C;\n    f32 sp38;\n\n    if (((struct_151A9EC0_inner *)*(void **)((u8 *)arg6 + 0x1C))->unk118 < arg1) {\n        return;\n    }\n\n    if (func_1515A920(*(void **)((u8 *)arg6 + 0x1C), &sp48) == 0) {\n        sp48 = 0;\n    }\n\n    sp50[0] = 0.0f;\n    sp50[1] = -(((func_150ADA68() * 196.0f) + 199.0f) * D_800A8F98 * arg4);\n    sp50[2] = 0.0f;\n    sp5C[0] = arg0;\n    sp5C[1] = arg1;\n    sp5C[2] = arg2;\n\n    sp38 = func_150ADA68();\n    sp3C = func_150ADA68();\n    sp40 = func_150ADA20();\n\n    func_1515A238(sp5C, sp50, ((sp38 * D_800A8F9C) + 454.0f) * D_800A8FA0,\n                  0.972683012f, sp48, (sp3C * 101.0f) + 101.0f,\n                  (sp40 % 0x1FU) + 0x32, (func_150ADA20() % 0x65U) + 0x64,\n                  1, arg6->unkC, arg6->unk1);\n}\n"
+}

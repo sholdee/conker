@@ -1,0 +1,6 @@
+{
+  "func": "func_1514DAA4",
+  "file": "game_179F30",
+  "score": 2,
+  "c": "void func_1514DAA4(s32 arg0) {\n    s32 v0;\n    s32 sp1C[2];\n\n    *(s32 *)(arg0 + 0x94) |= 0x2;\n    sp1C[0] = 0;\n    sp1C[1] = 0;\n    v0 = func_15158BD0(arg0, 1, 8);\n    if (v0 != 0) {\n        memcpy((void *)(v0 + 0x58), sp1C, 8);\n        func_1514EC1C(v0, arg0, 0x13);\n    }\n}\n"
+}

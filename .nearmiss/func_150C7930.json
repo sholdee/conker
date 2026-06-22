@@ -1,0 +1,1 @@
+{"func": "func_150C7930", "file": "game_F4D20", "score": 5, "c": "void func_150C7930(void) {\n    u8 *p = (u8 *)D_800DBEF4 + 0x1E0;\n    *(s32 *)(p + 0x3C) = *(s32 *)((u8 *)D_800DBEF4 + 0x21C) & 0xFFFF0000;\n    func_151150BC(p);\n}"}

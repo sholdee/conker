@@ -1,0 +1,6 @@
+{
+  "func": "func_151A2960",
+  "file": "/home/ethan/conker/conker/src/game_1CC440.c",
+  "score": 60,
+  "c": "s32 func_1513170C(s32 *, s32);\nstruct Obj151A2960;\nextern void (*D_8008F8E0[])(struct Obj151A2960 *, s32);\n\nstruct Sub151A2960 {\n    s16 unk0;\n    s16 unk2;\n    s16 unk4;\n    s8 unk6;\n};\n\nstruct Obj151A2960 {\n    u8 pad0[0x1A];\n    s16 unk1A;\n    u8 pad1C[0x2C - 0x1C];\n    u8 unk2C;\n    u8 pad2D[0xB0 - 0x2D];\n    struct Sub151A2960 unkB0;\n};\n\nvoid func_151A2960(struct Obj151A2960 *arg0, s32 arg1) {\n    register struct Sub151A2960 *temp_v0;\n    register s32 temp_a2;\n\n    temp_a2 = arg0->unk1A;\n    temp_v0 = &arg0->unkB0;\n    if (temp_a2 < temp_v0->unk0) {\n        arg0->unk2C = temp_a2 * temp_v0->unk2;\n    }\n    if (D_800BE616 == 0) {\n        if (-1 != temp_v0->unk4) {\n            if ((-1 != temp_v0->unk6) && (temp_v0->unk4 >= temp_a2)) {\n                D_8008F8E0[temp_v0->unk6](arg0, temp_v0->unk4);\n                temp_v0->unk4 = -1;\n            }\n        }\n    }\n    func_1513170C((s32 *)arg0, arg1);\n}\n"
+}

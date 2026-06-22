@@ -1,0 +1,7 @@
+{
+  "func": "func_15183ACC",
+  "file": "game_1B0740",
+  "score": 42,
+  "c": "void func_15183ACC(s32 arg0) {\n    Inner15183ACC *ret;\n    Struct15183974 *p;\n    s32 temp;\n\n    p = &((Struct15183974 *)D_800DDE80)[arg0];\n    if (p->unk0 == 0) {\n        ret = (Inner15183ACC *)func_1502B6BC(0, 0, 0, 2, 9, arg0 + 0xAD);\n        if (ret != 0) {\n            p->unk0 = (s32)ret;\n            p->unk4 = ret->unk0;\n            p->unk8 = ret->unk8;\n            p->unkC = ret->unk18;\n            D_800DDF78[arg0] = ret->unk10;\n            func_1510CE60(D_800DDF78[arg0], 0, 1, 0x3E, &p->unk10);\n            D_800DDF68[arg0] = 1;\n        }\n    }\n}",
+  "notes": "Body byte-identical to target register-for-register. Needs local decls: extern s8 D_800DDF68[]; extern s32 D_800DDF78[]; s32 func_1510CE60(s32,s32,s32,s32,s32*); typedef struct{s32 unk0,unk4,unk8,unkC,unk10,unk14,unk18;}Inner15183ACC; and existing Struct15183974/func_1502B6BC. The read-back func_1510CE60(D_800DDF78[arg0],...) is what triggers the D_800DDF78 base-materialize + move t0,v0 schedule. Sole residual: stack frame 0x30 vs target 0x28 (8-byte spill-slot reservation, -g3 reg pressure); unused 'temp' pins v1 spill to 0x20 (matching) giving SCORE 42; without it v1 lands at 0x24 (SCORE 50). Frame-size delta cascades to inflate per-object score."
+}

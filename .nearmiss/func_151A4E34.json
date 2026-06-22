@@ -1,0 +1,6 @@
+{
+  "func": "func_151A4E34",
+  "file": "game_1D0840",
+  "score": 10,
+  "c": "void func_15143134(void *, s32, s32);\n\nstruct struct151A4E34 {\n    u8 pad0[0x74];\n    u8 unk74;\n    u8 pad75[0x1D4 - 0x75];\n    struct elem151A4E34 *unk1D4;\n};\n\ns32 func_151A4E34(struct struct151A4E34 **arg0, s32 arg1) {\n    struct struct151A4E34 *v0 = arg0[0];\n    s32 v1 = (s32)v0->unk1D4;\n    if (v1 == 0) {\n        return 0;\n    }\n    if ((v0->unk74 & 0xF) == 0xF) {\n        return 0;\n    }\n    func_15143134((u8 *)arg0 + 8, arg1, v1 + (*((u8 *)arg0 + 5) << 6));\n    return 1;\n}\n"
+}

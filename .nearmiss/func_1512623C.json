@@ -1,0 +1,6 @@
+{
+  "func": "func_1512623C",
+  "file": "/home/ethan/conker/conker/src/game_14FF90.c",
+  "score": 10,
+  "c": "void func_15143134(void *, void *, s32);\n\nvoid func_1512623C(struct127 *arg0, void *arg1, s32 arg2, f32 *arg3, f32 *arg4, f32 *arg5, s32 arg6) {\n    s32 temp_v0;\n    f32 sp38[3];\n    f32 sp2C[3];\n    s32 index;\n    volatile s32 pad[2];\n\n    temp_v0 = 1;\n    if (arg0->unk1D4 != NULL) {\n        temp_v0 = 0;\n        if (arg6 != 0) {\n            index = 3;\n            sp38[0] = 0.0f;\n            sp38[1] = 20.0f;\n            sp38[2] = 0.0f;\n        } else if (arg2 == 0x1B) {\n            index = 4;\n            sp38[1] = 116.0f;\n            sp38[0] = 0.0f;\n            sp38[2] = 130.0f;\n        } else {\n            temp_v0 = 1;\n        }\n\n        if (temp_v0 == 0) {\n            arg2 = (s32)arg0->unk1D4;\n            arg2 += index << 6;\n            func_15143134(sp38, sp2C, arg2);\n            *arg3 = sp2C[0];\n            *arg4 = sp2C[1];\n            *arg5 = sp2C[2];\n        }\n    }\n\n    if (temp_v0 != 0) {\n        *arg3 = arg0->x_position;\n        *arg4 = arg0->y_position + (*(s16 *)((u8 *)arg1 + 0x114) * 0.75f);\n        *arg5 = arg0->z_position;\n    }\n}\n"
+}

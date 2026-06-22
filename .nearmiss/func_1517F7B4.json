@@ -1,0 +1,6 @@
+{
+  "func": "func_1517F7B4",
+  "file": "game_1AC2F0",
+  "score": 30,
+  "c": "void func_1517F7B4(void) {\n    if (D_800DDE08 != 0) {\n        if (D_800BE9E4 < D_800DDE08) {\n            D_800DDE08 -= D_800BE9E4;\n        } else {\n            D_800DDE08 = 0;\n        }\n        D_800DDD89 += D_800DDD88 * D_800BE9E4;\n    }\n}"
+}

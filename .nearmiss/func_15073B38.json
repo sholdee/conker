@@ -1,0 +1,6 @@
+{
+  "func": "func_15073B38",
+  "file": "/home/ethan/conker/conker/src/game_981E0.c",
+  "score": 30,
+  "c": "void func_15073B38(void) {\n    struct func_15073B38_inner {\n        u8 padA8[0xA8];\n        f32 unkA8;\n        u8 unkAC;\n        s8 unkAD;\n    };\n    s32 *temp_v0;\n    struct127 **temp_v1;\n    f32 temp_f0;\n    f32 temp_f2;\n\n    temp_v0 = &D_800D1580;\n    temp_v1 = &D_800D154C;\n    temp_f0 = (f32)(*temp_v0 & 0xFFFF);\n    ((struct func_15073B38_inner *)(*temp_v1)->unk31C)->unkA8 = temp_f0;\n    temp_f2 = (f32)((*temp_v0 >> 16) & 0xFF);\n    ((struct func_15073B38_inner *)(*temp_v1)->unk31C)->unkAC = (u32)temp_f2;\n    ((struct func_15073B38_inner *)(*temp_v1)->unk31C)->unkAD = *temp_v0 >> 24;\n}"
+}

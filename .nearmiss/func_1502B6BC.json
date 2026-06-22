@@ -1,0 +1,6 @@
+{
+ "func": "func_1502B6BC",
+ "file": "game_57FA0",
+ "score": 5,
+ "c": "s32 func_1502B4A8(s32 *arg0, s32 arg1);\n\ns32 func_1502B6BC(s32 *arg0, s32 arg1, s32 *arg2, s32 arg3) {\n    s32 *more;\n    u8 *offset;\n    s32 *tmp;\n    s32 sp44;\n    s32 ret;\n    s32 sp38;\n    s32 n;\n\n    more = &sp44;\n    if (arg0 != 0) {\n        more = arg0;\n    }\n\n    *more = 1;\n    offset = &D_AB1950;\n    tmp = &arg3 + 1;\n\n    if (arg3 != 0) {\n        do {\n            tmp = (s32 *)(((s32)tmp + 3) & -4) + 1;\n            n = *(tmp - 1);\n            if (*more != 0) {\n                offset += func_1502AC88(offset, n, &sp38);\n            }\n            *more = sp38 & 0xFFFFFFF;\n        } while (--arg3 != 0);\n    }\n\n    if (*more != 0) {\n        ret = func_1502B350(offset, sp38, more);\n        if (*more != 0 && ret != 0) {\n            arg1 = func_1502B4A8(ret, arg1);\n        } else {\n            arg1 = 0;\n        }\n        if (arg2 != 0) {\n            *arg2 = arg1;\n        }\n    } else {\n        ret = 0;\n    }\n\n    return ret;\n}\n"
+}

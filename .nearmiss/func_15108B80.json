@@ -1,0 +1,6 @@
+{
+  "func": "func_15108B80",
+  "file": "game_135D00",
+  "score": 50,
+  "c": "struct S15108B80 { u8 pad[0x50]; s32 unk50; };\n\nvoid func_15108B80(struct S15108B80 *arg0) {\n    s32 *p = (s32*)((u8*)arg0 + arg0->unk50);\n    s32 *q;\n    s32 v;\n\n    q = (s32*)((u8*)p + 0xF8);\n    if (p[0x10C/4] != 0x3E7) {\n        v = q[0x1C/4] - D_800BE9E4;\n        q[0x1C/4] = v;\n        if (v < 0) {\n            q[0x14/4] = 0x3E7;\n        }\n    }\n}\n"
+}

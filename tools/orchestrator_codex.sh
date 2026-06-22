@@ -17,7 +17,8 @@ Target asm: $REPO/conker/asm/nonmatchings/$2/$1.s
 
 THE LOOP:
 0. FIRST read $REPO/tools/ido_cookbook.md (core IDO 5.3 -O2 idioms; obey its When-to-BAIL checklist). For a stubborn diff or specific instruction pattern, grep $REPO/tools/ido_reference.md if it exists.
-0b. If $REPO contains /tmp/ref_$1.c, READ it: it is a SIMILAR already-matched function's byte-matching C. Read its asm too and use it as a worked template.
+0b. WORKED EXAMPLES: read /tmp/ref_$1.c (and /tmp/ref2_$1.c, /tmp/ref3_$1.c if present) -- the byte-matching C of the 3 most similar already-matched functions. Diff each one's asm against YOUR target .s to see what carries over; reuse their structure, casts, loop/branch shapes, and idioms as templates, ADAPTING offsets/constants/symbols to your function. Use them for style -- do NOT force your function into their exact shape, and do NOT copy verbatim.
+0d. m2c DRAFT: if /tmp/m2c_$1.c exists, read it -- a STRUCTURAL skeleton m2c decompiled from your target asm. Its control flow and call structure are usually right, but its TYPES are guesses (?, raw temp_/var_ names) and it can mis-analyze complex switches/loops. Treat it as a starting skeleton: keep the structure, re-derive types from the asm/headers, rewrite into idiomatic IDO C (use the refs above for style). NEVER submit m2c output verbatim -- verify every construct against the diff.
 0c. If your function builds DISPLAY LISTS (Gfx*, gSP/gDP macros, or raw ->w0/->w1 word stores), read $REPO/.claude/skills/decompile-microcode/f3dex2-reference.md and hand-write the matching macros.
 1. Read the target .s and src/$2.c (neighbor style/types); read include/structs.h, functions.h, variables.h for types.
 2. Replace the line  #pragma GLOBAL_ASM("asm/nonmatchings/$2/$1.s")  in $REPO/conker/src/$2.c with your candidate C.
@@ -31,7 +32,7 @@ HARD RULES (a violation corrupts the shared build tree):
 
 WHEN DONE:
 - SCORE: 0 -> STOP and LEAVE the matching C in the file.
-- Cannot reach 0 -> FIRST, if your best SCORE was <= 80, write the best-scoring C to $REPO/.nearmiss/$1.json as JSON with keys func,file,score,c (use python3 -c with json.dump). THEN revert: make $REPO/conker/src/$2.c contain exactly the original stub line  #pragma GLOBAL_ASM("asm/nonmatchings/$2/$1.s")  again. Leaving non-matching C breaks the build; reverting on failure is MANDATORY.
+- Cannot reach 0 -> FIRST, if your best SCORE was <= 80 OR <= half the instruction count of the target .s (a structurally-close attempt worth keeping for later), write the best-scoring C to $REPO/.nearmiss/$1.json as JSON with keys func,file,score,c (use python3 -c with json.dump). THEN revert: make $REPO/conker/src/$2.c contain exactly the original stub line  #pragma GLOBAL_ASM("asm/nonmatchings/$2/$1.s")  again. Leaving non-matching C breaks the build; reverting on failure is MANDATORY.
 EOF
 }
 
@@ -67,6 +68,13 @@ for c in json.load(sys.stdin): print(c['func'], c['file'])" > /tmp/codex_chunk.t
   echo "=== round $r: INTEGRATE (deterministic gate) ==="
   pairs=$(awk '{print $2" "$1}' /tmp/codex_chunk.txt | tr '\n' ' ')
   CONKER_REPO="$REPO" python3 tools/integrate.py $pairs
+
+  # durable provenance: record best score + size for EVERY attempt this round
+  while read -r func file; do
+    best=$(grep -oE 'SCORE: [0-9]+' "/tmp/codexm_${func}.log" 2>/dev/null | grep -oE '[0-9]+' | sort -n | head -1)
+    size=$(grep -cE '^\s+/\*' "$REPO/conker/asm/nonmatchings/${file}/${func}.s" 2>/dev/null)
+    printf '%s\t%s\t%s\t%s\n' "$func" "$file" "${best:-NA}" "${size:-NA}" >> "$REPO/tools/attempts.tsv"
+  done < /tmp/codex_chunk.txt
 done
 
 echo "=== DISTILL (codex, append-only to ido_reference.md) ==="

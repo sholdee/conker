@@ -1,0 +1,6 @@
+{
+  "func": "func_151AE640",
+  "file": "game_1D92F0",
+  "score": 160,
+  "c": "void func_151AE640(s32 *arg0, s32 *arg1, u8 arg2) {\n    s32 *ptr = arg0;\n    s32 temp;\n\n    if (arg2 == 0) {\n        temp = arg1[0];\n        if (temp == ptr[0x11]) {\n            ptr[0x11] = 0;\n        }\n    } else if (arg2 == 0x2D) {\n        temp = arg1[0];\n        if (temp == ptr[0x11]) {\n            ptr[0x11] = arg1[1];\n        } else if (arg1[1] == ptr[0x11]) {\n            ptr[0x11] = temp;\n        }\n    }\n}\n"
+}

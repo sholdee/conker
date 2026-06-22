@@ -1,0 +1,6 @@
+{
+  "func": "func_1503DA3C",
+  "file": "game_6A3D0",
+  "score": 115,
+  "c": "u8 func_1503DA3C(s32 arg0, s32 arg1) {\n    u8 *v0 = (u8 *)(*(&D_800D19A0 + arg0));\n    u8 *v1 = v0 - 0x38;\n\n    u8 *temp;\n    u8 ret;\n\n    if (v0 == 0) {\n        return 0xFF;\n    }\n    if (*(u32 *)(v1 + 0x34) < (u32)(arg1 + 1)) {\n        return 0xFF;\n    }\n    temp = *(u8 **)(v1 + 0x30);\n    ret = 0xFF;\n    if (temp != 0) {\n        ret = temp[arg1];\n    }\n    return ret;\n}\n"
+}

@@ -1,0 +1,6 @@
+{
+  "func": "func_150C1198",
+  "file": "game_EDE60",
+  "score": 30,
+  "c": "struct s150C1198 {\n    u8 pad0[0xA8];\n    struct s150C1198List *unkA8;\n};\n\nstruct s150C1198List {\n    u8 pad0[0x40];\n    struct sub150C0A48 *unk40;\n    s16 unk44;\n    s16 unk46;\n};\n\nvoid func_150C1198(struct s150C1198 *arg0) {\n    struct s150C1198List *temp;\n    s32 found;\n    s16 prev;\n    s16 head;\n    s16 idx;\n\n    temp = arg0->unkA8;\n    found = 0;\n    prev = -1;\n    idx = temp->unk44;\n    head = idx;\n    while ((idx != -1) && (found == 0)) {\n        if ((struct102 *)arg0 == temp->unk40[idx].unk0) {\n            found = 1;\n        } else {\n            prev = idx;\n            idx = temp->unk40[idx].unk4;\n        }\n    }\n\n    if (found) {\n        if (idx == head) {\n            temp->unk44 = temp->unk40[idx].unk4;\n        } else {\n            temp->unk40[prev].unk4 = temp->unk40[idx].unk4;\n        }\n        temp->unk40[idx].unk4 = temp->unk46;\n        temp->unk46 = idx;\n    }\n}\n"
+}

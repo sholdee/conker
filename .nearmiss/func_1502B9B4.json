@@ -1,0 +1,6 @@
+{
+  "func": "func_1502B9B4",
+  "file": "game_57FA0",
+  "score": 47,
+  "c": "s32 func_1502B9B4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {\n    u8 *offset;\n    s32 *tmp;\n    s32 n;\n    s32 more;\n    s32 stack0[5];\n    s32 stack2[2];\n    s32 stack1[2];\n\n    more = 1;\n    offset = &D_AB1950;\n    tmp = &arg0 + 1;\n\n    for (; arg0 != 0; arg0--) {\n        tmp = (s32 *)(((s32)tmp + 3) & -4) + 1;\n        n = *(tmp - 1);\n        if (more != 0) {\n            offset += func_1502AC88(offset, n, &stack0[0]);\n        }\n        more = stack0[0] & 0xFFFFFFF;\n    }\n\n    if (more != 0) {\n        more = ((stack0[0] & 0xFFFFFFF) + 1) & -2;\n        if ((stack0[0] & 0x70000000) == 0x10000000) {\n            tmp = stack1;\n            if (((s32)stack1 & 8) != 0) {\n                tmp = stack2;\n            }\n            func_10004514((s32)offset, tmp, 0x10, 1);\n            more = tmp[0];\n        }\n    }\n\n    return more;\n}\n"
+}

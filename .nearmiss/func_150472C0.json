@@ -1,0 +1,6 @@
+{
+  "func": "func_150472C0",
+  "file": "game_71820",
+  "score": 10,
+  "c": "struct conker150472C0_sub {\n    u8 unk0[0x10];\n    u16 unk10;\n};\n\nstruct conker150472C0_dst {\n    f32 unk0;\n    struct conker150472C0_sub unk4;\n    u8 pad16[2];\n    s32 unk18;\n    u8 unk1C;\n    u8 unk1D;\n    u8 pad1E[2];\n    s32 unk20;\n};\n\nstruct conker150472C0_src {\n    u8 pad0[0xC];\n    f32 unkC;\n    u8 pad10[0x34];\n    struct conker150472C0_sub unk44;\n    u8 pad56[3];\n    u8 unk59;\n    u8 pad5A[2];\n    s32 unk5C;\n    s32 unk60;\n};\n\nvoid func_150472C0(struct conker150472C0_dst *arg0, struct conker150472C0_src *arg1) {\n    s32 one;\n    s32 temp_v0;\n    s32 temp_v1;\n    s32 temp_a2;\n    u8 temp_t2;\n\n    one = 1;\n    arg0->unk0 = arg1->unkC;\n    arg0->unk4 = arg1->unk44;\n    arg0->unk18 = arg1->unk60;\n    temp_v0 = arg1->unk59;\n    temp_v1 = (1 == temp_v0) ? 2 : 0;\n    temp_t2 = 1;\n    temp_a2 = (one == temp_v0) ? one : 0;\n    temp_v0 = (one == temp_v0) ? 4 : 0;\n    arg0->unk1C = temp_v0 | temp_a2 | temp_v1;\n    if (arg1->unk59 == one) {\n        arg0->unk1D = temp_t2;\n    } else {\n        arg0->unk1D = 0;\n    }\n    arg0->unk20 = arg1->unk5C;\n}"
+}

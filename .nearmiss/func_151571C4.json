@@ -1,0 +1,6 @@
+{
+  "func": "func_151571C4",
+  "file": "game_183640",
+  "score": 40,
+  "c": "void func_151571C4(void *arg0) {\n    s32 i;\n    s32 *p;\n\n    for (i = 0, p = (s32 *)arg0; i <= D_80082FA0; i++, p++) {\n        if (p[0x41] != 0) {\n            func_100043B4((s32 *)p[0x41], 4);\n        }\n    }\n    if (((s32 *)arg0)[0x45] != 0) {\n        func_100043B4((s32 *)((s32 *)arg0)[0x45], 4);\n    }\n}"
+}

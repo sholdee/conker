@@ -1,0 +1,6 @@
+{
+  "func": "func_1501BB20",
+  "file": "game_48FD0",
+  "score": 10,
+  "c": "void func_1501BB20(void) {\n    if (D_80084064 != 0) {\n        osSetTimer(&D_800BE6E0, (u64)(0x19 * D_8002BD10) / 1000000, 0, &D_8003B218, (OSMesg)6);\n        D_80084064 = 0;\n    }\n}"
+}

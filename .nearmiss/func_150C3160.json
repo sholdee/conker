@@ -1,0 +1,6 @@
+{
+  "func": "func_150C3160",
+  "file": "conker/src/game_EF410.c",
+  "score": 60,
+  "c": "Gfx *func_150C3160(Gfx *arg0, struct127 *arg1, Gfx *arg2) {\n    f32 temp_f0;\n    s32 temp_v1;\n\n    arg2 = arg0;\n    if (arg1->unk2E8 != 0) {\n        temp_f0 = (f32)arg1->unk2E4 / (f32)arg1->unk2E8;\n    } else {\n        temp_f0 = 1.0f;\n    }\n    temp_f0 = 1.0f - temp_f0;\n    temp_v1 = (s32)((500.0f * temp_f0) + 2.0f);\n    arg0 = (Gfx *)(2 - arg1->unk2EC);\n    arg1->unk2EC = temp_v1 / 3;\n    while ((s32)arg0 < 0) {\n        arg0 = (Gfx *)((s32)arg0 + 0x40);\n    }\n    gDPSetTileSize(arg2++, 4, temp_v1, (s32)arg0, 0x1FE, 0x3E);\n    return arg2;\n}"
+}

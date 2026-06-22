@@ -1,0 +1,6 @@
+{
+  "func": "func_1516D678",
+  "file": "/home/ethan/conker/conker/src/game_19A8B0.c",
+  "score": 25,
+  "c": "extern s32 (*D_8008CBA0[])(u8 *);\n\nvoid func_1516D678(u8 *arg0) {\n    s32 temp;\n    s32 ptr;\n\n    temp = arg0[0x24];\n    if (temp != 0) {\n        temp -= D_800BE9E4;\n        if (temp < 0) {\n            temp = 0;\n        }\n        arg0[0x24] = temp;\n    }\n\n    if (D_8008CBA0[arg0[0x23]](arg0) == 1) {\n        ptr = *(s32 *)(arg0 + 0x30);\n        if (ptr != 0) {\n            *(s16 *)(ptr + 4) = 0;\n        }\n        func_1516972C((struct102 *)arg0);\n    } else {\n        temp = *(s16 *)(arg0 + 0x10);\n        temp = (temp << 8) + arg0[0x25];\n        temp += (u32)*(s16 *)(arg0 + 0x18) * (u32)D_800BE9E4;\n        *(s16 *)(arg0 + 0x10) = temp >> 8;\n        arg0[0x25] = temp;\n    }\n}\n"
+}

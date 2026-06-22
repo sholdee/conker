@@ -1,0 +1,6 @@
+{
+  "func": "func_15109064",
+  "file": "game_135D00",
+  "score": 160,
+  "c": "struct Arg0_15109064 {\n    u8 pad[0x50];\n    s32 off;\n};\n\nvoid func_15109064(struct Arg0_15109064 *arg0, s32 *arg1, u8 arg2) {\n    u8 *v0 = (u8 *)arg0 + arg0->off + 0xF8;\n\n    switch (arg2) {\n    case 0x1D:\n        *(s32 *)(v0 + 0x14) = arg1[0];\n        *(u8 *)(v0 + 0x18) = *(u8 *)((u8 *)arg1 + 0x8);\n        *(s32 *)(v0 + 0x1C) = arg1[1];\n        break;\n    case 0x1E:\n        if (*(u8 *)(v0 + 0x20) != 0) {\n            *(u8 *)(v0 + 0x20) = 0;\n        } else {\n            *(u8 *)(v0 + 0x20) = 1;\n        }\n        break;\n    }\n}\n"
+}

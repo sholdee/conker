@@ -1,0 +1,6 @@
+{
+  "func": "func_151AC408",
+  "file": "game_1D92F0",
+  "score": 24,
+  "c": "s32 func_151AC408(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5) {\n    struct_AC408 sp4C;\n    u8 *ptr = *(u8 **)(arg0 + 0x98);\n    struct_AC408 *arr = *(struct_AC408 **)(arg0 + 0x94);\n    u8 tmp;\n\n    sp4C.unk0 = arr[*(s8 *)(arg0 + 0x2D)].unk0;\n    sp4C.unk4 = arg4;\n    sp4C.unk8 = arr[*(s8 *)(arg0 + 0x2D)].unk8;\n    tmp = func_151D8E20();\n    if (func_150ADA20() & 1) {\n        func_151D9B8C(tmp, *(f32 *)ptr * 6.0f, ptr[0x1B], arg5, (struct17 *)&sp4C, (func_150ADA20() % 0x29U) + 0x50, 1, 1, 0, arg0[0xC], arg0[0x1]);\n    } else {\n        func_151DAB58(tmp, *(f32 *)ptr * 1.5f, ptr[0x1B], (struct17 *)&sp4C, 1, arg0[0xC], arg0[0x1]);\n    }\n    ptr[0x20] = 4;\n    return 1;\n}"
+}

@@ -1,0 +1,6 @@
+{
+  "func": "func_151A4900",
+  "file": "/home/ethan/conker/conker/src/game_1D0840.c",
+  "score": 20,
+  "c": "s32 func_151A4900(void *arg0, u8 arg1) {\n    s32 temp_a1;\n    s16 *temp_v1;\n    f32 temp_f0;\n\n    temp_v1 = (s16 *)((u8 *)arg0 + 0xA8);\n    temp_a1 = *(s16 *)((u8 *)arg0 + 0x1A);\n\n    if (temp_a1 < *(s16 *)((u8 *)arg0 + 0xAC)) {\n        *(u8 *)((u8 *)arg0 + 0x2B) = *(s16 *)((u8 *)arg0 + 0xAE) * temp_a1;\n    }\n\n    if (temp_a1 < temp_v1[4]) {\n        temp_f0 = (f32)(temp_v1[5] * D_800BE9E4);\n        *(volatile f32 *)((u8 *)arg0 + 0x38) = *(f32 *)((u8 *)arg0 + 0x38) + temp_f0;\n        *(volatile f32 *)((u8 *)arg0 + 0x3C) = *(f32 *)((u8 *)arg0 + 0x3C) + temp_f0;\n        temp_a1 = *(volatile s16 *)((u8 *)arg0 + 0x1A);\n    }\n\n    *(u8 *)((u8 *)arg0 + 0x2C) = temp_v1[1] * temp_a1;\n    return 1;\n}\n"
+}

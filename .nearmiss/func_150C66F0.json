@@ -1,0 +1,1 @@
+{"func": "func_150C66F0", "file": "game_F3BA0", "score": 165, "c": "void *func_150C6D90(void *arg0);\n\nvoid func_150C66F0(u8 *arg0) {\n    u8 *temp;\n    if (*(s32 *)(arg0 + 0x6C) != 0) {\n        temp = *(u8 **)(arg0 + 0x6C) + 0xB0;\n        temp[4] = 1;\n    } else {\n        *(void **)(arg0 + 0x6C) = func_150C6D90(arg0);\n    }\n}\n"}

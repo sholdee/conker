@@ -1,0 +1,6 @@
+{
+  "func": "func_150F33B0",
+  "file": "game_11FF10",
+  "score": 25,
+  "c": "void func_150F33B0(struct131 *arg0) {\n    if (D_800DBFF0->unk300 < -2000.0f) {\n        *(u8*)&arg0->unk4F &= ~1;\n    } else {\n        *(u8*)&arg0->unk4F |= 1;\n    }\n}"
+}

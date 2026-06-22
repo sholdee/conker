@@ -1,0 +1,6 @@
+{
+  "func": "func_1504452C",
+  "file": "/home/ethan/conker/conker/src/game_71820.c",
+  "score": 60,
+  "c": "void func_1504452C(s16 **arg0, struct17 *arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, s32 arg7) {\n    s16 **src;\n    struct17 *dst;\n    s16 *vtx;\n    f32 x;\n    f32 y;\n    f32 z;\n    s32 offset;\n\n    vtx = (s16 *)arg1;\n    src = arg0;\n    offset = 0;\n    dst = (struct17 *)vtx;\n    do {\n        vtx = (s16 *)((u8 *)*src + arg7);\n        x = vtx[0] - arg4;\n        y = vtx[1] - arg5;\n        z = vtx[2] - arg6;\n        dst->unk0 = (x * arg3) + (z * arg2);\n        dst->unk4 = y;\n        dst->unk8 = (z * arg3) - (x * arg2);\n        src++;\n        dst++;\n        offset += sizeof(struct17);\n    } while (offset != 0x24);\n}\n"
+}

@@ -1,0 +1,6 @@
+{
+ "func": "func_150CEF60",
+ "file": "game_FC410",
+ "score": 82,
+ "c": "extern s32 func_151149AC(u32);\nextern void func_150A3444(s32, s16, s16, s16);\nextern void func_151749A0(s32, s32);\nextern f32 D_800A0830;\nextern f32 D_800A0834;\n\nstruct Obj150CEF60 {\n    u8 pad0[0x8];\n    f32 unk8;\n};\n\nvoid func_150CEF60(s32 arg0) {\n    struct Obj150CEF60 *temp_v0;\n    f32 angle;\n    f32 c;\n    f32 s;\n    f32 cx;\n    f32 cy;\n\n    cx = -1.0f;\n    cy = 44.0f;\n    temp_v0 = (struct Obj150CEF60 *)func_151149AC(4);\n    angle = temp_v0->unk8 * D_800A0830;\n    c = func_150AD78C(angle);\n    s = func_150AD780(angle);\n    func_150A3444(2,\n                  (s16)((76.0f - cx) * s - (241.0f - cy) * c + cx),\n                  (s16)((76.0f - cx) * c + (241.0f - cy) * s + cy),\n                  (s16)D_800A0834);\n    func_151749A0(5, 3);\n}"
+}

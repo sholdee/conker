@@ -1,0 +1,6 @@
+{
+  "func": "func_151DCEF0",
+  "file": "game_20A3A0",
+  "score": 10,
+  "c": "void func_151DCEF0(s32 arg0, u8 arg1, s32 arg2, s32 arg3) {\n    while (func_151DCFD8(1) != 0) {\n    }\n    D_800E0A20 = arg0;\n    D_800E0A24 = arg1;\n    D_800E0A28 = arg2;\n    D_800E0A2C = arg3;\n    osSetTimer(&D_80042A58, (0x2EE0LL * D_8002BD10) / 1000000ULL, 0, &__osEepromTimerQ, &D_80042A90);\n}\n"
+}

@@ -1,0 +1,6 @@
+{
+  "func": "func_1519E304",
+  "file": "game_1CA420",
+  "score": 10,
+  "c": "void func_15143134(void *, s32, s32);\n\ns32 func_1519E304(s32 *arg0, f32 *arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {\n    f32 sp1C[3];\n    s32 v0;\n\n    v0 = ((s32 *)arg0[0])[0x1D4 / 4];\n    if (v0 == 0) {\n        return 0;\n    }\n    func_15143134((u8 *)arg0 + 8, (s32)sp1C, v0 + (*((u8 *)arg0 + 5) << 6));\n    arg1[0] = (sp1C[0] - arg2) * arg5 + arg2;\n    arg1[1] = (sp1C[1] - arg3) * arg5 + arg3;\n    arg1[2] = (sp1C[2] - arg4) * arg5 + arg4;\n    return 1;\n}"
+}

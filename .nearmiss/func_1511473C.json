@@ -1,0 +1,6 @@
+{
+  "func": "func_1511473C",
+  "file": "/home/ethan/conker/conker/src/game_13D350.c",
+  "score": 40,
+  "c": "extern f32 D_800A2F60;\nextern u16 D_800CBDA0[];\nvoid func_15114348(s32 arg0, f32 *arg1, f32 *arg2, f32 *arg3);\n\nvoid func_1511473C(struct127 *arg0, s32 arg1) {\n    if (arg0 != NULL) {\n        if (arg1 < D_800DBEF0) {\n            func_15114348(arg1, &arg0->x_position, &arg0->y_position, &arg0->z_position);\n            arg0->unk76 = (u32)((f32)(u32)arg0->unk76 + (*(f32 *)((u8 *)D_800DBEF4 + (arg1 * 0xA0) + 0x64) * D_800A2F60));\n\n            if (((u8 *)arg0)[0x137] != 0) {\n                if ((arg1 + 1) == D_800CBDA0[((s32)((u8 *)arg0 - (u8 *)D_800CC2D0)) / 0x32C]) {\n                    arg0->unk7A = arg0->unk76;\n                }\n            }\n        }\n    }\n}\n"
+}

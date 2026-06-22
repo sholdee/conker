@@ -1,0 +1,6 @@
+{
+  "func": "func_15087E54",
+  "file": "game_B3020",
+  "score": 70,
+  "c": "struct Struct15087E54 {\n    char pad0[0xC];\n    f32 unkC;\n    f32 unk10;\n    char pad14[0x84 - 0x14];\n};\n\nstruct Struct15087E54arg1 {\n    char pad0[0x76];\n    u16 unk76;\n};\n\nextern u8 *D_800872A0;\n\nvoid func_15087E54(s32 arg0, struct Struct15087E54arg1 *arg1) {\n    struct Struct15087E54 *p;\n    u16 r;\n    s32 d;\n    s32 cur;\n    if (D_800872A0 == 0) {\n        return;\n    }\n    p = (struct Struct15087E54 *)(arg0 * sizeof(struct Struct15087E54) + (s32)D_800872A0);\n    r = func_1505A630(p->unk10, p->unkC, 0) + 0x4000;\n    cur = arg1->unk76;\n    d = (u16)(r - cur);\n    if (d & 0x8000) {\n        if (d < 0xDBFF) {\n            arg1->unk76 = r + 0x2400;\n        }\n    } else {\n        if (d >= 0x2401) {\n            arg1->unk76 = r - 0x2400;\n        }\n    }\n}\n"
+}

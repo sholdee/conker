@@ -1,0 +1,6 @@
+{
+  "func": "func_151668B8",
+  "file": "game_193430",
+  "score": 30,
+  "c": "extern s16 D_800DCE40;\nextern s32 D_800DD220;\nextern s32 D_800DD224[];\nextern s32 D_800DD228;\nextern s32 D_800DD230;\nextern s32 D_800903F4;\nextern s32 D_800D2C9C;\ntypedef struct {\n    u8 pad0[0x18];\n    s32 unk18;\n    s32 unk1C;\n} struct_func_151668B8;\nextern struct_func_151668B8 D_800A4AC8;\nextern s32 func_15094F70(s32, s32, s32, s32 *, s32, s32, s32, s32, s32);\nextern void func_15142FBC(s32, s32, s32, s32);\n\nvoid func_151668B8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {\n    u8 sp37;\n    s32 temp;\n\n    temp = D_800DCE40;\n    D_800DD228 = (s32)&D_800903F4;\n    D_800DCE40 = temp + 0x80;\n    sp37 = 1;\n    D_800DD220 = temp;\n    if (D_800DCE40 >= 0x500) {\n        D_800DCE40 = 0;\n    }\n    D_800DD224[0] = 1;\n    temp = func_15094F70(arg0, D_800DD228, D_800DD220, &D_800DD230, 0, 0, 0, D_800DD224[0], 3);\n    func_15142FBC(temp, (D_800D2C9C | 0x80000) | 0x2CA0, D_800A4AC8.unk1C | D_800A4AC8.unk18, (s32)&sp37);\n}\n"
+}

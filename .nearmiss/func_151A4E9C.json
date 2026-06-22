@@ -1,0 +1,6 @@
+{
+  "func": "func_151A4E9C",
+  "file": "game_1D0840",
+  "score": 35,
+  "c": "void func_151A4E9C(void *arg0) {\n    u8 *p;\n    u8 v;\n    *(u8 *)((u8 *)arg0 + 0x30) = 0;\n    *(u16 *)((u8 *)arg0 + 0x1E) &= 0xFFFD;\n    p = *(u8 **)((u8 *)arg0 + 0x98);\n    v = p[0x30] | 1;\n    *(volatile u8 *)(p + 0x30) = v;\n    *(volatile u8 *)(p + 0x30) = v | 4;\n}\n"
+}
