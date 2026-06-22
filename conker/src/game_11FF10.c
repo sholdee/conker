@@ -5,6 +5,7 @@
 extern f32 D_800A1970;
 extern f32 D_800A1950[];
 
+s32 func_1509BE40();
 void func_15143134(void *, f32 *, s32);
 
 typedef struct {
@@ -124,4 +125,39 @@ void func_150F33F8(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11FF10/func_150F34F4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11FF10/func_150F43F0.s")
+void func_150F43F0(struct108 *arg0) {
+    if (arg0->unk23E == 0x3B) {
+        func_1509BFB0(0, 0x405C, 1);
+        if (arg0->unk2C == 0x100) {
+            goto set_zero;
+        }
+        if (arg0->unk6C8 == 0) {
+            if (func_15123934(arg0, 8, 0, 0, 0) != 0) {
+                arg0->unk84 |= 0x300000;
+                arg0->unk84 &= -5;
+                arg0->unk1B4 = 1;
+                arg0->unk1E0 = 3;
+                func_15124B18(arg0);
+            }
+            arg0->unk134 = 0;
+            arg0->unk348 = 125.0f;
+            arg0->unk34C = 125.0f;
+            arg0->unk374 = 220.0f;
+            arg0->unk190 = 30.0f;
+        } else {
+set_zero:
+            arg0->unk190 = 0.0f;
+        }
+    } else if (arg0->unk2C == 8) {
+        if (arg0->unk6C8 == 0) {
+            func_151239CC(arg0, 0);
+            func_1509BFB0(0, 0x405C, 0);
+        }
+    }
+
+    if ((func_1509BE40(1, 0x4054, 6, 0x9000) != 0) && (func_1509BE40(1, 0x405E, 6, 0x9000) == 0)) {
+        arg0->unk84 |= (s32)0x80000000;
+    } else {
+        arg0->unk84 &= 0x7FFFFFFF;
+    }
+}

@@ -7,6 +7,10 @@ extern f32 D_800A5790;
 extern void func_1513F680();
 extern void func_151D5D60();
 
+typedef s32 (*Func1514C2F0Callback)(s32, s16, f32, f32, f32, f32, f32, f32,
+                                    s32, s32, f32, s32, f32, s32, u8);
+extern Func1514C2F0Callback D_8008AA00[];
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_15149550.s")
 
@@ -367,7 +371,44 @@ s32 func_1514C2B8(struct Foo1514C2B8 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514C2F0.s")
+void func_1514C2F0(f32 arg0, f32 arg1, f32 arg2, f32 arg3,
+                   u8 arg4, s8 arg5, s16 arg6, u8 arg7,
+                   s32 arg8, f32 arg9, s32 arg10, u8 arg11) {
+    Func1514C2F0Callback *callbacks;
+    Func1514C2F0Callback callback;
+    f32 temp_f20;
+    f32 temp_f0;
+    f32 temp_f2;
+    f32 temp_arg1;
+    f32 temp_arg0;
+    f32 temp_arg2;
+    u8 var_s0;
+    s16 i;
+
+    temp_arg1 = arg1;
+    temp_arg0 = arg0;
+    temp_arg2 = arg2;
+    var_s0 = arg4;
+    i = 0;
+    if (arg6 > 0) {
+        callbacks = &D_8008AA00[arg7];
+        do {
+            temp_f20 = func_151423D8((u8)(var_s0 - 0x40));
+            temp_f0 = func_151423D8(var_s0);
+            temp_f2 = arg3 * temp_f0 + temp_arg2;
+            callback = *callbacks;
+            if (callback != 0) {
+                if (callback(1, i, arg3 * temp_f20 + temp_arg0, temp_arg1, temp_f2,
+                             temp_arg0, temp_arg1, temp_arg2, var_s0, arg4, arg3, arg8,
+                             arg9, arg10, arg11) == 0) {
+                    return;
+                }
+            }
+            i++;
+            var_s0 += arg5;
+        } while (i < arg6);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514C470.s")
 

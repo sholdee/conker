@@ -265,7 +265,35 @@ void *func_15154884(struct Vec3F *arg0, f32 arg1, f32 arg2, f32 arg3, u8 arg4, s
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15154A88.s")
+s32 func_15154A88(void *arg0) {
+    typedef struct {
+        f32 unk0;
+        f32 unk4;
+        f32 unk8;
+        f32 unkC;
+        f32 unk10;
+    } Struct15154A88;
+    register Struct15154A88 *temp_v1;
+    f32 temp_f0;
+    f32 temp_f2;
+
+    temp_v1 = (Struct15154A88 *)((s32)arg0 + 0x170);
+    temp_f0 = sinf(*(f32 *)((s32)arg0 + 0x17C));
+    temp_f2 = temp_v1->unk4 * temp_f0;
+    *(f32 *)((s32)arg0 + 0x1C) = temp_f2;
+    *(f32 *)((s32)arg0 + 0x18) = temp_f2;
+    *(u8 *)((s32)arg0 + 0x70) = (f32)(u8)(u32)temp_v1->unk8 * temp_f0;
+    temp_v1->unk0 -= (&D_800BE9A4)[0];
+    if (temp_v1->unk0 <= 0.0f) {
+        return 0;
+    }
+
+    temp_v1->unkC += temp_v1->unk10 * (&D_800BE9A4)[0];
+    *(f32 *)((s32)arg0 + 0x20) += *(f32 *)((s32)arg0 + 0x50) * (&D_800BE9A4)[0];
+    *(f32 *)((s32)arg0 + 0x24) += *(f32 *)((s32)arg0 + 0x54) * (&D_800BE9A4)[0];
+    *(f32 *)((s32)arg0 + 0x28) += *(f32 *)((s32)arg0 + 0x58) * (&D_800BE9A4)[0];
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15154C90.s")
 
