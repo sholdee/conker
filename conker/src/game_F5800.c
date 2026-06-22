@@ -10,7 +10,94 @@ extern f32 D_800A05B8;
 void func_15143794(s32, s32, f32, f32 *);
 struct260 *func_15130374(void *, u8, s32, u8, s32);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F5800/func_150C8350.s")
+typedef struct {
+    u8 pad0[2];
+    s8 unk2;
+    u8 pad3;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+} Struct150C8350;
+
+void func_150C8350(void) {
+    Struct150C8350 *volatile *recordsPtr;
+    volatile s32 *stepPtr;
+    volatile u8 *scalePtr;
+    Struct150C8350 *record;
+    register s32 offset;
+    s32 clamp;
+    s32 max;
+    s32 current;
+    s32 target;
+    s32 adjustedTarget;
+    s32 diff;
+    s32 absDiff;
+    s32 step;
+    s32 value;
+
+    scalePtr = &D_800BE9A0;
+    stepPtr = &D_800BE9E4;
+    recordsPtr = (Struct150C8350 *volatile *)&D_800BE4E0;
+    clamp = 0x4FF;
+    max = 0x500;
+    record = (Struct150C8350 *)0;
+
+    for (offset = (s32)record; offset != 0x64; offset += sizeof(Struct150C8350)) {
+        record = (Struct150C8350 *)((u8 *)*recordsPtr + offset);
+        current = record->unk6;
+        target = record->unk8;
+        if (current != target) {
+            adjustedTarget = target;
+            if (current < 0) {
+                adjustedTarget = -target;
+            }
+
+            diff = adjustedTarget - current;
+            step = *stepPtr << 4;
+            absDiff = (diff < 0) ? -diff : diff;
+
+            if (absDiff < step) {
+                record->unk6 = adjustedTarget;
+                record = (Struct150C8350 *)((u8 *)*recordsPtr + offset);
+                current = record->unk6;
+            } else {
+                if (diff < 0) {
+                    diff = -1;
+                } else {
+                    diff = 1;
+                }
+                value = step * diff;
+                record->unk6 = current + value;
+                record = (Struct150C8350 *)((u8 *)*recordsPtr + offset);
+                current = record->unk6;
+            }
+        }
+
+        record->unk4 += (current * record->unk2) * *scalePtr;
+        record = (Struct150C8350 *)((u8 *)*recordsPtr + offset);
+        value = record->unk4;
+        if (value >= max) {
+            record->unk4 = value - max;
+            record = (Struct150C8350 *)((u8 *)*recordsPtr + offset);
+            record->unk4 = max - record->unk4;
+            record = (Struct150C8350 *)((u8 *)*recordsPtr + offset);
+            record->unk2 = -record->unk2;
+            record = (Struct150C8350 *)((u8 *)*recordsPtr + offset);
+            if (record->unk4 >= max) {
+                record->unk4 = clamp;
+            }
+        } else if (value < 0) {
+            record->unk4 = -value;
+            record = (Struct150C8350 *)((u8 *)*recordsPtr + offset);
+            record->unk2 = -record->unk2;
+            record = (Struct150C8350 *)((u8 *)*recordsPtr + offset);
+            if (record->unk4 < 0) {
+                record->unk4 = 0;
+            }
+        }
+
+    }
+}
 
 extern void func_150C8350(void);
 

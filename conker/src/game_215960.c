@@ -9,10 +9,56 @@ extern Gfx D_80090028;
 extern u8 D_800917F8;
 extern u8 D_80091804;
 extern u8 D_80091810;
+extern s32 (*D_8008FFF4[])(s32);
+extern s32 D_80000300;
+extern u8 D_800BE616;
+extern u8 D_800BE740;
+extern s8 D_8008FD90;
+extern s8 D_800E0BD3;
+extern s32 *D_800E0BD8;
+s32 func_151ED1E0(s32);
+void func_15042D94(s32, s32, s32, s32);
 Gfx *func_151ED430(Gfx *, void *, s32, s32, s32, s32, f32, s32);
 Gfx *func_15096934(Gfx *);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151E84B0.s")
+s32 func_151E84B0(s32 arg0) {
+    s32 tmp;
+
+    D_8003C8E0 = 0x9000001;
+    tmp = 0;
+    arg0 = func_151ED1E0(arg0);
+    if (D_8008FFF4[D_800E0B94] != 0) {
+        arg0 = D_8008FFF4[D_800E0B94](arg0);
+    }
+
+    if (D_80000300 != 0) {
+        if ((D_800BE616 != 0) && (D_8008FD90 >= 2)) {
+            if ((D_800BE740 & 0xF) == 0) {
+                if (D_800E0BD3 == 1) {
+                    tmp = 0x33;
+                } else if (D_800E0BD3 == 2) {
+                    tmp = 0x16;
+                }
+            }
+        } else {
+            if ((D_800BE740 & 1) == 0) {
+                if (D_800E0BD3 == 1) {
+                    tmp = 0x32;
+                } else if (D_800E0BD3 == 2) {
+                    tmp = 0x15;
+                }
+            }
+        }
+    }
+
+    if (tmp != 0) {
+        func_1504332C(0xFF, 0xFF, 0xFF, 0xFF);
+        func_15042D94(0x94, 0xC8, 0x81, D_800E0BD8[tmp]);
+    }
+
+    D_8003C8E0 = 0;
+    return arg0;
+}
 
 extern u8 D_800E0B94;
 extern s32 (*D_8008FFC0[])(s32);
