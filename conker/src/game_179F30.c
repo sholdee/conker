@@ -33,6 +33,14 @@ void func_151BB044(s32);
 void func_151BC074(s32);
 void func_151BD2F8(void *, s32, s32);
 void func_151B9F00(void *, s32, s32);
+extern void *func_15155FD4(s32);
+extern void *func_15155780(s32, s32);
+s32 func_1514CA80(struct127 *, s32 *, s32 *, s32 *);
+extern void (*D_8008AA70[])(struct127 *);
+extern void (*D_8008AACC[])(struct127 *);
+extern u8 *D_8008AB90[];
+extern u8 D_800A5EC0[];
+extern u8 D_800A5ED8[];
 
 typedef struct Struct1514E00C_2C {
     /* 0x00 */ f32 unk00;
@@ -97,7 +105,63 @@ typedef struct Struct1514E00C_A4 {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514CA80.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514D15C.s")
+s32 func_1514D15C(struct127 *arg0) {
+    s32 sp44;
+    s32 sp40;
+    s32 sp3C;
+    u8 flags;
+    s32 temp_s0;
+    s32 index;
+    void *temp_v0;
+
+    sp44 = -1;
+    sp40 = -1;
+    sp3C = -1;
+    index = arg0 - D_800CC2D0;
+    if (*(s32 *)((u8 *)arg0 + 0x2F4) != 0) {
+        return 0;
+    }
+
+    do {
+        temp_v0 = func_15155FD4(index);
+        if (temp_v0 != 0) {
+            func_1516972C((struct102 *)temp_v0);
+        }
+    } while (temp_v0 != 0);
+
+    if ((index == 0) && (D_800BE616 == 0)) {
+        func_15155780(index, 0xFF);
+    }
+
+    D_8008AACC[0](arg0);
+    temp_s0 = func_1514CA80(arg0, &sp44, &sp40, &sp3C);
+    flags = temp_s0;
+    if (temp_s0 == 0) {
+        return 0;
+    }
+
+    if (flags & 4) {
+        temp_s0 = D_800A5ED8[sp3C];
+        if (temp_s0 != 0) {
+            D_8008AA70[temp_s0](arg0);
+        }
+    }
+
+    temp_s0 = flags & 2;
+    if (temp_s0 != 0) {
+        index = D_800A5EC0[sp40];
+        if (index != 0) {
+            D_8008AA70[index](arg0);
+        }
+    }
+
+    if ((temp_s0 != 0) && (flags & 1)) {
+        if (D_8008AA70[D_8008AB90[sp40][sp44]] != NULL) {
+            D_8008AA70[D_8008AB90[sp40][sp44]](arg0);
+        }
+    }
+    return 1;
+}
 
 typedef struct Node1514D310 {
     char pad0[0x10];

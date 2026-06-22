@@ -15,6 +15,10 @@ extern u8 D_800D2E40;
 extern s32 func_1501D2C4(s32, s32);
 extern f32 D_800969D8;
 extern f32 D_800969DC;
+extern u8 D_800C35AA;
+extern f32 D_80096A1C;
+extern void func_1507F640(void);
+extern void func_1508F060(void);
 
 typedef struct {
     f32 unk0;
@@ -299,6 +303,64 @@ void func_150233BC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_150234A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_150235DC.s")
+s32 func_150235DC(s32 arg0) {
+    struct127 *temp_v0;
+    struct127 *temp_v1;
+    void *temp_a0;
+    s8 temp_v0_2;
+
+    D_800CC2D0[0].unk25C &= ~0x200;
+    if (D_800C35AA == 0) {
+        temp_v0 = func_15083E90(1);
+        if (temp_v0 != 0) {
+            temp_v1 = temp_v0;
+            D_800C3E78 = temp_v0 - D_800CC2D0;
+            temp_a0 = temp_v0->unk31C;
+            temp_v0->xz_velocity = 0.0f;
+            if (temp_a0 != 0) {
+                *(f32 *)temp_a0 = 0.0f;
+            }
+            *(f32 *)((u8 *)temp_v0 + 0x54) = 0.0f;
+            temp_v0->unkCC = 0;
+            temp_v0->unkD0 = 0;
+
+            if ((D_80096A1C != temp_v0->unk118) && (temp_v0->y_position < temp_v0->unk118)) {
+                temp_v0->in_water = 1;
+                temp_v0->y_velocity = 0.0f;
+                temp_v0->gravity = 0.0f;
+                if (((temp_v0->unk118 - 50.0f) < temp_v0->unk1A6) || ((((u8 *)temp_v0->unk31C)[0x20] & 1) != 0)) {
+                    temp_v1->unkB2 = 0;
+                    func_1508F060();
+                }
+            } else {
+                temp_v0->in_water = 0;
+                temp_v0->unkB2 = 0;
+                temp_v0->y_velocity = -4.0f;
+                temp_v0->y_position = temp_v0->unk180;
+                temp_v0->unk1CC = temp_v0->unk180;
+                temp_v0->gravity = 5.0f;
+            }
+
+            temp_v1->unk81 = 0;
+            temp_v1->unk83 = 0;
+            temp_v1->disable_run = 0;
+            temp_v1->disable_jump = 0;
+            temp_v1->stunned = 0;
+            temp_v1->unk28 = temp_v1->y_position - temp_v1->unk180;
+            D_800D154C = temp_v1;
+            func_1507F640();
+            ((u8 *)temp_v1->unk31C)[0x23] = 0;
+            temp_v1->unk287 = 0;
+            temp_v0_2 = temp_v1->unk287;
+            temp_v1->unk276 = 0;
+            temp_v1->unk282 = 0;
+            temp_v1->unk278 = 0;
+            temp_v1->unk286 = temp_v0_2;
+            temp_v1->unk285 = temp_v0_2;
+            temp_v1->unk284 = temp_v0_2;
+            return temp_v0_2;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1502378C.s")
