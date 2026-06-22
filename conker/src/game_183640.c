@@ -28,6 +28,157 @@ extern void func_1503F5B8(s32, s32, s32, f32, f32, s32);
 extern void guMtxIdentF(float mf[4][4]);
 extern s32 func_1515D480(s32);
 extern s32 func_1515D440(void);
+extern void func_151539B4(void *, u8);
+extern void func_15130374(s32, u8, s32, u8, s32);
+
+#define LOW_U8_151568F8(arg) (*(u8 *)((u8 *)&(arg) + 3))
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} struct151568F8_0C;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+} struct151568F8_08;
+
+typedef struct {
+    struct151568F8_0C unk0;
+    s16 unkC;
+    s16 unkE;
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    s16 unk16;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    u8 unk28;
+    u8 unk29;
+    u8 unk2A;
+    u8 unk2B;
+    u8 unk2C;
+    u8 unk2D;
+    u8 unk2E;
+    u8 unk2F;
+    u8 unk30;
+    u8 pad31;
+    s16 unk32;
+    s16 unk34;
+    u16 unk36;
+    f32 unk38;
+    f32 unk3C;
+    u8 unk40;
+    u8 unk41;
+    s16 unk42;
+    s16 unk44;
+    u8 unk46;
+    u8 unk47;
+    u16 unk48;
+    u8 pad4A[2];
+    s32 unk4C;
+    s32 unk50;
+    s16 unk54;
+    u8 pad56[2];
+    s32 unk58;
+    s32 unk5C;
+    u8 unk60;
+    u8 unk61;
+    u8 unk62;
+    u8 unk63;
+    u8 unk64;
+    u8 unk65;
+    u8 unk66;
+    u8 unk67;
+    u8 unk68;
+    u8 pad69[3];
+    struct151568F8_08 unk6C;
+    s16 unk74;
+    s16 unk76;
+    s16 unk78;
+    u8 pad7A[2];
+    f32 unk7C;
+    s32 unk80;
+    u8 unk84;
+    u8 unk85;
+    s8 unk86;
+    s8 unk87;
+    u8 unk88;
+} struct151568F8_src;
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    struct151568F8_0C unk4;
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    s16 unk16;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    u8 unk28;
+    u8 unk29;
+    u8 unk2A;
+    u8 unk2B;
+    u8 unk2C;
+    u8 unk2D;
+    u8 unk2E;
+    u8 unk2F;
+    u8 unk30;
+    u8 pad31;
+    s16 unk32;
+    s16 unk34;
+    u16 unk36;
+    f32 unk38;
+    f32 unk3C;
+    u8 unk40;
+    u8 unk41;
+    s16 unk42;
+    s16 unk44;
+    u8 unk46;
+} struct151568F8_first;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    u16 unk8;
+    s16 unkA;
+    s32 unkC;
+    s32 unk10;
+    u8 unk14;
+    u8 unk15;
+    u8 unk16;
+    u8 unk17;
+    u8 unk18;
+    u8 unk19;
+    u8 unk1A;
+    u8 unk1B;
+    u8 unk1C;
+    u8 unk1D;
+    s16 unk1E;
+    s16 unk20;
+    s16 unk22;
+    f32 unk24;
+    struct151568F8_08 unk28;
+    struct151568F8_0C unk30;
+    u8 pad3C[0xC];
+    f32 unk48;
+    f32 unk4C;
+    f32 unk50;
+    f32 unk54;
+    s32 unk58;
+    u8 pad5C[4];
+    u8 unk60;
+    u8 unk61;
+    s8 unk62;
+    s8 unk63;
+    u8 pad64[0xC];
+} struct151568F8_second;
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15156190.s")
@@ -42,7 +193,75 @@ void func_15156388(void *arg0, u8 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_151564F8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_151568F8.s")
+void func_151568F8(struct151568F8_src *arg0, s32 arg1) {
+    struct151568F8_first first;
+    struct151568F8_second second;
+
+    first.unk0 = arg0->unkC;
+    first.unk2 = arg0->unkE;
+    first.unk4 = arg0->unk0;
+    first.unk10 = arg0->unk10;
+    first.unk14 = arg0->unk14;
+    first.unk12 = arg0->unk12;
+    first.unk16 = arg0->unk16;
+    first.unk18 = arg0->unk18;
+    first.unk1C = arg0->unk1C;
+    first.unk20 = arg0->unk20;
+    first.unk24 = arg0->unk24;
+    first.unk28 = arg0->unk28;
+    first.unk29 = arg0->unk29;
+    first.unk2A = arg0->unk2A;
+    first.unk2B = arg0->unk2B;
+    first.unk2C = arg0->unk2C;
+    first.unk2D = arg0->unk2D;
+    first.unk2E = arg0->unk2E;
+    first.unk2F = arg0->unk2F;
+    first.unk30 = arg0->unk30;
+    first.unk32 = arg0->unk32;
+    first.unk34 = arg0->unk34;
+    first.unk36 = arg0->unk36;
+    first.unk38 = arg0->unk38;
+    first.unk3C = arg0->unk3C;
+    first.unk40 = arg0->unk40;
+    first.unk41 = arg0->unk41;
+    first.unk42 = arg0->unk42;
+    first.unk44 = arg0->unk44;
+    first.unk46 = arg0->unk46;
+    func_151539B4(&first, LOW_U8_151568F8(arg1));
+
+    second.unk1D = arg0->unk47;
+    second.unk8 = arg0->unk48;
+    second.unk4 = arg0->unk50;
+    second.unk0 = arg0->unk4C;
+    second.unkC = arg0->unk58;
+    second.unk10 = arg0->unk5C;
+    second.unk14 = arg0->unk60;
+    second.unk15 = arg0->unk61;
+    second.unk16 = arg0->unk62;
+    second.unk17 = arg0->unk63;
+    second.unk18 = arg0->unk64;
+    second.unk19 = arg0->unk65;
+    second.unk1A = arg0->unk66;
+    second.unk30 = arg0->unk0;
+    second.unk58 = arg0->unk80;
+    second.unk1B = arg0->unk67;
+    second.unk1C = arg0->unk68;
+    second.unk62 = arg0->unk86;
+    second.unk63 = arg0->unk87;
+    second.unk1E = arg0->unk74;
+    second.unk20 = arg0->unk76;
+    second.unk60 = arg0->unk84;
+    second.unk61 = arg0->unk85;
+    second.unk22 = arg0->unk78;
+    second.unk24 = arg0->unk7C;
+    second.unkA = arg0->unk54;
+    second.unk28 = arg0->unk6C;
+    second.unk48 = 0.0f;
+    second.unk4C = 0.0f;
+    second.unk50 = 0.0f;
+    second.unk54 = 0.0f;
+    func_15130374((s32)&second, arg0->unk88, 0, LOW_U8_151568F8(arg1), 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15156B54.s")
 
