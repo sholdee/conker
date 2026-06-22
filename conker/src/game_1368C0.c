@@ -24,6 +24,18 @@ struct Arg15109C20Sub {
     u8 unk3B;
 };
 
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    u8 unk8;
+    u8 unk9;
+} GameStruct1510A8CCa;
+
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+} GameStruct1510A8CCb;
+
 extern f32 D_800A2650;
 extern f32 D_800A2654;
 extern f32 D_800A2658;
@@ -189,4 +201,15 @@ struct260 *func_1510A344(void *arg0, s32 arg1, u8 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1368C0/func_1510A870.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1368C0/func_1510A8CC.s")
+void func_1510A8CC(void *arg0, GameStruct1510A8CCa *arg1, u8 arg2) {
+    GameStruct1510A8CCb *v0 = (GameStruct1510A8CCb *)((u8 *)arg0 + 0x28);
+    if (arg2 == 0x2D) {
+        if (v0->unk0 == arg1->unk0) {
+            v0->unk0 = arg1->unk4;
+            v0->unk4 = arg1->unk9;
+        } else if (v0->unk0 == arg1->unk4) {
+            v0->unk0 = arg1->unk0;
+            v0->unk4 = arg1->unk8;
+        }
+    }
+}
