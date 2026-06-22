@@ -5,6 +5,7 @@
 extern void *allocate_memory();
 extern void func_10004074();
 extern void func_15188A58();
+extern s32 func_1502DB20();
 
 typedef struct Node1518894C {
     u8 unk0;
@@ -21,7 +22,72 @@ typedef struct Node1518894C {
 
 extern Node1518894C *D_800DF7CC;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B5CC0/func_15188810.s")
+typedef struct Struct15188810Arg {
+    char pad0[4];
+    u8 unk4;
+} Struct15188810Arg;
+
+typedef struct Node15188810 {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+    u8 unk4;
+    char pad5[1];
+    s16 unk6;
+    void *unk8;
+    struct Node15188810 *unkC;
+    Struct15188810Arg *unk10;
+    s32 unk14;
+} Node15188810;
+
+void func_15188810(Struct15188810Arg *arg0, s32 arg1, s32 arg2) {
+    Node15188810 *node;
+    s32 size[5];
+    void *mem;
+
+    node = (Node15188810 *)D_800DF7C8[0];
+    while (node != 0) {
+        if (arg0 == node->unk10) {
+            if (node->unk6 < arg1) {
+                node->unk6 = arg1;
+            }
+            node->unk4 = arg2;
+            return;
+        }
+        node = node->unkC;
+    }
+
+    node = allocate_memory(0x18, 1, 0, 0);
+    if (node != 0) {
+        s32 count;
+
+        count = func_1502DB20(arg0->unk4);
+        if (count == 0) {
+            func_10004074(node);
+            return;
+        }
+
+        size[0] = (count * 3) << 7;
+        mem = allocate_memory(size[0], 1, 1, 1);
+        if (mem == 0) {
+            func_10004074(node);
+            return;
+        }
+
+        node->unk0 = 0;
+        node->unk1 = 3;
+        node->unk2 = 0;
+        node->unk3 = 0x14;
+        node->unk4 = arg2;
+        node->unk6 = arg1;
+        node->unk8 = mem;
+        node->unk10 = arg0;
+        node->unk14 = 0;
+        bzero(mem, size[0]);
+        func_15188A58(node, D_800DF7C8);
+    }
+}
 
 void func_1518894C(s32 arg0, s32 arg1, s32 arg2) {
     Node1518894C *node;

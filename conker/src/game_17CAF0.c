@@ -167,7 +167,19 @@ extern void (*D_8008AC60[])(u8 *);
 extern void func_15156190(void *, u8, s32, u8, s32);
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514F640.s")
+struct Local1514FEFC;
+
+void func_1514F640(void *arg0, struct Local1514FEFC *arg1) {
+    *(u8 *)arg1 = 2;
+    *(f32 *)((u8 *)arg1 + 0x28) = *(f32 *)((u8 *)arg0 + 0x20);
+    if (func_15144E80((struct Vec3F *)((u8 *)arg0 + 0xC), (struct Vec3F *)((u8 *)arg1 + 0x10), (struct Vec3F *)((u8 *)arg1 + 0x1C), (struct Vec3F *)((u8 *)arg1 + 4)) != 0) {
+        if (func_15144A74((struct Vec3F *)((u8 *)arg1 + 4), (struct Vec3F *)arg0) < 0.0f) {
+            *(f32 *)((u8 *)arg1 + 4) = -*(f32 *)((u8 *)arg1 + 4);
+            *(f32 *)((u8 *)arg1 + 8) = -*(f32 *)((u8 *)arg1 + 8);
+            *(f32 *)((u8 *)arg1 + 0xC) = -*(f32 *)((u8 *)arg1 + 0xC);
+        }
+    }
+}
 
 s32 func_1514F6E8(struct Local1514F6E8 *arg0) {
     if (!(arg0->unk0 & 1)) {

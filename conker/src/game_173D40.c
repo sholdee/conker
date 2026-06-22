@@ -33,12 +33,17 @@ extern f32 D_800A5720;
 extern f32 D_800A5724;
 extern f32 D_800A5728;
 extern f32 D_800A572C;
+extern f32 D_800A5730;
+extern f32 D_800A5734;
+extern f32 D_800A5738;
 extern f32 D_800A573C;
 extern f32 D_800A5740;
 extern f32 D_800A5744;
 extern f32 D_800A5748;
 extern f32 D_800A574C;
 extern f32 D_800A5750;
+void func_15143794(s32, s32, f32, f32 *);
+struct260 *func_15130374(void *, u8, s32, u8, s32);
 
 s32 func_15146890(Struct15147040 *arg0, s32 arg1, s32 arg2, u8 arg3) {
     f32 sp2C[3];
@@ -165,7 +170,103 @@ void func_15147040(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_173D40/func_151470FC.s")
+s32 func_151470FC(s32 arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5, s32 arg6, s32 arg7, s16 arg8, s32 arg9, s32 argA, s32 argB, s32 argC, s32 argD, u8 argE) {
+    struct260 *ret;
+    struct {
+        f32 sp28;
+        u8 pad2C[4];
+        struct {
+            s32 unk00;
+            s32 unk04;
+            s16 unk08;
+            s16 unk0A;
+            s32 unk0C;
+            s32 unk10;
+            u8 unk14;
+            u8 unk15;
+            u8 unk16;
+            u8 unk17;
+            u8 unk18;
+            u8 unk19;
+            u8 unk1A;
+            u8 unk1B;
+            u8 unk1C;
+            u8 unk1D;
+            s16 unk1E;
+            s16 unk20;
+            s16 unk22;
+            f32 unk24;
+            f32 unk28;
+            f32 unk2C;
+            f32 unk30;
+            f32 unk34;
+            f32 unk38;
+            u8 pad3C[0xC];
+            f32 unk48;
+            f32 unk4C;
+            f32 unk50;
+            f32 unk54;
+            s32 unk58;
+            u8 pad5C[4];
+            u8 unk60;
+            u8 unk61;
+            u8 unk62;
+            s8 unk63;
+        } sp30;
+        u8 pad94[8];
+    } stack;
+
+    stack.sp30.unk1D = 0x29;
+    stack.sp30.unk08 = 0xE03;
+    stack.sp30.unk00 = 0x200005;
+    stack.sp30.unk04 = 0;
+    stack.sp30.unk0A = (func_150ADA20() & 0xF) + 0x14;
+    stack.sp30.unk0C = 0;
+    stack.sp30.unk10 = 0;
+    stack.sp30.unk18 = 0xB0;
+    stack.sp30.unk19 = 0xA0;
+    stack.sp30.unk1A = 0x2A;
+    stack.sp30.unk14 = 0x40;
+    stack.sp30.unk15 = 0xB;
+    stack.sp30.unk16 = 0x6A;
+    stack.sp30.unk17 = 0xFF;
+    stack.sp30.unk1B = (func_150ADA20() % 0x65U) + 0x64;
+    stack.sp30.unk1C = 0xFF;
+    stack.sp30.unk60 = 3;
+    stack.sp30.unk61 = 3;
+
+    stack.sp30.unk28 = stack.sp30.unk2C = (func_150ADA68() * 95.0f) + 101.0f;
+    stack.sp30.unk30 = arg2;
+    stack.sp30.unk34 = arg3;
+    stack.sp30.unk38 = arg4;
+    ((s32 *)&stack.sp28)[-2] = func_150ADA20();
+    func_15143794(arg8, (s16)((((s32 *)&stack.sp28)[-2] % 0xBU) - 0xB),
+                  ((func_150ADA68() * 396.0f) + 202.0f) * D_800A5730, &stack.sp30.unk48);
+    stack.sp30.unk54 = 0.0f;
+    stack.sp30.unk58 = 0xE05;
+
+    if (func_150ADA20() & 1) {
+        stack.sp30.unk58 |= 0x40;
+    }
+
+    if (func_150ADA20() & 1) {
+        stack.sp30.unk58 |= 0x80;
+    }
+
+    stack.sp30.unk62 = 0xA;
+    stack.sp30.unk24 = D_800A5734;
+    stack.sp28 = D_800A5738;
+    stack.sp30.unk63 = -1;
+    stack.sp30.unk1E = 0x14;
+    stack.sp30.unk20 = 0xC;
+    stack.sp30.unk22 = 0x1B;
+
+    ret = func_15130374(&stack.sp30, 1, 4, argE, 1);
+    if (ret != 0) {
+        memcpy((u8 *)ret + 0xA8, &stack.sp28, 4);
+    }
+    return 1;
+}
 
 void func_15147318(s32 arg0, s32 arg1, s32 arg2) {
     Struct15147040 sp4C;
