@@ -76,6 +76,7 @@ void func_15129934(struct108 *arg0);
 void func_1512A360(u8 *arg0);
 void func_1512E4B0(struct108 *arg0);
 void func_1512DEA4(struct108 *arg0);
+void func_15143134(void *arg0, void *arg1, s32 arg2);
 
 
 #if 0
@@ -697,8 +698,51 @@ void func_15126138(struct108 *arg0) {
     func_15124C38(arg0, 0);
 }
 
+typedef struct {
+    u8 pad0[0x114];
+    s16 unk114;
+} struct_1512623C_arg1;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_1512623C.s")
+void func_1512623C(struct127 *arg0, struct_1512623C_arg1 *arg1, s32 arg2, f32 *arg3, f32 *arg4, f32 *arg5, s32 arg6) {
+    s32 temp_v0;
+    f32 sp38[3];
+    f32 sp2C[3];
+    s32 index;
+    volatile s32 pad[2];
+
+    temp_v0 = 1;
+    if (arg0->unk1D4 != NULL) {
+        temp_v0 = 0;
+        if (arg6 != 0) {
+            index = 3;
+            sp38[0] = 0.0f;
+            sp38[1] = 20.0f;
+            sp38[2] = 0.0f;
+        } else if (arg2 == 0x1B) {
+            index = 4;
+            sp38[1] = 116.0f;
+            sp38[0] = 0.0f;
+            sp38[2] = 130.0f;
+        } else {
+            temp_v0 = 1;
+        }
+
+        if (temp_v0 == 0) {
+            arg2 = (s32)arg0->unk1D4;
+            arg2 += index << 6;
+            func_15143134(sp38, sp2C, arg2);
+            *arg3 = sp2C[0];
+            *arg4 = sp2C[1];
+            *arg5 = sp2C[2];
+        }
+    }
+
+    if (temp_v0 != 0) {
+        *arg3 = arg0->x_position;
+        *arg4 = arg0->y_position + (arg1->unk114 * 0.75f);
+        *arg5 = arg0->z_position;
+    }
+}
 // ooh mama
 #pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_15126378.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_14FF90/func_15127520.s")
