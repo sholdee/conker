@@ -14,9 +14,18 @@ extern f32 D_800AB1EC;
 extern f32 D_800AB1F0;
 extern f32 D_800AB1F4;
 extern f32 D_800AB1F8;
+extern f32 D_800AB21C;
+extern f32 D_800AB220;
+extern f32 D_800AB224;
+extern f32 D_800AB228;
+extern f32 D_800AB22C;
+extern f32 D_800AB230;
+extern f32 D_800AB234;
 
 void func_1503F404(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 s32 func_15132A4C(void *, s32, s32, s32, u8, s32);
+struct conker151D5514;
+void func_1514FCE8(struct conker151D5514 *a0, u8 a1, s32 a2);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D3480.s")
 
@@ -327,7 +336,72 @@ void func_151D5404(struct17 *arg0, f32 arg1, f32 arg2, f32 arg3, s32 arg4, s32 a
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D5514.s")
+struct vec151D5514 {
+    s32 unk00;
+    s32 unk04;
+    s32 unk08;
+};
+
+struct conker151D5514 {
+    s16 unk00;
+    s16 unk02;
+    s16 unk04;
+    s16 unk06;
+    s32 unk08;
+    s32 unk0C;
+    struct vec151D5514 unk10;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+    s32 unk34;
+    s32 unk38;
+    f32 unk3C;
+    f32 unk40;
+    f32 unk44;
+    f32 unk48;
+    s16 unk4C;
+    s16 unk4E;
+    s16 unk50;
+    s16 unk52;
+    s16 unk54;
+    s16 unk56;
+    s8 unk58;
+};
+
+void func_151D5514(struct vec151D5514 *arg0, u8 arg1, s32 arg2) {
+    struct conker151D5514 sp1C;
+
+    sp1C.unk00 = 0;
+    sp1C.unk02 = 0xFF;
+    sp1C.unk04 = -0x40;
+    sp1C.unk06 = 0x4A;
+    sp1C.unk08 = 9;
+    sp1C.unk0C = 3;
+    sp1C.unk10 = *arg0;
+    sp1C.unk1C = D_800AB21C;
+    sp1C.unk20 = 214.0f;
+    sp1C.unk24 = 203.0f;
+    sp1C.unk28 = D_800AB220;
+    sp1C.unk2C = D_800AB224;
+    sp1C.unk30 = D_800AB228;
+    sp1C.unk34 = 7;
+    sp1C.unk38 = 3;
+    sp1C.unk3C = 45.0f;
+    sp1C.unk40 = D_800AB22C;
+    sp1C.unk44 = D_800AB230;
+    sp1C.unk48 = D_800AB234;
+    sp1C.unk4C = 0xF;
+    sp1C.unk4E = 0xF;
+    sp1C.unk50 = 0x64;
+    sp1C.unk52 = 0x64;
+    sp1C.unk54 = 0xC;
+    sp1C.unk56 = 0x14;
+    sp1C.unk58 = 0;
+    func_1514FCE8(&sp1C, arg1, arg2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D5648.s")
 

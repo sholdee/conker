@@ -139,7 +139,14 @@ void func_150EA8E0(s32 arg0) {
     func_150E5AE0();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_117490/func_150EA904.s")
+void func_150EA904(s32 arg0, s32 arg1) {
+    u8 *p;
+
+    p = (u8 *)D_800DBEF4 + arg1 * sizeof(struct131);
+    if (p[0x72] == 0xE0) {
+        p[0x73] = (p[0x73] & 0xFF) | 3;
+    }
+}
 
 typedef struct {
     /* 0x00 */ f32 unk0;
