@@ -13,6 +13,8 @@ extern f32 D_800A4840;
 extern void func_15153F18(void *, void *, s32, u8, s32);
 extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
 extern void func_15143134(void *, s32, s32);
+extern s32 func_15145128(struct17 *, struct17 *, f32 *, f32 *);
+extern s32 func_15146078(struct17 *, struct17 *, struct17 *);
 
 typedef struct {
     s32 unk0[4];
@@ -605,7 +607,40 @@ void func_15136AE4(f32 a0, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5, u8 *a6) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_1513783C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15137C64.s")
+s32 func_15137C64(struct17 *arg0, struct17 *arg1, struct17 *arg2, struct17 *arg3,
+                  struct17 *arg4, struct17 *arg5, struct17 *arg6, struct17 *arg7) {
+    f32 sp2C;
+    f32 sp28;
+
+    if ((arg5 != NULL) && (arg6 != NULL)) {
+        *arg0 = *arg5;
+        *arg1 = *arg6;
+    } else if (arg5 != NULL) {
+        *arg0 = *arg5;
+        *arg1 = *arg5;
+    } else if (arg6 != NULL) {
+        *arg0 = *arg6;
+        *arg1 = *arg6;
+    } else {
+        return 0;
+    }
+
+    if (arg7 == NULL) {
+        arg2->unk0 = arg1->unk0 - arg0->unk0;
+        arg2->unk4 = arg1->unk4 - arg0->unk4;
+        arg2->unk8 = arg1->unk8 - arg0->unk8;
+        if (func_15145128(arg2, arg2, &sp2C, &sp28) == 0) {
+            return 0;
+        }
+    } else {
+        *arg2 = *arg7;
+    }
+
+    if (func_15146078(arg2, arg3, arg4) == 0) {
+        return 2;
+    }
+    return 1;
+}
 
 extern f32 D_800A4828;
 
