@@ -93,9 +93,78 @@ struct Local15150D1CArg {
     u8 unk2C;
 };
 
+struct Local151539B4Header {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+};
+
+struct Local151539B4Arg {
+    s16 unk0;
+    s16 unk2;
+    struct Local151539B4Header unk4;
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    s16 unk16;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    u8 unk28;
+    u8 unk29;
+    u8 unk2A;
+    u8 unk2B;
+    u8 unk2C;
+    u8 unk2D;
+    u8 unk2E;
+    u8 unk2F;
+    u8 unk30;
+    u8 pad31;
+    s16 unk32;
+    s16 unk34;
+    u16 unk36;
+    f32 unk38;
+    f32 unk3C;
+    u8 unk40;
+    u8 unk41;
+    s16 unk42;
+    s16 unk44;
+    u8 unk46;
+};
+
+struct Local151539B4Spawn {
+    struct Local151539B4Header unk0;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    u8 unk20;
+    u8 unk21;
+    u8 unk22;
+    u8 unk23;
+    u8 unk24;
+    u8 unk25;
+    u8 unk26;
+    u8 unk27;
+    u8 unk28;
+    u8 pad29;
+    s16 unk2A;
+    u16 unk2C;
+    u8 pad2E[2];
+    f32 unk30;
+    u8 unk34;
+    u8 pad35;
+    s16 unk36;
+    s16 unk38;
+    u8 pad3A[2];
+};
+
 extern void func_15143794(s32, s32, f32, f32 *);
 extern void func_150CCEB0(struct Local15152874Spawn *, u8, u8);
 extern void (*D_8008AC60[])(u8 *);
+extern void func_15156190(void *, u8, s32, u8, s32);
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514F640.s")
@@ -296,7 +365,54 @@ void func_15152874(struct Local15152874Arg *arg0, u8 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15153634.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_151539B4.s")
+void func_151539B4(struct Local151539B4Arg *arg0, u8 arg1) {
+    struct Local151539B4Spawn sp7C;
+    s32 count;
+    s16 randS1;
+    s16 randS2;
+    f32 temp_f20;
+    f32 temp_f22;
+    f32 temp_f24;
+    f32 temp_f2;
+    f32 temp_f0;
+
+    count = (func_150ADA20() % (u32)(arg0->unk2 + 1)) + arg0->unk0;
+    sp7C.unk0 = arg0->unk4;
+    sp7C.unk20 = arg0->unk28;
+    sp7C.unk21 = arg0->unk29;
+    sp7C.unk22 = arg0->unk2A;
+    sp7C.unk23 = arg0->unk2B;
+    sp7C.unk24 = arg0->unk2C;
+    sp7C.unk25 = arg0->unk2D;
+    sp7C.unk26 = arg0->unk2E;
+    sp7C.unk27 = arg0->unk2F;
+    sp7C.unk28 = arg0->unk30;
+    sp7C.unk2C = arg0->unk36;
+    sp7C.unk36 = arg0->unk42;
+    sp7C.unk38 = arg0->unk44;
+
+    if (count != 0) {
+        do {
+            randS1 = (func_150ADA20() % (u32)(arg0->unk14 + 1)) + arg0->unk10;
+            randS2 = (func_150ADA20() % (u32)(arg0->unk16 + 1)) + arg0->unk12;
+            temp_f20 = func_151423D8((u8)randS2);
+            temp_f22 = func_151423D8((u8)(randS2 - 0x40));
+            temp_f24 = func_151423D8((u8)randS1);
+            temp_f2 = 10.0f * temp_f20;
+            temp_f0 = func_151423D8((u8)(randS1 - 0x40));
+            sp7C.unkC = temp_f2 * temp_f0;
+            sp7C.unk10 = -10.0f * temp_f22;
+            sp7C.unk14 = temp_f2 * temp_f24;
+            sp7C.unk18 = (func_150ADA68() * arg0->unk1C) + arg0->unk18;
+            sp7C.unk1C = (func_150ADA68() * arg0->unk24) + arg0->unk20;
+            sp7C.unk2A = (func_150ADA20() % (u32)(arg0->unk34 + 1)) + arg0->unk32;
+            sp7C.unk30 = (func_150ADA68() * arg0->unk3C) + arg0->unk38;
+            sp7C.unk34 = (func_150ADA20() % (u32)(arg0->unk41 + 1)) + arg0->unk40;
+            func_15156190(&sp7C, arg0->unk46, 0, arg1, 0);
+            count--;
+        } while (count != 0);
+    }
+}
 
 extern void func_15153CCC(struct Local1514FEFC *, s32, s32, u8, s32);
 
