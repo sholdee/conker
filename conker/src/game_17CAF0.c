@@ -18,6 +18,59 @@ extern f32 D_800A6028;
 extern f32 D_800A602C;
 extern void *func_15132A4C(void *, s32, s32, s32, u8, s32);
 
+struct Local15152874Header {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+};
+
+struct Local15152874Arg {
+    s32 unk0;
+    s32 unk4;
+    struct Local15152874Header unk8;
+    s16 unk14;
+    s16 unk16;
+    s16 unk18;
+    s16 unk1A;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    s8 unk30;
+    u8 pad31;
+    s16 unk32;
+    s16 unk34;
+    u8 pad36[2];
+    f32 unk38;
+    f32 unk3C;
+    f32 unk40;
+    f32 unk44;
+    f32 unk48;
+};
+
+struct Local15152874Spawn {
+    struct Local15152874Header unk0;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    u8 unk20;
+    u8 unk21;
+    u8 unk22;
+    u8 unk23;
+    s32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+    s32 pad34;
+};
+
+extern void func_15143794(s32, s32, f32, f32 *);
+extern void func_150CCEB0(struct Local15152874Spawn *, u8, u8);
+extern void (*D_8008AC60[])(u8 *);
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514F640.s")
 
@@ -123,7 +176,45 @@ void func_1514FEFC(void *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15152520.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15152874.s")
+void func_15152874(struct Local15152874Arg *arg0, u8 arg1, s32 arg2) {
+    struct Local15152874Spawn sp58;
+    s32 count;
+    s32 rand0;
+    s32 rand1;
+
+    count = (func_150ADA20() % (u32)(arg0->unk4 + 1)) + arg0->unk0;
+    sp58.unk0 = arg0->unk8;
+    sp58.unk18 = arg0->unk24;
+    sp58.unk30 = arg0->unk48;
+
+    if (count != 0) {
+        do {
+            rand0 = func_150ADA20();
+            rand1 = func_150ADA20();
+            func_15143794((s16)((rand0 % (u32)(arg0->unk16 + 1)) + arg0->unk14),
+                          (s16)((rand1 % (u32)(arg0->unk1A + 1)) + arg0->unk18),
+                          (func_150ADA68() * arg0->unk20) + arg0->unk1C,
+                          &sp58.unkC);
+
+            sp58.unk1C = (func_150ADA68() * arg0->unk2C) + arg0->unk28;
+            sp58.unk24 = (func_150ADA20() % (u32)(arg0->unk34 + 1)) + arg0->unk32;
+            sp58.unk28 = (func_150ADA68() * arg0->unk40) + arg0->unk38;
+            sp58.unk2C = (func_150ADA68() * arg0->unk44) + arg0->unk3C;
+
+            if (arg0->unk30 != -1) {
+                D_8008AC60[arg0->unk30]((u8 *)&sp58 + 0x20);
+            } else {
+                sp58.unk20 = 0xFF;
+                sp58.unk21 = 0xFF;
+                sp58.unk22 = 0xFF;
+                sp58.unk23 = 0xFF;
+            }
+
+            func_150CCEB0(&sp58, arg1, arg2);
+            count--;
+        } while (count != 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15152ABC.s")
 

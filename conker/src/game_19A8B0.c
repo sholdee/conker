@@ -6,6 +6,64 @@
 
 extern void func_1516F864(s32);
 
+struct Obj1516D99C {
+    char pad0[0xE];
+    s16 unkE;
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    s16 unk16;
+    s16 unk18;
+    s16 unk1A;
+    s16 unk1C;
+    u16 unk1E;
+    u16 unk20;
+    u16 unk22;
+    u8 unk24;
+    u8 unk25;
+    u8 unk26;
+    u8 unk27;
+    u8 unk28;
+    u8 unk29;
+    u8 unk2A;
+    u8 unk2B;
+    u8 unk2C;
+    u8 unk2D;
+    u8 unk2E;
+    u8 unk2F;
+    u8 unk30;
+    u8 unk31;
+    u8 unk32;
+    u8 unk33;
+    u8 unk34;
+    u8 unk35;
+    u8 unk36;
+    u8 unk37;
+    u8 unk38;
+    u8 unk39;
+    u8 unk3A;
+    u8 unk3B;
+    u8 unk3C;
+    u8 unk3D;
+    u8 unk3E;
+    u8 unk3F;
+    u8 unk40;
+    u8 unk41;
+    u8 unk42;
+    u8 unk43;
+    u8 unk44;
+    u8 unk45;
+    u8 unk46;
+    u8 unk47;
+    u8 unk48;
+};
+
+extern struct Obj1516D99C *func_15167A68(s32, s32, s32, s32, s32, s32);
+
+#define LOW_S16(arg) (*(s16 *)((u8 *)&(arg) + 2))
+#define LOW_U16(arg) (*(u16 *)((u8 *)&(arg) + 2))
+#define LOW_U8(arg) (*(u8 *)((u8 *)&(arg) + 3))
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516D400.s")
 
@@ -15,7 +73,81 @@ extern void func_1516F864(s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516D738.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516D99C.s")
+void func_1516D99C(
+    s32 arg0, s32 arg1, s32 arg2, s32 arg3,
+    s32 arg4, s32 arg5, s32 arg6, s32 arg7,
+    s32 arg8, s32 arg9, s32 arg10, s32 arg11,
+    s32 arg12, s32 arg13, s32 arg14, s32 arg15,
+    s32 arg16, s32 arg17, s32 arg18, s32 arg19,
+    s32 arg20, s32 arg21, s32 arg22, s32 arg23,
+    s32 arg24, s32 arg25, s32 arg26, s32 arg27,
+    s32 arg28, s32 arg29, s32 arg30, s32 arg31,
+    s32 arg32, s32 arg33, s32 arg34, s32 arg35,
+    s32 arg36, s32 arg37, s32 arg38, s32 arg39,
+    s32 arg40, s32 arg41, s32 arg42, s32 arg43,
+    s32 arg44, s32 arg45, s32 arg46, s32 arg47,
+    s32 arg48) {
+    struct Obj1516D99C *ret;
+    s32 temp_v1;
+
+    ret = func_15167A68(arg44 != 0 ? 0x66 : 0x11, arg48, 0x4C, 0, LOW_U8(arg47), 1);
+    if (ret != NULL) {
+        ret->unkE = LOW_S16(arg0);
+        ret->unk10 = LOW_S16(arg1);
+        ret->unk12 = LOW_S16(arg2);
+        ret->unk14 = LOW_S16(arg27);
+        ret->unk16 = LOW_S16(arg28);
+        ret->unk18 = LOW_S16(arg29);
+        ret->unk1A = LOW_S16(arg30);
+        ret->unk24 = LOW_U8(arg3);
+        ret->unk25 = LOW_U8(arg4);
+        ret->unk26 = LOW_U8(arg5);
+        ret->unk27 = LOW_U8(arg6);
+        ret->unk28 = LOW_U8(arg7);
+        ret->unk2A = LOW_U8(arg9);
+        ret->unk2B = LOW_U8(arg10);
+        ret->unk2C = LOW_U8(arg11);
+        ret->unk29 = LOW_U8(arg8);
+        ret->unk2D = LOW_U8(arg12);
+        ret->unk2E = LOW_U8(arg13);
+        ret->unk2F = LOW_U8(arg14);
+        ret->unk30 = LOW_U8(arg15);
+        ret->unk31 = LOW_U8(arg16);
+        ret->unk32 = LOW_U8(arg17);
+        ret->unk33 = LOW_U8(arg18);
+        ret->unk34 = LOW_U8(arg19);
+        ret->unk35 = LOW_U8(arg20);
+        ret->unk36 = LOW_U8(arg21);
+        ret->unk37 = LOW_U8(arg22);
+        ret->unk38 = LOW_U8(arg23);
+        ret->unk39 = LOW_U8(arg24);
+        ret->unk3A = LOW_U8(arg25);
+        temp_v1 = LOW_U16(arg31);
+        ret->unk3B = LOW_U8(arg26);
+        ret->unk20 = temp_v1;
+        ret->unk3C = temp_v1;
+        ret->unk3D = LOW_U8(arg32);
+        ret->unk3E = LOW_U8(arg33);
+        ret->unk3F = LOW_U8(arg34);
+        ret->unk40 = LOW_U8(arg35);
+        ret->unk1C = LOW_S16(arg36);
+        ret->unk1E = LOW_U16(arg37);
+        ret->unk22 = LOW_U16(arg38);
+        ret->unk41 = LOW_U8(arg39);
+        ret->unk42 = 0;
+        ret->unk43 = LOW_U8(arg40);
+        if (arg44 != 0) {
+            if (LOW_U8(arg41) >= 4) {
+                LOW_U8(arg41) = 3;
+            }
+        }
+        ret->unk44 = LOW_U8(arg41);
+        ret->unk45 = LOW_U8(arg42);
+        ret->unk46 = LOW_U8(arg43);
+        ret->unk47 = LOW_U8(arg45);
+        ret->unk48 = LOW_U8(arg46);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516DB90.s")
 
