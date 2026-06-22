@@ -1233,3 +1233,7 @@ Special empty-guard case:
   forces a plain `lw` from the arg slot; plain `tmp = (s32)arg0` may reuse the old reg, while `volatile` can add address code.
 - Boolean temp stored to a byte/stack field: when target wants explicit default/override (`move v0,zero; beqz; ...; li v0,1; sb v0,off`), assign a `s32 flag` with full `if/else` then store it. Direct boolean/ternary stores can shrink to a branch-likely store.
 - Inline equality compare can split a global's address setup from its value load: `if (D_left == complex_rhs)` may hoist `D_left`'s `%hi` before the RHS address chain but delay its `lbu`/`lh` until the compare. Binding the left value to a local loads it too early.
+- Stack local with biased logical base: when IDO allocates a visible buffer at a higher
+  stack slot but the target passes/uses a lower base, declare the smaller byte buffer and set `p = (T*)(buf - bias)`; access/pass through `p` to emit the lower `addiu sp,K` without growing the frame.
+- Repeated scalar global reloads through one base: if direct/non-volatile reads fold each
+  use into `%lo(D)` but target materializes `&D` once and reloads `0(base)` each time, cast to a `volatile` one-field struct pointer and read the field repeatedly.
