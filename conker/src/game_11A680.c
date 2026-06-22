@@ -4,10 +4,19 @@
 
 extern void func_151254F4(struct108 *arg0, s32 arg1);
 extern void func_1517F488(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+extern f32 func_15144BC8(f32 arg0);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11A680/func_150ED1D0.s")
+f32 func_150ED1D0(f32 arg0, f32 arg1) {
+    f32 c;
 
-extern void func_150ED1D0(f32, f32);
+    arg1 = arg1;
+    arg0 = func_15144BC8(arg0);
+    c = func_15144BC8(func_15144BC8(arg1) - arg0);
+    if (c > 180.0f) {
+        c = -360.0f + c;
+    }
+    return c;
+}
 
 void func_150ED234(f32 *arg0, f32 *arg1) {
     s32 temp;

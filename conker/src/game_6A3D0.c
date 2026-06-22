@@ -2,6 +2,20 @@
 #include "functions.h"
 #include "variables.h"
 
+extern s32 allocate_memory(s32, s32, s32, s32);
+extern s32 *D_800C4020[];
+
+struct Src1503D804 {
+    u8 pad0[8];
+    s16 unk8;
+    s16 unkA;
+    u8 padC[4];
+};
+
+struct Dst1503D804 {
+    s16 unk0;
+    s16 unk2;
+};
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503CF20.s")
 
@@ -68,7 +82,51 @@ s32 func_1503D774(s32 arg0, s32 arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503D804.s")
+s32 func_1503D804(s32 arg0) {
+    s32 count;
+    s32 temp_v1;
+    struct Src1503D804 *src;
+    s32 *slot;
+
+    if (arg0 == 0x24) {
+        count = 0x5E;
+        temp_v1 = 0;
+    } else {
+        temp_v1 = -1;
+        count = 0;
+    }
+
+    if (count == 0) {
+        return 0;
+    }
+
+    slot = &D_800C6360[arg0];
+    if (*slot != 0) {
+        return 0;
+    }
+
+    src = (struct Src1503D804 *)(&D_800D19A0)[arg0];
+    if (temp_v1 != -1) {
+        src += D_800C4020[arg0][temp_v1];
+    }
+
+    {
+        s32 i;
+
+        *slot = allocate_memory(count * sizeof(struct Dst1503D804), 1, 0, 2);
+        if (*slot == 0) {
+            return 1;
+        }
+
+        slot = (s32 *)*slot;
+        for (i = 0; i < count; i++) {
+            ((struct Dst1503D804 *)slot)[i].unk0 = src[i].unk8;
+            ((struct Dst1503D804 *)slot)[i].unk2 = src[i].unkA;
+        }
+    }
+
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503D984.s")
 
