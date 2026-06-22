@@ -9,11 +9,23 @@ typedef struct {
     s32 unk8;
 } Struct15147040;
 
+typedef struct {
+    s32 pad0;
+    struct17 vec;
+} Struct15146E84Vec;
+
+typedef struct {
+    s32 values[8];
+    s32 pad20;
+} Struct15146E84Buffer;
+
 extern s32 func_15142314(s32, s32, Struct15147040 *);
 extern void func_1504715C(s32, s32);
 extern s32 func_15046C80(f32 *, s32, f32, s32);
 extern void func_15141F78(u8, struct157 *, f32, u8, struct157 *, u8);
 extern void func_15142180(u8, Struct15147040 *, s32, f32, f32);
+extern u8 func_151D8E20(void);
+extern void func_151DAB58(u8, f32, u8, struct17 *, s32, u8, u8);
 extern u8 (*D_8008FD04)(void);
 extern u8 (*D_8008FD1C)(void);
 extern u8 (*D_8008FD30)(void);
@@ -103,7 +115,39 @@ void func_15146D60(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_173D40/func_15146E84.s")
+void func_15146E84(s32 arg0, s32 arg1, s32 arg2) {
+    Struct15147040 sp7C;
+    Struct15146E84Buffer sp58;
+    u8 temp_color;
+    Struct15146E84Vec sp44;
+    s32 temp_rand;
+    f32 temp_f0;
+
+    if (*(s32 *)(arg0 + 0x1D4) != 0) {
+        if (func_15146890(&sp7C, arg0, (s32)sp58.values, (u8)arg1) != 0) {
+            temp_color = func_151D8E20();
+            if (arg2 >= 0x47) {
+                func_15142180(temp_color, &sp7C, sp58.values[6], 1.0f, 1.0f);
+            }
+
+            sp44.vec.unk0 = sp7C.unk0;
+            sp44.vec.unk4 = *(f32 *)&sp58.values[0];
+            sp44.vec.unk8 = *(f32 *)&sp7C.unk8;
+
+            if (func_150ADA20() & 1) {
+                temp_f0 = func_150ADA68();
+                temp_rand = func_150ADA20();
+                func_151D9B8C(temp_color, (temp_f0 * 10.0f) + 10.0f,
+                              (u8)((temp_rand % 0x65U) + 0x64), (s32)&sp58.values[1], &sp44.vec,
+                              (func_150ADA20() % 0x29U) + 0x50, 1, 1, 0, 0xFF, 1);
+            } else {
+                temp_f0 = func_150ADA68();
+                func_151DAB58(temp_color, (temp_f0 * 8.0f) + 5.0f,
+                              (u8)((func_150ADA20() % 0x65U) + 0x64), &sp44.vec, 1, 0xFF, 1);
+            }
+        }
+    }
+}
 
 extern s32 func_15146890(Struct15147040 *, s32, s32, u8);
 extern void func_1514C678(f32, f32, s32, f32, s32, s32, s32, s32, s32, f32, s32, s32);

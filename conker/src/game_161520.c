@@ -14,6 +14,12 @@ extern void func_15153F18(void *, void *, s32, u8, s32);
 extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
 extern void func_15143134(void *, s32, s32);
 
+typedef struct {
+    s32 unk0[4];
+} Struct15136698Table;
+
+extern Struct15136698Table D_80089BAC;
+
 // requires jump table
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15134070.s")
 
@@ -356,7 +362,100 @@ f32 func_15135670(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15136404.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15136698.s")
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Struct15136698Vec;
+
+typedef struct {
+    u8 unk0;
+    u8 pad1;
+    s16 unk2;
+    s16 unk4;
+    u8 pad6[2];
+    s32 unk8;
+    s32 unkC;
+    u8 unk10;
+    u8 unk11;
+    u8 unk12;
+    u8 unk13;
+    f32 unk14;
+    f32 unk18;
+    Struct15136698Vec unk1C;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+    s32 unk40;
+    u8 unk44;
+    u8 unk45;
+    u8 pad46[0x12];
+} Struct15136698Local;
+
+s32 func_15136698(f32 arg0, f32 arg1, u8 arg2, u8 arg3, s16 arg4, s32 arg5, Struct15136698Vec *arg6, u8 arg7, u8 arg8, u8 arg9, s32 arg10) {
+    s32 ret;
+    Struct15136698Local sp7C;
+    f32 sp78;
+    Struct15136698Table sp68;
+    s32 sp64;
+    s32 sp60;
+    s32 temp_v0;
+    s32 sp54;
+    s32 sp50;
+
+    sp68 = D_80089BAC;
+    sp78 = arg1;
+    sp7C.unk0 = sp68.unk0[func_150ADA20() & 3];
+    if (arg7 != 0) {
+        temp_v0 = 2;
+    } else {
+        temp_v0 = 1;
+    }
+    sp7C.unk2 = temp_v0 + 0x300;
+    sp7C.unk8 = 0;
+    sp7C.unkC = 0;
+    sp7C.unk10 = 0;
+    sp7C.unk11 = 0;
+    sp7C.unk12 = 0;
+    sp7C.unk13 = 0xFF;
+    sp7C.unk18 = arg0;
+    sp7C.unk14 = arg0;
+    sp7C.unk1C = *arg6;
+    sp7C.unk40 = 0;
+    sp7C.unk28 = 0.0f;
+    sp7C.unk2C = 0.0f;
+    sp7C.unk30 = 0.0f;
+    sp7C.unk34 = 1.0f;
+    sp7C.unk38 = 1.0f;
+    sp7C.unk3C = 1.0f;
+    if (arg4 == -1) {
+        sp7C.unk4 = 0x12C;
+    } else {
+        sp7C.unk4 = arg4 + 0x20;
+        sp7C.unk40 = 1;
+    }
+    sp7C.unk44 = arg2;
+    sp7C.unk45 = arg3;
+    if (arg8 != 0) {
+        sp64 = 3;
+        sp60 = 0xFF;
+    } else {
+        sp64 = 0;
+        sp60 = 0;
+    }
+
+    sp50 = func_150ADA20();
+    sp54 = func_150ADA20();
+    temp_v0 = func_150ADA20();
+    ret = func_1513D594((s32)&sp7C, 0, 0, 0x1A, 0, (sp54 & 1) + (sp50 & 1), temp_v0 & 0xFF, 500.0f, 500.0f, 0, arg5, sp64, sp60, 0, 4, arg9, arg10);
+    if (ret != 0) {
+        memcpy(ret + 0x128, &sp78, sizeof(sp78));
+    }
+    return ret;
+}
 
 extern f32 D_800BE9A4;
 
