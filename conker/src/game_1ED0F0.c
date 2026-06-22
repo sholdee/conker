@@ -7,6 +7,9 @@ extern f32 D_800AA980;
 extern f32 D_800AA984;
 extern f32 D_800AA988;
 extern f32 D_800AA98C;
+extern f32 D_800AA990;
+extern f32 D_800AA994;
+extern f32 D_800AA998;
 
 typedef struct {
     /* 0x00 */ s32 unk00;
@@ -72,6 +75,34 @@ zero:
 }
 
 struct Vec3F151BFDA0 { f32 x; f32 y; f32 z; };
+typedef struct {
+    /* 0x00 */ s16 unk00;
+    /* 0x02 */ s16 unk02;
+    /* 0x04 */ s16 unk04;
+    /* 0x06 */ s16 unk06;
+    /* 0x08 */ s32 unk08;
+    /* 0x0C */ s32 unk0C;
+    /* 0x10 */ struct Vec3F151BFDA0 unk10;
+    /* 0x1C */ f32 unk1C;
+    /* 0x20 */ f32 unk20;
+    /* 0x24 */ f32 unk24;
+    /* 0x28 */ f32 unk28;
+    /* 0x2C */ f32 unk2C;
+    /* 0x30 */ f32 unk30;
+    /* 0x34 */ s32 unk34;
+    /* 0x38 */ s32 unk38;
+    /* 0x3C */ f32 unk3C;
+    /* 0x40 */ f32 unk40;
+    /* 0x44 */ f32 unk44;
+    /* 0x48 */ f32 unk48;
+    /* 0x4C */ s16 unk4C;
+    /* 0x4E */ s16 unk4E;
+    /* 0x50 */ s16 unk50;
+    /* 0x52 */ s16 unk52;
+    /* 0x54 */ s16 unk54;
+    /* 0x56 */ s16 unk56;
+    /* 0x58 */ s8 unk58;
+} Struct151C0098;
 struct Local151BFDA0 {
     struct Vec3F151BFDA0 unk0;  /* 0x00 (sp 0x24) */
     f32 unkC;                   /* 0x0C (sp 0x30) */
@@ -85,6 +116,11 @@ void func_151C05A4(void *, u8, s32);
 void func_151C05F0(void *, u8, s32);
 void func_151BFC40(void *, f32 *);
 void func_1514FB98(void *, u8, s32);
+void func_1514FCE8(Struct151C0098 *, u8, s32);
+void func_1504715C(void *, s32);
+s32 func_15046C80(f32 *, s32, f32, void *);
+void func_151C0360(void *, void *, s32, s32);
+void func_151C0644(void *, u8, s32);
 
 void func_151BFDA0(struct Vec3F151BFDA0 *arg0, struct Vec3F151BFDA0 *arg1, u8 arg2, u8 arg3, s32 arg4) {
     struct Local151BFDA0 sp24;
@@ -105,7 +141,61 @@ void func_151BFDA0(struct Vec3F151BFDA0 *arg0, struct Vec3F151BFDA0 *arg1, u8 ar
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151BFE84.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C0098.s")
+void func_151C0098(struct Vec3F151BFDA0 *arg0, s32 arg1, volatile u8 arg2, u8 arg3, s32 arg4) {
+    Struct151C0098 sp64;
+    f32 sp58[3];
+    f32 sp34[9];
+    f32 sp28[3];
+
+    func_151C0418((f32 *)arg0, arg3, arg4);
+    func_151C04F8((f32 *)arg0, arg3, arg4);
+    func_151C05A4(arg0, arg3, arg4);
+    func_151C05F0(arg0, arg3, arg4);
+
+    if (arg2 != 0) {
+        sp64.unk00 = 0;
+        sp64.unk02 = 0xFF;
+        sp64.unk04 = -0x40;
+        sp64.unk06 = 0x47;
+        sp64.unk08 = 6;
+        sp64.unk0C = 4;
+        sp64.unk10 = *arg0;
+        sp64.unk1C = 23.0f;
+        sp64.unk20 = 30.0f;
+        sp64.unk24 = 45.0f;
+        sp64.unk28 = 53.0f;
+        sp64.unk2C = 203.0f;
+        sp64.unk30 = 414.0f;
+        sp64.unk34 = 7;
+        sp64.unk38 = 3;
+        sp64.unk3C = 15.0f;
+        sp64.unk40 = D_800AA990;
+        sp64.unk44 = D_800AA994;
+        sp64.unk48 = D_800AA998;
+        sp64.unk4C = 25;
+        sp64.unk4E = 15;
+        sp64.unk50 = 100;
+        sp64.unk52 = 100;
+        sp64.unk54 = 12;
+        sp64.unk56 = 20;
+        sp64.unk58 = 0;
+        func_1514FCE8(&sp64, arg3, arg4);
+    }
+
+    if (arg2 != 0 && arg1 != 0) {
+        sp58[0] = arg0->x;
+        sp58[1] = arg0->y + 100.0f;
+        sp58[2] = arg0->z;
+        func_1504715C(sp34, arg1);
+        if (func_15046C80(sp58, 0, arg0->y - 1000.0f, sp34) != 0) {
+            sp28[0] = sp58[0];
+            sp28[1] = sp34[0];
+            sp28[2] = sp58[2];
+            func_151C0360(&sp34[1], sp28, arg3 & 0xFF, arg4);
+            func_151C0644(arg0, arg3, arg4);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C02E4.s")
 

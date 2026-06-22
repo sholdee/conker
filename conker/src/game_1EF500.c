@@ -1,11 +1,16 @@
 #include <ultra64.h>
+#define func_150ADA20 func_150ADA20_u8_proto
 #include "functions.h"
+#undef func_150ADA20
 #include "variables.h"
 
 typedef void (*GameFunc151C455CDispatch)(s32);
 typedef void (*GameFunc151C455CCallback)(struct17 *, s32);
 
 extern GameFunc151C455CDispatch D_8008FBD0[];
+extern s32 func_150ADA20(void);
+extern f32 D_800AAA80;
+extern f32 D_800AAA84;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C2050.s")
 
@@ -132,7 +137,94 @@ s32 func_151C455C(s32 arg0, GameStruct151C455C *arg1, f32 arg2) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C4644.s")
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+} GameStruct151C4644Vec;
+
+typedef struct {
+    GameStruct151C4644Vec *unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s16 unk10;
+    s16 unk12;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+} GameStruct151C4644Sub;
+
+typedef struct {
+    u8 pad0[1];
+    u8 unk1;
+    u8 pad2[0xA];
+    u8 unkC;
+    u8 padD[0x1B];
+    GameStruct151C4644Sub unk28;
+} GameStruct151C4644;
+
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+    f32 unk40;
+} GameStruct151C4644Payload;
+
+void func_151C4644(GameStruct151C4644 *arg0) {
+    GameStruct151C4644Sub *sub;
+    GameStruct151C4644Payload sp48;
+    struct260 *temp_v0;
+
+    sub = &arg0->unk28;
+    sub->unk4 -= D_800BE9E4;
+    if (sub->unk4 < 0) {
+        sp48.unk0 = sub->unk1C;
+        sp48.unk4 = sub->unk20;
+        sp48.unk8 = func_150ADA68() * sub->unk24;
+        sp48.unkC = func_150ADA68() * sub->unk24;
+        sp48.unk10 = func_150ADA68() * D_800AAA80;
+        sp48.unk14 = func_150ADA68() * D_800AAA84;
+        sp48.unk18 = sub->unk28;
+        sp48.unk1C = sub->unk28;
+        sp48.unk20 = 0.0f;
+        sp48.unk24 = (func_150ADA68() * sub->unk18) + sub->unk14;
+        sp48.unk28 = 0.0f;
+        sp48.unk2C = sub->unk0->unk0;
+        sp48.unk30 = sub->unk0->unk2;
+        sp48.unk34 = sub->unk0->unk4;
+        sp48.unk38 = sub->unk2C;
+        sp48.unk3C = sub->unk30;
+        sp48.unk40 = sub->unk34;
+
+        temp_v0 = func_15149130((s16)((func_150ADA20() % (u32)(sub->unk12 + 1)) + sub->unk10),
+                                -1, 0x2B, -1, 1, 0, (struct37 *)0x44, arg0->unkC, arg0->unk1);
+        if (temp_v0 != NULL) {
+            memcpy((u8 *)temp_v0 + 0x28, &sp48, 0x44);
+        }
+
+        sub->unk4 = (func_150ADA20() % (u32)(sub->unkC + 1)) + sub->unk8;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C4820.s")
 
