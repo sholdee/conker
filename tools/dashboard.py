@@ -222,7 +222,7 @@ async function tick(){
    <div class=prow style="margin-top:8px"><span>init ${p.init.fpct}%/${p.init.bpct}%b</span><span>debugger ${p.debugger.fpct}%/${p.debugger.bpct}%b</span><span>overall ${p.overall.cf}/${p.overall.tf}</span></div>`;
  const w=d.active||[];$('acount').textContent=w.length?`(${w.filter(x=>x.status=='working').length} working)`:'';
  $('workers').innerHTML=w.length?w.map(x=>`<div class=worker>
-   <div class="sc ${scClass(x.best)}">${x.best===null?'—':x.best}</div>
+   <div class="sc ${scClass(x.latest)}" title="best ${x.best}">${x.latest===null?'—':x.latest}</div>
    <div class=fn><b>${x.func}</b> <span>${x.file} · ${x.instrs?x.instrs+'i':'?'} · ${x.iters}it${x.best===0&&x.latest>0?' · captured, codex over-running':''}</span></div>
    <div class="tag ${x.status}">${x.status}</div></div>`).join(''):'idle — no active run';
  $('commits').innerHTML=(d.commits||[]).map(c=>`<div class=cm><b>+${c.n??'?'}</b> <span>${c.when}</span> ${c.hash}</div>`).join('')||'—';
