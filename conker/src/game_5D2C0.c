@@ -12,10 +12,74 @@ s32 func_15033BDC();
 u8 *func_15083568(struct127 *, s32, f32, s32);
 extern void func_150A7A48(f32 arg0[4][4], f32 arg1[4][4], f32 arg2[4][4]);
 extern void func_1503E5F8();
+extern void *allocate_memory(s32 size, s32 arg1, s32 arg2, s32 arg3);
+extern void func_10004074(void *arg0);
+s32 func_1502FE10(s32 arg0, void *arg1, void *arg2, void *arg3, void *arg4, void *arg5, void *arg6);
+s32 func_1503F62C(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, void *arg5, void *arg6);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_1502FE10.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_1502FFD8.s")
+typedef struct Func1502FFD8Arg0 {
+    u8 pad0[1];
+    u8 unk1;
+    u8 pad2[2];
+    u8 unk4;
+    u8 pad5[3];
+    u8 unk8;
+    u8 unk9;
+    u8 padA[0xD];
+    s8 unk17;
+    u8 pad18[0xC];
+    s32 unk24;
+    void *unk28;
+    void *unk2C;
+    s32 unk30;
+    u8 pad34[0x14];
+    void *unk48;
+} Func1502FFD8Arg0;
+
+s32 func_1502FFD8(Func1502FFD8Arg0 *arg0, u8 *arg1) {
+    s32 sp3C;
+    s32 flags;
+    s32 sp34;
+
+    if (arg0->unk24 == 0) {
+        if (arg0->unk17 == -1) {
+            if (func_1502FE10(arg0->unk1, &arg0->unk24, (u8 *)arg0 + 0x14, &sp3C, &arg0->unk30, 0, 0) != 0) {
+                return 1;
+            }
+        } else {
+            if (func_1503F62C(arg0->unk1, arg0->unk17, &arg0->unk24, (u8 *)arg0 + 0x14, &sp3C, &arg0->unk30, &arg0->unk48) != 0) {
+                return 1;
+            }
+        }
+
+        flags = arg1[0x66] & 0xC;
+        sp34 = arg0->unk24 - sp3C;
+        if (((arg0->unk4 & 0x10) == 0) && (flags == 8) && (arg0->unk30 != 0)) {
+            arg0->unk28 = allocate_memory(sp34, 1, 2, 2);
+            if (arg0->unk28 == 0) {
+                return 1;
+            }
+
+            arg0->unk2C = allocate_memory(sp34, 1, 2, 2);
+            if (arg0->unk2C == 0) {
+                func_10004074(arg0->unk28);
+                arg0->unk28 = 0;
+                return 1;
+            }
+
+            bcopy((void *)sp3C, arg0->unk28, sp34);
+            bcopy((void *)sp3C, arg0->unk2C, sp34);
+            arg0->unk8 = 1;
+        } else {
+            arg0->unk28 = (void *)sp3C;
+            arg0->unk2C = (void *)sp3C;
+        }
+        arg0->unk9 = 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15030158.s")
 
