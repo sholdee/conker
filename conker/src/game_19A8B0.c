@@ -5,6 +5,16 @@
 #include "variables.h"
 
 extern void func_1516F864(s32);
+extern void func_1516F94C(s32, s32);
+
+struct Table1516F024 {
+    u8 unk0[0xB];
+};
+
+extern struct Table1516F024 D_8008CBC4;
+extern struct Table1516F024 D_8008CBD0;
+extern struct Table1516F024 D_8008CBDC;
+extern struct Table1516F024 D_8008CBE8;
 
 struct Obj1516D4E8 {
     char pad0[0xE];
@@ -296,7 +306,61 @@ void func_1516ED68(s32 a0, s32 a1, u8 a2, s32 a3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516EED4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516F024.s")
+s32 func_1516F024(s32 arg0) {
+    volatile s32 pad[4];
+    s32 temp_a2;
+    struct Table1516F024 sp48;
+    struct Table1516F024 sp3C;
+    struct Table1516F024 sp30;
+    struct Table1516F024 sp24;
+    s32 temp_v0;
+    s32 temp_v1;
+    s32 temp_a1;
+
+    sp48 = D_8008CBC4;
+    sp3C = D_8008CBD0;
+    sp30 = D_8008CBDC;
+    sp24 = D_8008CBE8;
+
+    temp_a1 = *(u8 *)(arg0 + 0x24);
+    temp_a2 = *(u8 *)(arg0 + 0x2C);
+    temp_v0 = *(u8 *)(arg0 + 0x1F);
+    if (temp_a1 != 0) {
+        temp_v1 = sp30.unk0[temp_a2];
+        if (temp_v0 != temp_v1) {
+            temp_v0 += D_800BE9E4 << 4;
+            if (temp_v1 < temp_v0) {
+                temp_v0 = temp_v1;
+            }
+            *(u8 *)(arg0 + 0x1F) = temp_v0;
+            temp_a1 = *(volatile u8 *)(arg0 + 0x24);
+        }
+    } else {
+        if (temp_v0 != 0) {
+            temp_v0 -= D_800BE9E4 * sp24.unk0[temp_a2];
+            if (temp_v0 < 0) {
+                temp_v0 = 0;
+            }
+            *(u8 *)(arg0 + 0x1F) = temp_v0;
+            temp_a1 = *(volatile u8 *)(arg0 + 0x24);
+        }
+    }
+
+    if ((temp_a1 == 0) && (temp_v0 == 0)) {
+        return 1;
+    }
+
+    func_1516F864(arg0);
+    temp_v0 = *(s16 *)(arg0 + 0x14);
+    temp_v0 += D_800BE9E4 * sp3C.unk0[temp_a2];
+    *(s16 *)(arg0 + 0x16) = temp_v0;
+    *(s16 *)(arg0 + 0x14) = temp_v0;
+    if (temp_a2 == 3) {
+        *(s16 *)(arg0 + 0x18) = 0x64;
+    }
+    func_1516F94C(arg0, sp48.unk0[temp_a2]);
+    return 0;
+}
 
 extern void func_1516D99C();
 
