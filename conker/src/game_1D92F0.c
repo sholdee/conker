@@ -4,6 +4,7 @@
 
 extern f32 D_800A9D84;
 extern f32 D_800A9D88;
+extern void func_151D5D60();
 void func_151AE984(f32 *, f32, f32, f32, s32, u8);
 void func_151AEAB4(f32 *, s32, u8);
 void func_15143134(f32 *, f32 *, s32);
@@ -62,7 +63,59 @@ s32 func_151AC550(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AC61C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AC810.s")
+struct Foo151AC810 {
+    char pad0[0x2C];
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+    char pad40[0xC];
+    f32 unk4C;
+    f32 unk50;
+    char pad54[0x6C];
+    char unkC0[0x40];
+    s16 *unk100[1];
+};
+
+s16 *func_151AC810(struct Foo151AC810 *arg0, s16 arg1) {
+    s16 *var_v0;
+    s16 *ret;
+    f32 temp_f0;
+    f32 temp_f14;
+    f32 temp_f2;
+    f32 temp_f12;
+    u8 sp37;
+
+    func_151D5D60(arg0->unk100, arg1, 0x40, &var_v0, &sp37);
+    ret = var_v0;
+    if (var_v0) {
+        if (sp37) {
+            memcpy(arg0->unk100[arg1], arg0->unkC0, 0x40);
+            memcpy(arg0->unk100[arg1] + 0x20, arg0->unkC0, 0x40);
+        }
+    } else {
+        return 0;
+    }
+
+    temp_f0 = arg0->unk2C * arg0->unk4C;
+    temp_f14 = arg0->unk30 * arg0->unk50;
+    temp_f2 = D_800DD1D8[arg1] * temp_f0;
+    temp_f12 = D_800DD1E8[arg1] * temp_f0;
+
+    var_v0[3] = 0;
+    var_v0[0xB] = 0;
+    var_v0[0x13] = 0;
+    var_v0[0x1B] = 0;
+    var_v0[0] = var_v0[0x18] = arg0->unk34 + temp_f12;
+    var_v0[1] = var_v0[9] = arg0->unk38;
+    var_v0[2] = var_v0[0x1A] = arg0->unk3C - temp_f2;
+    var_v0[8] = var_v0[0x10] = arg0->unk34 - temp_f12;
+    var_v0[0x11] = var_v0[0x19] = arg0->unk38 + temp_f14;
+    var_v0[0xA] = var_v0[0x12] = arg0->unk3C + temp_f2;
+
+    return ret;
+}
 
 extern f32 D_800BE9A4;
 

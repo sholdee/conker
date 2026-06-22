@@ -161,7 +161,40 @@ s16 *func_15149D18(struct Foo15149D18 *arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_15149EC4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_15149FD0.s")
+s16 *func_15149FD0(struct Foo15149D18 *arg0, s16 arg1) {
+    s16 *var_v0;
+    s16 *ret;
+    f32 temp_f2;
+    f32 temp_f12;
+    u8 sp37;
+
+    func_151D5D60(arg0->unk100, arg1, 0x40, &var_v0, &sp37);
+    ret = var_v0;
+    if (var_v0) {
+        if (sp37) {
+            memcpy(arg0->unk100[arg1], arg0->unkC0, 0x40);
+            memcpy(arg0->unk100[arg1] + 0x20, arg0->unkC0, 0x40);
+        }
+    } else {
+        return 0;
+    }
+
+    temp_f2 = D_800DD1D8[arg1] * arg0->unk2C;
+    temp_f12 = D_800DD1E8[arg1] * arg0->unk2C;
+
+    var_v0[3] = 0;
+    var_v0[0xB] = 0;
+    var_v0[0x13] = 0;
+    var_v0[0x1B] = 0;
+    var_v0[0] = var_v0[0x18] = arg0->unk34 + temp_f12;
+    var_v0[1] = var_v0[9] = arg0->unk38;
+    var_v0[2] = var_v0[0x1A] = arg0->unk3C - temp_f2;
+    var_v0[8] = var_v0[0x10] = arg0->unk34 - temp_f12;
+    var_v0[0x11] = var_v0[0x19] = arg0->unk38 + arg0->unk30;
+    var_v0[0xA] = var_v0[0x12] = arg0->unk3C + temp_f2;
+
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514A19C.s")
 
