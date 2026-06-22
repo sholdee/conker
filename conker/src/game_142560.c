@@ -7,6 +7,9 @@ extern f32 func_15048A40(u8);
 extern void func_15188010(s32, f32 *);
 extern s32 func_151149AC(u32);
 extern f32 D_800A2F8C;
+extern void *allocate_memory(s32, s32, s32, s32);
+extern f32 D_800A3210;
+extern f32 D_800A3214;
 
 struct Struct1511F31CArg {
     u8 pad0[0x10];
@@ -553,7 +556,71 @@ void func_1511CB2C(s32 arg0, f32 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511D9E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511DBC4.s")
+struct Obj1511DBC4Sub {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+};
+
+struct Obj1511DBC4 {
+    u8 pad0[0x8];
+    f32 unk8;
+    u8 padC[0x67];
+    u8 unk73;
+    u8 pad74[0x8];
+    struct Obj1511DBC4Sub *unk7C;
+};
+
+void func_1511DBC4(struct Obj1511DBC4 *arg0) {
+    s32 state;
+    struct Obj1511DBC4Sub *temp;
+    f32 ftemp;
+
+    if (arg0->unk7C == NULL) {
+        temp = allocate_memory(0x10, 1, 0, 0);
+        arg0->unk7C = temp;
+        temp->unk0 = 0.0f;
+        temp->unk4 = 0.0f;
+        temp->unk8 = 0.0f;
+        temp->unkC = D_800A3210;
+    } else {
+        temp = arg0->unk7C;
+    }
+
+    state = arg0->unk73 & 3;
+    if (state == 0) {
+        arg0->unk8 = 0.0f;
+    } else if (state == 3) {
+        arg0->unk8 = 90.0f;
+        ftemp = cosf(temp->unk0 * D_800A3214);
+        ftemp = ftemp * 0.5f;
+        arg0->unk8 = arg0->unk8 + ftemp;
+        temp->unk0 = temp->unk0 + (3.0f * (f32)D_800BE9E4);
+    } else if (state == 2) {
+        if (arg0->unk8 == 0.0f) {
+            temp->unk4 = 0.0f;
+            temp->unk8 = 0.0f;
+        }
+        temp->unk8 = temp->unk8 + temp->unkC;
+        temp->unk4 = temp->unk4 + temp->unk8;
+        arg0->unk8 = arg0->unk8 + temp->unk4;
+        if (arg0->unk8 >= 90.0f) {
+            state = 3;
+            arg0->unk8 = 90.0f;
+        }
+    } else {
+        if ((f32)D_800BE9E4 < arg0->unk8) {
+            arg0->unk8 = arg0->unk8 - (f32)D_800BE9E4;
+        } else {
+            arg0->unk8 = 0.0f;
+            state = 0;
+        }
+    }
+
+    arg0->unk73 &= 0xFFFC;
+    arg0->unk73 |= state;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511DD98.s")
 
