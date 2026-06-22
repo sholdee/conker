@@ -17,6 +17,8 @@ extern f32 D_800A6024;
 extern f32 D_800A6028;
 extern f32 D_800A602C;
 extern void *func_15132A4C(void *, s32, s32, s32, u8, s32);
+extern s32 func_150AC9C0(f32, f32, f32, f32, f32, f32, void *, s32, f32 *, f32 *, f32 *, f32 *, s32 *, s32, f32);
+extern s32 func_15145C90(s32);
 
 struct Local15152874Header {
     s32 unk0;
@@ -65,6 +67,24 @@ struct Local15152874Spawn {
     f32 unk2C;
     f32 unk30;
     s32 pad34;
+};
+
+struct Local15150D1CArg {
+    s32 unk0;
+    s32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    s16 unk14;
+    s16 unk16;
+    s16 unk18;
+    s16 unk1A;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    s16 unk28;
+    s16 unk2A;
+    u8 unk2C;
 };
 
 extern void func_15143794(s32, s32, f32, f32 *);
@@ -160,7 +180,51 @@ void func_1514FEFC(void *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1515080C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15150D1C.s")
+void func_15150D1C(struct Local15150D1CArg *arg0, u8 arg1, s32 arg2) {
+    void *spACPtr;
+    struct17 spC0;
+    u8 spAC[0x14];
+    struct17 spA0;
+    f32 sp9C;
+    s32 sp98;
+    s32 count;
+    s32 rand0;
+    s32 rand1;
+    f32 randf;
+
+    count = (func_150ADA20() % (u32)(arg0->unk4 + 1)) + arg0->unk0;
+    spACPtr = spAC;
+
+    if (count != 0) {
+        do {
+            rand0 = func_150ADA20();
+            rand1 = func_150ADA20();
+            func_15143794((s16)((rand0 % (u32)(arg0->unk16 + 1)) + arg0->unk14),
+                          (s16)((rand1 % (u32)(arg0->unk1A + 1)) + arg0->unk18),
+                          100.0f,
+                          &spC0.unk0);
+
+            if ((func_150AC9C0(arg0->unk8, arg0->unkC, arg0->unk10,
+                               spC0.unk0, spC0.unk4, spC0.unk8,
+                               0, (s32)spACPtr,
+                               &spA0.unk0, &spA0.unk4, &spA0.unk8,
+                               &sp9C, &sp98, 0, 0.0f) != 0)
+                    && (func_15145C90(sp98) != 0)
+                    && (sp9C < arg0->unk1C)) {
+                rand0 = (randf = func_150ADA68(), func_150ADA20());
+                rand1 = func_150ADA20();
+                func_151D9B8C(arg0->unk2C,
+                              ((randf = randf) * arg0->unk24) + arg0->unk20,
+                              (u8)((rand0 % 156U) + 0x64),
+                              (s32)spACPtr,
+                              &spA0,
+                              (rand1 % (u32)(arg0->unk2A + 1)) + arg0->unk28,
+                              1, 1, 1, arg1, arg2);
+            }
+            count--;
+        } while (count != 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15150F90.s")
 

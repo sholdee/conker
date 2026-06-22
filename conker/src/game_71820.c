@@ -19,6 +19,12 @@ struct conker15044A28 {
 extern struct conker15044A28 *D_800CBE00[];
 extern s32 (*D_80085E80[])(struct conker15044A28 *);
 extern void (*D_80085E8C[])(void);
+extern f32 D_80098D60;
+extern f32 D_80098D64;
+extern f32 D_80098D68;
+extern f32 sqrtf(f32);
+
+#pragma function sqrtf
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044370.s")
 
@@ -379,9 +385,71 @@ void func_150472C0(struct conker150472C0_dst *arg0, struct conker150472C0_src *a
 }
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15047390.s")
+void func_15047390(f32 mf[4][4], f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9) {
+    f32 temp_f0;
+    f32 temp_f20;
+    f32 temp_f22;
+    f32 temp_f24;
+    f32 temp_f26;
+    f32 temp_f28;
+    f32 temp_f30;
+    f32 temp_f18;
 
-void func_15047390(f32 mf[4][4], f32, f32, f32, f32, f32, f32, f32, f32, f32);
+    guMtxIdentF(mf);
+
+    temp_f26 = arg4 - arg1;
+    temp_f28 = arg5 - arg2;
+    temp_f30 = arg6 - arg3;
+    temp_f18 = sqrtf((temp_f26 * temp_f26) + (temp_f28 * temp_f28) + (temp_f30 * temp_f30));
+    if (temp_f18 == 0.0f) {
+        temp_f18 = D_80098D60;
+    }
+    temp_f0 = -1.0f / temp_f18;
+    temp_f26 *= temp_f0;
+    temp_f28 *= temp_f0;
+    temp_f30 *= temp_f0;
+
+    temp_f20 = (arg8 * temp_f30) - (arg9 * temp_f28);
+    temp_f22 = (arg9 * temp_f26) - (arg7 * temp_f30);
+    temp_f24 = (arg7 * temp_f28) - (arg8 * temp_f26);
+    temp_f18 = sqrtf((temp_f20 * temp_f20) + (temp_f22 * temp_f22) + (temp_f24 * temp_f24));
+    if (temp_f18 == 0.0f) {
+        temp_f18 = D_80098D64;
+    }
+    temp_f0 = 1.0f / temp_f18;
+    temp_f20 *= temp_f0;
+    temp_f22 *= temp_f0;
+    temp_f24 *= temp_f0;
+
+    arg7 = (temp_f28 * temp_f24) - (temp_f30 * temp_f22);
+    arg8 = (temp_f30 * temp_f20) - (temp_f26 * temp_f24);
+    arg9 = (temp_f26 * temp_f22) - (temp_f28 * temp_f20);
+    temp_f18 = sqrtf((arg7 * arg7) + (arg8 * arg8) + (arg9 * arg9));
+    if (temp_f18 == 0.0f) {
+        temp_f18 = D_80098D68;
+    }
+    temp_f0 = 1.0f / temp_f18;
+    arg7 *= temp_f0;
+    arg8 *= temp_f0;
+    arg9 *= temp_f0;
+
+    mf[0][0] = temp_f20;
+    mf[1][0] = temp_f22;
+    mf[2][0] = temp_f24;
+    mf[3][0] = -((arg1 * temp_f20) + (arg2 * temp_f22) + (arg3 * temp_f24));
+    mf[0][1] = arg7;
+    mf[1][1] = arg8;
+    mf[2][1] = arg9;
+    mf[3][1] = -((arg1 * arg7) + (arg2 * arg8) + (arg3 * arg9));
+    mf[0][2] = temp_f26;
+    mf[1][2] = temp_f28;
+    mf[2][2] = temp_f30;
+    mf[3][2] = -((arg1 * temp_f26) + (arg2 * temp_f28) + (arg3 * temp_f30));
+    mf[3][3] = 1.0f;
+    mf[0][3] = 0.0f;
+    mf[1][3] = 0.0f;
+    mf[2][3] = 0.0f;
+}
 
 void func_15047688(Mtx *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9) {
     f32 sp30[4][4];
