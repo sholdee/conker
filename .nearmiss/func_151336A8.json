@@ -2,6 +2,5 @@
   "func": "func_151336A8",
   "file": "game_15F680",
   "score": 3,
-  "c": "extern s32 D_800A3880[];\nextern s32 D_800DC640[];\ns32 func_1502B6BC(s32 *arg0, s32 arg1, s32 *arg2, s32 arg3, s32 arg4, s32 arg5);\ns32 func_1510CE60(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4);\ns32 func_15168E54(s32 arg0, s32 *arg1);\n\ns32 func_151336A8(s32 arg0, s32 **arg1, s32 arg2) {\n    s32 sp2C;\n    s32 sp28;\n\n    *arg1 = (s32 *)func_1502B6BC(&sp2C, 0, &sp28, 2, 9, D_800A3880[arg0]);\n    if (*arg1 == 0) {\n        return 0;\n    }\n    func_1510CE60(**arg1, 0, 1, 0x3E, &D_800DC640[arg0]);\n    func_15168E54(**arg1, *arg1);\n    return 1;\n}\n",
-  "notes": "All-but-3-instr match. Residual: final func_15168E54(**arg1,*arg1) setup colors the CSE pointer to a1 (lw a0,0(a1) in delay) instead of target v1 (lw a0,0(v1) separate, move a1,v1 in delay). Could not steer coloring: any temp local shifts the arg0<<2 spill from 0x24 to 0x20."
+  "c": "extern s32 D_800A3880[];\nextern s32 D_800DC640[];\ns32 func_1502B6BC(s32 *arg0, s32 arg1, s32 *arg2, s32 arg3, s32 arg4, s32 arg5);\ns32 func_1510CE60(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4);\ns32 func_15168E54(s32 arg0, s32 *arg1);\n\ns32 func_151336A8(s32 arg0, s32 **arg1, s32 arg2) {\n    s32 sp2C;\n    s32 sp28;\n\n    *arg1 = (s32 *)func_1502B6BC(&sp2C, 0, &sp28, 2, 9, D_800A3880[arg0]);\n    if (*arg1 == 0) {\n        return 0;\n    }\n    func_1510CE60(**arg1, 0, 1, 0x3E, &D_800DC640[arg0]);\n    func_15168E54(**arg1, *arg1);\n    return 1;\n}\n"
 }

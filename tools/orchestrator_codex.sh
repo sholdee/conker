@@ -33,7 +33,7 @@ HARD RULES (a violation corrupts the shared build tree):
 
 WHEN DONE:
 - SCORE: 0 -> STOP and LEAVE the matching C in the file.
-- Cannot reach 0 -> FIRST, if your best SCORE was <= 80 OR <= half the instruction count of the target .s (a structurally-close attempt worth keeping for later), write the best-scoring C to $REPO/.nearmiss/$1.json as JSON with keys func,file,score,c (use python3 -c with json.dump). THEN revert: make $REPO/conker/src/$2.c contain exactly the original stub line  #pragma GLOBAL_ASM("asm/nonmatchings/$2/$1.s")  again. Leaving non-matching C breaks the build; reverting on failure is MANDATORY.
+- Cannot reach 0 -> FIRST, if your best SCORE was <= 80 OR <= half the instruction count of the target .s (a structurally-close attempt worth keeping for later), write the best-scoring C to $REPO/.nearmiss/$1.json as JSON with keys func,file,score,c (use python3 -c with json.dump) -- but ONLY if that file does not already exist or its stored "score" is HIGHER than yours (keep-the-best: never replace a better prior attempt with a worse one). THEN revert: make $REPO/conker/src/$2.c contain exactly the original stub line  #pragma GLOBAL_ASM("asm/nonmatchings/$2/$1.s")  again. Leaving non-matching C breaks the build; reverting on failure is MANDATORY.
 EOF
 }
 

@@ -1,6 +1,1 @@
-{
-  "func": "func_15116110",
-  "file": "game_142560",
-  "score": 2,
-  "c": "extern s32 func_15195FB0(void *, s32, s32, s32, s32, s32, s32);\n\nvoid func_15116110(void *arg0) {\n    s32 *p = (s32 *)arg0;\n    s32 v;\n    if (p[0x1F] == 0) {\n        v = p[0xF];\n        p[0x1F] = func_15195FB0(arg0, v & 0x7FFF, v >> 15, -1, 0,\n                                (v >> 24) & 0xFF, (v >> 16) & 0xFF);\n        p[0xF] = 0;\n    }\n}\n"
-}
+{"func": "func_15116110", "file": "game_142560", "score": 2, "c": "/* your previous best attempt: SCORE 2 -- refine THIS toward 0 */\nextern s32 func_15195FB0(void *, s32, s32, s32, s32, s32, s32);\n\nvoid func_15116110(void *arg0) {\n    s32 *p = (s32 *)arg0;\n    s32 v;\n    if (p[0x1F] == 0) {\n        v = p[0xF];\n        p[0x1F] = func_15195FB0(arg0, v & 0x7FFF, v >> 15, -1, 0,\n                                (v >> 24) & 0xFF, (v >> 16) & 0xFF);\n        p[0xF] = 0;\n    }\n}\n"}

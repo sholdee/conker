@@ -212,7 +212,7 @@ def main():
         for rfunc, rfile in refs[:3]:
             r = corpus_by_name.get(rfunc)
             ref_cs.append((fs.extract_c_body(c_text(rfile), rfunc) or "") if r else "")
-        ref_func, ref_file = refs[0]
+        ref_func, ref_file = (refs[0] if refs else ("", ""))
         picked.append({
             "func": func,
             "file": file,
