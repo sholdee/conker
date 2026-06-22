@@ -34,7 +34,45 @@ typedef struct {
     struct183 tmp;
 } Struct1515A974Locals;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_151580B0.s")
+typedef struct {
+    u8 pad0[0xD8];
+    s32 unkD8;
+    u8 unkDC;
+    u8 padDD[3];
+    s32 unkE0[4];
+    s32 unkF0;
+    s32 unkF4;
+} Struct151580B0;
+
+extern Struct151580B0 *func_15167A68(s32, s32, s32, s32, s32, s32);
+extern s32 func_1515D480(s32);
+extern s32 func_1515D440(void);
+
+s32 func_151580B0(void *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4, u8 arg5, s32 arg6) {
+    Struct151580B0 *temp_v0;
+    s32 i;
+
+    temp_v0 = func_15167A68(arg3 ? 0x55 : 0x37, arg6, arg4 + 0xF8, 1, arg5, 1);
+    if (temp_v0 == 0) {
+        return 0;
+    }
+    memcpy(&temp_v0->pad0[0x10], arg0, 0x44);
+    temp_v0->unkD8 = arg1;
+    temp_v0->unkF4 = arg2;
+    temp_v0->unkDC = 0;
+    for (i = 0; i < 4; i++) {
+        temp_v0->unkE0[i] = 0;
+    }
+
+    temp_v0->unkF0 = 0;
+    if (arg1) {
+        for (i = 0; i <= D_80082FA0; i++) {
+            temp_v0->unkE0[i] = func_1515D480(arg1);
+        }
+        temp_v0->unkF0 = func_1515D440();
+    }
+    return (s32) temp_v0;
+}
 
 s32 func_151580B0(void *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4, u8 arg5, s32 arg6);
 

@@ -1,7 +1,10 @@
 #include <ultra64.h>
+#define func_150ADA20 func_150ADA20_u8_proto
 #include "functions.h"
+#undef func_150ADA20
 #include "variables.h"
 
+extern s32 func_150ADA20(void);
 extern struct172 D_80086CC4[];
 extern void func_150302F0(struct127 *arg0, s32 arg1);
 extern s32 D_80086CAC[];
@@ -321,7 +324,16 @@ u8 func_150849CC(GameAEB40Struct *a0, s32 *a1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084A18.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084C30.s")
+void func_15084C30(struct127 *arg0) {
+    struct197 *sp1C;
+    f32 temp_f0;
+
+    if (arg0->id == 0x94) {
+        sp1C = arg0->unk2D0;
+        temp_f0 = (f32)((u32)func_150ADA20() % (u32)(s32)sp1C->unk18);
+        sp1C->unk8 = temp_f0;
+    }
+}
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084CB0.s")
