@@ -1810,7 +1810,27 @@ void func_15073A28(void) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_15073A50.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_15073B38.s")
+
+void func_15073B38(void) {
+    struct func_15073B38_inner {
+        u8 padA8[0xA8];
+        f32 unkA8;
+        u8 unkAC;
+        s8 unkAD;
+    };
+    s32 *temp_v0;
+    struct127 **temp_v1;
+    f32 temp_f0;
+    f32 temp_f2;
+
+    temp_v0 = &D_800D1580;
+    temp_v1 = &D_800D154C;
+    temp_f0 = (f32)(*temp_v0 & 0xFFFF);
+    ((struct func_15073B38_inner *)(*temp_v1)->unk31C)->unkA8 = temp_f0;
+    temp_f2 = (f32)((*temp_v0 >> 16) & 0xFF);
+    ((struct func_15073B38_inner *)(*temp_v1)->unk31C)->unkAC = (u32)temp_f2;
+    ((struct func_15073B38_inner *)(*temp_v1)->unk31C)->unkAD = (*temp_v0 >> 24) & 0xFF;
+}
 
 void func_15073C28(void) {
     func_1507F640();

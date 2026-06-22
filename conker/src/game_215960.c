@@ -16,10 +16,11 @@ extern u8 D_800BE740;
 extern s8 D_8008FD90;
 extern s8 D_800E0BD3;
 extern s32 *D_800E0BD8;
-s32 func_151ED1E0(s32);
+Gfx *func_151ED1E0(Gfx *);
 void func_15042D94(s32, s32, s32, s32);
 Gfx *func_151ED430(Gfx *, void *, s32, s32, s32, s32, f32, s32);
 Gfx *func_15096934(Gfx *);
+Gfx *func_1501A6CC(Gfx *arg0, s32 a, s32 b, s32 c, s32 d);
 
 s32 func_151E84B0(s32 arg0) {
     s32 tmp;
@@ -220,7 +221,16 @@ Gfx *func_151ED09C(Gfx *gfx) {
     return func_15096934(gfx);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151ED1E0.s")
+Gfx *func_151ED1E0(Gfx *gfx) {
+    if (D_800E0B96 == 0) {
+        return gfx;
+    }
+    gDPPipeSync(gfx++);
+    gDPSetOtherMode(gfx++, 0x082C3F, 0x504340);
+    gDPSetCombine(gfx++, 0xFFFFFF, 0xFFFEFB7D);
+    gDPSetEnvColor(gfx++, 0, 0, 0, D_800E0B96);
+    return func_1501A6CC(gfx, 0, 0, D_800BE620, D_800BE624);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151ED29C.s")
 

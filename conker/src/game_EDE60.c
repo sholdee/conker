@@ -125,4 +125,44 @@ struct s150C0AC0 *func_150C0AC0(struct s150C0AC0_arg *arg0, s32 arg1, s32 arg2) 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EDE60/func_150C0C38.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_EDE60/func_150C1198.s")
+struct s150C1198 {
+    u8 pad0[0xA8];
+    struct s150C1198List *unkA8;
+};
+
+struct s150C1198List {
+    u8 pad0[0x40];
+    struct sub150C0A48 *unk40;
+    s16 unk44;
+    s16 unk46;
+};
+
+void func_150C1198(struct s150C1198 *arg0) {
+    struct s150C1198List *temp;
+    s32 found;
+    s16 prev;
+    s16 idx;
+
+    temp = arg0->unkA8;
+    found = 0;
+    prev = -1;
+    idx = temp->unk44;
+    while ((idx != -1) && (found == 0)) {
+        if ((struct102 *)arg0 == temp->unk40[idx].unk0) {
+            found = 1;
+        } else {
+            prev = idx;
+            idx = temp->unk40[idx].unk4;
+        }
+    }
+
+    if (found) {
+        if (idx == temp->unk44) {
+            temp->unk44 = temp->unk40[idx].unk4;
+        } else {
+            temp->unk40[prev].unk4 = temp->unk40[idx].unk4;
+        }
+        temp->unk40[idx].unk4 = temp->unk46;
+        temp->unk46 = idx;
+    }
+}

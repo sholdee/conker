@@ -32,10 +32,18 @@ typedef struct {
     u16 unk6;
 } struct_game49D30_1;
 
+typedef struct {
+    s16 unk0;
+    u8 pad2[0x32];
+    s32 unk34;
+} struct_game49D30_2;
+
 extern struct_game49D30_0 *D_800C3A50[];
 extern struct_game49D30_1 *D_800C3868[][30];
+extern struct_game49D30_2 D_800C3D48;
 extern void func_1501F72C(s32, f32, f32 *, s32, s32 *);
 extern void func_1501FFE8(f32 *, struct_game49D30_1 *, s32, u16);
+extern void func_1516D2E0(s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501C880.s")
 
@@ -297,7 +305,23 @@ void func_150233BC(void) {
     bzero(D_800C3CA0, 0xA8);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_150233E4.s")
+void func_150233E4(void) {
+    s32 i;
+    int new_var;
+    struct_game49D30_2 *entry;
+
+    i = 0;
+    do {
+        entry = &((struct_game49D30_2 *) D_800C3CA0)[i];
+        if (entry->unk0 != 0) {
+            func_1516D2E0(entry->unk34);
+            entry->unk34 = 0;
+            new_var = 0;
+            entry->unk0 = new_var;
+        }
+        i++;
+    } while (&D_800C3D48 != &((struct_game49D30_2 *) D_800C3CA0)[i]);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15023440.s")
 
