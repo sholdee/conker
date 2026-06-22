@@ -169,4 +169,14 @@ s32 func_151AFC88(s32 arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5,
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DCA70/func_151AFEA4.s")
+s32 func_151AFEA4(f32 *arg0, s32 arg1) {
+    volatile f32 *scale;
+    s32 i;
+
+    scale = (f32 *)((u8 *)arg0 + 0xA8);
+    for (i = D_800BE9E4; i != 0; i--) {
+        arg0[22] *= *scale;
+        arg0[24] *= *scale;
+    }
+    return 1;
+}
