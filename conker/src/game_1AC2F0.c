@@ -1,6 +1,10 @@
 #include <ultra64.h>
+#define func_15048A40 func_15048A40_hdr
 #include "functions.h"
+#undef func_15048A40
 #include "variables.h"
+
+extern f32 func_15048A40(u8 arg0);
 
 
 extern u8 D_800DDDA0[];
@@ -94,7 +98,7 @@ s32 func_1517EFDC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F08C.s")
 
 extern u8 D_800DDDA0[];
-s32 func_1517F08C(s32 arg0, s32 arg1, u8 arg2, u8 arg3, u8 arg4, s32 arg5);
+s32 func_1517F08C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
 s32 func_1517F3A0(s32 arg0, s32 arg1) {
     s32 v0 = func_1517EF00(arg1);
@@ -134,13 +138,48 @@ void func_1517F488(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F4D8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F564.s")
-
+extern u8 D_8008D010[];
 extern u8 D_800DDD88;
 extern u8 D_800DDD89;
 extern u8 D_800DDD8A;
 extern u8 D_800DDD8B;
 extern u8 D_800DDD8C;
+
+s32 func_1517F564(s32 arg0) {
+    f32 temp_f2[4];
+    f32 sp20;
+    f32 fade;
+    u8 *p;
+    s32 v0;
+    s32 a1;
+    s32 red;
+    s32 green;
+    s32 blue;
+
+    if (D_800DDE08 == 0) {
+        return arg0;
+    }
+
+    v0 = D_800DDD8B;
+    if (v0 == 0) {
+        return arg0;
+    }
+
+    if (D_800DDD8C != 0) {
+        fade = (func_15048A40(D_800DDD89) + 1.0f) * 0.5f;
+        a1 = (s32)((f32)D_800DDD8B * fade);
+        sp20 = 0.0f;
+    } else {
+        a1 = v0;
+        sp20 = temp_f2[0];
+    }
+
+    p = &D_8008D010[D_800DDD8A * 6];
+    red = (s32)((f32)p[0] + ((f32)(p[3] - p[0]) * sp20));
+    green = (s32)((f32)p[1] + ((f32)(p[4] - p[1]) * sp20));
+    blue = (s32)((f32)p[2] + ((f32)(p[5] - p[2]) * sp20));
+    return func_1517F08C(arg0, a1, red, green, blue, 0);
+}
 
 void func_1517F720(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     D_800DDE08 = arg1;

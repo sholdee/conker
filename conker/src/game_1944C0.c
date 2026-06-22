@@ -4,6 +4,17 @@
 #include "variables.h"
 
 extern void (*D_8008CA20[])(struct102 *);
+extern void (*D_8008C9C8[])(struct102 *);
+
+struct Some15171F04 {
+    u8 pad0[4];
+    u8 unk4;
+    u8 pad5;
+    u16 unk6;
+    u16 unk8;
+};
+
+extern struct Some15171F04 *D_8008CA4C[];
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167010.s")
 // NON-MATCHING: not hugely far away
@@ -109,7 +120,60 @@ s32 func_15168800(s32 arg0, s32 arg1, s32 arg2) {
     bcopy(arg0, (void *)(temp + 0x10), 0xA8);
     return temp;
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15168870.s")
+void func_15168870(s32 arg0) {
+    s32 temp_v0;
+    s32 temp_v1;
+    u8 temp_a1;
+    s16 temp_a2;
+    void (*func)(struct102 *);
+
+    temp_a2 = *(s16 *)(arg0 + 0x9A);
+    if (temp_a2 != 0) {
+        temp_a1 = D_8008CA4C[*(u8 *)(arg0 + 0xB0)]->unk4;
+        temp_v1 = temp_a1;
+        temp_v1 <<= 8;
+        *(s16 *)(arg0 + 0x98) += temp_a2 * D_800BE9E4;
+        temp_v0 = *(s16 *)(arg0 + 0x98);
+        temp_v1 -= 1;
+        if (temp_v1 < temp_v0) {
+            if (*(u16 *)(arg0 + 0xA8) & 0x40) {
+                *(s16 *)(arg0 + 0x98) = temp_v1 - (temp_v0 % temp_v1);
+                *(s16 *)(arg0 + 0x9A) = -temp_a2;
+            } else if (*(u16 *)(arg0 + 0xA8) & 4) {
+                *(s16 *)(arg0 + 0x98) = -1;
+            } else {
+                do {
+                    *(s16 *)(arg0 + 0x98) = temp_v0 - temp_v1;
+                    temp_v0 = *(s16 *)(arg0 + 0x98);
+                } while (temp_v1 < temp_v0);
+            }
+        } else if (temp_v0 < 0) {
+            if (*(u16 *)(arg0 + 0xA8) & 0x40) {
+                *(s16 *)(arg0 + 0x98) = -temp_v0 % temp_v1;
+                *(s16 *)(arg0 + 0x9A) = -temp_a2;
+            } else if (*(u16 *)(arg0 + 0xA8) & 4) {
+                *(s16 *)(arg0 + 0x98) = -1;
+            } else {
+                do {
+                    *(s16 *)(arg0 + 0x98) = temp_v0 + temp_v1;
+                    temp_v0 = *(s16 *)(arg0 + 0x98);
+                } while (temp_v0 < 0);
+            }
+        }
+    }
+
+    temp_v0 = *(s8 *)(arg0 + 0xB2);
+    if (temp_v0 != -1) {
+        func = D_8008C9C8[temp_v0];
+        if (func != NULL) {
+            func((struct102 *)arg0);
+        }
+    }
+
+    if (*(s16 *)(arg0 + 0x98) == -1) {
+        func_1516972C((struct102 *)arg0);
+    }
+}
 void func_15168A2C(s32 arg0) {
     func_15168B10(arg0, 0);
 }
