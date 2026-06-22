@@ -1,5 +1,7 @@
 #include <ultra64.h>
+#define func_1515D4D4 func_1515D4D4_prototype
 #include "functions.h"
+#undef func_1515D4D4
 #include "variables.h"
 
 
@@ -255,7 +257,28 @@ void func_1515F2E8(u8 *arg0, s32 *arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F338.s")
+void func_1515F338(s32 arg0, s32 arg1) {
+    u8 temp_v1;
+    u8 temp_t0;
+    u8 temp_t1;
+
+    temp_v1 = ((u8 *)&D_800DCD20)[0];
+    temp_t0 = ((u8 *)&D_800DCD20)[1];
+    temp_t1 = ((u8 *)&D_800DCD20)[2];
+    if (D_800DCD94 != 97.0f) {
+        D_800DCD94 += (97.0f - D_800DCD94) * 0.5f;
+        temp_v1 = (u8)(u32)D_800DCD94;
+    }
+    if (D_800DCD98 != 96.0f) {
+        D_800DCD98 += (96.0f - D_800DCD98) * 0.5f;
+        temp_t0 = (u8)(u32)D_800DCD98;
+    }
+    if (D_800DCD9C != 98.0f) {
+        D_800DCD9C += (98.0f - D_800DCD9C) * 0.5f;
+        temp_t1 = (u8)(u32)D_800DCD9C;
+    }
+    func_1515D4D4(temp_v1, temp_t0, temp_t1, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F5C4.s")
 
