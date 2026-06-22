@@ -664,7 +664,47 @@ void func_1505959C(struct127 *arg0, s32 arg1) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_150597FC.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_150599C8.s")
+
+u8 func_150599C8(struct127 *arg0, u8 arg1, u16 arg2) {
+    s16 temp_a3;
+    s16 temp_t6;
+    s16 temp_t8;
+    s32 temp_v0;
+    s32 temp_lo;
+    s16 phi_v1;
+
+    temp_v0 = (s32) (((arg1 << 8) + arg0->unk1E8) * D_800CC264) / 0x64;
+    temp_a3 = arg2 - arg0->unk7A;
+    if (arg0->unk1EA != 0) {
+        temp_lo = (s32) (arg0->unk1EA * D_800CC264) / 0x64;
+        temp_t6 = arg0->unk1EC + temp_lo;
+        temp_t8 = arg0->unk1EC - temp_lo;
+        if (temp_t6 < temp_a3) {
+            temp_a3 = temp_t6;
+        }
+        if (temp_a3 < temp_t8) {
+            temp_a3 = temp_t8;
+        }
+    }
+
+    phi_v1 = temp_a3;
+    if (temp_a3 < 0) {
+        temp_a3 = temp_a3 ^ 0xFFFF;
+    }
+    if (temp_a3 < temp_v0) {
+        temp_v0 = temp_a3;
+    }
+    if ((arg0->unkF4 & 1) == 0) {
+        if (arg0->unk80 != 0) {
+            if (phi_v1 < 0) {
+                arg0->unk7A -= temp_v0;
+            } else {
+                arg0->unk7A += temp_v0;
+            }
+        }
+    }
+    return temp_a3 >> 8;
+}
 
 u8 func_15059B54(struct127 *arg0, u16 arg1) {
     s16 temp_t8;
