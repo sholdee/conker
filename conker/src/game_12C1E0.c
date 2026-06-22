@@ -7,6 +7,18 @@
 
 extern s32 func_1514654C(struct127 *, struct126 *, s32, void *, void *, s32);
 extern f32 D_800A2050;
+extern f32 D_800A2114;
+extern f32 D_800A2118;
+struct126 *func_150FF288(struct127 *arg0);
+void func_150FF2AC(struct127 *arg0, struct17 *arg1, struct17 *arg2, struct17 *arg3);
+void func_151D5148(struct127 *arg0);
+void func_150FF2D4(u8 *, struct17 *, struct17 *, struct17 *, struct17 *, struct17 *, struct17 *, struct17 *, struct17 *, struct17 *, s32 *, s32 *, struct17 *, struct127 *, struct126 *);
+void func_150F7470(struct17 *, struct17 *, s32, s32, s32, s32, f32, f32, f32, struct127 *, s32, s32, s32, s32, s32, s32, s32, s32, u8, s32);
+void func_151D3F14(struct17 *arg0, u8 arg1, s32 arg2);
+void func_151D4408(struct17 *, struct17 *, void *, struct127 *, f32, s32, s32);
+void func_150FF474(struct17 *, struct17 *, s32, s32);
+
+typedef u8 Func150FF084Entry[0x40];
 
 void func_150FEFD0(struct127 *arg0, s16 arg1, struct17 *arg2) {
     f32 *p1;
@@ -31,7 +43,53 @@ void func_150FEFD0(struct127 *arg0, s16 arg1, struct17 *arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12C1E0/func_150FF084.s")
+void func_150FF084(struct127 *arg0, s32 arg1, s32 arg2) {
+    struct17 sp124;
+    struct17 sp118;
+    struct17 sp10C;
+    struct17 sp100;
+    struct17 spF4;
+    struct17 spE8;
+    struct17 spDC;
+    struct17 spD0;
+    struct17 spC4;
+    struct17 sp7C[6];
+    s32 sp78;
+    s32 sp74;
+    struct126 *temp;
+    u8 sp6F;
+    s32 rand;
+    s32 sp64;
+
+    temp = func_150FF288(arg0);
+    if (temp != 0) {
+        func_151D5148(arg0);
+        func_150FF2AC(arg0, &sp10C, &sp100, &spF4);
+
+        if (arg0->unk1D4 != 0) {
+            sp6F = 1;
+        } else {
+            sp6F = 0;
+        }
+
+        func_150FF2D4(&sp6F, sp7C, &sp124, &spE8, &spDC, &sp10C, &sp100, &spF4, &spD0, &spC4, &sp78, &sp74, &sp118, arg0, temp);
+
+        if (sp74 == 0) {
+            sp64 = 0;
+        } else {
+            sp64 = 1;
+        }
+
+        rand = func_150ADA20();
+        func_150F7470(&sp124, &sp10C, sp78, sp74, sp64, 0, D_800A2114, D_800A2118, 300.0f, arg0, 1, 1, 1, 0, 0x1A, 1, (rand % 5U) + 0x327, 0, ((u8 *)&arg1)[3], arg2);
+
+        if (sp6F != 0) {
+            func_151D3F14(&sp124, ((u8 *)&arg1)[3], arg2);
+            func_151D4408(&spE8, &spDC, (*(Func150FF084Entry **)&arg0->unk1D4)[*((u8 *)temp + 2)], arg0, 1.0f, ((u8 *)&arg1)[3], arg2);
+            func_150FF474(&sp124, sp7C, ((u8 *)&arg1)[3], arg2);
+        }
+    }
+}
 
 struct126 *func_150FF288(struct127 *arg0) {
     return func_1503195C(arg0, 0x82, 0);
