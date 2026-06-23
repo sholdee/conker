@@ -38,6 +38,8 @@ typedef struct {
     char pad_0x11[0x12];
     u8 field_0x23;
     char pad_0x24[0x4];
+    char pad_0x28[0x20];
+    u8 field_0x48;
 } GameObjectHeader;
 
 extern struct Some15171F04 *D_8008CA4C[];
@@ -138,15 +140,15 @@ void func_15167B44(struct102 *arg0) {
 }
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167C58.s")
 s32 func_15167D84(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
-    s32 temp;
+    GameObjectHeader *temp;
 
-    temp = func_15167A68((arg1 == 0) ? 5 : 0x42, arg5, arg2 + 0x50, 0, *((u8 *)&arg4 + 3), 1);
+    temp = (GameObjectHeader *)func_15167A68((arg1 == 0) ? 5 : 0x42, arg5, arg2 + 0x50, 0, *((u8 *)&arg4 + 3), 1);
     if (temp == 0) {
-        return temp;
+        return (s32)temp;
     }
-    bcopy(arg0, (void *)(temp + 0x10), 0x38);
-    *(u8 *)(temp + 0x48) = *((s8 *)&arg3 + 3);
-    return temp;
+    bcopy(arg0, &temp->field_0x10, 0x38);
+    temp->field_0x48 = *((s8 *)&arg3 + 3);
+    return (s32)temp;
 }
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167E0C.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15168118.s")

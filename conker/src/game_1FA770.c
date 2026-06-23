@@ -22,6 +22,20 @@ typedef struct {
     s32 field_0x98;
 } Func151CE4DCArg0;
 
+typedef struct {
+    char pad_0x0[0x30];
+    s32 field_0x30;
+} ConkerField30Object;
+
+typedef struct {
+    ConkerField30Object *field_0x0;
+} ConkerField0Slot;
+
+typedef struct {
+    char pad_0x0[0x98];
+    ConkerField0Slot *field_0x98;
+} ConkerField98Owner;
+
 
 struct260 *func_151CD2C0(void *arg0, u8 arg1, s32 arg2) {
     struct260 *temp_v0;
@@ -487,14 +501,14 @@ void func_151D13E0(struct260 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151D1C98.s")
 
-void func_151D223C(s32 arg0) {
-    s32 *temp_v0;
-    s32 temp_v1;
+void func_151D223C(ConkerField98Owner *arg0) {
+    ConkerField0Slot *temp_v0;
+    ConkerField30Object *temp_v1;
 
-    temp_v0 = *(s32 **)(arg0 + 0x98);
-    temp_v1 = temp_v0[0];
+    temp_v0 = arg0->field_0x98;
+    temp_v1 = temp_v0->field_0x0;
     if (temp_v1 != 0) {
-        *(s32 *)(temp_v1 + 0x30) = 0;
+        temp_v1->field_0x30 = 0;
     }
 }
 

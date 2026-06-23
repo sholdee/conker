@@ -102,6 +102,12 @@ typedef struct {
     Game1F4650ByteFlagTarget *field_0x14;
     Game1F4650StatusFlagBlock *field_0x18;
 } Game1F4650StatusFlagOwner;
+typedef struct {
+    u8 pad_0x00[0x58];
+    s32 field_0x58;
+    u8 pad_0x5C[0x12C];
+    Game1F4650StatusFlagBlock *field_0x188;
+} Game1F4650StatusFlagObject;
 extern void func_1504715C(struct_func_151C9AC0_sp20 *, struct_func_151C9AC0_arg0 *);
 extern s32 func_151ABE40(f32 *, struct_func_151C9AC0_sp20 *, s32, u8, s32);
 
@@ -330,12 +336,12 @@ s32 func_151C9B30(Game1F4650StatusFlagOwner *arg0) {
     return 1;
 }
 
-s32 func_151C9B64(void *arg0, u8 *arg1) {
-    s32 temp = *(s32 *)((s32)arg0 + 0x188);
-    if (*(u8 *)(temp + 0x6F) == 0) {
+s32 func_151C9B64(Game1F4650StatusFlagObject *arg0, u8 *arg1) {
+    Game1F4650StatusFlagBlock *temp = arg0->field_0x188;
+    if (temp->field_0x6F == 0) {
         *arg1 = 1;
     } else {
-        *(s32 *)((s32)arg0 + 0x58) &= ~0x2;
+        arg0->field_0x58 &= ~0x2;
         *arg1 = 0;
     }
     return 1;

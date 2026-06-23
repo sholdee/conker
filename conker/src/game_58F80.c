@@ -9,6 +9,15 @@ typedef struct {
     u8 pad1[0xF];
 } D_800C666FEntry;
 
+typedef struct {
+    u8 pad_0[0xA0];
+    u32 field_0xA0;
+    u8 field_0xA4;
+    u8 field_0xA5;
+    u8 field_0xA6;
+    u8 field_0xA7;
+} ActorInteractionFields;
+
 extern D_800C666FEntry D_800C666F[];
 extern void *allocate_memory(s32, s32, s32, s32);
 extern void func_1502C608(s32);
@@ -151,12 +160,12 @@ void func_1502E474(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502E9FC.s")
 
-void func_1502EA0C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
-    arg0[0xA4] = 4;
-    arg0[0xA5] = 0;
-    arg0[0xA6] = arg5;
-    *(u32 *)(arg0 + 0xA0) = (arg4 << 24) | (arg1 << 16) | (arg2 << 8) | arg3;
-    arg0[0xA7] = 0xFF;
+void func_1502EA0C(ActorInteractionFields *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    arg0->field_0xA4 = 4;
+    arg0->field_0xA5 = 0;
+    arg0->field_0xA6 = arg5;
+    arg0->field_0xA0 = (arg4 << 24) | (arg1 << 16) | (arg2 << 8) | arg3;
+    arg0->field_0xA7 = 0xFF;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502EA50.s")

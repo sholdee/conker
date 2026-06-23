@@ -113,7 +113,7 @@ void func_15146A98(s32 arg0, s32 arg1, s32 arg2) {
     Struct15147040 sp5C;
     Struct15146A98 sp18;
 
-    if (*(s32 *)(arg0 + 0x1D4) != 0) {
+    if (((ActorFields *)arg0)->field_0x1D4 != 0) {
         func_15146890(&sp5C, (ActorFields *)arg0, 0, (u8)arg1);
         sp18.unk0 = 5;
         sp18.unk4 = 0x16;
