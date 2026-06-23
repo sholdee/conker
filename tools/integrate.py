@@ -69,19 +69,24 @@ def main():
     if rom_matches():
         good = claimed
     else:
-        # bisect: revert one file at a time until the ROM matches; the reverted
-        # files are the broken ones.
-        good, bad = list(claimed), []
-        for f, fn in list(claimed):
+        # ADD-BACK bisect: save each claim's matching source, revert to the clean committed base,
+        # then add claims back ONE AT A TIME, keeping only those that still build the matching ROM.
+        # This drops ONLY genuinely-broken claims. The old linear "revert in order until it matches"
+        # dropped good claims that merely preceded a broken one (the "+1 committed when several
+        # matched" bug). Claims are distinct files, so each is an independent test.
+        saved = {(f, fn): open(os.path.join(REPO, f"conker/src/{f}.c")).read() for f, fn in claimed}
+        sh("git checkout conker/src/")
+        good = []
+        for f, fn in claimed:
+            open(os.path.join(REPO, f"conker/src/{f}.c"), "w").write(saved[(f, fn)])
             if rom_matches():
-                break
-            sh(f"git checkout conker/src/{f}.c")
-            good.remove((f, fn)); bad.append(fn)
+                good.append((f, fn))
+            else:
+                sh(f"git checkout conker/src/{f}.c")
         if not rom_matches():
-            print("INTEGRATE: ROM still broken after reverting all claims — ABORT, no commit")
-            sh("git checkout conker/src/")
-            write_rom_status(False)
-            return
+            print("INTEGRATE: ROM broken at clean committed base — ABORT, no commit")
+            sh("git checkout conker/src/"); write_rom_status(False); return
+        bad = [fn for f, fn in claimed if (f, fn) not in good]
         if bad:
             print(f"INTEGRATE: reverted broken/unverifiable: {', '.join(bad)}")
 

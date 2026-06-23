@@ -63,10 +63,12 @@ def progress():
         sizes = map_sizes() or {}
         st = set(stub_map().keys())
         out = {}
+        is_data = lambda f: f.startswith(("D_", "B_", "jtbl", "jpt_", "_pad"))
         for seg in ["init", "game", "debugger"]:
-            funcs = {f: l for f, (sg, l) in sizes.items() if sg == seg}
-            # COUNT excludes gcc local labels (.L… = branch targets inside functions, not functions);
-            # BYTES include them (a label's length is real code bytes, part of its parent function).
+            allf = {f: l for f, (sg, l) in sizes.items() if sg == seg}
+            # BYTES: functions + .L code labels, but NOT data (D_/jtbl/…) — data isn't function code.
+            funcs = {f: l for f, l in allf.items() if not is_data(f)}
+            # COUNT: functions only — also exclude .L gcc local labels (branch targets inside a func).
             real = {f for f in funcs if not f.startswith(".L")}
             tf = len(real); cf = sum(1 for f in real if f not in st)
             tb = sum(funcs.values()); cb = sum(l for f, l in funcs.items() if f not in st)

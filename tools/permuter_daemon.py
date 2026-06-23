@@ -18,7 +18,7 @@ Typical coordination between orchestrator runs:
   permuter_daemon.py import_new   # ingest this run's new near-misses
   permuter_daemon.py run 5400     # (re)launch background permuters for next run
 """
-import glob, json, os, re, subprocess, sys, time
+import glob, json, os, re, shutil, subprocess, sys, time
 
 REPO = os.path.expanduser("~/conker")
 INNER = os.path.join(REPO, "conker")
@@ -82,15 +82,41 @@ def running_funcs():
             out.add(m.group(1))
     return out
 
+def _stub_set():
+    """Funcs still GLOBAL_ASM stubs in src (i.e. NOT yet matched by codex)."""
+    s = set()
+    for c in glob.glob(os.path.join(INNER, "src", "*.c")):
+        try:
+            for m in re.finditer(r'GLOBAL_ASM\("asm/nonmatchings/[^/]+/(func_[0-9A-F]+)\.s"\)', open(c).read()):
+                s.add(m.group(1))
+        except OSError:
+            pass
+    return s
+
 def _eligible(exclude):
-    # newest imports first, skip cracked / no-port / already-running — so fresh
-    # high-value near-misses get the free slots, not never-cracking old cases.
-    return sorted(
-        [d for d in glob.glob(os.path.join(NM_DIR, "func_*"))
-         if not cracked(os.path.basename(d))
-         and not os.path.exists(os.path.join(d, ".noport"))
-         and os.path.basename(d) not in exclude],
-        key=os.path.getmtime, reverse=True)
+    # newest imports first, skip cracked / no-port / already-running. Deterministically PRUNE seeds
+    # whose func has since been matched by codex (no longer a stub) — they'd just load score-0 and
+    # exit, wasting a slot. Keeps the permuter on the real backlog without a manual prune step.
+    stubs = _stub_set()
+    out = []
+    for d in glob.glob(os.path.join(NM_DIR, "func_*")):
+        f = os.path.basename(d)
+        if f not in stubs:
+            shutil.rmtree(d, ignore_errors=True)        # matched since import → prune stale seed
+            continue
+        if cracked(f) or os.path.exists(os.path.join(d, ".noport")) or f in exclude:
+            continue
+        # base.c already score 0 in isolation (permuter exits instantly with "Found zero"): nothing
+        # to permute — these object-matches-but-ROM-fails were hogging slots from real near-misses.
+        log = f"/tmp/permd_{f}.log"
+        if os.path.exists(log):
+            try:
+                if "Found zero score" in open(log).read(1024):
+                    continue
+            except OSError:
+                pass
+        out.append(d)
+    return sorted(out, key=os.path.getmtime, reverse=True)
 
 def _launch_one(func, seconds):
     log = f"/tmp/permd_{func}.log"

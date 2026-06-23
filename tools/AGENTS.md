@@ -4,9 +4,27 @@ Match every `game` function to byte-identical IDO 5.3 `-O2 -g3` asm. Branch `dec
 Two engines run in PARALLEL: the **orchestrator** (LLM agents match `GLOBAL_ASM` stubs) and the
 **permuter daemon** (cracks JUSTREG residue on spare CPU). You coordinate them BETWEEN runs.
 
+## LATEST STATE & PENDING (read FIRST after compaction)
+- **Active run:** `bash tools/orchestrator_codex.sh 12 400 8` (chunk 12, maxi 400), tracked → notifies on done.
+- **UNCOMMITTED tools — live on-disk, COMMIT AT NEXT GAP:** `permuter_daemon.py` (deterministic prune of
+  matched + base-0 seeds in `_eligible`), `integrate.py` (ADD-BACK bisect fix — needs `ALLOW_GATE_EDIT=1`;
+  SHA gate constants verified UNCHANGED), `dashboard.py` (debugger `D_` count fix).
+- **PENDING recovery:** port the **22 score-0 `.nearmiss`** entries (matches over-reverted by the OLD integrate
+  bisect bug, now fixed) — write each `.nearmiss["c"]` into its stub + run `integrate.py`; the gate keeps the
+  genuinely-matchable, drops true object-match-but-ROM-fails. (These overlap the permuter's base-0 seeds.)
+- **DASHBOARD:** `tools/dashboard.py` on :8077 (status bar: ROM badge ← `/tmp/rom_status.json`, Cycle/round ←
+  `/tmp/cycle_status.json`, tree-clean, per-commit `[cycle N]`). Restart: kill `tools/dashboard.py` procs +
+  `setsid python3 tools/dashboard.py 8077 >/tmp/dashboard.log 2>&1 </dev/null &`. Read-only, no pipeline risk.
+- **DETERMINISTIC HARVEST:** `iter_match.sh` tracks per-func running-best (prints `BEST: M`), snapshots best-C →
+  `/tmp/bestc_<func>.c`; orchestrator harvests `.nearmiss` via `harvest_nearmiss.py` (keep-best). attempts.tsv +
+  dashboard read the TRACKED score, NOT the codex log (polluted by the prompt's literal "SCORE: 0" text).
+- **CORRECTED METRICS:** function count excludes `.L` gcc labels + `D_` data symbols (progress.py counts them,
+  inflating) → game ~58.7% func / ~28% bytes; matches README method (~5338 game funcs). Byte % was always right.
+- **CYCLE:** `.cycle` counter (+1 per run, gitignored); `integrate.py` tags each commit `[cycle N]`.
+
 ## CURRENT MODE — Codex engine (rationing Claude tokens)
 The matching now runs on **Codex** (zero Claude tokens), via a shell mirror of the orchestrator:
-- **Run:** `bash tools/orchestrator_codex.sh 8 250 8` (chunk maxi rounds) as a tracked background task →
+- **Run:** `bash tools/orchestrator_codex.sh 12 400 8` (chunk maxi rounds) as a tracked background task →
   one completion notification. Uses `codex exec --full-auto` for matching; similar_chunk + integrate.py
   are the deterministic glue.
 - **MAXI regime (size cap, RAISE as bands deplete):** raise when a band's match RATE decays OR round-1
