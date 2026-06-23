@@ -86,7 +86,23 @@ void func_1510D720(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510D7AC.s")
+void func_1510D7AC(s32 arg0) {
+    register s8 *flag;
+
+    flag = (s8 *)&D_800BC448[arg0];
+    if (*flag != 0) {
+        if (D_800D9F68[arg0] != 0) {
+            if (--D_800D9F68[arg0] == 0) {
+                if (*flag & 0x40) {
+                    func_10004074(*(s16 **)D_800B0E58[arg0]);
+                }
+                func_10004074((s16 *)D_800B0E58[arg0]);
+                D_800B0E58[arg0] = -1;
+                *flag = 0;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510D864.s")
 

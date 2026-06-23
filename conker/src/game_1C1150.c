@@ -15,6 +15,10 @@ typedef struct {
 extern void func_151D8868(void *arg0, s32 arg1, s32 arg2, s32 arg3);
 extern void func_151C0098(f32 *arg0, struct127 *arg1, s32 arg2, s32 arg3, s32 arg4);
 extern void func_1507CD64(struct127 *arg0, s32 arg1);
+extern void func_1504715C(f32 *arg0, struct127 *arg1);
+extern void func_1514B364(f32 *arg0, f32 *arg1, s32 arg2, s32 arg3);
+extern s32 func_1518D1C0(struct127 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, u8 *arg6);
+extern u8 D_800A8244[];
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15193CA0.s")
@@ -128,11 +132,26 @@ s32 func_15194D80(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return func_15194FF4(arg0, arg1, 0, arg3);
 }
 
-s32 func_15194DA4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+s32 func_15194DA4(arg0, arg1, arg2, arg3)
+s32 arg0;
+s32 arg1;
+s32 arg2;
+s32 arg3;
+{
     return func_15194FF4(arg0, arg1, 1, arg3);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194DC8.s")
+void func_15194DC8(s32 arg0, struct127 *arg1, s32 arg2) {
+    f32 sp2C[9];
+
+    if (D_800BE616 != 0) {
+        func_15194DA4(arg0, (s32)arg1, arg2);
+    } else {
+        func_1518D1C0(arg1, 0xB, 0, 1, 0xFF, 1, D_800A8244);
+    }
+    func_1504715C(sp2C, arg1);
+    func_1514B364(&arg1->x_position, sp2C, 0xFF, 1);
+}
 
 extern void func_150B06B0(s32, s32, s32, s32);
 
