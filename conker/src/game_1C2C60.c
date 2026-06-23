@@ -509,7 +509,15 @@ void func_15199980(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519B4B8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519BE1C.s")
+void func_1519BE1C(struct17 *arg0, struct17 *arg1, f32 arg2, f32 arg3) {
+    struct17 sp4;
+
+    sp4 = *arg1;
+    arg1->unk4 += arg2 * arg3;
+    arg0->unk0 += sp4.unk0 * arg3;
+    arg0->unk4 += (sp4.unk4 * arg3) + (0.5f * arg2 * arg3 * arg3);
+    arg0->unk8 += sp4.unk8 * arg3;
+}
 
 void func_1519BEB8(u8 *arg0) {
     u8 *q;
