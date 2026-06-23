@@ -98,7 +98,9 @@ def active():
         if os.path.exists(log):
             try:
                 txt = open(log).read()
-                scores = [int(x) for x in re.findall(r'SCORE:\s*(\d+)', txt)]
+                # ONLY iter_match's own output (line ends in the number); the match prompt
+                # contains "SCORE: 0 -> ..." text that must NOT be counted as a real score.
+                scores = [int(x) for x in re.findall(r'(?m)SCORE: (\d+)\s*$', txt)]
                 mtime = os.path.getmtime(log)
             except Exception:
                 pass

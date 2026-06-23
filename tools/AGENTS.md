@@ -32,9 +32,12 @@ The matching now runs on **Codex** (zero Claude tokens), via a shell mirror of t
   similar matched functions' C → `/tmp/ref_`, `/tmp/ref2_`, `/tmp/ref3_<func>.c`, AND an m2c structural draft →
   `/tmp/m2c_<func>.c` (best-effort `--context`, falls back to raw). Prompts use refs for style + m2c for structure,
   with guardrails (never copy verbatim; m2c types are guesses). Both engines benefit since both call similar_chunk.
-- **RETENTION:** harvest best-C when `score ≤ 80 OR ≤ ½ instr count` (size-fair). Every attempt is logged to
-  `tools/attempts.tsv` (func,file,best_score,size) — committed + pushed. `.nearmiss/*.json` best-C seeds are
-  tracked + backed up. Permuter `import_new` keeps its ≤80 filter (no wasted CPU on uncrackable seeds).
+- **RETENTION (deterministic, via iter_match's tracked best):** `iter_match.sh` tracks the per-func running-best,
+  prints `BEST: M` to the agent (so it sees regression), and snapshots the best-C to `/tmp/bestc_<func>.c`. The
+  orchestrator harvests `.nearmiss` from that snapshot via `harvest_nearmiss.py` (keep-best) when `score ≤ 80 OR
+  ≤ ½ instr count` — NOT from codex self-report (which drifted to over-run versions) or the log (prompt-polluted).
+  `attempts.tsv` best-score also reads `/tmp/best_<func>.score`. `.nearmiss/*.json` tracked + backed up; permuter
+  `import_new` keeps its ≤80 filter.
 - **RE-ATTEMPT (ACTIVE — m2c validated +18% on run 18):** `rm /tmp/orchestrator_attempted_*.txt` re-opens every
   still-stubbed function (safe — only stubs re-open). `similar_chunk.py` then prioritizes **near-miss funcs first,
   lowest prior score first** (closest), and seeds each with its OWN best-C at `/tmp/prev_<func>.c` (#1) on top of

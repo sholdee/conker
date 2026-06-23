@@ -33,7 +33,7 @@ HARD RULES (a violation corrupts the shared build tree):
 
 WHEN DONE:
 - SCORE: 0 -> YOU ARE FINISHED. STOP IMMEDIATELY: run NO further commands, make NO further edits, do NOT "verify" or "clean up". The instant iter_match prints SCORE: 0 the match is already captured for you; ANY further edit risks moving away from it and losing the match. Just stop.
-- Cannot reach 0 -> FIRST, if your best SCORE was <= 80 OR <= half the instruction count of the target .s (a structurally-close attempt worth keeping for later), write the best-scoring C to $REPO/.nearmiss/$1.json as JSON with keys func,file,score,c (use python3 -c with json.dump) -- but ONLY if that file does not already exist or its stored "score" is HIGHER than yours (keep-the-best: never replace a better prior attempt with a worse one). THEN revert: make $REPO/conker/src/$2.c contain exactly the original stub line  #pragma GLOBAL_ASM("asm/nonmatchings/$2/$1.s")  again. Leaving non-matching C breaks the build; reverting on failure is MANDATORY.
+- Cannot reach 0 -> revert: make $REPO/conker/src/$2.c contain exactly the original stub line  #pragma GLOBAL_ASM("asm/nonmatchings/$2/$1.s")  again. Leaving non-matching C breaks the build; reverting on failure is MANDATORY. (Your BEST attempt is captured automatically by iter_match -- you do NOT need to save it anywhere. Watch the "BEST:" line: once you hit it, do not edit away from it.)
 EOF
 }
 
@@ -59,7 +59,7 @@ for c in json.load(sys.stdin): print(c['func'], c['file'])" > /tmp/codex_chunk.t
   echo "round $r: $(wc -l < /tmp/codex_chunk.txt) candidates"
 
   echo "=== round $r: MATCH (codex exec --full-auto, parallel, distinct files) ==="
-  rm -f /tmp/match_func_*.c   # clear stale; only THIS round's score-0 snapshots will exist
+  rm -f /tmp/match_func_*.c /tmp/best_func_*.score /tmp/bestc_func_*.c   # clear per-round best-tracking
   while read -r func file; do
     match_prompt "$func" "$file" > "/tmp/codexp_${func}.txt"
     ( timeout 2400 codex exec --full-auto --cd "$REPO" "$(cat /tmp/codexp_${func}.txt)" \
@@ -79,11 +79,20 @@ for c in json.load(sys.stdin): print(c['func'], c['file'])" > /tmp/codex_chunk.t
   pairs=$(awk '{print $2" "$1}' /tmp/codex_chunk.txt | tr '\n' ' ')
   CONKER_REPO="$REPO" python3 tools/integrate.py $pairs
 
-  # durable provenance: record best score + size for EVERY attempt this round
+  # provenance + deterministic near-miss harvest, from iter_match's TRACKED best (not the codex log,
+  # which is polluted by the prompt's "SCORE: 0" text; not codex self-report, which drifts on over-run).
   while read -r func file; do
-    best=$(grep -oE 'SCORE: [0-9]+' "/tmp/codexm_${func}.log" 2>/dev/null | grep -oE '[0-9]+' | sort -n | head -1)
+    best=$(cat "/tmp/best_${func}.score" 2>/dev/null || echo NA)
     size=$(grep -cE '^\s+/\*' "$REPO/conker/asm/nonmatchings/${file}/${func}.s" 2>/dev/null)
     printf '%s\t%s\t%s\t%s\n' "$func" "$file" "${best:-NA}" "${size:-NA}" >> "$REPO/tools/attempts.tsv"
+    # harvest .nearmiss from the best-C IF still a stub (uncommitted), structurally close, keep-best
+    if [ "${best:-NA}" != NA ] && [ -f "/tmp/bestc_${func}.c" ] \
+       && grep -q "GLOBAL_ASM(\"asm/nonmatchings/${file}/${func}\.s\")" "$REPO/conker/src/${file}.c" 2>/dev/null; then
+      half=$(( ${size:-0} / 2 ))
+      if [ "$best" -le 80 ] 2>/dev/null || { [ "$half" -gt 0 ] && [ "$best" -le "$half" ] 2>/dev/null; }; then
+        CONKER_REPO="$REPO" python3 tools/harvest_nearmiss.py "$func" "$file" "$best" "/tmp/bestc_${func}.c" 2>/dev/null
+      fi
+    fi
   done < /tmp/codex_chunk.txt
 done
 

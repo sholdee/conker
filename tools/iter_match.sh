@@ -30,6 +30,16 @@ diff=$(python3 ../tools/asm-differ/diff.py -o "$func" 2>&1)
 score=$(echo "$diff" | grep -oE "CURRENT \(([0-9]+)\)" | grep -oE "[0-9]+" | head -1)
 echo "$diff"
 echo "SCORE: ${score:-unknown}"
-# Capture the matching source the INSTANT it hits 0, so a later over-running edit
-# can't destroy the match — the orchestrator restores from this snapshot before integrate.
-[ "${score:-x}" = "0" ] && cp "src/${file}.c" "/tmp/match_${func}.c" 2>/dev/null
+# Track the running-best deterministically: report it to the agent + snapshot the best-C (harvest
+# source) and the score-0 source (integrate restore source). Defeats codex over-running past its
+# best or mis-reporting it. Per-attempt state is cleared by the orchestrator at round start.
+if [ -n "${score:-}" ] && [ "$score" != "unknown" ]; then
+  bf="/tmp/best_${func}.score"
+  best=$(cat "$bf" 2>/dev/null || echo 999999)
+  if [ "$score" -lt "$best" ] 2>/dev/null; then
+    echo "$score" > "$bf"; best="$score"
+    cp "src/${file}.c" "/tmp/bestc_${func}.c" 2>/dev/null     # best-C so far (for .nearmiss harvest)
+  fi
+  echo "BEST: $best  (your lowest score so far -- do NOT edit away from it)"
+  [ "$score" = "0" ] && cp "src/${file}.c" "/tmp/match_${func}.c" 2>/dev/null   # score-0 = integrate restore
+fi
