@@ -137,7 +137,43 @@ void func_1503192C(struct127 *arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_1503195C.s")
+struct S1503195C {
+    u8 unk0;
+    u8 pad1[5];
+    u8 unk6;
+    u8 pad7[0x4D];
+    struct S1503195C *unk54;
+};
+
+struct126 *func_1503195C(struct127 *arg0, s32 arg1, s32 arg2) {
+    s32 key;
+    struct S1503195C *var;
+    struct S1503195C *next;
+
+    key = arg0->unique_id;
+    if (key == 0) {
+        return 0;
+    }
+
+    var = (struct S1503195C *)D_800C3EE0;
+    if (var != 0) {
+        do {
+            next = var->unk54;
+            if ((key == var->unk0) && (arg1 == var->unk6)) {
+                if (arg2 != 0) {
+                    arg2 -= 1;
+                    var = next;
+                } else {
+                    arg2 -= 1;
+                    return (struct126 *)var;
+                }
+            } else {
+                var = next;
+            }
+        } while (var != 0);
+    }
+    return 0;
+}
 
 struct S150319CC {
     u8 unk0;

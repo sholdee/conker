@@ -9,6 +9,7 @@ void *func_1507E9F8(void *, s32 *);
 s32 func_150302F0(void *, s32);
 void func_1507EA44(void *, s32, s32);
 extern struct124 *D_800D1C90[];
+extern f32 D_8009B8A0;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507E2B0.s")
 
@@ -147,7 +148,16 @@ void *func_1507E9F8(void *arg0, s32 *arg1) {
     return (void *)0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AB760/func_1507EA44.s")
+void func_1507EA44(void *arg0, s32 arg1, s32 arg2) {
+    u8 *temp;
+
+    if (arg1 != 0) {
+        temp = func_1507E9F8(arg0, 0);
+        if (temp != 0) {
+            func_15083568(arg0, temp[arg1 - 1], (f32)arg2 * D_8009B8A0, 0);
+        }
+    }
+}
 
 extern void func_1507E7E4(void *, s32, s32, s32, s32);
 

@@ -2,6 +2,8 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_80099A28;
+struct225 *func_151602C0(Header *, Header2 *, s32, s32, s32, s32, s32, s32, s32, s32, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506A5F0.s")
 
@@ -46,7 +48,34 @@ s32 func_1506A83C(s32 arg0, s32 arg1) {
     return func_151BC104(arg0, 0xFF, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506A864.s")
+void func_1506A864(struct127 *arg0, s32 arg1) {
+    struct225 *temp_v0;
+    Header header;
+    struct {
+        f32 unk0;
+        f32 unk4;
+        f32 unk8;
+        f32 unkC;
+    } sp44;
+    Header2 header2;
+
+    header2.unk0 = (s32)arg0->x_position;
+    header2.unk4 = (s32)(arg0->y_position + 50.0f);
+    header2.unk8 = (s32)arg0->z_position;
+    sp44.unk0 = 0.0f;
+    sp44.unk8 = 0.0f;
+    header.unk0 = 2;
+    header.unk1 = 0xF;
+    header.unk2 = 0x12C;
+    header.unk4 = 5;
+    sp44.unk4 = 80.0f;
+    sp44.unkC = D_80099A28;
+
+    temp_v0 = func_151602C0(&header, &header2, 0, 0xFF, 0xFF, 0x5A, 0xFF, 0, 0x10, 0xFF, 1);
+    if (temp_v0 != NULL) {
+        memcpy(&temp_v0->unk18, &sp44, 0x10);
+    }
+}
 
 void func_1506A968(struct127 *arg0, s32 arg1) {
     f32 sp2C[3];

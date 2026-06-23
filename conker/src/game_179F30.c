@@ -47,6 +47,10 @@ extern f32 D_800A5E18;
 extern f32 D_800A5E1C;
 extern f32 D_800A5E58;
 extern f32 D_800A5E5C;
+extern f32 D_800A5DE4;
+extern f32 D_800A5DE8;
+extern f32 D_800A5DEC;
+extern f32 D_800A5DF0;
 extern Vec3w1514F308 D_800A5970;
 extern Vec3w1514F308 D_800A597C;
 extern u8 D_800A5958;
@@ -63,6 +67,8 @@ void func_151BC074(s32);
 void func_151BD2F8(void *, s32, s32);
 void func_151B9F00(void *, s32, s32);
 void func_150C0AC0(Struct1514F5CCArg *, s32, s32);
+s32 func_150C5370(void *, s32);
+s32 func_1514EC1C(s32, s32, s16);
 extern void *func_15155FD4(s32);
 extern void *func_15155780(s32, s32);
 s32 func_1514CA80(struct127 *, s32 *, s32 *, s32 *);
@@ -277,7 +283,58 @@ s32 func_1514D4B8(s16 arg0, s16 arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514D564.s")
+typedef struct Struct1514D564Payload {
+    struct127 *unk0;
+    u8 unk4;
+    s8 unk5;
+    u8 pad6[2];
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+} Struct1514D564Payload;
+
+typedef struct Struct1514D564Desc {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    s8 unk18;
+    u8 pad19[3];
+    f32 unk1C;
+    s8 unk20;
+    u8 pad21[3];
+} Struct1514D564Desc;
+
+void func_1514D564(struct127 *arg0) {
+    Struct1514D564Desc sp34;
+    s32 temp_v0;
+    Struct1514D564Payload sp1C;
+    register f32 neg;
+
+    neg = -180.0f;
+    sp1C.unk0 = arg0;
+    sp1C.unk4 = arg0->unique_id;
+    sp1C.unk8 = 0.0f;
+    sp1C.unkC = neg;
+    sp1C.unk10 = 77.0f;
+    sp34.unk0 = D_800A5DE4;
+    sp34.unk4 = D_800A5DE8;
+    sp34.unk8 = D_800A5DEC;
+    sp1C.unk5 = 6;
+    sp34.unk18 = 1;
+    sp34.unkC = arg0->x_position;
+    sp34.unk10 = arg0->y_position;
+    sp34.unk14 = arg0->z_position;
+    sp34.unk20 = 1;
+    sp34.unk1C = D_800A5DF0;
+    temp_v0 = func_150C5370(&sp34, 0x14);
+    if (temp_v0 != 0) {
+        memcpy((void *)(temp_v0 + 0xC8), &sp1C, 0x14);
+        func_1514EC1C(temp_v0, (s32) arg0, 0x15);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514D64C.s")
 
