@@ -63,6 +63,7 @@ void func_151E2404(void);
 void func_151E3344(s32, s32, s32, s32, s32);
 void func_151E6964(s32);
 void func_151E530C(void);
+void func_151E557C(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151DD970.s")
 
@@ -282,7 +283,15 @@ void func_151E4DD8(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E4E00.s")
+void func_151E4E00(void) {
+    D_8008FDCC = 0;
+    func_151E557C();
+    D_800E0B94 = 3;
+    D_8008FDA4 = 0;
+    D_8008FD80 = 0;
+    D_800D2E40 = 0;
+    func_1501C730(6, 0x1D, 0, 0, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E4E64.s")
 

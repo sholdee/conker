@@ -7,7 +7,22 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F21D0/func_150C4E9C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F21D0/func_150C522C.s")
+extern s32 *D_800D98D0[];
+
+void func_150C522C(void) {
+    s32 i;
+    s32 v;
+
+    i = 0;
+    do {
+        v = (s32)D_800D98D0[i];
+        if (v != 0) {
+            func_1516972C((struct102 *)v);
+        }
+        i++;
+        D_800D98D0[i - 1] = 0;
+    } while ((s32 **)&D_800D98E0 != &D_800D98D0[i]);
+}
 
 extern u8 D_800C35E8;
 

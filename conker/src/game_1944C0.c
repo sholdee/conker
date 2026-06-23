@@ -5,6 +5,8 @@
 
 extern void (*D_8008CA20[])(struct102 *);
 extern void (*D_8008C9C8[])(struct102 *);
+extern void (*D_8008CB64)(void);
+extern void (*D_8008CB70)(void);
 
 struct Some15171F04 {
     u8 pad0[4];
@@ -33,7 +35,20 @@ void func_15169070(s32, s32, s32, u8);
 //     }
 // }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_1516706C.s")
+void func_1516706C(void) {
+    void (**funcp)(void);
+    void (**end)(void);
+    void (*func)(void);
+
+    funcp = &D_8008CB64; end = &D_8008CB70;
+    do {
+        func = *funcp;
+        if (func != NULL) {
+            func();
+        }
+        funcp++;
+    } while (funcp != end);
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_151670C0.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_151671E8.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167310.s")

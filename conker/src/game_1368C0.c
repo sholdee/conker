@@ -200,7 +200,42 @@ void func_15109C20(struct Arg15109C20 *arg0, struct Vec3F15109C20 *arg1, s32 arg
     func_15132A4C(&sp20, 3, 0xFF, 0, arg0->unkC, arg0->unk1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1368C0/func_15109ED4.s")
+struct260 *func_15109ED4(void *arg0, s16 arg1, s8 arg2, s8 arg3, f32 arg4, s32 arg5, u8 arg6, s32 arg7) {
+    struct260 *temp_v0;
+    struct {
+        void *unk0;
+        f32 unk4;
+        f32 unk8;
+        u8 unkC;
+        u8 unkD;
+    } sp34;
+    s16 sp44;
+    u8 sp40;
+
+    if (arg0 == NULL) {
+        return NULL;
+    }
+
+    sp40 = 0;
+    if (arg1 < 0) {
+        sp44 = 0x12C;
+    } else {
+        sp40 = 1;
+        sp44 = (s16)arg1;
+    }
+
+    sp34.unk4 = 0.0f;
+    sp34.unk8 = arg4;
+    sp34.unkC = arg2;
+    sp34.unkD = arg3;
+    sp34.unk0 = arg0;
+
+    temp_v0 = func_15149130(sp44, -1, 0x1B, -1, sp40, 0x1B, (struct37 *)((s32)arg5 + 0x10), arg6, arg7);
+    if (temp_v0 != NULL) {
+        memcpy((void *)((s32)temp_v0 + 0x28), &sp34, 0x10);
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1368C0/func_15109FB8.s")
 

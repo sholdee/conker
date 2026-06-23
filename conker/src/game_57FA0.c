@@ -202,7 +202,32 @@ s32 func_1502B7F0(s32 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     return sp38;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_57FA0/func_1502B8E0.s")
+s32 func_1502B8E0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    u8 *offset;
+    s32 *tmp;
+    s32 n;
+    s32 more;
+    s32 sp34;
+
+    more = 1;
+    offset = &D_AB1950;
+    tmp = &arg2 + 1;
+
+    for (; arg2 != 0; arg2--) {
+        tmp = (s32 *)(((s32)tmp + 3) & -4) + 1;
+        n = *(tmp - 1);
+        if (more != 0) {
+            offset += func_1502AC88(offset, n, &sp34);
+        }
+        more = sp34 & 0xFFFFFFF;
+    }
+
+    if (more != 0) {
+        more = func_1502B224(offset, arg0, sp34, arg1);
+    }
+
+    return more;
+}
 
 s32 func_1502B9B4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     u8 *offset;

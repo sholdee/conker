@@ -4,6 +4,8 @@
 
 extern s32 (*D_8008FAF0[])(void *, void *, s32);
 extern s32 (*D_8008FAF8[])(void *);
+extern void *func_15167A68(s32, s32, s32, s32, u8, s32);
+extern f32 D_800AA390;
 extern f32 D_800AA3AC;
 
 typedef struct {
@@ -36,7 +38,38 @@ typedef struct {
     Struct151B3F28Inner *unk150;
 } Struct151B3F28;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E0560/func_151B30B0.s")
+typedef struct {
+    u8 pad0[0x10];
+    u8 unk10;
+    u8 pad11[0x27];
+    f32 unk38;
+    u8 pad3C[0xFC];
+    f32 unk138;
+    s32 unk13C;
+    u8 unk140[0x10];
+} Struct151B30B0;
+
+void *func_151B30B0(s32 arg0, f32 arg1, s32 arg2, u8 arg3, s32 arg4) {
+    Struct151B30B0 *temp_v0;
+    Struct151B30B0 *sp24;
+    f32 temp_f0;
+    f32 temp_f2;
+
+    temp_v0 = func_15167A68(0x33, arg4, arg2 + 0x150, 1, arg3, 1);
+    if (temp_v0 == 0) {
+        return NULL;
+    }
+
+    sp24 = temp_v0;
+    memcpy(&temp_v0->unk10, (void *)arg0, 0x38);
+    temp_f0 = temp_v0->unk38;
+    temp_v0->unk10 |= 0xE;
+    temp_f2 = (temp_f0 * temp_f0) / D_800AA390;
+    temp_v0->unk138 = temp_f2 + temp_f2;
+    temp_v0->unk13C = (s32)(temp_f0 * arg1 * 4096.0f);
+    bzero(temp_v0->unk140, 0x10);
+    return sp24;
+}
 
 void func_151B3184(Struct151B3184 *arg0) {
     s32 temp;
