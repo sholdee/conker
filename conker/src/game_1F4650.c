@@ -587,7 +587,18 @@ s32 func_151CC77C(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CCD1C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CCE94.s")
+void func_151CCE94(void *arg0) {
+    void *temp_v0;
+    void *sp28;
+
+    if (D_800BE616 != 0) {
+        sp28 = arg0;
+        temp_v0 = func_151A4FD0(0, 0, 0, 0xFF, 0, *(u8 *)((s32)arg0 + 0x23D), 1, 4);
+        if (temp_v0 != NULL) {
+            memcpy((void *)((s32)temp_v0 + 0x20), &sp28, 4);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CCF08.s")
 
