@@ -7,6 +7,23 @@
 
 typedef void (*Callback_151416E8)(void *, s32, u8);
 extern Callback_151416E8 D_8008A02C[];
+void func_150A7960(f32 *arg0, f32 arg1, s32 arg2, f32 arg3, f32 *arg4, f32 *arg5, f32 *arg6);
+
+struct conk14182C_pos {
+    f32 x;
+    f32 y;
+    f32 z;
+};
+
+struct conk14182C {
+    u8 pad0[0x34];
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+    f32 unk40;
+    f32 unk44;
+    f32 unk48;
+};
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16DC80/func_151407D0.s")
@@ -159,7 +176,24 @@ s32 func_15141818(s32 arg0, s32 arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16DC80/func_1514182C.s")
+f32 func_1514182C(void *arg0, void *arg1, s32 arg2, f32 arg3, f32 arg4, f32 arg5) {
+    register f32 temp_f14;
+    register f32 temp_f16;
+    register f32 temp_f18;
+    f32 sp34[4][4];
+
+    func_150A8050(sp34, arg4, 0.0f, arg5);
+    sp34[3][0] = ((struct conk14182C_pos *)arg1)->x;
+    sp34[3][1] = ((struct conk14182C_pos *)arg1)->y;
+    sp34[3][2] = ((struct conk14182C_pos *)arg1)->z;
+    func_150A7960(&sp34[0][0], 0.0f, arg2, 0.0f, &((struct conk14182C *)arg0)->unk34, &((struct conk14182C *)arg0)->unk38, &((struct conk14182C *)arg0)->unk3C);
+    temp_f14 = (((struct conk14182C *)arg0)->unk34 - ((struct conk14182C_pos *)arg1)->x) * arg3;
+    temp_f16 = (((struct conk14182C *)arg0)->unk38 - ((struct conk14182C_pos *)arg1)->y) * arg3;
+    temp_f18 = (((struct conk14182C *)arg0)->unk3C - ((struct conk14182C_pos *)arg1)->z) * arg3;
+    ((struct conk14182C *)arg0)->unk40 = ((struct conk14182C *)arg0)->unk34 + (temp_f14 * 500.0f);
+    ((struct conk14182C *)arg0)->unk44 = ((struct conk14182C *)arg0)->unk38 + (temp_f16 * 500.0f);
+    ((struct conk14182C *)arg0)->unk48 = ((struct conk14182C *)arg0)->unk3C + (temp_f18 * 500.0f);
+}
 // f32 func_1514182C(void *arg0, void *arg1, s32 arg2, f32 arg3, s32 arg4, s32 arg5) {
 //     f32 sp6C;
 //     f32 sp68;
