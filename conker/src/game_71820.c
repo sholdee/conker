@@ -23,6 +23,7 @@ extern f32 D_80098D60;
 extern f32 D_80098D64;
 extern f32 D_80098D68;
 extern f32 sqrtf(f32);
+s32 func_15044964(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 
 #pragma function sqrtf
 
@@ -59,7 +60,42 @@ void func_15044658(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044660.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_150448D0.s")
+struct conker150448D0 {
+    struct conker150448D0 *next;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    u8 unkC;
+    u8 unkD;
+    u8 unkE;
+    u8 padF;
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    u8 unk16;
+    u8 pad17;
+    s32 unk18;
+    s32 unk1C;
+};
+
+struct conker150448D0 *func_150448D0(
+    s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8
+) {
+    struct conker150448D0 *ret;
+
+    ret = (struct conker150448D0 *)func_15044964(0x20, 1, arg0, arg1, arg2, 0, 0, 0);
+    if (ret == 0) {
+        return 0;
+    }
+    ret->unk10 = arg3;
+    ret->unk12 = arg4;
+    ret->unk14 = arg5;
+    ret->unk16 = arg6;
+    ret->unk18 = arg7;
+    ret->unk1C = arg8;
+    return ret;
+}
 
 s32 func_15044964(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
     struct conker15044A28 *node;

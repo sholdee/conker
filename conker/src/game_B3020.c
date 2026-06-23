@@ -447,7 +447,16 @@ s32 func_1508868C(s32 arg0) {
     return -1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15088780.s")
+void func_15088780(void) {
+    s32 func_1508855C();
+    s32 temp_v0;
+
+    if (D_800872A0 != 0) {
+        temp_v0 = func_1508855C();
+        D_800872A0[temp_v0 * 0x84 + 0x31] = 0;
+        D_800D2394 &= ~(1 << (temp_v0 - D_800D2398));
+    }
+}
 
 extern u8 *D_800872A0;
 

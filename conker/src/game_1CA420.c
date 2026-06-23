@@ -235,7 +235,52 @@ s32 func_1519D030(void *arg0, s32 arg1, s16 arg2, u8 arg3, u8 arg4, s32 arg5) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519D9F4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E1F4.s")
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+    u8 pad5[0x47];
+    u8 unk4C;
+} SubA_1519E1F4;
+
+typedef struct {
+    union {
+        s32 w0;
+        u8 b0;
+    } u0;
+    union {
+        s32 w4;
+        u8 b4;
+    } u4;
+    u8 unk8;
+    u8 unk9;
+} ArgB_1519E1F4;
+
+void func_1519E1F4(struct s_1519CFA0 *arg0, s32 arg1, u8 arg2) {
+    SubA_1519E1F4 *temp_v0 = (SubA_1519E1F4 *)arg0->unk98;
+    ArgB_1519E1F4 *b = (ArgB_1519E1F4 *)arg1;
+
+    if (arg2 == 0) {
+        if ((b->u0.w0 == temp_v0->unk0) || (b->u4.b4 == temp_v0->unk4)) {
+            func_1519CFA0(arg0);
+        }
+    } else if (arg2 == 6) {
+        if (temp_v0->unk4C == b->u0.b0) {
+            func_1519CFA0(arg0);
+        }
+    } else if (arg2 == 7) {
+        if ((b->u0.w0 == temp_v0->unk0) || (b->u4.b4 == temp_v0->unk4)) {
+            func_1519CFA0(arg0);
+        }
+    } else if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->u0.w0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else if (temp_v0->unk0 == b->u4.w4) {
+            temp_v0->unk0 = b->u0.w0;
+            temp_v0->unk4 = b->unk8;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E304.s")
 

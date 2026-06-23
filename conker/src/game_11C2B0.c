@@ -17,6 +17,8 @@ extern f32 D_800A1830;
 extern f32 D_800A1834;
 extern f32 D_800A1870;
 extern f32 D_800A1874;
+extern u8 D_800A1674;
+extern u8 D_800A1680;
 extern f32 sinf(f32);
 
 typedef struct {
@@ -55,6 +57,7 @@ void *func_150EEF80(struct_150EEE00_arg0 *, u8, u8, s32);
 void func_15143134(void *, void *, s32);
 void *func_151407D0(void *, s32, void *, s32, s32, s32, s32, s32, s32, s32);
 void func_151602C0(Header *, Header2 *, s32, s32, s32, s32, s32, s32, s32, u8, s32);
+s32 func_15160A58(s32, s32, void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
 void func_150F0A24(f32 *);
 
 void func_150EEE00(struct_150EEE00_arg0 *arg0, u8 arg1) {
@@ -527,7 +530,10 @@ void func_150F088C(struct260 *arg0, s32 arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F0938.s")
+void func_150F0938(s32 arg0) {
+    func_15160A58(arg0, 0x25, &D_800A1674, 2, 0x12C, 4, 0, 0xFF, 0, 0xFF, 0, -1, 0, 0, 0xFF, 1);
+    func_15160A58(arg0, 2, &D_800A1680, 2, 0x12C, 0xD, 0xFF, 0xFF, 0xFF, 0xFF, 0, -1, 0, 0, 0xFF, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F0A24.s")
 

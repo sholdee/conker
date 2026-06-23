@@ -10,6 +10,10 @@ extern s16 D_800DD1C0;
 extern s16 D_800DD1C2;
 extern s16 D_800DD1C4;
 extern s16 D_800DD1C6;
+extern s16 D_800DD1C8;
+extern s16 D_800DD1CA;
+extern s16 D_800DD1CC;
+extern s16 D_800DD1CE;
 extern s16 D_800DD204;
 extern s16 D_800DD206;
 
@@ -323,7 +327,24 @@ f32 func_15142B44(f32 arg0) {
     return ((arg0 + 1.0f) * (arg0 - 1.0f) * arg0) * D_800A5628;
 }
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142B7C.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142C10.s")
+Gfx *func_15142C10(Gfx *gfx, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 *arg5) {
+    if ((arg1 != (&D_800DD1C8)[0]) || (arg2 != D_800DD1CA) || (arg3 != D_800DD1CC) ||
+        (arg4 != D_800DD1CE)) {
+        if (*arg5 == 1) {
+            gDPPipeSync(gfx++);
+            *arg5 = 0;
+        }
+
+        gDPSetEnvColor(gfx++, arg1, arg2, arg3, arg4);
+
+        (&D_800DD1C8)[0] = arg1;
+        D_800DD1CA = arg2;
+        D_800DD1CC = arg3;
+        D_800DD1CE = arg4;
+    }
+
+    return gfx;
+}
 Gfx *func_15142CF0(Gfx *gfx, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, u8 *arg7) {
     if ((arg1 != (&D_800DD204)[0]) || (arg2 != D_800DD206) || (arg3 != D_800DD1C0) ||
         (arg4 != D_800DD1C2) || (arg5 != D_800DD1C4) || (arg6 != D_800DD1C6)) {

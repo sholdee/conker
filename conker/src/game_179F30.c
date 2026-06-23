@@ -26,12 +26,25 @@ typedef struct Vec3w1514F308 {
     s32 unk8;
 } Vec3w1514F308;
 
+typedef struct Struct1514F5CCArg {
+    s32 unk00;
+    f32 unk04;
+    struct127 *unk08;
+    u8 unk0C;
+    u8 pad0D[3];
+    f32 unk10;
+    s16 unk14;
+    s16 unk16;
+    u8 unk18;
+} Struct1514F5CCArg;
+
 extern struct_1514EBA4 *func_15167A68(s32, s32, s32, s32, s32, s32);
 extern f32 D_800A5E08;
 extern f32 D_800A5E0C;
 extern f32 D_800A5E10;
 extern f32 D_800A5E14;
 extern f32 D_800A5E58;
+extern f32 D_800A5E5C;
 extern Vec3w1514F308 D_800A5970;
 extern Vec3w1514F308 D_800A597C;
 extern u8 D_800A5958;
@@ -47,6 +60,7 @@ void func_151BB044(s32);
 void func_151BC074(s32);
 void func_151BD2F8(void *, s32, s32);
 void func_151B9F00(void *, s32, s32);
+void func_150C0AC0(Struct1514F5CCArg *, s32, s32);
 extern void *func_15155FD4(s32);
 extern void *func_15155780(s32, s32);
 s32 func_1514CA80(struct127 *, s32 *, s32 *, s32 *);
@@ -996,4 +1010,16 @@ void func_1514F590(struct127 *arg0) {
     func_15011A78(arg0, 0xFF, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F5CC.s")
+void func_1514F5CC(struct127 *arg0) {
+    Struct1514F5CCArg sp1C;
+
+    sp1C.unk00 = 0;
+    sp1C.unk08 = arg0;
+    sp1C.unk04 = 0.0f;
+    sp1C.unk0C = arg0->unique_id;
+    sp1C.unk10 = D_800A5E5C;
+    sp1C.unk14 = 0x14;
+    sp1C.unk16 = 0x12C;
+    sp1C.unk18 = 4;
+    func_150C0AC0(&sp1C, 0xFF, 1);
+}
