@@ -122,7 +122,30 @@ void func_1518E4F8(void *arg0) {
     func_15169824(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518E524.s")
+void func_1518E524(u8 *arg0, u8 *arg1, u8 *arg2, u8 *arg3, u8 *arg4, u8 *arg5, s16 *arg6) {
+    s32 temp;
+
+    *arg1 = 2;
+    if (func_150ADA20() & 1) {
+        *arg1 |= 1;
+    }
+
+    temp = func_150ADA20() & 1;
+    switch (temp) {
+    case 0:
+        *arg0 = 0x13;
+        break;
+    case 1:
+        *arg0 = 0x14;
+        break;
+    }
+
+    *arg2 = 0;
+    *arg3 = 0;
+    *arg4 = 0;
+    *arg5 = 0xFF;
+    *arg6 = 0x301;
+}
 
 extern u8 func_150ADA20(void);
 extern void func_151429E0(u8, s32, s32, s32);
