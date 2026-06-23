@@ -8,10 +8,12 @@ void func_1519CDB0(s32, f32, s32);
 
 s32 func_15195DD4(s32, s32, s32, s32, s32, s32, s32);
 s32 func_151422C0();
+struct225 *func_151602C0(Header *, Header2 *, s32, s32, s32, s32, u8, u8, s32, u8, s32);
 
 extern char D_800A8A40[];
 extern char D_800A8A48[];
 extern f32 D_800A8AA8;
+extern f32 D_800A8AF8;
 
 extern s32 D_800E08E0;
 extern s32 D_800E08E4;
@@ -622,7 +624,48 @@ void func_1519C06C(u8 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C09C.s")
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+} Struct1519C09CData;
+
+struct225 *func_1519C09C(s32 arg0, f32 *arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6, s32 arg7) {
+    struct225 *temp_v0;
+    Header header;
+    Header2 header2;
+    s32 sp5C;
+    Struct1519C09CData data;
+
+    data.unk0 = 35.0f;
+    data.unk4 = 5.0f;
+    sp5C = arg0;
+    header.unk0 = 2;
+    header.unk1 = 2;
+    header.unk2 = 0x12C;
+    header.unk4 = 0x22;
+    data.unk8 = 110.0f;
+    data.unkC = 1.0f;
+    data.unk10 = 0.0f;
+    data.unk14 = 7.0f;
+    data.unk18 = D_800A8AF8;
+    data.unk1C = 127.0f;
+    header2.unk0 = arg1[0];
+    header2.unk4 = arg1[1];
+    header2.unk8 = arg1[2];
+
+    temp_v0 = func_151602C0(&header, &header2, arg2, arg3, arg4, arg5, 0xFF, 0, 0x24, arg6, arg7);
+    if (temp_v0 != NULL) {
+        memcpy((u8 *)temp_v0 + 0x18, &data, sizeof(data));
+        memcpy((u8 *)temp_v0 + 0x38, &sp5C, sizeof(sp5C));
+    }
+    return temp_v0;
+}
 
 void func_1519C258(s32);
 void func_151617C4(s32);

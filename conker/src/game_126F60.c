@@ -54,7 +54,28 @@ void func_150FA468(struct102 *arg0, s32 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FA520.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FAA40.s")
+void func_150FAA40(u8 arg0, s32 arg1) {
+    struct {
+        s32 unk0;
+        s32 unk4;
+        f32 unk8;
+    } sp3C;
+    struct260 *temp_v0;
+
+    if (D_80088B60 == 0) {
+        sp3C.unk0 = *(s32 *)&D_800D3098 + 0x71C;
+        sp3C.unk4 = *(s32 *)&D_800D3098 + 0x6E8;
+        sp3C.unk8 = 0.0f;
+
+        temp_v0 = func_15149130(0x12C, -1, 0x57, -1, 0, 0x46, (struct37 *)0xC, arg0, arg1);
+        if (temp_v0 != NULL) {
+            D_80088B60 = 1;
+        }
+        if (temp_v0 != NULL) {
+            memcpy((void *)((s32)temp_v0 + 0x28), &sp3C, 0xC);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FAAEC.s")
 
