@@ -1247,3 +1247,5 @@ Special empty-guard case:
 - Scalar equality-backedge loop: for target `li bound; ...; addiu i,1; bnel i,bound,top`,
   write `for (i=0, limit=N; i != limit; ) { ...; i++; }` / `do{}while(i != count)`, not `< N`.
 - Volatile scalar PARAM reloads: when target reloads a homed/stack arg (`lw`/`lh off(sp)`) and `&arg` adds unwanted address arithmetic, type only that param `volatile s32`/`volatile s16`; plain uses force the stack reloads without a pointer temp.
+- Branch-delay copy before a split clamp: for `slti; bnez low; move copy,src`, write
+  `copy = src; if (copy >= K) { src = C; copy = src - copy; ... } else { copy = src << n; ... }`. Direct `C-copy` hoists `li C`; low-arm `copy` use can fill the slot with the shift instead.
