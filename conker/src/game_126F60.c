@@ -83,7 +83,13 @@ void func_150FAD78(void) {
     func_151494E0(0, 0x4C);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FADC8.s")
+void func_150FADC8(s32 *arg0, s32 arg1, u8 arg2) {
+    if (arg2 == 0x53) {
+        arg0[0x16] |= 2;
+    } else if (arg2 == 0x54) {
+        arg0[0x16] &= ~2;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FAE18.s")
 
