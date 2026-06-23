@@ -1241,3 +1241,5 @@ Special empty-guard case:
   in the `for` initializer (`for (a = G1, b = G2, i = 0; ... )`): IDO keeps single pre-loop `lw`s while allowing earlier base-address setup to finish first.
 - Fixed-signature stack-arg walk: when the asm scans extra word args with `p=&last+1`;
   `p=(s32*)(((s32)p+3)&-4)+1; v=*(p-1)`, hand-roll that pointer walk instead of `...`/`va_list` to avoid the variadic frame/homes.
+- Pre-loop scalar STORE scheduling: when a global/default store must happen after loop-end
+  address setup but before iteration 0, put it in the `for` initializer with the induction init (`for (G=0, i=0;;)`). A standalone store schedules too early.
