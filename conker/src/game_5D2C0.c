@@ -560,7 +560,30 @@ s32 func_15033E00(s32 arg0, u8 *arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033E28.s")
+s32 func_15033E28(u8 *arg0, u8 **arg1) {
+    u8 *var;
+    u8 *cur;
+    u8 *next;
+    s32 count;
+
+    var = (u8 *)D_800C3EE0;
+    count = 0;
+    if (var == 0) {
+        return 0;
+    }
+    cur = var;
+    if (cur != 0) {
+        do {
+            next = *(u8 **)(cur + 0x54);
+            if (arg0[0x3B] == cur[0]) {
+                arg1[count] = cur;
+                count += 1;
+            }
+            cur = next;
+        } while (next != 0);
+    }
+    return count;
+}
 
 struct S15033E84 {
     u8 unk0;

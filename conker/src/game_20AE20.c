@@ -397,7 +397,28 @@ void func_151E557C(void) {
     D_80084060[3] = 3;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E55A8.s")
+void func_151E55A8(void) {
+    s32 temp;
+    s32 step;
+    s32 direction;
+
+    direction = D_800E0B98;
+    if (direction == 0) {
+        step = D_800BE9E4 * 8;
+    } else {
+        step = -D_800BE9E4 * 8;
+    }
+    temp = D_800E0B97;
+    temp += step;
+    if (temp >= 0x100) {
+        temp = 0x1FE - temp;
+        D_800E0B98 = direction ^ 1;
+    } else if (temp < 0) {
+        temp = -temp;
+        D_800E0B98 = direction ^ 1;
+    }
+    D_800E0B97 = temp;
+}
 
 extern u8 D_800E0A8C;
 

@@ -17,6 +17,7 @@ extern void *func_15190770(void *, s32, s32, s32);
 extern void func_151346EC(u8 *);
 extern void func_1513470C(u8 *);
 extern f32 D_800A8FF0;
+extern f32 D_800A8F94;
 
 typedef struct {
     u8 pad0[0x3B];
@@ -153,7 +154,28 @@ void func_151AA210(struct s_151AA210_arg *arg0) {
     func_1519F3B8(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AA264.s")
+void func_151AA264(void *arg0, s32 arg1) {
+    struct_151AB2C4_desc sp18;
+
+    if (*((u8 *)arg1 + 0x1C) & 1) {
+        sp18.unk0 = 0;
+        sp18.unk4 = 0;
+        sp18.unk8 = *((u8 *)arg0 + 0x3B);
+        sp18.unk10 = 1;
+        sp18.unk14 = 0.0f;
+        sp18.unk18 = 0.0f;
+        sp18.unk1C = 0.0f;
+        sp18.unk20 = 25.0f;
+        sp18.unk24 = D_800A8F94;
+        sp18.unk28 = 0x1E;
+        sp18.unk2A = 0xE;
+        sp18.unk2B = 2;
+        sp18.unk2C = -1;
+        sp18.unk2D = 0;
+        sp18.unkC = arg0;
+        func_1513418C(&sp18, 0, 0xFF, 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AA30C.s")
 

@@ -53,6 +53,11 @@ extern f32 D_800A1358;
 extern f32 D_800A135C;
 extern f32 D_800A1360;
 extern f32 D_800A1364;
+extern f32 D_800A1310;
+extern f32 D_800A1314;
+extern f32 D_800A1318;
+extern f32 D_800A131C;
+extern f32 D_800A1320;
 extern void func_151D3FF4(Struct150E81A8Vec *arg0, u8 arg1, s32 arg2);
 extern void func_1514FCE8(Struct150E81A8 *arg0, u8 arg1, s32 arg2);
 extern void func_151D8868(void *arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -91,7 +96,21 @@ void func_150E70CC(f32 *arg0, f32 *arg1) {
     arg0[2] = arg1[7];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E70EC.s")
+void func_150E70EC(s32 arg0, s32 arg1, f32 *arg2, f32 *out) {
+    f32 temp_f2;
+    f32 temp_f16;
+
+    out[0] = func_150484A0(arg2[0], arg2[2]);
+    out[2] = func_150ADA68() * D_800A1310;
+    out[4] = func_150ADA68() * D_800A1314;
+    out[6] = func_150ADA68() * 0.5f;
+    temp_f2 = arg2[0];
+    temp_f16 = arg2[2];
+    out[1] = func_150484A0(sqrtf((temp_f2 * temp_f2) + (temp_f16 * temp_f16)), arg2[1]) - D_800A1318;
+    out[3] = func_150ADA68() * D_800A131C;
+    out[5] = func_150ADA68() * D_800A1320;
+    out[7] = func_150ADA68() * 0.5f;
+}
 
 extern f32 D_800A1324;
 extern f32 D_800A1328;

@@ -6,12 +6,22 @@ extern f32 D_800A1050;
 extern f32 D_800A1054;
 extern void func_1505D1C4(f32, f32, f32, s32, s32, s32, s32, s32);
 void func_151C3B0C(s32, f32, f32, f32, f32, s32, s32, s32);
+extern s32 func_150AD9A0(s32, s32, s32);
+extern u8 *func_150E3020(s32, s32, s32, s32, s32, s32, s32, f32, s32, f32, f32, f32, s32, s16);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1104D0/func_150E3020.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1104D0/func_150E3208.s")
+s32 func_150E3208(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
+    u8 *temp;
 
-extern u8 *func_150E3020(s32, s32, s32, s32, s32, s32, s32, f32, s32, f32, f32, f32, s32, s16);
+    temp = func_150E3020(arg0, arg1, arg2, arg3, arg4, arg5, arg6,
+                         (f32)func_150AD9A0(arg0 - arg3, arg1 - arg4, arg2 - arg5) / (f32)arg7,
+                         0, 0.0f, 0.0f, 0.0f, 0, -99);
+    if (temp != 0) {
+        return temp[0x48] + 1;
+    }
+    return 0;
+}
 
 s32 func_150E32D0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, f32 arg5) {
     u8 *temp;

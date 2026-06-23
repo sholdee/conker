@@ -7,6 +7,9 @@
 
 s32 *allocate_memory(s32, s32, s32, s32);
 s32 func_150A1DA0(u8 *, struct178 *, s32);
+f32 func_1515F008(s16 *, s32);
+void func_1515F040(f32, s32);
+void func_1515F0AC(f32, s32);
 extern f32 D_800A6530;
 
 s32 *func_1515D440(void) {
@@ -164,7 +167,12 @@ struct Node1515E43C *func_1515EB84(s32 arg0, s32 arg1, s32 arg2, s32 arg3, struc
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515EC78.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515EF74.s")
+void func_1515EF74(s16 *arg0) {
+    func_1515F040(1.0f / func_1515F008(arg0, 0), 0);
+    func_1515F040(1.0f / func_1515F008(arg0, 5), 1);
+    func_1515F040(1.0f / func_1515F008(arg0, 0xA), 2);
+    func_1515F0AC(-func_1515F008(arg0, 0xE), 3);
+}
 
 f32 func_1515F008(s16 *arg0, s32 arg1) {
     s32 hi = arg0[arg1];
