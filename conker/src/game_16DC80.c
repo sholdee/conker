@@ -183,7 +183,15 @@ s32 func_15141818(s32 arg0, s32 arg1) {
 //     return temp_f0;
 // }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16DC80/func_15141928.s")
+extern f32 func_1514182C(void *, void *, s32, f32, f32, f32);
+
+s32 func_15141928(u8 *arg0) {
+    f32 *temp_v0;
+
+    temp_v0 = *(f32 **)(arg0 + 0x178);
+    func_1514182C(arg0, arg0 + 0x17C, *(s32 *)(arg0 + 0x170), *(f32 *)(arg0 + 0x174), temp_v0[0], temp_v0[2]);
+    return 1;
+}
 // s32 func_15141928(void *arg0) {
 //     void *temp_v0 = arg0->unk178;
 //     func_1514182C(arg0, arg0->unk17C, arg0->unk170, arg0->unk174, temp_v0->unk0, temp_v0->unk8);

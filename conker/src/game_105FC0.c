@@ -44,6 +44,8 @@ extern s32 func_151EF610(void);
 extern void func_1000D96C(s32, s32, s32);
 extern s32 func_10010F88(s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
 extern s32 func_15147A80(void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
+extern void func_15131828(void *, void *, void *, void *);
+extern void func_15131958(void *, s32, void *);
 
 
 void func_150D8B10(f32 *a0, f32 *a1) {
@@ -191,6 +193,13 @@ void func_150DA5EC(u8 *arg0, f32 arg1) {
     func_15147D64(&sp1C, 0x44);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150DA628.s")
+s32 func_150DA628(u8 *arg0, s32 arg1) {
+    u8 *temp_a2;
+
+    temp_a2 = arg0 + 0xA8;
+    func_15131828(arg0, arg0 + 0xAC, temp_a2, arg0 + 0xAA);
+    func_15131958(arg0 + 0x58, *(s32 *)(temp_a2 + 0xC), temp_a2);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150DA67C.s")

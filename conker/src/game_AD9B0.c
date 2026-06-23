@@ -79,7 +79,19 @@ s32 func_15080738(s32 arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AD9B0/func_15080784.s")
+void func_15080784(void) {
+    s32 temp_a0;
+
+    if (D_800D1998 != 0) {
+        if (D_800D1994 != D_800D1995) {
+            temp_a0 = ((u16 *)D_800D1998)[D_800D1994];
+            if (temp_a0 != 0) {
+                func_1001263C(temp_a0, 0x7FFF, 0x40);
+            }
+            D_800D1994++;
+        }
+    }
+}
 
 extern void func_15080784(void);
 

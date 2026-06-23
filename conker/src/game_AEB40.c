@@ -15,6 +15,8 @@ extern void func_15036C70(struct127 *arg0);
 extern void func_150825C0(s32 arg0, s32 arg1);
 extern u8 D_800D2100;
 extern u8 D_800D2101;
+extern u8 D_800BE590;
+extern u16 D_800BE598[];
 
 typedef struct {
     u8 pad0[0x2];
@@ -370,4 +372,20 @@ void func_15084C30(struct127 *arg0) {
 }
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084CB0.s")
+s32 func_15084CB0(s32 arg0) {
+    s32 ret;
+    s32 i;
+
+    ret = 0;
+    i = 0;
+    if ((s32)D_800BE590 > 0) {
+        do {
+            if (arg0 == D_800BE598[i]) {
+                ret = i;
+                break;
+            }
+            i++;
+        } while (i < (s32)D_800BE590);
+    }
+    return ret;
+}

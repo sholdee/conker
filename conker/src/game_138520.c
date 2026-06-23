@@ -3,11 +3,31 @@
 #include "variables.h"
 
 extern f32 D_800D9C10[][4][4];
+extern f32 D_800A2C20;
+extern f32 D_800D9B28[4][4];
+extern s16 D_800DD2F2;
+extern s16 D_800DD2F4;
 void func_150A7A48(f32 a[4][4], f32 b[4][4], f32 c[4][4]);
 void func_1501B22C(s32 arg0);
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_138520/func_1510B070.s")
+void func_1510B070(s32 arg0) {
+    f32 temp_f0;
+    f32 temp_f2;
+
+    D_800D9B20 = (f32)D_800DD2F2;
+    D_800D9B1C = (f32)D_800DD2F4;
+    D_800D3670 = 100.0f - D_800D9B1C;
+    func_151EF954(
+        D_800D9B28,
+        -(temp_f0 = *(f32 *)(D_800BE628 + 0xC)),
+        temp_f0,
+        -(temp_f2 = *(f32 *)(D_800BE628 + 0x10)),
+        temp_f2,
+        1.0f,
+        D_800A2C20,
+        1.0f);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_138520/func_1510B128.s")
 

@@ -380,7 +380,18 @@ s32 func_15157860(u8 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157898.s")
+struct15157010 *func_15157898(u8 *arg0, void *arg1, s32 arg2, f32 arg3, s32 arg4, s32 arg5, s32 arg6, u8 arg7, s32 arg8) {
+    struct15157010 *temp_v0;
+    struct15157010 *sp2C;
+
+    temp_v0 = func_15157010(arg0, arg2, arg3, arg4, arg5, arg6 + 0x38, arg7, arg8);
+    if (temp_v0 == 0) {
+        return NULL;
+    }
+    sp2C = temp_v0;
+    memcpy((u8 *)temp_v0 + 0x120, arg1, 0x38);
+    return sp2C;
+}
 
 s32 func_15157918(u8 *arg0) {
     f32 *arg1;
