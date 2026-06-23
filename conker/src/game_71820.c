@@ -305,14 +305,43 @@ extern void func_1510F800(s32);
 extern s32 func_150A6500(s16, s16, s32, u16);
 
 struct conker15045714 {
-    f32 unk0;
-    f32 unk4;
-    f32 unk8;
+    f32 field_0x00;
+    f32 field_0x04;
+    f32 field_0x08;
+};
+
+struct conker150472C0_sub
+{
+  u8 field_0x00[0x10];
+  u16 field_0x10;
+};
+struct conker150472C0_dst
+{
+  f32 field_0x00;
+  struct conker150472C0_sub field_0x04;
+  u8 pad16[2];
+  s32 field_0x18;
+  u8 field_0x1C;
+  u8 field_0x1D;
+  u8 pad1E[2];
+  s32 field_0x20;
+};
+struct conker150472C0_src
+{
+  u8 pad0[0xC];
+  f32 unkC;
+  u8 pad10[0x34];
+  struct conker150472C0_sub unk44;
+  u8 pad56[3];
+  u8 unk59;
+  u8 pad5A[2];
+  s32 unk5C;
+  s32 unk60;
 };
 
 void func_15045714(struct conker15045714 *arg0, u16 arg1, s32 *arg2, s32 arg3) {
     func_1510F800(2);
-    *arg2 = func_150A6500((s16)arg0->unk0, (s16)arg0->unk8, arg3, arg1);
+    *arg2 = func_150A6500((s16)arg0->field_0x00, (s16)arg0->field_0x08, arg3, arg1);
 }
 
 s32 func_15045F8C(struct conker15045714 *arg0, f32 arg1, s32 *arg2, s32 arg3);
@@ -321,7 +350,7 @@ s32 func_15045780(struct conker15045714 *arg0, u16 arg1, f32 arg2, s32 arg3) {
     s32 sp1C;
     s32 sp18;
 
-    if (arg0->unk4 < arg2) {
+    if (arg0->field_0x04 < arg2) {
         *((u8 *)arg3 + 0x1C) &= ~2;
         return 0;
     }
@@ -329,11 +358,11 @@ s32 func_15045780(struct conker15045714 *arg0, u16 arg1, f32 arg2, s32 arg3) {
     return func_15045F8C(arg0, arg2, &sp18, arg3);
 }
 
-extern s32 func_15047004(s32, s32, s32);
+extern s32 func_15047004(struct conker15045714 *, s32, struct conker150472C0_dst *);
 extern s32 func_15045780(struct conker15045714 *, u16, f32, s32);
 
 s32 func_15045800(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    switch (func_15047004(arg0, arg2, arg3)) {
+    switch (func_15047004((struct conker15045714 *)arg0, arg2, (struct conker150472C0_dst *)arg3)) {
     case 0:
         return func_15045780((struct conker15045714 *)arg0, (u16)arg1, *(f32 *)&arg2, arg3);
     case 1:
@@ -380,7 +409,7 @@ s32 func_15046C00(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 s32 func_1504697C(s32, u16, s32, s32);
 
 s32 func_15046C80(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    switch (func_15047004(arg0, arg2, arg3)) {
+    switch (func_15047004((struct conker15045714 *)arg0, arg2, (struct conker150472C0_dst *)arg3)) {
     case 0:
         return func_1504697C(arg0, (u16)arg1, arg2, arg3);
     case 1:
@@ -397,7 +426,7 @@ s32 func_15046C80(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 s32 func_15046D00(s32, u16, s32, s32);
 
 s32 func_15046F84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    switch (func_15047004(arg0, arg2, arg3)) {
+    switch (func_15047004((struct conker15045714 *)arg0, arg2, (struct conker150472C0_dst *)arg3)) {
     case 0:
         return func_15046D00(arg0, (u16)arg1, arg2, arg3);
     case 1:
@@ -411,15 +440,15 @@ s32 func_15046F84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 extern s32 func_150A3FC4(f32, f32, s32, s32, s32);
 
-s32 func_15047004(s32 a0, s32 a1, s32 a2) {
+s32 func_15047004(struct conker15045714 *a0, s32 a1, struct conker150472C0_dst *a2) {
     f32 sp24;
 
-    if (*(u8 *)(a2 + 0x1C) & 0x4) {
-        if (func_150A3FC4(*(f32 *)a0, *(f32 *)(a0 + 8), 0, a2 + 4, (s32)&sp24)) {
+    if (a2->field_0x1C & 0x4) {
+        if (func_150A3FC4(a0->field_0x00, a0->field_0x08, 0, (s32)&a2->field_0x04, (s32)&sp24)) {
             if (*(f32 *)&a1 <= sp24) {
-                if (sp24 <= *(f32 *)(a0 + 4)) {
-                    *(f32 *)a2 = sp24;
-                    *(u8 *)(a2 + 0x1C) |= 0x2;
+                if (sp24 <= a0->field_0x04) {
+                    a2->field_0x00 = sp24;
+                    a2->field_0x1C |= 0x2;
                     return 2;
                 }
             }
@@ -449,34 +478,6 @@ s32 func_150470B0(s32 a0, s32 a1, s32 a2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_1504715C.s")
 
-struct conker150472C0_sub
-{
-  u8 unk0[0x10];
-  u16 unk10;
-};
-struct conker150472C0_dst
-{
-  f32 unk0;
-  struct conker150472C0_sub unk4;
-  u8 pad16[2];
-  s32 unk18;
-  u8 unk1C;
-  u8 unk1D;
-  u8 pad1E[2];
-  s32 unk20;
-};
-struct conker150472C0_src
-{
-  u8 pad0[0xC];
-  f32 unkC;
-  u8 pad10[0x34];
-  struct conker150472C0_sub unk44;
-  u8 pad56[3];
-  u8 unk59;
-  u8 pad5A[2];
-  s32 unk5C;
-  s32 unk60;
-};
 void func_150472C0(struct conker150472C0_dst *arg0, struct conker150472C0_src *arg1)
 {
   s32 one;
@@ -485,24 +486,24 @@ void func_150472C0(struct conker150472C0_dst *arg0, struct conker150472C0_src *a
   s32 temp_a2;
   u8 temp_t2;
   one = 1;
-  arg0->unk0 = arg1->unkC;
-  arg0->unk4 = (0, arg1->unk44);
-  arg0->unk18 = arg1->unk60;
+  arg0->field_0x00 = arg1->unkC;
+  arg0->field_0x04 = (0, arg1->unk44);
+  arg0->field_0x18 = arg1->unk60;
   temp_v0 = arg1->unk59;
   temp_v1 = (1 == (temp_v0 ^ 0)) ? (2) : (0);
   temp_t2 = 1;
   temp_a2 = (one == temp_v0) ? (one) : (0);
   temp_v0 = (one == temp_v0) ? (4) : (0);
-  arg0->unk1C = (temp_v0 | temp_a2) | temp_v1;
+  arg0->field_0x1C = (temp_v0 | temp_a2) | temp_v1;
   if (arg1->unk59 == one)
   {
-    arg0->unk1D = temp_t2;
+    arg0->field_0x1D = temp_t2;
   }
   else
   {
-    arg0->unk1D = 0;
+    arg0->field_0x1D = 0;
   }
-  arg0->unk20 = arg1->unk5C;
+  arg0->field_0x20 = arg1->unk5C;
 }
 
 

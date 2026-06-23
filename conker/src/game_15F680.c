@@ -81,6 +81,17 @@ typedef struct {
     s32 unk4;
 } Data15133E3C;
 
+typedef struct {
+    u8 pad_0[0x7C];
+    s32 field_0x7C;
+    u8 field_0x80;
+} InteractionTargetFields;
+
+typedef struct {
+    s32 field_0x0;
+    u8 field_0x4;
+} InteractionKeyFields;
+
 extern Data15133E3C D_800A3860;
 void func_15169260(Data15133E3C *, s32, s32, u8);
 
@@ -336,13 +347,13 @@ s32 func_15133D20(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5) {
     return 1;
 }
 
-void func_15133DE8(s32 arg0, s32 arg1, u8 arg2) {
+void func_15133DE8(InteractionTargetFields *arg0, InteractionKeyFields *arg1, u8 arg2) {
     s32 temp;
 
     if (arg2 == 0) {
-        temp = *(s32 *)(arg1 + 0x0);
-        if ((temp == *(s32 *)(arg0 + 0x7C)) ||
-            (*(u8 *)(arg1 + 0x4) == *(u8 *)(arg0 + 0x80))) {
+        temp = arg1->field_0x0;
+        if ((temp == arg0->field_0x7C) ||
+            (arg0->field_0x80 == arg1->field_0x4)) {
             func_1516972C((struct102 *)arg0);
         }
     }

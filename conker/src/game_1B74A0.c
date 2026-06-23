@@ -3,15 +3,27 @@
 #include "variables.h"
 
 
+typedef struct {
+    char pad_0[0x6A];
+    u8 field_0x6A;
+} GameObjectStateBytes;
+
+typedef struct {
+    char pad_0[0x58];
+    s32 field_0x58;
+    char pad_0x5C[0x12C];
+    GameObjectStateBytes *field_0x188;
+} GameObjectWithStateBytes;
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B74A0/func_15189FF0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B74A0/func_1518A094.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B74A0/func_1518A214.s")
 
-s32 func_1518A2E8(s32 arg0, u8 *arg1) {
-    if (*(u8 *)(*(s32 *)(arg0 + 0x188) + 0x6A) != 0) {
-        *(s32 *)(arg0 + 0x58) &= ~2;
+s32 func_1518A2E8(GameObjectWithStateBytes *arg0, u8 *arg1) {
+    if (arg0->field_0x188->field_0x6A != 0) {
+        arg0->field_0x58 &= ~2;
         *arg1 = 0;
     } else {
         *arg1 = 1;

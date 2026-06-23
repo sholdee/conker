@@ -485,27 +485,27 @@ void func_15157D88(s32 arg0, s32 arg1, u8 arg2) {
     func_15169850(arg1, arg2, arg0 + 0x4C, arg0 + 0x50, arg0);
 }
 
-extern void func_15157DEC(u8 *, f32 *);
+extern void func_15157DEC(struct15157010 *, f32 *);
 
-s32 func_15157DC8(void *arg0) {
-    func_15157DEC(arg0, (void *)((u8 *)arg0 + 0x120));
+s32 func_15157DC8(struct15157010 *arg0) {
+    func_15157DEC(arg0, arg0->field_0x120);
     return 1;
 }
 
-void func_15157DEC(u8 *arg0, f32 *arg1) {
-    func_150A8050((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)), arg1[0], arg1[1], arg1[2]);
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[3][0] = *(f32 *)(arg0 + 0x54);
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[3][1] = *(f32 *)(arg0 + 0x58);
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[3][2] = *(f32 *)(arg0 + 0x5C);
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[0][0] *= arg1[3];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[0][1] *= arg1[3];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[0][2] *= arg1[3];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[1][0] *= arg1[4];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[1][1] *= arg1[4];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[1][2] *= arg1[4];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[2][0] *= arg1[3];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[2][1] *= arg1[3];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[2][2] *= arg1[3];
+void func_15157DEC(struct15157010 *arg0, f32 *arg1) {
+    func_150A8050(arg0->field_0x7C[D_800BE9C0], arg1[0], arg1[1], arg1[2]);
+    arg0->field_0x7C[D_800BE9C0][3][0] = arg0->field_0x54;
+    arg0->field_0x7C[D_800BE9C0][3][1] = arg0->field_0x58;
+    arg0->field_0x7C[D_800BE9C0][3][2] = arg0->field_0x5C;
+    arg0->field_0x7C[D_800BE9C0][0][0] *= arg1[3];
+    arg0->field_0x7C[D_800BE9C0][0][1] *= arg1[3];
+    arg0->field_0x7C[D_800BE9C0][0][2] *= arg1[3];
+    arg0->field_0x7C[D_800BE9C0][1][0] *= arg1[4];
+    arg0->field_0x7C[D_800BE9C0][1][1] *= arg1[4];
+    arg0->field_0x7C[D_800BE9C0][1][2] *= arg1[4];
+    arg0->field_0x7C[D_800BE9C0][2][0] *= arg1[3];
+    arg0->field_0x7C[D_800BE9C0][2][1] *= arg1[3];
+    arg0->field_0x7C[D_800BE9C0][2][2] *= arg1[3];
 }
 
 extern Mtx D_80089470;

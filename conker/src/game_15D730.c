@@ -22,7 +22,11 @@ typedef struct Obj15130280 {
     u8 pad_0x2C[0xC];
     f32 field_0x38;
     f32 field_0x3C;
-    u8 pad_0x40[0x40];
+    u8 pad_0x40[0xC];
+    f32 field_0x4C;
+    u8 pad_0x50[0x4];
+    f32 field_0x54;
+    u8 pad_0x58[0x28];
     Struct15130280Payload unk80;
     u8 pad_0xA4[0x4];
     f32 field_0xA8;
@@ -199,9 +203,9 @@ s32 func_151317C8(s32 *a0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15131814.s")
 
-void func_15131828(u8 *arg0, f32 *arg1, u8 *arg2, u8 *arg3) {
-    *(f32 *)(arg0 + 0x4C) = arg1[0] * func_151423D8((u8)(arg2[0] - 0x40));
-    *(f32 *)(arg0 + 0x54) = arg1[1] * func_151423D8((u8)(arg2[1] - 0x40));
+void func_15131828(Obj15130280 *arg0, f32 *arg1, u8 *arg2, u8 *arg3) {
+    arg0->field_0x4C = arg1[0] * func_151423D8((u8)(arg2[0] - 0x40));
+    arg0->field_0x54 = arg1[1] * func_151423D8((u8)(arg2[1] - 0x40));
     arg2[0] = arg3[0] * D_800BE9E4 + arg2[0];
     arg2[1] = arg3[1] * D_800BE9E4 + arg2[1];
 }

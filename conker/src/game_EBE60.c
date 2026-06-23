@@ -8,6 +8,13 @@ typedef struct {
     s32 unk8;
 } Struct150BEACC;
 
+typedef struct {
+    char pad_0[0x40];
+    f32 field_0x40;
+    char pad_1[0x190];
+    s32 field_0x1D4;
+} ActorFields;
+
 void func_15142314(s32, s32, f32 *);
 void func_1504715C(s32, s32);
 s32 func_15046C80(f32 *, s32, f32, s32);
@@ -62,16 +69,16 @@ s32 func_150BEAA8(s32 arg0, s32 arg1) {
     }
 }
 
-void func_150BEACC(s32 arg0, s32 arg1, s32 arg2) {
+void func_150BEACC(ActorFields *arg0, s32 arg1, s32 arg2) {
     Struct150BEACC sp4C;
     s32 sp2C[8];
     s32 temp_a3;
 
     temp_a3 = (u8)arg1;
-    if (*(s32 *)(arg0 + 0x1D4) != 0) {
-        if (func_150BE9B0((f32 *)&sp4C, arg0, (s32)&sp2C[-1], temp_a3) != 0) {
+    if (arg0->field_0x1D4 != 0) {
+        if (func_150BE9B0((f32 *)&sp4C, *(s32 *)&arg0, (s32)&sp2C[-1], temp_a3) != 0) {
             func_15141F78(0xB, (struct157 *)&sp2C[-1], (f32)arg2 * D_800A00C0 * D_800A00C4,
-                          (u8)(u32)(*(f32 *)(arg0 + 0x40) * D_800A00C8),
+                          (u8)(u32)(arg0->field_0x40 * D_800A00C8),
                           (struct157 *)&sp4C, temp_a3);
             if (arg2 >= 0x4C) {
                 func_15142180(2, &sp4C, sp2C[5], 3.232000113f, D_800A00CC);

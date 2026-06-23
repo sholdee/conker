@@ -65,14 +65,19 @@ typedef struct {
     s32 field_0x0;
     u8 pad_0x4[0x8];
     u8 field_0xC;
-    u8 pad_0xD[0x1];
+    u8 field_0xD;
     u8 field_0xE;
     u8 pad_0xF[0x1];
     f32 field_0x10;
     f32 field_0x14;
+    f32 field_0x18;
+    u8 pad_0x1C[0x4];
+    f32 field_0x20;
 } Game1F4650EffectState;
 typedef struct {
-    u8 pad_0x00[0x70];
+    u8 pad_0x00[0x14];
+    f32 field_0x14;
+    u8 pad_0x18[0x58];
     Game1F4650EffectState field_0x70;
 } Game1F4650EffectObject;
 typedef struct {
@@ -678,13 +683,13 @@ void func_151CCE94(void *arg0) {
 
 extern f32 func_151CC1D4(void *);
 
-void func_151CD224(void *arg0) {
-    s32 base = (s32)arg0 + 0x70;
+void func_151CD224(Game1F4650EffectObject *arg0) {
+    Game1F4650EffectState *base = &arg0->field_0x70;
     f32 ret = func_151CC1D4(arg0);
-    f32 temp = (1.0f - *(f32 *)(base + 0x20) * (ret - *(f32 *)(base + 0x18))) * 75.0f;
-    if (*(u8 *)(base + 0xD) == 5) {
-        *(f32 *)((s32)arg0 + 0x14) = 92.0f + temp;
-    } else if (*(u8 *)(base + 0xD) == 4) {
-        *(f32 *)((s32)arg0 + 0x14) = -92.0f - temp;
+    f32 temp = (1.0f - (ret - base->field_0x18) * base->field_0x20) * 75.0f;
+    if (base->field_0xD == 5) {
+        arg0->field_0x14 = 92.0f + temp;
+    } else if (base->field_0xD == 4) {
+        arg0->field_0x14 = -92.0f - temp;
     }
 }

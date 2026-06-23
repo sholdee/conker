@@ -10,19 +10,27 @@ extern s16 D_800DD2F4;
 void func_150A7A48(f32 a[4][4], f32 b[4][4], f32 c[4][4]);
 void func_1501B22C(s32 arg0);
 
+typedef struct {
+    char pad_0[0xC];
+    f32 field_0x0C;
+    f32 field_0x10;
+} D_800BE628View;
+
 
 void func_1510B070(s32 arg0) {
+    D_800BE628View *be628;
     f32 temp_f0;
     f32 temp_f2;
 
     D_800D9B20 = (f32)D_800DD2F2;
     D_800D9B1C = (f32)D_800DD2F4;
     D_800D3670 = 100.0f - D_800D9B1C;
+    be628 = (D_800BE628View *)D_800BE628;
     func_151EF954(
         D_800D9B28,
-        -(temp_f0 = *(f32 *)(D_800BE628 + 0xC)),
+        -(temp_f0 = be628->field_0x0C),
         temp_f0,
-        -(temp_f2 = *(f32 *)(D_800BE628 + 0x10)),
+        -(temp_f2 = be628->field_0x10),
         temp_f2,
         1.0f,
         D_800A2C20,

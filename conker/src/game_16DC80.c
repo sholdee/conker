@@ -73,51 +73,51 @@ void func_15141250(void *arg0) {
 extern f32 D_800BE9A4;
 
 struct conk141478b {
-    f32 unk0;
-    f32 unk4;
-    f32 unk8;
-    f32 unkC;
-    f32 unk10;
-    f32 unk14;
-    f32 unk18;
+    f32 field_0x0;
+    f32 field_0x4;
+    f32 field_0x8;
+    f32 field_0xC;
+    f32 field_0x10;
+    f32 field_0x14;
+    f32 field_0x18;
 };
 
 struct conk141478a {
-    u8 pad0[0x48];
-    f32 unk48;
+    u8 pad_0[0x48];
+    f32 field_0x48;
 };
 
 struct conk141478 {
-    u8 pad0[0x110];
-    struct conk141478a unk110;
-    u8 pad15C[0x14];
-    struct conk141478b unk170;
+    u8 pad_0[0x110];
+    struct conk141478a field_0x110;
+    u8 pad_1[0x14];
+    struct conk141478b field_0x170;
 };
 
 s32 func_15141478(struct conk141478 *arg0) {
     struct conk141478b *v1;
     struct conk141478a *a0;
 
-    a0 = &arg0->unk110;
-    v1 = &arg0->unk170;
-    v1->unk10 -= D_800BE9A4;
-    if (v1->unk10 < 0.0f) {
-        v1->unk10 = func_150ADA68() * v1->unk14;
+    a0 = &arg0->field_0x110;
+    v1 = &arg0->field_0x170;
+    v1->field_0x10 -= D_800BE9A4;
+    if (v1->field_0x10 < 0.0f) {
+        v1->field_0x10 = func_150ADA68() * v1->field_0x14;
         if (func_150ADA20() & 3) {
-            v1->unkC = func_150ADA68() * (v1->unk0 - v1->unk4) + v1->unk4;
+            v1->field_0xC = func_150ADA68() * (v1->field_0x0 - v1->field_0x4) + v1->field_0x4;
         } else {
-            v1->unkC = func_150ADA68() * (v1->unk8 - v1->unk0) + v1->unk0;
+            v1->field_0xC = func_150ADA68() * (v1->field_0x8 - v1->field_0x0) + v1->field_0x0;
         }
     }
-    a0->unk48 = a0->unk48 + (v1->unkC - a0->unk48) * v1->unk18;
+    a0->field_0x48 = a0->field_0x48 + (v1->field_0xC - a0->field_0x48) * v1->field_0x18;
     return 1;
 }
 
-s32 func_15141564(u8 *arg0) {
-    f32 *v1 = (f32 *)(arg0 + 0x170);
+s32 func_15141564(struct conk141478 *arg0) {
+    f32 *v1 = &arg0->field_0x170.field_0x0;
     f32 *p;
 
-    *(f32 *)(arg0 + 0x158) = v1[1] * sinf(*(f32 *)(arg0 + 0x178)) + v1[0];
+    arg0->field_0x110.field_0x48 = v1[1] * sinf(arg0->field_0x170.field_0x8) + v1[0];
     p = &v1[2];
     *p = v1[3] * D_800BE9A4 + *p;
     *p = func_15144B68(*p);

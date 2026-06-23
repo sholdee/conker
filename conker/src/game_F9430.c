@@ -41,6 +41,15 @@ typedef struct {
     CC638Sub unk128;
 } CC638Struct;
 
+typedef struct {
+    char pad_0[0x58];
+    f32 field_0x58;
+    char pad_0x5C[0x60 - 0x5C];
+    f32 field_0x60;
+    char pad_0x64[0xA8 - 0x64];
+    f32 field_0xA8;
+} EffectScaleState;
+
 s32 func_150CC638(CC638Struct *arg0) {
     CC638Sub *sub;
 
@@ -167,14 +176,14 @@ s32 func_150CC6B8(s32 arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5,
     return 1;
 }
 
-s32 func_150CC8D4(u8 *arg0, s32 arg1) {
+s32 func_150CC8D4(EffectScaleState *arg0, s32 arg1) {
     f32 *scale;
     s32 i;
 
-    scale = (f32 *)(arg0 + 0xA8);
+    scale = &arg0->field_0xA8;
     for (i = D_800BE9E4; i != 0; i--) {
-        *(f32 *)(arg0 + 0x58) *= *scale;
-        *(f32 *)(arg0 + 0x60) *= *scale;
+        arg0->field_0x58 *= *scale;
+        arg0->field_0x60 *= *scale;
     }
     return 1;
 }

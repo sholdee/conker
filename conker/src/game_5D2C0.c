@@ -49,6 +49,15 @@ typedef struct Game5D2C0PositionState {
     Game5D2C0ActorState *field_0x31C;
 } Game5D2C0PositionState;
 
+typedef struct Game5D2C0AnimationState {
+    u8 pad_0[0x4];
+    u16 field_0x04;
+    u8 pad_0x06[0x2];
+    f32 field_0x08;
+    u8 pad_0x0C[0xC];
+    f32 field_0x18;
+} Game5D2C0AnimationState;
+
 typedef struct Game5D2C0AnimationOwner {
     u8 pad_0[0x48];
     struct197 *field_0x48;
@@ -371,18 +380,18 @@ s32 func_150331B8(Game5D2C0AnimationOwner *arg0, struct127 *arg1) {
 }
 
 
-s32 func_1503327C(s32 arg0, s32 arg1) {
-    s32 ptr;
+s32 func_1503327C(Game5D2C0AnimationOwner *arg0, s32 arg1) {
+    Game5D2C0AnimationState *ptr;
 
-    ptr = *(s32 *)(arg0 + 0x48);
+    ptr = (Game5D2C0AnimationState *)arg0->field_0x48;
     if (ptr == 0) {
         return 0;
     }
-    if ((*(u16 *)(ptr + 4) & 0x8000) != 0x8000) {
-        func_1503F5B8(ptr, 0, 0, 1.0f, 0.0f, 1);
-        ptr = *(s32 *)(arg0 + 0x48);
+    if ((ptr->field_0x04 & 0x8000) != 0x8000) {
+        func_1503F5B8((s32)ptr, 0, 0, 1.0f, 0.0f, 1);
+        ptr = (Game5D2C0AnimationState *)arg0->field_0x48;
     }
-    if (*(f32 *)(ptr + 0x18) - 1.0f <= *(f32 *)(ptr + 8)) {
+    if (ptr->field_0x18 - 1.0f <= ptr->field_0x08) {
         return 1;
     }
     return 0;
