@@ -3,7 +3,8 @@
 #include "variables.h"
 
 typedef struct {
-    char pad_0[0x28];
+    char pad_0[0x24];
+    s32 field_0x24;
     s32 field_0x28;
     s32 field_0x2C;
 } Field124ChildBlock;
@@ -11,7 +12,9 @@ typedef struct {
 typedef struct {
     char pad_0[0x18];
     s32 field_0x18;
-    char pad_1[0x108];
+    char pad_1[0xB4];
+    s32 field_0xD0;
+    char pad_2[0x50];
     s32 field_0x124;
 } Field124Owner;
 
@@ -54,10 +57,10 @@ void func_15101260(Field124Owner *arg0) {
 
 void func_1513173C(struct210 *);
 
-void func_15101288(struct210 *arg0) {
-    s32 temp = *(s32 *)((s32)arg0 + 0xD0) + 0x110;
-    *(s32 *)(temp + 0x24) = 0;
-    func_1513173C(arg0);
+void func_15101288(Field124Owner *arg0) {
+    Field124ChildBlock *temp = (Field124ChildBlock *)(arg0->field_0xD0 + 0x110);
+    temp->field_0x24 = 0;
+    func_1513173C((struct210 *)arg0);
 }
 
 void func_1513175C(struct210 *);
