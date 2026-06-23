@@ -2,13 +2,51 @@
 #include "functions.h"
 #include "variables.h"
 
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AB530/func_1517E080.s")
+extern void *allocate_memory(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 typedef struct Node_1517E134 {
-    char pad0[0x24];
+    char pad0[0xC];
+    f32 unkC;
+    f32 unk10;
+    char pad14[0x10];
     struct Node_1517E134 *next;
+    s16 unk28;
+    char pad2A[4];
+    s8 unk2E;
+    s8 unk2F;
+    s8 unk30;
 } Node_1517E134;
+
+Node_1517E134 *func_1517E080(s32 arg0, s32 arg1) {
+    Node_1517E134 *cur;
+    Node_1517E134 **slot;
+
+    cur = (Node_1517E134 *)D_800DDD64;
+    if (cur != NULL) {
+        if (cur->next != NULL) {
+            do {
+                cur = cur->next;
+            } while (cur->next != NULL);
+        }
+        slot = &cur->next;
+    } else {
+        slot = (Node_1517E134 **)&D_800DDD64;
+    }
+
+    cur = allocate_memory(0x34, 1, 0, 1);
+    if (cur == NULL) {
+        return NULL;
+    }
+    *slot = cur;
+    cur->next = NULL;
+    cur->unk28 = 0;
+    cur->unk2E = 0;
+    cur->unk10 = 0.0f;
+    cur->unkC = 0.0f;
+    cur->unk2F = arg0;
+    cur->unk30 = arg1;
+    return cur;
+}
 
 typedef struct Node_1517E1AC {
     char pad0[0xC];
