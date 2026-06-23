@@ -239,7 +239,18 @@ struct260 *func_1510A344(void *arg0, s32 arg1, u8 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1368C0/func_1510A40C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1368C0/func_1510A870.s")
+void func_1510A870(void *arg0, GameStruct1510A8CCa *arg1, u8 arg2) {
+    GameStruct1510A8CCb *v0 = (GameStruct1510A8CCb *)((u8 *)arg0 + 0x28);
+    if (arg2 == 0x2D) {
+        if (v0->unk0 == arg1->unk0) {
+            v0->unk0 = arg1->unk4;
+            v0->unk4 = arg1->unk9;
+        } else if (v0->unk0 == arg1->unk4) {
+            v0->unk0 = arg1->unk0;
+            v0->unk4 = arg1->unk8;
+        }
+    }
+}
 
 void func_1510A8CC(void *arg0, GameStruct1510A8CCa *arg1, u8 arg2) {
     GameStruct1510A8CCb *v0 = (GameStruct1510A8CCb *)((u8 *)arg0 + 0x28);

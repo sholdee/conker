@@ -354,7 +354,27 @@ void func_1519E754(Arg1519E464 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E818.s")
+void func_1519E818(struct260 *arg0, s32 arg1, u8 arg2) {
+    SubA_1519E570 *temp_v0 = (SubA_1519E570 *)((u8 *)arg0 + 0x28);
+    ArgB_1519E570 *b = (ArgB_1519E570 *)arg1;
+
+    if (arg2 == 0) {
+        if ((b->unk0 == temp_v0->unk0) || (b->u4.b4 == temp_v0->unk4)) {
+            func_1516972C((struct102 *)arg0);
+            D_800E0920 = 0;
+    skip:
+            ;
+        }
+    } else if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->unk0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else if (temp_v0->unk0 == b->u4.w4) {
+            temp_v0->unk0 = b->unk0;
+            temp_v0->unk4 = b->unk8;
+        }
+    }
+}
 
 extern void func_1514EDF0(struct260 *, s32);
 

@@ -119,7 +119,10 @@ void func_151B229C(struct260 *arg0) {
     func_1514933C(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B22C8.s")
+void func_151B22C8(struct260 *arg0) {
+    func_151B220C(arg0);
+    func_15149368(arg0);
+}
 
 s32 func_151B22F4(s32 *arg0) {
     s32 temp = arg0[0x28 / 4];

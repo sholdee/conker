@@ -85,35 +85,42 @@ s32 func_150AEDD8(struct202 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_DBA60/func_150AEDF8.s")
-// void func_150AEDF8(void *arg0, void *arg1, s32 arg2) {
-//     s32 temp_a0;
-//     s32 temp_t6;
-//     s32 temp_v1;
-//     void *temp_v0;
-//     void *temp_v0_2;
-//
-//     temp_t6 = arg2 & 0xFF;
-//     if (temp_t6 == 0x2D) {
-//         temp_v0 = arg0->unk28;
-//         temp_a0 = temp_v0->unk0;
-//         temp_v1 = arg1->unk0;
-//         if (temp_v1 == temp_a0) {
-//             temp_v0->unk0 = (s32) arg1->unk4;
-//             temp_v0->unk4 = (u8) arg1->unk9;
-//             return;
-//         }
-//         if (arg1->unk4 == temp_a0) {
-//             temp_v0->unk0 = temp_v1;
-//             temp_v0->unk4 = (u8) arg1->unk8;
-//             return;
-//         }
-//     } else {
-//         temp_v0 = arg0->unk28;
-//         if (temp_t6 == 0) {
-//             if ((arg1->unk0 == temp_v0->unk0) || ((temp_v0->unk4 == (u8) arg1->unk4))) {
-//                 func_1516972C(arg0, temp_t6, arg0);
-//             }
-//         }
-//     }
-// }
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+} SubA_150AEDF8;
+
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        u8 b4;
+    } u4;
+    u8 unk8;
+    u8 unk9;
+} ArgB_150AEDF8;
+
+void func_150AEDF8(struct260 *arg0, s32 arg1, u8 arg2) {
+    SubA_150AEDF8 *temp_v0 = (SubA_150AEDF8 *)((u8 *)arg0 + 0x28);
+    ArgB_150AEDF8 *b = (ArgB_150AEDF8 *)arg1;
+    s32 b0;
+
+    if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->unk0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else {
+            if (temp_v0->unk0 == b->u4.w4) {
+                temp_v0->unk0 = b->unk0;
+                ((volatile SubA_150AEDF8 *)temp_v0)->unk4 = b->unk8;
+            }
+trailing_label_150AEDF8:
+            ;
+        }
+    } else if (arg2 == 0) {
+        b0 = b->unk0;
+        if ((b0 == temp_v0->unk0) || (b->u4.b4 == temp_v0->unk4)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    }
+}

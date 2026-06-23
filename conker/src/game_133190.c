@@ -258,7 +258,9 @@ void func_15107678(struct260 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15107700.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_151078E4.s")
+void func_151078E4(s32 *arg0, s32 arg1, u8 arg2) {
+    func_15169850(arg1, arg2, arg0[0x18], arg0[0x18] + 4, (s32)arg0);
+}
 
 struct S15107924 {
     struct127 *unk0;
