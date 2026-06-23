@@ -18,7 +18,20 @@ void func_15042D78(u8 arg0) {
     D_800CBD74 = arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_70200/func_15042D94.s")
+void func_15042D94(s32 arg0, s32 arg1, u8 arg2, s32 arg3, ...) {
+    va_list args;
+    s32 sp24[16];
+    s32 i;
+
+    D_800CBD74 = arg2;
+    D_800CBD70 = arg0;
+    D_800CBD72 = arg1;
+    va_start(args, arg3);
+    for (i = 0; i < 16; i++) {
+        sp24[i] = va_arg(args, s32);
+    }
+    func_15042ECC(arg3, sp24);
+}
 void func_15042E3C(s32 arg0, ...) {
     va_list args;
     s32 sp24[16];

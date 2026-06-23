@@ -5,7 +5,9 @@
 extern void func_150A7960(f32 *, f32, f32, f32, f32 *, f32 *, f32 *);
 
 typedef struct {
-    u8 pad0[0x18];
+    s32 unk0;
+    u8 pad4[0x14 - 0x4];
+    f32 unk14;
     f32 unk18;
     f32 unk1C;
     f32 unk20;
@@ -41,7 +43,23 @@ typedef struct {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E37D0/func_151B7328.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E37D0/func_151B7678.s")
+s32 func_151B7678(struct151B76CCArg0 *arg0, f32 *arg1) {
+    struct151B76CCList *list;
+    struct151B76CCObj **entry;
+    struct151B76CCObj *obj;
+
+    list = arg0->unk98;
+    entry = list->unk4;
+    obj = *entry;
+    if ((obj->unk0 == 0) || (*((u8 *) entry + 4) != *((u8 *) obj + 0x3B))) {
+        return 0;
+    }
+
+    arg1[0] = obj->unk14;
+    arg1[1] = obj->unk18;
+    arg1[2] = obj->unk1C;
+    return 1;
+}
 
 s32 func_151B76CC(struct151B76CCArg0 *arg0, f32 *arg1) {
     struct151B76CCList *list;
