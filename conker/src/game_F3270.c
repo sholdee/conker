@@ -19,22 +19,6 @@ typedef struct {
     GameF3270SpawnedObject *volatile field_0x5C;
 } GameF3270SpawnOwner;
 
-void *func_150C6460(u8 *arg0);
-GameF3270SpawnedObject *func_150C5F94(s32 arg0, GameF3270SpawnOwner *arg1);
-
-void func_150C5DC0(u8 *arg0) {
-    u8 *temp;
-
-    if (*(s32 *)(arg0 + 0x58) != 0) {
-        temp = *(u8 **)(arg0 + 0x58) + 0xB0;
-        temp[4] = 1;
-        done:
-            ;
-    } else {
-        *(void **)(arg0 + 0x58) = func_150C6460(arg0);
-    }
-}
-
 typedef struct {
     char pad_0x0[0x4];
     u8 field_0x4;
@@ -55,6 +39,27 @@ typedef struct {
     char pad_0x28[0x88];
     GameF3270B0State field_0xB0;
 } GameF3270Object;
+
+typedef struct {
+    char pad_0x0[0x58];
+    GameF3270Object *volatile field_0x58;
+} GameF3270ObjectOwner58;
+
+GameF3270Object *func_150C6460(GameF3270ObjectOwner58 *arg0);
+GameF3270SpawnedObject *func_150C5F94(s32 arg0, GameF3270SpawnOwner *arg1);
+
+void func_150C5DC0(GameF3270ObjectOwner58 *arg0) {
+    GameF3270B0State *temp;
+
+    if (arg0->field_0x58 != 0) {
+        temp = &arg0->field_0x58->field_0xB0;
+        temp->field_0x4 = 1;
+        done:
+            ;
+    } else {
+        arg0->field_0x58 = func_150C6460(arg0);
+    }
+}
 
 s32 func_150C5E0C(GameF3270Object *arg0) {
     s8 ret;

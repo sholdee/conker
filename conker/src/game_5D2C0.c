@@ -19,10 +19,20 @@ s32 func_1502FE10(s32 arg0, void *arg1, void *arg2, void *arg3, void *arg4, void
 s32 func_1503F62C(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, void *arg5, void *arg6);
 
 typedef struct Game5D2C0EffectState {
-    u8 pad_0[0x38];
+    u8 pad_0[0x1];
+    u8 field_0x01;
+    u8 field_0x02;
+    u8 pad_0x03[0x1F];
+    s16 field_0x22;
+    u8 pad_0x24[0x14];
     s32 field_0x38;
     s32 field_0x3C;
 } Game5D2C0EffectState;
+
+typedef struct Game5D2C0EventState {
+    u8 pad_0[0x5];
+    u8 field_0x05;
+} Game5D2C0EventState;
 
 typedef struct Game5D2C0FlagState {
     u8 pad_0[0x3];
@@ -440,10 +450,10 @@ s32 func_150333A8(Game5D2C0FlagState *arg0, Game5D2C0PositionState *arg1) {
     return 0;
 }
 
-s32 func_15033440(u8 *arg0, u8 *arg1) {
+s32 func_15033440(Game5D2C0EffectState *arg0, Game5D2C0EventState *arg1) {
     s32 state;
 
-    state = arg0[1];
+    state = arg0->field_0x01;
     if (state == 0x27) {
         goto add_delta;
     }
@@ -455,18 +465,18 @@ s32 func_15033440(u8 *arg0, u8 *arg1) {
     }
 
 add_delta:
-    if (arg1[5] != 5) {
+    if (arg1->field_0x05 != 5) {
         goto done;
     }
-    arg0[2] = 0;
-    *(s16 *)(arg0 + 0x22) += D_800BE9E4 * 0xAAA;
+    arg0->field_0x02 = 0;
+    arg0->field_0x22 += D_800BE9E4 * 0xAAA;
     goto done;
 
 clear:
-    if (arg1[5] != 5) {
+    if (arg1->field_0x05 != 5) {
         goto done;
     }
-    arg0[2] = 0;
+    arg0->field_0x02 = 0;
 
 done:
     return 0;

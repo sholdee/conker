@@ -133,8 +133,13 @@ void func_15195D00(Struct15195984 *arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15195DD4.s")
 
-s32 func_15195FB0(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
-    return func_15195DD4(*(s32 *)(arg0 + 0x1C), arg1, arg2, arg3, arg4, arg5, arg6);
+typedef struct {
+    char pad_0x0[0x1C];
+    s32 field_0x1C;
+} ResourceEntry;
+
+s32 func_15195FB0(ResourceEntry *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+    return func_15195DD4(arg0->field_0x1C, arg1, arg2, arg3, arg4, arg5, arg6);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15195FF0.s")

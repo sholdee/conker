@@ -251,6 +251,11 @@ typedef struct {
 } Payload_150EFEC8;
 
 typedef struct {
+    u8 pad_0[0x3B];
+    u8 field_0x3B;
+} ActorIdByteFields;
+
+typedef struct {
     f32 unk00;
     f32 unk04;
     f32 unk08;
@@ -315,18 +320,23 @@ typedef struct {
     u8 pad4C[0xC];
 } Struct40_150EFEC8;
 
-s32 func_150EFEC8(s32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, s32 arg5, u8 arg6, s32 arg7) {
-    void *temp_v0;
+typedef struct {
+    u8 pad_0[0x170];
+    Payload_150EFEC8 field_0x170;
+} CreatedObjectPayloadFields;
+
+s32 func_150EFEC8(ActorIdByteFields *arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, s32 arg5, u8 arg6, s32 arg7) {
+    CreatedObjectPayloadFields *temp_v0;
     Struct98_150EFEC8 sp98;
     Struct40_150EFEC8 sp40;
     Payload_150EFEC8 sp34;
 
-    sp34.unk00 = arg0;
-    sp34.unk04 = *(u8 *)(arg0 + 0x3B);
+    sp34.unk00 = (s32)arg0;
+    sp34.unk04 = arg0->field_0x3B;
     sp34.unk05 = arg1;
     sp34.unk08 = arg5;
 
-    sp40.unk00 = D_8008FD00(arg0, arg1);
+    sp40.unk00 = D_8008FD00((s32)arg0, arg1);
     sp40.unk01 = 3;
     sp40.unk02 = 0x2203;
     sp40.unk04 = 0x12C;
@@ -386,7 +396,7 @@ s32 func_150EFEC8(s32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, s32 arg5, u8 arg
 
     temp_v0 = func_151407D0(&sp98, 0x6C, &sp40, 0x1E, 0, 0, 0, -1, arg6, arg7);
     if (temp_v0 != 0) {
-        memcpy((void *)((s32)temp_v0 + 0x170), &sp34, 0xC);
+        memcpy(&temp_v0->field_0x170, &sp34, 0xC);
     }
     return (s32)temp_v0;
 }

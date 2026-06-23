@@ -9,6 +9,31 @@ extern f32 D_800A7B6C;
 extern f32 D_800A7B70;
 extern struct225 *func_151602C0(Header *, Header2 *, s32, s32, s32, s32, u8, u8, s32, u8, s32);
 
+struct SoundLinkedPayload {
+    u8 pad_0x0[0x46];
+    s16 field_0x46;
+    u8 pad_0x48[0x3C];
+    u8 field_0x84;
+};
+
+struct SoundLinkedObject {
+    u8 pad_0x0[0x31C];
+    struct SoundLinkedPayload *field_0x31C;
+};
+
+struct TimedSoundTrigger {
+    s32 field_0x0;
+    s32 field_0x4;
+    struct127 *field_0x8;
+};
+
+struct TimedSoundObject {
+    u8 pad_0x0[0x10];
+    struct SoundLinkedObject *field_0x10;
+    u8 pad_0x14[0x7C];
+    struct TimedSoundTrigger field_0x90;
+};
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518CD20.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518D1C0.s")
@@ -594,29 +619,20 @@ void func_15190550(void *arg0, s32 arg1, u8 arg2) {
 
 extern s32 func_1505D024(void *, s32, u16, s32);
 
-struct Struct151905BC {
-    u8  pad0[0x10];
-    u8  *unk10;
-    u8  pad14[0x7C];
-    s32 unk90;
-    s32 unk94;
-    struct127 *unk98;
-};
+s32 func_151905BC(struct TimedSoundObject *arg0) {
+    struct TimedSoundTrigger *p;
+    struct SoundLinkedPayload *temp;
 
-s32 func_151905BC(struct Struct151905BC *arg0) {
-    s32 *p;
-    u8 *temp;
-
-    arg0->unk94 += D_800BE9E4;
-    p = &arg0->unk90;
-    while (p[1] >= p[0]) {
-        func_1505D024(arg0->unk10, 0x60021, 0, (struct127 *)p[2] - D_800CC2D0);
-        p[1] -= p[0];
+    arg0->field_0x90.field_0x4 += D_800BE9E4;
+    p = &arg0->field_0x90;
+    while (p->field_0x4 >= p->field_0x0) {
+        func_1505D024(arg0->field_0x10, 0x60021, 0, p->field_0x8 - D_800CC2D0);
+        p->field_0x4 -= p->field_0x0;
     }
-    temp = *(u8 **)(arg0->unk10 + 0x31C);
+    temp = arg0->field_0x10->field_0x31C;
     if (temp != NULL) {
-        if (temp[0x84] == 0) {
-            *(s16 *)(temp + 0x46) = 0x3E8;
+        if (temp->field_0x84 == 0) {
+            temp->field_0x46 = 0x3E8;
         }
     }
     return 1;

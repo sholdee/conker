@@ -14,6 +14,13 @@ extern f32 D_800AA998;
 void func_151541B8(void *, f32, s32, f32, f32, u8, s32);
 
 typedef struct {
+    char pad_0[0x4];
+    u8 field_0x04;
+    char pad_1[0x1CF];
+    s32 field_0x1D4;
+} GameObjectMatrixSource;
+
+typedef struct {
     /* 0x00 */ s32 unk00;
     /* 0x04 */ s32 unk04;
     /* 0x08 */ u8  pad08[0xC];
@@ -368,10 +375,10 @@ struct S800AA958 { s32 unk0; s32 unk4; s32 unk8; };
 extern u8 D_800AA954[];
 extern struct S800AA958 D_800AA958[];
 
-void func_151C1798(u8 *arg0, s32 arg1) {
+void func_151C1798(GameObjectMatrixSource *arg0, s32 arg1) {
     s32 index;
 
-    switch (arg0[4]) {
+    switch (arg0->field_0x04) {
     case 0x77:
         index = 1;
         break;
@@ -383,7 +390,7 @@ void func_151C1798(u8 *arg0, s32 arg1) {
         break;
     }
     func_15143134(&D_800AA958[index], arg1,
-                  *(s32 *)(arg0 + 0x1D4) + (D_800AA954[index] << 6));
+                  arg0->field_0x1D4 + (D_800AA954[index] << 6));
 }
 
 void func_151C1814(s32 *arg0, s32 *arg1, u8 arg2) {

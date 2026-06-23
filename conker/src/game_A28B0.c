@@ -5,6 +5,13 @@
 
 s32 func_1505D024(struct127 *arg0, s32 arg1, u16 arg2, s32 arg3);
 
+typedef struct {
+    char pad_0[0x8];
+    s16 field_0x8;
+    char pad_1[0x2];
+    s16 field_0xC;
+} PathPointWindow;
+
 
 void func_15075400(s32 arg0) {
     s32 tmp;
@@ -120,7 +127,7 @@ void func_15075548(void) {
 
 void func_15075884(void) {
     struct127 *temp_v0;
-    u8 *temp_v1;
+    PathPointWindow *temp_v1;
     f32 temp_f2;
     f32 temp_f12;
     f32 temp_f0;
@@ -128,9 +135,9 @@ void func_15075884(void) {
 
     func_15075548();
     temp_v0 = D_800D154C;
-    temp_v1 = (u8 *)D_800D2104[temp_v0->unk13F] + (temp_v0->unk21E * 8);
-    temp_f2 = (f32)*(s16 *)(temp_v1 + 8) - temp_v0->x_position;
-    temp_f12 = (f32)*(s16 *)(temp_v1 + 0xC) - temp_v0->z_position;
+    temp_v1 = (PathPointWindow *)((u8 *)D_800D2104[temp_v0->unk13F] + (temp_v0->unk21E * 8));
+    temp_f2 = (f32)temp_v1->field_0x8 - temp_v0->x_position;
+    temp_f12 = (f32)temp_v1->field_0xC - temp_v0->z_position;
     temp_f0 = sqrtf((temp_f2 * temp_f2) + (temp_f12 * temp_f12));
     temp_f2 = (f32)((u32)D_800D1891);
     temp_f14 = temp_f0 / temp_f2;

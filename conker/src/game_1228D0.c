@@ -245,17 +245,22 @@ void func_150F63C0(s32 arg0, s32 arg1, u8 arg2) {
     func_15169850(arg1, arg2, arg0 + 0x28, arg0 + 0x2C, arg0);
 }
 
-struct Sub150F6400 {
-    s32 pad[2];
-    s32 unk8;
-};
+typedef struct {
+    char pad_0[0x8];
+    s32 field_0x08;
+} Field160ChildBlock;
 
-void func_150F6400(u8 *arg0) {
-    struct Sub150F6400 *p;
+typedef struct {
+    char pad_0[0x160];
+    u8 * volatile field_0x160;
+} Field160Owner;
 
-    if (*(s32 *)(arg0 + 0x160) != 0) {
-        p = (struct Sub150F6400 *)(*(u8 **)(arg0 + 0x160) + 0x28);
-        p->unk8 = 0;
+void func_150F6400(Field160Owner *arg0) {
+    Field160ChildBlock *p;
+
+    if (arg0->field_0x160 != 0) {
+        p = (Field160ChildBlock *)(arg0->field_0x160 + 0x28);
+        p->field_0x08 = 0;
     }
 }
 
