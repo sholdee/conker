@@ -8,6 +8,8 @@ extern void (*D_80082F28[])(struct16 *, f32);
 extern f32 D_80096650;
 extern f32 D_80096648;
 extern f32 D_8009664C;
+extern f32 D_80096680;
+extern f32 D_80096684;
 extern u8 D_800C35E8;
 extern void func_1510F800(s32);
 
@@ -381,7 +383,51 @@ s32 func_150142AC(struct134 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_150142EC.s")
+s32 func_150142EC(struct134 *arg0) {
+    struct {
+        struct134 *unk0;
+        f32 unk4;
+        f32 unk8;
+        f32 unkC;
+        f32 unk10;
+        f32 unk14;
+    } tmp;
+    struct260 *temp_v0_2;
+    f32 temp_f4;
+    f32 temp_f6;
+    f32 temp_f2;
+    f32 temp_f8;
+    register f32 temp_f0;
+
+    arg0->unk16 |= 4;
+    if (D_80082FA0 >= 2) {
+        return 1;
+    }
+
+    if ((((u8 *)D_800D2E4C)[0x11] & 4) && (D_800BE9F0 == 0x13)) {
+        return 1;
+    }
+
+    temp_f4 = (f32)(arg0->unk1C & 0xFFFFU) * D_80096680;
+    temp_f6 = (f32)(((u32)arg0->unk1C >> 16) & 0xFFFFU) * D_80096680;
+    temp_f2 = (f32)(arg0->unk20 & 0xFFFFU) * D_80096680;
+    temp_f8 = (f32)(((u32)arg0->unk20 >> 16) & 0xFFFFU) * D_80096680;
+
+    temp_f0 = func_1514462C((s32)arg0);
+
+    tmp.unk0 = arg0;
+    tmp.unk4 = (temp_f4 * temp_f0) * D_80096684;
+    tmp.unk8 = (temp_f6 * temp_f0) * D_80096684;
+    tmp.unkC = temp_f2;
+    tmp.unk10 = temp_f8;
+    tmp.unk14 = 0.0f;
+
+    temp_v0_2 = func_15149130(0x12C, -1, 0x29, -1, 0, 0, (struct37 *)0x18, 0xFF, 0);
+    if (temp_v0_2 != NULL) {
+        memcpy((u8 *)temp_v0_2 + 0x28, &tmp, 0x18);
+    }
+    return 1;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_150144B8.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_1501474C.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_15014B60.s")

@@ -30,7 +30,29 @@ extern f32 sqrtf(f32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15044380.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_1504452C.s")
+void func_1504452C(s16 **arg0, struct17 *arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, s32 arg7) {
+    s16 **src;
+    struct17 *dst;
+    s16 *vtx;
+    f32 x;
+    f32 y;
+    f32 z;
+    s32 offset;
+
+    vtx = (s16 *)arg1;
+    src = arg0;
+    for (offset = 0, dst = (struct17 *)vtx; offset != 0x24; offset += sizeof(struct17)) {
+        vtx = (s16 *)((u8 *)*src + arg7);
+        x = vtx[0] - arg4;
+        y = vtx[1] - arg5;
+        z = vtx[2] - arg6;
+        dst->unk0 = (x * arg3) + (z * arg2);
+        dst->unk4 = y;
+        dst->unk8 = (z * arg3) - (x * arg2);
+        src++;
+        dst++;
+    }
+}
 
 void func_15044658(void) {
 }
