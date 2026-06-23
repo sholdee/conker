@@ -13,9 +13,12 @@ extern s32 D_800427F0;
 extern s32 D_8009BD10[];
 extern s32 D_800D1928;
 extern s32 D_800D192C;
+extern s32 D_800D1930;
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AD6B0/func_15080200.s")
+void func_15080200(void) {
+    D_800D1930 = D_800D1928 = D_800D192C = 0;
+}
 
 void func_15080228(void) {
     u8 sp38[0x100];

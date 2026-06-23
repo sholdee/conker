@@ -1548,7 +1548,12 @@ s32 func_1507A3E8(void) {
 //     return (D_800D1890 << 0x18) | (D_800D1891 << 0x10) | (D_800D1892 << 8) | D_800D1893;
 // }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_A28B0/func_1507A428.s")
+void func_1507A428(void) {
+    s32 temp;
+
+    temp = ((D_800D1890 & 0xFF) << 0x18) | ((D_800D1891 & 0xFF) << 0x10) | ((D_800D1892 & 0xFF) << 8) | (D_800D1893 & 0xFF);
+    D_800D154C->unk94 = ~(temp | 1);
+}
 void func_1507A47C(void) {
     s32 temp;
 

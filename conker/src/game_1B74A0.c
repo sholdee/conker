@@ -29,4 +29,29 @@ s32 func_1518A324(s32 arg0, u8 *arg1) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B74A0/func_1518A360.s")
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    u8 unk8;
+    u8 unk9;
+} GameStruct1518A360a;
+
+typedef struct {
+    u8 unk0[0x18];
+    s32 unk18;
+    u8 unk1C;
+    u8 unk1D;
+} GameStruct1518A360b;
+
+void func_1518A360(void *arg0, GameStruct1518A360a *arg1, u8 arg2) {
+    GameStruct1518A360b *v0 = (GameStruct1518A360b *)((u8 *)arg0 + 0x170);
+    if (arg2 == 0x2D) {
+        if (v0->unk18 == arg1->unk0) {
+            v0->unk18 = arg1->unk4;
+            v0->unk1D = arg1->unk9;
+        } else if (v0->unk18 == arg1->unk4) {
+            v0->unk18 = arg1->unk0;
+            v0->unk1D = arg1->unk8;
+        }
+    }
+}

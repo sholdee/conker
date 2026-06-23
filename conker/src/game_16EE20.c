@@ -449,7 +449,9 @@ void func_15143794(s32 arg0, s32 arg1, f32 arg2, f32 *arg3) {
     arg3[1] = -arg2 * sin1;
     arg3[2] = temp * cos0;
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15143834.s")
+void func_15143834(s16 arg0, s16 arg1, f32 arg2, f32 *arg3) {
+    func_15143794(arg0, arg1, arg2, arg3);
+}
 void func_15143874(s32 arg0, f32 arg1, f32 *arg2, f32 *arg3) {
     f32 temp;
     f32 temp2;

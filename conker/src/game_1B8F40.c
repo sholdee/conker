@@ -84,4 +84,44 @@ s32 func_1518C57C(void *arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B8F40/func_1518C69C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B8F40/func_1518C850.s")
+typedef struct {
+    u8 pad0[0x24];
+    s32 unk24;
+    u8 unk28;
+} SubA1518C850;
+
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        u8 b4;
+    } u4;
+    u8 unk8;
+    u8 unk9;
+} ArgB1518C850;
+
+void func_1518C850(struct102 *arg0, s32 arg1, u8 arg2) {
+    SubA1518C850 *dst = (SubA1518C850 *)arg0;
+    ArgB1518C850 *b = (ArgB1518C850 *)arg1;
+    s32 b0;
+
+    if (arg2 == 0x2D) {
+        b0 = b->unk0;
+        if (b0 == dst->unk24) {
+            dst->unk24 = b->u4.w4;
+            dst->unk28 = b->unk9;
+        } else {
+            if (dst->unk24 == b->u4.w4) {
+                dst->unk24 = b0;
+                dst->unk28 = b->unk8;
+            }
+trailing_label_1518C850:
+            ;
+        }
+    } else if (arg2 == 0) {
+        b0 = b->unk0;
+        if ((b0 == dst->unk24) || (b->u4.b4 == dst->unk28)) {
+            func_1516972C(arg0);
+        }
+    }
+}

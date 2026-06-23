@@ -6,9 +6,19 @@ void func_1519CDB0(s32, f32, s32);
 
 s32 func_15195DD4(s32, s32, s32, s32, s32, s32, s32);
 
+extern s32 D_800E08E0;
+extern s32 D_800E08E4;
+extern s32 D_800E08E8;
+extern s32 D_800E08EC;
+extern s32 D_800E08F0;
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_151957B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519582C.s")
+void func_1519582C(void) {
+    D_800E08E0 = D_800E08E4 = 0;
+    D_800E08E8 = D_800E08EC = 0;
+    D_800E08F0 = -2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15195868.s")
 
