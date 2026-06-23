@@ -44,7 +44,30 @@ s32 func_1509CA78(s32 arg0) {
     return D_80087434[arg0].unk0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CA98.s")
+s32 func_1509CA98(s32 arg0) {
+    s32 i;
+
+    i = 0;
+loop:
+    if (D_80087430[i].unk0 && arg0 == ((D_80087430[i].unk4 & 0x1FFFFFFF) + 1)) {
+        return i;
+    }
+    if (D_80087430[i + 1].unk0 && arg0 == ((D_80087430[i + 1].unk4 & 0x1FFFFFFF) + 1)) {
+        return i + 1;
+    }
+    if (D_80087430[i + 2].unk0 && arg0 == ((D_80087430[i + 2].unk4 & 0x1FFFFFFF) + 1)) {
+        return i + 2;
+    }
+    if (D_80087430[i + 3].unk0 && arg0 == ((D_80087430[i + 3].unk4 & 0x1FFFFFFF) + 1)) {
+        return i + 3;
+    }
+    i += 4;
+    if (i != 0xCC) {
+        goto loop;
+    }
+
+    return 0xCC;
+}
 
 s32 func_1509CB68(void) {
     s32 count;

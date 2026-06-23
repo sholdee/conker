@@ -52,7 +52,47 @@ extern f32 D_800A2680;
 extern void func_15132A4C(void *, s32, s32, s32, u8, s32);
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1368C0/func_15109410.s")
+struct260 *func_15109410(void *arg0, s16 arg1, s8 arg2, s8 arg3, f32 arg4, s32 arg5, u8 arg6, s32 arg7) {
+    struct260 *temp_v0;
+    struct {
+        void *unk0;
+        u8 unk4;
+        u8 pad5;
+        u8 pad6;
+        u8 pad7;
+        f32 unk8;
+        f32 unkC;
+        u8 unk10;
+        u8 unk11;
+    } sp38;
+    s16 sp44;
+    u8 sp40;
+
+    if (arg0 == NULL) {
+        return NULL;
+    }
+
+    sp40 = 0;
+    if (arg1 < 0) {
+        sp44 = 0x12C;
+    } else {
+        sp40 = 1;
+        sp44 = (s16)arg1;
+    }
+
+    sp38.unk8 = 0.0f;
+    sp38.unkC = arg4;
+    sp38.unk10 = arg2;
+    sp38.unk11 = arg3;
+    sp38.unk0 = arg0;
+    sp38.unk4 = *(u8 *)((s32)arg0 + 0x3B);
+
+    temp_v0 = func_15149130(sp44, -1, 0x1A, -1, sp40, 0x1A, (struct37 *)((s32)arg5 + 0x14), arg6, arg7);
+    if (temp_v0 != NULL) {
+        memcpy((void *)((s32)temp_v0 + 0x28), &sp38, 0x14);
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1368C0/func_151094FC.s")
 
