@@ -76,7 +76,35 @@ void func_150D4C2C(void *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_100810/func_150D4CC4.s")
+struct Bar150D4CC4 {
+    char pad48[0x48];
+    f32 unk48;
+};
+
+struct Obj150D4CC4 {
+    char pad18[0x18];
+    u8 unk18;
+    char pad19[0x170 - 0x19];
+    s16 unk170;
+    char pad172[0x2];
+    f32 unk174;
+};
+
+extern s32 D_800A09C0[];
+extern f32 D_800A0A14;
+
+s32 func_150D4CC4(struct Obj150D4CC4 *arg0) {
+    struct Bar150D4CC4 *v1 = (struct Bar150D4CC4 *)((char *)arg0 + 0x110);
+
+    arg0->unk170 -= D_800BE9E4;
+    if (arg0->unk170 < 0) {
+        arg0->unk18 = D_800A09C0[func_150ADA20() & 3];
+        arg0->unk170 = (func_150ADA20() & 7) + 3;
+    }
+
+    v1->unk48 = v1->unk48 + (arg0->unk174 - v1->unk48) * D_800A0A14;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_100810/func_150D4D58.s")
 

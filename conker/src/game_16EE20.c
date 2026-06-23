@@ -4,6 +4,7 @@
 #include "variables.h"
 
 extern f32 D_800A5698;
+extern f32 D_800A5694;
 extern f32 D_800A569C;
 extern s16 D_800DD1C0;
 extern s16 D_800DD1C2;
@@ -541,7 +542,27 @@ f32 func_15144528(f32 arg0, f32 arg1, f32 arg2) {
     }
     return arg0;
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15144598.s")
+f32 func_15144598(struct134 *arg0) {
+    f32 temp_f2;
+    s16 temp_v0;
+    s32 temp_t6;
+
+    temp_t6 = *((u8 *)arg0 + 0x15) & 3;
+    switch (temp_t6) {
+    default:
+        temp_f2 = 1.0f;
+        break;
+    case 2:
+        temp_f2 = (f32)((s16)arg0->unk6 * (s16)arg0->unkA) * 4.0f;
+        break;
+    case 0:
+    case 1:
+        temp_v0 = (s16)arg0->unk6;
+        temp_f2 = (f32)(temp_v0 * temp_v0) * D_800A5694;
+        break;
+    }
+    return temp_f2;
+}
 f32 func_1514462C(s32 arg0) {
     struct169 *temp_a0;
     s32 temp_t6;

@@ -25,7 +25,28 @@ void func_15192920(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BFDD0/func_151929A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BFDD0/func_15192D48.s")
+struct260 *func_15192D48(void *arg0, s16 arg1, u8 arg2, s32 arg3) {
+    struct260 *temp_v0;
+    struct {
+        void *unk0;
+        u8 unk4;
+        f32 unk8;
+    } sp28;
+
+    if (arg0 == NULL) {
+        return NULL;
+    }
+
+    sp28.unk0 = arg0;
+    sp28.unk4 = *(u8 *)((s32)arg0 + 0x3B);
+    sp28.unk8 = 0.0f;
+
+    temp_v0 = func_151491F4(arg1, -1, 0x18, 1, 0x16, 0xC, arg2, arg3);
+    if (temp_v0 != NULL) {
+        memcpy((void *)((s32)temp_v0 + 0x28), &sp28, 0xC);
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BFDD0/func_15192DF0.s")
 

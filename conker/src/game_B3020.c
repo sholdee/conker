@@ -538,10 +538,16 @@ void func_15088824(Struct15088824 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508A6FC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508B194.s")
-
 extern s8 D_8008FD90;
 extern s16 *D_8008FDD4;
+
+s32 func_1508B194(s32 arg0) {
+    if (arg0 >= D_8008FD90) {
+        return 0;
+    }
+
+    return *(s16 *)((u8 *)D_8008FDD4 + arg0 * 12 + 0x70);
+}
 
 void func_1508B1D4(s32 arg0) {
     if (arg0 < D_8008FD90) {
