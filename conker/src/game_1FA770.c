@@ -142,7 +142,20 @@ void func_151CE4DC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CE6D0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CEA20.s")
+s32 func_151CEA20(f32 *arg0) {
+    f32 temp_f2;
+    f32 temp_f12;
+
+    temp_f2 = arg0[0x11];
+    temp_f12 = arg0[0x10];
+    arg0[0x11] += temp_f12 * D_800BE9A4;
+    *(volatile f32 *)&arg0[0xE] = arg0[0xE] + ((temp_f2 + ((0.5f * temp_f12) * D_800BE9A4)) * D_800BE9A4);
+    *(volatile f32 *)&arg0[0x14] = ((*(volatile f32 *)&arg0[0x13]) * D_800BE9A4) + (*(volatile f32 *)&arg0[0x14]);
+    if (arg0[0x14] > 1.0f) {
+        arg0[0x14] = 1.0f;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CEAAC.s")
 

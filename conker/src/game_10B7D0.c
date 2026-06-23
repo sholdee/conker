@@ -7,6 +7,7 @@ extern f32 func_15048A40(u8 arg0);
 extern u8 D_80090204[];
 extern s32 func_1510D0EC(s32, s32 *, s32, s32);
 extern void func_1510D874(s32, s32, s32, s32, s32);
+extern s32 func_15140410(s32, s32, s32, s16);
 
 typedef struct {
     /* 0x00 */ f32 unk0;
@@ -146,7 +147,12 @@ s32 func_150DEACC(f32 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_10B7D0/func_150DEB58.s")
+s32 func_150DEB58(s32 arg0, s16 arg1) {
+    if (D_800DBFF0[D_80082FA0].unk388 < 5.0f) {
+        return 0;
+    }
+    return func_15140410(arg0, arg0 + 0x120, arg0 + 0x12C, arg1);
+}
 
 extern void func_150DEC28(u8, s32);
 extern u8 D_800A0D0B[];

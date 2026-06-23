@@ -4,10 +4,15 @@
 
 extern f32 D_800A8F68;
 extern f32 D_800A8F6C;
+extern f32 D_800A8F58;
+extern f32 D_800A8F5C;
+extern f32 D_800A8F60;
+extern f32 D_800A8F64;
 extern void (*D_8008FA60[])(f32 *, void *, s32, u8, s32);
 
 void func_1514373C(f32, f32, f32 *, f32 *);
 s32 func_15046C80(f32 *, s32, f32, void *);
+s32 func_151A8B20(void *, s32, s32, s32, s32);
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D4E00/func_151A7950.s")
@@ -124,7 +129,57 @@ s32 func_151A9060(u8 *arg0)
 }
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D4E00/func_151A90C0.s")
+void func_151A90C0(s32 arg0, s32 arg1) {
+    struct {
+        s8 unk0;
+        u8 pad1[3];
+        s32 unk4;
+        f32 unk8;
+        f32 unkC;
+        f32 unk10;
+        f32 unk14;
+        f32 unk18;
+        f32 unk1C;
+        f32 unk20;
+        s8 unk24;
+        s8 unk25;
+        s8 unk26;
+    } sp30;
+    s32 sp28;
+    f32 temp_f0;
+    s32 temp_v0;
+
+    sp30.unk0 = 2;
+    sp30.unk4 = arg0;
+    temp_f0 = (f32)(arg1 & 1);
+    if (temp_f0) {
+        sp30.unk8 = D_800A8F58;
+    } else {
+        sp30.unk8 = D_800A8F5C;
+    }
+
+    if (temp_f0) {
+        sp30.unkC = D_800A8F60;
+    } else {
+        sp30.unkC = D_800A8F64;
+    }
+
+    temp_f0 = 0.0f;
+    sp30.unk10 = temp_f0;
+    sp30.unk14 = temp_f0;
+    sp30.unk18 = temp_f0;
+    sp30.unk1C = temp_f0;
+    sp30.unk20 = temp_f0;
+    sp30.unk24 = 1;
+    sp30.unk25 = -1;
+    sp30.unk26 = 0;
+    ((s8 *)&sp28)[-4] = (s8)arg1;
+
+    temp_v0 = func_151A8B20(&sp30, -1, 1, 0xFF, 0);
+    if (temp_v0 != 0) {
+        memcpy((void *)(temp_v0 + 0x80), ((s8 *)&sp28) - 4, 1);
+    }
+}
 
 struct S6_151A91AC { s16 unk0; s16 unk2; s16 unk4; };
 extern struct S6_151A91AC D_8008F9A4;

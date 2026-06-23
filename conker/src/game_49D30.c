@@ -54,6 +54,7 @@ extern struct_game49D30_2 D_800C3D48;
 extern void func_1501F72C(s32, f32, f32 *, s32, s32 *);
 extern void func_1501FFE8(f32 *, struct_game49D30_1 *, s32, u16);
 extern void func_1516D2E0(s32);
+extern void func_1516D328(s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501C880.s")
 
@@ -440,7 +441,20 @@ void func_150233E4(void) {
     } while (&D_800C3D48 != &((struct_game49D30_2 *) D_800C3CA0)[i]);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15023440.s")
+void func_15023440(struct_game49D30_2 *arg0, s32 arg1) {
+    struct_game49D30_2 *entry;
+
+    entry = arg0;
+    if (arg1 != 0) {
+        func_1516D2E0(entry->unk34);
+        entry->unk34 = 0;
+    } else if (*(u8 *)((u8 *)entry + 0xC) != 0) {
+        func_1516D328(entry->unk34);
+    } else {
+        entry->unk34 = 0;
+    }
+    entry->unk0 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_150234A4.s")
 
