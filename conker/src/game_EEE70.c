@@ -5,7 +5,12 @@
 
 s32 func_15142314(s32, s32, s32);
 
-s32 func_150C19C0(s32 arg0, s32 arg1, u8 arg2) {
+typedef struct {
+    char pad_0[0x1D4];
+    s32 field_0x1D4;
+} ActorFields;
+
+s32 func_150C19C0(s32 arg0, ActorFields *arg1, u8 arg2) {
     s32 sp1C;
 
     switch (arg2) {
@@ -17,7 +22,7 @@ s32 func_150C19C0(s32 arg0, s32 arg1, u8 arg2) {
         break;
     }
 
-    func_15142314(*(s32 *)(arg1 + 0x1D4), sp1C, arg0);
+    func_15142314(arg1->field_0x1D4, sp1C, arg0);
     return 1;
 }
 

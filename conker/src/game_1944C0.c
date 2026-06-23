@@ -28,6 +28,13 @@ typedef struct {
     s8 field_0xB2;
 } GameAnimObject;
 
+typedef struct {
+    char pad_0[0x1];
+    u8 field_0x1;
+    char pad_0x2[0xA];
+    u8 field_0xC;
+} GameObjectHeader;
+
 extern struct Some15171F04 *D_8008CA4C[];
 
 void func_15169070(s32, s32, s32, u8);
@@ -68,15 +75,15 @@ void func_1516706C(void) {
 void func_15168A4C(s32 *arg0, s32 arg1);
 
 s32 func_15167A68(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
-    s32 temp;
+    GameObjectHeader *temp;
 
-    temp = func_10003C6C(arg2, 1, arg3, 0, (u8)arg5);
+    temp = (GameObjectHeader *)func_10003C6C(arg2, 1, arg3, 0, (u8)arg5);
     if (temp != 0) {
-        *(u8 *)(temp + 1) = arg1;
+        temp->field_0x1 = arg1;
         func_15168A4C((s32 *)temp, arg0);
-        *(u8 *)(temp + 0xC) = *((u8 *)&arg4 + 3);
+        temp->field_0xC = *((u8 *)&arg4 + 3);
     }
-    return temp;
+    return (s32)temp;
 }
 
 void func_15167AD8(s32 arg0, s32 arg1, s32 arg2) {

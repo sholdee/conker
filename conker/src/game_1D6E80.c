@@ -454,11 +454,11 @@ void *func_151AB2C4(struct_151AB2C4_arg *arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB3A4.s")
 
 typedef struct {
-    u8 pad0[0x4];
-    u8 unk4;
-    u8 pad5;
-    u16 unk6;
-} Struct151AB6B8;
+    u8 pad_0x0[0x4];
+    u8 field_0x4;
+    u8 pad_0x5[0x1];
+    u16 field_0x6;
+} SoundHandlePlayback;
 
 typedef struct {
     u8 pad_0x0[0x1C];
@@ -472,31 +472,31 @@ typedef struct {
     volatile u16 field_0x5E;
 } SoundHandleOwner;
 
-s32 func_151AB6B8(u8 *arg0) {
+s32 func_151AB6B8(SoundHandleOwner *arg0) {
     u8 ret;
-    Struct151AB6B8 *temp_v1;
+    SoundHandlePlayback *temp_v1;
 
     ret = 1;
-    temp_v1 = (Struct151AB6B8 *)(arg0 + 0x58);
-    if (*(u16 *)(arg0 + 0x5E) != 0) {
+    temp_v1 = (SoundHandlePlayback *)&arg0->field_0x58;
+    if (arg0->field_0x5E != 0) {
         if (D_800DBFF0->unk5F0 & 1) {
         } else {
-            func_100111C8(temp_v1->unk6);
-            temp_v1->unk6 = 0;
+            func_100111C8(temp_v1->field_0x6);
+            temp_v1->field_0x6 = 0;
             goto done_sound;
         }
     }
-    if (temp_v1->unk6 == 0) {
+    if (temp_v1->field_0x6 == 0) {
         if (D_800DBFF0->unk5F0 & 1) {
-            temp_v1->unk6 = func_10010F30(0x355, 0x7D00, 0x40, 0, 0);
+            temp_v1->field_0x6 = func_10010F30(0x355, 0x7D00, 0x40, 0, 0);
         }
     }
 
 done_sound:
-    if (temp_v1->unk4 == 0) {
+    if (temp_v1->field_0x4 == 0) {
         ret = 0;
     }
-    temp_v1->unk4 = 0;
+    temp_v1->field_0x4 = 0;
     return ret;
 }
 

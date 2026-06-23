@@ -54,6 +54,10 @@ typedef struct {
     s32 field_0x144;
 } Game1F4650LinkedObject;
 typedef struct {
+    u8 pad_0x00[0x170];
+    s32 field_0x170;
+} Game1F4650LinkOwner;
+typedef struct {
     s32 field_0x0;
     s32 field_0x4;
 } Game1F4650LinkMatchEvent;
@@ -270,9 +274,11 @@ void func_151C95D8(Game1F4650LinkedObject *arg0) {
     func_1513CAA0(arg0);
 }
 
-s32 func_151C96DC(void *arg0, s32 arg1) {
-    s32 temp = *(s32 *)((s32)arg0 + 0x170) + 0x110;
-    if (*(u8 *)(temp + 0x86) & 0x2) {
+s32 func_151C96DC(Game1F4650LinkOwner *arg0, s32 arg1) {
+    Game1F4650LinkBlock *temp;
+
+    temp = (Game1F4650LinkBlock *)(arg0->field_0x170 + 0x110);
+    if (temp->field_0x86 & 0x2) {
         return 1;
     }
     return 0;

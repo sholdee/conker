@@ -37,6 +37,17 @@ typedef struct Obj15130280 {
     f32 field_0xB8;
 } Obj15130280;
 
+typedef struct Obj15130280AngleState {
+    u8 pad_0x0[0x38];
+    f32 field_0x38;
+    f32 field_0x3C;
+    u8 pad_0x40[0x68];
+    u8 field_0xA8[2];
+    s8 field_0xAA[2];
+    f32 field_0xAC;
+    f32 field_0xB0[2];
+} Obj15130280AngleState;
+
 extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
 
 typedef struct {
@@ -280,8 +291,8 @@ void func_15131C84(u8 *a0, s8 *a1, f32 a2, f32 *a3, f32 *a4, f32 *a5) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15131D4C.s")
 
-s32 func_15131D9C(u8 *arg0, s32 arg1) {
-    func_15131C84(arg0 + 0xA8, arg0 + 0xAA, *(f32 *)(arg0 + 0xAC), arg0 + 0xB0, arg0 + 0x38, arg0 + 0x3C);
+s32 func_15131D9C(Obj15130280AngleState *arg0, s32 arg1) {
+    func_15131C84(arg0->field_0xA8, arg0->field_0xAA, arg0->field_0xAC, arg0->field_0xB0, &arg0->field_0x38, &arg0->field_0x3C);
     return 1;
 }
 

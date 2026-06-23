@@ -22,9 +22,20 @@ void func_151C69A0(void *a0, s32 a1, s32 a2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F3780/func_151C6D70.s")
 
 struct blk12_C6EA0 { s32 a; s32 b; s32 c; };
+
+typedef struct {
+    u8 pad_0[0x3B];
+    u8 field_0x3B;
+} ActorIdByteFields;
+
+typedef struct {
+    u8 pad_0[0x170];
+    u8 field_0x170;
+} CreatedObjectFlagFields;
+
 s32 func_1513264C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 arg5, s32 arg6);
 
-void func_151C6EA0(s32 arg0, u8 arg1, s32 arg2) {
+void func_151C6EA0(ActorIdByteFields *arg0, u8 arg1, s32 arg2) {
     struct {
         f32 unk00;
         f32 unk04;
@@ -66,7 +77,7 @@ void func_151C6EA0(s32 arg0, u8 arg1, s32 arg2) {
     } sp34;
     struct { u8 b; u8 pad[3]; } sp30;
     struct blk12_C6EA0 *src = (struct blk12_C6EA0 *)&D_800A5480;
-    s32 temp_v0;
+    CreatedObjectFlagFields *temp_v0;
 
     sp30.b = 0;
     sp34.unk00 = 1.0f;
@@ -97,15 +108,15 @@ void func_151C6EA0(s32 arg0, u8 arg1, s32 arg2) {
     sp34.unk69 = -1;
     sp34.unk6A = 1;
     sp34.unk4C = 0.0f;
-    sp34.unk6C = arg0;
-    sp34.unk70 = *(u8 *)(arg0 + 0x3B);
+    sp34.unk6C = (s32)arg0;
+    sp34.unk70 = arg0->field_0x3B;
     sp34.unk72 = 1;
     sp34.unk74 = 0xFF;
     sp34.unk78 = 0;
 
-    temp_v0 = func_1513264C((s32)&sp34, 3, 0xFF, 0, 1, arg1, arg2);
+    temp_v0 = (CreatedObjectFlagFields *)func_1513264C((s32)&sp34, 3, 0xFF, 0, 1, arg1, arg2);
     if (temp_v0 != 0) {
-        memcpy((void *)(temp_v0 + 0x170), &sp30.b, 1);
+        memcpy(&temp_v0->field_0x170, &sp30.b, 1);
     }
 }
 

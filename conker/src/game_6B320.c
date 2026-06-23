@@ -65,6 +65,21 @@ struct func_1503E3C4_mtx {
     f32 unk3C;
 };
 
+typedef struct {
+    u8 pad_0[0x4C];
+    f32 field_0x4C;
+    u8 pad_0x50[0x18];
+} Game6B320EffectEntry;
+
+typedef struct {
+    Game6B320EffectEntry *field_0x00;
+    s32 field_0x04;
+    s32 field_0x08;
+    s16 field_0x0C;
+    u8 field_0x0E;
+    u8 field_0x0F;
+} Game6B320EffectState;
+
 
 void func_1503DE70(struct127 *arg0, s32 arg1, s32 arg2) {
     if (arg2 != -1) {
@@ -191,17 +206,17 @@ void func_1503EEC0(s32 arg0) {
 extern u8 D_80098914[];
 
 void func_1503EFC4(s32 arg0) {
-    struct106 *p = &D_800C6660[arg0];
+    Game6B320EffectState *p = (Game6B320EffectState *)&D_800C6660[arg0];
     s32 i;
     s32 off;
     s32 count;
 
-    *(s16 *)((s32)p + 0xC) = 0x78;
-    count = D_80098914[*(u8 *)((s32)p + 0xE)];
+    p->field_0x0C = 0x78;
+    count = D_80098914[p->field_0x0E];
     i = 0;
     off = 0;
     for (; i < count; i++, off += 0x68) {
-        *(f32 *)(p->unk0 + off + 0x4C) = (f32)((s32)((u32)func_150ADA20() % 0x14) - 5);
+        ((Game6B320EffectEntry *)((s32)p->field_0x00 + off))->field_0x4C = (f32)((s32)((u32)func_150ADA20() % 0x14) - 5);
     }
 }
 

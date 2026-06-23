@@ -587,8 +587,8 @@ typedef struct {
 } Struct1519BFBCVec;
 
 typedef struct {
-    char pad0[0x130];
-    u16 unk130;
+    char pad_0x0[0x130];
+    u16 field_0x130;
 } Struct1519BFBCSound;
 
 typedef struct {
@@ -597,7 +597,7 @@ typedef struct {
     s8 unk2D;
     char pad2E[0x94 - 0x2E];
     Struct1519BFBCVec *unk94;
-    Struct1519BFBCSound *unk98;
+    Struct1519BFBCSound *field_0x98;
 } Struct1519BFBC;
 
 void func_1519BFBC(Struct1519BFBC *arg0) {
@@ -607,11 +607,11 @@ void func_1519BFBC(Struct1519BFBC *arg0) {
     s32 temp_t6;
     s32 temp_t7;
 
-    temp_v2 = arg0->unk98;
+    temp_v2 = arg0->field_0x98;
     temp_v1 = arg0->unk94;
 
     if (arg0->unk2C != 0) {
-        temp_a0 = temp_v2->unk130;
+        temp_a0 = temp_v2->field_0x130;
         if (temp_a0 != 0) {
             temp_t6 = 0x1388;
             temp_t7 = 0x1F4;
@@ -624,9 +624,9 @@ void func_1519BFBC(Struct1519BFBC *arg0) {
     }
 }
 
-void func_1519C06C(u8 *arg0) {
-    u8 *temp = *(u8 **)(arg0 + 0x98);
-    u16 val = *(u16 *)(temp + 0x130);
+void func_1519C06C(Struct1519BFBC *arg0) {
+    Struct1519BFBCSound *temp = arg0->field_0x98;
+    u16 val = temp->field_0x130;
     if (val != 0) {
         func_100111C8(val);
     }

@@ -85,12 +85,12 @@ void func_150E3340(f32 *arg0, s32 *arg1, s32 arg2, s16 arg3) {
 extern void func_150E33CC(void);
 
 s32 func_150E3414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, f32 arg8) {
-    u8 *temp;
+    Game1104D0EffectInstance *temp;
 
-    temp = func_150E3020(arg3, arg4, arg5, 0, 0, 0, arg7, arg8, arg6, (f32)arg0, (f32)arg1, (f32)arg2, 0, -99);
+    temp = (Game1104D0EffectInstance *)func_150E3020(arg3, arg4, arg5, 0, 0, 0, arg7, arg8, arg6, (f32)arg0, (f32)arg1, (f32)arg2, 0, -99);
     if (temp != 0) {
-        *(s16 *)(temp + 0x4A) = func_1000FA64(0x2D0, (s16)arg0, (s16)arg1, (s16)arg2, 0x5DC0, 0x1770, 0x3E8, (s32)func_150E33CC, 0, 0, 0, 0);
-        return temp[0x48] + 1;
+        temp->field_0x4A = func_1000FA64(0x2D0, (s16)arg0, (s16)arg1, (s16)arg2, 0x5DC0, 0x1770, 0x3E8, (s32)func_150E33CC, 0, 0, 0, 0);
+        return temp->field_0x48 + 1;
     }
     return 0;
 }

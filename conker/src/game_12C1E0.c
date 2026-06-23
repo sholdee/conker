@@ -135,13 +135,13 @@ extern s32 func_15145EA4(s32 *arg0, s32 *arg1, s32 arg2, s32 arg3);
 extern u8 D_80088BB0;
 extern s32 D_800A2130;
 
-void func_150FFBDC(s32 arg0, s32 arg1, s32 arg2) {
+void func_150FFBDC(struct127 *arg0, s32 arg1, s32 arg2) {
     s32 sp1C;
     s32 sp18;
 
     sp1C = (s32)&D_800A2130;
     sp18 = arg2;
-    func_15145EA4(&sp1C, &sp18, *(s32 *)(arg0 + 0x1D4) + D_80088BB0 * 0x40, 1);
+    func_15145EA4(&sp1C, &sp18, (s32) arg0->unk1D4 + D_80088BB0 * 0x40, 1);
 }
 
 extern void func_151D8868(void *arg0, s32 arg1, s32 arg2, s32 arg3);

@@ -22,6 +22,13 @@ typedef struct {
 } struct_AF4D0;
 
 typedef struct {
+    char pad_0[0x74];
+    u8 field_0x74;
+    char pad_0x75[0x15F];
+    s32 field_0x1D4;
+} GameObjectTransformOwner;
+
+typedef struct {
     char pad_0[0x44];
     s32 field_0x44;
     char pad_0x48[0x4];
@@ -493,7 +500,7 @@ void func_151AF338(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, v
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AF388.s")
 
-void func_151AF4D0(u8 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+void func_151AF4D0(GameObjectTransformOwner *arg0, s32 arg1, s32 arg2, s32 arg3) {
     f32 sp44[3];
     f32 sp38[3];
     s32 temp_a2;
@@ -501,9 +508,9 @@ void func_151AF4D0(u8 *arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 temp_v1;
 
     if (arg0 != 0) {
-        temp_v1 = *(s32 *)(arg0 + 0x1D4);
+        temp_v1 = arg0->field_0x1D4;
         if (temp_v1 != 0) {
-            if ((arg0[0x74] & 0xF) != 0xF) {
+            if ((arg0->field_0x74 & 0xF) != 0xF) {
                 temp_v0 = &D_800A9DF0[(u8)arg1];
                 temp_a2 = temp_v1;
                 temp_a2 += temp_v0->unk0 << 6;
