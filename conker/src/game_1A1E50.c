@@ -4,6 +4,7 @@
 
 extern Mtx D_80089470;
 extern Gfx *(*D_8008CD74[])(Gfx *, s32);
+extern Gfx *(*D_8008CD7C[])(Gfx *, s32);
 
 #define WGFX15174AA4(pkt, a, b)     \
 {                                   \
@@ -58,4 +59,13 @@ Gfx *func_15174AA4(Gfx *gfx, s32 arg1, s32 arg2) {
     return gfx;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A1E50/func_15174B48.s")
+Gfx *func_15174B48(Gfx *gfx, s32 arg1, s32 arg2) {
+    arg1 = arg2;
+    WGFX15174AA4(gfx++, 0xE7000000, 0x00000000);
+    WGFX15174AA4(gfx++, 0xDA380003, &D_80089470);
+    if (*((u8 *)D_800B0DF0 + 0xD) != 0) {
+        gfx = D_8008CD7C[*((u8 *)D_800B0DF0 + 0xD)](gfx, arg1);
+    }
+    WGFX15174AA4(gfx++, 0xDA380003, &D_80089470);
+    return gfx;
+}

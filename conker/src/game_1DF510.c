@@ -139,7 +139,20 @@ s32 func_151B22F4(s32 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B2690.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B2950.s")
+typedef struct {
+    u8 pad0[0x178];
+    s32 *unk178;
+    u8 unk17C;
+} GameStruct151B2950;
+
+void func_151B2950(GameStruct151B2950 *arg0) {
+    s32 *temp;
+
+    temp = arg0->unk178;
+    if (temp != NULL) {
+        temp[arg0->unk17C + (0x38 / 4)] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B2974.s")
 

@@ -25,7 +25,20 @@ void func_1512D560(u8 *arg0, s32 arg1, s32 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15AA10/func_1512D604.s")
+u8 *func_1512D604(u8 *arg0, s32 temp) {
+    u8 *entry;
+    u8 *ret;
+
+    entry = (*(Entry15 **)&D_800DC2B0)[arg0[0x23D]];
+    temp = *(s32 *)&entry[0xA8];
+    ret = (u8 *)((s32)entry + (temp * 8));
+    *(s32 *)&entry[0xA8] = temp + 1;
+    entry = (*(Entry15 **)&D_800DC2B0)[arg0[0x23D]];
+    if (*(s32 *)&entry[0xA8] == 0x14) {
+        *(s32 *)&entry[0xA8] = 0;
+    }
+    return ret;
+}
 
 extern s32 D_800DC2B0;
 
