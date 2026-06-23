@@ -7,6 +7,7 @@ typedef struct {
     s32 field_0x24;
     s32 field_0x28;
     s32 field_0x2C;
+    s32 field_0x30;
 } Field124ChildBlock;
 
 typedef struct {
@@ -16,6 +17,8 @@ typedef struct {
     s32 field_0xD0;
     char pad_2[0x50];
     s32 field_0x124;
+    char pad_3[0x48];
+    s32 field_0x170;
 } Field124Owner;
 
 
@@ -71,10 +74,10 @@ void func_151012B0(Field124Owner *arg0) {
     func_1513175C((struct210 *)arg0);
 }
 
-void func_151012D8(struct210 *arg0) {
-    s32 temp = *(s32 *)((s32)arg0 + 0x170) + 0x110;
-    *(s32 *)(temp + 0x30) = 0;
-    func_151411A4(arg0);
+void func_151012D8(Field124Owner *arg0) {
+    Field124ChildBlock *temp = (Field124ChildBlock *)(arg0->field_0x170 + 0x110);
+    temp->field_0x30 = 0;
+    func_151411A4((struct210 *)arg0);
 }
 
 void func_15101300(struct210 *arg0) {
