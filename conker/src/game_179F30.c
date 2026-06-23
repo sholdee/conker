@@ -300,7 +300,30 @@ void func_1514D9F4(s32 arg0) {
     func_1514EC1C(v0, arg0, 0x14);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DA38.s")
+void func_1514DA38(s32 arg0) {
+    s32 temp_v0;
+    struct {
+        s32 unk0;
+        s32 unk4;
+        s32 unk8;
+        s32 unkC;
+        s32 unk10;
+        s32 unk14;
+        s32 unk18;
+    } sp18;
+
+    sp18.unk14 = 0;
+    sp18.unk18 = 0;
+    sp18.unk0 = 0;
+    sp18.unk4 = 0;
+    sp18.unk8 = 0;
+    sp18.unkC = 0;
+    temp_v0 = func_15158BD0(arg0, 1, 0x1C);
+    if (temp_v0 != 0) {
+        memcpy((void *)(temp_v0 + 0x58), &sp18, 0x1C);
+        func_1514EC1C(temp_v0, arg0, 0x13);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DAA4.s")
 

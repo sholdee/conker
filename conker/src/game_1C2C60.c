@@ -1,10 +1,17 @@
 #include <ultra64.h>
+#define func_151422C0 func_151422C0_header
 #include "functions.h"
+#undef func_151422C0
 #include "variables.h"
 
 void func_1519CDB0(s32, f32, s32);
 
 s32 func_15195DD4(s32, s32, s32, s32, s32, s32, s32);
+s32 func_151422C0();
+
+extern char D_800A8A40[];
+extern char D_800A8A48[];
+extern f32 D_800A8AA8;
 
 extern s32 D_800E08E0;
 extern s32 D_800E08E4;
@@ -178,7 +185,9 @@ void func_151963B4(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_151979F8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15197A0C.s")
+f32 func_15197A0C(s32 arg0) {
+    return (f32)func_151422C0(0xA, (s32) D_800A8A40, 1, 0x1F4, (s32) D_800A8A48, 0x8CC) * D_800A8AA8;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_15197A68.s")
 

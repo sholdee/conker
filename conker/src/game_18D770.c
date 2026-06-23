@@ -1338,8 +1338,47 @@ s32 func_15163F50(struct225 *arg0, struct225 *arg1) {
     return 1;
 }
 
-// ???
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18D770/func_15163FEC.s")
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        u8 b4;
+    } u4;
+    u8 unk8;
+    u8 unk9;
+} struct_func_15163FEC_arg1;
+
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+} struct_func_15163FEC_sub;
+
+void func_15163FEC(struct225 *arg0, struct_func_15163FEC_arg1 *arg1, u8 arg2) {
+    struct_func_15163FEC_sub *temp_v0;
+    s32 temp_v1;
+
+    temp_v0 = (struct_func_15163FEC_sub *)((u8 *)arg0 + 0x18);
+    if (arg2 == 0) {
+        temp_v1 = arg1->unk0;
+        if ((temp_v1 == temp_v0->unk0) || (arg1->u4.b4 == temp_v0->unk4)) {
+            func_1516972C(arg0);
+        }
+    } else if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == arg1->unk0) {
+            temp_v0->unk0 = arg1->u4.w4;
+            temp_v0->unk4 = arg1->unk9;
+        } else {
+            if (temp_v0->unk0 == arg1->u4.w4) {
+                temp_v0->unk0 = arg1->unk0;
+                temp_v0->unk4 = arg1->unk8;
+            }
+        trailing_label_15163FEC:
+            ;
+        }
+    } else if (D_8008B374[arg0->unk2D] != NULL) {
+        D_8008B374[arg0->unk2D]((s32)arg0);
+    }
+}
 void func_151640C0(struct225 *arg0, void *arg1, u8 arg2) {
     struct225 **sp18;
     void **sp1C;

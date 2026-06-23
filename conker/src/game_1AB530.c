@@ -90,7 +90,19 @@ void func_1517E1AC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AB530/func_1517E4A8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AB530/func_1517EA4C.s")
+#define WGFX1517EA4C(pkt, a, b)     \
+{                                   \
+    Gfx *_g = (Gfx *)(pkt);         \
+    _g->words.w0 = (u32)(a);        \
+    _g->words.w1 = (u32)(b);        \
+}
+
+Gfx *func_1517EA4C(Gfx *arg0) {
+    WGFX1517EA4C(arg0++, 0xE7000000, 0);
+    WGFX1517EA4C(arg0++, 0xFCFFB3FF, 0xFF65FEFF);
+    WGFX1517EA4C(arg0++, 0xEF002C0F, 0x00504344);
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AB530/func_1517EAAC.s")
 
