@@ -14,6 +14,8 @@ extern u8 D_800DC0C0[];
 extern struct1512ABF8 D_800DC200[][4];
 extern s16 D_800DC204[];
 extern s16 D_800DC206[];
+extern f32 D_800A3694;
+extern f32 D_800A3698;
 
 void func_15123A54(struct108 *arg0);
 void func_1512C150(struct108 *arg0);
@@ -152,7 +154,24 @@ void func_1512C068(struct108 *arg0) {
     func_1512C150(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512C150.s")
+void func_1512C150(struct108 *arg0) {
+    f32 temp_f0;
+
+    arg0->unk5CC += D_800A3694;
+    temp_f0 = arg0->unk5CC;
+    if (temp_f0 > 1.0f) {
+        arg0->unk5CC = 1.0f;
+    } else {
+        arg0->unk5CC = temp_f0;
+    }
+
+    if (arg0->unk5CC == 1.0f) {
+        arg0->unk384 = D_800A3698;
+        arg0->unk240 &= ~2;
+    } else {
+        arg0->unk384 += func_15048A70(arg0->unk384, arg0->unk37C) * arg0->unk5CC;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512C200.s")
 

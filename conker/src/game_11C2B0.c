@@ -55,6 +55,8 @@ typedef struct {
 
 void *func_150EEF80(struct_150EEE00_arg0 *, u8, u8, s32);
 void func_15143134(void *, void *, s32);
+void func_15143874(s32, f32, f32 *, f32 *);
+void func_151C329C(void *, s32, s32);
 void *func_151407D0(void *, s32, void *, s32, s32, s32, s32, s32, s32, s32);
 void func_151602C0(Header *, Header2 *, s32, s32, s32, s32, s32, s32, s32, u8, s32);
 s32 func_15160A58(s32, s32, void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
@@ -731,4 +733,16 @@ void func_150F1CB0(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F20F0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F2230.s")
+void func_150F2230(struct127 *arg0, s32 arg1, s32 arg2) {
+    struct { f32 x; f32 y; f32 z; } sp2C;
+    struct { f32 x; f32 y; f32 z; } sp20;
+
+    if ((arg0->unk1D4 != NULL) && ((arg0->unk74 & 0xF) != 0xF)) {
+        sp2C.x = 0.0f;
+        sp2C.y = 0.0f;
+        sp2C.z = 0.0f;
+        func_15143874((s16)(func_150ADA20() & 0xFF), 100.0f, &sp2C.x, &sp2C.z);
+        func_15143134(&sp2C.x, &sp20.x, (s32)arg0->unk1D4 + 0x4C0);
+        func_151C329C(&sp20.x, (u8)arg1, arg2);
+    }
+}
