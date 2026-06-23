@@ -239,17 +239,20 @@ class H(http.server.BaseHTTPRequestHandler):
     def log_message(self, *a):
         pass
     def do_GET(self):
-        if self.path.startswith("/state.json"):
-            try:
-                body = json.dumps(collect()).encode()
-            except Exception as e:
-                body = json.dumps({"error": str(e)}).encode()
-            self.send_response(200); self.send_header("Content-Type", "application/json")
-        else:
-            body = HTML.encode(); self.send_response(200); self.send_header("Content-Type", "text/html")
-        self.send_header("Content-Length", str(len(body))); self.end_headers()
         try:
+            if self.path.startswith("/state.json"):
+                try:
+                    body = json.dumps(collect()).encode()
+                except Exception as e:
+                    body = json.dumps({"error": str(e)}).encode()
+                ct = "application/json"
+            else:
+                body = HTML.encode(); ct = "text/html"
+            self.send_response(200); self.send_header("Content-Type", ct)
+            self.send_header("Content-Length", str(len(body))); self.end_headers()
             self.wfile.write(body)
+        except (ConnectionResetError, BrokenPipeError):
+            pass            # client (browser) dropped the connection — ignore, keep serving
         except Exception:
             pass
 
