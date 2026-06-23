@@ -1249,3 +1249,4 @@ Special empty-guard case:
 - Volatile scalar PARAM reloads: when target reloads a homed/stack arg (`lw`/`lh off(sp)`) and `&arg` adds unwanted address arithmetic, type only that param `volatile s32`/`volatile s16`; plain uses force the stack reloads without a pointer temp.
 - Branch-delay copy before a split clamp: for `slti; bnez low; move copy,src`, write
   `copy = src; if (copy >= K) { src = C; copy = src - copy; ... } else { copy = src << n; ... }`. Direct `C-copy` hoists `li C`; low-arm `copy` use can fill the slot with the shift instead.
+- Redundant default in a real `else` can preserve a plain-branch CFG while the store DCEs: after `x=0; if (cond) { setup; x=1; } else { x=0; }`, IDO can keep `bne ...; move x,zero` plus the true-arm `b join; li x,1`. Empty/goto elses may delete the join branch.
