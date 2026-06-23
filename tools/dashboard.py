@@ -84,9 +84,12 @@ def progress():
     return cached("progress", 25, build)
 
 def active():
-    chunk = "/tmp/codex_chunk.txt"
-    if not os.path.exists(chunk):
+    # follow whichever pipeline is live: matching (codex_chunk) or typing (type_chunk), by freshest chunk.
+    cands = [(c, p) for c, p in (("/tmp/type_chunk.txt", "typel_"), ("/tmp/codex_chunk.txt", "codexm_"))
+             if os.path.exists(c)]
+    if not cands:
         return []
+    chunk, logpfx = max(cands, key=lambda cp: os.path.getmtime(cp[0]))
     st = stub_map(); sizes = map_sizes() or {}
     res = []
     try:
@@ -98,7 +101,7 @@ def active():
         if len(p) != 2:
             continue
         func, file = p
-        log = f"/tmp/codexm_{func}.log"
+        log = f"/tmp/{logpfx}{func}.log"
         scores, mtime = [], 0
         if os.path.exists(log):
             try:
@@ -138,12 +141,14 @@ def recent_commits():
         res = []
         for l in out.splitlines():
             parts = l.split("|", 2)
-            if len(parts) == 3 and "match" in parts[2]:
-                m = re.search(r'match (\d+)', parts[2])
-                cyc = re.search(r'\[cycle (\d+)\]', parts[2])
-                res.append({"hash": parts[0], "when": parts[1],
-                            "n": int(m.group(1)) if m else None,
-                            "cycle": int(cyc.group(1)) if cyc else None})
+            if len(parts) != 3:
+                continue
+            m = re.search(r'(match|type) (\d+) function', parts[2])
+            if not m:
+                continue
+            cyc = re.search(r'\[cycle (\d+)\]', parts[2])
+            res.append({"hash": parts[0], "when": parts[1], "kind": m.group(1),
+                        "n": int(m.group(2)), "cycle": int(cyc.group(1)) if cyc else None})
         return res
     return cached("commits", 10, build)
 
@@ -340,8 +345,36 @@ def runway():
 def phase_status():
     def r(pat):
         return subprocess.run(f"pgrep -f '{pat}' >/dev/null 2>&1", shell=True).returncode == 0
+    if r("type_pass.sh") or r("type_orchestrator.sh"):          # Phase-1 typing sweep
+        return "TYPE"
     return ("SELECT" if r("similar_chunk.py") else "MATCH" if r("codex exec")
             else "INTEGRATE" if r("tools/integrate.py") else "")
+
+_CAST = re.compile(r'\*\([A-Za-z0-9_]+\s*\*\)\(\(?[A-Za-z_][A-Za-z0-9_]*[^)]*?\+\s*0x')
+def typing():
+    """Phase-1 typing progress: offset-casts remaining in game src (the un-typed debt) + functions still
+    holding casts. Tracks a baseline (max seen) so we can show % converted since tracking began."""
+    def build():
+        casts = files = 0
+        for c in glob.glob(os.path.join(INNER, "src/game_*.c")):
+            try:
+                n = len(_CAST.findall(open(c).read()))
+            except OSError:
+                n = 0
+            if n:
+                files += 1; casts += n
+        bf = "/tmp/typing_baseline.txt"; base = casts
+        try:
+            base = max(casts, int(open(bf).read().strip()))
+        except Exception:
+            pass
+        try:
+            open(bf, "w").write(str(base))
+        except OSError:
+            pass
+        return {"casts": casts, "files": files, "base": base,
+                "pct": round((base - casts) / base * 100, 1) if base else 0}
+    return cached("typing", 20, build)
 
 def collect():
     pr = progress()
@@ -349,7 +382,8 @@ def collect():
             "commits": recent_commits(), "nearmiss": nearmiss(), "permuter": permuter(),
             "cycle": cycle_status(), "cycle_matched": cycle_matched(),
             "rom": rom_status(), "tree": tree_status(),
-            "history": progress_history(), "runway": runway(), "phase": phase_status()}
+            "history": progress_history(), "runway": runway(), "phase": phase_status(),
+            "typing": typing()}
 
 # Decouple data collection from the request path: ONE background thread refreshes the snapshot on a
 # fixed cadence, serializing it once. do_GET just writes the pre-built bytes — so client count never
@@ -412,9 +446,10 @@ h1{font-size:16px;margin:0 0 6px}.sub{color:#8b949e;font-size:11px;margin-bottom
   </div>
   <div class=card style="grid-column:1/-1"><h2>Progress history — this branch</h2><div style="position:relative"><div id=hist style="width:100%;height:140px"></div><div id=htip style="position:absolute;display:none;top:3px;pointer-events:none;background:#161b22;border:1px solid #30363d;border-radius:4px;padding:3px 7px;font-size:11px;line-height:1.4;white-space:nowrap;z-index:5"></div><span style="position:absolute;top:-2px;right:4px;font-size:9px;color:#484f58;pointer-events:none">100%</span><span style="position:absolute;top:48%;right:4px;font-size:9px;color:#484f58;pointer-events:none">50%</span></div><div class=prow style="margin-top:5px;gap:16px;font-size:11px"><span style="color:#388bfd">●&nbsp;functions</span><span style="color:#2ea043">●&nbsp;bytes</span><span style="color:#6e7681">hover for values</span></div></div>
   <div class=card><h2>Active workers <span id=acount style=color:#8b949e></span></h2><div id=workers>idle</div></div>
-  <div class=card><h2>Recent matches</h2><div id=commits></div></div>
+  <div class=card><h2>Recent commits</h2><div id=commits></div></div>
   <div class=card><h2>Near-miss reservoir (re-attempt runway)</h2><div class=nm id=nm></div></div>
   <div class=card><h2>Unmatched runway (by instr size)</h2><div class=nm id=runway></div></div>
+  <div class=card><h2>Typing sweep <span style="color:#8b949e;font-size:11px">offset-casts → structs</span></h2><div id=typing></div></div>
   <div class=card><h2>Permuter (backstop)</h2><div class=kv id=perm></div></div>
 </div>
 <script>
@@ -460,12 +495,13 @@ async function tick(){
    <div style="margin:8px 0">${pbar(p.game,'game')}</div>
    <div class=prow style="margin-top:8px"><span>init ${p.init.fpct}%/${p.init.bpct}%b</span><span>debugger ${p.debugger.fpct}%/${p.debugger.bpct}%b</span><span>overall ${p.overall.cf}/${p.overall.tf}</span></div>`;
  renderHistory(d.history);renderRunway(d.runway);
+ const t=d.typing;if(t)$('typing').innerHTML=`<div class=big>${t.casts.toLocaleString()} casts left</div><div class=bar style="margin:3px 0 6px"><i style="width:${t.pct}%;background:linear-gradient(90deg,#8957e5,#a371f7)"></i></div><div class=prow><span>${t.files} functions to type</span><span>${t.pct}% converted</span></div>`;
  const w=d.active||[];$('acount').textContent=w.length?`(${w.filter(x=>x.status=='working').length} working)`:'';
  $('workers').innerHTML=w.length?w.map(x=>`<div class=worker>
    <div class="sc ${scClass(x.best)}" title="latest ${x.latest}">${x.best===null?'—':x.best}</div>
    <div class=fn><b>${x.func}</b> <span>${x.file} · ${x.instrs?x.instrs+'i':'?'} · ${x.iters}it${x.latest!=null&&x.latest!==x.best?` · now ${x.latest}`:''}</span></div>
    <div class="tag ${x.status}">${x.status}</div></div>`).join(''):'idle — no active run';
- $('commits').innerHTML=(d.commits||[]).map(c=>`<div class=cm><b>+${c.n??'?'}</b> ${c.cycle?`<span style="color:#388bfd">c${c.cycle}</span>`:''} <span>${c.when}</span> ${c.hash}</div>`).join('')||'—';
+ $('commits').innerHTML=(d.commits||[]).map(c=>`<div class=cm><b>+${c.n??'?'}</b> <span style="color:${c.kind==='type'?'#a371f7':'#3fb950'}">${c.kind||'match'}</span> ${c.cycle?`<span style="color:#388bfd">c${c.cycle}</span>`:''} <span>${c.when}</span> ${c.hash}</div>`).join('')||'—';
  const nm=d.nearmiss.bands,mx=Math.max(1,...Object.values(nm));
  $('nm').innerHTML=Object.entries(nm).map(([k,v])=>`<div><div class=b style="height:${Math.round(v/mx*56)}px"></div><small>${v}<br>${k}</small></div>`).join('')+`<div style="align-self:center;color:#8b949e">Σ${d.nearmiss.total}</div>`;
  const pm=d.permuter;$('perm').innerHTML=`<div><b>${pm.cracked}</b>cracked</div><div><b>${pm.backlog}</b>backlog</div><div><b>${pm.seeded}</b>seeded</div><div><b>${pm.live}</b>live procs</div>`;
