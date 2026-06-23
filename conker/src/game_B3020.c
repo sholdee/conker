@@ -5,6 +5,7 @@
 extern s8 D_800D239A;
 extern s8 D_800D2398;
 extern s8 D_800D2399;
+extern s8 *D_800D23B0;
 s32 func_1508802C();
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15085B70.s")
@@ -543,7 +544,19 @@ void func_1508B1D4(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508C9CC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508CA88.s")
+s32 func_1508CA88(void) {
+    s8 **p2;
+    s8 temp;
+
+    p2 = &D_800D23B0;
+    D_800D23B0[0x1703]++;
+    temp = D_800D23B0[0x1703];
+    if (temp >= D_8008FD90) {
+        D_800D23B0[0x1703] = 0;
+        temp = (*p2)[0x1703];
+    }
+    return temp;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508CAD8.s")
 

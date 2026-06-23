@@ -131,7 +131,18 @@ s32 func_15185B28(f32 *arg0) {
     return arg0[2] < D_800D368C;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B1600/func_15185B54.s")
+struct vtx151857DC *func_15185B54(struct vtx151857DC *a0, struct vtx151857DC *a1, struct vtx151857DC *a2) {
+    f32 t;
+
+    t = a0->x / (a0->x - a1->x);
+    a2->x = 0.0f;
+    a2->y = a0->y + (a1->y - a0->y) * t;
+    a2->z = a0->z + (a1->z - a0->z) * t;
+    a2->unkC = (s16)((f32)a0->unkC + (f32)(a1->unkC - a0->unkC) * t);
+    a2->unkE = (s16)((f32)a0->unkE + (f32)(a1->unkE - a0->unkE) * t);
+    a2->unk10 = (s16)((f32)a0->unk10 + (f32)(a1->unk10 - a0->unk10) * t);
+    return a2 + 1;
+}
 
 s32 func_15185C44(f32 *arg0) {
     return arg0[0] <= 0.0f;
