@@ -299,6 +299,8 @@ s32 func_15114CC4(void *a0, s32 a1, s32 *a2, s32 a3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15114D24.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15114F04.s")
+void func_15114F04(s32 arg0, s32 arg1, s32 arg2) {
+    func_1001001C(func_15114CC4, arg0, 0, arg1, arg2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15114F44.s")
