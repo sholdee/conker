@@ -49,7 +49,21 @@ void func_15147928(void *arg0) {
     func_15169824((struct102 *)arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_1514795C.s")
+void func_1514795C(void *arg0) {
+    s32 i;
+    s32 *p;
+
+    for (i = 0, p = (s32 *)arg0; i <= D_80082FA0; i++, p++) {
+        if (p[0xF] != 0) {
+            func_100043B4((s32 *)p[0xF], 4);
+        }
+    }
+
+    p = (s32 *)((s32 *)arg0)[0x13];
+    if (((s32 *)arg0)[0x13] != 0) {
+        func_100043B4(p, 4);
+    }
+}
 
 extern void (*D_8008A2F0[])(void *);
 

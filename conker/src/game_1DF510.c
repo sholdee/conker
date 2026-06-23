@@ -27,6 +27,7 @@ s32 func_151B22F4(s32 *arg0);
 void func_151B222C();
 void func_151B2348(s32 *arg0);
 void func_151B2690(s32 *arg0);
+void func_151B47D8(s32 arg0, s32 arg1, s32 arg2, u8 arg3);
 
 
 void func_151B2060(void *arg0) {
@@ -181,7 +182,9 @@ void func_151B2F04(void *a0, GameStruct151B2F04a *a1, u8 a2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B2FA0.s")
+void func_151B2FA0(s32 arg0, s32 arg1, u8 arg2) {
+    func_151B47D8(arg0, arg0 + 0x150, arg1, arg2);
+}
 
 void func_151B2FD0(s32 *arg0) {
     s32 *temp = (s32 *)arg0[0x4C / 4];

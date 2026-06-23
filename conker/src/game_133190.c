@@ -189,6 +189,7 @@ void func_15106F24(struct102 *arg0) {
 }
 
 extern void (*D_80088C28[])(void *, s32, u8);
+extern void (*D_80088C38[])(struct102 *, s32, u8);
 
 void func_15106F50(struct102 *arg0, s32 arg1, u8 arg2) {
     void (*fn)(void *, s32, u8) = D_80088C28[*(u8 *)((u8 *)arg0 + 0x5C)];
@@ -254,7 +255,11 @@ void func_15107678(struct260 *arg0) {
     func_15149368(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_151076A4.s")
+void func_151076A4(struct102 *arg0, s32 arg1, u8 arg2) {
+    if (D_80088C38[*(u8 *)((s32)arg0 + 0x68)] != 0) {
+        D_80088C38[*(volatile u8 *)((s32)arg0 + 0x68)](arg0, arg1, arg2);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_133190/func_15107700.s")
 

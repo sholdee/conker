@@ -16,6 +16,8 @@ struct Some15171F04 {
 
 extern struct Some15171F04 *D_8008CA4C[];
 
+void func_15169070(s32, s32, s32, u8);
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15167010.s")
 // NON-MATCHING: not hugely far away
 // void func_15167010(void) {
@@ -287,7 +289,9 @@ void func_15168F84(s32 arg0, s32 *arg1, s32 *arg2) {
         *arg2 = 0x60;
     }
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15169040.s")
+void func_15169040(s32 arg0, u8 arg1) {
+    func_15169070(0, 0x68, arg0, arg1);
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15169070.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15169260.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_1516944C.s")

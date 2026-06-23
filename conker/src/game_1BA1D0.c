@@ -4,6 +4,9 @@
 
 void func_1518E308(void *);
 extern f32 D_800A8004;
+extern f32 D_800A7B68;
+extern f32 D_800A7B6C;
+extern f32 D_800A7B70;
 extern struct225 *func_151602C0(Header *, Header2 *, s32, s32, s32, s32, u8, u8, s32, u8, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518CD20.s")
@@ -196,7 +199,60 @@ s32 func_1518F15C(void *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F1A0.s")
+struct Struct1518F1A0Obj {
+    char pad0[0x24];
+    s32 unk24;
+    char pad28[0x4];
+    f32 unk2C;
+    f32 unk30;
+};
+
+struct Struct1518F1A0Sub {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    s16 unk1C;
+    s16 unk1E;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    s16 unk2C;
+};
+
+s32 func_1518F1A0(struct Struct1518F1A0Obj *arg0) {
+    struct Struct1518F1A0Sub *sub;
+    s32 temp_v1;
+
+    sub = (struct Struct1518F1A0Sub *)((u8 *)arg0 + 0x110);
+    sub->unk1E -= D_800BE9E4;
+    if (sub->unk1E < 0) {
+        sub->unk1E = (u32) func_150ADA20() % 6;
+        if (func_150ADA20() & 3) {
+            sub->unk18 = (func_150ADA68() * (sub->unkC - sub->unk10)) + sub->unk10;
+        } else {
+            sub->unk18 = (func_150ADA68() * (sub->unk14 - sub->unkC)) + sub->unkC;
+        }
+    }
+    arg0->unk30 = arg0->unk30 + ((sub->unk18 - arg0->unk30) * D_800A7B68);
+    sub->unk1C -= D_800BE9E4;
+    if (sub->unk1C < 0) {
+        sub->unk1C = (u32) func_150ADA20() % 0x11;
+        sub->unk8 = (func_150ADA68() * (sub->unk0 - sub->unk4)) + sub->unk4;
+    }
+    arg0->unk2C = arg0->unk2C + ((sub->unk8 - arg0->unk2C) * D_800A7B6C);
+    sub->unk2C -= D_800BE9E4;
+    if (sub->unk2C < 0) {
+        sub->unk2C = (u32) func_150ADA20() % 0xF;
+        sub->unk28 = (func_150ADA68() * (sub->unk20 - sub->unk24)) + sub->unk24;
+    }
+    temp_v1 = arg0->unk24;
+    arg0->unk24 += (s32)((sub->unk28 - (f32) temp_v1) * D_800A7B70);
+    return 1;
+}
 
 extern f32 func_150ADA68(void);
 extern f32 D_800A7B74;

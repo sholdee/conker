@@ -16,6 +16,7 @@ extern f32 D_800AA908;
 extern f32 D_800AA90C;
 void func_15150F90(void *arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_15153634(void *arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_151602C0(Header *, Header2 *, s32, s32, s32, s32, s32, s32, s32, u8, s32);
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151B9F00.s")
@@ -78,7 +79,21 @@ void func_151BA468(struct260 *arg0, s32 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BBA9C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BBEE4.s")
+void func_151BBEE4(f32 *arg0, u8 arg1, s32 arg2) {
+    Header header;
+    Header2 header2;
+
+    header.unk0 = 3;
+    header.unk1 = -1;
+    header.unk2 = (func_150ADA20() & 0xF) + 5;
+    header.unk4 = 0;
+
+    header2.unk0 = (s32) arg0[0];
+    header2.unk4 = (s32) arg0[1];
+    header2.unk8 = (s32) arg0[2];
+
+    func_151602C0(&header, &header2, (func_150ADA20() % 0x15U) + 0x1E, 0xFF, 0x61, 0x36, 0xFF, 0, 0, arg1, arg2);
+}
 
 void func_150E7FEC(f32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
 

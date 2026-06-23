@@ -48,6 +48,7 @@ extern u8 D_800A5EC0[];
 extern u8 D_800A5ED8[];
 s32 func_1518D1C0(s32, s32, s32, s32, s32, s32, s32 *);
 s32 func_1515D5F8(s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
+void func_150C4120(s32, s32, s32, s32);
 
 typedef struct Struct1514E00C_2C {
     /* 0x00 */ f32 unk00;
@@ -944,7 +945,9 @@ void func_1514F538(s32 arg0) {
     func_151D74B0(arg0, 4, -1, 0xFF, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F568.s")
+void func_1514F568(s32 arg0) {
+    func_150C4120(arg0, -1, 0xFF, 1);
+}
 
 void func_1501175C(struct127 *arg0, u8 arg1, s32 arg2);
 

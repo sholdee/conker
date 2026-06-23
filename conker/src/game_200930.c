@@ -24,6 +24,7 @@ extern f32 D_800AB234;
 
 void func_1503F404(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 s32 func_15132A4C(void *, s32, s32, s32, u8, s32);
+void func_151541B8(void *, f32, s32, f32, f32, u8, s32);
 struct conker151D5514;
 void func_1514FCE8(struct conker151D5514 *a0, u8 a1, s32 a2);
 
@@ -417,7 +418,17 @@ void func_151D5514(struct vec151D5514 *arg0, u8 arg1, s32 arg2) {
     func_1514FCE8(&sp1C, arg1, arg2);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D5648.s")
+void func_151D5648(void *arg0, u8 arg1, s32 arg2) {
+    union { f32 f; f64 _a; } temp_f0;
+    u32 temp_a;
+
+    func_151D5514(arg0, arg1, arg2);
+    func_151D3FF4(arg0, arg1, arg2);
+    temp_f0.f = func_150ADA68();
+    temp_a = func_150ADA20();
+    func_151541B8(arg0, temp_f0.f * 4.0f + 12.0f, 0x3FD20C49,
+                  (f32)(u32)((temp_a % 0x38U) + 0xC8), 0.0f, arg1, arg2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D5714.s")
 
