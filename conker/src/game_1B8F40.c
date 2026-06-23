@@ -9,17 +9,24 @@
 
 s32 func_15167A68(s32, s32, s32, s32, s32, s32);
 
-s32 func_1518BCD0(s32 arg0, s32 arg1, s32 arg2) {
-    s32 temp_v0;
+typedef struct {
+    u8 pad_0x0[0x10];
+    u8 field_0x10[0x1C];
+    s32 field_0x2C;
+    s32 field_0x30;
+} EffectObject1F;
 
-    temp_v0 = func_15167A68(0x1F, arg2, 0x44, 1, (u8)arg1, 1);
+s32 func_1518BCD0(s32 arg0, s32 arg1, s32 arg2) {
+    EffectObject1F *temp_v0;
+
+    temp_v0 = (EffectObject1F *)func_15167A68(0x1F, arg2, 0x44, 1, (u8)arg1, 1);
     if (temp_v0 == 0) {
         return 0;
     }
-    memcpy((void *)(temp_v0 + 0x10), (void *)arg0, 0x1C);
-    *(s32 *)(temp_v0 + 0x2C) = func_150ADA20() & 0x1F;
-    *(s32 *)(temp_v0 + 0x30) = func_150ADA20() & 0x1F;
-    return temp_v0;
+    memcpy(temp_v0->field_0x10, (void *)arg0, 0x1C);
+    temp_v0->field_0x2C = func_150ADA20() & 0x1F;
+    temp_v0->field_0x30 = func_150ADA20() & 0x1F;
+    return (s32)temp_v0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B8F40/func_1518BD60.s")

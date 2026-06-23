@@ -3,21 +3,6 @@
 #include "variables.h"
 
 void func_1513470C(struct102 *arg0);
-void *func_150C6D90(u8 *arg0);
-
-
-void func_150C66F0(u8 *arg0) {
-    u8 *temp;
-
-    if (*(s32 *)(arg0 + 0x6C) != 0) {
-        temp = *(u8 **)(arg0 + 0x6C) + 0xB0;
-        temp[4] = 1;
-        done:
-            ;
-    } else {
-        *(void **)(arg0 + 0x6C) = func_150C6D90(arg0);
-    }
-}
 
 typedef struct {
     /* 0x00 */ s32 field_0x00;
@@ -39,6 +24,26 @@ typedef struct {
     /* 0x28 */ char pad_0x28[0x88];
     /* 0xB0 */ RandomLerpState field_0xB0;
 } RandomLerpObject;
+
+typedef struct {
+    /* 0x00 */ char pad_0x00[0x6C];
+    /* 0x6C */ RandomLerpObject *volatile field_0x6C;
+} RandomLerpOwner;
+
+RandomLerpObject *func_150C6D90(RandomLerpOwner *arg0);
+
+void func_150C66F0(RandomLerpOwner *arg0) {
+    RandomLerpState *temp;
+
+    if (arg0->field_0x6C != 0) {
+        temp = &arg0->field_0x6C->field_0xB0;
+        temp->field_0x04 = 1;
+        done:
+            ;
+    } else {
+        arg0->field_0x6C = func_150C6D90(arg0);
+    }
+}
 
 s32 func_150C673C(RandomLerpObject *arg0) {
     s8 ret;

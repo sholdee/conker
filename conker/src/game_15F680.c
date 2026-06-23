@@ -108,11 +108,11 @@ void func_151323AC(Func151323ACArg0 *arg0) {
 
 extern void (*D_800899D4[])(s32);
 
-void func_151323F8(s32 arg0) {
+void func_151323F8(Func151323ACArg0 *arg0) {
     s32 idx;
 
-    idx = (*(s32 *)(arg0 + 0x60) & 0x100) ? *(u8 *)(arg0 + 0x68) : 0;
-    D_800899D4[idx](arg0);
+    idx = (arg0->field_0x60 & 0x100) ? arg0->field_0x68 : 0;
+    D_800899D4[idx]((s32)arg0);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15132444.s")

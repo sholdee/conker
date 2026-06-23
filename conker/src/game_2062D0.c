@@ -401,12 +401,44 @@ typedef struct {
 } Struct151DAB58Local;
 
 typedef struct {
-    u8 unk0;
-    u8 unk1;
-    u8 pad2[2];
-    f32 unk4;
-    f32 unk8;
+    u8 field_0x00;
+    u8 field_0x01;
+    u8 pad_0x02[0x2];
+    f32 field_0x04;
+    f32 field_0x08;
 } Struct151DAB58Extra;
+
+typedef struct {
+    u8 field_0x00;
+    u8 pad_0x01[0x3];
+    s32 field_0x04;
+    u8 field_0x08;
+    u8 field_0x09;
+    u8 field_0x0A;
+    u8 field_0x0B;
+    u8 field_0x0C;
+    u8 field_0x0D;
+    u8 pad_0x0E[0x2];
+    f32 field_0x10;
+    f32 field_0x14;
+    f32 field_0x18;
+} AxisOscillator;
+
+typedef struct {
+    u8 pad_0x00[0x4C];
+    f32 field_0x4C;
+    f32 field_0x50;
+    f32 field_0x54;
+    u8 field_0x58;
+    u8 pad_0x59[0x4F];
+    AxisOscillator field_0xA8;
+    u8 pad_0xC4[0x4C];
+    Struct151DAB58Extra field_0x110;
+} AxisOscillatorOwner;
+
+typedef struct {
+    u32 field_0x00;
+} FrameDeltaWord;
 
 void func_151DAB58(u8 arg0, f32 arg1, u8 arg2, struct17 *arg3, volatile u8 arg4, u8 arg5, s32 arg6) {
     void *ret;
@@ -445,10 +477,10 @@ void func_151DAB58(u8 arg0, f32 arg1, u8 arg2, struct17 *arg3, volatile u8 arg4,
     sp54.unk14 = arg1;
     sp54.unk46 = 0;
     sp54.unk47 = 7;
-    sp48.unk0 = 0;
-    sp48.unk1 = (func_150ADA20() % 3U) + 6;
-    sp48.unk4 = (func_150ADA68() * D_800AB4A0) + D_800AB4A4;
-    sp48.unk8 = (func_150ADA68() * D_800AB4A8) + D_800AB4AC;
+    sp48.field_0x00 = 0;
+    sp48.field_0x01 = (func_150ADA20() % 3U) + 6;
+    sp48.field_0x04 = (func_150ADA68() * D_800AB4A0) + D_800AB4A4;
+    sp48.field_0x08 = (func_150ADA68() * D_800AB4A8) + D_800AB4AC;
     sp54.unk1 = 0;
     sp54.unk48 = 0;
     sp54.unk4C = 0xFF;
@@ -478,15 +510,15 @@ void func_151DAB58(u8 arg0, f32 arg1, u8 arg2, struct17 *arg3, volatile u8 arg4,
 }
 extern f32 D_800AB4B0;
 
-s32 func_151DADA0(u8 *arg0) {
+s32 func_151DADA0(AxisOscillatorOwner *arg0) {
     f32 f0;
-    u8 *p;
+    Struct151DAB58Extra *p;
 
-    p = arg0 + 0x110;
-    *p = (s8)arg0[0x111] * D_800BE9E4 + *p;
-    f0 = func_151423D8((u8)(*p - 0x40));
-    *(f32 *)(arg0 + 0x4C) = *(f32 *)(p + 4) * f0 + 1.0f;
-    *(f32 *)(arg0 + 0x50) = D_800AB4B0 - *(f32 *)(p + 8) * f0;
+    p = &arg0->field_0x110;
+    p->field_0x00 = p->field_0x00 + (s8)p->field_0x01 * D_800BE9E4;
+    f0 = func_151423D8((u8)(p->field_0x00 - 0x40));
+    arg0->field_0x4C = p->field_0x04 * f0 + 1.0f;
+    arg0->field_0x50 = D_800AB4B0 - p->field_0x08 * f0;
     return 1;
 }
 
@@ -649,36 +681,6 @@ void func_151DB4CC(struct218 *arg0) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_2062D0/func_151DB5D0.s")
-
-typedef struct {
-    u8 field_0x00;
-    u8 pad_0x01[0x3];
-    s32 field_0x04;
-    u8 field_0x08;
-    u8 field_0x09;
-    u8 field_0x0A;
-    u8 field_0x0B;
-    u8 field_0x0C;
-    u8 field_0x0D;
-    u8 pad_0x0E[0x2];
-    f32 field_0x10;
-    f32 field_0x14;
-    f32 field_0x18;
-} AxisOscillator;
-
-typedef struct {
-    u8 pad_0x00[0x4C];
-    f32 field_0x4C;
-    f32 field_0x50;
-    f32 field_0x54;
-    u8 field_0x58;
-    u8 pad_0x59[0x4F];
-    AxisOscillator field_0xA8;
-} AxisOscillatorOwner;
-
-typedef struct {
-    u32 field_0x00;
-} FrameDeltaWord;
 
 s32 func_151DB97C(AxisOscillatorOwner *arg0, s32 arg1) {
     AxisOscillator *p;

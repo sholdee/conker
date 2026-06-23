@@ -502,18 +502,18 @@ void func_151AB788(SoundHandleOwner *arg0) {
     func_151346EC((u8 *)arg0);
 }
 
-void func_151AB7D8(u8 *arg0) {
+void func_151AB7D8(SoundHandleOwner *arg0) {
     union {
-        s32 *v0;
+        SoundHandleState *v0;
         f64 align;
     } sp18;
 
-    sp18.v0 = (s32 *)(*(s32 *)(arg0 + 0x58) + 0x58);
-    if (*(u16 volatile *)(arg0 + 0x5E) != 0) {
-        func_100111C8(*(u16 *)(arg0 + 0x5E));
+    sp18.v0 = (SoundHandleState *)(arg0->field_0x58 + 0x58);
+    if (arg0->field_0x5E != 0) {
+        func_100111C8(arg0->field_0x5E);
     }
-    sp18.v0[7] = 0;
-    func_1513470C(arg0);
+    sp18.v0->field_0x1C = 0;
+    func_1513470C((u8 *)arg0);
 }
 
 void func_151AB828(u8 *arg0) {

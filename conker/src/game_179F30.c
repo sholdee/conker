@@ -38,6 +38,16 @@ typedef struct Struct1514F5CCArg {
     u8 unk18;
 } Struct1514F5CCArg;
 
+typedef struct HudSpriteState {
+    char pad_0x00[0x9];
+    u8 field_0x09;
+} HudSpriteState;
+
+typedef struct HudSpriteHandle {
+    char pad_0x00[0x14];
+    HudSpriteState *field_0x14;
+} HudSpriteHandle;
+
 extern struct_1514EBA4 *func_15167A68(s32, s32, s32, s32, s32, s32);
 extern f32 D_800A5E08;
 extern f32 D_800A5E0C;
@@ -1046,16 +1056,16 @@ void func_1514F110(void) {
     func_1514F194();
 }
 
-s32 func_1514F130(s32 arg0, s32 arg1, s32 arg2) {
+s32 func_1514F130(HudSpriteHandle *arg0, s32 arg1, s32 arg2) {
     switch (arg1) {
     case 13:
-        *(u8 *)(*(s32 *)(arg0 + 0x14) + 9) = 0;
+        arg0->field_0x14->field_0x09 = 0;
         break;
     case 14:
-        *(u8 *)(*(s32 *)(arg0 + 0x14) + 9) = 1;
+        arg0->field_0x14->field_0x09 = 1;
         break;
     default:
-        return func_1514E89C(arg0, arg1, arg2);
+        return func_1514E89C((s32) arg0, arg1, arg2);
     }
     return 1;
 }

@@ -1340,38 +1340,43 @@ s32 func_15163F50(struct225 *arg0, struct225 *arg1) {
 }
 
 typedef struct {
-    s32 unk0;
+    s32 field_0x0;
     union {
-        s32 w4;
-        u8 b4;
-    } u4;
-    u8 unk8;
-    u8 unk9;
-} struct_func_15163FEC_arg1;
+        s32 w;
+        u8 b;
+    } field_0x4;
+    u8 field_0x8;
+    u8 field_0x9;
+} ActorRefMessage;
 
 typedef struct {
-    s32 unk0;
-    u8 unk4;
-} struct_func_15163FEC_sub;
+    s32 field_0x0;
+    u8 field_0x4;
+} ActorRefPayload;
 
-void func_15163FEC(struct225 *arg0, struct_func_15163FEC_arg1 *arg1, u8 arg2) {
-    struct_func_15163FEC_sub *temp_v0;
+typedef struct {
+    u8 pad_0[0x18];
+    ActorRefPayload field_0x18;
+} ActorRefObject;
+
+void func_15163FEC(struct225 *arg0, ActorRefMessage *arg1, u8 arg2) {
+    ActorRefPayload *temp_v0;
     s32 temp_v1;
 
-    temp_v0 = (struct_func_15163FEC_sub *)((u8 *)arg0 + 0x18);
+    temp_v0 = (ActorRefPayload *)((u8 *)arg0 + 0x18);
     if (arg2 == 0) {
-        temp_v1 = arg1->unk0;
-        if ((temp_v1 == temp_v0->unk0) || (arg1->u4.b4 == temp_v0->unk4)) {
+        temp_v1 = arg1->field_0x0;
+        if ((temp_v1 == temp_v0->field_0x0) || (arg1->field_0x4.b == temp_v0->field_0x4)) {
             func_1516972C(arg0);
         }
     } else if (arg2 == 0x2D) {
-        if (temp_v0->unk0 == arg1->unk0) {
-            temp_v0->unk0 = arg1->u4.w4;
-            temp_v0->unk4 = arg1->unk9;
+        if (temp_v0->field_0x0 == arg1->field_0x0) {
+            temp_v0->field_0x0 = arg1->field_0x4.w;
+            temp_v0->field_0x4 = arg1->field_0x9;
         } else {
-            if (temp_v0->unk0 == arg1->u4.w4) {
-                temp_v0->unk0 = arg1->unk0;
-                temp_v0->unk4 = arg1->unk8;
+            if (temp_v0->field_0x0 == arg1->field_0x4.w) {
+                temp_v0->field_0x0 = arg1->field_0x0;
+                temp_v0->field_0x4 = arg1->field_0x8;
             }
         trailing_label_15163FEC:
             ;
@@ -1380,9 +1385,9 @@ void func_15163FEC(struct225 *arg0, struct_func_15163FEC_arg1 *arg1, u8 arg2) {
         D_8008B374[arg0->unk2D]((s32)arg0);
     }
 }
-void func_151640C0(struct225 *arg0, void *arg1, u8 arg2) {
-    struct225 **sp18;
-    void **sp1C;
+void func_151640C0(ActorRefObject *arg0, ActorRefMessage *arg1, u8 arg2) {
+    ActorRefObject **sp18;
+    ActorRefMessage **sp1C;
     s32 temp_v1;
     s32 temp_v0;
     s32 temp_a0;
@@ -1392,37 +1397,37 @@ void func_151640C0(struct225 *arg0, void *arg1, u8 arg2) {
     sp18 = &arg0;
     sp1C = &arg1;
     if (arg2 == 0x29) {
-        temp_v1 = *(s32 *)((s32)*sp1C + 4);
+        temp_v1 = (*sp1C)->field_0x4.w;
         temp_v0 = (s32)*sp18;
-        temp_a0 = *(s32 *)temp_v1;
-        temp_a1 = *(s32 *)(temp_v0 + 0x18);
+        temp_a0 = ((ActorRefPayload *)temp_v1)->field_0x0;
+        temp_a1 = ((ActorRefObject *)temp_v0)->field_0x18.field_0x0;
         temp_v0 += 0x18;
-        temp_a2 = *(u8 *)(temp_v0 + 4);
-        temp_a3 = *(u8 *)(temp_v1 + 4);
-        if ((temp_a1 == temp_a0) || (temp_a2 == temp_a3) || (temp_a3 == *(u8 *)(temp_a1 + 0x3B))) {
-            func_1516972C(*sp18);
+        temp_a2 = ((ActorRefPayload *)temp_v0)->field_0x4;
+        temp_a3 = ((ActorRefPayload *)temp_v1)->field_0x4;
+        if ((temp_a1 == temp_a0) || (temp_a2 == temp_a3) || (((struct127 *)temp_a1)->unique_id == temp_a3)) {
+            func_1516972C((struct225 *)*sp18);
         }
     }
 }
 
-void func_15164134(struct225 *arg0, struct_func_15163FEC_arg1 *arg1, u8 arg2) {
-    struct_func_15163FEC_sub *temp_v0;
+void func_15164134(struct225 *arg0, ActorRefMessage *arg1, u8 arg2) {
+    ActorRefPayload *temp_v0;
     s32 temp_v1;
 
-    temp_v0 = (struct_func_15163FEC_sub *)((u8 *)arg0 + 0x18);
+    temp_v0 = (ActorRefPayload *)((u8 *)arg0 + 0x18);
     if (arg2 == 0) {
-        temp_v1 = arg1->unk0;
-        if ((temp_v1 == temp_v0->unk0) || (arg1->u4.b4 == temp_v0->unk4)) {
+        temp_v1 = arg1->field_0x0;
+        if ((temp_v1 == temp_v0->field_0x0) || (arg1->field_0x4.b == temp_v0->field_0x4)) {
             func_1516972C(arg0);
         }
     } else if (arg2 == 0x2D) {
-        if (temp_v0->unk0 == arg1->unk0) {
-            temp_v0->unk0 = arg1->u4.w4;
-            temp_v0->unk4 = arg1->unk9;
+        if (temp_v0->field_0x0 == arg1->field_0x0) {
+            temp_v0->field_0x0 = arg1->field_0x4.w;
+            temp_v0->field_0x4 = arg1->field_0x9;
         } else {
-            if (temp_v0->unk0 == arg1->u4.w4) {
-                temp_v0->unk0 = arg1->unk0;
-                temp_v0->unk4 = arg1->unk8;
+            if (temp_v0->field_0x0 == arg1->field_0x4.w) {
+                temp_v0->field_0x0 = arg1->field_0x0;
+                temp_v0->field_0x4 = arg1->field_0x8;
             }
         trailing_label_15164134:
             ;

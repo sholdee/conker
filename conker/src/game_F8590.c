@@ -23,7 +23,12 @@ void func_15143794(s32, s32, f32, f32 *);
 struct260 *func_15130374(void *, u8, s32, u8, s32);
 s32 func_15132A4C(void *, s32, s32, s32, u8, s32);
 
-s32 func_150CB0E0(f32 *arg0, s32 arg1, s32 arg2, u8 arg3) {
+typedef struct {
+    char pad_0[0x1D4];
+    s32 field_0x1D4;
+} AnimFrameOwner;
+
+s32 func_150CB0E0(f32 *arg0, AnimFrameOwner *arg1, s32 arg2, u8 arg3) {
     f32 sp2C[3];
     f32 *temp_a0;
     s32 temp_a2;
@@ -39,9 +44,9 @@ s32 func_150CB0E0(f32 *arg0, s32 arg1, s32 arg2, u8 arg3) {
     }
 
     if (arg3 == 1) {
-        temp_a2 = *(s32 *)(arg1 + 0x1D4) + 0xA00;
+        temp_a2 = arg1->field_0x1D4 + 0xA00;
     } else {
-        temp_a2 = *(s32 *)(arg1 + 0x1D4) + 0xBC0;
+        temp_a2 = arg1->field_0x1D4 + 0xBC0;
     }
 
     func_15143134(temp_a0, arg0, temp_a2);
@@ -52,7 +57,7 @@ s32 func_150CB0E0(f32 *arg0, s32 arg1, s32 arg2, u8 arg3) {
     sp2C[0] = arg0[0];
     sp2C[1] = arg0[1] + 100.0f;
     sp2C[2] = arg0[2];
-    func_1504715C(arg2, arg1);
+    func_1504715C(arg2, (s32)arg1);
     return func_15046C80(sp2C, 0, arg0[1] - 500.0f, arg2);
 }
 

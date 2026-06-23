@@ -11,6 +11,19 @@ extern f32 D_800A4A94;
 extern f32 sinf(f32);
 struct102 *func_1513B5E0(void *, s32, s32, s32, s32);
 
+typedef struct ObjRenderState {
+    u8 pad_0[0x10];
+    u8 field_0x10;
+    u8 pad_0x11;
+    s8 field_0x12;
+    u8 pad_0x13[0x36];
+    u8 field_0x49;
+    u8 pad_0x4A[0xA];
+    u32 field_0x54;
+    u32 field_0x58[2][4];
+    Mtx field_0x78[2];
+} ObjRenderState;
+
 struct Obj1513BAE8 {
     u8 pad0[0x50];
     s32 unk50;
@@ -50,25 +63,23 @@ void func_1513B798(struct102 *arg0) {
         func_1516972C(arg0);
     }
 }
-Gfx *func_1513B83C(Gfx *arg0, struct102 *arg1, s16 arg2) {
+Gfx *func_1513B83C(Gfx *arg0, ObjRenderState *arg1, s16 arg2) {
     s32 idx;
-    u8 *ptr;
 
-    ptr = (u8 *)arg1;
-    if ((ptr[0x10] & 2) && !(ptr[0x49] & (1 << arg2))) {
+    if ((arg1->field_0x10 & 2) && !(arg1->field_0x49 & (1 << arg2))) {
         return arg0;
     }
 
-    idx = *(s8 *)(ptr + 0x12);
+    idx = arg1->field_0x12;
     if (idx != -1) {
-        if (D_80089C28[idx](arg1, arg2) == 0) {
+        if (D_80089C28[idx]((struct102 *)arg1, arg2) == 0) {
             return arg0;
         }
     }
 
-    WGFX168A90(arg0++, 0xDA380003, (s32)ptr + (D_800BE9C0 << 6) + 0x78);
-    WGFX168A90(arg0++, 0xDB060004, *(u32 *)((s32)ptr + (D_800BE9C0 << 4) + (arg2 << 2) + 0x58));
-    WGFX168A90(arg0++, 0xDE000000, *(u32 *)(ptr + 0x54));
+    WGFX168A90(arg0++, 0xDA380003, (s32)&arg1->field_0x78[D_800BE9C0]);
+    WGFX168A90(arg0++, 0xDB060004, arg1->field_0x58[D_800BE9C0][arg2]);
+    WGFX168A90(arg0++, 0xDE000000, arg1->field_0x54);
 
     return arg0;
 }

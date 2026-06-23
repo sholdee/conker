@@ -28,13 +28,27 @@ typedef struct {
     f32 field_0x24;
     s32 field_0x28;
     s32 field_0x2C;
-    char pad_0x30[0x8];
+    s32 field_0x30;
+    s32 field_0x34;
     s8 field_0x38;
     s8 field_0x39;
     char pad_0x3A[0x6];
-    u8 field_0x40[0x1D0];
-    u8 field_0x210[0x1D0];
+    u8 field_0x40[1];
+    u8 field_0x41;
+    char pad_0x42[0x1CE];
+    u8 field_0x210[1];
+    u8 field_0x211;
+    char pad_0x212[0x1CE];
 } AnimPlaybackState;
+
+typedef struct {
+    char pad_0[0x4];
+    u8 field_0x4;
+    char pad_0x5[0x7F];
+    u16 field_0x84;
+    char pad_0x86[0x24A];
+    AnimPlaybackState *field_0x2D0;
+} AnimPlaybackOwner;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_15055E50.s")
 
@@ -1106,22 +1120,22 @@ f32 func_1505DF10(struct127 *arg0, u8 arg1, s16 *arg2, f32 *arg3, f32 *arg4) {
 }
 extern u16 D_800C4ED0[];
 
-void func_1505DFDC(u8 *arg0) {
+void func_1505DFDC(AnimPlaybackOwner *arg0) {
     s32 sp1C;
-    void *temp;
+    AnimPlaybackState *temp;
     u16 *p;
 
-    *(u16 *)(arg0 + 0x84) = 0xFFFF;
-    temp = *(void **)(arg0 + 0x2D0);
+    arg0->field_0x84 = 0xFFFF;
+    temp = arg0->field_0x2D0;
     if (temp != NULL) {
-        sp1C = *(u8 *)(arg0 + 0x4);
-        *(s32 *)((u8 *)temp + 0x28) = 0;
-        bzero((u8 *)temp + 0x40, 0x3A0);
+        sp1C = arg0->field_0x4;
+        temp->field_0x28 = 0;
+        bzero(temp->field_0x40, 0x3A0);
         p = &D_800C4ED0[sp1C];
-        *(u8 *)((u8 *)temp + 0x41) = *p + 1;
-        *(u8 *)((u8 *)temp + 0x211) = *p + 1;
-        *(s32 *)((u8 *)temp + 0x30) = 0;
-        *(s32 *)((u8 *)temp + 0x34) = 0;
+        temp->field_0x41 = *p + 1;
+        temp->field_0x211 = *p + 1;
+        temp->field_0x30 = 0;
+        temp->field_0x34 = 0;
     }
 }
 

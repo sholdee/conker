@@ -167,16 +167,16 @@ void func_15146BF8(ActorFields *arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
-void func_15146D60(s32 arg0, s32 arg1, s32 arg2) {
+void func_15146D60(ActorFields *arg0, s32 arg1, s32 arg2) {
     Struct15147040 sp4C;
     s32 sp2C[8];
     s32 temp_a3;
 
     temp_a3 = (u8)arg1;
-    if (*(s32 *)(arg0 + 0x1D4) != 0) {
-        if (func_15146890(&sp4C, arg0, (s32)&sp2C[-1], temp_a3) != 0) {
+    if (arg0->field_0x1D4 != 0) {
+        if (func_15146890(&sp4C, *(s32 *)&arg0, (s32)&sp2C[-1], temp_a3) != 0) {
             func_15141F78(0xA, (struct157 *)&sp2C[-1], (f32)arg2 * D_800A5728,
-                          (u8)(u32)(*(f32 *)(arg0 + 0x40) * D_800A572C),
+                          (u8)(u32)(arg0->field_0x40 * D_800A572C),
                           (struct157 *)&sp4C, temp_a3);
         }
     }

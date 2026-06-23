@@ -124,12 +124,12 @@ void func_151CE47C(ConkerStruct151CE47C *arg0) {
 
 extern void func_151478F4(void *);
 
-void func_151CE49C(s32 arg0) {
+void func_151CE49C(Func151CE4DCArg0 *arg0) {
     s32 sp1C;
-    s32 temp;
+    Func151CE4DCTemp *temp;
 
-    temp = *(s32 *)(arg0 + 0x98);
-    sp1C = *(s32 *)(temp + 0x48);
+    temp = (Func151CE4DCTemp *)arg0->field_0x98;
+    sp1C = temp->field_0x48;
     func_151494E0((s32)&sp1C, 0x23);
     func_151478F4((void *)arg0);
 }
