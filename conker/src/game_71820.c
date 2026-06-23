@@ -252,20 +252,32 @@ struct conker15045714 {
     f32 unk8;
 };
 
-void func_15045714(struct conker15045714 *arg0, s32 arg1, s32 *arg2, s32 arg3) {
+void func_15045714(struct conker15045714 *arg0, u16 arg1, s32 *arg2, s32 arg3) {
     func_1510F800(2);
-    *arg2 = func_150A6500((s16)arg0->unk0, (s16)arg0->unk8, arg3, (u16)arg1);
+    *arg2 = func_150A6500((s16)arg0->unk0, (s16)arg0->unk8, arg3, arg1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15045780.s")
+s32 func_15045F8C(struct conker15045714 *arg0, f32 arg1, s32 *arg2, s32 arg3);
+
+s32 func_15045780(struct conker15045714 *arg0, u16 arg1, f32 arg2, s32 arg3) {
+    s32 sp1C;
+    s32 sp18;
+
+    if (arg0->unk4 < arg2) {
+        *((u8 *)arg3 + 0x1C) &= ~2;
+        return 0;
+    }
+    func_15045714(arg0, arg1, &sp1C, (s32)&sp18);
+    return func_15045F8C(arg0, arg2, &sp18, arg3);
+}
 
 extern s32 func_15047004(s32, s32, s32);
-extern s32 func_15045780(s32, u16, s32, s32);
+extern s32 func_15045780(struct conker15045714 *, u16, f32, s32);
 
 s32 func_15045800(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     switch (func_15047004(arg0, arg2, arg3)) {
     case 0:
-        return func_15045780(arg0, (u16)arg1, arg2, arg3);
+        return func_15045780((struct conker15045714 *)arg0, (u16)arg1, *(f32 *)&arg2, arg3);
     case 1:
         return 0;
     case 2:

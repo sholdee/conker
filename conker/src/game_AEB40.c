@@ -1,10 +1,13 @@
 #include <ultra64.h>
 #define func_150ADA20 func_150ADA20_u8_proto
+#define func_15083E90 func_15083E90_s32_proto
 #include "functions.h"
+#undef func_15083E90
 #undef func_150ADA20
 #include "variables.h"
 
 extern s32 func_150ADA20(void);
+extern struct127 *func_15083E90(u8);
 extern struct172 D_80086CC4[];
 extern void func_150302F0(struct127 *arg0, s32 arg1);
 extern s32 D_80086CAC[];
@@ -216,7 +219,15 @@ s32 func_15083E0C(u8 id) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15083E90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15083FB0.s")
+s32 func_15083FB0(u8 arg0) {
+    struct127 *temp;
+
+    temp = func_15083E90(arg0);
+    if (temp != 0) {
+        return temp - D_800CC2D0;
+    }
+    return -1;
+}
 
 extern struct127 *func_1505EEF4(void);
 
