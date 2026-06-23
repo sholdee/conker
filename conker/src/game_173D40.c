@@ -19,6 +19,28 @@ typedef struct {
     s32 pad20;
 } Struct15146E84Buffer;
 
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    Struct15147040 unk8;
+    f32 unk14;
+    f32 unk18;
+    s16 unk1C;
+    s16 unk1E;
+    s16 unk20;
+    s16 unk22;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+    s8 unk3C;
+    u8 pad3D;
+    s16 unk3E;
+    s16 unk40;
+} Struct15146A98;
+
 extern s32 func_15142314(s32, s32, Struct15147040 *);
 extern void func_1504715C(s32, s32);
 extern s32 func_15046C80(f32 *, s32, f32, s32);
@@ -29,6 +51,12 @@ extern void func_151DAB58(u8, f32, u8, struct17 *, s32, u8, u8);
 extern u8 (*D_8008FD04)(void);
 extern u8 (*D_8008FD1C)(void);
 extern u8 (*D_8008FD30)(void);
+extern f32 D_800A5708;
+extern f32 D_800A570C;
+extern f32 D_800A5710;
+extern f32 D_800A5714;
+extern f32 D_800A5718;
+extern f32 D_800A571C;
 extern f32 D_800A5720;
 extern f32 D_800A5724;
 extern f32 D_800A5728;
@@ -42,6 +70,7 @@ extern f32 D_800A5744;
 extern f32 D_800A5748;
 extern f32 D_800A574C;
 extern f32 D_800A5750;
+extern void func_15150F90(void *, s32, s32, s32);
 void func_15143794(s32, s32, f32, f32 *);
 struct260 *func_15130374(void *, u8, s32, u8, s32);
 
@@ -73,7 +102,33 @@ s32 func_15146890(Struct15147040 *arg0, s32 arg1, s32 arg2, u8 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_173D40/func_15146970.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_173D40/func_15146A98.s")
+void func_15146A98(s32 arg0, s32 arg1, s32 arg2) {
+    Struct15147040 sp5C;
+    Struct15146A98 sp18;
+
+    if (*(s32 *)(arg0 + 0x1D4) != 0) {
+        func_15146890(&sp5C, arg0, 0, (u8)arg1);
+        sp18.unk0 = 5;
+        sp18.unk4 = 0x16;
+        sp18.unk8 = sp5C;
+        sp18.unk14 = D_800A5708;
+        sp18.unk18 = D_800A570C;
+        sp18.unk1C = 0;
+        sp18.unk1E = 0xFF;
+        sp18.unk20 = -0x14;
+        sp18.unk22 = 0xE;
+        sp18.unk24 = 6.0f;
+        sp18.unk28 = 3.0f;
+        sp18.unk2C = D_800A5710;
+        sp18.unk30 = D_800A5714;
+        sp18.unk34 = D_800A5718;
+        sp18.unk38 = D_800A571C;
+        sp18.unk3C = 3;
+        sp18.unk3E = 0x19;
+        sp18.unk40 = 0x19;
+        func_15150F90(&sp18, 0, 0xFF, 1);
+    }
+}
 
 void func_15146BF8(s32, s32, s32, s32);
 
