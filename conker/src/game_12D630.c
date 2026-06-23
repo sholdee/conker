@@ -2,6 +2,11 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+} struct_func_15100230;
+
 
 void func_15100180(s32 arg0) {
     struct {
@@ -32,6 +37,20 @@ void func_151001B4(struct127 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12D630/func_15100230.s")
+void func_15100230(struct102 *arg0, void *arg1, u8 arg2) {
+    struct {
+        s32 unk0;
+        u8 unk4;
+    } *p;
+
+    p = (void *)((u8 *)arg0 + 0x28);
+    if (arg2 == 0x48) {
+        if ((p->unk0 == *(s32 *)arg1) || (p->unk4 == *(u8 *)(*(s32 *)&arg1 + 4))) {
+            func_1516972C(arg0);
+        }
+    } else {
+        func_15149514((s32)arg1, arg2, (s32)p, (s32)&p->unk4, (s32)arg0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12D630/func_151002BC.s")

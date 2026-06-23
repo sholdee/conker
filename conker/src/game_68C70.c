@@ -3,7 +3,26 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_68C70/func_1503B7C0.s")
+extern void *allocate_memory(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+
+typedef struct {
+    u8 pad0[0x44];
+    f32 unk44;
+    u8 pad48[0x4];
+    s16 unk4C;
+} func_1503B7C0_sub;
+
+typedef struct {
+    u8 pad0[0x11C];
+    func_1503B7C0_sub *unk11C;
+} func_1503B7C0_inner;
+
+void func_1503B7C0(struct127 *arg0) {
+    ((func_1503B7C0_inner *)arg0->unk31C)->unk11C = allocate_memory(0x50, 1, 0, 0);
+    bzero(((func_1503B7C0_inner *)arg0->unk31C)->unk11C, 0x50);
+    ((func_1503B7C0_inner *)arg0->unk31C)->unk11C->unk44 = 30.0f;
+    ((func_1503B7C0_inner *)arg0->unk31C)->unk11C->unk4C = func_150ADA20() % 30U;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_68C70/func_1503B840.s")
 
