@@ -555,7 +555,44 @@ s32 func_150F0E48(Struct150F0E48Obj *arg0, s32 arg1) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F1020.s")
+typedef struct {
+    s32 unk0;
+    u8  unk4;
+} SubA150F1020;
+
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        u8  b4;
+    } u4;
+    u8  unk8;
+    u8  unk9;
+} ArgB150F1020;
+
+void func_150F1020(struct260 *arg0, s32 arg1, u8 arg2) {
+    SubA150F1020 *temp_v0 = (SubA150F1020 *)((u8 *)arg0 + 0xA8);
+    ArgB150F1020 *b = (ArgB150F1020 *)arg1;
+    s32 b0;
+
+    if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->unk0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else {
+            if (temp_v0->unk0 == b->u4.w4) {
+                temp_v0->unk0 = b->unk0;
+                temp_v0->unk4 = b->unk8;
+            }
+        block_150F1020: ;
+        }
+    } else if (arg2 == 0 || arg2 == 0x43) {
+        b0 = b->unk0;
+        if ((b0 == temp_v0->unk0) || (b->u4.b4 == temp_v0->unk4)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    }
+}
 
 void func_150F10D4(struct210 *arg0) {
     s8 sp40[0x18];

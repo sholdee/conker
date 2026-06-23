@@ -29,6 +29,76 @@ void func_15192920(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BFDD0/func_15192DF0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BFDD0/func_15193234.s")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+typedef struct {
+    s32 unk0;
+    u8  unk4;
+} SubA_15193234;
+
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        u8  b4;
+    } u4;
+    u8  unk8;
+    u8  unk9;
+} ArgB_15193234;
+
+void func_15193234(struct260 *arg0, s32 arg1, u8 arg2) {
+    SubA_15193234 *temp_v0 = (SubA_15193234 *)((u8 *)arg0 + 0x28);
+    ArgB_15193234 *b = (ArgB_15193234 *)arg1;
+    s32 b0;
+
+    if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->unk0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else {
+            if (temp_v0->unk0 == b->u4.w4) {
+                temp_v0->unk0 = b->unk0;
+                ((volatile SubA_15193234 *)temp_v0)->unk4 = b->unk8;
+            }
+trailing_label_15193234:
+            ;
+        }
+    } else if (arg2 == 0) {
+        b0 = b->unk0;
+        if ((b0 == temp_v0->unk0) || (b->u4.b4 == temp_v0->unk4)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BFDD0/func_151932E0.s")

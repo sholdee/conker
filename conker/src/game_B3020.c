@@ -294,7 +294,20 @@ s32 func_15088270(s32 arg0) {
     return (s32)p->unk14;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_150882B0.s")
+struct Struct150882B0 {
+    char pad0[0x27];
+    s8 unk27;
+    char pad28[0x84 - 0x28];
+};
+
+s32 func_150882B0(s32 arg0) {
+    struct Struct150882B0 *p;
+    if (D_800872A0 == 0) {
+        return 0;
+    }
+    p = (struct Struct150882B0 *)(arg0 * sizeof(struct Struct150882B0) + (s32)D_800872A0);
+    return p->unk27;
+}
 
 struct Struct150882E4 {
     char pad0[8];

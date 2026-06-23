@@ -35,10 +35,12 @@ typedef struct Stack_15070D24 {
 
 extern Vec3w_15070D24 D_80099B88;
 extern Vec3w_15070D24 D_80099B94;
+extern f32 D_8009A094;
 extern f32 D_80099F2C;
 extern s32 func_150ADA20(void);
 extern void func_15143134(void *, void *, s32);
 extern void func_15102B38(s32, u8, s32, s32, f32 *, s32, s32, f32, s32, s32, s32, s32, u8, s32);
+extern void func_150E1570(struct127 *, f32, f32, f32, f32, f32, f32, s32, s32);
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_1506AD30.s")
@@ -1740,7 +1742,23 @@ void func_15072EF4(void) {
     D_800D154C->stunned = (s8) D_800D1580;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_15072F10.s")
+void func_15072F10(void) {
+    f32 sp4C;
+    f32 sp48;
+    f32 sp44;
+    s16 temp;
+
+    temp = (s16)(D_800D154C->unk1D1 * 200);
+    *(s16 *)((u8 *)D_800D154C->unk31C + 0x24) -= 1;
+    func_1505A184((u16)(D_800D154C->unk7A - D_800D154C->unk31C->unk12), 2000.0f, (f32)temp * 0.0054931640625f, &sp4C, &sp48, &sp44);
+    sp4C = sp4C * D_8009A094 + D_800D154C->x_position;
+    sp48 = sp48 * D_8009A094 + D_800D154C->z_position;
+    sp44 = sp44 * D_8009A094 + D_800D154C->y_position;
+    func_150E1570(D_800D154C, D_800D154C->x_position, D_800D154C->y_position + (f32)D_800D154C->unkD6, D_800D154C->z_position, sp4C, sp44, sp48, D_800C3E78, 0x12);
+}
+
+void func_1507304C(void) {
+}
 
 void func_15073054(void) {
     D_800D154C->unk22E = (s16) D_800D1580;

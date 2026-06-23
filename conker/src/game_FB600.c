@@ -61,6 +61,44 @@ void *func_150CE150(void *arg0, s16 arg1, u8 arg2, s32 arg3)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FB600/func_150CE450.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FB600/func_150CE694.s")
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+} SubA_150CE694;
+
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        u8 b4;
+    } u4;
+    u8 unk8;
+    u8 unk9;
+} ArgB_150CE694;
+
+void func_150CE694(struct260 *arg0, s32 arg1, u8 arg2) {
+    SubA_150CE694 *temp_v0 = (SubA_150CE694 *)((u8 *)arg0 + 0x18);
+    ArgB_150CE694 *b = (ArgB_150CE694 *)arg1;
+    s32 b0;
+
+    if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->unk0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else {
+            if (temp_v0->unk0 == b->u4.w4) {
+                temp_v0->unk0 = b->unk0;
+                temp_v0->unk4 = b->unk8;
+            }
+trailing_150CE694:
+            ;
+        }
+    } else if (arg2 == 0) {
+        b0 = b->unk0;
+        if ((b0 == temp_v0->unk0) || (b->u4.b4 == temp_v0->unk4)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FB600/func_150CE740.s")

@@ -3,9 +3,21 @@
 #include "variables.h"
 
 void func_1513470C(struct102 *arg0);
+void *func_150C6D90(u8 *arg0);
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F3BA0/func_150C66F0.s")
+void func_150C66F0(u8 *arg0) {
+    u8 *temp;
+
+    if (*(s32 *)(arg0 + 0x6C) != 0) {
+        temp = *(u8 **)(arg0 + 0x6C) + 0xB0;
+        temp[4] = 1;
+        done:
+            ;
+    } else {
+        *(void **)(arg0 + 0x6C) = func_150C6D90(arg0);
+    }
+}
 
 struct Sub150C673C {
     /* 0x00 */ s32 unk0;
