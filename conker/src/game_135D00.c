@@ -1,5 +1,7 @@
 #include <ultra64.h>
+#define func_15169260 func_15169260_s32
 #include "functions.h"
+#undef func_15169260
 #include "variables.h"
 
 
@@ -21,6 +23,13 @@ void func_15108B80(struct Arg0_15108AB4 *);
 
 struct Arg0_15108BC0;
 void func_15108BC0(struct Arg0_15108BC0 *arg0);
+
+struct Data_151090DC {
+    s32 unk0;
+    s32 unk4;
+};
+extern struct Data_151090DC D_80088C58;
+void func_15169260(struct Data_151090DC *, s32, s32, u8);
 
 struct Arg0_15108AB4 {
     u8 pad[0x50];
@@ -135,6 +144,11 @@ void func_15109064(struct Arg0_15109064 *arg0, s32 *arg1, u8 arg2)
 }
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_135D00/func_151090DC.s")
+void func_151090DC(void) {
+    struct Data_151090DC sp18;
+
+    sp18 = D_80088C58;
+    func_15169260(&sp18, 2, 0, 0x1E);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_135D00/func_15109120.s")

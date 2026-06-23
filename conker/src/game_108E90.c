@@ -12,6 +12,10 @@ extern f32 D_800A0C14;
 extern f32 D_800A0C18;
 extern f32 D_800A0C1C;
 extern f32 D_800A0C20;
+extern f32 D_800A0C24;
+extern f32 D_800A0C28;
+extern f32 D_800A0C2C;
+extern f32 D_800A0C30;
 extern s32 D_80090514;
 
 void func_15152F70(void *arg0, u8 arg1);
@@ -161,7 +165,40 @@ void func_150DB9E0(s32 arg0, s32 arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_108E90/func_150DBC60.s")
+void func_150DBC60(void *arg0) {
+    Struct150DB9E0A sp18;
+
+    sp18.unk00 = D_800A0C24;
+    sp18.unk24 = 1;
+    sp18.unk26 = 2;
+    sp18.unk28 = -0x4B;
+    sp18.unk2C = -0x26;
+    sp18.unk2A = 0x16;
+    sp18.unk2E = 0x23;
+    sp18.unk30 = 3;
+    sp18.unk32 = 2;
+    sp18.unk34 = 0x29;
+    sp18.unk36 = 0;
+    sp18.unk0C = 2.0f;
+    sp18.unk10 = 2.0f;
+    sp18.unk38 = 0xA;
+    sp18.unk39 = 0x28;
+    sp18.unk3C = 1;
+    sp18.unk40 = 0;
+    sp18.unk44 = 0;
+    sp18.unk48 = 0;
+    sp18.unk4C = 0;
+    sp18.unk50 = 0;
+    sp18.unk54 = 0xFF;
+    sp18.unk55 = 0xFF;
+    sp18.unk04 = D_800A0C28;
+    sp18.unk08 = D_800A0C2C;
+    sp18.unk1C = 7.0f;
+    sp18.unk20 = 5.0f;
+    sp18.unk14 = D_800A0C30;
+    sp18.unk18 = 0.0f;
+    func_15152F70(&sp18, *(u8 *)((u8 *)arg0 + 0xC));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_108E90/func_150DBD70.s")
 

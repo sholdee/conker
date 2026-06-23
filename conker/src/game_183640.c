@@ -440,7 +440,18 @@ Gfx *func_15157F80(Gfx *pkt, s32 arg1, s32 arg2, s32 arg3, u8 *arg4) {
     return pkt;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15157FE8.s")
+#define WGFX15157FE8(pkt, a, b)     \
+{                                   \
+    Gfx *_g = (Gfx *)(pkt);         \
+    _g->words.w0 = (u32)(a);        \
+    _g->words.w1 = (u32)(b);        \
+}
+
+Gfx *func_15157FE8(Gfx *pkt, s32 arg1, s32 arg2, s32 arg3) {
+    WGFX15157FE8(pkt++, 0xDA380007, (u8 *)((struct259 *)D_800BE628 + arg2) + (D_800BE9C0 << 6) + 0x100);
+    WGFX15157FE8(pkt++, 0xDA380005, ((s32 *)&D_800DC2A0)[D_800BE9C0] + (arg2 << 6));
+    return pkt;
+}
 
 extern s32 D_800A6060;
 

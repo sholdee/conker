@@ -199,7 +199,25 @@ void func_151C0098(struct Vec3F151BFDA0 *arg0, s32 arg1, volatile u8 arg2, u8 ar
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1ED0F0/func_151C02E4.s")
+s32 func_151C02E4(s32 arg0, s32 arg1, s32 arg2, s32 *arg3) {
+    u8 i;
+
+    for (i = 0; i < arg2; i++) {
+        if (arg0 == arg3[i]) {
+            return 0;
+        }
+    }
+    if (arg0 == arg1) {
+        return 0;
+    }
+    if (*(s32 *)arg0 == 0) {
+        return 0;
+    }
+    if (*(u8 *)(arg0 + 4) == 0xFF) {
+        return 0;
+    }
+    return 1;
+}
 
 void func_150E7FEC(f32, s32, void *, void *, s32, s32, s32, s32, s32, s32, s32, s32);
 

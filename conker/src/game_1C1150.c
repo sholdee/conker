@@ -13,6 +13,8 @@ typedef struct {
 } Struct15195738Small;
 
 extern void func_151D8868(void *arg0, s32 arg1, s32 arg2, s32 arg3);
+extern void func_151C0098(f32 *arg0, struct127 *arg1, s32 arg2, s32 arg3, s32 arg4);
+extern void func_1507CD64(struct127 *arg0, s32 arg1);
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15193CA0.s")
@@ -148,7 +150,17 @@ void func_15194EA8(s32 arg0, struct127* arg1, s32 arg2) {
     func_15194BF0(arg0, arg1, &sp37);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194F48.s")
+void func_15194F48(s32 arg0, struct127* arg1, s32 arg2) {
+    f32 sp34[3];
+
+    sp34[0] = arg1->x_position;
+    sp34[1] = arg1->y_position + 50.0f;
+    sp34[2] = arg1->z_position;
+    func_151C0098(sp34, arg1, 1, 0xFF, 1);
+    func_15136C3C(arg1, 0, 0, 1, 0, 0, 0xFF, 1);
+    func_15145A50(arg1);
+    func_1507CD64(arg1, 6);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194FF4.s")
 

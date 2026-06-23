@@ -15,7 +15,38 @@ extern struct225 *func_151602C0(Header *, Header2 *, s32, s32, s32, s32, u8, u8,
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518D6E0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518E298.s")
+struct Struct1518E298Inner {
+    s32 unk0;
+    u8 pad4[0x10];
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+};
+
+struct Struct1518E298 {
+    u8 pad0[2];
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    u8 pad8[0x14];
+    struct Struct1518E298Inner *unk1C;
+};
+
+s32 func_1518E298(struct Struct1518E298 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    struct Struct1518E298Inner *temp_v1;
+
+    temp_v1 = arg0->unk1C;
+    if (temp_v1 != 0) {
+        if (temp_v1->unk0 != 0) {
+            arg0->unk2 = temp_v1->unk14;
+            arg0->unk4 = temp_v1->unk18;
+            arg0->unk6 = temp_v1->unk1C;
+            return 0;
+        }
+    }
+
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518E308.s")
 

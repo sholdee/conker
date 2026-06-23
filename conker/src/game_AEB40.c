@@ -12,6 +12,9 @@ extern struct172 D_80086CC4[];
 extern void func_150302F0(struct127 *arg0, s32 arg1);
 extern s32 D_80086CAC[];
 extern void func_15036C70(struct127 *arg0);
+extern void func_150825C0(s32 arg0, s32 arg1);
+extern u8 D_800D2100;
+extern u8 D_800D2101;
 
 typedef struct {
     u8 pad0[0x2];
@@ -55,7 +58,27 @@ void func_15081E0C(struct127 *arg0, u16 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_150825C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_1508295C.s")
+void func_1508295C(s32 arg0, s32 arg1, s32 arg2) {
+    s32 start;
+    s32 end;
+    s32 i;
+
+    if (arg2 != 0) {
+        start = 0;
+        end = D_800D2101;
+    } else {
+        start = D_800D2101;
+        end = D_800D2100;
+    }
+
+    i = start;
+    if (start < end) {
+        do {
+            func_150825C0(i, arg1);
+            i++;
+        } while (i != end);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_150829D8.s")
 

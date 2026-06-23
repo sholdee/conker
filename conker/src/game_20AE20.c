@@ -54,6 +54,7 @@ extern u16 D_800BE930;
 extern s8 D_800AB690[];
 extern s32 D_800AB754[];
 extern char D_800AB850[];
+extern void (*D_800E0A88)(void);
 extern u8 D_800E0A95;
 extern s8 D_800E0A96;
 extern s8 D_8008FDE0;
@@ -66,6 +67,7 @@ void func_151E2404(void);
 void func_151E3344(s32, s32, s32, s32, s32);
 void func_151E6964(s32);
 void func_151E530C(void);
+void func_151E55A8(void);
 void func_151E557C(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151DD970.s")
@@ -307,7 +309,18 @@ void func_151E4E00(void) {
     func_1501C730(6, 0x1D, 0, 0, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E4E64.s")
+void func_151E4E64(void) {
+    func_151E530C();
+    func_151E55A8();
+    if (D_800E0A90 >= 0x4B1) {
+        D_800E0B9A |= 0x8000;
+    }
+    if (D_800E0B9A != 0) {
+        D_800E0B94 = 7;
+        D_800E0A88 = func_151E4E00;
+        D_8008FD74 = 8;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E4EE8.s")
 
