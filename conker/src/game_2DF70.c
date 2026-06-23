@@ -5,6 +5,18 @@
 
 #include "macros.h"
 
+typedef struct func_15002560_node {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    s16 unkC;
+} func_15002560_node;
+
+void func_15002560(u16 *arg0, u16 *arg1);
+
 void func_15000AC0(void) {
     D_800D9E64 = (u8)0;
 }
@@ -209,7 +221,38 @@ u16 *func_15001DE0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 // 3 loops
 #pragma GLOBAL_ASM("asm/nonmatchings/game_2DF70/func_15002008.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_2DF70/func_15002248.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_2DF70/func_15002560.s")
+
+void func_15002560(u16 *arg0, u16 *arg1) {
+    s32 temp_v0;
+    func_15002560_node *temp_s0;
+    func_15002560_node *var_s1;
+
+loop:
+    if (arg0 != 0) {
+        if (((func_15002560_node *)arg0)->unk4 == 0) {
+            if (arg1 != 0) {
+                temp_v0 = (s32)arg1 - (s32)arg0;
+            } else {
+                temp_v0 = 0;
+            }
+            ((func_15002560_node *)arg0)->unk4 = temp_v0;
+        }
+        temp_v0 = ((func_15002560_node *)arg0)->unkC;
+        if (temp_v0 == 0) {
+            return;
+        }
+        var_s1 = (func_15002560_node *)((u8 *)arg0 + temp_v0);
+        if (var_s1->unk4 != 0) {
+            do {
+                temp_s0 = (func_15002560_node *)((u8 *)var_s1 + var_s1->unk4);
+                func_15002560((u16 *)var_s1, (u16 *)temp_s0);
+                var_s1 = temp_s0;
+            } while (temp_s0->unk4 != 0);
+        }
+        arg0 = (u16 *)var_s1;
+        goto loop;
+    }
+}
 
 void func_150025FC(void) {
     s32 tmp0;
