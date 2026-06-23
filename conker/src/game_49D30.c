@@ -19,6 +19,12 @@ extern u8 D_800C35AA;
 extern f32 D_80096A1C;
 extern void func_1507F640(void);
 extern void func_1508F060(void);
+extern void func_150242F8(s32, s32);
+extern void func_1501EC38(s32);
+extern void func_15020EC4(s32);
+extern void func_1502178C(struct127 *, s32, s32);
+extern void func_1501E81C(s32, s32);
+extern s32 func_150229E4(struct127 *);
 
 typedef struct {
     f32 unk0;
@@ -71,7 +77,28 @@ void func_1501D258(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501DAAC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501DE18.s")
+void func_1501DE18(s32 arg0) {
+    s32 i;
+    s32 limit;
+    struct127 *obj;
+
+    D_800C35B0[arg0] = D_800C3640[arg0] + D_800BEA08;
+    func_150242F8(1, 0);
+    func_1501EC38(0);
+    func_150242F8(0, 0);
+    func_15020EC4(0);
+
+    for (obj = D_800CC2D0, i = 0, limit = 25; i != limit; i++, obj = (struct127 *)((u8 *)obj + 0x32C)) {
+        if (obj->interaction_state) {
+            D_800C3E78 = i;
+            if (func_150229E4(obj)) {
+                func_1502178C(obj, arg0, -1);
+            }
+        }
+    }
+
+    func_1501E81C(1, arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501DF04.s")
 

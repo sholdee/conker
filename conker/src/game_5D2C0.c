@@ -7,6 +7,7 @@
 extern f32 D_80097B68;
 extern f32 D_800970DC;
 extern u8 D_800BEA0C;
+extern s32 D_800902BC[];
 void func_1000FD38(void *, void *, s32);
 s32 func_15033BDC();
 u8 *func_15083568(struct127 *, s32, f32, s32);
@@ -180,7 +181,21 @@ struct S150319CC *func_150319CC(s32 arg0, u8 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15031C14.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15031E2C.s")
+s32 func_15031E2C(void *arg0, s32 arg1) {
+    s32 idx;
+
+    idx = *(s32 *)((u8 *)arg0 + 0x38);
+
+    if (idx >= 3) {
+        idx = 5 - idx;
+    }
+    *(s16 *)((u8 *)arg0 + 0x18) = D_800902BC[idx];
+    *(s32 *)((u8 *)arg0 + 0x38) = *(s32 *)((u8 *)arg0 + 0x38) + 1;
+    if (*(s32 *)((u8 *)arg0 + 0x38) >= 6) {
+        *(s32 *)((u8 *)arg0 + 0x38) = 0;
+    }
+    return 0;
+}
 
 s32 func_15031E7C(u8 *arg0, struct127 *arg1) {
     struct197 *anim;

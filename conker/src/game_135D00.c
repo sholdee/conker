@@ -16,7 +16,8 @@ extern f32 D_800A2488;
 extern f32 D_800A248C;
 f32 sinf(f32);
 f32 func_15144B68(f32);
-void func_15108B80(void *);
+struct Arg0_15108AB4;
+void func_15108B80(struct Arg0_15108AB4 *);
 
 struct Arg0_15108BC0;
 void func_15108BC0(struct Arg0_15108BC0 *arg0);
@@ -40,7 +41,17 @@ s32 func_15108AB4(struct Arg0_15108AB4 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_135D00/func_15108B80.s")
+void func_15108B80(struct Arg0_15108AB4 *arg0) {
+    s32 *p;
+
+    p = (s32*)((u8*)arg0 + arg0->off);
+    if ((p = (s32*)((u8*)p + 0xF8), 0x3E7) == p[0x14/4]) {
+    } else {
+        if ((p[0x1C/4] -= D_800BE9E4) < 0) {
+            p[0x14/4] = 0x3E7;
+        }
+    }
+}
 
 struct Arg0_15108BC0 {
     u8 pad[0x50];
