@@ -417,7 +417,9 @@ s32 func_1511896C(void *arg0) {
     return func_151189AC(arg0, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511898C.s")
+s32 func_1511898C(void *arg0) {
+    return func_151189AC(arg0, 3);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151189AC.s")
 

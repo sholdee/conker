@@ -85,7 +85,21 @@ void func_151D3F14(f32 *arg0, u8 arg1, s32 arg2) {
     func_151602C0(&header, &header2, (func_150ADA20() % 13U) + 0x14, 0xFF, 0xE8, 0xAB, 0xFF, 0, 0, arg1, arg2);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D3FF4.s")
+void func_151D3FF4(f32 *arg0, u8 arg1, s32 arg2) {
+    Header header;
+    Header2 header2;
+
+    header.unk0 = 3;
+    header.unk1 = -1;
+    header.unk2 = (func_150ADA20() % 0xBU) + 0x14;
+    header.unk4 = 0;
+
+    header2.unk0 = (s32) arg0[0];
+    header2.unk4 = (s32) arg0[1];
+    header2.unk8 = (s32) arg0[2];
+
+    func_151602C0(&header, &header2, (func_150ADA20() % 0x18U) + 0x22, 0xFF, 0xA1, 0xA2, 0xFF, 0, 0, arg1, arg2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D40D4.s")
 

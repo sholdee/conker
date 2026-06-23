@@ -190,7 +190,10 @@ void func_151B2FD0(s32 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B2FE8.s")
+void func_151B2FE8(s32 *arg0) {
+    func_151B2FD0(arg0);
+    func_1514933C((struct260 *)arg0);
+}
 
 void func_151B3014(s32 *arg0) {
     func_151B2FD0(arg0);

@@ -261,4 +261,27 @@ return_zero:
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D7068.s")
+void func_150D7068(struct260 *arg0, s32 arg1, u8 arg2) {
+    SubA150D596C *temp_v0 = (SubA150D596C *)((u8 *)arg0 + 0xA8);
+    ArgB150D596C *b = (ArgB150D596C *)arg1;
+    s32 b0;
+
+    if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->unk0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else {
+            if (temp_v0->unk0 == b->u4.w4) {
+                temp_v0->unk0 = b->unk0;
+                temp_v0->unk4 = b->unk8;
+            }
+trailing_150D7068:
+            ;
+        }
+    } else if (arg2 == 0) {
+        b0 = b->unk0;
+        if ((b0 == temp_v0->unk0) || (b->u4.b4 == temp_v0->unk4)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    }
+}

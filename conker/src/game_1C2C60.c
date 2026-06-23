@@ -682,7 +682,10 @@ s32 func_1519C910(struct ConkerStruct1519C910Outer *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_1519C948.s")
+s32 func_1519C948(s32 arg0) {
+    func_1519CDB0(arg0, 0.25f, 0x1C);
+    return 0;
+}
 
 s32 func_1519C970(s32 arg0) {
     func_1519CDB0(arg0, 0.5f, 0x1D);

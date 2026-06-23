@@ -31,6 +31,7 @@ extern s32 D_800A58D0;
 extern s32 D_800A58E4;
 extern s32 D_800A58F8;
 extern s32 D_800A590C;
+extern s32 D_800A5920;
 s32 func_15189FF0(void *, void *, void *, s32, s32, s32, s32);
 extern void func_151D74B0(s32, s32, s32, s32, s32);
 void func_151BB044(s32);
@@ -592,7 +593,12 @@ void func_1514E718(s32 arg0) {
     func_1514EC1C(v0, arg0, 0x18);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514E7C8.s")
+void func_1514E7C8(s32 arg0) {
+    s32 v0;
+
+    v0 = func_1518D1C0(arg0, 7, 0, 1, 0xFF, 1, &D_800A5920);
+    func_1514EC1C(v0, arg0, 0xF);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514E824.s")
 

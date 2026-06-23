@@ -257,7 +257,13 @@ void func_15181D70(s32 arg0) {
     (&D_800DDE20)[arg0] = 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_15181DC8.s")
+void func_15181DC8(s32 arg0) {
+    (&D_800DDDD8)[arg0] = 0;
+    (&D_800DDDC8)[arg0] = 0.0f;
+    D_800DDDE8[arg0][0] = 0.0f;
+    D_800DDDE8[arg0][1] = 0.0f;
+    (&D_800DDE20)[arg0] = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_15181E18.s")
 
