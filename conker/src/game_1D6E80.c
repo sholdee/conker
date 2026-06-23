@@ -448,6 +448,18 @@ typedef struct {
     u16 unk6;
 } Struct151AB6B8;
 
+typedef struct {
+    u8 pad_0x0[0x1C];
+    s32 field_0x1C;
+} SoundHandleState;
+
+typedef struct {
+    u8 pad_0x0[0x58];
+    s32 field_0x58;
+    u8 pad_0x5C[0x2];
+    volatile u16 field_0x5E;
+} SoundHandleOwner;
+
 s32 func_151AB6B8(u8 *arg0) {
     u8 ret;
     Struct151AB6B8 *temp_v1;
@@ -476,18 +488,18 @@ done_sound:
     return ret;
 }
 
-void func_151AB788(u8 *arg0) {
+void func_151AB788(SoundHandleOwner *arg0) {
     union {
-        s32 *v0;
+        SoundHandleState *v0;
         f64 align;
     } sp18;
 
-    sp18.v0 = (s32 *)(*(s32 *)(arg0 + 0x58) + 0x58);
-    if (*(u16 volatile *)(arg0 + 0x5E) != 0) {
-        func_100111C8(*(u16 *)(arg0 + 0x5E));
+    sp18.v0 = (SoundHandleState *)(arg0->field_0x58 + 0x58);
+    if (arg0->field_0x5E != 0) {
+        func_100111C8(arg0->field_0x5E);
     }
-    sp18.v0[7] = 0;
-    func_151346EC(arg0);
+    sp18.v0->field_0x1C = 0;
+    func_151346EC((u8 *)arg0);
 }
 
 void func_151AB7D8(u8 *arg0) {

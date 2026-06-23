@@ -41,6 +41,13 @@ typedef struct {
     s16 unk40;
 } Struct15146A98;
 
+typedef struct {
+    char pad_0[0x40];
+    f32 field_0x40;
+    char pad_1[0x190];
+    s32 field_0x1D4;
+} ActorFields;
+
 extern s32 func_15142314(s32, s32, Struct15147040 *);
 extern void func_1504715C(s32, s32);
 extern s32 func_15046C80(f32 *, s32, f32, s32);
@@ -130,28 +137,28 @@ void func_15146A98(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-void func_15146BF8(s32, s32, s32, s32);
+void func_15146BF8(ActorFields *, s32, s32, s32);
 
 void func_15146BB8(s32 arg0, s32 arg1, s32 arg2) {
-    func_15146BF8(arg0, arg1, arg2, 0);
+    func_15146BF8((ActorFields *)arg0, arg1, arg2, 0);
 }
 
 void func_15146BD8(s32 arg0, s32 arg1, s32 arg2) {
-    func_15146BF8(arg0, arg1, arg2, 1);
+    func_15146BF8((ActorFields *)arg0, arg1, arg2, 1);
 }
 
-void func_15146BF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void func_15146BF8(ActorFields *arg0, s32 arg1, s32 arg2, s32 arg3) {
     Struct15147040 sp4C;
     s32 sp2C[8];
     s32 temp_a3;
     s32 temp_v0;
 
     temp_a3 = (u8)arg1;
-    if (*(s32 *)(arg0 + 0x1D4) != 0) {
-        if (func_15146890(&sp4C, arg0, (s32)&sp2C[-1], temp_a3) != 0) {
+    if (arg0->field_0x1D4 != 0) {
+        if (func_15146890(&sp4C, *(s32 *)&arg0, (s32)&sp2C[-1], temp_a3) != 0) {
             temp_v0 = ((u8)arg3 != 0) ? 0xC : 0xB;
             func_15141F78((u8)temp_v0, (struct157 *)&sp2C[-1], (f32)arg2 * D_800A5720,
-                          (u8)(u32)(*(f32 *)(arg0 + 0x40) * D_800A5724),
+                          (u8)(u32)(arg0->field_0x40 * D_800A5724),
                           (struct157 *)&sp4C, temp_a3);
             if (arg2 >= 0x73) {
                 func_15142180(2, &sp4C, sp2C[5], 1.0f, 1.0f);

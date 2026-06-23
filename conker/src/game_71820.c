@@ -281,11 +281,14 @@ void func_15044E88(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_150450CC.s")
 
+struct conker15045714;
+struct conker150472C0_dst;
+
 s32 func_15044ED0(s32, s32, s32);
-s32 func_150470B0(s32, s32, s32);
+s32 func_150470B0(struct conker15045714 *, s32, struct conker150472C0_dst *);
 
 s32 func_1504530C(s32 arg0, s32 arg1, s32 arg2) {
-    switch (func_150470B0(arg0, arg1, arg2)) {
+    switch (func_150470B0((struct conker15045714 *)arg0, arg1, (struct conker150472C0_dst *)arg2)) {
     case 0:
         return func_15044ED0(arg0, arg1, arg2);
     case 1:
@@ -390,11 +393,11 @@ s32 func_15045800(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_1504697C.s")
 
-s32 func_150470B0(s32, s32, s32);
+s32 func_150470B0(struct conker15045714 *, s32, struct conker150472C0_dst *);
 s32 func_150466F8(s32, u16, s32, s32);
 
 s32 func_15046C00(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    switch (func_150470B0(arg0, arg2, arg3)) {
+    switch (func_150470B0((struct conker15045714 *)arg0, arg2, (struct conker150472C0_dst *)arg3)) {
     case 0:
         return func_150466F8(arg0, (u16)arg1, arg2, arg3);
     case 1:
@@ -458,15 +461,15 @@ s32 func_15047004(struct conker15045714 *a0, s32 a1, struct conker150472C0_dst *
     return 0;
 }
 
-s32 func_150470B0(s32 a0, s32 a1, s32 a2) {
+s32 func_150470B0(struct conker15045714 *a0, s32 a1, struct conker150472C0_dst *a2) {
     f32 sp24;
 
-    if (*(u8 *)(a2 + 0x1C) & 0x4) {
-        if (func_150A3FC4(*(f32 *)a0, *(f32 *)(a0 + 8), 0, a2 + 4, (s32)&sp24)) {
+    if (a2->field_0x1C & 0x4) {
+        if (func_150A3FC4(a0->field_0x00, a0->field_0x08, 0, (s32)&a2->field_0x04, (s32)&sp24)) {
             if (sp24 <= *(f32 *)&a1) {
-                if (*(f32 *)(a0 + 4) <= sp24) {
-                    *(f32 *)a2 = sp24;
-                    *(u8 *)(a2 + 0x1C) |= 0x2;
+                if (a0->field_0x04 <= sp24) {
+                    a2->field_0x00 = sp24;
+                    a2->field_0x1C |= 0x2;
                     return 2;
                 }
             }

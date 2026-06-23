@@ -25,6 +25,20 @@ struct conk14182C {
     f32 unk48;
 };
 
+struct conkMotionSample {
+    f32 field_0x0;
+    u8 pad_0[0x4];
+    f32 field_0x8;
+};
+
+struct conkMotionControl {
+    u8 pad_0[0x170];
+    s32 field_0x170;
+    f32 field_0x174;
+    struct conkMotionSample *field_0x178;
+    struct conk14182C_pos field_0x17C;
+};
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16DC80/func_151407D0.s")
 
@@ -219,11 +233,11 @@ f32 func_1514182C(void *arg0, void *arg1, s32 arg2, f32 arg3, f32 arg4, f32 arg5
 
 extern f32 func_1514182C(void *, void *, s32, f32, f32, f32);
 
-s32 func_15141928(u8 *arg0) {
-    f32 *temp_v0;
+s32 func_15141928(struct conkMotionControl *arg0) {
+    struct conkMotionSample *temp_v0;
 
-    temp_v0 = *(f32 **)(arg0 + 0x178);
-    func_1514182C(arg0, arg0 + 0x17C, *(s32 *)(arg0 + 0x170), *(f32 *)(arg0 + 0x174), temp_v0[0], temp_v0[2]);
+    temp_v0 = arg0->field_0x178;
+    func_1514182C(arg0, &arg0->field_0x17C, arg0->field_0x170, arg0->field_0x174, temp_v0->field_0x0, temp_v0->field_0x8);
     return 1;
 }
 // s32 func_15141928(void *arg0) {

@@ -2,8 +2,25 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct {
+    char pad_0x0[0x4];
+    u8 field_0x4;
+} GameF3270Child58State;
+
+typedef struct {
+    char pad_0x0[0x58];
+    GameF3270Child58State field_0x58;
+} GameF3270SpawnedObject;
+
+typedef struct {
+    char pad_0x0[0x18];
+    s32 field_0x18;
+    char pad_0x1C[0x40];
+    GameF3270SpawnedObject *volatile field_0x5C;
+} GameF3270SpawnOwner;
+
 void *func_150C6460(u8 *arg0);
-void *func_150C5F94(s32 arg0, u8 *arg1);
+GameF3270SpawnedObject *func_150C5F94(s32 arg0, GameF3270SpawnOwner *arg1);
 
 void func_150C5DC0(u8 *arg0) {
     u8 *temp;
@@ -69,18 +86,18 @@ s32 func_150C5EFC(u8 *arg0) {
     return 0;
 }
 
-void func_150C5F40(u8 *arg0) {
+void func_150C5F40(GameF3270SpawnOwner *arg0) {
     s32 temp_a2;
-    u8 *temp;
+    GameF3270Child58State *temp;
 
-    temp_a2 = *(s32 *)(arg0 + 0x18);
-    if (*(s32 *)(arg0 + 0x5C) != 0) {
-        temp = *(u8 **)(arg0 + 0x5C) + 0x58;
-        temp[4] = 1;
+    temp_a2 = arg0->field_0x18;
+    if (arg0->field_0x5C != 0) {
+        temp = &arg0->field_0x5C->field_0x58;
+        temp->field_0x4 = 1;
         done:
             ;
     } else {
-        *(void **)(arg0 + 0x5C) = func_150C5F94(temp_a2, arg0);
+        arg0->field_0x5C = func_150C5F94(temp_a2, arg0);
     }
 }
 

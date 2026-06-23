@@ -6,6 +6,8 @@
 typedef struct {
     char pad_0[0x6A];
     u8 field_0x6A;
+    char pad_0x6B[0x4];
+    u8 field_0x6F;
 } GameObjectStateBytes;
 
 typedef struct {
@@ -31,9 +33,9 @@ s32 func_1518A2E8(GameObjectWithStateBytes *arg0, u8 *arg1) {
     return 1;
 }
 
-s32 func_1518A324(s32 arg0, u8 *arg1) {
-    if (*(u8 *)(*(s32 *)(arg0 + 0x188) + 0x6F) == 0) {
-        *(s32 *)(arg0 + 0x58) &= ~2;
+s32 func_1518A324(GameObjectWithStateBytes *arg0, u8 *arg1) {
+    if (arg0->field_0x188->field_0x6F == 0) {
+        arg0->field_0x58 &= ~2;
         *arg1 = 0;
     } else {
         *arg1 = 1;

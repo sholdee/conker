@@ -115,11 +115,11 @@ void func_1516D328(struct_game_197C20_3 *arg0) {
     }
 }
 
-u8 *func_1516D378(u8 *arg0) {
-    if ((arg0 != 0) && (*arg0 == 0x51)) {
-        *(s32 *)(*(s32 *)(arg0 + 0x10)) |= 0x100;
-        *(s32 *)(*(s32 *)(arg0 + 0x10)) &= ~0x400;
-        return arg0;
+u8 *func_1516D378(struct_game_197C20_3 *arg0) {
+    if ((arg0 != 0) && (arg0->field_0x0 == 0x51)) {
+        arg0->field_0x10->field_0x0 |= 0x100;
+        arg0->field_0x10->field_0x0 &= ~0x400;
+        return (u8 *)arg0;
     }
     return 0;
 }
