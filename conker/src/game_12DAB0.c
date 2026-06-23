@@ -3,7 +3,20 @@
 #include "variables.h"
 
 typedef struct {
-    char pad_0[0x24];
+    char pad_0[0x197];
+    u8 field_0x197;
+} ObjectState197;
+
+typedef struct {
+    char pad_0[0x31C];
+    ObjectState197 *field_0x31C;
+} ObjectWithState197;
+
+typedef struct {
+    ObjectWithState197 *field_0x0;
+    char pad_0[0x1E];
+    u8 field_0x22;
+    char pad_1[0x1];
     s32 field_0x24;
     s32 field_0x28;
     s32 field_0x2C;
@@ -18,7 +31,8 @@ typedef struct {
     s32 field_0xA8;
     char pad_2[0x24];
     s32 field_0xD0;
-    char pad_3[0x50];
+    u8 field_0xD4;
+    char pad_3[0x4F];
     s32 field_0x124;
     char pad_4[0x48];
     s32 field_0x170;
@@ -137,22 +151,22 @@ void func_151027E8(struct210 *arg0) {
     func_151403A8(&sp18, 0x1A);
 }
 
-s32 func_1510281C(struct210 *arg0, s16 arg1) {
-    s32 *p = (s32 *)(*(s32 *)((s32)arg0 + 0xD0) + 0x110);
-    s32 v1;
+s32 func_1510281C(Field124Owner *arg0, s16 arg1) {
+    Field124ChildBlock *p = (Field124ChildBlock *)(arg0->field_0xD0 + 0x110);
+    ObjectWithState197 *v1;
 
-    if (arg1 != *(u8 *)((s32)p + 0x22)) {
+    if (arg1 != p->field_0x22) {
         goto tail;
     }
-    v1 = *p;
+    v1 = p->field_0x0;
     if (v1 != 0) {
-        if (*(u8 *)(*(s32 *)(v1 + 0x31C) + 0x197) == 0) {
+        if (v1->field_0x31C->field_0x197 == 0) {
             goto tail;
         }
     }
     return 0;
 tail:
-    if (!(*(u8 *)((s32)arg0 + 0xD4) & 1)) {
+    if (!(arg0->field_0xD4 & 1)) {
         return 0;
     }
     return 1;
