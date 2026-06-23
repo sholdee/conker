@@ -6,12 +6,14 @@ Two engines run in PARALLEL: the **orchestrator** (LLM agents match `GLOBAL_ASM`
 
 ## LATEST STATE & PENDING (read FIRST after compaction)
 - **Active run:** `bash tools/orchestrator_codex.sh 12 400 8` (chunk 12, maxi 400), tracked → notifies on done.
-- **UNCOMMITTED tools — live on-disk, COMMIT AT NEXT GAP:** `permuter_daemon.py` (deterministic prune of
-  matched + base-0 seeds in `_eligible`), `integrate.py` (ADD-BACK bisect fix — needs `ALLOW_GATE_EDIT=1`;
-  SHA gate constants verified UNCHANGED), `dashboard.py` (debugger `D_` count fix).
-- **PENDING recovery:** port the **22 score-0 `.nearmiss`** entries (matches over-reverted by the OLD integrate
-  bisect bug, now fixed) — write each `.nearmiss["c"]` into its stub + run `integrate.py`; the gate keeps the
-  genuinely-matchable, drops true object-match-but-ROM-fails. (These overlap the permuter's base-0 seeds.)
+  Cycle 1 = 45 matches; cycle 2 in progress.
+- **DONE (committed 21992cc):** `integrate.py` ADD-BACK bisect, `permuter_daemon.py` deterministic prune+base-0
+  skip, `dashboard.py` `.L`/`D_` count fix. SHA gate constants verified UNCHANGED.
+- **DONE recovery:** ported 22 score-0 `.nearmiss` via `/tmp/port_nearmiss.py` → **+9 recovered**, 13 true
+  object-match-but-ROM-fails (left as stubs). NOTE: the observed "+1 commit" was NOT a bisect over-revert —
+  those reverts were genuine ROM-fails; the add-back is kept as a defensive fix, not the cure for that symptom.
+- **iter_match-0-but-ROM-fail is the real frontier:** an object can byte-match in isolation yet fail the
+  full-ROM link (symbol/reloc/bss). integrate's gate correctly commits only full-ROM matches.
 - **DASHBOARD:** `tools/dashboard.py` on :8077 (status bar: ROM badge ← `/tmp/rom_status.json`, Cycle/round ←
   `/tmp/cycle_status.json`, tree-clean, per-commit `[cycle N]`). Restart: kill `tools/dashboard.py` procs +
   `setsid python3 tools/dashboard.py 8077 >/tmp/dashboard.log 2>&1 </dev/null &`. Read-only, no pipeline risk.
