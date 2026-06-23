@@ -26,6 +26,17 @@ typedef struct {
     Game1104D0EffectState field_0x110;
 } Game1104D0EffectObj;
 
+typedef struct {
+    char pad_0x0[0x28];
+    f32 field_0x28;
+    f32 field_0x2C;
+    f32 field_0x30;
+    char pad_0x34[0x14];
+    u8 field_0x48;
+    char pad_0x49[0x1];
+    u16 field_0x4A;
+} Game1104D0EffectInstance;
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1104D0/func_150E3020.s")
 
 s32 func_150E3208(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
@@ -76,12 +87,12 @@ s32 func_150E3414(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s3
     return 0;
 }
 
-void func_150E3514(u8 *arg0) {
+void func_150E3514(Game1104D0EffectInstance *arg0) {
     s32 temp;
     s32 *slot;
     u16 id;
 
-    temp = arg0[0x48];
+    temp = arg0->field_0x48;
     if (temp >= 0) {
         slot = &D_800D99D0[temp];
         if (*slot == (s32)arg0) {
@@ -89,14 +100,14 @@ void func_150E3514(u8 *arg0) {
         }
     }
 
-    id = *(u16 *)(arg0 + 0x4A);
+    id = arg0->field_0x4A;
     if (id != 0) {
         func_100111C8(id);
-        *(u16 *)(arg0 + 0x4A) = 0;
+        arg0->field_0x4A = 0;
         func_10010F88(0x2D7, 0x5DC0, 0, 0, 0,
-                      (s32)*(f32 *)(arg0 + 0x28),
-                      (s32)*(f32 *)(arg0 + 0x2C),
-                      (s32)*(f32 *)(arg0 + 0x30),
+                      (s32)arg0->field_0x28,
+                      (s32)arg0->field_0x2C,
+                      (s32)arg0->field_0x30,
                       0x3E8, 0x1770);
     }
 

@@ -180,54 +180,54 @@ void func_151C94D4(Game1F4650LinkedObject *arg0) {
     func_1513CA6C(arg0);
 }
 
-void func_151C95D8(void *arg0) {
-    register s32 temp_s0;
+void func_151C95D8(Game1F4650LinkedObject *arg0) {
+    register Game1F4650LinkBlock *temp_s0;
     s32 temp_a0;
 
-    temp_s0 = (s32)arg0 + 0x110;
-    if (*(s32 *)((s32)arg0 + 0x13C) != 0) {
-        func_1516972C(*(struct102 **)(temp_s0 + 0x2C));
+    temp_s0 = (Game1F4650LinkBlock *)((s32)arg0 + 0x110);
+    if (arg0->field_0x13C != 0) {
+        func_1516972C(temp_s0->field_0x2C);
         func_1000FD38(func_151C87AC, (void *)temp_s0, 0);
     }
 
-    temp_s0 = *(s32 *)&arg0;
-    temp_a0 = *(s32 *)(temp_s0 + 0x144);
-    temp_s0 = temp_s0 + 0x110;
+    temp_s0 = (Game1F4650LinkBlock *)*(s32 *)&arg0;
+    temp_a0 = ((Game1F4650LinkedObject *)temp_s0)->field_0x144;
+    temp_s0 = (Game1F4650LinkBlock *)((s32)temp_s0 + 0x110);
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }
 
-    temp_a0 = *(s32 *)(temp_s0 + 0x38);
+    temp_a0 = temp_s0->field_0x38;
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }
 
-    temp_a0 = *(s32 *)(temp_s0 + 0x3C);
+    temp_a0 = temp_s0->field_0x3C;
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }
 
-    temp_a0 = *(s32 *)(temp_s0 + 0x40);
+    temp_a0 = temp_s0->field_0x40;
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }
 
-    temp_a0 = *(s32 *)(temp_s0 + 0x44);
+    temp_a0 = temp_s0->field_0x44;
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }
 
-    temp_a0 = *(s32 *)(temp_s0 + 0x48);
+    temp_a0 = temp_s0->field_0x48;
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }
 
-    temp_a0 = *(s32 *)(temp_s0 + 0x4C);
+    temp_a0 = temp_s0->field_0x4C;
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }
 
-    temp_a0 = *(s32 *)(temp_s0 + 0x50);
+    temp_a0 = temp_s0->field_0x50;
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }

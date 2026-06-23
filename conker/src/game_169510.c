@@ -36,6 +36,14 @@ typedef struct {
     u16 unk8;
 } Src151400D0;
 
+typedef struct {
+    char pad_0x00[0x2C];
+    f32 field_0x2C;
+    f32 field_0x30;
+    char pad_0x34[0xF4];
+    f32 field_0x128;
+} ScaleUpdateState;
+
 extern struct1513FFF4_80090B60 D_80090B60[];
 extern f32 D_800A5184;
 void func_1513FFF4(struct1513FFF4 *arg0, u8 arg1, u8 arg2);
@@ -676,10 +684,10 @@ void func_1513F6C0(struct171 *arg0, u8 arg1, u8 arg2) {
     *(u8 *)((u8 *)arg0 + 0x81) = arg2;
 }
 
-s32 func_1513F6E8(s32 arg0) {
-    f32 temp = *(f32 *)(arg0 + 0x128);
-    *(f32 *)(arg0 + 0x2C) = *(f32 *)(arg0 + 0x2C) + (temp * D_800BE9A4);
-    *(f32 *)(arg0 + 0x30) = *(f32 *)(arg0 + 0x30) + (temp * D_800BE9A4);
+s32 func_1513F6E8(ScaleUpdateState *arg0) {
+    f32 temp = arg0->field_0x128;
+    arg0->field_0x2C = arg0->field_0x2C + (temp * D_800BE9A4);
+    arg0->field_0x30 = arg0->field_0x30 + (temp * D_800BE9A4);
     return 1;
 }
 

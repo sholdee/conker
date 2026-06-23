@@ -593,19 +593,19 @@ s32 func_150337E4(void *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15033838.s")
 
-s32 func_150339C8(u8 *arg0, u8 *arg1) {
+s32 func_150339C8(Game5D2C0EffectState *arg0, Game5D2C0PositionState *arg1) {
     func_150334B8(arg0, arg1);
     if (D_800C35EA != 1) {
         if (D_800BEA0C != 0) {
-            if (*(s32 *)(arg0 + 0x3C) != 0) {
+            if (arg0->field_0x3C != 0) {
                 func_1000FD38(func_15033BDC, arg0, (s32)arg1);
             }
-            *(s32 *)(arg0 + 0x3C) = 0;
-        } else if (*(s32 *)(arg0 + 0x3C) == 0) {
-            *(s32 *)(arg0 + 0x3C) = func_1000FA64(0x448,
-                (s16)(s32)*(f32 *)(arg1 + 0x14),
-                (s16)(s32)*(f32 *)(arg1 + 0x18),
-                (s16)(s32)*(f32 *)(arg1 + 0x1C),
+            arg0->field_0x3C = 0;
+        } else if (arg0->field_0x3C == 0) {
+            arg0->field_0x3C = func_1000FA64(0x448,
+                (s16)(s32)arg1->field_0x14,
+                (s16)(s32)arg1->field_0x18,
+                (s16)(s32)arg1->field_0x1C,
                 0x7D00, 0x3E8, 0x1F4, (s32)func_15033BDC, arg0, (s32)arg1, 0, 0) | 0x80000000;
         }
     }

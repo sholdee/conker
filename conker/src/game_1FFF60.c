@@ -27,6 +27,17 @@ typedef struct {
     s32 unk0;
 } Func151D343CData;
 
+typedef struct {
+    u8 pad_0[0x10];
+    u8 field_0x10[0x8];
+    u8 field_0x18;
+    u8 pad_0x19[0x7];
+    s16 field_0x20;
+    u8 pad_0x22[0x2];
+    s32 field_0x24;
+    s32 field_0x28;
+} Game1FFF60ObjectNode;
+
 void func_15169260(Func151D343CData *, s32, s32, u8);
 
 void func_151D2AB0(s32 arg0) {
@@ -177,19 +188,19 @@ void func_151D2E14(struct102 *arg0) {
 s32 func_15167A68(s32, s32, s32, s32, s32, s32);
 
 s32 func_151D2F00(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    s32 tmp = func_15167A68(0x3E, arg3, arg1 + 0x30, 1, (u8)arg2, 1);
+    Game1FFF60ObjectNode *tmp = (Game1FFF60ObjectNode *)func_15167A68(0x3E, arg3, arg1 + 0x30, 1, (u8)arg2, 1);
 
     if (tmp == 0) {
         return 0;
     }
 
-    memcpy((void *)(tmp + 0x10), arg0, 0x10);
-    *(s16 *)(tmp + 0x20) = 0;
-    *(s32 *)(tmp + 0x24) = 0;
-    *(s32 *)(tmp + 0x28) = 0;
-    *(u8 *)(tmp + 0x18) = *(u8 *)(tmp + 0x18) & 0xFFFD;
+    memcpy(tmp->field_0x10, arg0, 0x10);
+    tmp->field_0x20 = 0;
+    tmp->field_0x24 = 0;
+    tmp->field_0x28 = 0;
+    tmp->field_0x18 = tmp->field_0x18 & 0xFFFD;
 
-    return tmp;
+    return (s32)tmp;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FFF60/func_151D2F90.s")

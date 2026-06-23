@@ -2,6 +2,26 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct {
+    u8 pad_0x0[0x10];
+    u8 field_0x10;
+    u8 field_0x11;
+    s8 field_0x12;
+    s8 field_0x13;
+    f32 field_0x14;
+    f32 field_0x18;
+    f32 field_0x1C;
+    f32 field_0x20;
+} CompactOscillatorMotionState;
+
+typedef struct {
+    u8 pad_0x0[0x2C];
+    f32 field_0x2C;
+    f32 field_0x30;
+    u8 pad_0x34[0xDC];
+    CompactOscillatorMotionState field_0x110;
+} CompactOscillatorObject;
+
 void func_151B1918(struct260 *arg0);
 void func_15149368(struct260 *arg0);
 
@@ -31,17 +51,17 @@ s32 func_151B1478(struct260 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DD500/func_151B14AC.s")
 
-s32 func_151B1828(u8 *arg0) {
-    u8 *p = arg0;
-    f32 *f = (f32 *)(arg0 + 0x110);
+s32 func_151B1828(CompactOscillatorObject *arg0) {
+    CompactOscillatorObject *p = arg0;
+    CompactOscillatorMotionState *f = &arg0->field_0x110;
     f32 r1;
     f32 r2;
-    p[0x120] = *(s8 *)(p + 0x122) * D_800BE9E4 + p[0x120];
-    p[0x121] = *(s8 *)(p + 0x123) * D_800BE9E4 + p[0x121];
-    r1 = func_151423D8((u8)(p[0x120] - 0x40));
-    r2 = func_151423D8((u8)(((u8 *)f)[0x11] - 0x40));
-    *(f32 *)(p + 0x2C) += (f[5] + f[7] * r1 - *(f32 *)(p + 0x2C)) * 0.5f;
-    *(f32 *)(p + 0x30) += (f[6] + f[8] * r2 - *(f32 *)(p + 0x30)) * 0.5f;
+    f->field_0x10 = f->field_0x10 + f->field_0x12 * D_800BE9E4;
+    f->field_0x11 = f->field_0x11 + f->field_0x13 * D_800BE9E4;
+    r1 = func_151423D8((u8)(f->field_0x10 - 0x40));
+    r2 = func_151423D8((u8)(f->field_0x11 - 0x40));
+    p->field_0x2C += (f->field_0x14 + f->field_0x1C * r1 - p->field_0x2C) * 0.5f;
+    p->field_0x30 += (f->field_0x18 + f->field_0x20 * r2 - p->field_0x30) * 0.5f;
     return 1;
 }
 

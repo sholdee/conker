@@ -70,14 +70,14 @@ struct Obj1511515C {
 };
 
 struct Obj151152A8 {
-    u8 pad0[0x12];
-    s16 unk12;
-    u8 pad14[0x28];
-    s32 unk3C;
-    u8 pad40[0xF];
-    u8 unk4F;
-    u8 pad50[0x2C];
-    s32 unk7C;
+    char pad_0x0[0x12];
+    s16 field_0x12;
+    char pad_0x14[0x28];
+    s32 field_0x3C;
+    char pad_0x40[0xF];
+    u8 field_0x4F;
+    char pad_0x50[0x2C];
+    s32 field_0x7C;
 };
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151150B0.s")
@@ -120,27 +120,27 @@ void func_151151FC(struct Obj151151FC *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511529C.s")
 
-void func_151152A8(u8 *arg0) {
+void func_151152A8(struct Obj151152A8 *arg0) {
     s32 target;
     s32 current;
     s32 step;
     s32 *targetPtr;
 
-    targetPtr = (s32 *)(arg0 + 0x7C);
+    targetPtr = &arg0->field_0x7C;
     target = *targetPtr;
     if (target == 0) {
-        target = *(s16 *)(arg0 + 0x12);
+        target = arg0->field_0x12;
         *targetPtr = target;
     }
-    current = *(s16 *)(arg0 + 0x12);
-    if ((arg0[0x4F] & 0xFF) & 4) {
-        step = *(s32 *)(arg0 + 0x3C);
+    current = arg0->field_0x12;
+    if ((arg0->field_0x4F & 0xFF) & 4) {
+        step = arg0->field_0x3C;
         if ((target - current) < (s16)step) {
-            *(s16 *)(arg0 + 0x12) = current - ((s16)(step >> 16) * D_800BE9E4);
+            arg0->field_0x12 = current - ((s16)(step >> 16) * D_800BE9E4);
             return;
         }
     } else {
-        *(s16 *)(arg0 + 0x12) = (s32)((f32)current + ((f32)(target - current) * D_800A2F8C * (f32)D_800BE9E4));
+        arg0->field_0x12 = (s32)((f32)current + ((f32)(target - current) * D_800A2F8C * (f32)D_800BE9E4));
     }
 }
 

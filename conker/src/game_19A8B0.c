@@ -110,7 +110,8 @@ typedef struct {
     char pad_0[0x14];
     s16 field_0x14;
     s16 field_0x16;
-    char pad_0x18[0x7];
+    s16 field_0x18;
+    char pad_0x1A[0x5];
     u8 field_0x1F;
     char pad_0x20[0x4];
     u8 field_0x24;
@@ -326,7 +327,7 @@ void func_1516ED68(s32 a0, s32 a1, u8 a2, s32 a3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516EED4.s")
 
-s32 func_1516F024(s32 arg0) {
+s32 func_1516F024(Obj1516FadeState *arg0) {
     volatile s32 pad[4];
     s32 temp_a2;
     struct Table1516F024 sp48;
@@ -342,9 +343,9 @@ s32 func_1516F024(s32 arg0) {
     sp30 = D_8008CBDC;
     sp24 = D_8008CBE8;
 
-    temp_a1 = *(u8 *)(arg0 + 0x24);
-    temp_a2 = *(u8 *)(arg0 + 0x2C);
-    temp_v0 = *(u8 *)(arg0 + 0x1F);
+    temp_a1 = arg0->field_0x24;
+    temp_a2 = arg0->field_0x2C;
+    temp_v0 = arg0->field_0x1F;
     if (temp_a1 != 0) {
         temp_v1 = sp30.unk0[temp_a2];
         if (temp_v0 != temp_v1) {
@@ -352,8 +353,8 @@ s32 func_1516F024(s32 arg0) {
             if (temp_v1 < temp_v0) {
                 temp_v0 = temp_v1;
             }
-            *(u8 *)(arg0 + 0x1F) = temp_v0;
-            temp_a1 = *(volatile u8 *)(arg0 + 0x24);
+            arg0->field_0x1F = temp_v0;
+            temp_a1 = ((volatile Obj1516FadeState *)arg0)->field_0x24;
         }
     } else {
         if (temp_v0 != 0) {
@@ -361,8 +362,8 @@ s32 func_1516F024(s32 arg0) {
             if (temp_v0 < 0) {
                 temp_v0 = 0;
             }
-            *(u8 *)(arg0 + 0x1F) = temp_v0;
-            temp_a1 = *(volatile u8 *)(arg0 + 0x24);
+            arg0->field_0x1F = temp_v0;
+            temp_a1 = ((volatile Obj1516FadeState *)arg0)->field_0x24;
         }
     }
 
@@ -370,15 +371,15 @@ s32 func_1516F024(s32 arg0) {
         return 1;
     }
 
-    func_1516F864(arg0);
-    temp_v0 = *(s16 *)(arg0 + 0x14);
+    func_1516F864((s32)arg0);
+    temp_v0 = arg0->field_0x14;
     temp_v0 += D_800BE9E4 * sp3C.unk0[temp_a2];
-    *(s16 *)(arg0 + 0x16) = temp_v0;
-    *(s16 *)(arg0 + 0x14) = temp_v0;
+    arg0->field_0x16 = temp_v0;
+    arg0->field_0x14 = temp_v0;
     if (temp_a2 == 3) {
-        *(s16 *)(arg0 + 0x18) = 0x64;
+        arg0->field_0x18 = 0x64;
     }
-    func_1516F94C(arg0, sp48.unk0[temp_a2]);
+    func_1516F94C((s32)arg0, sp48.unk0[temp_a2]);
     return 0;
 }
 
