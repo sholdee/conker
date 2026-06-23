@@ -21,6 +21,34 @@ typedef struct {
     /* 0x10 */ f32 unk10[3];
 } struct_AF4D0;
 
+typedef struct {
+    char pad_0[0x44];
+    s32 field_0x44;
+    char pad_0x48[0x4];
+    f32 field_0x4C;
+    s8 field_0x50;
+    s8 field_0x51;
+    s16 field_0x52;
+} ObjectFxPayload;
+
+typedef struct {
+    char pad_0[0x98];
+    s8 field_0x98;
+    char pad_0x99[0x3];
+    ObjectFxPayload *field_0x9C;
+    char pad_0xA0[0xE];
+    u8 field_0xAE;
+} ObjectFxControl;
+
+typedef struct {
+    char pad_0[0x3C];
+    f32 field_0x3C;
+    char pad_0x40[0x36];
+    u16 field_0x76;
+    char pad_0x78[0x2A4];
+    ObjectFxControl *field_0x31C;
+} GameObjectFxOwner;
+
 extern struct_AF4D0 D_800A9DF0[];
 extern f32 D_800AA0E4;
 
@@ -208,16 +236,16 @@ void func_151ACB94(s32 arg0, s32 arg1, u8 arg2) {
 
 extern f32 D_800A9294;
 
-void func_151AE264(u8 *arg0) {
-    f32 temp = *(f32 *)(arg0 + 0x3C) * D_800A9294;
-    u8 *v0 = *(u8 **)(*(s32 *)(arg0 + 0x31C) + 0x9C);
-    *(f32 *)(v0 + 0x4C) = temp;
-    *(s8 *)(v0 + 0x50) = *(u16 *)(arg0 + 0x76) >> 8;
-    *(s8 *)(v0 + 0x51) = *(u8 *)(*(s32 *)(arg0 + 0x31C) + 0xAE);
-    *(s16 *)(v0 + 0x52) = 0x14;
-    *(s32 *)(v0 + 0x44) = 0;
-    *(s8 *)(*(s32 *)(arg0 + 0x31C) + 0x98) = 0;
-    *(s32 *)(*(s32 *)(arg0 + 0x31C) + 0x9C) = 0;
+void func_151AE264(GameObjectFxOwner *arg0) {
+    f32 temp = arg0->field_0x3C * D_800A9294;
+    ObjectFxPayload *v0 = arg0->field_0x31C->field_0x9C;
+    v0->field_0x4C = temp;
+    v0->field_0x50 = arg0->field_0x76 >> 8;
+    v0->field_0x51 = arg0->field_0x31C->field_0xAE;
+    v0->field_0x52 = 0x14;
+    v0->field_0x44 = 0;
+    arg0->field_0x31C->field_0x98 = 0;
+    arg0->field_0x31C->field_0x9C = 0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE2BC.s")

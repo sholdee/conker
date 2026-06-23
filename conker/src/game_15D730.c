@@ -17,8 +17,19 @@ typedef struct Struct15130280Payload {
 } Struct15130280Payload;
 
 typedef struct Obj15130280 {
-    u8 pad0[0x80];
+    u8 pad_0x0[0x2B];
+    u8 field_0x2B;
+    u8 pad_0x2C[0xC];
+    f32 field_0x38;
+    f32 field_0x3C;
+    u8 pad_0x40[0x40];
     Struct15130280Payload unk80;
+    u8 pad_0xA4[0x4];
+    f32 field_0xA8;
+    f32 field_0xAC;
+    f32 field_0xB0;
+    f32 field_0xB4;
+    f32 field_0xB8;
 } Obj15130280;
 
 extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
@@ -269,19 +280,19 @@ s32 func_15131D9C(u8 *arg0, s32 arg1) {
     return 1;
 }
 
-s32 func_15131DEC(u8 *arg0, s32 arg1) {
+s32 func_15131DEC(Obj15130280 *arg0, s32 arg1) {
     f32 temp_f2;
     f32 temp_f12;
 
-    temp_f2 = *(f32 *)(arg0 + 0xA8);
-    temp_f12 = *(f32 *)(arg0 + 0xB0) * sqrtf(temp_f2);
-    *(f32 *)(arg0 + 0x3C) = temp_f12;
-    *(f32 *)(arg0 + 0x38) = temp_f12;
+    temp_f2 = arg0->field_0xA8;
+    temp_f12 = arg0->field_0xB0 * sqrtf(temp_f2);
+    arg0->field_0x3C = temp_f12;
+    arg0->field_0x38 = temp_f12;
 
-    arg0[0x2B] = (u32)(*(f32 *)(arg0 + 0xB4) - ((*(f32 *)(arg0 + 0xB8) * temp_f2) * temp_f2));
-    *(f32 *)(arg0 + 0xA8) = temp_f2 + D_800BE9A4;
+    arg0->field_0x2B = (u32)(arg0->field_0xB4 - ((arg0->field_0xB8 * temp_f2) * temp_f2));
+    arg0->field_0xA8 = temp_f2 + D_800BE9A4;
 
-    if (*(f32 *)(arg0 + 0xAC) < *(f32 *)(arg0 + 0xA8)) {
+    if (arg0->field_0xAC < arg0->field_0xA8) {
         return 0;
     }
     return 1;

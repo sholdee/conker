@@ -3,31 +3,40 @@
 #include "variables.h"
 
 
-void func_150D7420(s32 arg0, u8 *arg1, u8 arg2) {
+typedef struct {
+    char pad_0[0x28];
+    u8 field_0x28;
+    u8 field_0x29;
+    u8 field_0x2A;
+    char pad_0x2B[0x2D];
+    s32 field_0x58;
+} GameObjectColorFlags;
+
+void func_150D7420(GameObjectColorFlags *arg0, u8 *arg1, u8 arg2) {
     if (arg2 == 0x36) {
         switch (*arg1) {
             case 0:
                 break;
             case 1:
-                *(s32 *)(arg0 + 0x58) |= 2;
-                *(u8 *)(arg0 + 0x28) = 0xFF;
-                *(u8 *)(arg0 + 0x29) = 0;
-                *(u8 *)(arg0 + 0x2A) = 0;
+                arg0->field_0x58 |= 2;
+                arg0->field_0x28 = 0xFF;
+                arg0->field_0x29 = 0;
+                arg0->field_0x2A = 0;
                 return;
             case 2:
-                *(s32 *)(arg0 + 0x58) |= 2;
-                *(u8 *)(arg0 + 0x28) = 0xFF;
-                *(u8 *)(arg0 + 0x29) = 0;
-                *(u8 *)(arg0 + 0x2A) = 0;
+                arg0->field_0x58 |= 2;
+                arg0->field_0x28 = 0xFF;
+                arg0->field_0x29 = 0;
+                arg0->field_0x2A = 0;
                 return;
             case 3:
-                *(u8 *)(arg0 + 0x28) = 0;
-                *(s32 *)(arg0 + 0x58) |= 2;
-                *(u8 *)(arg0 + 0x29) = 0xFF;
-                *(u8 *)(arg0 + 0x2A) = 0;
+                arg0->field_0x28 = 0;
+                arg0->field_0x58 |= 2;
+                arg0->field_0x29 = 0xFF;
+                arg0->field_0x2A = 0;
                 return;
         }
-        *(s32 *)(arg0 + 0x58) &= ~2;
+        arg0->field_0x58 &= ~2;
     }
 }
 

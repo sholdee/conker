@@ -201,67 +201,67 @@ s32 func_15149550(Struct15149550Arg *arg0, u8 arg1, u8 arg2, s32 arg3, u8 arg4, 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_15149838.s")
 
-struct Foo15149A94Inner {
-    char pad0[0x8];
-    f32 unk8;
-    char padC[0x14];
-    f32 unk20;
-    char pad24[0x20];
-    f32 unk44;
-};
+typedef struct {
+    char pad_0x0[0x8];
+    f32 field_0x8;
+    char pad_0xC[0x14];
+    f32 field_0x20;
+    char pad_0x24[0x20];
+    f32 field_0x44;
+} Struct15149550ObjExtra;
 
-struct Foo15149A94 {
-    char pad1C[0x1C];
-    s16 unk1C;
-    char pad1E[0xE];
-    f32 unk2C;
-    f32 unk30;
-    char pad34[0x24];
-    s32 unk58;
-    char pad5C[0x14];
-    u8 unk70;
-    u8 unk71;
-    u8 unk72;
-    u8 unk73;
-    u8 unk74;
-    char pad75[0x9B];
-    struct Foo15149A94Inner unk110;
-    u8 unk158;
-};
+typedef struct {
+    char pad_0x0[0x1C];
+    s16 field_0x1C;
+    char pad_0x1E[0xE];
+    f32 field_0x2C;
+    f32 field_0x30;
+    char pad_0x34[0x24];
+    s32 field_0x58;
+    char pad_0x5C[0x14];
+    u8 field_0x70;
+    char pad_0x71[0x1];
+    u8 field_0x72;
+    u8 field_0x73;
+    u8 field_0x74;
+    char pad_0x75[0x9B];
+    Struct15149550ObjExtra field_0x110;
+    u8 field_0x158;
+} Struct15149550Obj;
 
-s32 func_15149A94(u8 *arg0) {
-    struct Foo15149A94Inner *temp_v0;
+s32 func_15149A94(Struct15149550Obj *arg0) {
+    Struct15149550ObjExtra *temp_v0;
     s32 var_v1;
     s32 flags;
 
-    flags = *(u8 *)(arg0 + 0x74);
+    flags = arg0->field_0x74;
     var_v1 = 1;
-    temp_v0 = (struct Foo15149A94Inner *)(arg0 + 0x110);
+    temp_v0 = &arg0->field_0x110;
     if (!(flags & 2)) {
-        *(f32 *)(arg0 + 0x2C) += (temp_v0->unk8 - *(f32 *)(arg0 + 0x2C)) * temp_v0->unk44;
-        if ((temp_v0->unk8 * D_800A578C) < *(f32 *)(arg0 + 0x2C)) {
-            *(u8 *)(arg0 + 0x74) |= 2;
-            flags = *(u8 *)(arg0 + 0x74);
+        arg0->field_0x2C += (temp_v0->field_0x8 - arg0->field_0x2C) * temp_v0->field_0x44;
+        if ((temp_v0->field_0x8 * D_800A578C) < arg0->field_0x2C) {
+            arg0->field_0x74 |= 2;
+            flags = arg0->field_0x74;
         } else {
             var_v1 = 0;
-            flags = *(u8 *)(arg0 + 0x74);
+            flags = arg0->field_0x74;
         }
     }
     if (!(flags & 8)) {
-        *(f32 *)(arg0 + 0x30) += (temp_v0->unk20 - *(f32 *)(arg0 + 0x30)) * temp_v0->unk44;
-        if ((temp_v0->unk20 * D_800A5790) < *(f32 *)(arg0 + 0x30)) {
-            *(u8 *)(arg0 + 0x74) |= 8;
+        arg0->field_0x30 += (temp_v0->field_0x20 - arg0->field_0x30) * temp_v0->field_0x44;
+        if ((temp_v0->field_0x20 * D_800A5790) < arg0->field_0x30) {
+            arg0->field_0x74 |= 8;
         } else {
             var_v1 = 0;
         }
     }
     if (var_v1) {
-        func_1513F680(arg0, *(u8 *)(arg0 + 0x70), 0xD, *(u8 *)(arg0 + 0x72), *(u8 *)(arg0 + 0x73));
+        func_1513F680(arg0, arg0->field_0x70, 0xD, arg0->field_0x72, arg0->field_0x73);
     }
-    if (*(s16 *)(arg0 + 0x1C) < 5) {
-        func_1513F680(arg0, *(u8 *)(arg0 + 0x70), *(u8 *)(arg0 + 0x158), *(u8 *)(arg0 + 0x72), *(u8 *)(arg0 + 0x73));
-        *(s16 *)(arg0 + 0x1C) = 0x64;
-        *(s32 *)(arg0 + 0x58) &= -2;
+    if (arg0->field_0x1C < 5) {
+        func_1513F680(arg0, arg0->field_0x70, arg0->field_0x158, arg0->field_0x72, arg0->field_0x73);
+        arg0->field_0x1C = 0x64;
+        arg0->field_0x58 &= -2;
     }
     return 1;
 }

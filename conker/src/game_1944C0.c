@@ -16,6 +16,18 @@ struct Some15171F04 {
     u16 unk8;
 };
 
+typedef struct {
+    char pad_0[0x98];
+    s16 field_0x98;
+    s16 field_0x9A;
+    char pad_0x9C[0xC];
+    u16 field_0xA8;
+    char pad_0xAA[0x6];
+    u8 field_0xB0;
+    char pad_0xB1[0x1];
+    s8 field_0xB2;
+} GameAnimObject;
+
 extern struct Some15171F04 *D_8008CA4C[];
 
 void func_15169070(s32, s32, s32, u8);
@@ -137,49 +149,49 @@ s32 func_15168800(s32 arg0, s32 arg1, s32 arg2) {
     bcopy(arg0, (void *)(temp + 0x10), 0xA8);
     return temp;
 }
-void func_15168870(s32 arg0) {
+void func_15168870(GameAnimObject *arg0) {
     s32 temp_v0;
     s32 temp_v1;
     u8 temp_a1;
     s16 temp_a2;
     void (*func)(struct102 *);
 
-    temp_a2 = *(s16 *)(arg0 + 0x9A);
+    temp_a2 = arg0->field_0x9A;
     if (temp_a2 != 0) {
-        temp_a1 = D_8008CA4C[*(u8 *)(arg0 + 0xB0)]->unk4;
+        temp_a1 = D_8008CA4C[arg0->field_0xB0]->unk4;
         temp_v1 = temp_a1;
         temp_v1 <<= 8;
-        *(s16 *)(arg0 + 0x98) += temp_a2 * D_800BE9E4;
-        temp_v0 = *(s16 *)(arg0 + 0x98);
+        arg0->field_0x98 += temp_a2 * D_800BE9E4;
+        temp_v0 = arg0->field_0x98;
         temp_v1 -= 1;
         if (temp_v1 < temp_v0) {
-            if (*(u16 *)(arg0 + 0xA8) & 0x40) {
-                *(s16 *)(arg0 + 0x98) = temp_v1 - (temp_v0 % temp_v1);
-                *(s16 *)(arg0 + 0x9A) = -temp_a2;
-            } else if (*(u16 *)(arg0 + 0xA8) & 4) {
-                *(s16 *)(arg0 + 0x98) = -1;
+            if (arg0->field_0xA8 & 0x40) {
+                arg0->field_0x98 = temp_v1 - (temp_v0 % temp_v1);
+                arg0->field_0x9A = -temp_a2;
+            } else if (arg0->field_0xA8 & 4) {
+                arg0->field_0x98 = -1;
             } else {
                 do {
-                    *(s16 *)(arg0 + 0x98) = temp_v0 - temp_v1;
-                    temp_v0 = *(s16 *)(arg0 + 0x98);
+                    arg0->field_0x98 = temp_v0 - temp_v1;
+                    temp_v0 = arg0->field_0x98;
                 } while (temp_v1 < temp_v0);
             }
         } else if (temp_v0 < 0) {
-            if (*(u16 *)(arg0 + 0xA8) & 0x40) {
-                *(s16 *)(arg0 + 0x98) = -temp_v0 % temp_v1;
-                *(s16 *)(arg0 + 0x9A) = -temp_a2;
-            } else if (*(u16 *)(arg0 + 0xA8) & 4) {
-                *(s16 *)(arg0 + 0x98) = -1;
+            if (arg0->field_0xA8 & 0x40) {
+                arg0->field_0x98 = -temp_v0 % temp_v1;
+                arg0->field_0x9A = -temp_a2;
+            } else if (arg0->field_0xA8 & 4) {
+                arg0->field_0x98 = -1;
             } else {
                 do {
-                    *(s16 *)(arg0 + 0x98) = temp_v0 + temp_v1;
-                    temp_v0 = *(s16 *)(arg0 + 0x98);
+                    arg0->field_0x98 = temp_v0 + temp_v1;
+                    temp_v0 = arg0->field_0x98;
                 } while (temp_v0 < 0);
             }
         }
     }
 
-    temp_v0 = *(s8 *)(arg0 + 0xB2);
+    temp_v0 = arg0->field_0xB2;
     if (temp_v0 != -1) {
         func = D_8008C9C8[temp_v0];
         if (func != NULL) {
@@ -187,7 +199,7 @@ void func_15168870(s32 arg0) {
         }
     }
 
-    if (*(s16 *)(arg0 + 0x98) == -1) {
+    if (arg0->field_0x98 == -1) {
         func_1516972C((struct102 *)arg0);
     }
 }

@@ -45,40 +45,72 @@ s32 func_1518C540(void* arg0) {
 void func_1516865C(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 s32 func_15168800(s32 arg0, s32 arg1, s32 arg2);
 
-struct Struct1518C57C {
-    u8 pad[0xA8];
-};
+typedef struct {
+    f32 field_0x0;
+    f32 field_0x4;
+    f32 field_0x8;
+    s32 field_0xC;
+    s32 field_0x10;
+} EffectPoint;
 
-struct Elem1518C57C {
-    f32 unk0;
-    f32 unk4;
-    f32 unk8;
-    s32 unkC;
-    s32 unk10;
-};
+typedef struct {
+    u8 pad_0x0[0x20];
+    s8 field_0x20;
+} EffectState;
 
-s32 func_1518C57C(void *arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4) {
-    struct Struct1518C57C sp38;
-    void *temp;
-    struct Elem1518C57C *base;
+typedef struct {
+    u8 pad_0x0[0x1];
+    u8 field_0x1;
+    u8 pad_0x2[0xA];
+    u8 field_0xC;
+    u8 pad_0xD[0x20];
+    s8 field_0x2D;
+    u8 pad_0x2E[0x66];
+    EffectPoint *field_0x94;
+    EffectState *field_0x98;
+} EffectEmitter;
 
-    temp = *(void **)((u8 *)arg0 + 0x98);
-    base = *(struct Elem1518C57C **)((u8 *)arg0 + 0x94);
-    *(s32 *)(sp38.pad + 0x80) = 0;
-    *(s16 *)(sp38.pad + 0x8A) = 0x100;
-    *(s16 *)(sp38.pad + 0x8C) = (s32)base[*(s8 *)((u8 *)arg0 + 0x2D)].unk0;
-    *(s16 *)(sp38.pad + 0x8E) = (s32)arg4;
-    *(s16 *)(sp38.pad + 0x90) = (s32)base[*(s8 *)((u8 *)arg0 + 0x2D)].unk8;
-    *(s16 *)(sp38.pad + 0x94) = (func_150ADA20() % 0x15U) + 0x23;
-    *(s16 *)(sp38.pad + 0x92) = *(s16 *)(sp38.pad + 0x94);
-    *(s8 *)(sp38.pad + 0xA2) = -1;
-    *(s8 *)(sp38.pad + 0xA0) = 0x12;
-    *(s16 *)(sp38.pad + 0x98) = 0xC;
-    *(s8 *)(sp38.pad + 0xA1) = 0;
-    *(s16 *)(sp38.pad + 0x96) = (s32)arg4;
+typedef struct {
+    u8 pad_0x0[0x80];
+    s32 field_0x80;
+    u8 pad_0x84[0x6];
+    s16 field_0x8A;
+    s16 field_0x8C;
+    s16 field_0x8E;
+    s16 field_0x90;
+    s16 field_0x92;
+    s16 field_0x94;
+    s16 field_0x96;
+    s16 field_0x98;
+    u8 pad_0x9A[0x6];
+    s8 field_0xA0;
+    s8 field_0xA1;
+    s8 field_0xA2;
+    u8 pad_0xA3[0x5];
+} EffectSpawnPacket;
+
+s32 func_1518C57C(EffectEmitter *arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4) {
+    EffectSpawnPacket sp38;
+    EffectState *temp;
+    EffectPoint *base;
+
+    temp = arg0->field_0x98;
+    base = arg0->field_0x94;
+    sp38.field_0x80 = 0;
+    sp38.field_0x8A = 0x100;
+    sp38.field_0x8C = (s32)base[arg0->field_0x2D].field_0x0;
+    sp38.field_0x8E = (s32)arg4;
+    sp38.field_0x90 = (s32)base[arg0->field_0x2D].field_0x8;
+    sp38.field_0x94 = (func_150ADA20() % 0x15U) + 0x23;
+    sp38.field_0x92 = sp38.field_0x94;
+    sp38.field_0xA2 = -1;
+    sp38.field_0xA0 = 0x12;
+    sp38.field_0x98 = 0xC;
+    sp38.field_0xA1 = 0;
+    sp38.field_0x96 = (s32)arg4;
     func_1516865C(&sp38, 0xFF, 0xFF, 0xFF, 0xFF);
-    func_15168800((s32)&sp38, *(u8 *)((u8 *)arg0 + 0xC), *(u8 *)((u8 *)arg0 + 1));
-    *(s8 *)((u8 *)temp + 0x20) = 4;
+    func_15168800((s32)&sp38, arg0->field_0xC, arg0->field_0x1);
+    temp->field_0x20 = 4;
     return 1;
 }
 

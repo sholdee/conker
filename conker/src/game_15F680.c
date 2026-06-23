@@ -32,6 +32,23 @@ typedef struct {
 } PaddedMtxF15133A94;
 
 typedef struct {
+    u8 pad_0[0x10];
+    f32 field_0x10;
+    f32 field_0x14;
+    u8 pad_1[0x24];
+    f32 field_0x3C;
+    u8 pad_2[0x4];
+    f32 field_0x44;
+    f32 field_0x48;
+    f32 field_0x4C;
+    f32 field_0x50;
+    f32 field_0x54;
+    f32 field_0x58;
+    f32 field_0x5C;
+    s32 field_0x60;
+} MotionFields15133;
+
+typedef struct {
     s32 unk0;
     s32 unk4;
 } Data15133E3C;
@@ -241,26 +258,26 @@ s32 func_15133A94(Mtx *arg0, u8 *arg1) {
     return 1;
 }
 
-s32 func_15133B98(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5) {
+s32 func_15133B98(MotionFields15133 *arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5) {
     f32 temp;
 
-    temp = *(f32 *)(arg0 + 0x14);
-    *(f32 *)(arg0 + 0x3C) = *(f32 *)(arg0 + 0x10) + arg4;
-    *(f32 *)(arg0 + 0x44) = *(f32 *)(arg0 + 0x44) * temp;
-    *(f32 *)(arg0 + 0x48) = *(f32 *)(arg0 + 0x48) * -temp;
-    *(f32 *)(arg0 + 0x4C) = *(f32 *)(arg0 + 0x4C) * temp;
-    *(f32 *)(arg0 + 0x50) = *(f32 *)(arg0 + 0x50) * temp;
-    *(f32 *)(arg0 + 0x54) = *(f32 *)(arg0 + 0x54) * temp;
-    *(f32 *)(arg0 + 0x58) = *(f32 *)(arg0 + 0x58) * temp;
-    if (fabsf(*(f32 *)(arg0 + 0x48)) < 4.0f) {
-        *(s32 *)(arg0 + 0x60) &= -0x6A;
-        *(f32 *)(arg0 + 0x44) = 0.0f;
-        *(f32 *)(arg0 + 0x48) = 0.0f;
-        *(f32 *)(arg0 + 0x4C) = 0.0f;
-        *(f32 *)(arg0 + 0x50) = 0.0f;
-        *(f32 *)(arg0 + 0x54) = 0.0f;
-        *(f32 *)(arg0 + 0x58) = 0.0f;
-        *(f32 *)(arg0 + 0x5C) = 0.0f;
+    temp = arg0->field_0x14;
+    arg0->field_0x3C = arg0->field_0x10 + arg4;
+    arg0->field_0x44 = arg0->field_0x44 * temp;
+    arg0->field_0x48 = arg0->field_0x48 * -temp;
+    arg0->field_0x4C = arg0->field_0x4C * temp;
+    arg0->field_0x50 = arg0->field_0x50 * temp;
+    arg0->field_0x54 = arg0->field_0x54 * temp;
+    arg0->field_0x58 = arg0->field_0x58 * temp;
+    if (fabsf(arg0->field_0x48) < 4.0f) {
+        arg0->field_0x60 &= -0x6A;
+        arg0->field_0x44 = 0.0f;
+        arg0->field_0x48 = 0.0f;
+        arg0->field_0x4C = 0.0f;
+        arg0->field_0x50 = 0.0f;
+        arg0->field_0x54 = 0.0f;
+        arg0->field_0x58 = 0.0f;
+        arg0->field_0x5C = 0.0f;
     }
     return 1;
 }

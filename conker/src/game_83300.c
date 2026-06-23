@@ -14,6 +14,28 @@ s32 func_1505C1E4(void *arg0, struct127 *arg1, void *arg2, s32 arg3, s32 arg4, s
 extern struct255 *D_800CC4A4;
 void func_1505F188(struct127 *arg0);
 
+typedef struct {
+    char pad_0[0x4];
+    u16 field_0x4;
+    s16 field_0x6;
+    f32 field_0x8;
+    f32 field_0xC;
+    f32 field_0x10;
+    f32 field_0x14;
+    f32 field_0x18;
+    f32 field_0x1C;
+    f32 field_0x20;
+    f32 field_0x24;
+    s32 field_0x28;
+    s32 field_0x2C;
+    char pad_0x30[0x8];
+    s8 field_0x38;
+    s8 field_0x39;
+    char pad_0x3A[0x6];
+    u8 field_0x40[0x1D0];
+    u8 field_0x210[0x1D0];
+} AnimPlaybackState;
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_15055E50.s")
 
 void func_15056150(struct127 *arg0) {
@@ -1103,17 +1125,15 @@ void func_1505DFDC(u8 *arg0) {
     }
 }
 
-void func_1505E060(void *arg0) {
-    u8 *p = (u8 *)arg0;
-
-    *(s16 *)(p + 0x6) = *(u16 *)(p + 0x4);
-    *(f32 *)(p + 0xC) = *(f32 *)(p + 0x8);
-    *(f32 *)(p + 0x14) = *(f32 *)(p + 0x10);
-    *(f32 *)(p + 0x24) = *(f32 *)(p + 0x20);
-    *(f32 *)(p + 0x1C) = *(f32 *)(p + 0x18);
-    *(s8 *)(p + 0x39) = *(s8 *)(p + 0x38);
-    *(s32 *)(p + 0x2C) = *(s32 *)(p + 0x28);
-    bcopy(p + 0x40, p + 0x210, 0x1D0);
+void func_1505E060(AnimPlaybackState *arg0) {
+    arg0->field_0x6 = arg0->field_0x4;
+    arg0->field_0xC = arg0->field_0x8;
+    arg0->field_0x14 = arg0->field_0x10;
+    arg0->field_0x24 = arg0->field_0x20;
+    arg0->field_0x1C = arg0->field_0x18;
+    arg0->field_0x39 = arg0->field_0x38;
+    arg0->field_0x2C = arg0->field_0x28;
+    bcopy(arg0->field_0x40, arg0->field_0x210, 0x1D0);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_1505E0C4.s")

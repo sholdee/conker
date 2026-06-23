@@ -18,6 +18,19 @@ extern void func_10004074(void *arg0);
 s32 func_1502FE10(s32 arg0, void *arg1, void *arg2, void *arg3, void *arg4, void *arg5, void *arg6);
 s32 func_1503F62C(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, void *arg5, void *arg6);
 
+typedef struct Game5D2C0EffectState {
+    u8 pad_0[0x38];
+    s32 field_0x38;
+    s32 field_0x3C;
+} Game5D2C0EffectState;
+
+typedef struct Game5D2C0PositionState {
+    u8 pad_0[0x14];
+    f32 field_0x14;
+    f32 field_0x18;
+    f32 field_0x1C;
+} Game5D2C0PositionState;
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_1502FE10.s")
 
 typedef struct Func1502FFD8Arg0 {
@@ -596,20 +609,20 @@ s32 func_150339C8(u8 *arg0, u8 *arg1) {
 
 s32 func_15033BDC();
 
-s32 func_15033AD8(u8 *arg0, u8 *arg1) {
+s32 func_15033AD8(Game5D2C0EffectState *arg0, Game5D2C0PositionState *arg1) {
     if (D_800BE616 != 0) {
-        func_1508B20C(*(f32 *)(arg1 + 0x14), *(f32 *)(arg1 + 0x18), *(f32 *)(arg1 + 0x1C), 900.0f);
+        func_1508B20C(arg1->field_0x14, arg1->field_0x18, arg1->field_0x1C, 900.0f);
     }
-    if (*(s32 *)(arg0 + 0x38) == 0) {
-        if (*(s32 *)(arg0 + 0x3C) < 0x1E) {
-            *(s32 *)(arg0 + 0x3C) += D_800BE9E4;
+    if (arg0->field_0x38 == 0) {
+        if (arg0->field_0x3C < 0x1E) {
+            arg0->field_0x3C += D_800BE9E4;
         } else {
-            *(s32 *)(arg0 + 0x3C) = func_1000FA64(0x513,
-                (s16)(s32)*(f32 *)(arg1 + 0x14),
-                (s16)(s32)*(f32 *)(arg1 + 0x18),
-                (s16)(s32)*(f32 *)(arg1 + 0x1C),
+            arg0->field_0x3C = func_1000FA64(0x513,
+                (s16)(s32)arg1->field_0x14,
+                (s16)(s32)arg1->field_0x18,
+                (s16)(s32)arg1->field_0x1C,
                 0x7D00, 0x3E8, 0x1F4, (s32)func_15033BDC, arg0, (s32)arg1, 0, 0);
-            *(s32 *)(arg0 + 0x38) = 0x513;
+            arg0->field_0x38 = 0x513;
         }
     }
     return 0;
