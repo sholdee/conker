@@ -18,6 +18,8 @@ extern s32 D_800DD1FC;
 extern s32 D_800DD200;
 extern s16 D_800DD204;
 extern s16 D_800DD206;
+extern s32 D_800DD218;
+extern s32 D_800DD21C;
 
 
 void func_15141970(struct37 *arg0) {
@@ -380,7 +382,21 @@ Gfx *func_15142CF0(Gfx *gfx, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     return gfx;
 }
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142E24.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142FBC.s")
+Gfx *func_15142FBC(Gfx *gfx, s32 arg1, s32 arg2, u8 *arg3) {
+    if ((arg1 != D_800DD218) || (arg2 != D_800DD21C)) {
+        if (*arg3 == 1) {
+            gDPPipeSync(gfx++);
+            *arg3 = 0;
+        }
+
+        gDPSetOtherMode(gfx++, arg1 | 0xF, arg2);
+
+        D_800DD218 = arg1;
+        D_800DD21C = arg2;
+    }
+
+    return gfx;
+}
 s16 func_15143044(u8 arg0, s32 arg1) {
     return 0x7FFF - arg0;
 }

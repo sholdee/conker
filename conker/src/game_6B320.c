@@ -164,7 +164,27 @@ void func_1503E3C4(s32 arg0, s32 arg1, s32 arg2, struct func_1503E3C4_s *arg3, s
 void func_1503EEB8(void) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503EEC0.s")
+struct func_1503EEC0_s {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s16 unkC;
+    s8 padE[2];
+};
+
+void func_1503EEC0(s32 arg0) {
+    struct func_1503EEC0_s *p;
+    s32 timer;
+
+    func_1503ECA0(arg0);
+    p = (struct func_1503EEC0_s *)&D_800C6660[arg0];
+    timer = p->unkC;
+    timer -= D_800BE9E4;
+    p->unkC = timer;
+    if (timer <= 0) {
+        func_15060F28(&D_800CC2D0[arg0], 1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503EF4C.s")
 

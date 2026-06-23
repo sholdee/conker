@@ -110,7 +110,10 @@ void func_150FB240(u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_126F60/func_150FB29C.s")
+s32 func_150FB29C(void *arg0) {
+    func_150FB240((u8 *)arg0 + 0x43, *(s16 *)((u8 *)arg0 + 0x16), *(s16 *)((u8 *)arg0 + 0x120), *(s16 *)((u8 *)arg0 + 0x64), *(s16 *)((u8 *)arg0 + 0x66));
+    return 1;
+}
 
 extern void func_150FB240(u8 *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 

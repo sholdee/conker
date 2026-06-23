@@ -69,6 +69,8 @@ void func_151E6964(s32);
 void func_151E530C(void);
 void func_151E55A8(void);
 void func_151E557C(void);
+s32 func_151F2CDC(void);
+void func_151F2D6C(s32, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151DD970.s")
 
@@ -260,7 +262,22 @@ void func_151E2284(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E3344.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E4264.s")
+void func_151E4264(void) {
+    if (D_8008FD80 != 0) {
+        D_8008FD80 = 0;
+        return;
+    }
+
+    func_151E530C();
+    if ((D_800E0B9A != 0) || (D_800C35EA != 1)) {
+        if ((D_800C35EA == 1) && (func_151F2CDC() == 1)) {
+            func_151F2D6C(0, 0x2DE0);
+        }
+        D_800E0B94 = 7;
+        D_800E0A88 = func_151E2834;
+        D_8008FD74 = 8;
+    }
+}
 
 void func_151E4314(void) {
     struct Struct151E4314 *entry;

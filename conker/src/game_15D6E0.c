@@ -3,4 +3,10 @@
 #include "variables.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15D6E0/func_15130230.s")
+extern void (*D_80089670[])(void *);
+
+void func_15130230(void *arg0, s32 arg1) {
+    if (D_800B0DF0->padF) {
+        D_80089670[D_800B0DF0->padF](arg0);
+    }
+}

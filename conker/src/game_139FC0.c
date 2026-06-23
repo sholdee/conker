@@ -4,9 +4,22 @@
 
 extern u8 D_1A37E0[];
 
+#define WGFX1510CDB8(pkt, a, b)     \
+{                                   \
+    Gfx *_g = (Gfx *)(pkt);         \
+    _g->words.w0 = (u32)(a);        \
+    _g->words.w1 = (u32)(b);        \
+}
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510CB10.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510CDB8.s")
+Gfx *func_1510CDB8(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    gDPSetPrimColor(arg0++, 0xF2, 0, D_800D9B68[arg3][0], D_800D9B68[arg3][1], D_800D9B68[arg3][2], arg1);
+
+    gDPSetEnvColor(arg0++, D_800D9B78[arg3][0], D_800D9B78[arg3][1], D_800D9B78[arg3][2], arg2);
+
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510CE60.s")
 
