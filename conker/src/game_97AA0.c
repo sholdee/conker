@@ -25,7 +25,20 @@ s32 func_1506A760(s32 arg0, s32 arg1) {
     return func_151BBA9C(arg0, (s32)&D_800D1560, (s32)&D_800D1570, 0xFF, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506A79C.s")
+void func_151D3480(f32 *, f32 *, s32, s32, s32, s32);
+
+void func_1506A79C(struct127 *arg0, s32 arg1) {
+    f32 sp2C[3];
+    f32 sp20[3];
+
+    sp2C[0] = arg0->x_position;
+    sp2C[1] = arg0->y_position;
+    sp2C[2] = arg0->z_position;
+    sp20[0] = D_800D1570[0] - D_800D1560[0];
+    sp20[1] = D_800D1570[1] - D_800D1560[1];
+    sp20[2] = D_800D1570[2] - D_800D1560[2];
+    func_151D3480(sp2C, sp20, 0, 0, 0xFF, 1);
+}
 
 s32 func_151BC104(s32, s32, s32);
 

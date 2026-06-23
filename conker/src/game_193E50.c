@@ -4,6 +4,11 @@
 
 extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
 extern void func_1517E05C(s32, s32, s32);
+extern s32 D_8009054C;
+extern s32 D_800DD220;
+extern s32 D_800DD224;
+extern s32 D_800DD228[];
+extern s32 D_800DD230;
 
 void func_151669A0(s32 arg0, s32 arg1, s32 arg2, f32 arg3, s32 arg4, s32 arg5) {
     u8 *temp_v0;
@@ -41,7 +46,10 @@ void func_151669A0(s32 arg0, s32 arg1, s32 arg2, f32 arg3, s32 arg4, s32 arg5) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_193E50/func_15166D68.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_193E50/func_15166F6C.s")
+void func_15166F6C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    D_800DD228[0] = (s32)&D_8009054C;
+    func_15094F70(arg0, D_800DD228[0], D_800DD220, (s32)&D_800DD230, 0, 0, 0, D_800DD224, 3);
+}
 
 extern Mtx D_80089470;
 

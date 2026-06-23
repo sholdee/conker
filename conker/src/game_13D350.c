@@ -253,7 +253,32 @@ void func_1511490C(f32 arg0[4][4], struct Struct1511490C *arg1) {
     func_150A7A48(sp20, arg0, arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_151149AC.s")
+struct131 *func_151149AC(u8 id) {
+    s32 i;
+    s32 offset;
+    struct131 *base;
+    struct131 *ptr;
+
+    if (id == 0) {
+        return NULL;
+    }
+
+    i = 0;
+    if (D_800DBEF0 > 0) {
+        base = D_800DBEF4;
+        offset = 0;
+        ptr = base;
+        do {
+            i++;
+            if (((u8 *)ptr)[0x72] == id) {
+                return (struct131 *)((u8 *)offset + (s32)base);
+            }
+            offset += sizeof(struct131);
+            ptr++;
+        } while (i < D_800DBEF0);
+    }
+    return NULL;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13D350/func_15114A1C.s")
 

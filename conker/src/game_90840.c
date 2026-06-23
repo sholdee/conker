@@ -15,7 +15,12 @@ struct func_15063B64_sp28 {
     volatile s32 unk14;
 };
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_15063390.s")
+s16 func_15063390(struct127 *arg0) {
+    struct127 *temp;
+
+    temp = &D_800CC2D0[arg0->unk222];
+    return func_1505A630(temp->x_position - arg0->x_position, arg0->z_position - temp->z_position, 0);
+}
 
 void func_15063404(struct127 *arg0) {
     struct127 *temp = &D_800CC2D0[arg0 - D_800CC2D0];

@@ -440,4 +440,14 @@ void func_151D5648(void *arg0, u8 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D5D60.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D5E30.s")
+void func_151D5E30(s32 *arg0) {
+    s32 i;
+
+    i = 0;
+    do {
+        if (arg0[i] != 0) {
+            func_100043B4((s32 *)arg0[i], 3);
+        }
+        i = (u8)(i + 1);
+    } while (i < 4);
+}
