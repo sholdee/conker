@@ -196,6 +196,88 @@ struct Local15152ABCStack {
 };
 
 extern struct Local15152ABCColor D_800A5FE0[];
+extern s32 func_15147DA0(void *, void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32 *, s32, u8, s32);
+
+struct Local15151A38Header {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+};
+
+struct Local15151A38Arg {
+    struct Local15151A38Header unk0;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    s16 unk24;
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    s16 unk2E;
+    s16 unk30;
+    s16 unk32;
+    s16 unk34;
+    s16 unk36;
+    u8 unk38;
+    u8 unk39;
+    u8 unk3A;
+    u8 pad3B;
+    s32 unk3C;
+    s32 unk40;
+    s32 unk44;
+    s32 unk48;
+    s32 unk4C;
+    s32 unk50;
+    u8 unk54;
+    u8 unk55;
+    u8 unk56;
+    u8 pad57;
+    s32 unk58;
+    s32 unk5C;
+    s32 unk60;
+    s32 unk64;
+    s32 unk68;
+    s32 unk6C;
+    s32 unk70;
+    s32 unk74;
+    s32 unk78;
+    u8 unk7C;
+    u8 unk7D;
+    u8 pad7E[2];
+    s16 unk80;
+    s16 unk82;
+    s32 unk84;
+};
+
+struct Local15151A38Pos {
+    struct Local15151A38Header unk0;
+    s16 unkC;
+    s16 unkE;
+    s32 unk10;
+    u8 pad14;
+    u8 unk15;
+    u8 pad16[2];
+    s32 unk18;
+};
+
+struct Local15151A38Spawn {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    u8 pad14[4];
+    u8 unk18;
+    u8 unk19;
+    u8 unk1A;
+    u8 unk1B;
+    s16 unk1C;
+    s16 unk1E;
+};
 
 
 struct Local1514FEFC;
@@ -350,7 +432,54 @@ void func_15150D1C(struct Local15150D1CArg *arg0, u8 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15151670.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15151A38.s")
+void func_15151A38(struct Local15151A38Arg *arg0, u8 arg1, s32 arg2) {
+    struct Local15151A38Pos spDC;
+    struct Local15151A38Spawn spBC;
+    s32 count;
+    s16 randS1;
+    s16 randS2;
+    f32 temp_f20;
+    f32 temp_f22;
+    f32 temp_f24;
+    f32 temp_f26;
+    f32 temp_f28;
+    f32 temp_f2;
+
+    spDC.unk10 = 1;
+    spDC.unkE = arg0->unk39;
+    spBC.unk19 = arg0->unk38;
+    spBC.unk1A = arg0->unk54;
+    spBC.unk18 = arg0->unk3A;
+    spDC.unk0 = arg0->unk0;
+    spBC.unk1C = arg0->unk80;
+    spBC.unk1E = arg0->unk82;
+    spDC.unk18 = arg0->unk84;
+    count = (func_150ADA20() % (u32)(arg0->unk26 + 1)) + arg0->unk24;
+
+    if (count != 0) {
+        do {
+            randS1 = (func_150ADA20() % (u32)(arg0->unk2A + 1)) + arg0->unk28;
+            randS2 = (func_150ADA20() % (u32)(arg0->unk2E + 1)) + arg0->unk2C;
+            temp_f28 = func_151423D8((u8)randS2);
+            temp_f22 = func_151423D8((u8)(randS2 - 0x40));
+            temp_f24 = func_151423D8((u8)randS1);
+            temp_f26 = func_151423D8((u8)(randS1 - 0x40));
+            temp_f20 = (func_150ADA68() * arg0->unk20) + arg0->unk1C;
+            spBC.unk1B = (func_150ADA20() % (u32)(arg0->unk56 + 1)) + arg0->unk55;
+            spDC.unk15 = (func_150ADA20() % (u32)(arg0->unk32 + 1)) + arg0->unk30;
+            spDC.unkC = (func_150ADA20() % (u32)(arg0->unk36 + 1)) + arg0->unk34;
+            spBC.unk0 = (func_150ADA68() * arg0->unk10) + arg0->unkC;
+            spBC.unk10 = (func_150ADA68() * arg0->unk18) + arg0->unk14;
+            temp_f2 = temp_f20 * temp_f28;
+            spBC.unk4 = temp_f2 * temp_f26;
+            spBC.unk8 = -temp_f20 * temp_f22;
+            spBC.unkC = temp_f2 * temp_f24;
+            func_15147DA0(&spDC, &spBC, 0, arg0->unk3C, arg0->unk40, arg0->unk44, arg0->unk48,
+                          arg0->unk4C, arg0->unk50, arg0->unk58, arg0->unk5C, &arg0->unk60, 0, arg1, arg2);
+            count--;
+        } while (count != 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15151D6C.s")
 

@@ -8,7 +8,38 @@ extern s8 D_800D2399;
 extern s8 *D_800D23B0;
 s32 func_1508802C();
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15085B70.s")
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    s16 unkC;
+    s16 unkE;
+} B3020Struct;
+
+extern s16 D_80087290;
+extern s16 D_80087294;
+extern B3020Struct *D_800D2350;
+s16 *func_1502B5C8(s32 *, s32, s32, s32);
+void func_15085BE8(void);
+
+void func_15085B70(s32 arg0) {
+    s16 *temp_v0;
+
+    temp_v0 = func_1502B5C8(0, 2, 0x19, arg0);
+    if (temp_v0 == 0) {
+        D_80087290 = 0;
+        D_80087294 = 0;
+        D_800D2350 = 0;
+    } else {
+        D_80087290 = temp_v0[0];
+        D_80087294 = temp_v0[1];
+        D_800D2350 = (B3020Struct *)(temp_v0 + 2);
+    }
+    func_15085BE8();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15085BE8.s")
 
@@ -33,17 +64,6 @@ u8 func_15085DA8(f32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15086BD0.s")
 
 extern void func_150A3194(s32, s32, s32, s32, s32);
-
-typedef struct {
-    s16 unk0;
-    s16 unk2;
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
-    s16 unkA;
-    s16 unkC;
-    s16 unkE;
-} B3020Struct;
 
 extern B3020Struct *D_800D2350;
 
