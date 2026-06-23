@@ -1,5 +1,7 @@
 #include <ultra64.h>
+#define func_15169260 func_15169260_s32_decl
 #include "functions.h"
+#undef func_15169260
 #include "variables.h"
 
 struct Vec3F { f32 x; f32 y; f32 z; };
@@ -25,6 +27,14 @@ extern f32 D_800A6018;
 extern void *func_15132A4C(void *, s32, s32, s32, u8, s32);
 extern s32 func_150AC9C0(f32, f32, f32, f32, f32, f32, void *, s32, f32 *, f32 *, f32 *, f32 *, s32 *, s32, f32);
 extern s32 func_15145C90(s32);
+
+struct Local1515572CData {
+    s32 unk0;
+    s32 unk4;
+};
+
+extern struct Local1515572CData D_800A6038;
+extern void func_15169260(struct Local1515572CData *, s32, s32, u8);
 
 struct Local15152874Header {
     s32 unk0;
@@ -788,4 +798,9 @@ void func_15155564(struct Local15155564 *arg0, s32 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_151555AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1515572C.s")
+void func_1515572C(s32 arg0, u8 arg1) {
+    struct Local1515572CData sp18;
+
+    sp18 = D_800A6038;
+    func_15169260(&sp18, 2, arg0, arg1);
+}

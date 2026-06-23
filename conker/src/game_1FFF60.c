@@ -1,6 +1,8 @@
 #include <ultra64.h>
 
+#define func_15169260 func_15169260_s32
 #include "functions.h"
+#undef func_15169260
 #include "variables.h"
 
 void func_151D3354(struct224 *arg0);
@@ -18,6 +20,12 @@ typedef u8 Func151D2C40Frame[0x40];
 
 extern s32 (*D_8008FC40[])(struct224 *, Func151D2C40Data *);
 extern void (*D_8008FC48[])(struct224 *, Func151D2C40Data *);
+
+typedef struct {
+    s32 unk0;
+} Func151D343CData;
+
+void func_15169260(Func151D343CData *, s32, s32, u8);
 
 void func_151D2AB0(s32 arg0) {
     u32 tmp;
@@ -262,9 +270,9 @@ void func_151D33FC(struct224 *arg0, struct223 *arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FFF60/func_151D343C.s")
-// NON-MATCHING: ops in wrong order
-// void func_151D343C(s32 arg0, u8 arg1) {
-//     s32 sp1C[1] = D_800AB168;
-//     func_15169260(sp1C, 1, arg0, arg1);
-// }
+void func_151D343C(s32 arg0, u8 arg1) {
+    Func151D343CData sp1C;
+
+    sp1C = *(Func151D343CData *)D_800AB168;
+    func_15169260(&sp1C, 1, arg0, arg1);
+}

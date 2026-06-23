@@ -1,5 +1,7 @@
 #include <ultra64.h>
+#define func_15169260 func_15169260_s32
 #include "functions.h"
+#undef func_15169260
 #include "variables.h"
 
 void func_15132444(struct102 *arg0);
@@ -21,6 +23,14 @@ typedef struct {
     u8 pad[4];
     f32 m[4][4];
 } PaddedMtxF15133A94;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+} Data15133E3C;
+
+extern Data15133E3C D_800A3860;
+void func_15169260(Data15133E3C *, s32, s32, u8);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_151321D0.s")
 
@@ -268,7 +278,12 @@ void func_15133DE8(s32 arg0, s32 arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133E3C.s")
+void func_15133E3C(s32 arg0, u8 arg1) {
+    Data15133E3C sp18;
+
+    sp18 = D_800A3860;
+    func_15169260(&sp18, 2, arg0, arg1);
+}
 
 s32 func_15133EEC(s32 arg0, u16 arg1, u8 arg2, s32 arg3);
 

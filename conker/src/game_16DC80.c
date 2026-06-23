@@ -1,6 +1,8 @@
 #include <ultra64.h>
 
+#define func_15169260 func_15169260_s32
 #include "functions.h"
+#undef func_15169260
 #include "variables.h"
 
 typedef void (*Callback_151416E8)(void *, s32, u8);
@@ -138,8 +140,20 @@ void func_151416E8(void *arg0, s32 arg1, s32 arg2) {
     }
 }
 
-// ???
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16DC80/func_151417C4.s")
+struct Data_151417C4 {
+    s32 unk0;
+    s32 unk4;
+};
+void func_15169260(struct Data_151417C4 *, s32, u8 *, u8);
+
+void func_151417C4(u8 arg0, u8 arg1) {
+    u8 sp24[4];
+    struct Data_151417C4 sp1C;
+
+    sp1C = *(struct Data_151417C4 *)D_8008A074;
+    sp24[0] = arg0;
+    func_15169260(&sp1C, 2, sp24, arg1);
+}
 
 s32 func_15141818(s32 arg0, s32 arg1) {
     return 0;

@@ -17,6 +17,7 @@ void func_150F7470(struct17 *, struct17 *, s32, s32, s32, s32, f32, f32, f32, st
 void func_151D3F14(struct17 *arg0, u8 arg1, s32 arg2);
 void func_151D4408(struct17 *, struct17 *, void *, struct127 *, f32, s32, s32);
 void func_150FF474(struct17 *, struct17 *, s32, s32);
+extern void func_1505D1C4(f32, f32, f32, s32, s32, s32, s32, s32);
 
 typedef u8 Func150FF084Entry[0x40];
 
@@ -117,7 +118,18 @@ s32 func_150FF6B4(struct127 *arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12C1E0/func_150FF840.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12C1E0/func_150FFB6C.s")
+void func_150FFB6C(struct17 *arg0, s32 arg1, struct127 *arg2, s32 arg3) {
+    struct127 *obj;
+    s32 flags;
+    s32 index;
+    u16 angle;
+
+    obj = arg2;
+    flags = arg3 | 0x60000;
+    index = obj - D_800CC2D0;
+    angle = obj->unk7A;
+    func_1505D1C4(arg0->unk0, arg0->unk4, arg0->unk8, flags, index, angle, 0, arg1);
+}
 
 extern s32 func_15145EA4(s32 *arg0, s32 *arg1, s32 arg2, s32 arg3);
 extern u8 D_80088BB0;

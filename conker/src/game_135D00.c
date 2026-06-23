@@ -28,6 +28,7 @@ struct Data_151090DC {
     s32 unk0;
     s32 unk4;
 };
+extern struct Data_151090DC D_80088C50;
 extern struct Data_151090DC D_80088C58;
 void func_15169260(struct Data_151090DC *, s32, s32, u8);
 
@@ -108,7 +109,22 @@ s32 func_15108C38(struct Arg0_15108AB4 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_135D00/func_15108E10.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_135D00/func_15108FFC.s")
+struct Data_15108FFC {
+    s32 unk0;
+    s32 unk4;
+    u8 unk8;
+};
+
+void func_15108FFC(s32 arg0, s32 arg1, u8 arg2) {
+    struct Data_15108FFC sp24;
+    struct Data_151090DC sp1C;
+
+    sp1C = D_80088C50;
+    sp24.unk0 = arg0;
+    sp24.unk4 = arg1;
+    sp24.unk8 = arg2;
+    func_15169260(&sp1C, 2, (s32)&sp24, 0x1D);
+}
 
 struct Arg0_15109064
 {

@@ -1,11 +1,20 @@
 #include <ultra64.h>
+#define func_15169260 func_15169260_s32
 #include "functions.h"
+#undef func_15169260
 #include "variables.h"
 
 
 extern f32 D_800A8D50;
 extern f32 D_800A8D54;
 extern f32 D_800A8D60;
+
+struct Data151A561C {
+    s32 unk0;
+};
+
+extern struct Data151A561C D_800A8D70;
+void func_15169260(struct Data151A561C *, s32, s32, u8);
 
 struct vec151A3504 {
     s32 unk0;
@@ -484,4 +493,9 @@ void func_151A55D4(void *arg0, void *arg1, u8 arg2)
   }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A561C.s")
+void func_151A561C(s32 arg0, u8 arg1) {
+    struct Data151A561C sp1C;
+
+    sp1C = D_800A8D70;
+    func_15169260(&sp1C, 1, arg0, arg1);
+}
