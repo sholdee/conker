@@ -108,7 +108,17 @@ void func_15194B1C(struct127* arg0) {
     func_15194AB4(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194B94.s")
+void func_15194B94(s32 arg0, struct127* arg1, s32 arg2) {
+    struct127* temp;
+
+    temp = arg1;
+    if (temp->id == 0x53) {
+        func_151942B0(arg0, (s32)temp, arg2);
+        return;
+    }
+    func_15194B1C(temp);
+    func_151949F4(1, arg0, temp);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15194BF0.s")
 
