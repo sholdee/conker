@@ -1246,3 +1246,4 @@ Special empty-guard case:
 - Float-to-u32 conversion: cast the float expression to `u32` to get the long FCSR `cfc1/ctc1/cvt.w.s` + overflow-correction path; `(s32)`/narrow casts use plain `trunc.w.s`.
 - Scalar equality-backedge loop: for target `li bound; ...; addiu i,1; bnel i,bound,top`,
   write `for (i=0, limit=N; i != limit; ) { ...; i++; }` / `do{}while(i != count)`, not `< N`.
+- Volatile scalar PARAM reloads: when target reloads a homed/stack arg (`lw`/`lh off(sp)`) and `&arg` adds unwanted address arithmetic, type only that param `volatile s32`/`volatile s16`; plain uses force the stack reloads without a pointer temp.
