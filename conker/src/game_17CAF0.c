@@ -204,6 +204,107 @@ extern f32 D_800A5FFC;
 extern void func_1514F808(struct Local1514F6E8 *, f32, struct Vec3F *);
 extern void func_151DA6F8(struct Local15153CCCArg *, struct Vec3F *, f32, s16, s32, f32, s32, s32, f32, f32, s32, u8, s32, s16, s16, s32, u8, s32);
 
+struct Local15152520Bytes {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+};
+
+struct Local15152520Arg {
+    s32 unk0;
+    s32 unk4;
+    struct Local15152874Header unk8;
+    s16 unk14;
+    s16 unk16;
+    s16 unk18;
+    s16 unk1A;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    s16 unk30;
+    s16 unk32;
+    s32 unk34;
+    s32 unk38;
+    s32 unk3C;
+    f32 unk40;
+    f32 unk44;
+    f32 unk48;
+    f32 unk4C;
+    f32 unk50;
+    f32 unk54;
+    f32 unk58;
+    f32 unk5C;
+    f32 unk60;
+    f32 unk64;
+    struct Local15152520Bytes unk68;
+    struct Local15152520Bytes unk6C;
+    u8 unk70;
+    u8 unk71;
+    s16 unk72;
+    s16 unk74;
+};
+
+struct Local15152520Motion {
+    f32 unk00;
+    f32 unk04;
+    f32 unk08;
+    f32 unk0C;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    u8 unk30;
+    u8 pad31[3];
+};
+
+struct Local15152520Params {
+    u8 unk00;
+    u8 unk01;
+    u8 unk02;
+    s8 unk03;
+    s8 unk04;
+    u8 pad05;
+    s16 unk06;
+    s32 unk08;
+    s32 unk0C;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+    s32 unk1C;
+    s32 unk20;
+    s32 unk24;
+    s32 unk28;
+    u8 unk2C;
+    u8 unk2D;
+    u8 pad2E[2];
+    struct Local15152520Bytes unk30;
+    struct Local15152520Bytes unk34;
+    u8 unk38;
+    u8 pad39[3];
+    s32 unk3C;
+    u8 unk40;
+    u8 unk41;
+    u8 pad42[2];
+    struct Local15152874Header unk44;
+    u8 pad50[4];
+    s16 unk54;
+    s16 unk56;
+};
+
+struct Local15152520ParamBlock {
+    struct Local15152520Params params;
+    s32 pad58;
+};
+
+extern void func_15157898(struct Local15152520Params *, struct Local15152520Motion *, s32, f32, s32, s32, s32, u8, s32);
+
 struct Local15152ABCOut {
     u8 unk0;
     u8 unk1;
@@ -512,7 +613,64 @@ void func_15151A38(struct Local15151A38Arg *arg0, u8 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15152190.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15152520.s")
+void func_15152520(struct Local15152520Arg *arg0, u8 arg1, s32 arg2) {
+    struct Local15152520ParamBlock paramBlock;
+    struct Local15152520Motion motion;
+    s32 count;
+    s32 rand0;
+    s32 rand1;
+
+    paramBlock.params.unk38 = 0;
+    paramBlock.params.unk00 = arg0->unk70 | 2;
+    paramBlock.params.unk01 = 0;
+    paramBlock.params.unk02 = 1;
+    paramBlock.params.unk03 = -1;
+    paramBlock.params.unk04 = -1;
+    paramBlock.params.unk08 = arg0->unk34;
+    paramBlock.params.unk0C = arg0->unk38;
+    paramBlock.params.unk24 = 0x80;
+    paramBlock.params.unk28 = 0x20;
+    paramBlock.params.unk10 = 0;
+    paramBlock.params.unk14 = 0x220405;
+    paramBlock.params.unk18 = 0x40200;
+    paramBlock.params.unk2C = 0;
+    paramBlock.params.unk2D = 8;
+    paramBlock.params.unk1C = 1;
+    paramBlock.params.unk20 = 0x38;
+    paramBlock.params.unk3C = 0;
+    paramBlock.params.unk40 = 0;
+    paramBlock.params.unk41 = 2;
+    paramBlock.params.unk44 = arg0->unk8;
+    motion.unk2C = arg0->unk24;
+    paramBlock.params.unk30 = arg0->unk68;
+    paramBlock.params.unk34 = arg0->unk6C;
+    paramBlock.params.unk54 = arg0->unk72;
+    paramBlock.params.unk56 = arg0->unk74;
+    motion.unk30 = arg0->unk71;
+    count = (func_150ADA20() % (u32)(arg0->unk4 + 1)) + arg0->unk0;
+
+    if (count != 0) {
+        do {
+            paramBlock.params.unk06 = (func_150ADA20() % (u32)(arg0->unk32 + 1)) + arg0->unk30;
+            motion.unk00 = func_150ADA68() * 360.0f;
+            motion.unk04 = func_150ADA68() * 360.0f;
+            motion.unk08 = func_150ADA68() * 360.0f;
+            motion.unk0C = (func_150ADA68() * arg0->unk4C) + arg0->unk48;
+            rand0 = func_150ADA20();
+            rand1 = func_150ADA20();
+            func_15143794((s16)((rand0 % (u32)(arg0->unk16 + 1)) + arg0->unk14),
+                          (s16)((rand1 % (u32)(arg0->unk1A + 1)) + arg0->unk18),
+                          (func_150ADA68() * arg0->unk20) + arg0->unk1C,
+                          &motion.unk10);
+            motion.unk1C = (func_150ADA68() * arg0->unk5C) + arg0->unk50;
+            motion.unk20 = (func_150ADA68() * arg0->unk60) + arg0->unk54;
+            motion.unk24 = (func_150ADA68() * arg0->unk64) + arg0->unk58;
+            motion.unk28 = (func_150ADA68() * arg0->unk2C) + arg0->unk28;
+            func_15157898(&paramBlock.params, &motion, arg0->unk3C, (func_150ADA68() * arg0->unk44) + arg0->unk40, 0, 0, 0, arg1, arg2);
+            count--;
+        } while (count != 0);
+    }
+}
 
 void func_15152874(struct Local15152874Arg *arg0, u8 arg1, s32 arg2) {
     struct Local15152874Spawn sp58;

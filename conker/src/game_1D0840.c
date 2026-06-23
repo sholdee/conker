@@ -514,7 +514,44 @@ struct Obj151A4FD0 *func_151A4FD0(s32 a0, s32 a1, s32 a2, s32 a3, s32 a4, s32 a5
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A5070.s")
+void func_151A5070(struct Obj151A4FD0 *arg0) {
+    struct Obj151A4FD0 *temp_a1;
+    s32 temp_v0;
+    s32 temp_t8;
+    s32 var_v0;
+
+    temp_a1 = arg0;
+    temp_v0 = temp_a1->unk10;
+    if (temp_v0 != 0) {
+        temp_v0 -= D_800BE9E4;
+        if (temp_v0 <= 0) {
+            func_1516972C((struct102 *)temp_a1);
+            return;
+        }
+        temp_a1->unk10 = temp_v0;
+    }
+
+    if (temp_a1->unk19 == 0) {
+        func_10011FA0((s32 *)2);
+    }
+
+    var_v0 = temp_a1->unk15;
+    temp_t8 = D_800BE9E4 * 2;
+    if (temp_a1->unk18 == 0) {
+        var_v0 -= temp_t8;
+        if (var_v0 < 0x90) {
+            var_v0 = 0x90;
+            temp_a1->unk18 = 1;
+        }
+    } else {
+        var_v0 += temp_t8;
+        if (var_v0 >= 0x100) {
+            var_v0 = 0xFF;
+            temp_a1->unk18 = 0;
+        }
+    }
+    temp_a1->unk15 = var_v0;
+}
 
 extern void (*D_8008F900[])(void *, void *, s16);
 
