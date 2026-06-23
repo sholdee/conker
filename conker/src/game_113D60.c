@@ -56,6 +56,7 @@ extern f32 D_800A1364;
 extern void func_151D3FF4(Struct150E81A8Vec *arg0, u8 arg1, s32 arg2);
 extern void func_1514FCE8(Struct150E81A8 *arg0, u8 arg1, s32 arg2);
 extern void func_151D8868(void *arg0, s32 arg1, s32 arg2, s32 arg3);
+extern s32 func_151337C0(f32 *arg0);
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E68B0.s")
@@ -247,4 +248,39 @@ void func_150E90DC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E93DC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E971C.s")
+s32 func_150E971C(f32 *arg0) {
+    f32 *temp_v1;
+    struct157 tmp[1];
+
+    func_151337C0(arg0);
+    temp_v1 = (f32 *)((u8 *)arg0 + 0x170);
+    if (arg0[15] < temp_v1[0]) {
+        if ((((s32 *)temp_v1)[1] & 0x1F) == 0xA) {
+            f32 temp_f2;
+
+            temp_f2 = (func_150ADA68() * 20.0f) + 20.0f;
+
+            tmp->unk6 = 0xB;
+            tmp->unk7 = 0;
+            tmp->unk0 = 0x9701;
+            tmp->unk4 = 0x64;
+            tmp->unk8 = 0;
+            tmp->unkC = 0;
+            *(u8 *)&tmp->unk10 = 0xFF;
+            *(u8 *)&tmp->unk11 = 0xFF;
+            *(u8 *)&tmp->unk12 = 0xFF;
+            *(u8 *)&tmp->unk13 = 0xFF;
+            *(u8 *)&tmp->unk14 = 0xFF;
+            *(u8 *)&tmp->unk15 = 0xFF;
+            tmp->unk18 = 0x3B0003;
+            tmp->unk16 = 0;
+            tmp->unk17 = 7;
+            tmp->unk22 = 0x14;
+            tmp->unk24 = 0xC;
+
+            func_1513C73C((s32)tmp, 0, 0, (s32)(temp_v1 + 2), arg0[14], temp_v1[0] + 5.0f, arg0[16], temp_f2, temp_f2, func_150ADA20() & 0xFF, 0, 0, *(u8 *)((u8 *)arg0 + 0xC), *(u8 *)((u8 *)arg0 + 1));
+        }
+        return 0;
+    }
+    return 1;
+}
