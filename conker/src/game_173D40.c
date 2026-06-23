@@ -219,12 +219,12 @@ void func_15146E84(ActorFields *arg0, s32 arg1, s32 arg2) {
 extern s32 func_15146890(Struct15147040 *, ActorFields *, s32, u8);
 extern void func_1514C678(f32, f32, s32, f32, s32, s32, s32, s32, s32, f32, s32, s32);
 
-void func_15147040(s32 arg0, s32 arg1, s32 arg2) {
+void func_15147040(ActorFields *arg0, s32 arg1, s32 arg2) {
     Struct15147040 sp44;
     s16 temp;
 
-    if (*(s32 *)(arg0 + 0x1D4) != 0) {
-        func_15146890(&sp44, (ActorFields *)arg0, 0, (u8)arg1);
+    if (arg0->field_0x1D4 != 0) {
+        func_15146890(&sp44, (ActorFields *)*(s32 *)&arg0, 0, (u8)arg1);
         temp = (func_150ADA20() % 11U) + 5;
         func_1514C678(sp44.unk0, sp44.unk4, sp44.unk8,
                       func_150ADA68() * 11.0f,

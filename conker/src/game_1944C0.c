@@ -374,12 +374,12 @@ void func_1516968C(struct102 *arg0, u8 *arg1, u8 arg2) {
     }
 }
 
-void func_151696DC(s32 arg0) {
+void func_151696DC(struct102 *arg0) {
     s8 i;
 
     for (i = 0; i < D_800DD190; i++) {
-        if (arg0 == ((s32 *)D_800DD198)[i]) {
-            ((s32 *)D_800DD198)[i] = *(s32 *)(arg0 + 0x8);
+        if ((s32)arg0 == ((s32 *)D_800DD198)[i]) {
+            ((s32 *)D_800DD198)[i] = arg0->unk8;
         }
     }
 }

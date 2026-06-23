@@ -10,12 +10,21 @@ typedef struct {
 } D_800C666FEntry;
 
 typedef struct {
-    u8 pad_0[0xA0];
+    u8 pad_0[0x4];
+    u8 field_0x4;
+    u8 pad_0x5[0x9B];
     u32 field_0xA0;
     u8 field_0xA4;
     u8 field_0xA5;
     u8 field_0xA6;
     u8 field_0xA7;
+    u8 pad_0xA8[0x50];
+    u32 field_0xF8;
+    u8 pad_0xFC[0xD8];
+    void *field_0x1D4;
+    void *field_0x1D8;
+    u8 pad_0x1DC[0x88];
+    void *field_0x264;
 } ActorInteractionFields;
 
 extern D_800C666FEntry D_800C666F[];
@@ -211,20 +220,20 @@ void func_1502EA98(ActorInteractionFields *arg0, s32 arg1, s32 arg2, s32 arg3, s
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502F490.s")
 
-void func_1502F948(u8 *arg0) {
+void func_1502F948(ActorInteractionFields *arg0) {
     s32 idx;
     void *temp;
 
-    if ((*(u32 *)(arg0 + 0xF8) & 0x4000) && (*(void **)(arg0 + 0x264) != 0) && (*(void **)(arg0 + 0x1D4) != 0)) {
-        idx = arg0[4];
-        if (*(void **)(arg0 + 0x1D8) == 0) {
+    if ((arg0->field_0xF8 & 0x4000) && (arg0->field_0x264 != 0) && (arg0->field_0x1D4 != 0)) {
+        idx = arg0->field_0x4;
+        if (arg0->field_0x1D8 == 0) {
             temp = allocate_memory(D_800C4ED0[idx] << 6, 1, 1, 2);
-            *(void **)(arg0 + 0x1D8) = temp;
+            arg0->field_0x1D8 = temp;
             if (temp == 0) {
                 return;
             }
         }
-        bcopy(*(void **)(arg0 + 0x1D4), *(void **)(arg0 + 0x1D8), D_800C4ED0[idx] << 6);
+        bcopy(arg0->field_0x1D4, arg0->field_0x1D8, D_800C4ED0[idx] << 6);
     }
 }
 
