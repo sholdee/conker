@@ -36,6 +36,7 @@ typedef struct {
     s32 field_0x124;
     char pad_4[0x48];
     s32 field_0x170;
+    u8 field_0x174;
 } Field124Owner;
 
 
@@ -179,22 +180,22 @@ s32 func_15102884(struct210 *arg0, s32 arg1) {
     return 1;
 }
 
-s32 func_151028AC(struct210 *arg0, s16 arg1) {
-    s32 *p = (s32 *)(*(s32 *)((s32)arg0 + 0x170) + 0x110);
-    s32 v1;
+s32 func_151028AC(Field124Owner *arg0, s16 arg1) {
+    Field124ChildBlock *p = (Field124ChildBlock *)(arg0->field_0x170 + 0x110);
+    ObjectWithState197 *v1;
 
-    if (arg1 != *(u8 *)((s32)p + 0x22)) {
+    if (arg1 != p->field_0x22) {
         goto tail;
     }
-    v1 = *p;
+    v1 = p->field_0x0;
     if (v1 != 0) {
-        if (*(u8 *)(*(s32 *)(v1 + 0x31C) + 0x197) == 0) {
+        if (v1->field_0x31C->field_0x197 == 0) {
             goto tail;
         }
     }
     return 0;
 tail:
-    if (!(*(u8 *)((s32)arg0 + 0x174) & 1)) {
+    if (!(arg0->field_0x174 & 1)) {
         return 0;
     }
     return 1;
