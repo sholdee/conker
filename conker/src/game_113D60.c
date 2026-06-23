@@ -216,7 +216,17 @@ s32 func_150E8824(s32 arg0, s32 arg1) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E8854.s")
+void func_150E8854(void) {
+    struct260 *temp_v0;
+    f32 sp30;
+
+    sp30 = 10.0f;
+
+    temp_v0 = func_15149130(0x12C, -1, 0x35, -1, 0, 0, (struct37 *)0x4, 0xFF, 1);
+    if (temp_v0 != NULL) {
+        memcpy((void *)((s32)temp_v0 + 0x28), &sp30, 4);
+    }
+}
 
 extern f32 D_800A1378;
 extern void func_150E8930(void *);
