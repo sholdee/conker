@@ -117,7 +117,38 @@ void func_15087DCC(s32 arg0, s32 arg1) {
     p->unk2F = arg1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15087E54.s")
+struct Struct15087E54 {
+    char pad0[0xC];
+    f32 unkC;
+    f32 unk10;
+    char pad14[0x84 - 0x14];
+};
+
+struct Struct15087E54arg1 {
+    char pad0[0x76];
+    u16 unk76;
+};
+
+void func_15087E54(s32 arg0, struct Struct15087E54arg1 *arg1) {
+    struct Struct15087E54 *p;
+    u16 d;
+    u16 r;
+    if (D_800872A0 == 0) {
+        return;
+    }
+    p = (struct Struct15087E54 *)(arg0 * sizeof(struct Struct15087E54) + (s32)D_800872A0);
+    r = func_1505A630(p->unk10, p->unkC, 0) + 0x4000;
+    d = (u16)(r - arg1->unk76);
+    if (d & 0x8000) {
+        if (d < 0xDBFF) {
+            arg1->unk76 = r + 0x2400;
+        }
+    } else {
+        if (d >= 0x2401) {
+            arg1->unk76 = r - 0x2400;
+        }
+    }
+}
 
 extern s8 D_800D23A8;
 extern u8 *D_800872A0;

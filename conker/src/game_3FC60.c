@@ -2,6 +2,12 @@
 #include "functions.h"
 #include "variables.h"
 
+extern u8 D_800DF7D0;
+extern u8 D_800DF7D1;
+extern u8 D_800DF7D2;
+extern u8 D_800DF7D3[];
+extern u8 D_800DF9B3[];
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_3FC60/func_150127B0.s")
 
@@ -9,4 +15,20 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_3FC60/func_15012ED8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_3FC60/func_15012F90.s")
+void func_15012F90(void) {
+    s32 i;
+
+    D_800DF7D0 = 0;
+    D_800DF7D1 = 0;
+    for (D_800DF7D2 = 0, i = 0;;) {
+        i += 4;
+        D_800DF7D3[i - 3] = 0;
+        D_800DF7D3[i - 2] = 0;
+        D_800DF7D3[i - 1] = 0;
+        D_800DF7D3[i - 4] = 0;
+        if (&D_800DF9B3[0] != &D_800DF7D3[i]) {
+            continue;
+        }
+        break;
+    }
+}

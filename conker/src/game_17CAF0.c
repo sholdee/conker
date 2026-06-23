@@ -164,6 +164,7 @@ struct Local151539B4Spawn {
 extern void func_15143794(s32, s32, f32, f32 *);
 extern void func_150CCEB0(struct Local15152874Spawn *, u8, u8);
 extern void (*D_8008AC60[])(u8 *);
+extern s32 (*D_8008ACC8[])(void *);
 extern void func_15156190(void *, u8, s32, u8, s32);
 
 
@@ -722,7 +723,55 @@ s32 func_15154A88(void *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15154C90.s")
+typedef struct {
+    u8 pad0[0x22];
+    s16 unk22;
+    u16 unk24;
+    s16 unk26;
+    s16 unk28;
+    u8 pad2A[0x4];
+    u8 unk2E;
+    u8 pad2F[0x39];
+    u8 unk68;
+} Struct15154C90;
+
+void func_15154C90(Struct15154C90 *arg0) {
+    s32 temp;
+    s8 failed;
+
+    failed = 0;
+    if (arg0->unk24 & 1) {
+        arg0->unk22 -= D_800BE9E4;
+        if (arg0->unk22 < 0) {
+            failed = 1;
+        }
+    }
+    temp = arg0->unk68 & 0xF;
+    if (temp != 0) {
+        if (failed == 0) {
+            s32 ret;
+
+            ret = D_8008ACC8[temp](arg0);
+            if (ret == 0) {
+                failed = 1;
+            }
+        }
+    }
+    if (arg0->unk24 & 8) {
+        s16 temp_v1;
+
+        temp_v1 = arg0->unk22;
+        if (temp_v1 < arg0->unk26) {
+            temp = (s16)(temp_v1 * (u32)arg0->unk28);
+            if (temp < arg0->unk2E) {
+                arg0->unk2E = temp;
+            }
+        }
+    }
+    if (failed) {
+        func_1516972C((struct102 *) arg0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15154D80.s")
 

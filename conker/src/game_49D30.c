@@ -25,6 +25,8 @@ extern void func_15020EC4(s32);
 extern void func_1502178C(struct127 *, s32, s32);
 extern void func_1501E81C(s32, s32);
 extern s32 func_150229E4(struct127 *);
+extern u8 *D_800C3688[][30];
+extern s32 func_15023BB0(void *, s32, s32, s16 **, s32, s32, s32, s32, s32, s32, s32);
 
 typedef struct {
     f32 unk0;
@@ -326,7 +328,57 @@ s32 func_15022B08(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15022BA4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15023264.s")
+s32 func_15023264(s32 arg0, s32 arg1) {
+    s32 i;
+    s32 best;
+    s32 result;
+    s32 score;
+    s16 *found;
+    u8 **entry;
+    u8 *ptr;
+    u8 *records;
+
+    result = -1;
+    best = 0x1869F;
+
+    i = 0;
+    if (D_800C363A[arg0] > 0) {
+        entry = D_800C3688[arg0];
+        do {
+            ptr = *entry;
+            if (ptr != 0) {
+                found = 0;
+                score = func_15023BB0(ptr + 0x18, 3, i, &found, 0, 0, 0, 0, 0, 0, arg0);
+                if (found != 0) {
+                    if (score < best) {
+                        best = score;
+                        result = found[1];
+                    }
+                }
+            }
+            i++;
+            entry++;
+        } while (i < D_800C363A[arg0]);
+    }
+
+    if (result == -1) {
+        result = 0;
+        i = 0;
+        if (i < D_800C363A[arg0]) {
+            records = D_800C35F0[arg0];
+            do {
+                if (*(u16 *)records == 1) {
+                    result = i;
+                    break;
+                }
+                i++;
+                records += 8;
+            } while (i < D_800C363A[arg0]);
+        }
+    }
+
+    return result;
+}
 
 void func_150233BC(void) {
     bzero(D_800C3CA0, 0xA8);
