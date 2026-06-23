@@ -8,6 +8,7 @@ extern s32 func_1505D024(struct127 *, s32, u16, s32);
 extern void func_150A7960(f32 *, f32, f32, f32, f32 *, f32 *, f32 *);
 extern void func_150E1AB0(s32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, u16, s32, s32, s16, s16, s32, u8, s16, s32, s32, u8, f32, f32, f32, f32, f32, f32);
 extern void func_150E2DB4(struct127 *, u8, s16, s32, f32, f32, f32, f32, f32, f32, s16, s16, u16, u8);
+extern void func_15179008(s32);
 
 void func_150AF200(s32 arg0, s32 arg1) {
     struct131 *temp;
@@ -164,7 +165,14 @@ void func_150AFE64(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150B003C.s")
+void func_150B003C(s32 arg0) {
+    if (D_800BE9F0 == 6) {
+        func_15179008(0);
+        func_150AF200(0xE2, 0xE1);
+        return;
+    }
+    func_150AF200(0xDF, 0xDE);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150B0094.s")
 

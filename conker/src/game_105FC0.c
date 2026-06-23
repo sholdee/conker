@@ -116,7 +116,21 @@ void func_150D8B88(f32 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150D8D84.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150D8E1C.s")
+typedef struct {
+    char pad0[0x1C];
+    u16 unk1C;
+    u16 unk1E;
+    char pad20[0x10];
+    u8 unk30;
+} ConkerStruct150D8E1C;
+
+void func_150D8E1C(ConkerStruct150D8E1C *arg0) {
+    arg0->unk30 = 0;
+    arg0->unk1E &= ~0x2;
+    arg0->unk1E |= 0x8;
+    arg0->unk1E |= 1;
+    arg0->unk1C = 0x28;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150D8E4C.s")
 

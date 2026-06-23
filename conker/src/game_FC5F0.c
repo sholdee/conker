@@ -51,6 +51,7 @@ void func_150CF530(s32 arg0) {
 extern s8 *D_80088890;
 extern s8 *D_80088894;
 extern s8 *D_80088898;
+extern s8 *D_8008889C;
 
 void func_150CF578(s32 arg0) {
     D_80088890 += D_800BE9E4 * 26;
@@ -58,7 +59,18 @@ void func_150CF578(s32 arg0) {
     D_80088898 -= D_800BE9E4 * 28;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CF5E8.s")
+#define WGFX150CF5E8(pkt, a, b)     \
+{                                   \
+    Gfx *_g = (Gfx *)(pkt);         \
+    _g->words.w0 = (u32)(a);        \
+    _g->words.w1 = (u32)(b);        \
+}
+
+Gfx *func_150CF5E8(Gfx *arg0) {
+    WGFX150CF5E8(arg0++, (0xF2000000 | ((((s32)D_80088890 >> 7) & 0xFFF) << 12) | (((s32)D_80088894 >> 7) & 0xFFF)), 0x0047E47E);
+    WGFX150CF5E8(arg0++, (0xF2000000 | ((((s32)D_80088898 >> 7) & 0xFFF) << 12) | (((s32)D_8008889C >> 7) & 0xFFF)), 0x0147E47E);
+    return arg0;
+}
 
 typedef struct {
     /* 0x00 */ f32 unk0;
