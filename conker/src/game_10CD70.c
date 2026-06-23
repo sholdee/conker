@@ -33,6 +33,22 @@ typedef struct {
 } Game10CD70FadeState;
 
 typedef struct {
+    u8 pad_0x0[0x30];
+    f32 field_0x30;
+    f32 field_0x34;
+    f32 field_0x38;
+} Game10CD70Transform;
+
+typedef struct {
+    u8 pad_0x0[0x14];
+    f32 field_0x14;
+    u8 pad_0x18[0x4];
+    f32 field_0x1C;
+    u8 pad_0x20[0x1B4];
+    s32 field_0x1D4;
+} Game10CD70Actor;
+
+typedef struct {
     s32 unk0;
     s32 unk4;
     u8 unk8;
@@ -70,11 +86,12 @@ s32 func_150DF8C0(s32 a0) {
 
 extern f32 D_800A0FB0;
 
-void func_150DFDA4(s32 a0) {
-    f32 *p = (f32 *)(*(s32 *)(a0 + 0x1D4) + 0x40);
-    p[0xC] = *(f32 *)(a0 + 0x14);
-    p[0xD] = D_800A0FB0;
-    p[0xE] = *(f32 *)(a0 + 0x1C);
+void func_150DFDA4(Game10CD70Actor *arg0) {
+    Game10CD70Transform *p = (Game10CD70Transform *)(arg0->field_0x1D4 + 0x40);
+
+    p->field_0x30 = arg0->field_0x14;
+    p->field_0x34 = D_800A0FB0;
+    p->field_0x38 = arg0->field_0x1C;
 }
 
 s32 func_150DFDD0(Game10CD70Object *arg0, Game10CD70FadeState *arg1) {

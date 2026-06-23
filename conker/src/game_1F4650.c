@@ -32,7 +32,8 @@ typedef struct {
     u8 unk0[0x24];
 } struct_func_151C9AC0_sp20;
 typedef struct {
-    u8 pad_0x00[0x2C];
+    u8 pad_0x00[0x28];
+    s32 field_0x28;
     struct102 *field_0x2C;
     u8 pad_0x30[0x4];
     s32 field_0x34;
@@ -43,6 +44,8 @@ typedef struct {
     s32 field_0x48;
     s32 field_0x4C;
     s32 field_0x50;
+    u8 pad_0x54[0x32];
+    u8 field_0x86;
 } Game1F4650LinkBlock;
 typedef struct {
     u8 pad_0x00[0x13C];
@@ -50,6 +53,14 @@ typedef struct {
     u8 pad_0x140[0x4];
     s32 field_0x144;
 } Game1F4650LinkedObject;
+typedef struct {
+    s32 field_0x0;
+    s32 field_0x4;
+} Game1F4650LinkMatchEvent;
+typedef struct {
+    s32 field_0x0;
+    u8 field_0x4;
+} Game1F4650LinkStateEvent;
 extern void func_1504715C(struct_func_151C9AC0_sp20 *, struct_func_151C9AC0_arg0 *);
 extern s32 func_151ABE40(f32 *, struct_func_151C9AC0_sp20 *, s32, u8, s32);
 
@@ -75,30 +86,30 @@ void func_151C8674(s32 arg0, s32 arg1) {
 
 void func_151C86AC(s32 arg0, s32 arg1, u8 arg2) {
     s32 *arg0p;
-    s32 temp_v0;
+    Game1F4650LinkBlock *temp_v0;
     s32 temp_v1;
 
     arg0p = &arg0;
     switch (arg2) {
     case 0x20:
-        temp_v0 = *arg0p + 0x110;
-        if ((*(u8 *)(temp_v0 + 0x86) & 0x10) && (*(s32 *)(temp_v0 + 0x28) == *(s32 *)(arg1 + 4))) {
-            if (func_151C87E0(*(s32 *)arg1, *arg0p) != 0) {
-                func_151C899C(*(s32 *)arg1, *arg0p);
+        temp_v0 = (Game1F4650LinkBlock *)(*arg0p + 0x110);
+        if ((temp_v0->field_0x86 & 0x10) && (((Game1F4650LinkMatchEvent *)arg1)->field_0x4 == temp_v0->field_0x28)) {
+            if (func_151C87E0(((Game1F4650LinkMatchEvent *)arg1)->field_0x0, *arg0p) != 0) {
+                func_151C899C(((Game1F4650LinkMatchEvent *)arg1)->field_0x0, *arg0p);
             }
         }
         break;
     case 0x3A:
-        temp_v0 = *arg0p;
-        temp_v0 += 0x110;
-        if (*(s32 *)(temp_v0 + 0x28) == *(s32 *)arg1) {
-            temp_v1 = *(u8 *)(arg1 + 4);
+        temp_v0 = (Game1F4650LinkBlock *)*arg0p;
+        temp_v0 = (Game1F4650LinkBlock *)((s32)temp_v0 + 0x110);
+        if (((Game1F4650LinkStateEvent *)arg1)->field_0x0 == temp_v0->field_0x28) {
+            temp_v1 = ((Game1F4650LinkStateEvent *)arg1)->field_0x4;
             switch (temp_v1) {
             case 0:
-                *(u8 *)(temp_v0 + 0x86) |= 2;
+                temp_v0->field_0x86 |= 2;
                 break;
             case 1:
-                *(u8 *)(temp_v0 + 0x86) &= ~2;
+                temp_v0->field_0x86 &= ~2;
                 break;
             case 2:
                 func_151C899C(0, *arg0p);

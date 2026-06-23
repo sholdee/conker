@@ -35,6 +35,9 @@ typedef struct {
     u8 field_0x48;
     char pad_0x49[0x1];
     u16 field_0x4A;
+    f32 field_0x4C;
+    char pad_0x50[0x4];
+    f32 field_0x54;
 } Game1104D0EffectInstance;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1104D0/func_150E3020.s")
@@ -151,8 +154,8 @@ void func_150E411C(s32 arg0) {
 
 extern f32 D_800BE9A4;
 
-s32 func_150E4174(u8 *arg0) {
-    *(f32 *)(arg0 + 0x2C) += *(f32 *)(arg0 + 0x4C) * D_800BE9A4;
-    *(f32 *)(arg0 + 0x30) += *(f32 *)(arg0 + 0x54) * D_800BE9A4;
+s32 func_150E4174(Game1104D0EffectInstance *arg0) {
+    arg0->field_0x2C += arg0->field_0x4C * D_800BE9A4;
+    arg0->field_0x30 += arg0->field_0x54 * D_800BE9A4;
     return 1;
 }

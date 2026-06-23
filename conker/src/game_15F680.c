@@ -42,6 +42,19 @@ typedef struct {
 } MatrixTransformFields;
 
 typedef struct {
+    u8 pad_0[0x18];
+    f32 field_0x18;
+    f32 field_0x1C;
+    s32 field_0x20;
+    f32 field_0x24;
+    f32 field_0x28;
+    u8 pad_1[0xC];
+    f32 field_0x38;
+    f32 field_0x3C;
+    f32 field_0x40;
+} TransformDispatchFields;
+
+typedef struct {
     u8 pad[4];
     f32 m[4][4];
 } PaddedMtxF15133A94;
@@ -193,10 +206,16 @@ s32 func_15133510(s32 arg0, MatrixTransformFields *arg1) {
 
 s32 func_15142838(s32 arg0, f32 arg1, f32 arg2, s32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8);
 
-s32 func_15133760(s32 arg0, s32 arg1) {
-    func_15142838(arg0, *(f32 *)(arg1 + 0x18), *(f32 *)(arg1 + 0x1C), *(s32 *)(arg1 + 0x20),
-                  *(f32 *)(arg1 + 0x24), *(f32 *)(arg1 + 0x28), *(f32 *)(arg1 + 0x38),
-                  *(f32 *)(arg1 + 0x3C), *(f32 *)(arg1 + 0x40));
+s32 func_15133760(s32 arg0, TransformDispatchFields *arg1) {
+    func_15142838(arg0,
+                  arg1->field_0x18,
+                  arg1->field_0x1C,
+                  arg1->field_0x20,
+                  arg1->field_0x24,
+                  arg1->field_0x28,
+                  arg1->field_0x38,
+                  arg1->field_0x3C,
+                  arg1->field_0x40);
     return 1;
 }
 

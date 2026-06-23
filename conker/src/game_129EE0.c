@@ -4,7 +4,24 @@
 #undef func_1513EDE4
 #include "variables.h"
 
-extern s32 *func_1513EDE4(s32 arg0, s16 arg1);
+typedef struct {
+    char pad_0x00[0x124];
+    f32 field_0x124;
+    f32 field_0x128;
+} ScaleUpdateState;
+
+typedef struct {
+    char pad_0x00[0x8];
+    s16 field_0x08;
+    char pad_0x0A[0xE];
+    s16 field_0x18;
+    char pad_0x1A[0xE];
+    s16 field_0x28;
+    char pad_0x2A[0xE];
+    s16 field_0x38;
+} ScaleUpdateNode;
+
+extern ScaleUpdateNode *func_1513EDE4(ScaleUpdateState *arg0, s16 arg1);
 extern void func_150FCBC0(s32 arg0);
 extern s32 func_1000EC24();
 extern void func_15164F0C(s32 arg0, u8 arg1, s32 arg2, s32 arg3, s32 arg4);
@@ -73,15 +90,15 @@ void func_150FCFB0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_129EE0/func_150FDB0C.s")
 
-s32 *func_150FDBA0(s32 arg0, s16 arg1) {
-    s32 *node;
+ScaleUpdateNode *func_150FDBA0(ScaleUpdateState *arg0, s16 arg1) {
+    ScaleUpdateNode *node;
 
     node = func_1513EDE4(arg0, arg1);
     if (node != NULL) {
-        *(s16 *)((u8 *)node + 0x8) = *(f32 *)(arg0 + 0x124);
-        *(s16 *)((u8 *)node + 0x18) = *(f32 *)(arg0 + 0x128);
-        *(s16 *)((u8 *)node + 0x28) = *(f32 *)(arg0 + 0x128);
-        *(s16 *)((u8 *)node + 0x38) = *(f32 *)(arg0 + 0x124);
+        node->field_0x08 = arg0->field_0x124;
+        node->field_0x18 = arg0->field_0x128;
+        node->field_0x28 = arg0->field_0x128;
+        node->field_0x38 = arg0->field_0x124;
     }
     return node;
 }

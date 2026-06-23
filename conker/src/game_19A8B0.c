@@ -122,6 +122,19 @@ typedef struct {
     u8 field_0x2D;
 } Obj1516FadeState;
 
+typedef struct {
+    char pad_0[0x14];
+    s16 field_0x14;
+    s16 field_0x16;
+    s16 field_0x18;
+    char pad_0x1A[0x5];
+    u8 field_0x1F;
+    char pad_0x20[0x4];
+    u8 field_0x24;
+    char pad_0x25[0x7];
+    s8 field_0x2C;
+} Obj1516FadeStepState;
+
 extern struct Obj1516D99C *func_15167A68(s32, s32, s32, s32, s32, s32);
 extern s32 func_150448D0(s32, s32, s32, s32, s32, s32, s32, s32, s32);
 
@@ -450,21 +463,21 @@ void func_1516FA88(s16 arg0, s16 arg1, s16 arg2, s32 arg3, u8 arg4, s32 arg5) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516FBCC.s")
 
-s32 func_1516FD50(s32 arg0) {
+s32 func_1516FD50(Obj1516FadeStepState *arg0) {
     s32 temp_a1;
     s32 temp_v0;
     s32 temp;
 
-    temp_a1 = *(u8 *)(arg0 + 0x24);
-    temp_v0 = *(u8 *)(arg0 + 0x1F);
+    temp_a1 = arg0->field_0x24;
+    temp_v0 = arg0->field_0x1F;
     if (temp_a1 != 0) {
         if (temp_v0 != 0xFF) {
             temp_v0 += D_800BE9E4 << 4;
             if (temp_v0 >= 0x100) {
                 temp_v0 = 0xFF;
             }
-            *(u8 *)(arg0 + 0x1F) = temp_v0;
-            temp_a1 = *(volatile u8 *)(arg0 + 0x24);
+            arg0->field_0x1F = temp_v0;
+            temp_a1 = ((volatile Obj1516FadeStepState *)arg0)->field_0x24;
         }
     } else {
         if (temp_v0 != 0) {
@@ -472,20 +485,20 @@ s32 func_1516FD50(s32 arg0) {
             if (temp_v0 < 0) {
                 temp_v0 = 0;
             }
-            *(u8 *)(arg0 + 0x1F) = temp_v0;
+            arg0->field_0x1F = temp_v0;
         }
         temp = (temp_v0 << 9) >> 8;
-        *(s16 *)(arg0 + 0x16) = temp;
-        *(s16 *)(arg0 + 0x14) = temp;
-        temp_a1 = *(volatile u8 *)(arg0 + 0x24);
+        arg0->field_0x16 = temp;
+        arg0->field_0x14 = temp;
+        temp_a1 = ((volatile Obj1516FadeStepState *)arg0)->field_0x24;
     }
 
     if ((temp_a1 == 0) && (temp_v0 == 0)) {
         return 1;
     }
 
-    func_1516F864(arg0);
-    *(s16 *)(arg0 + 0x18) = *(s8 *)(arg0 + 0x2C) + *(s16 *)(arg0 + 0x18);
+    func_1516F864((s32)arg0);
+    arg0->field_0x18 = arg0->field_0x18 + arg0->field_0x2C;
     return 0;
 }
 

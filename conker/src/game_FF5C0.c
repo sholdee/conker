@@ -54,6 +54,14 @@ struct obj150D21CC {
     struct sub150D21CC unk28;
 };
 
+struct colorFadeObj {
+    u8 pad_0x0[0x28];
+    u8 field_0x28;
+    u8 pad_0x29[0x13];
+    u8 field_0x3C;
+    u8 field_0x3D;
+};
+
 void func_150D21CC(struct obj150D21CC *arg0) {
     struct sub150D21CC *p = &arg0->unk28;
 
@@ -91,11 +99,11 @@ void func_150D22D4(s32 arg0) {
 
 s32 func_1517F08C(s32, s32, s32, s32, s32, s32);
 
-s32 func_150D22F4(s32 arg0, s32 arg1, s32 arg2) {
-    if (*(u8 *)(arg1 + 0x28) == 1) {
-        arg0 = func_1517F08C(arg0, *(u8 *)(arg1 + 0x3C), 0xFF, 0xFF, 0xFF, (s16)arg2);
+s32 func_150D22F4(s32 arg0, struct colorFadeObj *arg1, s32 arg2) {
+    if (arg1->field_0x28 == 1) {
+        arg0 = func_1517F08C(arg0, arg1->field_0x3C, 0xFF, 0xFF, 0xFF, (s16)arg2);
     } else {
-        arg0 = func_1517F08C(arg0, *(u8 *)(arg1 + 0x3D), 0, 0, 0, (s16)arg2);
+        arg0 = func_1517F08C(arg0, arg1->field_0x3D, 0, 0, 0, (s16)arg2);
     }
     return arg0;
 }

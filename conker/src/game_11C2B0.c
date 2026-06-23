@@ -53,6 +53,16 @@ typedef struct {
     u8 unkAC;
 } Struct150F0E48Obj;
 
+typedef struct {
+    u8 pad_0[0x68];
+    u8 field_0x68;
+    u8 field_0x69;
+    u8 pad_1[0x1A];
+    u16 field_0x84;
+    u8 pad_2[0x25E];
+    s32 field_0x2E4;
+} ActorStateFields;
+
 void *func_150EEF80(struct_150EEE00_arg0 *, u8, u8, s32);
 void func_15143134(void *, void *, s32);
 void func_15143874(s32, f32, f32 *, f32 *);
@@ -714,18 +724,18 @@ void func_150F1684(struct func150F1684_sub *arg0, struct func150F1684_sub *arg1,
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F1B48.s")
 
-void func_150F1CB0(u8 *arg0) {
-    if (*(u16 *)(arg0 + 0x84) == 0x14) {
-        arg0[0x68] = 0x1B;
+void func_150F1CB0(ActorStateFields *arg0) {
+    if (arg0->field_0x84 == 0x14) {
+        arg0->field_0x68 = 0x1B;
     } else {
-        arg0[0x68] = 0xC;
+        arg0->field_0x68 = 0xC;
     }
-    arg0[0x69] = 0x13;
-    if ((*(s32 *)(arg0 + 0x2E4) & 0x3) == 0x3) {
-        arg0[0x69] = 0x14;
+    arg0->field_0x69 = 0x13;
+    if ((arg0->field_0x2E4 & 0x3) == 0x3) {
+        arg0->field_0x69 = 0x14;
     }
-    if ((*(s32 *)(arg0 + 0x2E4) & 0xC) == 0xC) {
-        arg0[0x69] = 0x17;
+    if ((arg0->field_0x2E4 & 0xC) == 0xC) {
+        arg0->field_0x69 = 0x17;
     }
 }
 

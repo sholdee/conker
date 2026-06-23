@@ -651,52 +651,63 @@ void func_151DB4CC(struct218 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_2062D0/func_151DB5D0.s")
 
 typedef struct {
-    u8 unk0;
-    u8 pad1[7];
-    u8 unk8;
-    u8 unk9;
-    u8 unkA;
-    u8 unkB;
-    u8 unkC;
-    u8 unkD;
-    u8 padE[2];
-    f32 unk10;
-    f32 unk14;
-    f32 unk18;
-} Struct151DB97C;
+    u8 field_0x00;
+    u8 pad_0x01[0x3];
+    s32 field_0x04;
+    u8 field_0x08;
+    u8 field_0x09;
+    u8 field_0x0A;
+    u8 field_0x0B;
+    u8 field_0x0C;
+    u8 field_0x0D;
+    u8 pad_0x0E[0x2];
+    f32 field_0x10;
+    f32 field_0x14;
+    f32 field_0x18;
+} AxisOscillator;
 
 typedef struct {
-    u32 unk0;
-} Struct151DB97CDelta;
+    u8 pad_0x00[0x4C];
+    f32 field_0x4C;
+    f32 field_0x50;
+    f32 field_0x54;
+    u8 field_0x58;
+    u8 pad_0x59[0x4F];
+    AxisOscillator field_0xA8;
+} AxisOscillatorOwner;
 
-s32 func_151DB97C(u8 *arg0, s32 arg1) {
-    Struct151DB97C *p;
-    volatile Struct151DB97CDelta *delta;
+typedef struct {
+    u32 field_0x00;
+} FrameDeltaWord;
+
+s32 func_151DB97C(AxisOscillatorOwner *arg0, s32 arg1) {
+    AxisOscillator *p;
+    volatile FrameDeltaWord *delta;
     f32 sp24;
     f32 sp20;
 
-    if (!(arg0[0xA8] & 2)) {
-        p = (Struct151DB97C *)(arg0 + 0xA8);
+    if (!(arg0->field_0xA8.field_0x00 & 2)) {
+        p = &arg0->field_0xA8;
     } else {
-        func_15131918((s32)(arg0 + 0x58), *(s32 *)(arg0 + 0xAC));
-        p = (Struct151DB97C *)(arg0 + 0xA8);
+        func_15131918((s32)&arg0->field_0x58, arg0->field_0xA8.field_0x04);
+        p = &arg0->field_0xA8;
     }
 
-    delta = (volatile Struct151DB97CDelta *)&D_800BE9E4;
-    if (p->unk0 & 1) {
-        p->unk8 = p->unk8 + (p->unkB * delta->unk0);
-        p->unk9 = p->unk9 + (p->unkC * delta->unk0);
-        p->unkA = p->unkA + (p->unkD * delta->unk0);
+    delta = (volatile FrameDeltaWord *)&D_800BE9E4;
+    if (p->field_0x00 & 1) {
+        p->field_0x08 = p->field_0x08 + (p->field_0x0B * delta->field_0x00);
+        p->field_0x09 = p->field_0x09 + (p->field_0x0C * delta->field_0x00);
+        p->field_0x0A = p->field_0x0A + (p->field_0x0D * delta->field_0x00);
 
-        sp20 = func_151423D8((u8)(p->unk8 - 0x40));
-        sp24 = func_151423D8((u8)(p->unk9 - 0x40));
+        sp20 = func_151423D8((u8)(p->field_0x08 - 0x40));
+        sp24 = func_151423D8((u8)(p->field_0x09 - 0x40));
         {
             f32 sp28;
 
-            sp28 = func_151423D8((u8)(p->unkA - 0x40));
-            *(f32 *)(arg0 + 0x4C) = p->unk10 * sp20;
-            *(f32 *)(arg0 + 0x50) = p->unk14 * sp24;
-            *(f32 *)(arg0 + 0x54) = p->unk18 * sp28;
+            sp28 = func_151423D8((u8)(p->field_0x0A - 0x40));
+            arg0->field_0x4C = p->field_0x10 * sp20;
+            arg0->field_0x50 = p->field_0x14 * sp24;
+            arg0->field_0x54 = p->field_0x18 * sp28;
         }
     }
     return 1;
