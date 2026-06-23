@@ -258,7 +258,14 @@ void func_15168B10(s32 arg0, s32 arg1) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15168B44.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1944C0/func_15168BAC.s")
+void func_15168BAC(struct102 *arg0) {
+    u8 temp_v0;
+
+    temp_v0 = *(u8 *)((u8 *)arg0 + 0xE4);
+    if (temp_v0 != 0) {
+        D_8008CA20[temp_v0](arg0);
+    }
+}
 s32 func_15167A68(s32, s32, s32, s32, s32, s32);
 
 void func_15168BE4(s32 *arg0, s32 arg1, s32 arg2) {

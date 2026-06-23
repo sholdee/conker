@@ -224,7 +224,14 @@ s32 func_150A32B4(struct178 *arg0, s32 arg1, s32 arg2, s32 arg3) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A3330.s")
+void func_150A3330(s32 arg0, s32 *arg1, s32 *arg2, s32 *arg3, s32 *arg4) {
+    typedef u8 entry[0x34];
+
+    *arg1 = (*(entry **)&D_800D3098)[arg0][0x17];
+    *arg2 = *(s32 *)&(*(entry **)&D_800D3098)[arg0][0x18];
+    *arg3 = *(s32 *)&(*(entry **)&D_800D3098)[arg0][0x1C];
+    *arg4 = *(s32 *)&(*(entry **)&D_800D3098)[arg0][0x20];
+}
 
 void func_150A3398(s32 arg0, u16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
     typedef u8 entry[0x34];
