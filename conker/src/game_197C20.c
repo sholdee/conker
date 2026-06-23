@@ -22,7 +22,9 @@ typedef struct {
     u8 field_0x0;
     char pad_0[0xF];
     struct_game_197C20_2 *field_0x10;
-    char pad_1[0xC];
+    char pad_1[0x1];
+    u8 field_0x15;
+    char pad_2[0xA];
     u8 field_0x20;
 } struct_game_197C20_3;
 
@@ -99,11 +101,11 @@ u8 *func_1516C878(struct_game_197C20_1 *arg0, s32 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_197C20/func_1516D0CC.s")
 
-void func_1516D2E0(u8 *arg0) {
-    if ((arg0 != 0) && (*arg0 == 0x51)) {
-        *(u8 *)(*(s32 *)(arg0 + 0x10) + 8) = 0;
+void func_1516D2E0(struct_game_197C20_3 *arg0) {
+    if ((arg0 != 0) && (arg0->field_0x0 == 0x51)) {
+        arg0->field_0x10->field_0x8 = 0;
         func_1516972C((struct102 *)arg0);
-        arg0[0x15] = 0;
+        arg0->field_0x15 = 0;
     }
 }
 

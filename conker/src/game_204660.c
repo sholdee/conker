@@ -58,14 +58,14 @@ void func_151D7450(struct260 *arg0) {
     func_15149368(arg0);
 }
 
-void func_151D747C(s32 arg0) {
+void func_151D747C(struct struct127 *arg0) {
     struct {
         s32 unk0;
         u8 unk4;
     } sp18;
 
-    sp18.unk0 = arg0;
-    sp18.unk4 = *(u8 *)(arg0 + 0x3B);
+    sp18.unk0 = (s32)arg0;
+    sp18.unk4 = arg0->unique_id;
     func_151494E0((s32)&sp18, 0x3D);
 }
 

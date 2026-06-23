@@ -246,14 +246,14 @@ void func_151CF898(struct127 *arg0, f32 arg1, f32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CFA4C.s")
 
-void func_151D0024(s32 arg0) {
+void func_151D0024(struct127 *arg0) {
     struct {
         s32 unk0;
         u8 unk4;
     } sp18;
 
-    sp18.unk0 = arg0;
-    sp18.unk4 = *(u8 *)(arg0 + 0x3B);
+    sp18.unk0 = (s32)arg0;
+    sp18.unk4 = arg0->unique_id;
     func_151494E0((s32)&sp18, 0x18);
 }
 

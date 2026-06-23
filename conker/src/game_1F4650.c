@@ -89,6 +89,19 @@ typedef struct {
     u8 pad_0x1[0x3];
     s32 field_0x4;
 } Game1F4650EffectTriggerEvent;
+typedef struct {
+    u8 pad_0x0[0x9];
+    u8 field_0x9;
+} Game1F4650ByteFlagTarget;
+typedef struct {
+    u8 pad_0x0[0x6F];
+    u8 field_0x6F;
+} Game1F4650StatusFlagBlock;
+typedef struct {
+    u8 pad_0x00[0x14];
+    Game1F4650ByteFlagTarget *field_0x14;
+    Game1F4650StatusFlagBlock *field_0x18;
+} Game1F4650StatusFlagOwner;
 extern void func_1504715C(struct_func_151C9AC0_sp20 *, struct_func_151C9AC0_arg0 *);
 extern s32 func_151ABE40(f32 *, struct_func_151C9AC0_sp20 *, s32, u8, s32);
 
@@ -307,12 +320,12 @@ void func_151C9AC0(struct_func_151C9AC0_arg0 *arg0, u8 arg1, s32 arg2) {
     func_151ABE40(sp44, &sp20, 2, arg1, arg2);
 }
 
-s32 func_151C9B30(void *arg0) {
-    s32 temp = *(s32 *)((s32)arg0 + 0x18);
-    if (*(u8 *)(temp + 0x6F) == 0) {
-        *(u8 *)(*(s32 *)((s32)arg0 + 0x14) + 0x9) = 0;
+s32 func_151C9B30(Game1F4650StatusFlagOwner *arg0) {
+    Game1F4650StatusFlagBlock *temp = arg0->field_0x18;
+    if (temp->field_0x6F == 0) {
+        arg0->field_0x14->field_0x9 = 0;
     } else {
-        *(u8 *)(*(s32 *)((s32)arg0 + 0x14) + 0x9) = 1;
+        arg0->field_0x14->field_0x9 = 1;
     }
     return 1;
 }

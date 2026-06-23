@@ -2,15 +2,19 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct {
+    char pad_0[0x3B];
+    u8 field_0x3B;
+} ActorUniqueIdFields;
 
-void func_150F6DB0(s32 arg0) {
+void func_150F6DB0(ActorUniqueIdFields *arg0) {
     struct {
         s32 unk0;
         u8 unk4;
     } sp18;
 
-    sp18.unk0 = arg0;
-    sp18.unk4 = *(u8 *)(arg0 + 0x3B);
+    sp18.unk0 = (s32)arg0;
+    sp18.unk4 = arg0->field_0x3B;
     func_151494E0((s32)&sp18, 0x3E);
 }
 

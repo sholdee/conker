@@ -72,13 +72,23 @@ typedef struct {
 } Game6B320EffectEntry;
 
 typedef struct {
-    Game6B320EffectEntry *field_0x00;
+    u8 pad_0[0x1EC];
+    f32 field_0x1EC;
+} Game6B320EffectData;
+
+typedef struct {
+    Game6B320EffectData *field_0x00;
     s32 field_0x04;
     s32 field_0x08;
     s16 field_0x0C;
     u8 field_0x0E;
     u8 field_0x0F;
 } Game6B320EffectState;
+
+typedef struct {
+    s32 field_0x00;
+    u8 pad_0x04[0x328];
+} Game6B320ObjectStatusEntry;
 
 
 void func_1503DE70(struct127 *arg0, s32 arg1, s32 arg2) {
@@ -236,13 +246,14 @@ void func_1503F0D8(void *arg0, s32 arg1) {
     func_1503EB78(arg0, 2.06f, 3.0f, 1);
 }
 
-extern s8 D_800CC364[];
+extern Game6B320ObjectStatusEntry D_800CC364[];
 
 void func_1503F108(s32 arg0) {
-    struct106 *p = &D_800C6660[arg0];
-    (*(s16 *)((s32)p + 0xC)) = 0x8C;
-    *(s32 *)&D_800CC364[arg0 * 812] = 6;
-    *(f32 *)(p->unk0 + 0x1EC) = 10.0f;
+    Game6B320EffectState *p = (Game6B320EffectState *)&D_800C6660[arg0];
+
+    p->field_0x0C = 0x8C;
+    D_800CC364[arg0].field_0x00 = 6;
+    p->field_0x00->field_0x1EC = 10.0f;
 }
 
 void func_1503F16C(s32 arg0) {

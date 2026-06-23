@@ -33,6 +33,11 @@ typedef struct {
     u8 field_0x1;
     char pad_0x2[0xA];
     u8 field_0xC;
+    char pad_0xD[0x3];
+    u8 field_0x10;
+    char pad_0x11[0x12];
+    u8 field_0x23;
+    char pad_0x24[0x4];
 } GameObjectHeader;
 
 extern struct Some15171F04 *D_8008CA4C[];
@@ -87,12 +92,12 @@ s32 func_15167A68(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 }
 
 void func_15167AD8(s32 arg0, s32 arg1, s32 arg2) {
-    s32 temp;
+    GameObjectHeader *temp;
 
-    temp = func_15167A68(3, arg2, 0x28, 0, (u8)arg1, 1);
+    temp = (GameObjectHeader *)func_15167A68(3, arg2, 0x28, 0, (u8)arg1, 1);
     if (temp != 0) {
-        bcopy(arg0, (void *)(temp + 0x10), 0x18);
-        *(u8 *)(temp + 0x23) = 0xFF;
+        bcopy(arg0, &temp->field_0x10, 0x18);
+        temp->field_0x23 = 0xFF;
     }
 }
 void func_15167B44(struct102 *arg0) {

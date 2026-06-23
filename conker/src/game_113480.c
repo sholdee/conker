@@ -35,15 +35,24 @@ typedef struct {
 } Struct150E5FD0Local;
 
 typedef struct {
-    u8 unk0;
-    u8 pad1[3];
-    struct17 unk4;
-    s32 unk10;
-    s32 unk14[5];
-    f32 unk28;
-    s8 unk2C;
-    u8 pad2D[3];
+    u8 field_0x00;
+    u8 pad_0x01[3];
+    struct17 field_0x04;
+    s32 field_0x10;
+    s32 field_0x14[5];
+    f32 field_0x28;
+    s8 field_0x2C;
+    u8 pad_0x2D[3];
 } Struct150E5FD0Extra;
+
+typedef struct {
+    u8 pad_0x00[0x1];
+    u8 field_0x01;
+    u8 pad_0x02[0xA];
+    u8 field_0x0C;
+    u8 pad_0x0D[0x103];
+    Struct150E5FD0Extra field_0x110;
+} Struct150EEffectObject;
 
 s32 func_150E5FD0(struct17 *arg0, struct17 *arg1, f32 arg2, f32 arg3, f32 arg4, u8 arg5, s32 arg6, u8 arg7, u8 arg8, s16 arg9, s8 argA) {
     s32 ret;
@@ -73,17 +82,17 @@ s32 func_150E5FD0(struct17 *arg0, struct17 *arg1, f32 arg2, f32 arg3, f32 arg4, 
     sp94.unk38 = arg2;
     sp94.unk3C = 0.0f;
     sp94.unk40 = 1;
-    sp64.unk0 = 0;
-    sp64.unk2C = argA;
-    if ((arg7 != 0) && (func_150AC9C0(arg0->unk0, arg0->unk4, arg0->unk8, arg1->unk0, arg1->unk4, arg1->unk8, &sp64.unk10, &sp64.unk14, &sp64.unk4.unk0, &sp64.unk4.unk4, &sp64.unk4.unk8, 0, &sp60, 0, 0.0f) != 0) && (func_15145C90(sp60) != 0)) {
-        sp64.unk0 |= 1;
-        sp54.unk0 = sp64.unk4.unk0 - sp94.unk1C.unk0;
-        sp54.unk4 = sp64.unk4.unk4 - sp94.unk1C.unk4;
-        sp54.unk8 = sp64.unk4.unk8 - sp94.unk1C.unk8;
-        if (func_15144A74(&sp54, &sp64.unk4) < 0.0f) {
-            sp64.unk28 = -1.0f;
+    sp64.field_0x00 = 0;
+    sp64.field_0x2C = argA;
+    if ((arg7 != 0) && (func_150AC9C0(arg0->unk0, arg0->unk4, arg0->unk8, arg1->unk0, arg1->unk4, arg1->unk8, &sp64.field_0x10, &sp64.field_0x14, &sp64.field_0x04.unk0, &sp64.field_0x04.unk4, &sp64.field_0x04.unk8, 0, &sp60, 0, 0.0f) != 0) && (func_15145C90(sp60) != 0)) {
+        sp64.field_0x00 |= 1;
+        sp54.unk0 = sp64.field_0x04.unk0 - sp94.unk1C.unk0;
+        sp54.unk4 = sp64.field_0x04.unk4 - sp94.unk1C.unk4;
+        sp54.unk8 = sp64.field_0x04.unk8 - sp94.unk1C.unk8;
+        if (func_15144A74(&sp54, &sp64.field_0x04) < 0.0f) {
+            sp64.field_0x28 = -1.0f;
         } else {
-            sp64.unk28 = 1.0f;
+            sp64.field_0x28 = 1.0f;
         }
     }
     if (func_150ADA20() & 1) {
@@ -142,9 +151,9 @@ struct LocalDef150E67D0 {
     s32 unk2C;
 };
 
-s32 func_150E67D0(void *arg0) {
+s32 func_150E67D0(Struct150EEffectObject *arg0) {
     struct LocalDef150E67D0 tmp;
-    u8 *temp;
+    Struct150E5FD0Extra *temp;
 
     tmp.unk6 = 0x3A;
     tmp.unk0 = 1;
@@ -159,7 +168,7 @@ s32 func_150E67D0(void *arg0) {
     tmp.unk15 = 0xFF;
     tmp.unk18 = 0x130001;
 
-    temp = (u8 *)arg0 + 0x110;
-    func_1513C73C((s32)&tmp, 0, 0, (s32)(temp + 0x14), *(f32 *)(temp + 4), *(f32 *)(temp + 8), *(f32 *)(temp + 0xC), 50.0f, 50.0f, func_150ADA20() & 0xFF, 0, 0, *(u8 *)((u8 *)arg0 + 0xC), *(u8 *)((u8 *)arg0 + 1));
+    temp = &arg0->field_0x110;
+    func_1513C73C((s32)&tmp, 0, 0, (s32)&temp->field_0x14, temp->field_0x04.unk0, temp->field_0x04.unk4, temp->field_0x04.unk8, 50.0f, 50.0f, func_150ADA20() & 0xFF, 0, 0, arg0->field_0x0C, arg0->field_0x01);
     return 0;
 }

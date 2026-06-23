@@ -13,6 +13,11 @@ void func_1507EB80(u8 *buf, s32 *count, u8 c) {
 extern u8 *D_80086C24[];
 extern u8 D_8009BBF0[];
 
+typedef struct {
+    char pad_0[0x3B];
+    u8 field_0x3B;
+} ActorUniqueIdFields;
+
 void func_1507EBB8(s32 arg0, s32 *arg1, s32 arg2) {
     u8 *dst = D_80086C24[arg2];
     s32 len = D_8009BBF0[arg2];
@@ -87,14 +92,14 @@ s32 func_1507F4C0(s32 arg0) {
 
 void func_15191B8C(s32 arg0, u8 arg1);
 
-void func_1507FF94(s32 arg0) {
+void func_1507FF94(ActorUniqueIdFields *arg0) {
     struct {
         s32 unk0;
         u8 unk4;
     } sp20;
 
-    sp20.unk0 = arg0;
-    sp20.unk4 = *(u8 *)(arg0 + 0x3B);
+    sp20.unk0 = (s32)arg0;
+    sp20.unk4 = arg0->field_0x3B;
     func_15191B8C((s32)&sp20, 0xD);
     func_151494E0((s32)&sp20, 0xD);
 }
