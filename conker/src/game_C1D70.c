@@ -51,7 +51,9 @@ void func_15094FE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_1509563C.s")
 
 s32 func_1509563C(f32, f32, f32, f32 *, f32 *, f32 *, f32 *, f32);
+void func_15095B08(s32, f32, f32, f32, s32, s32 *);
 s32 func_15095A90(s32, s32, f32, f32, f32, s32, s32, s32, s32);
+s32 func_15095D34(s32, s32, s32, s32, s32);
 
 struct Pt15095760 {
     s16 x;
@@ -88,11 +90,19 @@ void func_15095A48(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
     func_15095A90(arg0, arg1, arg2, arg3, 4096.0f, 0, 0, 0, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_15095A90.s")
+s32 func_15095A90(s32 arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
+    s32 sp24;
+
+    func_15095B08(arg1, arg2, arg3, arg4, arg5, &sp24);
+    if (sp24 != 0) {
+        arg0 = func_15095D34(arg0, arg1, arg6, arg7, arg8);
+    }
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_15095B08.s")
 
-void func_15095D34(s32, s32, s32, s32, s32);
+s32 func_15095D34(s32, s32, s32, s32, s32);
 
 void func_15095D0C(s32 arg0, s32 arg1) {
     func_15095D34(arg0, arg1, 0, 0, 0);

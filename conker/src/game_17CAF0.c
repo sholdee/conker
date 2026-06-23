@@ -177,6 +177,26 @@ extern void (*D_8008AC60[])(u8 *);
 extern s32 (*D_8008ACC8[])(void *);
 extern void func_15156190(void *, u8, s32, u8, s32);
 
+struct Local15152ABCOut {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+};
+
+struct Local15152ABCColor {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+};
+
+struct Local15152ABCStack {
+    struct Local15152ABCColor *color;
+    s32 pad;
+};
+
+extern struct Local15152ABCColor D_800A5FE0[];
+
 
 struct Local1514FEFC;
 
@@ -378,7 +398,15 @@ void func_15152874(struct Local15152874Arg *arg0, u8 arg1, s32 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15152ABC.s")
+void func_15152ABC(struct Local15152ABCOut *arg0) {
+    struct Local15152ABCStack stack;
+
+    stack.color = &D_800A5FE0[(u8)((u32)func_150ADA20() % 5U)];
+    arg0->unk3 = (func_150ADA20() % 101U) + 0x9B;
+    arg0->unk0 = stack.color->unk0;
+    arg0->unk1 = stack.color->unk1;
+    arg0->unk2 = stack.color->unk2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15152B38.s")
 

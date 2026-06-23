@@ -16,6 +16,44 @@ extern void func_151ABE00(void *);
 extern void *func_15190770(void *, s32, s32, s32);
 extern void func_151346EC(u8 *);
 extern void func_1513470C(u8 *);
+extern f32 D_800A8FF0;
+
+typedef struct {
+    u8 pad0[0x3B];
+    u8 unk3B;
+    u8 pad3C[0xDC];
+    f32 unk118;
+} struct_151AB2C4_arg;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    u8 unk8;
+    u8 pad9[0x3];
+    void *unkC;
+    u8 unk10;
+    u8 pad11[0x3];
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    s16 unk28;
+    u8 unk2A;
+    u8 unk2B;
+    s8 unk2C;
+    u8 unk2D;
+} struct_151AB2C4_desc;
+
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+    u8 pad5;
+    s16 unk6;
+    f32 unk8;
+} struct_151AB2C4_payload;
+
+extern void *func_1513418C(struct_151AB2C4_desc *, s32, u8, s32);
 
 typedef struct {
     u8 pad0[0x14];
@@ -338,7 +376,37 @@ void func_151AB1C4(u8 *arg0) {
     func_151AA264(v1, temp);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB2C4.s")
+void *func_151AB2C4(struct_151AB2C4_arg *arg0, s32 arg1) {
+    struct_151AB2C4_desc sp28;
+    struct_151AB2C4_payload sp1C;
+    void *temp_v0;
+
+    sp1C.unk0 = arg1;
+    sp1C.unk6 = 0;
+    sp1C.unk4 = 1;
+    sp1C.unk8 = arg0->unk118;
+    sp28.unk0 = 0;
+    sp28.unk4 = 0;
+    sp28.unk8 = arg0->unk3B;
+    sp28.unk10 = 1;
+    sp28.unk14 = 0.0f;
+    sp28.unk18 = 0.0f;
+    sp28.unk1C = 0.0f;
+    sp28.unk28 = 0x12C;
+    sp28.unk2A = 0xA;
+    sp28.unk2B = 3;
+    sp28.unk2C = 0;
+    sp28.unk2D = 1;
+    sp28.unkC = arg0;
+    sp28.unk20 = 25.0f;
+    sp28.unk24 = D_800A8FF0;
+
+    temp_v0 = func_1513418C(&sp28, 0xC, 0xFF, 0);
+    if (temp_v0 != NULL) {
+        memcpy((u8 *)temp_v0 + 0x58, &sp1C, 0xC);
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB3A4.s")
 

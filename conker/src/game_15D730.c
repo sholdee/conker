@@ -131,10 +131,10 @@ void func_1513164C(s32 a0, s32 a1, s32 a2, s32 a3, s32 a4, s32 a5, s32 a6, s32 a
     func_1513137C(a0, a1, a2, a3, a8);
 }
 
-void func_151318E8(s32 a0, s32 a1);
+void func_151318E8(f32 *a0, f32 a1);
 
 s32 func_151316AC(s32 *a0, s32 a1) {
-    func_151318E8((s32)a0 + 0x58, a0[0x2A]);
+    func_151318E8((f32 *)((s32)a0 + 0x58), *(f32 *)&a0[0x2A]);
     return 1;
 }
 
@@ -195,7 +195,13 @@ void func_15131828(u8 *arg0, f32 *arg1, u8 *arg2, u8 *arg3) {
     arg2[1] = arg3[1] * D_800BE9E4 + arg2[1];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_151318E8.s")
+void func_151318E8(f32 *a0, f32 a1) {
+    s32 i;
+
+    for (i = D_800BE9E4; i > 0; i--) {
+        a0[1] = a0[1] * a1;
+    }
+}
 
 s32 func_15131918(f32 *a0, f32 a1) {
     s32 i;

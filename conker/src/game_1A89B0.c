@@ -83,7 +83,10 @@ void func_1517D578(s16 arg0, s16 arg1, s16 arg2, f32 arg3, s32 arg4, s32 arg5, u
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517D5FC.s")
+void func_1517D5FC(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, s32 arg5)
+{
+    func_1517D578(arg0, arg1, arg2, D_800DBFF0[arg3].unk380, arg4, arg5, D_800DDD1C >> 3);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517D690.s")
 

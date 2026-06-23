@@ -191,7 +191,20 @@ void func_15087EF0(s32 arg0, struct Struct15087EF0arg1 *arg1) {
     arg1->unk76 = r;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15087FC4.s")
+struct Struct15087FC4 {
+    char pad0[0x31];
+    u8 unk31;
+    char pad32[0x84 - 0x32];
+};
+
+void func_15087FC4(s32 arg0, s32 arg1) {
+    struct Struct15087FC4 *p;
+    if (D_800872A0 == 0) {
+        return;
+    }
+    p = (struct Struct15087FC4 *)(arg0 * sizeof(struct Struct15087FC4) + (s32)D_800872A0);
+    p->unk31 = arg1;
+}
 
 extern u8 *D_800872A0;
 
