@@ -1243,3 +1243,4 @@ Special empty-guard case:
   `p=(s32*)(((s32)p+3)&-4)+1; v=*(p-1)`, hand-roll that pointer walk instead of `...`/`va_list` to avoid the variadic frame/homes.
 - Pre-loop scalar STORE scheduling: when a global/default store must happen after loop-end
   address setup but before iteration 0, put it in the `for` initializer with the induction init (`for (G=0, i=0;;)`). A standalone store schedules too early.
+- Float-to-u32 conversion: cast the float expression to `u32` to get the long FCSR `cfc1/ctc1/cvt.w.s` + overflow-correction path; `(s32)`/narrow casts use plain `trunc.w.s`.
