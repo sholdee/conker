@@ -4,10 +4,14 @@
 
 
 struct LL155FD4 {
-    u8 pad0[0x8];
-    struct LL155FD4 *unk8;
-    u8 padC[0x4];
-    u8 unk10;
+    u8 pad_0x0[0x8];
+    struct LL155FD4 *field_0x8;
+    u8 pad_0xC[0x2];
+    s16 field_0xE;
+    u8 field_0x10;
+    u8 field_0x11;
+    u8 pad_0x12[0x86];
+    f32 field_0x98;
 };
 
 extern u8 D_800DCE50[];
@@ -35,20 +39,20 @@ extern u8 D_800CC37D;
 extern u8 *func_15155FD4(s32 arg0);
 
 void func_151557FC(s32 arg0, s32 arg1, f32 arg2) {
-    u8 *temp_v0;
+    struct LL155FD4 *temp_v0;
 
-    temp_v0 = func_15155FD4(arg0);
+    temp_v0 = (struct LL155FD4 *)func_15155FD4(arg0);
     if (temp_v0 == 0) {
-        temp_v0 = (u8 *)func_15155780(arg0, 0xFF);
+        temp_v0 = (struct LL155FD4 *)func_15155780(arg0, 0xFF);
     }
     if (temp_v0 != 0) {
-        *(f32 *)(temp_v0 + 0x98) = arg2;
+        temp_v0->field_0x98 = arg2;
         if ((&D_800CC37D)[arg0 * 812] != 0) {
-            *(s16 *)(temp_v0 + 0xE) = 0;
-            temp_v0[0x11] = 0;
+            temp_v0->field_0xE = 0;
+            temp_v0->field_0x11 = 0;
         } else {
-            temp_v0[0x11] = 3;
-            *(s16 *)(temp_v0 + 0xE) = arg1;
+            temp_v0->field_0x11 = 3;
+            temp_v0->field_0xE = arg1;
         }
     }
 }
@@ -100,10 +104,10 @@ u8 *func_15155FD4(s32 arg0) {
         node = *(struct LL155FD4 **)&D_800DCE50[i + 0x140];
         i += 0x1A0;
         while (node != NULL) {
-            if (arg0 == node->unk10) {
+            if (arg0 == node->field_0x10) {
                 return (u8 *)node;
             }
-            node = node->unk8;
+            node = node->field_0x8;
         }
     } while ((u8 *)&D_800DD190 != &D_800DCE50[i]);
     return NULL;

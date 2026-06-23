@@ -10,6 +10,15 @@ extern f32 func_15048A40(u8 arg0);
 extern u8 D_800DDDA0[];
 extern u8 D_800DDDC0;
 
+typedef struct {
+    char pad_0x00[0xE];
+    s16 field_0x0E;
+    char pad_0x10[0x1B];
+    u8 field_0x2B;
+    char pad_0x2C[0x2];
+    s16 field_0x2E;
+} ColorBlendTask;
+
 void func_1517EE40(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s8 arg4, s32 arg5) {
     u8 *p;
 
@@ -297,8 +306,8 @@ void func_15182670(s32 arg0, s32 arg1, s32 arg2, s32 arg3, volatile s16 arg4, u8
     }
 }
 
-void func_15182748(s32 arg0) {
-    *(u8 *)(arg0 + 0x2B) = *(s16 *)(arg0 + 0xE) * *(s16 *)(arg0 + 0x2E);
+void func_15182748(ColorBlendTask *arg0) {
+    arg0->field_0x2B = arg0->field_0x2E * arg0->field_0x0E;
 }
 
 s32 func_15182768(s32 arg0, s32 arg1, s16 arg2) {

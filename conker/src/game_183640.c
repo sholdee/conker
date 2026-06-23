@@ -3,23 +3,28 @@
 #include "variables.h"
 
 typedef struct {
-    u8 pad0[0x18];
-    s32 unk18;
-    s32 unk1C;
-    u8 pad20[0x48];
-    s32 unk68;
-    s32 unk6C;
-    s32 unk70;
-    s32 unk74;
-    s32 unk78;
-    f32 unk7C[4][4];
-    f32 unkBC[4][4];
-    s32 unkFC;
-    u8 unk100;
-    u8 pad101[0x3];
-    s32 unk104[4];
-    s32 unk114;
-    s32 unk118;
+    u8 pad_0x0[0x18];
+    s32 field_0x18;
+    s32 field_0x1C;
+    u8 pad_0x20[0x34];
+    f32 field_0x54;
+    f32 field_0x58;
+    f32 field_0x5C;
+    u8 pad_0x60[0x8];
+    s32 field_0x68;
+    s32 field_0x6C;
+    s32 field_0x70;
+    s32 field_0x74;
+    s32 field_0x78;
+    f32 field_0x7C[2][4][4];
+    s32 field_0xFC;
+    u8 field_0x100;
+    u8 pad_0x101[0x3];
+    s32 field_0x104[4];
+    s32 field_0x114;
+    s32 field_0x118;
+    u8 pad_0x11C[0x4];
+    f32 field_0x120[0xE];
 } struct15157010;
 
 extern struct15157010 *func_15167A68(s32, s32, s32, s32, s32, s32);
@@ -318,28 +323,28 @@ struct15157010 *func_15157010(u8 *arg0, s32 arg1, f32 arg2, s32 arg3, s32 arg4, 
     if (temp_v0 == 0) {
         return NULL;
     }
-    memcpy(&temp_v0->pad0[0x10], arg0, 0x58);
-    func_1503F62C(temp_v0->unk18, temp_v0->unk1C, &temp_v0->unk6C, &temp_v0->unk70, &temp_v0->unk74, &temp_v0->unk78, &temp_v0->unk68);
-    mtx1 = temp_v0->unk7C;
+    memcpy(&temp_v0->pad_0x0[0x10], arg0, 0x58);
+    func_1503F62C(temp_v0->field_0x18, temp_v0->field_0x1C, &temp_v0->field_0x6C, &temp_v0->field_0x70, &temp_v0->field_0x74, &temp_v0->field_0x78, &temp_v0->field_0x68);
+    mtx1 = temp_v0->field_0x7C[0];
     guMtxIdentF(mtx1);
-    mtx2 = temp_v0->unkBC;
+    mtx2 = temp_v0->field_0x7C[1];
     guMtxIdentF(mtx2);
-    *(f32 (**) [4]) (temp_v0->unk68 + 0x3E0) = mtx1;
-    *(f32 (**) [4]) (temp_v0->unk68 + 0x3E4) = mtx2;
-    func_1503F5B8(temp_v0->unk68, 1, arg1, arg2, 0.0f, 0);
-    temp_v0->unkFC = arg3;
-    temp_v0->unk118 = arg4;
-    temp_v0->unk100 = 0;
+    *(f32 (**) [4]) (temp_v0->field_0x68 + 0x3E0) = mtx1;
+    *(f32 (**) [4]) (temp_v0->field_0x68 + 0x3E4) = mtx2;
+    func_1503F5B8(temp_v0->field_0x68, 1, arg1, arg2, 0.0f, 0);
+    temp_v0->field_0xFC = arg3;
+    temp_v0->field_0x118 = arg4;
+    temp_v0->field_0x100 = 0;
     for (i = 0; i < 4; i++) {
-        temp_v0->unk104[i] = 0;
+        temp_v0->field_0x104[i] = 0;
     }
 
-    temp_v0->unk114 = 0;
+    temp_v0->field_0x114 = 0;
     if (arg3) {
         for (i = 0; i <= D_80082FA0; i++) {
-            temp_v0->unk104[i] = func_1515D480(arg3);
+            temp_v0->field_0x104[i] = func_1515D480(arg3);
         }
-        temp_v0->unk114 = func_1515D440();
+        temp_v0->field_0x114 = func_1515D440();
     }
     return temp_v0;
 }
@@ -450,27 +455,27 @@ struct15157010 *func_15157898(u8 *arg0, void *arg1, s32 arg2, f32 arg3, s32 arg4
         return NULL;
     }
     sp2C = temp_v0;
-    memcpy((u8 *)temp_v0 + 0x120, arg1, 0x38);
+    memcpy(temp_v0->field_0x120, arg1, 0x38);
     return sp2C;
 }
 
-s32 func_15157918(u8 *arg0) {
+s32 func_15157918(struct15157010 *arg0) {
     f32 *arg1;
 
-    arg1 = (f32 *)(arg0 + 0x120);
-    func_150A8050((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)), arg1[0], arg1[1], arg1[2]);
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[3][0] = *(f32 *)(arg0 + 0x54);
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[3][1] = *(f32 *)(arg0 + 0x58);
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[3][2] = *(f32 *)(arg0 + 0x5C);
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[0][0] *= arg1[3];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[0][1] *= arg1[3];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[0][2] *= arg1[3];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[1][0] *= arg1[3];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[1][1] *= arg1[3];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[1][2] *= arg1[3];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[2][0] *= arg1[3];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[2][1] *= arg1[3];
-    ((f32 (*)[4])(arg0 + 0x7C + (D_800BE9C0 << 6)))[2][2] *= arg1[3];
+    arg1 = arg0->field_0x120;
+    func_150A8050(arg0->field_0x7C[D_800BE9C0], arg1[0], arg1[1], arg1[2]);
+    arg0->field_0x7C[D_800BE9C0][3][0] = arg0->field_0x54;
+    arg0->field_0x7C[D_800BE9C0][3][1] = arg0->field_0x58;
+    arg0->field_0x7C[D_800BE9C0][3][2] = arg0->field_0x5C;
+    arg0->field_0x7C[D_800BE9C0][0][0] *= arg1[3];
+    arg0->field_0x7C[D_800BE9C0][0][1] *= arg1[3];
+    arg0->field_0x7C[D_800BE9C0][0][2] *= arg1[3];
+    arg0->field_0x7C[D_800BE9C0][1][0] *= arg1[3];
+    arg0->field_0x7C[D_800BE9C0][1][1] *= arg1[3];
+    arg0->field_0x7C[D_800BE9C0][1][2] *= arg1[3];
+    arg0->field_0x7C[D_800BE9C0][2][0] *= arg1[3];
+    arg0->field_0x7C[D_800BE9C0][2][1] *= arg1[3];
+    arg0->field_0x7C[D_800BE9C0][2][2] *= arg1[3];
     return 1;
 }
 

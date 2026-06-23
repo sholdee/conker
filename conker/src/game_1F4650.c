@@ -61,6 +61,25 @@ typedef struct {
     s32 field_0x0;
     u8 field_0x4;
 } Game1F4650LinkStateEvent;
+typedef struct {
+    s32 field_0x0;
+    u8 pad_0x4[0x8];
+    u8 field_0xC;
+    u8 pad_0xD[0x1];
+    u8 field_0xE;
+    u8 pad_0xF[0x1];
+    f32 field_0x10;
+    f32 field_0x14;
+} Game1F4650EffectState;
+typedef struct {
+    u8 pad_0x00[0x70];
+    Game1F4650EffectState field_0x70;
+} Game1F4650EffectObject;
+typedef struct {
+    u8 field_0x0;
+    u8 pad_0x1[0x3];
+    s32 field_0x4;
+} Game1F4650EffectTriggerEvent;
 extern void func_1504715C(struct_func_151C9AC0_sp20 *, struct_func_151C9AC0_arg0 *);
 extern s32 func_151ABE40(f32 *, struct_func_151C9AC0_sp20 *, s32, u8, s32);
 
@@ -482,14 +501,15 @@ void func_151CB510(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CB5FC.s")
 
-void func_151CB918(void *arg0, void *arg1, u8 arg2) {
-    s32 base = (s32)arg0 + 0x70;
+void func_151CB918(Game1F4650EffectObject *arg0, Game1F4650EffectTriggerEvent *arg1, u8 arg2) {
+    Game1F4650EffectState *base = &arg0->field_0x70;
+
     if (arg2 == 0x37) {
-        if (*(u8 *)arg1 == *(u8 *)(base + 0xE)) {
-            if (*(s32 *)((s32)arg1 + 0x4) == *(s32 *)base) {
-                *(f32 *)(base + 0x10) = 0.0f;
-                *(u8 *)(base + 0xC) |= 0x1;
-                *(f32 *)(base + 0x14) = 0.0f;
+        if (base->field_0xE == arg1->field_0x0) {
+            if (base->field_0x0 == arg1->field_0x4) {
+                base->field_0x10 = 0.0f;
+                base->field_0xC |= 0x1;
+                base->field_0x14 = 0.0f;
             }
         }
     }

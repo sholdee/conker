@@ -246,14 +246,14 @@ s32 func_151339D4(MotionFields15133 *arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg
     return 1;
 }
 
-s32 func_15133A50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4) {
-    *(f32 *)(arg0 + 0x3C) = *(f32 *)(arg0 + 0x10) + arg4;
-    *(f32 *)(arg0 + 0x44) = 0.0f;
-    *(f32 *)(arg0 + 0x48) = 0.0f;
-    *(f32 *)(arg0 + 0x4C) = 0.0f;
-    *(f32 *)(arg0 + 0x50) = 0.0f;
-    *(f32 *)(arg0 + 0x54) = 0.0f;
-    *(f32 *)(arg0 + 0x58) = 0.0f;
+s32 func_15133A50(MotionFields15133 *arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4) {
+    arg0->field_0x3C = arg0->field_0x10 + arg4;
+    arg0->field_0x44 = 0.0f;
+    arg0->field_0x48 = 0.0f;
+    arg0->field_0x4C = 0.0f;
+    arg0->field_0x50 = 0.0f;
+    arg0->field_0x54 = 0.0f;
+    arg0->field_0x58 = 0.0f;
     return 1;
 }
 

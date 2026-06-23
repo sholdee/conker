@@ -19,36 +19,43 @@ void func_150C66F0(u8 *arg0) {
     }
 }
 
-struct Sub150C673C {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ u8 unk4;
-    /* 0x05 */ u8 pad5[3];
-    /* 0x08 */ f32 unk8;
-    /* 0x0C */ f32 unkC;
-    /* 0x10 */ f32 unk10;
-    /* 0x14 */ s16 unk14;
-    /* 0x16 */ s16 unk16;
-    /* 0x18 */ s16 unk18;
-    /* 0x1A */ s16 unk1A;
-    /* 0x1C */ f32 unk1C;
-};
+typedef struct {
+    /* 0x00 */ s32 field_0x00;
+    /* 0x04 */ u8 field_0x04;
+    /* 0x05 */ u8 pad_0x05[0x3];
+    /* 0x08 */ f32 field_0x08;
+    /* 0x0C */ f32 field_0x0C;
+    /* 0x10 */ f32 field_0x10;
+    /* 0x14 */ s16 field_0x14;
+    /* 0x16 */ s16 field_0x16;
+    /* 0x18 */ s16 field_0x18;
+    /* 0x1A */ s16 field_0x1A;
+    /* 0x1C */ f32 field_0x1C;
+} RandomLerpState;
 
-s32 func_150C673C(u8 *arg0) {
+typedef struct {
+    /* 0x00 */ char pad_0x00[0x24];
+    /* 0x24 */ s32 field_0x24;
+    /* 0x28 */ char pad_0x28[0x88];
+    /* 0xB0 */ RandomLerpState field_0xB0;
+} RandomLerpObject;
+
+s32 func_150C673C(RandomLerpObject *arg0) {
     s8 ret;
-    struct Sub150C673C *sub;
+    RandomLerpState *sub;
 
     ret = 1;
-    sub = (struct Sub150C673C *)(arg0 + 0xB0);
-    if (sub->unk4 == 0) {
+    sub = &arg0->field_0xB0;
+    if (sub->field_0x04 == 0) {
         ret = 0;
     }
-    sub->unk4 = 0;
-    sub->unk14 -= D_800BE9E4;
-    if (sub->unk14 < 0) {
-        sub->unk14 = (func_150ADA20() % (u32)(sub->unk18 + 1)) + sub->unk16;
-        sub->unk10 = func_150ADA68() * sub->unkC + sub->unk8;
+    sub->field_0x04 = 0;
+    sub->field_0x14 -= D_800BE9E4;
+    if (sub->field_0x14 < 0) {
+        sub->field_0x14 = (func_150ADA20() % (u32)(sub->field_0x18 + 1)) + sub->field_0x16;
+        sub->field_0x10 = func_150ADA68() * sub->field_0x0C + sub->field_0x08;
     }
-    *(s32 *)(arg0 + 0x24) += (s32)((sub->unk10 - (f32)*(s32 *)(arg0 + 0x24)) * sub->unk1C);
+    arg0->field_0x24 += (s32)((sub->field_0x10 - (f32)arg0->field_0x24) * sub->field_0x1C);
     return ret;
 }
 

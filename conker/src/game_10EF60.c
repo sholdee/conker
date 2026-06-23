@@ -2,6 +2,16 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct {
+    s32 field_0x0;
+    s32 field_0x4;
+    u8 field_0x8;
+    u8 field_0x9;
+    u8 pad_0xA[0xD0];
+    u8 field_0xDA;
+    u8 pad_0xDB;
+    s32 field_0xDC[1];
+} CollisionPairRecord;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10EF60/func_150E1AB0.s")
 
@@ -27,14 +37,21 @@ s32 func_150E2F90(s32 a0, s32 a1, s16 a2) {
     return func_150E2DA4(a0, a2);
 }
 
-void func_150E2FC0(u8 *a0, s32 *a1, u8 a2) {
+void func_150E2FC0(CollisionPairRecord *a0, CollisionPairRecord *a1, u8 a2) {
+    s32 temp_v0;
+
     if (a2 == 0x2D) {
-        if (a1[0] == *(s32 *)(a0 + 0xDC)) {
-            *(s32 *)(a0 + 0xDC) = a1[1];
-            a0[0xDA] = *(u8 *)((u8 *)a1 + 9);
-        } else if (a1[1] == *(s32 *)(a0 + 0xDC)) {
-            *(s32 *)(a0 + 0xDC) = a1[0];
-            a0[0xDA] = *(u8 *)((u8 *)a1 + 8);
+        if ((temp_v0 = a1->field_0x0) != a0->field_0xDC[0]) {
+            goto check_second;
         }
+        a0->field_0xDC[0] = a1->field_0x4;
+        a0->field_0xDA = a1->field_0x9;
+        return;
+check_second:
+        if ((u32)a1->field_0x4 != (u32)a0->field_0xDC[0]) {
+            return;
+        }
+        a0->field_0xDC[0] = temp_v0;
+        a0->field_0xDA = a1->field_0x8;
     }
 }

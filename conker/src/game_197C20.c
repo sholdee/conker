@@ -12,6 +12,20 @@ typedef struct {
     s32 unk4;
 } struct_game_197C20_1;
 
+typedef struct {
+    s32 field_0x0;
+    char pad_0[0x4];
+    u8 field_0x8;
+} struct_game_197C20_2;
+
+typedef struct {
+    u8 field_0x0;
+    char pad_0[0xF];
+    struct_game_197C20_2 *field_0x10;
+    char pad_1[0xC];
+    u8 field_0x20;
+} struct_game_197C20_3;
+
 extern struct_game_197C20_0 *D_800DD254;
 extern struct_game_197C20_0 *D_800DD258;
 
@@ -93,11 +107,11 @@ void func_1516D2E0(u8 *arg0) {
     }
 }
 
-void func_1516D328(u8 *arg0) {
-    if ((arg0 != 0) && (*arg0 == 0x51)) {
-        *(s32 *)(*(s32 *)(arg0 + 0x10)) |= 0x100;
-        *(s32 *)(*(s32 *)(arg0 + 0x10)) &= ~0x400;
-        arg0[0x20] = *(u8 *)(*(s32 *)(arg0 + 0x10) + 8);
+void func_1516D328(struct_game_197C20_3 *arg0) {
+    if ((arg0 != 0) && (arg0->field_0x0 == 0x51)) {
+        arg0->field_0x10->field_0x0 |= 0x100;
+        arg0->field_0x10->field_0x0 &= ~0x400;
+        arg0->field_0x20 = arg0->field_0x10->field_0x8;
     }
 }
 
