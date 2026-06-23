@@ -21,6 +21,18 @@ extern s16 D_800DD206;
 extern s32 D_800DD218;
 extern s32 D_800DD21C;
 
+struct unk151420F8 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    s32 unk14;
+};
+
+extern struct unk151420F8 D_800A5200;
+s32 func_150A2AEC(s32, s32, struct unk151420F8 *, s32);
+
 
 void func_15141970(struct37 *arg0) {
     func_1514EDF0(arg0, arg0->unk2C);
@@ -156,7 +168,15 @@ void func_15141F78(u8 arg0, struct157 *arg1, f32 arg2, u8 arg3, struct157 *arg4,
 //     func_1513C650(&tmp, 0, 0, arg1->unk4, arg4->unk0, arg1->unk0, arg4->unk8, temp_f2, temp_f2, arg3, phi_v0, 3, 1, 0, 0xFF, 1);
 // }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151420F8.s")
+s32 func_151420F8(s32 arg0) {
+    struct unk151420F8 sp18;
+
+    sp18 = D_800A5200;
+    if (func_150A2AEC((arg0 - (s32)D_800CC2D0) / (s32)sizeof(struct127), 6, &sp18, arg0) == -1) {
+        return 0;
+    }
+    return 1;
+}
 struct vec15142180 {
     /* 0x00 */ s32 unk00;
     /* 0x04 */ s32 unk04;

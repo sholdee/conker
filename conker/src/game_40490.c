@@ -12,6 +12,7 @@ extern f32 D_80096680;
 extern f32 D_80096684;
 extern u8 D_800C35E8;
 extern void func_1510F800(s32);
+s32 func_151BE850(struct17 *arg0, s32 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
 
 typedef struct {
     f32 unk0;
@@ -212,7 +213,21 @@ s32 func_15013C38(struct16 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_15013D38.s")
+s32 func_15013D38(struct47 *arg0) {
+    struct17 tmp;
+    struct17 *tmp_ptr;
+    s32 temp_v0;
+
+    tmp_ptr = &tmp;
+    arg0->unk16 |= 4;
+    tmp.unk0 = (f32)arg0->unk0;
+    tmp.unk4 = (f32)arg0->unk2;
+    tmp.unk8 = (f32)arg0->unk4;
+
+    temp_v0 = arg0->unk18;
+    func_151BE850(tmp_ptr, arg0->unk10, temp_v0 ? temp_v0 : 1, arg0->unk1F, 1, 0xFF, 1);
+    return 1;
+}
 // #NON-MATCHING: looks close but think its wrong
 // s32 func_151BE850(struct17 *arg0, s32 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
 // s32 func_15013D38(struct47 *arg0) {
