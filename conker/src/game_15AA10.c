@@ -34,4 +34,9 @@ void func_1512D66C(u8 *arg0) {
     *(s32 *)((*(s32 *)&D_800DC2B0) + arg0[0x23D] * 0xB0 + 0xAC) = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15AA10/func_1512D6B0.s")
+s32 func_1512D6B0(u8 *arg0) {
+    u8 *entry;
+
+    entry = (*(Entry15 **)&D_800DC2B0)[arg0[0x23D]];
+    return *(s32 *)&entry[0xA8] == *(s32 *)&entry[0xAC];
+}

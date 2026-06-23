@@ -4,6 +4,9 @@
 
 
 extern u8 D_800AA490;
+extern f32 D_800AA4C8;
+extern f32 D_800DCA24;
+extern void func_15134908(void *, s32, u8, s32);
 
 struct blk12_B8400 {
     s32 unk0;
@@ -140,7 +143,33 @@ void func_151B863C(s32 a0, s16 a1) {
     func_1513FA70(a0, a1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E58B0/func_151B8668.s")
+typedef struct {
+    s32 unk00;
+    s32 unk04;
+    s32 unk08;
+    f32 unk0C;
+    f32 unk10;
+    s16 unk14;
+    u8 unk16;
+    u8 unk17;
+    u8 unk18;
+    u8 pad19[7];
+} Struct151B8668;
+
+void func_151B8668(s32 arg0, u8 arg1, s32 arg2) {
+    Struct151B8668 sp18;
+
+    sp18.unk0C = 10.0f;
+    sp18.unk00 = arg0 + 0x38;
+    sp18.unk04 = arg0 + 0x3C;
+    sp18.unk08 = arg0 + 0x40;
+    sp18.unk10 = D_800AA4C8 * D_800DCA24;
+    sp18.unk14 = 0x12C;
+    sp18.unk16 = 0;
+    sp18.unk17 = 3;
+    sp18.unk18 = 0;
+    func_15134908(&sp18, 0, arg1, arg2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E58B0/func_151B86F4.s")
 

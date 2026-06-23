@@ -3,6 +3,7 @@
 #include "variables.h"
 
 s32 func_1513FAB4(void *arg0, s32 arg1, f32 *arg2, s16 arg3);
+s32 func_151BB0E0();
 extern f32 D_800AA8E0;
 extern f32 D_800AA8E8;
 extern f32 D_800AA8EC;
@@ -71,7 +72,12 @@ void func_151BA468(struct260 *arg0, s32 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BA518.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BB044.s")
+void func_151BB044(struct127 *arg0) {
+    func_1000FA64(0x4A7, (s16)(s32)arg0->x_position,
+                  (s16)(s32)arg0->y_position,
+                  (s16)(s32)arg0->z_position, 0x2000, 0x320, 0xC8,
+                  (s32)func_151BB0E0, arg0, 0, 8, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BB0E0.s")
 

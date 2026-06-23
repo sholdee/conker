@@ -19,7 +19,19 @@ void func_1501BB20(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_48FD0/func_1501C010.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_48FD0/func_1501C0F0.s")
+void func_1501C0F0(u8 arg0, f32 arg1, f32 arg2) {
+    u8 temp = D_80084060[arg0];
+
+    if (temp < 4) {
+        if (D_800BE944[temp] != 0) {
+            D_800BE93C[temp] = 1;
+            D_800BE950[temp] = 0.0f;
+            D_800BE960[temp] = arg1;
+            D_800BE970[temp] = arg2;
+            D_800BE980[temp] = arg1 + arg2;
+        }
+    }
+}
 
 void func_1501C17C(u8 arg0) {
     u8 temp = D_80084060[arg0];

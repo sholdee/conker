@@ -48,7 +48,18 @@ s32 func_1506A83C(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506A864.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506A968.s")
+void func_1506A968(struct127 *arg0, s32 arg1) {
+    f32 sp2C[3];
+    f32 sp20[3];
+
+    sp2C[0] = arg0->x_position;
+    sp2C[1] = arg0->y_position;
+    sp2C[2] = arg0->z_position;
+    sp20[0] = D_800D1570[0] - D_800D1560[0];
+    sp20[1] = D_800D1570[1] - D_800D1560[1];
+    sp20[2] = D_800D1570[2] - D_800D1560[2];
+    func_151D3480(sp2C, sp20, 0, 1, 0xFF, 1);
+}
 
 s32 func_151B7144(s32, s32, s32);
 s32 func_151B6320(s32, s32, s32);
