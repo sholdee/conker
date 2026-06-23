@@ -130,7 +130,15 @@ s32 func_151D7770(s32 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D779C.s")
+s32 func_151D779C(s32 *arg0) {
+    u8 *p = (u8 *)arg0 + 0x28;
+    s32 *v = (s32 *)arg0[0x40 / 4];
+
+    if (*(u8 *)((u8 *)v + 0xAD) != 0) {
+        p[5] &= ~1;
+    }
+    return 1;
+}
 
 void func_151D77C8(s32 *arg0) {
     s32 **p = (s32 **)((u8 *)arg0 + 0x28);
