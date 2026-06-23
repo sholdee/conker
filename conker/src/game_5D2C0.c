@@ -31,6 +31,11 @@ typedef struct Game5D2C0PositionState {
     f32 field_0x1C;
 } Game5D2C0PositionState;
 
+typedef struct Game5D2C0AnimationOwner {
+    u8 pad_0[0x48];
+    struct197 *field_0x48;
+} Game5D2C0AnimationOwner;
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_1502FE10.s")
 
 typedef struct Func1502FFD8Arg0 {
@@ -325,23 +330,23 @@ s32 func_15031E7C(u8 *arg0, struct127 *arg1) {
 
 void func_1503F5B8(s32 arg0, s32 arg1, s32 arg2, f32 arg3, f32 arg4, s32 arg5);
 
-s32 func_150331B8(s32 arg0, s32 arg1) {
-    s32 ptr;
-    s32 temp;
+s32 func_150331B8(Game5D2C0AnimationOwner *arg0, struct127 *arg1) {
+    struct197 *ptr;
+    struct197 *temp;
 
-    ptr = *(s32 *)(arg1 + 0x2D0);
-    temp = *(s32 *)(arg0 + 0x48);
+    ptr = arg1->unk2D0;
+    temp = arg0->field_0x48;
     if (temp == 0) {
         return 0;
     }
-    if ((*(s32 *)(arg1 + 0x2E4) & 0xFF) != 0xFF) {
-        func_1503F5B8(temp, 0, *(s32 *)(arg1 + 0x2E4) & 0xFF, 1.0f, 0.0f, 1);
+    if ((arg1->unk2E4 & 0xFF) != 0xFF) {
+        func_1503F5B8((s32)temp, 0, arg1->unk2E4 & 0xFF, 1.0f, 0.0f, 1);
     }
     if (ptr != 0) {
-        *(f32 *)(*(s32 *)(arg0 + 0x48) + 8) = *(f32 *)(ptr + 8);
-        temp = *(s32 *)(arg0 + 0x48);
-        if (*(f32 *)(temp + 0x18) <= *(f32 *)(temp + 8)) {
-            *(f32 *)(temp + 8) = *(f32 *)(temp + 0x18) - 1.0f;
+        arg0->field_0x48->unk8 = ptr->unk8;
+        temp = arg0->field_0x48;
+        if (temp->unk18 <= temp->unk8) {
+            temp->unk8 = temp->unk18 - 1.0f;
         }
     }
     return 0;

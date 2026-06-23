@@ -53,14 +53,14 @@ struct F8StateData {
 };
 
 s32 func_15108AB4(struct Arg0_15108AB4 *arg0) {
-    u8 *v0 = (((u8 *)arg0) + arg0->off) + 0xF8;
+    struct F8StateData *v0 = (struct F8StateData *)((((u8 *)arg0) + arg0->off) + 0xF8);
 
-    *(f32 *)(v0 + 0x8) = *(f32 *)(v0 + 0x8) + D_800A2470 * D_800BE9A4;
-    *(f32 *)(v0 + 0xC) = *(f32 *)(v0 + 0xC) + D_800A2474 * D_800BE9A4;
-    *(f32 *)(v0 + 0x8) = func_15144B68(*(f32 *)(v0 + 0x8));
-    *(f32 *)(v0 + 0xC) = func_15144B68(*(f32 *)(v0 + 0xC));
-    *(f32 *)(v0 + 0x0) = sinf(*(f32 *)(v0 + 0x8)) * D_800A2478;
-    *(f32 *)(v0 + 0x4) = sinf(*(f32 *)(v0 + 0xC)) * D_800A247C;
+    v0->field_0x8 = v0->field_0x8 + D_800A2470 * D_800BE9A4;
+    v0->field_0xC = v0->field_0xC + D_800A2474 * D_800BE9A4;
+    v0->field_0x8 = func_15144B68(v0->field_0x8);
+    v0->field_0xC = func_15144B68(v0->field_0xC);
+    v0->field_0x0 = sinf(v0->field_0x8) * D_800A2478;
+    v0->field_0x4 = sinf(v0->field_0xC) * D_800A247C;
     func_15108B80(arg0);
     func_15108BC0((struct Arg0_15108BC0 *)arg0);
     return 1;

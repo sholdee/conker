@@ -198,17 +198,17 @@ s32 func_151337C0(f32 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133894.s")
 
-s32 func_151339D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4) {
+s32 func_151339D4(MotionFields15133 *arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4) {
     f32 temp;
 
-    *(f32 *)(arg0 + 0x3C) = *(f32 *)(arg0 + 0x10) + arg4;
-    temp = *(f32 *)(arg0 + 0x14);
-    *(f32 *)(arg0 + 0x44) = *(f32 *)(arg0 + 0x44) * temp;
-    *(f32 *)(arg0 + 0x48) = *(f32 *)(arg0 + 0x48) * -temp;
-    *(f32 *)(arg0 + 0x4C) = *(f32 *)(arg0 + 0x4C) * temp;
-    *(f32 *)(arg0 + 0x50) = *(f32 *)(arg0 + 0x50) * temp;
-    *(f32 *)(arg0 + 0x54) = *(f32 *)(arg0 + 0x54) * temp;
-    *(f32 *)(arg0 + 0x58) = *(f32 *)(arg0 + 0x58) * temp;
+    arg0->field_0x3C = arg0->field_0x10 + arg4;
+    temp = arg0->field_0x14;
+    arg0->field_0x44 = arg0->field_0x44 * temp;
+    arg0->field_0x48 = arg0->field_0x48 * -temp;
+    arg0->field_0x4C = arg0->field_0x4C * temp;
+    arg0->field_0x50 = arg0->field_0x50 * temp;
+    arg0->field_0x54 = arg0->field_0x54 * temp;
+    arg0->field_0x58 = arg0->field_0x58 * temp;
     return 1;
 }
 

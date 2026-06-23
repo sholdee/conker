@@ -31,6 +31,25 @@ typedef struct {
 typedef struct {
     u8 unk0[0x24];
 } struct_func_151C9AC0_sp20;
+typedef struct {
+    u8 pad_0x00[0x2C];
+    struct102 *field_0x2C;
+    u8 pad_0x30[0x4];
+    s32 field_0x34;
+    s32 field_0x38;
+    s32 field_0x3C;
+    s32 field_0x40;
+    s32 field_0x44;
+    s32 field_0x48;
+    s32 field_0x4C;
+    s32 field_0x50;
+} Game1F4650LinkBlock;
+typedef struct {
+    u8 pad_0x00[0x13C];
+    s32 field_0x13C;
+    u8 pad_0x140[0x4];
+    s32 field_0x144;
+} Game1F4650LinkedObject;
 extern void func_1504715C(struct_func_151C9AC0_sp20 *, struct_func_151C9AC0_arg0 *);
 extern s32 func_151ABE40(f32 *, struct_func_151C9AC0_sp20 *, s32, u8, s32);
 
@@ -106,54 +125,54 @@ s32 func_151C87AC(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151C9198.s")
 
-void func_151C94D4(void *arg0) {
-    register s32 temp_s0;
+void func_151C94D4(Game1F4650LinkedObject *arg0) {
+    register Game1F4650LinkBlock *temp_s0;
     s32 temp_a0;
 
-    temp_s0 = (s32)arg0 + 0x110;
-    if (*(s32 *)((s32)arg0 + 0x13C) != 0) {
-        func_1516972C(*(struct102 **)(temp_s0 + 0x2C));
+    temp_s0 = (Game1F4650LinkBlock *)((s32)arg0 + 0x110);
+    if (arg0->field_0x13C != 0) {
+        func_1516972C(temp_s0->field_0x2C);
         func_1000FD38(func_151C87AC, (void *)temp_s0, 0);
     }
 
-    temp_s0 = *(s32 *)&arg0;
-    temp_a0 = *(s32 *)(temp_s0 + 0x144);
-    temp_s0 = temp_s0 + 0x110;
+    temp_s0 = (Game1F4650LinkBlock *)*(s32 *)&arg0;
+    temp_a0 = ((Game1F4650LinkedObject *)temp_s0)->field_0x144;
+    temp_s0 = (Game1F4650LinkBlock *)((s32)temp_s0 + 0x110);
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }
 
-    temp_a0 = *(s32 *)(temp_s0 + 0x38);
+    temp_a0 = temp_s0->field_0x38;
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }
 
-    temp_a0 = *(s32 *)(temp_s0 + 0x3C);
+    temp_a0 = temp_s0->field_0x3C;
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }
 
-    temp_a0 = *(s32 *)(temp_s0 + 0x40);
+    temp_a0 = temp_s0->field_0x40;
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }
 
-    temp_a0 = *(s32 *)(temp_s0 + 0x44);
+    temp_a0 = temp_s0->field_0x44;
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }
 
-    temp_a0 = *(s32 *)(temp_s0 + 0x48);
+    temp_a0 = temp_s0->field_0x48;
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }
 
-    temp_a0 = *(s32 *)(temp_s0 + 0x4C);
+    temp_a0 = temp_s0->field_0x4C;
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }
 
-    temp_a0 = *(s32 *)(temp_s0 + 0x50);
+    temp_a0 = temp_s0->field_0x50;
     if (temp_a0 != 0) {
         func_1516972C((struct102 *)temp_a0);
     }

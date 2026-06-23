@@ -27,30 +27,39 @@ typedef struct {
     f32 unk38;
 } struct_func_1510AEE0;
 
+typedef struct {
+    f32 field_0x00;
+    u8 pad_0x04[0x5C];
+    f32 field_0x60;
+    u8 pad_0x64[0x18];
+    s32 field_0x7C;
+    f32 field_0x80;
+} OscillatorState;
+
 void func_1510AA20(s32 arg0) {
     func_15179008(0);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_137ED0/func_1510AA44.s")
 
-void func_1510ADD8(s32 arg0) {
+void func_1510ADD8(OscillatorState *arg0) {
     f32 temp;
 
-    *(f32 *)(arg0 + 0x80) += (D_800A26B0 * D_800BE9E4) / 60.0f;
-    temp = cosf(*(f32 *)(arg0 + 0x80)) * 10.0f;
-    *(f32 *)(arg0 + 0x60) = *(f32 *)arg0 - temp;
-    *(f32 *)arg0 = temp;
-    if (*(s32 *)(arg0 + 0x7C) == 0) {
-        if (D_800A26B4 <= *(f32 *)(arg0 + 0x80)) {
-            *(s32 *)(arg0 + 0x7C) = 1;
-            func_15114D24(arg0, 0x4CA, 0x2EE0, 0xC8, 0x3E8, 4);
+    arg0->field_0x80 += (D_800A26B0 * D_800BE9E4) / 60.0f;
+    temp = cosf(arg0->field_0x80) * 10.0f;
+    arg0->field_0x60 = arg0->field_0x00 - temp;
+    arg0->field_0x00 = temp;
+    if (arg0->field_0x7C == 0) {
+        if (D_800A26B4 <= arg0->field_0x80) {
+            arg0->field_0x7C = 1;
+            func_15114D24((s32)arg0, 0x4CA, 0x2EE0, 0xC8, 0x3E8, 4);
         }
     } else {
         temp = D_800A26B8;
-        if (temp <= *(f32 *)(arg0 + 0x80)) {
-            *(f32 *)(arg0 + 0x80) -= temp;
-            *(s32 *)(arg0 + 0x7C) = 0;
-            func_15114D24(arg0, 0x4CB, 0x2EE0, 0xC8, 0x3E8, 4);
+        if (temp <= arg0->field_0x80) {
+            arg0->field_0x80 -= temp;
+            arg0->field_0x7C = 0;
+            func_15114D24((s32)arg0, 0x4CB, 0x2EE0, 0xC8, 0x3E8, 4);
         }
     }
 }

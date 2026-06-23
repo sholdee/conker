@@ -9,6 +9,23 @@ void func_151C3B0C(s32, f32, f32, f32, f32, s32, s32, s32);
 extern s32 func_150AD9A0(s32, s32, s32);
 extern u8 *func_150E3020(s32, s32, s32, s32, s32, s32, s32, f32, s32, f32, f32, f32, s32, s16);
 
+typedef struct {
+    char pad_0x0[0x30];
+    f32 field_0x30;
+    f32 field_0x34;
+    f32 field_0x38;
+    char pad_0x3C[0x24];
+    f32 field_0x60;
+    f32 field_0x64;
+    char pad_0x68[0x3C];
+    s32 field_0xA4;
+} Game1104D0EffectState;
+
+typedef struct {
+    char pad_0x0[0x110];
+    Game1104D0EffectState field_0x110;
+} Game1104D0EffectObj;
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1104D0/func_150E3020.s")
 
 s32 func_150E3208(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
@@ -106,14 +123,14 @@ void func_150E36BC(s32 arg0, s32 *arg1, s32 *arg2, s32 *arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1104D0/func_150E3738.s")
 
-void func_150E4010(u8 *arg0) {
-    u8 *temp;
+void func_150E4010(Game1104D0EffectObj *arg0) {
+    Game1104D0EffectState *temp;
 
-    temp = arg0 + 0x110;
-    if (*(s32 *)(arg0 + 0x1B4) != 0) {
-        func_1505D1C4(*(f32 *)(temp + 0x30), *(f32 *)(temp + 0x34), *(f32 *)(temp + 0x38),
-                      *(s32 *)(temp + 0xA4) | 0x60000, -1,
-                      ((u16)(u32)(func_150484A0(*(f32 *)(temp + 0x60), *(f32 *)(temp + 0x64)) * D_800A1050) - 0x4000) | 1, 0, 0);
+    temp = &arg0->field_0x110;
+    if (arg0->field_0x110.field_0xA4 != 0) {
+        func_1505D1C4(temp->field_0x30, temp->field_0x34, temp->field_0x38,
+                      temp->field_0xA4 | 0x60000, -1,
+                      ((u16)(u32)(func_150484A0(temp->field_0x60, temp->field_0x64) * D_800A1050) - 0x4000) | 1, 0, 0);
     }
 }
 

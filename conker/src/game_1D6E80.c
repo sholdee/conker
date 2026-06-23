@@ -216,6 +216,15 @@ typedef struct {
     /* 0x14 */ f32 unk14;
 } struct_AA48C_b;
 
+typedef struct {
+    /* 0x00 */ u8  pad0[0x58];
+    /* 0x58 */ f32 field_0x58;
+    /* 0x5C */ f32 field_0x5C;
+    /* 0x60 */ f32 field_0x60;
+    /* 0x64 */ u8  pad64[0x24];
+    /* 0x88 */ s32 field_0x88;
+} struct_AA48C_effect;
+
 extern f32 D_800A8FA4;
 extern f32 D_800A8FA8;
 extern void *func_15134DAC(struct_10E4_AA48C *, s32);
@@ -260,17 +269,17 @@ void *func_151AA48C(void *arg0, s32 arg1) {
     return temp_v0;
 }
 
-s32 func_151AA5A4(u8 *arg0) {
-    *(s32 *)(arg0 + 0x88) = 0;
+s32 func_151AA5A4(struct_AA48C_effect *arg0) {
+    arg0->field_0x88 = 0;
     if (func_150ADA20() & 1) {
         func_10010F88(0xA, 0x55F0, (s16)((func_151EF610() % 0x4B0) - 0x258), 0, 0,
-                      (s32)*(f32 *)(arg0 + 0x58), (s32)*(f32 *)(arg0 + 0x5C),
-                      (s32)*(f32 *)(arg0 + 0x60), 0x1F4, 0x9C4);
+                      (s32)arg0->field_0x58, (s32)arg0->field_0x5C,
+                      (s32)arg0->field_0x60, 0x1F4, 0x9C4);
         return 1;
     }
     func_10010F88(0xB, 0x55F0, (s16)((func_151EF610() % 0x4B0) - 0x258), 0, 0,
-                  (s32)*(f32 *)(arg0 + 0x58), (s32)*(f32 *)(arg0 + 0x5C),
-                  (s32)*(f32 *)(arg0 + 0x60), 0x1F4, 0x9C4);
+                  (s32)arg0->field_0x58, (s32)arg0->field_0x5C,
+                  (s32)arg0->field_0x60, 0x1F4, 0x9C4);
     return 1;
 }
 

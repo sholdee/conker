@@ -106,6 +106,21 @@ typedef struct {
     s16 field_0x18;
 } Obj1516F984;
 
+typedef struct {
+    char pad_0[0x14];
+    s16 field_0x14;
+    s16 field_0x16;
+    char pad_0x18[0x7];
+    u8 field_0x1F;
+    char pad_0x20[0x4];
+    u8 field_0x24;
+    char pad_0x25[0x1];
+    u8 field_0x26;
+    char pad_0x27[0x5];
+    u8 field_0x2C;
+    u8 field_0x2D;
+} Obj1516FadeState;
+
 extern struct Obj1516D99C *func_15167A68(s32, s32, s32, s32, s32, s32);
 extern s32 func_150448D0(s32, s32, s32, s32, s32, s32, s32, s32, s32);
 
@@ -253,31 +268,31 @@ void func_1516D99C(
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516E8CC.s")
 
-s32 func_1516ECAC(s32 arg0) {
+s32 func_1516ECAC(Obj1516FadeState *arg0) {
     s32 temp_v0;
     s32 temp_v1;
     s32 temp_a1;
     s32 temp;
 
-    temp_v0 = *(u8 *)(arg0 + 0x24);
-    temp_v1 = *(u8 *)(arg0 + 0x1F);
+    temp_v0 = arg0->field_0x24;
+    temp_v1 = arg0->field_0x1F;
     if (temp_v0 != 0) {
         if (temp_v1 != 0xFF) {
             temp_v1 += D_800BE9E4 << 7;
             if (temp_v1 >= 0x100) {
                 temp_v1 = 0xFF;
             }
-            *(u8 *)(arg0 + 0x1F) = temp_v1;
-            temp_v0 = *(volatile u8 *)(arg0 + 0x24);
+            arg0->field_0x1F = temp_v1;
+            temp_v0 = ((volatile Obj1516FadeState *)arg0)->field_0x24;
         }
     } else {
         if (temp_v1 != 0) {
-            temp_v1 -= D_800BE9E4 * *(u8 *)(arg0 + 0x26);
+            temp_v1 -= D_800BE9E4 * arg0->field_0x26;
             if (temp_v1 < 0) {
                 temp_v1 = 0;
             }
-            *(u8 *)(arg0 + 0x1F) = temp_v1;
-            temp_v0 = *(volatile u8 *)(arg0 + 0x24);
+            arg0->field_0x1F = temp_v1;
+            temp_v0 = ((volatile Obj1516FadeState *)arg0)->field_0x24;
         }
     }
 
@@ -285,10 +300,10 @@ s32 func_1516ECAC(s32 arg0) {
         return 1;
     }
 
-    temp_a1 = *(u8 *)(arg0 + 0x2D) | (*(u8 *)(arg0 + 0x2C) << 8);
+    temp_a1 = (arg0->field_0x2C << 8) | arg0->field_0x2D;
     temp = (temp_a1 * temp_v1) >> 7;
-    *(s16 *)(arg0 + 0x16) = temp;
-    *(s16 *)(arg0 + 0x14) = temp;
+    arg0->field_0x16 = temp;
+    arg0->field_0x14 = temp;
     return 0;
 }
 

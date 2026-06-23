@@ -49,6 +49,19 @@ typedef struct {
     ObjectFxControl *field_0x31C;
 } GameObjectFxOwner;
 
+typedef struct {
+    char pad_0[0x10];
+    s32 field_0x10;
+    s32 field_0x14;
+    u8 field_0x18;
+    char pad_0x19[0x3];
+    s32 field_0x1C;
+    u8 field_0x20;
+    char pad_0x21[0x3];
+    s32 field_0x24;
+    f32 field_0x28;
+} ObjectLinkPayload;
+
 extern struct_AF4D0 D_800A9DF0[];
 extern f32 D_800AA0E4;
 
@@ -172,26 +185,26 @@ s32 func_151ACA20(s16 *arg0) {
 extern u8 *func_15167A68(s32, s32, s32, s32, s32, s32);
 s32 func_151ACB38(u8 *arg0, u8 *arg1);
 
-s32 func_151ACA60(u8 *arg0, f32 arg1, s32 arg2) {
-    u8 *temp;
+s32 func_151ACA60(struct127 *arg0, f32 arg1, s32 arg2) {
+    ObjectLinkPayload *temp;
 
     if (arg0 == 0) {
         return 0;
     }
-    temp = func_15167A68(0x30, 0, arg2 + 0x30, 1, 0xFF, 1);
+    temp = (ObjectLinkPayload *)func_15167A68(0x30, 0, arg2 + 0x30, 1, 0xFF, 1);
     if (temp == 0) {
         return 0;
     }
-    if (func_151ACB38(arg0, temp + 0x18) == 0) {
+    if (func_151ACB38((u8 *)arg0, &temp->field_0x18) == 0) {
         func_1516979C((struct102 *)temp);
         return 0;
     }
-    *(s32 *)(temp + 0x1C) = (s32)arg0;
-    *(u8 *)(temp + 0x20) = arg0[0x3B];
-    *(s32 *)(temp + 0x24) = (struct127 *)arg0 - D_800CC2D0;
-    *(f32 *)(temp + 0x28) = arg1;
-    *(s32 *)(temp + 0x10) = 1;
-    *(s32 *)(temp + 0x14) = 0;
+    temp->field_0x1C = (s32)arg0;
+    temp->field_0x20 = arg0->unique_id;
+    temp->field_0x24 = arg0 - D_800CC2D0;
+    temp->field_0x28 = arg1;
+    temp->field_0x10 = 1;
+    temp->field_0x14 = 0;
     return (s32)temp;
 }
 
