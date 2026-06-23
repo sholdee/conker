@@ -23,7 +23,16 @@ s32 func_150E32D0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, f32 arg5) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1104D0/func_150E3340.s")
+void func_150E3340(f32 *arg0, s32 *arg1, s32 arg2, s16 arg3) {
+    s32 temp_a0;
+    s32 temp_a1;
+    s32 temp_a2;
+
+    temp_a0 = arg1[0];
+    temp_a1 = arg1[1];
+    temp_a2 = arg1[2];
+    func_150E3020(temp_a0, temp_a1, temp_a2, temp_a0, temp_a1, temp_a2, 0x1A, 10.0f, 0, arg0[0], arg0[1], arg0[2], arg2, arg3);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1104D0/func_150E33CC.s")
 

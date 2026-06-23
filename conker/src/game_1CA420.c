@@ -4,8 +4,9 @@
 
 
 extern void func_15147D64(u8 *arg0, s32 arg1);
-extern void func_1519E3BC(void *arg0, s16 arg1, u8 arg2, u8 arg3);
+extern void func_1519E3BC(void *arg0, s16 arg1, u8 arg2, s32 arg3);
 extern s32 func_1519D030(void *arg0, s32 arg1, s16 arg2, u8 arg3, u8 arg4, s32 arg5);
+extern void func_1519E688(void);
 extern s32 func_1514ED3C(s32 arg0, s32 arg1, s32 *arg2);
 extern s32 func_1514EC1C(s32 arg0, s32 arg1, s16 arg2);
 extern s32 D_800E0920;
@@ -238,7 +239,12 @@ s32 func_1519D030(void *arg0, s32 arg1, s16 arg2, u8 arg3, u8 arg4, s32 arg5) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E304.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519E3BC.s")
+void func_1519E3BC(void *arg0, s16 arg1, u8 arg2, s32 arg3) {
+    func_1519E688();
+    func_1519D030(arg0, 3, 0x12C, 0, arg2, arg3);
+    func_1519D030(arg0, 4, 0x12C, 0, arg2, arg3);
+    func_151491F4(arg1, 6, -1, 1, 3, 0, arg2, arg3);
+}
 
 void func_1519E464(Arg1519E464 *arg0) {
     Sub1519E464 *sub;

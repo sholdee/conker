@@ -38,6 +38,8 @@ typedef struct {
 } Payload150D8B88;
 
 extern f32 D_800A0B48;
+extern f32 D_800A0B4C;
+extern f32 D_800A0B50;
 extern s32 func_151EF610(void);
 extern void func_1000D96C(s32, s32, s32);
 extern s32 func_10010F88(s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
@@ -114,7 +116,15 @@ void func_150D8B88(f32 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150D8D84.s")
+void func_150D8D84(struct17 *arg0, struct17 *arg1, f32 arg2) {
+    struct17 sp4;
+
+    sp4 = *arg1;
+    arg1->unk4 += D_800A0B4C * arg2;
+    arg0->unk0 += sp4.unk0 * arg2;
+    arg0->unk4 += (sp4.unk4 * arg2) + ((D_800A0B50 * arg2) * arg2);
+    arg0->unk8 += sp4.unk8 * arg2;
+}
 
 typedef struct {
     char pad0[0x1C];

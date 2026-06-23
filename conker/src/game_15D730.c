@@ -188,7 +188,12 @@ s32 func_151317C8(s32 *a0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15131814.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15131828.s")
+void func_15131828(u8 *arg0, f32 *arg1, u8 *arg2, u8 *arg3) {
+    *(f32 *)(arg0 + 0x4C) = arg1[0] * func_151423D8((u8)(arg2[0] - 0x40));
+    *(f32 *)(arg0 + 0x54) = arg1[1] * func_151423D8((u8)(arg2[1] - 0x40));
+    arg2[0] = arg3[0] * D_800BE9E4 + arg2[0];
+    arg2[1] = arg3[1] * D_800BE9E4 + arg2[1];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_151318E8.s")
 

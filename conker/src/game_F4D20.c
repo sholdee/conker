@@ -90,4 +90,18 @@ void func_150C7968(GameObj150C7968 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F4D20/func_150C7C90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F4D20/func_150C7D7C.s")
+typedef struct {
+    u8 pad00[0x10];
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+} GameObj150C7D7C;
+
+void func_150C7D7C(GameObj150C7D7C *arg0) {
+    struct127 *temp_v0;
+
+    temp_v0 = func_15083E90(0xC);
+    arg0->unk10 = (s16)(s32)(temp_v0->x_position - 30.0f);
+    arg0->unk12 = (s16)(s32)(temp_v0->y_position + 50.0f);
+    arg0->unk14 = (s16)(s32)(temp_v0->z_position + 30.0f);
+}

@@ -3,6 +3,8 @@
 #include "variables.h"
 
 extern f32 D_800A1970;
+extern f32 D_800A1980;
+extern f32 D_800A1984;
 extern f32 D_800A1950[];
 
 s32 func_1509BE40();
@@ -130,7 +132,17 @@ void func_150F33F8(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11FF10/func_150F34A0.s")
+f32 func_150F34A0(s32 arg0, f32 arg1) {
+    f32 var_f2;
+
+    if (arg1 < -5.0f) {
+        var_f2 = (arg1 * D_800A1980) + D_800A1984;
+    } else {
+        var_f2 = 0.75f;
+    }
+
+    return var_f2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11FF10/func_150F34F4.s")
 

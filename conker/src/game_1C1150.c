@@ -2,6 +2,18 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct {
+    /* 0x0 */ u8 unk0;
+    /* 0x1 */ u8 unk1;
+    /* 0x2 */ s16 unk2;
+    /* 0x4 */ u8 unk4;
+    /* 0x5 */ u8 unk5;
+    /* 0x6 */ s8 unk6;
+    /* 0x7 */ u8 unk7;
+} Struct15195738Small;
+
+extern void func_151D8868(void *arg0, s32 arg1, s32 arg2, s32 arg3);
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15193CA0.s")
 
@@ -168,4 +180,13 @@ void func_15195698(struct127 *arg0, struct127 *arg1, s32 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C1150/func_15195738.s")
+void func_15195738(s32 arg0, s32 arg1, s32 arg2) {
+    Struct15195738Small sp18;
+
+    sp18.unk0 = 1;
+    sp18.unk2 = (func_150ADA20() % 0xBU) + 0x14;
+    sp18.unk4 = 8;
+    sp18.unk6 = -1;
+    sp18.unk5 = 1;
+    func_151D8868(&sp18, 0, 0xFF, 0);
+}
