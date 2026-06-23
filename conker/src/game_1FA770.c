@@ -12,6 +12,16 @@ extern f32 func_15144AA8(s32);
 extern struct17 *func_15144B34(s32);
 extern s32 func_15046C80(f32 *, s32, f32, f32 *);
 
+typedef struct {
+    char pad_0x0[0x48];
+    s32 field_0x48;
+} Func151CE4DCTemp;
+
+typedef struct {
+    char pad_0x0[0x98];
+    s32 field_0x98;
+} Func151CE4DCArg0;
+
 
 struct260 *func_151CD2C0(void *arg0, u8 arg1, s32 arg2) {
     struct260 *temp_v0;
@@ -126,14 +136,14 @@ void func_151CE49C(s32 arg0) {
 
 extern void func_15147928(s32);
 
-void func_151CE4DC(s32 arg0) {
+void func_151CE4DC(Func151CE4DCArg0 *arg0) {
     s32 sp1C;
-    s32 temp;
+    Func151CE4DCTemp *temp;
 
-    temp = *(s32 *)(arg0 + 0x98);
-    sp1C = *(s32 *)(temp + 0x48);
+    temp = (Func151CE4DCTemp *)arg0->field_0x98;
+    sp1C = temp->field_0x48;
     func_151494E0((s32)&sp1C, 0x23);
-    func_15147928(arg0);
+    func_15147928((s32)arg0);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CE51C.s")

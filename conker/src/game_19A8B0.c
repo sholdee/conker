@@ -101,6 +101,11 @@ struct Obj1516D99C {
     u8 unk48;
 };
 
+typedef struct {
+    char pad_0[0x18];
+    s16 field_0x18;
+} Obj1516F984;
+
 extern struct Obj1516D99C *func_15167A68(s32, s32, s32, s32, s32, s32);
 extern s32 func_150448D0(s32, s32, s32, s32, s32, s32, s32, s32, s32);
 
@@ -407,12 +412,12 @@ void func_1516F94C(s32 arg0, s32 arg1) {
     func_1516F91C(arg0, arg1);
 }
 
-void func_1516F984(s32 arg0, s32 arg1) {
+void func_1516F984(Obj1516F984 *arg0, s32 arg1) {
     s32 temp;
-    func_1516F94C(arg0, arg1);
-    temp = *(s16*)(arg0 + 0x18);
+    func_1516F94C((s32)arg0, arg1);
+    temp = arg0->field_0x18;
     temp = temp * arg1;
-    *(s16*)(arg0 + 0x18) = temp >> 8;
+    arg0->field_0x18 = temp >> 8;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516F9C4.s")

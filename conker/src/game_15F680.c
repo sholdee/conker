@@ -11,6 +11,13 @@ extern u8 D_800C3E90;
 extern s32 (*D_8008998C[])(s32);
 
 typedef struct {
+    u8 pad_0[0x60];
+    s32 field_0x60;
+    u8 pad_1[0x4];
+    u8 field_0x68;
+} Func151323ACArg0;
+
+typedef struct {
     u8 pad0[0x60];
     u32 flags;
     u8 pad64[0x8];
@@ -36,11 +43,11 @@ void func_15169260(Data15133E3C *, s32, s32, u8);
 
 extern void (*D_800899B0[])(s32);
 
-void func_151323AC(s32 arg0) {
+void func_151323AC(Func151323ACArg0 *arg0) {
     s32 idx;
 
-    idx = (*(s32 *)(arg0 + 0x60) & 0x100) ? *(u8 *)(arg0 + 0x68) : 0;
-    D_800899B0[idx](arg0);
+    idx = (arg0->field_0x60 & 0x100) ? arg0->field_0x68 : 0;
+    D_800899B0[idx]((s32)arg0);
 }
 
 extern void (*D_800899D4[])(s32);
