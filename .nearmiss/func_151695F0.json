@@ -1,0 +1,1 @@
+{"func": "func_151695F0", "file": "game_1944C0", "score": 0, "c": "void func_151695F0(s32 arg0, u8 arg1) {\n    struct {\n        s32 unk0;\n        u8 unk4;\n    } sp18;\n\n    sp18.unk0 = arg0;\n    sp18.unk4 = *(u8 *)(arg0 + 0x3B);\n    func_15169040((s32)&sp18, arg1);\n}"}

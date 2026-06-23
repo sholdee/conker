@@ -1,0 +1,1 @@
+{"func": "func_15194B94", "file": "game_1C1150", "score": 0, "c": "void func_15194B94(s32 arg0, struct127* arg1, s32 arg2) {\n    struct127* temp;\n\n    temp = arg1;\n    if (temp->id == 0x53) {\n        func_151942B0(arg0, (s32)temp, arg2);\n        return;\n    }\n    func_15194B1C(temp);\n    func_151949F4(1, arg0, temp);\n}"}

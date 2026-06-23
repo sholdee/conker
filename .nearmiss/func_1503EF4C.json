@@ -1,6 +1,6 @@
 {
   "func": "func_1503EF4C",
   "file": "game_6B320",
-  "score": 30,
-  "c": "struct e1f4b_s { s32 unk0; s32 unk4; };\nextern struct e1f4b_s *D_8008446C[];\n\ns32 func_1503EF4C(s32 arg0, s32 arg1, s32 arg2) {\n    struct e1f4b_s *row = D_8008446C[arg0];\n    struct e1f4b_s *p = &row[arg1];\n    if (p->unk0 != 0) {\n        if ((p->unk0 & D_800C6664[arg2].f) == 0) {\n            goto ret0;\n        }\n    }\n    if (p->unk4 != 0) {\n        if ((p->unk4 & D_800C6668[arg2].f) == 0) {\n            goto ret0;\n        }\n    }\n    return 1;\nret0:\n    return 0;\n}\n"
+  "score": 20,
+  "c": "struct e1f4b_s { u32 unk0; u32 unk4; };\nextern struct e1f4b_s *D_8008446C[];\n\ns32 func_1503EF4C(s32 arg0, s32 arg1, s32 arg2) {\n    struct e1f4b_s *row = D_8008446C[arg0];\n    struct e1f4b_s *p = (struct e1f4b_s *)((char *)row + (arg1 * 8));\n\n    if (p->unk0 != 0) {\n        if ((p->unk0 & D_800C6664[arg2].f) == 0) {\n            goto ret0;\n        }\n    }\n    if (p->unk4 != 0) {\n        if ((p->unk4 & D_800C6668[arg2].f) == 0) {\n            goto ret0;\n        }\n    }\n    return 1;\nret0:\n    return 0;\n}\n"
 }

@@ -1,0 +1,1 @@
+{"func": "func_151E5FAC", "file": "game_20AE20", "score": 0, "c": "s8 func_151E5FAC(void) {\n    if (D_800E0BEB != 0) {\n        if (D_8008FD8C >= 5) {\n            return D_8008FD90;\n        }\n        return D_8008FD8C;\n    }\n    return D_8008FD90;\n}"}

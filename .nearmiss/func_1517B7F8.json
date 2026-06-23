@@ -1,6 +1,6 @@
 {
   "func": "func_1517B7F8",
-  "file": "game_1A89B0",
-  "score": 40,
-  "c": "s32 func_1517B7F8(s16 *a0, s16 *a1, s32 *a2, s32 a3) {\n    s32 v0 = *a2;\n    s32 base;\n\n    if (v0 >= 0xD00) {\n        return 1;\n    }\n\n    if (v0 >= 0x100) {\n        base = a0[1];\n        a1[1] = base + (0x190000 - (v0 - 0x600) * (v0 - 0x600)) / 0x1E00;\n        v0 = *a2;\n        if (v0 >= 0x200) {\n            if (v0 >= 0xA01) {\n                *a2 = v0 - 0x800;\n            } else {\n                *a2 = 0x200;\n            }\n        }\n    } else {\n        a1[1] = a0[1];\n    }\n\n    a1[0] = a0[0];\n    a1[2] = a0[2];\n    return 0;\n}"
+  "file": "/home/ethan/conker/conker/src/game_1A89B0.c",
+  "score": 35,
+  "c": "s32 func_1517B7F8(s16 *a0, s16 *a1, s32 *a2, s32 a3) {\n    s32 v0 = *a2;\n    s16 base;\n\n    if (v0 >= 0xD00) {\n        return 1;\n    }\n\n    if (v0 >= 0x100) {\n        base = a0[1];\n        a1[1] = base + (0x190000 - (v0 - 0x600) * (v0 - 0x600)) / 0x1E00;\n        v0 = *a2;\n        if (v0 >= 0x200) {\n            if (v0 >= 0xA01) {\n                *a2 = v0 - 0x800;\n            } else {\n                *a2 = 0x200;\n            }\n        }\n    } else {\n        a1[1] = a0[1];\n    }\n\n    a1[0] = a0[0];\n    a1[2] = a0[2];\n    return 0;\n}\n"
 }

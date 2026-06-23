@@ -1,0 +1,1 @@
+{"func": "func_15144B68", "file": "game_16EE20", "score": 60, "c": "f32 func_15144B68(f32 arg0) {\n    f32 v = arg0;\n\n    if (D_800A56A4 < v) {\n        do {\n            v -= D_800A56A4;\n        } while (D_800A56A4 < v);\n    }\n    if (v < 0.0f) {\n        do {\n            v += D_800A56A4;\n        } while (v < 0.0f);\n    }\n    return v;\n}"}

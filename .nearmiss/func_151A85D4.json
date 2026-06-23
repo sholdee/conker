@@ -1,0 +1,1 @@
+{"func": "func_151A85D4", "file": "game_1D4E00", "score": 26, "c": "void func_151A85D4(u8 *arg0) {\n    void (*temp)(void);\n    u8 *save;\n\n    temp = D_8008F958[arg0[0x5C]];\n    if (temp != NULL) {\n        save = arg0;\n        temp();\n        arg0 = save;\n    }\n    func_151A8560(arg0);\n    func_15169824((struct102 *)arg0);\n}"}

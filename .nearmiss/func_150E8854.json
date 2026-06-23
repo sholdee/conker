@@ -1,0 +1,1 @@
+{"func": "func_150E8854", "file": "game_113D60", "score": 0, "c": "void func_150E8854(void) {\n    struct260 *temp_v0;\n    f32 sp30;\n\n    sp30 = 10.0f;\n\n    temp_v0 = func_15149130(0x12C, -1, 0x35, -1, 0, 0, (struct37 *)0x4, 0xFF, 1);\n    if (temp_v0 != NULL) {\n        memcpy((void *)((s32)temp_v0 + 0x28), &sp30, 4);\n    }\n}"}

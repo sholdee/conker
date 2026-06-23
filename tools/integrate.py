@@ -15,11 +15,24 @@ Robustness vs the prior agent:
 - On mismatch, bisect: revert files one at a time until the ROM matches, so a
   single bad function never blocks the good ones.
 """
-import os, subprocess, sys
+import os, subprocess, sys, json, time
 
 REPO = os.environ.get("CONKER_REPO", os.path.expanduser("~/conker"))
 INNER_SHA = "842e3d348e3c8ae0039e2ab367ad492f9b5266d8"
 OUTER_SHA = "4cbadd3c4e0729dec46af64ad018050eada4f47a"
+
+def write_rom_status(ok, commit=""):
+    try:
+        json.dump({"ok": ok, "sha1": OUTER_SHA, "at": int(time.time()), "commit": commit},
+                  open("/tmp/rom_status.json", "w"))
+    except Exception:
+        pass
+
+def cycle_tag():
+    try:
+        return " [cycle %s]" % open(os.path.join(REPO, ".cycle")).read().strip()
+    except Exception:
+        return ""
 
 def sh(cmd):
     return subprocess.run(cmd, shell=True, cwd=REPO, capture_output=True, text=True)
@@ -67,6 +80,7 @@ def main():
         if not rom_matches():
             print("INTEGRATE: ROM still broken after reverting all claims — ABORT, no commit")
             sh("git checkout conker/src/")
+            write_rom_status(False)
             return
         if bad:
             print(f"INTEGRATE: reverted broken/unverifiable: {', '.join(bad)}")
@@ -78,10 +92,11 @@ def main():
     sh(f"git add {files} tools/ido_cookbook.md")
     if sh("git diff --cached --quiet").returncode == 0:
         print("INTEGRATE: nothing staged (already committed?); no commit"); return
-    msg = (f"game: match {len(good)} functions via orchestrator\\n\\n{funcs}\\n\\n"
+    msg = (f"game: match {len(good)} functions via orchestrator{cycle_tag()}\\n\\n{funcs}\\n\\n"
            "asm-differ score 0; force-clean full-ROM sha1 verifies.\\n\\n"
            "Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>")
     r = sh(f'git commit -q -m "$(printf \'{msg}\')"')
+    write_rom_status(True, sh("git rev-parse --short HEAD").stdout.strip())
     print(f"INTEGRATE: committed {len(good)} — {funcs}")
 
 if __name__ == "__main__":

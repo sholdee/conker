@@ -1,6 +1,1 @@
-{
-  "func": "func_151BD750",
-  "file": "game_1E73B0",
-  "score": 205,
-  "c": "extern f32 D_800AA860;\nextern f32 D_800AA864;\nf32 func_151BD750(s16 *arg0) {\n    s16 temp = arg0[0x40];\n    f32 ret;\n    ret = (f32) temp / 0.5f * D_800AA860 + D_800AA864;\n    arg0[0x40] = temp + D_800BE9E4;\n    return ret;\n}\n"
-}
+{"func": "func_151BD750", "file": "game_1E73B0", "score": 0, "c": "f32 func_151BD750(s16 *arg0) {\n    s16 temp;\n    f32 ret;\n\n    temp = arg0[0x40];\n    ret = (1.0f + 1.0f) * (f32) temp * D_800AA860 + D_800AA864;\n    arg0[0x40] = temp + D_800BE9E4;\n    return ret;\n}"}

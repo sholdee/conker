@@ -65,7 +65,10 @@ def progress():
         out = {}
         for seg in ["init", "game", "debugger"]:
             funcs = {f: l for f, (sg, l) in sizes.items() if sg == seg}
-            tf = len(funcs); cf = sum(1 for f in funcs if f not in st)
+            # COUNT excludes gcc local labels (.L… = branch targets inside functions, not functions);
+            # BYTES include them (a label's length is real code bytes, part of its parent function).
+            real = {f for f in funcs if not f.startswith(".L")}
+            tf = len(real); cf = sum(1 for f in real if f not in st)
             tb = sum(funcs.values()); cb = sum(l for f, l in funcs.items() if f not in st)
             out[seg] = {"cf": cf, "tf": tf, "cb": cb, "tb": tb,
                         "fpct": round(cf / tf * 100, 1) if tf else 0,
@@ -135,8 +138,10 @@ def recent_commits():
             parts = l.split("|", 2)
             if len(parts) == 3 and "match" in parts[2]:
                 m = re.search(r'match (\d+)', parts[2])
+                cyc = re.search(r'\[cycle (\d+)\]', parts[2])
                 res.append({"hash": parts[0], "when": parts[1],
-                            "n": int(m.group(1)) if m else None, "msg": parts[2][:70]})
+                            "n": int(m.group(1)) if m else None,
+                            "cycle": int(cyc.group(1)) if cyc else None})
         return res
     return cached("commits", 10, build)
 
@@ -168,16 +173,61 @@ def permuter():
         return {"seeded": seeded, "cracked": cracked, "backlog": seeded - cracked, "live": live}
     return cached("permuter", 15, build)
 
+def cycle_status():
+    try:
+        return json.load(open("/tmp/cycle_status.json"))
+    except Exception:
+        return {}
+
+def rom_status():
+    try:
+        d = json.load(open("/tmp/rom_status.json"))
+        d["age"] = int(time.time() - os.path.getmtime("/tmp/rom_status.json"))
+        return d
+    except Exception:
+        return {}
+
+def tree_status():
+    def build():
+        try:
+            out = subprocess.run(["git", "-C", REPO, "status", "--porcelain", "conker/src"],
+                                 capture_output=True, text=True, timeout=5).stdout
+            return {"inflight": len([l for l in out.splitlines() if l.strip()])}
+        except Exception:
+            return {"inflight": None}
+    return cached("tree", 4, build)
+
+def cycle_matched():
+    cyc = cycle_status().get("cycle")
+    if not cyc:
+        return 0
+    def build():
+        try:
+            out = subprocess.run(["git", "-C", REPO, "log", f"--grep=\\[cycle {cyc}\\]",
+                                  "--format=%s", "-300"], capture_output=True, text=True, timeout=5).stdout
+            return sum(int(m.group(1)) for l in out.splitlines()
+                       for m in [re.search(r'match (\d+)', l)] if m)
+        except Exception:
+            return 0
+    return cached(f"cyc{cyc}", 8, build)
+
 def collect():
     return {"updated": time.strftime("%H:%M:%S"), "progress": progress(), "active": active(),
-            "commits": recent_commits(), "nearmiss": nearmiss(), "permuter": permuter()}
+            "commits": recent_commits(), "nearmiss": nearmiss(), "permuter": permuter(),
+            "cycle": cycle_status(), "cycle_matched": cycle_matched(),
+            "rom": rom_status(), "tree": tree_status()}
 
-HTML = r"""<!doctype html><html><head><meta charset=utf-8><title>Conker decomp</title>
+HTML = r"""<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Conker decomp</title>
 <style>
 :root{color-scheme:dark}
 body{background:#0d1117;color:#c9d1d9;font:13px/1.5 ui-monospace,Menlo,monospace;margin:0;padding:16px}
-h1{font-size:16px;margin:0 0 4px}.sub{color:#8b949e;font-size:11px;margin-bottom:14px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:900px){.grid{grid-template-columns:1fr}}
+h1{font-size:16px;margin:0 0 6px}.sub{color:#8b949e;font-size:11px;margin-bottom:14px}
+.statusbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px;font-size:12px}
+.badge{padding:3px 9px;border-radius:5px;font-weight:bold;white-space:nowrap}
+.badge.ok{background:#23863633;color:#3fb950;border:1px solid #2386364d}
+.badge.bad{background:#6e253055;color:#f85149;border:1px solid #da3633}
+.badge.neutral{background:#21262d;color:#adbac7;border:1px solid #30363d}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:900px){.grid{grid-template-columns:1fr}}@media(max-width:560px){body{padding:10px}h1{font-size:14px}.big{font-size:18px}.card{padding:10px}.kv{gap:10px}.worker{gap:6px}.fn span{font-size:10px}}
 .card{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px}
 .card h2{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#8b949e;margin:0 0 10px}
 .bar{height:18px;background:#21262d;border-radius:4px;overflow:hidden;margin:3px 0 8px}
@@ -187,18 +237,19 @@ h1{font-size:16px;margin:0 0 4px}.sub{color:#8b949e;font-size:11px;margin-bottom
 .worker{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #21262d}
 .sc{min-width:42px;text-align:center;font-weight:bold;border-radius:4px;padding:2px 0}
 .sc0{background:#238636;color:#fff}.scl{background:#9e6a03;color:#fff}.sch{background:#6e2530;color:#fff}.scn{background:#30363d;color:#8b949e}
-.fn{flex:1}.fn b{color:#e6edf3}.fn span{color:#6e7681;font-size:11px}
+.fn{flex:1;min-width:0;overflow:hidden}.fn b{color:#e6edf3}.fn span{color:#6e7681;font-size:11px}
 .tag{font-size:10px;padding:1px 6px;border-radius:10px}
 .tag.working{background:#1f6feb33;color:#58a6ff}.tag.matched{background:#23863633;color:#3fb950}.tag.idle{background:#30363d;color:#8b949e}
-.nm{display:flex;gap:6px;align-items:flex-end;height:60px;margin-top:6px}
-.nm>div{flex:1;text-align:center}.nm .b{background:#388bfd;border-radius:3px 3px 0 0;min-height:2px}
-.nm small{display:block;color:#8b949e;font-size:10px;margin-top:3px}
+.nm{display:flex;gap:6px;align-items:flex-end;min-height:96px;margin-top:12px}
+.nm>div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;text-align:center;min-width:0}
+.nm .b{background:#388bfd;border-radius:3px 3px 0 0;min-height:2px;max-height:56px}
+.nm small{display:block;color:#8b949e;font-size:10px;margin-top:4px;line-height:1.2}
 .cm{padding:3px 0;border-bottom:1px solid #21262d;font-size:12px}.cm b{color:#3fb950}.cm span{color:#6e7681}
 .big{font-size:22px;font-weight:bold;color:#e6edf3}.kv{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px}
 .kv div{color:#8b949e;font-size:11px}.kv b{color:#c9d1d9;font-size:14px;display:block}
 </style></head><body>
 <h1>Conker's Bad Fur Day — decomp pipeline</h1>
-<div class=sub id=upd>connecting…</div>
+<div class=statusbar id=statusbar>connecting…</div>
 <div class=grid>
   <div class=card style="grid-column:1/-1">
     <h2>Progress (README method)</h2>
@@ -212,24 +263,31 @@ h1{font-size:16px;margin:0 0 4px}.sub{color:#8b949e;font-size:11px;margin-bottom
 <script>
 const $=id=>document.getElementById(id);
 function scClass(s){return s===null?'scn':s===0?'sc0':s<=15?'scl':'sch'}
+function fmtAge(s){return s==null?'':s<60?s+'s ago':s<3600?Math.floor(s/60)+'m ago':Math.floor(s/3600)+'h ago'}
+function statusbar(d){const r=d.rom||{},c=d.cycle||{},t=d.tree||{};
+ const rc=r.ok===true?'ok':r.ok===false?'bad':'neutral';
+ const rt=r.sha1?`ROM ${r.ok?'✓':'✗'} ${r.sha1.slice(0,8)}${r.age!=null?' · '+fmtAge(r.age):''}`:'ROM —';
+ const ct=c.cycle?`Cycle ${c.cycle} · round ${c.round}/${c.rounds} · ${d.cycle_matched||0} this cycle`:'idle';
+ const tt=t.inflight==null?'':t.inflight>0?`${t.inflight} in-flight`:'tree clean';
+ return `<span class="badge ${rc}">${rt}</span><span class="badge neutral">${ct}</span>${tt?`<span class="badge neutral">${tt}</span>`:''}<span style=color:#6e7681>updated ${d.updated}</span>`;}
 function pbar(o,seg){return `<div style="font-size:11px;margin-bottom:2px">${seg}</div>
  <div class=bar><i style="width:${o.fpct}%"></i></div><div class=prow><span>${o.cf}/${o.tf} funcs</span><span>${o.fpct}%</span></div>
  <div class="bar byte"><i style="width:${o.bpct}%"></i></div><div class=prow><span>${o.cb.toLocaleString()}/${o.tb.toLocaleString()} bytes</span><span>${o.bpct}%</span></div>`}
 async function tick(){
- let d; try{d=await (await fetch('/state.json')).json()}catch(e){$('upd').textContent='offline';return}
- $('upd').textContent='updated '+d.updated+' · auto-refresh 3s';
+ let d; try{d=await (await fetch('/state.json')).json()}catch(e){$('statusbar').textContent='offline';return}
+ $('statusbar').innerHTML=statusbar(d);
  const p=d.progress;
  $('prog').innerHTML=`<div class=big>${p.overall.fpct}% funcs · ${p.overall.bpct}% bytes</div>
    <div style="margin:8px 0">${pbar(p.game,'game')}</div>
    <div class=prow style="margin-top:8px"><span>init ${p.init.fpct}%/${p.init.bpct}%b</span><span>debugger ${p.debugger.fpct}%/${p.debugger.bpct}%b</span><span>overall ${p.overall.cf}/${p.overall.tf}</span></div>`;
  const w=d.active||[];$('acount').textContent=w.length?`(${w.filter(x=>x.status=='working').length} working)`:'';
  $('workers').innerHTML=w.length?w.map(x=>`<div class=worker>
-   <div class="sc ${scClass(x.latest)}" title="best ${x.best}">${x.latest===null?'—':x.latest}</div>
-   <div class=fn><b>${x.func}</b> <span>${x.file} · ${x.instrs?x.instrs+'i':'?'} · ${x.iters}it${x.best===0&&x.latest>0?' · captured, codex over-running':''}</span></div>
+   <div class="sc ${scClass(x.best)}" title="latest ${x.latest}">${x.best===null?'—':x.best}</div>
+   <div class=fn><b>${x.func}</b> <span>${x.file} · ${x.instrs?x.instrs+'i':'?'} · ${x.iters}it${x.latest!=null&&x.latest!==x.best?` · now ${x.latest}`:''}</span></div>
    <div class="tag ${x.status}">${x.status}</div></div>`).join(''):'idle — no active run';
- $('commits').innerHTML=(d.commits||[]).map(c=>`<div class=cm><b>+${c.n??'?'}</b> <span>${c.when}</span> ${c.hash}</div>`).join('')||'—';
+ $('commits').innerHTML=(d.commits||[]).map(c=>`<div class=cm><b>+${c.n??'?'}</b> ${c.cycle?`<span style="color:#388bfd">c${c.cycle}</span>`:''} <span>${c.when}</span> ${c.hash}</div>`).join('')||'—';
  const nm=d.nearmiss.bands,mx=Math.max(1,...Object.values(nm));
- $('nm').innerHTML=Object.entries(nm).map(([k,v])=>`<div><div class=b style="height:${Math.round(v/mx*48)}px"></div><small>${v}<br>${k}</small></div>`).join('')+`<div style="align-self:center;color:#8b949e">Σ${d.nearmiss.total}</div>`;
+ $('nm').innerHTML=Object.entries(nm).map(([k,v])=>`<div><div class=b style="height:${Math.round(v/mx*56)}px"></div><small>${v}<br>${k}</small></div>`).join('')+`<div style="align-self:center;color:#8b949e">Σ${d.nearmiss.total}</div>`;
  const pm=d.permuter;$('perm').innerHTML=`<div><b>${pm.cracked}</b>cracked</div><div><b>${pm.backlog}</b>backlog</div><div><b>${pm.seeded}</b>seeded</div><div><b>${pm.live}</b>live procs</div>`;
 }
 tick();setInterval(tick,3000);

@@ -1,6 +1,6 @@
 {
   "func": "func_151AAA4C",
-  "file": "game_1D6E80",
-  "score": 20,
-  "c": "struct s_151AAA4C {\n    char pad0[0x88];\n    s32 unk88;\n    s32 unk8C;\n    f32 unk90;\n    f32 unk94;\n};\n\nextern s32 D_800BE9E4;\n\nstruct s_151AAA4C_sub {\n    s32 unk0;\n    s32 unk4;\n    s32 unk8;\n};\n\nf32 func_151AAA4C(struct s_151AAA4C *volatile arg0) {\n    f32 ret;\n    struct s_151AAA4C *p;\n    s32 v;\n\n    ret = func_151423D8((u8)(((u32)arg0->unk88 >> 16) - 0x40)) * (p = arg0, p->unk94) + p->unk90;\n    v = p->unk88 + p->unk8C * D_800BE9E4;\n    p = (struct s_151AAA4C *)((u8 *)p + 0x80);\n    ((struct s_151AAA4C_sub *)p)->unk8 = v;\n    return ret;\n}\n"
+  "file": "conker/src/game_1D6E80.c",
+  "score": 10,
+  "c": "struct s_151AAA4C {\n    char pad0[0x88];\n    s32 unk88;\n    s32 unk8C;\n    f32 unk90;\n    f32 unk94;\n};\n\nstruct s_151AAA4C_sub {\n    s32 unk0;\n    s32 unk4;\n    s32 unk8;\n};\n\nf32 func_151AAA4C(struct s_151AAA4C *volatile arg0) {\n    f32 ret;\n    struct s_151AAA4C *p;\n\n    ret = func_151423D8((u8)(((u32)arg0->unk88 >> 16) - 0x40));\n    p = arg0;\n    ret = ret * p->unk94 + p->unk90;\n    p = (struct s_151AAA4C *)((u8 *)p + 0x80);\n    ((struct s_151AAA4C_sub *)p)->unk8 = ((struct s_151AAA4C *)((u8 *)p - 0x80))->unk88\n        + ((struct s_151AAA4C *)((u8 *)p - 0x80))->unk8C * D_800BE9E4;\n    return ret;\n}\n\n"
 }

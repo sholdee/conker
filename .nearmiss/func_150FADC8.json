@@ -1,1 +1,1 @@
-{"func": "func_150FADC8", "file": "game_126F60", "score": 310, "c": "s32 func_150FADC8(s32 *arg0, s32 arg1, u8 arg2) {\n    if (arg2 == 0x53) {\n        arg0[0x16] |= 0x2;\n        return arg2;\n    }\n    if (arg2 == 0x54) {\n        arg0[0x16] &= ~0x2;\n    }\n    return arg2;\n}\n"}
+{"func": "func_150FADC8", "file": "game_126F60", "score": 0, "c": "void func_150FADC8(s32 *arg0, s32 arg1, u8 arg2) {\n    if (arg2 == 0x53) {\n        arg0[0x16] |= 2;\n    } else if (arg2 == 0x54) {\n        arg0[0x16] &= ~2;\n    }\n}"}

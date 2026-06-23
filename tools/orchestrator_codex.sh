@@ -8,6 +8,11 @@ REPO="$HOME/conker"
 CHUNK="${1:-8}"; MAXI="${2:-90}"; ROUNDS="${3:-8}"
 cd "$REPO"; . .venv/bin/activate
 
+# cycle counter (one per run) + status file the dashboard reads
+CYCLE=$(( $(cat "$REPO/.cycle" 2>/dev/null || echo 0) + 1 )); echo "$CYCLE" > "$REPO/.cycle"
+status() { printf '{"cycle":%s,"round":%s,"rounds":%s}\n' "$CYCLE" "$1" "$ROUNDS" > /tmp/cycle_status.json; }
+status 0
+
 match_prompt() {  # $1=func  $2=file  (heredoc expands the paths; no $ / backticks remain)
   cat <<EOF
 You are matching ONE function in the mkst/conker N64 decompilation (IDO 5.3, -O2 -g3) to byte-identical assembly, using a real compile+diff loop.
@@ -51,6 +56,7 @@ EOF
 }
 
 for r in $(seq 1 "$ROUNDS"); do
+  status "$r"
   echo "=== round $r: SELECT ==="
   CONKER_REPO="$REPO" python3 tools/similar_chunk.py "$CHUNK" "$MAXI" \
     | python3 -c "import json,sys

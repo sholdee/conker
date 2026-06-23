@@ -1,6 +1,1 @@
-{
-  "func": "func_1507F454",
-  "file": "game_AC030",
-  "score": 60,
-  "c": "extern u8 *D_80086BA0[];\n\ns32 func_1507F454(void) {\n    u8 *p = (u8 *)D_800D154C->unk31C;\n    u8 v0 = p[0x5C];\n\n    p += 0x58;\n    if (v0 == 0) {\n        return 1;\n    }\n    if (D_80086BA0[v0][(p[5] = p[5] + 1) & 0xFF] == 0) {\n        p[4] = 0;\n        p[5] = 0;\n        return 1;\n    }\n    return 0;\n}\n"
-}
+{"func": "func_1507F454", "file": "game_AC030", "score": 45, "c": "s32 func_1507F454(void) {\n    u8 *p = (u8 *)D_800D154C->unk31C;\n    u8 v0 = p[0x5C];\n\n    p += 0x58;\n    if (v0 == 0) {\n        return 1;\n    }\n    {\n        u8 value;\n\n        value = D_80086BA0[v0][++p[5]];\n        if (value == 0) {\n            p[4] = 0;\n            p[5] = 0;\n            return 1;\n        }\n    }\n    return 0;\n}"}
