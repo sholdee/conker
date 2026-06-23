@@ -45,10 +45,11 @@ void func_15101238(Field124Owner *arg0) {
 
 void func_151617E4(struct210 *arg0);
 
-void func_15101260(struct210 *arg0) {
-    s32 temp = *(s32 *)((s32)arg0 + 0x18) + 0x110;
-    *(s32 *)(temp + 0x2C) = 0;
-    func_151617E4(arg0);
+void func_15101260(Field124Owner *arg0) {
+    Field124ChildBlock *temp = (Field124ChildBlock *)(arg0->field_0x18 + 0x110);
+
+    temp->field_0x2C = 0;
+    func_151617E4((struct210 *)arg0);
 }
 
 void func_1513173C(struct210 *);
