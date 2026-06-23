@@ -12,6 +12,14 @@ extern f32 sqrtf(f32);
 extern void func_150499A0(f32 arg0[4][4], f32 arg1[4][4]);
 extern void func_150A7A48(f32 arg0[4][4], f32 arg1[4][4], f32 arg2[4][4]);
 extern void func_1503E5F8();
+extern void func_1503DF0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+
+struct func_1503DE70_s {
+    s32 unk0;
+    s32 unk4;
+};
+
+extern struct func_1503DE70_s *D_8008446C[];
 
 struct func_1503E3C4_s {
     f32 unk0;
@@ -58,7 +66,13 @@ struct func_1503E3C4_mtx {
 };
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503DE70.s")
+void func_1503DE70(struct127 *arg0, s32 arg1, s32 arg2) {
+    if (arg2 != -1) {
+        func_1503DF0C(arg0 - D_800CC2D0, arg1, D_8008446C[arg1][arg2].unk0, D_8008446C[arg1][arg2].unk4);
+        return;
+    }
+    func_1503DF0C(arg0 - D_800CC2D0, arg1, -1, -1);
+}
 
 void func_1503DF0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     D_800C6660[arg0].unk4 |= arg2;

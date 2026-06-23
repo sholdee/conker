@@ -4,7 +4,10 @@
 
 extern f32 D_800A9D84;
 extern f32 D_800A9D88;
+extern f32 D_800A9D80;
 extern void func_151D5D60();
+void *func_1513418C(void *, s32, s32, s32);
+void func_1516962C(s32, struct102 *, s32);
 void func_151AE984(f32 *, f32, f32, f32, s32, u8);
 void func_151AEAB4(f32 *, s32, u8);
 void func_15143134(f32 *, f32 *, s32);
@@ -283,7 +286,56 @@ void func_151AE6B0(u8 *arg0)
 }
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE7B0.s")
+void *func_151AE7B0(struct102 *arg0, f32 arg1, s16 arg2, u8 arg3, s32 arg4) {
+    void *result;
+    struct {
+        s32 unk0;
+        s32 unk4;
+        u8 unk8;
+        u8 pad9[3];
+        struct102 *unkC;
+        u8 unk10;
+        u8 pad11[3];
+        f32 unk14;
+        f32 unk18;
+        f32 unk1C;
+        f32 unk20;
+        f32 unk24;
+        s16 unk28;
+        u8 unk2A;
+        u8 unk2B;
+        s8 unk2C;
+        u8 unk2D;
+    } sp1C;
+
+    if (arg0 == 0) {
+        return 0;
+    }
+
+    func_1516962C(0x28, arg0, 0x11);
+    sp1C.unk0 = 0;
+    sp1C.unk4 = 0;
+    sp1C.unk8 = *((u8 *)arg0 + 0x3B);
+    sp1C.unkC = arg0;
+    sp1C.unk10 = 1;
+    sp1C.unk14 = 0.0f;
+    sp1C.unk18 = 0.0f;
+    sp1C.unk1C = 0.0f;
+    sp1C.unk20 = D_800A9D80;
+    sp1C.unk24 = arg1;
+    sp1C.unk2A = 2;
+    if (arg2 != 0) {
+        sp1C.unk28 = arg2;
+        sp1C.unk2A = 6;
+    } else {
+        sp1C.unk28 = 0x12C;
+    }
+    sp1C.unk2B = 6;
+    sp1C.unk2C = -1;
+    sp1C.unk2D = 5;
+    result = func_1513418C(&sp1C, 0, arg3, arg4);
+    return result;
+}
 
 void func_151AE890(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, u8 *arg6) {
     f32 sp2C[3];
@@ -340,7 +392,7 @@ typedef struct {
 extern f32 D_800A9DCC;
 extern f32 D_800A9DD0;
 void func_1516962C(s32, struct102 *, s32);
-void *func_1513418C(struct_AF270 *, s32, u8, s32);
+void *func_1513418C(void *, s32, s32, s32);
 
 void *func_151AF270(struct102 *arg0, s32 arg1, s32 arg2) {
     void *result;

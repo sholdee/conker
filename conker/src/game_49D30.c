@@ -224,6 +224,8 @@ void func_15022190(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 
 extern s16 D_800C3598[];
 extern f32 D_800C35A0;
+extern u8 D_800C3510[];
+extern u8 D_800C3518[][25];
 
 void func_150221E8(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
     D_800C35A0 = arg3;
@@ -236,7 +238,28 @@ void func_150221E8(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15022248.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1502225C.s")
+void func_1502225C(s32 arg0, s32 arg1) {
+    s32 i;
+    s32 count;
+    s32 limit;
+    u8 *count_ptr;
+
+    i = 0;
+    count_ptr = &D_800C3510[arg1];
+    count = *count_ptr;
+    limit = count;
+    if (count > 0) {
+        do {
+            if (arg0 == D_800C3518[arg1][i]) {
+                return;
+            }
+            i++;
+        } while (i < limit);
+    }
+
+    D_800C3518[arg1][count] = arg0;
+    *count_ptr = count + 1;
+}
 
 void func_150222E0(s32 arg0, s32 arg1) {
     struct127 *temp_v0;
