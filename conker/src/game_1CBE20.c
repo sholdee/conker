@@ -3,6 +3,43 @@
 #include "variables.h"
 
 
+struct Vec1519EA78 {
+    /* 0x00 */ s32 unk00;
+    /* 0x04 */ s32 unk04;
+    /* 0x08 */ s32 unk08;
+};
+
+struct Conker1519EA78 {
+    /* 0x00 */ s32 unk00;
+    /* 0x04 */ s32 unk04;
+    /* 0x08 */ struct Vec1519EA78 unk08;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ s16 unk16;
+    /* 0x18 */ s16 unk18;
+    /* 0x1A */ s16 unk1A;
+    /* 0x1C */ f32 unk1C;
+    /* 0x20 */ f32 unk20;
+    /* 0x24 */ f32 unk24;
+    /* 0x28 */ f32 unk28;
+    /* 0x2C */ s16 unk2C;
+    /* 0x2E */ s16 unk2E;
+    /* 0x30 */ f32 unk30;
+    /* 0x34 */ f32 unk34;
+    /* 0x38 */ f32 unk38;
+};
+
+struct Src1519EA78 {
+    /* 0x00 */ struct Vec1519EA78 unk00;
+};
+
+extern f32 D_800A8CC0;
+extern f32 D_800A8CC4;
+extern f32 D_800A8CC8;
+extern f32 D_800A8CCC;
+extern f32 D_800A8CD0;
+
+void func_15152190(struct Conker1519EA78 *arg0, s32 *arg1, f32 *arg2, s32 arg3, f32 arg4, s32 arg5, s32 arg6, s32 arg7);
+
 struct Obj1519E970 {
     char pad0[0x10];
     s32 unk10;
@@ -59,7 +96,31 @@ void func_1519EA04(struct Local1519EA04 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CBE20/func_1519EA78.s")
+void func_1519EA78(struct Src1519EA78 *arg0, u16 arg1, f32 arg2, u8 arg3, s32 arg4) {
+    struct Conker1519EA78 sp34;
+    s32 sp30;
+    f32 sp2C;
+
+    sp34.unk00 = 0xA;
+    sp34.unk04 = 7;
+    sp34.unk08 = arg0->unk00;
+    sp34.unk14 = 0;
+    sp34.unk16 = 0xFF;
+    sp34.unk18 = -0x35;
+    sp34.unk1A = 0x18;
+    sp34.unk1C = 10.0f;
+    sp34.unk20 = 8.0f;
+    sp34.unk24 = D_800A8CC0;
+    sp34.unk28 = D_800A8CC4;
+    sp34.unk2C = 0x32;
+    sp34.unk2E = 0x14;
+    sp34.unk30 = D_800A8CC8;
+    sp34.unk34 = D_800A8CCC;
+    sp34.unk38 = D_800A8CD0;
+    sp30 = arg1;
+    sp2C = arg2;
+    func_15152190(&sp34, &sp30, &sp2C, 1, 0.0f, 0, arg3, arg4);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CBE20/func_1519EB8C.s")
 

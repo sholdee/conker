@@ -8,8 +8,11 @@ extern f32 D_800A0ABC;
 extern f32 D_800A0AC0;
 extern f32 D_800A0AC4;
 extern f32 D_800A0AC8;
+extern f32 D_800A0AB0;
+extern f32 D_800A0AB4;
 
 extern void func_15182670(s32, s32, s32, s32, s32, s32, s32, s32);
+extern void *func_15154884(struct Vec3F *, f32, f32, f32, u8, s32);
 
 void func_150D5440(void *arg0, u8 arg1, s32 arg2) {
     struct {
@@ -92,7 +95,15 @@ void func_150D6388(void *arg0, u8 arg1, s32 arg2) {
                   (f32)(u32)((temp_a % 0x38U) + 0xC8), 0.0f, arg1, arg2);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D6434.s")
+void func_150D6434(struct Vec3F *arg0, u8 arg1, s32 arg2) {
+    union { f32 f; f64 _a; } temp1;
+    f32 temp0;
+
+    temp0 = func_150ADA68();
+    temp1.f = func_150ADA68();
+    func_15154884(arg0, temp0 * 3.0f + 8.0f, temp1.f * D_800A0AB0 + D_800A0AB4,
+                  func_150ADA68() * 50.0f + 100.0f, arg1, arg2);
+}
 
 typedef struct {
     /* 0x00 */ s32 unk00;

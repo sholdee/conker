@@ -3,6 +3,7 @@
 #include "variables.h"
 
 void *func_150C6460(u8 *arg0);
+void *func_150C5F94(s32 arg0, u8 *arg1);
 
 void func_150C5DC0(u8 *arg0) {
     u8 *temp;
@@ -61,7 +62,20 @@ s32 func_150C5EFC(u8 *arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F3270/func_150C5F40.s")
+void func_150C5F40(u8 *arg0) {
+    s32 temp_a2;
+    u8 *temp;
+
+    temp_a2 = *(s32 *)(arg0 + 0x18);
+    if (*(s32 *)(arg0 + 0x5C) != 0) {
+        temp = *(u8 **)(arg0 + 0x5C) + 0x58;
+        temp[4] = 1;
+        done:
+            ;
+    } else {
+        *(void **)(arg0 + 0x5C) = func_150C5F94(temp_a2, arg0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F3270/func_150C5F94.s")
 
