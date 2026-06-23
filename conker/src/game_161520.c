@@ -15,6 +15,7 @@ extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
 extern void func_15143134(void *, s32, s32);
 extern s32 func_15145128(struct17 *, struct17 *, f32 *, f32 *);
 extern s32 func_15146078(struct17 *, struct17 *, struct17 *);
+extern void func_151BC5A4(struct260 *, s32, u8);
 
 typedef struct {
     s32 unk0[4];
@@ -219,7 +220,11 @@ void *func_15134908(void *arg0, s32 arg1, u8 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_151349D0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15134C98.s")
+void func_15134C98(struct260 *arg0, s32 arg1, u8 arg2) {
+    if (((struct102 *)arg0)->unk28 == 1) {
+        func_151BC5A4(arg0, arg1, arg2);
+    }
+}
 
 void func_15134CD4(f32 arg0, f32 arg1, s32 arg2, s32 arg3) {
 }

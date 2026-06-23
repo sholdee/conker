@@ -405,7 +405,12 @@ void func_151AB7D8(u8 *arg0) {
     func_1513470C(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB828.s")
+void func_151AB828(u8 *arg0) {
+    u8 *a3;
+
+    a3 = arg0;
+    func_15141DA4(*(void **)(a3 + 0x18), 0, 4);
+}
 
 void func_151AB854(u8 *arg0) {
     u8 *v1;

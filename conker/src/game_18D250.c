@@ -4,6 +4,7 @@
 
 
 extern void *func_15167A68(s32, s32, s32, s32, u8, s32);
+extern s32 (*D_8008B0D0[])(void *);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18D250/func_1515FDA0.s")
 
@@ -20,7 +21,37 @@ void *func_1515FF74(void *arg0, s32 arg1, u8 arg2, s32 arg3) {
     return sp24;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18D250/func_1515FFEC.s")
+typedef struct {
+    u8 pad0[0xE];
+    u8 unkE;
+    s8 unkF;
+    u8 pad10[2];
+    s16 unk12;
+} Struct1515FFEC;
+
+void func_1515FFEC(Struct1515FFEC *arg0) {
+    s32 temp;
+    u8 failed;
+
+    failed = 0;
+    if (arg0->unkE & 1) {
+        arg0->unk12 -= D_800BE9E4;
+        if (arg0->unk12 < 0) {
+            failed = 1;
+        }
+    }
+    if (failed == 0) {
+        temp = arg0->unkF;
+        if (temp != -1) {
+            if (D_8008B0D0[temp](arg0) == 0) {
+                failed = 1;
+            }
+        }
+    }
+    if (failed) {
+        func_1516972C((struct102 *) arg0);
+    }
+}
 
 extern void (*D_8008B0E4[])(void*, s32, u8);
 

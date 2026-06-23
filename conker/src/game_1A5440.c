@@ -1,5 +1,7 @@
 #include <ultra64.h>
+#define func_15178E14 func_15178E14_header_mismatch
 #include "functions.h"
+#undef func_15178E14
 #include "variables.h"
 
 
@@ -113,4 +115,6 @@ void func_15178DA4(Node15178DA4 *arg0) {
     func_15169824((struct102 *)arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A5440/func_15178E14.s")
+void func_15178E14(u8 arg0) {
+    func_15178DA4(func_15178B98(arg0));
+}

@@ -9,6 +9,8 @@ extern f32 D_800A0AC0;
 extern f32 D_800A0AC4;
 extern f32 D_800A0AC8;
 
+extern void func_15182670(s32, s32, s32, s32, s32, s32, s32, s32);
+
 void func_150D5440(void *arg0, u8 arg1, s32 arg2) {
     struct {
         void *unk0;
@@ -167,7 +169,14 @@ void func_150D65F0(s32 arg0, s32 arg1, u8 arg2, s32 arg3) {
                   (temp_b % 31) + 0x32, 0, 1, arg2, arg3);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D66A4.s")
+void func_150D66A4(u8 arg0, u8 arg1, s32 arg2) {
+    u32 temp1;
+    u32 temp0;
+
+    temp0 = func_150ADA20();
+    temp1 = func_150ADA20();
+    func_15182670(0xFF, 0xFF, 0xFF, (u8)(temp0 % 0x38 + 0xC8), temp1 % 6 + 0x19, arg0, arg1, arg2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1028F0/func_150D6730.s")
 

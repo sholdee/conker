@@ -2,8 +2,20 @@
 #include "functions.h"
 #include "variables.h"
 
+void *func_150C6460(u8 *arg0);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F3270/func_150C5DC0.s")
+void func_150C5DC0(u8 *arg0) {
+    u8 *temp;
+
+    if (*(s32 *)(arg0 + 0x58) != 0) {
+        temp = *(u8 **)(arg0 + 0x58) + 0xB0;
+        temp[4] = 1;
+        done:
+            ;
+    } else {
+        *(void **)(arg0 + 0x58) = func_150C6460(arg0);
+    }
+}
 
 struct Sub150C5E0C {
     /* 0x00 */ s32 unk0;

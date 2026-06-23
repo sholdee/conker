@@ -7,6 +7,8 @@ extern s32 D_800DBDC4;
 extern s32 D_800DBDC8;
 extern f32 D_800DBDCC;
 extern f32 D_800DBDD0;
+extern f32 D_800A2D50;
+extern f32 D_800A2D54;
 extern f32 D_800A2D58;
 extern f32 D_800A2D5C;
 
@@ -34,7 +36,9 @@ void func_1510E7A4(s32 a0, s32 a1, s32 a2, s32 a3, s32 arg4, s32 arg5, f32 arg6,
     func_1510E950(a0, a1, 0, a2, a3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13BB20/func_1510E82C.s")
+void func_1510E82C(s32 a0, s32 a1, s32 a2, s32 a3, s32 arg4, s32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9, u16 arg10, s32 arg11) {
+    func_1510E950(a0, a1, 0, a2, a3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, D_800A2D50, D_800A2D54, 0);
+}
 
 void func_1510E8BC(s32 a0, s32 a1, s32 a2, s32 a3, s32 arg4, s32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9, u16 arg10, s32 arg11, f32 arg12, f32 arg13, s32 arg14) {
     func_1510E950(a0, a1, 0, a2, a3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, D_800A2D58, D_800A2D5C, arg14);

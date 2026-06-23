@@ -245,7 +245,21 @@ void func_15044E88(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_150450CC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_1504530C.s")
+s32 func_15044ED0(s32, s32, s32);
+s32 func_150470B0(s32, s32, s32);
+
+s32 func_1504530C(s32 arg0, s32 arg1, s32 arg2) {
+    switch (func_150470B0(arg0, arg1, arg2)) {
+    case 0:
+        return func_15044ED0(arg0, arg1, arg2);
+    case 1:
+        return 0;
+    case 2:
+        return 1;
+    default:
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_71820/func_15045384.s")
 
