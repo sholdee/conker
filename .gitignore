@@ -37,3 +37,4 @@ conker/ctx.c
 tools/decomp-permuter
 tools/gfxdis
 .cycle
+.progress_history.tsv

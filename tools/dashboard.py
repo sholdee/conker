@@ -213,11 +213,143 @@ def cycle_matched():
             return 0
     return cached(f"cyc{cyc}", 8, build)
 
+HIST = os.path.join(REPO, ".progress_history.tsv")
+
+def _full_bytes():
+    """func -> full code bytes (func_ length + the .L branch-target chunks the map lists separately).
+    Approximate vs progress()'s total; used only for the SHAPE of the byte curve, which is then
+    anchored to exact endpoints, so the approximation washes out."""
+    def build():
+        spec = importlib.util.spec_from_file_location("prog", os.path.join(REPO, "tools/progress.py"))
+        prog = importlib.util.module_from_spec(spec); spec.loader.exec_module(prog)
+        mp = os.path.join(INNER, "build/conker.us.map"); fb = {}
+        for seg in [".init", ".game", ".debugger"]:
+            try:
+                with open(mp) as mf:
+                    _, fns = prog.parse_map(mf, seg, None)
+            except Exception:
+                continue
+            syms = sorted((i.get("offset", 0), fn, i.get("length", 0)) for fn, i in fns.items())
+            for k, (off, fn, ln) in enumerate(syms):
+                if fn.startswith((".L", "D_", "B_", "jtbl", "jpt_")):
+                    continue
+                end = off + ln; j = k + 1
+                while j < len(syms) and syms[j][1].startswith(".L"):
+                    end = syms[j][0] + syms[j][2]; j += 1
+                fb[fn] = max(ln, end - off)
+        return fb
+    return cached("fullbytes", 999999, build)
+
+def _reconstruct_history():
+    """Branch-long series from DE-STUB events (every match removes a GLOBAL_ASM pragma — reliable).
+    SELF-CONSISTENT, no external anchor: restricted to OUR commits (since the fork from upstream,
+    which re-split the ROM into a different function universe — mkst's % is NOT comparable). The
+    baseline is current progress minus our contribution; function counts are exact, byte sizes are
+    scaled so they reconcile exactly with progress()'s matched-byte total. Endpoints land on exact
+    current progress."""
+    ov = progress()["overall"]; tf = ov["tf"] or 1; tb = ov["tb"] or 1
+    fb = _full_bytes(); st = set(stub_map().keys())
+    matched_fb = sum(b for f, b in fb.items()
+                     if f not in st and not f.startswith(("D_", "B_", "jtbl", "jpt_"))) or 1
+    sf = ov["cb"] / matched_fb                            # scale full_bytes -> exact matched-byte total
+    mb = subprocess.run("git merge-base HEAD origin/master", shell=True, cwd=REPO,
+                        capture_output=True, text=True).stdout.strip()
+    rng = (mb + "..HEAD") if mb else ""                   # OUR commits only (fall back to all)
+    out = subprocess.run(f"git log --reverse --format='C%ct' -p -U0 {rng} -- 'conker/src/*.c'",
+                         shell=True, cwd=REPO, capture_output=True, text=True).stdout
+    ts = None; last = {}
+    for ln in out.splitlines():
+        if ln.startswith("C") and ln[1:].isdigit():
+            ts = int(ln[1:])
+        elif ln.startswith("-") and "GLOBAL_ASM" in ln and ts:
+            m = re.search(r'(func_[0-9A-Fa-f]+)', ln)
+            if m:
+                last[m.group(1)] = ts                     # last de-stub wins (handles revert+redo)
+    events = sorted((t, f) for f, t in last.items() if f not in st)   # currently-matched only
+    if not events:
+        return
+    base_cf = ov["cf"] - len(events)
+    base_cb = ov["cb"] - sf * sum(fb.get(f, 0) for _, f in events)
+    rows = [f"{events[0][0]}\t{round(base_cf/tf*100,2)}\t{round(base_cb/tb*100,2)}"]
+    cc = 0; cbq = 0.0
+    for t, f in events:
+        cc += 1; cbq += sf * fb.get(f, 0)
+        rows.append(f"{t}\t{round((base_cf+cc)/tf*100,2)}\t{round((base_cb+cbq)/tb*100,2)}")
+    if len(rows) > 150:                                   # smooth ~150-pt curve over the sprint
+        step = len(rows) / 150.0
+        rows = [rows[int(i * step)] for i in range(150)] + [rows[-1]]
+    try:
+        open(HIST, "w").write("\n".join(rows) + "\n")
+    except OSError:
+        pass
+
+def sample_history(pr):
+    """Keep today's point live + add one point per new day, with EXACT progress() numbers (matches
+    the UI). Over time the reconstructed/approximate tail is replaced by exact daily samples."""
+    try:
+        if not os.path.exists(HIST):
+            return
+        lines = [l for l in open(HIST).read().strip().split("\n") if l]
+        today = int(time.time()) // 86400
+        o = pr["overall"]; new = f"{today*86400}\t{o['fpct']}\t{o['bpct']}"
+        lastday = int(float(lines[-1].split("\t")[0])) // 86400 if lines else -1
+        if lastday == today:
+            if lines[-1] == new:
+                return
+            lines[-1] = new
+        else:
+            lines.append(new)
+        open(HIST, "w").write("\n".join(lines) + "\n")
+    except Exception:
+        pass
+
+def progress_history():
+    def build():
+        if not os.path.exists(HIST):
+            _reconstruct_history()
+        pts = []
+        try:
+            for ln in open(HIST):
+                a = ln.strip().split("\t")
+                if len(a) == 3:
+                    pts.append({"t": int(float(a[0])), "f": float(a[1]), "b": float(a[2])})
+        except OSError:
+            return []
+        if len(pts) > 180:                          # downsample for the SVG
+            step = len(pts) / 180.0
+            pts = [pts[int(i * step)] for i in range(180)] + [pts[-1]]
+        return pts
+    return cached("history", 30, build)
+
+def runway():
+    """Unmatched game functions by instruction-size band — where the remaining work lives."""
+    def build():
+        sizes = map_sizes() or {}; st = set(stub_map().keys())
+        order = ["≤100", "101–200", "201–400", "401–700", ">700"]
+        bins = {k: 0 for k in order}
+        for f, (seg, length) in sizes.items():
+            if seg != "game" or f not in st or f.startswith((".L", "D_", "B_", "jtbl", "jpt_")):
+                continue
+            n = length // 4
+            k = ("≤100" if n <= 100 else "101–200" if n <= 200 else "201–400" if n <= 400
+                 else "401–700" if n <= 700 else ">700")
+            bins[k] += 1
+        return {"order": order, "bins": bins, "total": sum(bins.values())}
+    return cached("runway", 60, build)
+
+def phase_status():
+    def r(pat):
+        return subprocess.run(f"pgrep -f '{pat}' >/dev/null 2>&1", shell=True).returncode == 0
+    return ("SELECT" if r("similar_chunk.py") else "MATCH" if r("codex exec")
+            else "INTEGRATE" if r("tools/integrate.py") else "")
+
 def collect():
-    return {"updated": time.strftime("%H:%M:%S"), "progress": progress(), "active": active(),
+    pr = progress()
+    return {"updated": time.strftime("%H:%M:%S"), "progress": pr, "active": active(),
             "commits": recent_commits(), "nearmiss": nearmiss(), "permuter": permuter(),
             "cycle": cycle_status(), "cycle_matched": cycle_matched(),
-            "rom": rom_status(), "tree": tree_status()}
+            "rom": rom_status(), "tree": tree_status(),
+            "history": progress_history(), "runway": runway(), "phase": phase_status()}
 
 # Decouple data collection from the request path: ONE background thread refreshes the snapshot on a
 # fixed cadence, serializing it once. do_GET just writes the pre-built bytes — so client count never
@@ -229,7 +361,9 @@ def _refresher():
     global _snapshot_json
     while True:
         try:
-            _snapshot_json = json.dumps(collect()).encode()
+            snap = collect()
+            sample_history(snap["progress"])
+            _snapshot_json = json.dumps(snap).encode()
         except Exception:
             pass
         time.sleep(REFRESH)
@@ -264,17 +398,23 @@ h1{font-size:16px;margin:0 0 6px}.sub{color:#8b949e;font-size:11px;margin-bottom
 .cm{padding:3px 0;border-bottom:1px solid #21262d;font-size:12px}.cm b{color:#3fb950}.cm span{color:#6e7681}
 .big{font-size:22px;font-weight:bold;color:#e6edf3}.kv{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px}
 .kv div{color:#8b949e;font-size:11px}.kv b{color:#c9d1d9;font-size:14px;display:block}
+.badge.phase{background:#132035;color:#58a6ff;border:1px solid #1f6feb}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#58a6ff;margin-right:5px;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.15}}
+#hist{background:#0a0e14;border-radius:4px}
 </style></head><body>
 <h1>Conker's Bad Fur Day — decomp pipeline</h1>
 <div class=statusbar id=statusbar>connecting…</div>
 <div class=grid>
   <div class=card style="grid-column:1/-1">
-    <h2>Progress (README method)</h2>
+    <h2>Progress</h2>
     <div id=prog></div>
   </div>
+  <div class=card style="grid-column:1/-1"><h2>Progress history — this branch</h2><div style="position:relative"><div id=hist style="width:100%;height:140px"></div><div id=htip style="position:absolute;display:none;top:3px;pointer-events:none;background:#161b22;border:1px solid #30363d;border-radius:4px;padding:3px 7px;font-size:11px;line-height:1.4;white-space:nowrap;z-index:5"></div><span style="position:absolute;top:-2px;right:4px;font-size:9px;color:#484f58;pointer-events:none">100%</span><span style="position:absolute;top:48%;right:4px;font-size:9px;color:#484f58;pointer-events:none">50%</span></div><div class=prow style="margin-top:5px;gap:16px;font-size:11px"><span style="color:#388bfd">●&nbsp;functions</span><span style="color:#2ea043">●&nbsp;bytes</span><span style="color:#6e7681">hover for values</span></div></div>
   <div class=card><h2>Active workers <span id=acount style=color:#8b949e></span></h2><div id=workers>idle</div></div>
   <div class=card><h2>Recent matches</h2><div id=commits></div></div>
   <div class=card><h2>Near-miss reservoir (re-attempt runway)</h2><div class=nm id=nm></div></div>
+  <div class=card><h2>Unmatched runway (by instr size)</h2><div class=nm id=runway></div></div>
   <div class=card><h2>Permuter (backstop)</h2><div class=kv id=perm></div></div>
 </div>
 <script>
@@ -286,7 +426,29 @@ function statusbar(d){const r=d.rom||{},c=d.cycle||{},t=d.tree||{};
  const rt=r.sha1?`ROM ${r.ok?'✓':'✗'} ${r.sha1.slice(0,8)}${r.age!=null?' · '+fmtAge(r.age):''}`:'ROM —';
  const ct=c.cycle?`Cycle ${c.cycle} · round ${c.round}/${c.rounds} · ${d.cycle_matched||0} this cycle`:'idle';
  const tt=t.inflight==null?'':t.inflight>0?`${t.inflight} in-flight`:'tree clean';
- return `<span class="badge ${rc}">${rt}</span><span class="badge neutral">${ct}</span>${tt?`<span class="badge neutral">${tt}</span>`:''}<span style=color:#6e7681>updated ${d.updated}</span>`;}
+ const ph=d.phase?`<span class="badge phase"><span class=dot></span>${d.phase}</span>`:'';
+ return `${ph}<span class="badge ${rc}">${rt}</span><span class="badge neutral">${ct}</span>${tt?`<span class="badge neutral">${tt}</span>`:''}<span style=color:#6e7681>updated ${d.updated}</span>`;}
+function renderHistory(h){
+ if(!h||!h.length){$('hist').innerHTML='';return}
+ const W=600,H=140,n=h.length,x=i=>n<2?W/2:i/(n-1)*W,y=v=>H-v/100*H;
+ const iso=t=>new Date(t*1000).toISOString().slice(0,10);
+ const pl=(k,c)=>`<polyline fill="none" stroke="${c}" stroke-width="2" vector-effect="non-scaling-stroke" points="${h.map((p,i)=>x(i).toFixed(1)+','+y(p[k]).toFixed(1)).join(' ')}"/>`;
+ const grid=[25,50,75,100].map(g=>`<line x1="0" y1="${y(g)}" x2="${W}" y2="${y(g)}" stroke="#21262d"/>`).join('');
+ $('hist').innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:140px;display:block;background:#0a0e14;border-radius:4px">${grid}${pl('b','#2ea043')}${pl('f','#388bfd')}<line id=hcur x1="0" y1="0" x2="0" y2="${H}" stroke="#6e7681" stroke-width="1" vector-effect="non-scaling-stroke" style="display:none"/></svg>`;
+ const el=$('hist');el._h=h;
+ if(!el._bound){el._bound=1;const tip=$('htip');
+  el.onmousemove=e=>{const d=el._h;if(!d||!d.length)return;const r=el.getBoundingClientRect();
+   const fx=(e.clientX-r.left)/r.width;let i=Math.round(fx*(d.length-1));i=Math.max(0,Math.min(d.length-1,i));const p=d[i];
+   const cur=$('hcur');if(cur){cur.setAttribute('x1',fx*600);cur.setAttribute('x2',fx*600);cur.style.display='';}
+   tip.style.display='block';tip.style.left=Math.max(2,Math.min(r.width-140,e.clientX-r.left-35))+'px';
+   tip.innerHTML=`<b>${new Date(p.t*1000).toISOString().slice(5,16).replace('T',' ')} UTC</b><br><span style="color:#388bfd">functions ${p.f}%</span> · <span style="color:#2ea043">bytes ${p.b}%</span>`;};
+  el.onmouseleave=()=>{tip.style.display='none';const c=$('hcur');if(c)c.style.display='none';};}
+}
+function renderRunway(rw){
+ if(!rw||!rw.order){return}
+ const mx=Math.max(1,...rw.order.map(k=>rw.bins[k]));
+ const le=rw.bins['≤100']+rw.bins['101–200']+rw.bins['201–400'];
+ $('runway').innerHTML=rw.order.map(k=>`<div><div class=b style="height:${Math.round(rw.bins[k]/mx*56)}px;background:#1f6feb"></div><small>${rw.bins[k]}<br>${k}</small></div>`).join('')+`<div style="align-self:center;color:#8b949e">Σ${rw.total}<br>≤400i: ${le}</div>`;}
 function pbar(o,seg){return `<div style="font-size:11px;margin-bottom:2px">${seg}</div>
  <div class=bar><i style="width:${o.fpct}%"></i></div><div class=prow><span>${o.cf}/${o.tf} funcs</span><span>${o.fpct}%</span></div>
  <div class="bar byte"><i style="width:${o.bpct}%"></i></div><div class=prow><span>${o.cb.toLocaleString()}/${o.tb.toLocaleString()} bytes</span><span>${o.bpct}%</span></div>`}
@@ -297,6 +459,7 @@ async function tick(){
  $('prog').innerHTML=`<div class=big>${p.overall.fpct}% funcs · ${p.overall.bpct}% bytes</div>
    <div style="margin:8px 0">${pbar(p.game,'game')}</div>
    <div class=prow style="margin-top:8px"><span>init ${p.init.fpct}%/${p.init.bpct}%b</span><span>debugger ${p.debugger.fpct}%/${p.debugger.bpct}%b</span><span>overall ${p.overall.cf}/${p.overall.tf}</span></div>`;
+ renderHistory(d.history);renderRunway(d.runway);
  const w=d.active||[];$('acount').textContent=w.length?`(${w.filter(x=>x.status=='working').length} working)`:'';
  $('workers').innerHTML=w.length?w.map(x=>`<div class=worker>
    <div class="sc ${scClass(x.best)}" title="latest ${x.latest}">${x.best===null?'—':x.best}</div>
