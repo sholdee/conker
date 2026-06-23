@@ -44,11 +44,14 @@ void func_151D73A8(s32 *arg0, s32 arg1, u8 arg2) {
 
 void func_151D77C8();
 
-void func_151D7404(void) {
+void func_151D7404() {
     func_151D77C8();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D7424.s")
+void func_151D7424(struct260 *arg0) {
+    func_151D7404(arg0);
+    func_1514933C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D7450.s")
 

@@ -101,4 +101,27 @@ trailing_label_15193234:
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BFDD0/func_151932E0.s")
+void func_151932E0(struct260 *arg0, s32 arg1, u8 arg2) {
+    SubA_15193234 *temp_v0 = (SubA_15193234 *)((u8 *)arg0 + 0x28);
+    ArgB_15193234 *b = (ArgB_15193234 *)arg1;
+    s32 b0;
+
+    if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->unk0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else {
+            if (temp_v0->unk0 == b->u4.w4) {
+                temp_v0->unk0 = b->unk0;
+                ((volatile SubA_15193234 *)temp_v0)->unk4 = b->unk8;
+            }
+trailing_label_151932E0:
+            ;
+        }
+    } else if (arg2 == 0) {
+        b0 = b->unk0;
+        if ((b0 == temp_v0->unk0) || (b->u4.b4 == temp_v0->unk4)) {
+            func_1516972C((struct102 *)arg0);
+        }
+    }
+}

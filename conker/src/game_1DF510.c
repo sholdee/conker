@@ -91,7 +91,7 @@ void func_151B2100(GameStruct151B2100 *arg0) {
 
 void func_151B222C();
 
-void func_151B220C(void) {
+void func_151B220C() {
     func_151B222C();
 }
 
@@ -114,7 +114,10 @@ struct260 *arg0;
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B229C.s")
+void func_151B229C(struct260 *arg0) {
+    func_151B220C(arg0);
+    func_1514933C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1DF510/func_151B22C8.s")
 

@@ -15,6 +15,24 @@ s32 func_15046C80(f32 *, s32, f32, s32);
 void func_15143794(s32, s32, f32, f32 *);
 struct260 *func_15130374(void *, u8, s32, u8, s32);
 
+typedef struct {
+    s16 unk0;
+    f32 unk4;
+} AFC08Sub;
+
+typedef struct {
+    char pad0[0x1C];
+    s16 unk1C;
+    char pad1E[0x2C - 0x1E];
+    f32 unk2C;
+    f32 unk30;
+    char pad34[0x58 - 0x34];
+    s32 unk58;
+    u8 unk5C;
+    char pad5D[0x128 - 0x5D];
+    AFC08Sub unk128;
+} AFC08Struct;
+
 s32 func_151AF5C0(f32 *arg0, s32 arg1, s32 arg2, u8 arg3) {
     f32 sp2C[3];
     f32 *temp_a0;
@@ -64,7 +82,24 @@ s32 func_151AFBD4(void *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1DCA70/func_151AFC08.s")
+s32 func_151AFC08(AFC08Struct *arg0) {
+    AFC08Sub *sub;
+
+    if (arg0->unk58 & 1) {
+        sub = &arg0->unk128;
+        if (arg0->unk1C < 0x20) {
+            if ((arg0->unk1C << 3) < arg0->unk5C) {
+                *(u8*)((u8*)sub - 0xCC) = arg0->unk1C << 3;
+            }
+        }
+        if (sub->unk0 < arg0->unk1C) {
+            f32 v = sub->unk4 * D_800BE9A4;
+            arg0->unk2C = arg0->unk2C + v;
+            arg0->unk30 = arg0->unk30 + v;
+        }
+    }
+    return 1;
+}
 
 s32 func_151AFC88(s32 arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5,
                   s32 arg6, s32 arg7, s16 arg8, s32 arg9, s32 arg10, s32 arg11,

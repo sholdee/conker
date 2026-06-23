@@ -4,6 +4,7 @@
 
 extern f32 sqrtf(f32);
 extern f32 D_800A3850;
+extern void (*D_80089814[])(s32 *);
 
 typedef struct Struct15130280 {
     s32 unk0;
@@ -161,7 +162,16 @@ void func_1513175C(void) {
     func_15169824();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_1513177C.s")
+void func_1513177C(s32 *a0) {
+    s32 idx;
+
+    if (a0[0x1A] & 0x4000) {
+        idx = *((u8 *)a0 + 0x75);
+    } else {
+        idx = 0;
+    }
+    D_80089814[idx](a0);
+}
 
 extern s32 (*D_80089844[])(s32 *);
 

@@ -9,6 +9,7 @@ void func_151AE984(f32 *, f32, f32, f32, s32, u8);
 void func_151AEAB4(f32 *, s32, u8);
 void func_15143134(f32 *, f32 *, s32);
 void func_15135DD0(f32 *, f32 *, f32, u8, s32);
+void func_151AF388(f32 *, f32, f32, f32, s32);
 
 typedef struct {
     /* 0x00 */ u8 unk0;
@@ -368,7 +369,14 @@ void *func_151AF270(struct102 *arg0, s32 arg1, s32 arg2) {
     return result;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AF338.s")
+void func_151AF338(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, void *arg6) {
+    f32 sp24[3];
+
+    sp24[0] = arg0;
+    sp24[1] = arg1;
+    sp24[2] = arg2;
+    func_151AF388(sp24, arg3, arg4, arg5, *(u8 *)((s32)arg6 + 0xC));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AF388.s")
 

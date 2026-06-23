@@ -199,7 +199,9 @@ void func_150F6394(struct260 *arg0) {
     func_15149368(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F63C0.s")
+void func_150F63C0(s32 arg0, s32 arg1, u8 arg2) {
+    func_15169850(arg1, arg2, arg0 + 0x28, arg0 + 0x2C, arg0);
+}
 
 struct Sub150F6400 {
     s32 pad[2];

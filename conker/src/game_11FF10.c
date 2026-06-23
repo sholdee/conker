@@ -60,7 +60,9 @@ void func_150F3194(s32 arg0, s32 arg1, u8 arg2) {
     func_15169850(arg1, arg2, arg0 + 0x28, arg0 + 0x2C, arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11FF10/func_150F31D4.s")
+void func_150F31D4(s32 arg0, s32 arg1, u8 arg2) {
+    func_15169850(arg1, arg2, arg0 + 0x110, arg0 + 0x114, arg0);
+}
 
 s32 func_150F3214(Struct150F3214 *arg0) {
     Struct150F3214_110 *temp_v0;
