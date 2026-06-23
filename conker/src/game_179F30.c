@@ -1046,7 +1046,19 @@ void func_1514F110(void) {
     func_1514F194();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514F130.s")
+s32 func_1514F130(s32 arg0, s32 arg1, s32 arg2) {
+    switch (arg1) {
+    case 13:
+        *(u8 *)(*(s32 *)(arg0 + 0x14) + 9) = 0;
+        break;
+    case 14:
+        *(u8 *)(*(s32 *)(arg0 + 0x14) + 9) = 1;
+        break;
+    default:
+        return func_1514E89C(arg0, arg1, arg2);
+    }
+    return 1;
+}
 
 void func_1514F194(s32 arg0) {
     s32 v0;

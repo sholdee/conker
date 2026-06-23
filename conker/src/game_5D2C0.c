@@ -92,7 +92,35 @@ s32 func_150302F0(void *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15030310.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_150303E4.s")
+struct S150303E4 {
+    u8 unk0;
+    u8 pad1[0x53];
+    struct S150303E4 *unk54;
+};
+
+s32 func_150303E4(struct127 *arg0) {
+    struct S150303E4 *var;
+    struct S150303E4 *next;
+    s32 ret;
+
+    if (arg0->unique_id == 0) {
+        return 0;
+    }
+
+    var = (struct S150303E4 *)D_800C3EE0;
+    ret = 0;
+    if (var != 0) {
+        do {
+            next = var->unk54;
+            if (var->unk0 == arg0->unique_id) {
+                ret = 1;
+                func_15030158(var, 0);
+            }
+            var = next;
+        } while (next != 0);
+    }
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15030468.s")
 

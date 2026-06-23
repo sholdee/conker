@@ -379,7 +379,57 @@ s32 func_150EFEC8(s32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, s32 arg5, u8 arg
     return (s32)temp_v0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F00EC.s")
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Vec3w_150F00EC;
+
+typedef struct {
+    u8 pad0[0x18];
+    u8 unk18;
+    u8 pad19[0x17];
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+} Sub110_150F00EC;
+
+typedef struct {
+    u8 pad0[0x34];
+    Vec3w_150F00EC unk34;
+    u8 pad40[0xD0];
+} Sub178_150F00EC;
+
+typedef struct {
+    u8 pad0[0x34];
+    Vec3w_150F00EC unk34;
+    f32 unk40;
+    f32 unk44;
+    f32 unk48;
+    u8 pad4C[0xC];
+    s32 unk58;
+    u8 pad5C[0x11C];
+    Sub178_150F00EC *unk178;
+} Arg150F00EC;
+
+s32 func_150F00EC(Arg150F00EC *arg0) {
+    Sub178_150F00EC *temp_v0;
+    Sub110_150F00EC *temp_v1;
+
+    temp_v0 = arg0->unk178;
+    temp_v1 = (Sub110_150F00EC *)(temp_v0 + 1);
+    if (*(u8 *)((u8 *)temp_v0 + 0x128) & 1) {
+        arg0->unk34 = temp_v0->unk34;
+        arg0->unk40 = *(f32 *)&temp_v0->unk34.unk0 + (temp_v1->unk30 * 500.0f);
+        arg0->unk44 = *(f32 *)&temp_v0->unk34.unk4 + (temp_v1->unk34 * 500.0f);
+        arg0->unk48 = *(f32 *)&temp_v0->unk34.unk8 + (temp_v1->unk38 * 500.0f);
+        arg0->unk58 |= 6;
+    } else {
+        arg0->unk58 &= ~4;
+        arg0->unk58 &= ~2;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F0198.s")
 

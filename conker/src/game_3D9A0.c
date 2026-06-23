@@ -3,8 +3,23 @@
 #include "variables.h"
 
 
+struct Obj150104F0 {
+    u8 pad0[0x7C];
+    f32 unk7C;
+};
+
+extern u8 D_800D9950[];
+extern struct Obj150104F0 *func_151149AC(u32);
+
 // ???
-#pragma GLOBAL_ASM("asm/nonmatchings/game_3D9A0/func_150104F0.s")
+void func_150104F0(void) {
+    struct Obj150104F0 *temp_v0;
+
+    D_800D9950[0] = (D_800D9950[1] = (D_800D9950[2] = 0));
+    temp_v0 = func_151149AC(0xF6);
+    temp_v0->unk7C = 2.0f;
+    D_80088980 = 0;
+}
 
 void func_15010538(struct127 *arg0) {
     struct175 tmp;
