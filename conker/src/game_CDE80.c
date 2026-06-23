@@ -2,10 +2,32 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_8009F5A0;
+extern f32 D_8009F5A4;
+
+struct Func150A0D14Arg {
+    u8 pad0[0xC];
+    f32 unkC;
+    f32 unk10;
+    u8 pad14[0x10];
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+};
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A09D0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A0D14.s")
+void func_150A0D14(struct Func150A0D14Arg *arg0) {
+    f32 angle;
+
+    angle = arg0->unkC * D_8009F5A0;
+    arg0->unk24 = func_150AD78C(angle);
+    arg0->unk28 = func_150AD780(angle);
+    angle = arg0->unk10 * D_8009F5A4;
+    arg0->unk2C = func_150AD78C(angle);
+    arg0->unk30 = func_150AD780(angle);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_CDE80/func_150A0D8C.s")
 
