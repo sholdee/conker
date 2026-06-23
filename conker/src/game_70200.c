@@ -1,9 +1,12 @@
 #include <ultra64.h>
+#include "libc/stdarg.h"
 
 #define func_15043BB8 func_15043BB8_header_mismatch
 #include "functions.h"
 #undef func_15043BB8
 #include "variables.h"
+
+void func_15042ECC(s32 arg0, s32 *arg1);
 
 
 void func_15042D50(void) {
@@ -16,7 +19,17 @@ void func_15042D78(u8 arg0) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_70200/func_15042D94.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_70200/func_15042E3C.s")
+void func_15042E3C(s32 arg0, ...) {
+    va_list args;
+    s32 sp24[16];
+    s32 i;
+
+    va_start(args, arg0);
+    for (i = 0; i < 16; i++) {
+        sp24[i] = va_arg(args, s32);
+    }
+    func_15042ECC(arg0, sp24);
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_70200/func_15042ECC.s")
 
 void func_150432BC(f32 arg0) {
