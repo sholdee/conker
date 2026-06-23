@@ -713,7 +713,20 @@ void func_1519086C(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15190898.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15190F9C.s")
+s32 func_15190F9C(u8 *arg0) {
+    u8 *p = arg0;
+    f32 *f = (f32 *)(arg0 + 0x110);
+    f32 r1;
+    f32 r2;
+
+    p[0x131] = *(s8 *)(p + 0x133) * D_800BE9E4 + p[0x131];
+    p[0x132] = *(s8 *)(p + 0x134) * D_800BE9E4 + p[0x132];
+    r1 = func_151423D8((u8)(p[0x131] - 0x40));
+    r2 = func_151423D8((u8)(((u8 *)f)[0x22] - 0x40));
+    *(f32 *)(p + 0x2C) += (f[10] + f[12] * r1 - *(f32 *)(p + 0x2C)) * 0.5f;
+    *(f32 *)(p + 0x30) += (f[11] + f[13] * r2 - *(f32 *)(p + 0x30)) * 0.5f;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1519108C.s")
 
