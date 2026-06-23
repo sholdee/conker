@@ -37,33 +37,33 @@ void func_150ECB4C(s32 arg0, s32 arg1, u8 arg2) {
     func_15169850(arg1, arg2, arg0 + 0x28, arg0 + 0x2C, arg0);
 }
 
-struct S150ECB8C_inner;
-extern void func_1502EA98(struct S150ECB8C_inner*, u8, u8, u8, u8, s32, u8);
+typedef struct {
+    /* 0x00 */ struct127 *field_0x00;
+    /* 0x04 */ u8 field_0x04;
+    /* 0x05 */ u8 field_0x05;
+    /* 0x06 */ u8 field_0x06;
+    /* 0x07 */ u8 field_0x07;
+    /* 0x08 */ u8 field_0x08;
+    /* 0x09 */ u8 field_0x09;
+} ObjectColorCommandData;
 
-struct S150ECB8C_inner {
-    s32 unk0;
-    u8 pad[0x37];
-    u8 unk3B;
-};
+typedef struct {
+    /* 0x00 */ u8 pad_0[0xE];
+    /* 0x0E */ s16 field_0x0E;
+    /* 0x10 */ u8 pad_1[0x18];
+    /* 0x28 */ ObjectColorCommandData field_0x28;
+} ObjectColorCommandTask;
 
-struct S150ECB8C {
-    struct S150ECB8C_inner* unk0;
-    u8 unk4;
-    u8 unk5;
-    u8 unk6;
-    u8 unk7;
-    u8 unk8;
-    u8 unk9;
-};
+extern void func_1502EA98(struct127*, u8, u8, u8, u8, s32, u8);
 
-void func_150ECB8C(s32 arg0) {
-    struct S150ECB8C* p = (struct S150ECB8C*)(arg0 + 0x28);
-    struct S150ECB8C_inner* ptr = p->unk0;
+void func_150ECB8C(ObjectColorCommandTask *arg0) {
+    ObjectColorCommandData* p = &arg0->field_0x28;
+    struct127* ptr = p->field_0x00;
 
-    if ((ptr->unk0 == 0) || (ptr->unk3B != p->unk4)) {
-        *(s16*)(arg0 + 0xE) = -1;
+    if ((ptr->interaction_state == 0) || (ptr->unique_id != p->field_0x04)) {
+        arg0->field_0x0E = -1;
     } else {
-        func_1502EA98(ptr, p->unk5, p->unk6, p->unk7, p->unk8, 0, p->unk9);
+        func_1502EA98(ptr, p->field_0x05, p->field_0x06, p->field_0x07, p->field_0x08, 0, p->field_0x09);
     }
 }
 

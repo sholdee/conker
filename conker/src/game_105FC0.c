@@ -37,6 +37,11 @@ typedef struct {
     u8 pad50[4];
 } Payload150D8B88;
 
+typedef struct {
+    char pad_0x00[0xC];
+    s32 field_0x0C;
+} ActorA8State;
+
 extern f32 D_800A0B48;
 extern f32 D_800A0B4C;
 extern f32 D_800A0B50;
@@ -194,11 +199,11 @@ void func_150DA5EC(u8 *arg0, f32 arg1) {
 }
 
 s32 func_150DA628(u8 *arg0, s32 arg1) {
-    u8 *temp_a2;
+    ActorA8State *temp_a2;
 
-    temp_a2 = arg0 + 0xA8;
+    temp_a2 = (ActorA8State *)(arg0 + 0xA8);
     func_15131828(arg0, arg0 + 0xAC, temp_a2, arg0 + 0xAA);
-    func_15131958(arg0 + 0x58, *(s32 *)(temp_a2 + 0xC), temp_a2);
+    func_15131958(arg0 + 0x58, temp_a2->field_0x0C, temp_a2);
     return 1;
 }
 

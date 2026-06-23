@@ -22,7 +22,7 @@ typedef struct {
     s32 field_0x1D4;
 } ActorFields;
 
-s32 func_150EAF50(f32 *arg0, s32 arg1, s32 arg2, u8 arg3) {
+s32 func_150EAF50(f32 *arg0, ActorFields *arg1, s32 arg2, u8 arg3) {
     f32 sp2C[3];
     s32 temp_a1;
 
@@ -36,7 +36,7 @@ s32 func_150EAF50(f32 *arg0, s32 arg1, s32 arg2, u8 arg3) {
         temp_a1 = 0x1D;
     }
 
-    func_15142314(*(s32 *)(arg1 + 0x1D4), temp_a1, arg0);
+    func_15142314(arg1->field_0x1D4, temp_a1, arg0);
     if (arg2 == 0) {
         return 1;
     }
@@ -44,7 +44,7 @@ s32 func_150EAF50(f32 *arg0, s32 arg1, s32 arg2, u8 arg3) {
     sp2C[0] = arg0[0];
     sp2C[1] = arg0[1] + 10.0f;
     sp2C[2] = arg0[2];
-    func_1504715C(arg2, arg1);
+    func_1504715C(arg2, (s32)arg1);
     return func_15046C80(sp2C, 0, arg0[1] - 50.0f, arg2);
 }
 

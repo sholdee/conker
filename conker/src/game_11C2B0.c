@@ -455,30 +455,36 @@ s32 func_150F00EC(Arg150F00EC *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F0198.s")
 
-struct func150F02A0_sub {
-    u8 pad0[0x8];
-    u8 *unk8;
-    u8 unkC;
-};
-struct func150F02A0_arg {
-    u8 pad0[0x60];
-    struct func150F02A0_sub *unk60;
-};
+typedef struct {
+    u8 pad_0[0x12C];
+    s32 field_0x12C[1];
+} SlotTableFields;
 
-void func_150F02A0(struct func150F02A0_arg *arg0);
+typedef struct {
+    u8 pad_0[0x8];
+    SlotTableFields *field_0x8;
+    u8 field_0xC;
+} SlotTableLinkFields;
 
-void func_150F0260(struct func150F02A0_arg *arg0) {
+typedef struct {
+    u8 pad_0[0x60];
+    SlotTableLinkFields *field_0x60;
+} SlotTableOwnerFields;
+
+void func_150F02A0(SlotTableOwnerFields *arg0);
+
+void func_150F0260(SlotTableOwnerFields *arg0) {
     func_150F02A0(arg0);
 }
 
-void func_150F0280(struct func150F02A0_arg *arg0) {
+void func_150F0280(SlotTableOwnerFields *arg0) {
     func_150F02A0(arg0);
 }
 
-void func_150F02A0(struct func150F02A0_arg *arg0) {
-    struct func150F02A0_sub *temp = arg0->unk60;
-    u8 *base = temp->unk8;
-    *(s32*)(base + temp->unkC * 4 + 0x12C) = 0;
+void func_150F02A0(SlotTableOwnerFields *arg0) {
+    SlotTableLinkFields *temp = arg0->field_0x60;
+    SlotTableFields *base = temp->field_0x8;
+    base->field_0x12C[temp->field_0xC] = 0;
 }
 
 void func_150F0318(struct260 *arg0);

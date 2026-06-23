@@ -10,7 +10,17 @@ extern u8 D_800BEA0C;
 extern s32 D_800902BC[];
 void func_1000FD38(void *, void *, s32);
 s32 func_15033BDC();
-u8 *func_15083568(struct127 *, s32, f32, s32);
+
+typedef struct Game5D2C0RenderState {
+    u8 pad_0[0x2];
+    u8 field_0x02;
+    u8 pad_0x03[0x13];
+    u8 field_0x16;
+    u8 pad_0x17[0x29];
+    f32 field_0x40;
+} Game5D2C0RenderState;
+
+Game5D2C0RenderState *func_15083568(struct127 *, s32, f32, s32);
 extern void func_150A7A48(f32 arg0[4][4], f32 arg1[4][4], f32 arg2[4][4]);
 extern void func_1503E5F8();
 extern void *allocate_memory(s32 size, s32 arg1, s32 arg2, s32 arg3);
@@ -544,7 +554,7 @@ s16 arg1;
 }
 
 void *func_150335C8(struct127 *arg0, struct127 *arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
-    u8 *temp_v0;
+    Game5D2C0RenderState *temp_v0;
     f32 sp124[4][4];
     f32 spE4[4][4];
     f32 spA4[4][4];
@@ -566,13 +576,13 @@ void *func_150335C8(struct127 *arg0, struct127 *arg1, s32 arg2, s32 arg3, s32 ar
 
     temp_v0 = func_15083568(arg1, arg2, 1.0f, 0);
     if (temp_v0 != 0) {
-        temp_v0[2] = arg3;
-        *(f32 *)(temp_v0 + 0x40) = arg0->xz_scale;
+        temp_v0->field_0x02 = arg3;
+        temp_v0->field_0x40 = arg0->xz_scale;
 
         if (arg4 != 0) {
-            temp_v0[0x16] = temp_v0[0x16] & ~4;
+            temp_v0->field_0x16 = temp_v0->field_0x16 & ~4;
         } else {
-            temp_v0[0x16] = temp_v0[0x16] | 4;
+            temp_v0->field_0x16 = temp_v0->field_0x16 | 4;
         }
 
         guMtxL2F(sp124, (Mtx *)((u8 *)arg1->unk1D4 + (arg3 << 6)));

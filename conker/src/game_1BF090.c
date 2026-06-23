@@ -36,6 +36,17 @@ struct Struct15191BE0Stack {
     struct Struct15191BE0Local local;
 };
 
+typedef struct AngleVelocityState {
+    u8 pad_0x00[0x38];
+    f32 field_0x38;
+    f32 field_0x3C;
+    u8 pad_0x40[0x68];
+    s32 field_0xA8;
+    u8 field_0xAC[2];
+    s8 field_0xAE[2];
+    f32 field_0xB0;
+} AngleVelocityState;
+
 void func_1504715C(s32, s32);
 
 struct260 *func_15191BE0(struct Struct15191BE0Arg0 *arg0, Header2 *arg1, u8 arg2, f32 arg3, f32 arg4, s16 arg5, f32 arg6, f32 arg7, s16 arg8, s16 arg9, u8 argA, u8 argB, f32 argC, f32 argD, f32 argE, u8 argF, u8 arg10, s32 arg11) {
@@ -93,19 +104,19 @@ struct260 *func_15191BE0(struct Struct15191BE0Arg0 *arg0, Header2 *arg1, u8 arg2
 
 extern void func_15131C84(s32, s32, s32, s32, s32, s32);
 
-u8 func_15192308(s32 arg0, s32 arg1) {
-    func_15131C84(arg0 + 0xAC, arg0 + 0xAE, *(s32 *)(arg0 + 0xA8), arg0 + 0xB0, arg0 + 0x38, arg0 + 0x3C);
+u8 func_15192308(AngleVelocityState *arg0, s32 arg1) {
+    func_15131C84((s32) arg0->field_0xAC, (s32) arg0->field_0xAE, arg0->field_0xA8, (s32) &arg0->field_0xB0, (s32) &arg0->field_0x38, (s32) &arg0->field_0x3C);
     return 1;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BF090/func_15192358.s")
 
-u8 func_15192308(s32 arg0, s32 arg1);
+u8 func_15192308(AngleVelocityState *arg0, s32 arg1);
 u8 func_15192358(s32 arg0, s32 arg1);
 
 u8 func_1519257C(s32 arg0, s32 arg1) {
     u8 ret;
-    ret = func_15192308(arg0, arg1);
+    ret = func_15192308((AngleVelocityState *) arg0, arg1);
     if (ret != 0) {
         ret = func_15192358(arg0, arg1);
     }

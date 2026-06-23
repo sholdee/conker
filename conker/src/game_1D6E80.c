@@ -316,17 +316,29 @@ s32 func_151AABA0(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AABC4.s")
 
-s32 func_151AADBC(s32 arg0) {
-    u8 *p;
+typedef struct {
+    u8 pad_0x0[0x1B];
+    u8 field_0x1B;
+} AlphaFadePayload;
+
+typedef struct {
+    u8 pad_0x0[0x1C];
+    s16 field_0x1C;
+    u8 pad_0x1E[0x7A];
+    AlphaFadePayload *field_0x98;
+} AlphaFadeOwner;
+
+s32 func_151AADBC(AlphaFadeOwner *arg0) {
+    AlphaFadePayload *p;
     s32 v1;
 
-    p = *(u8 **)(arg0 + 0x98);
-    v1 = *(s16 *)(arg0 + 0x1C) << 4;
+    p = arg0->field_0x98;
+    v1 = arg0->field_0x1C << 4;
     if (v1 >= 0x100) {
         v1 = 0xFF;
     }
-    if (v1 < p[0x1B]) {
-        p[0x1B] = v1;
+    if (v1 < p->field_0x1B) {
+        p->field_0x1B = v1;
     }
     return 1;
 }

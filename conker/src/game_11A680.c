@@ -112,12 +112,12 @@ void func_150EEC84(struct127 *arg0) {
 extern void func_151045E0(void *, s32, f32);
 extern void func_15052590(void);
 
-void func_150EEDA8(u8 *arg0) {
-    if (arg0[5] != 3) {
+void func_150EEDA8(struct127 *arg0) {
+    if (arg0->unk5 != 3) {
         func_151045E0(arg0, 0xF, 250.0f);
-        arg0[5] = 3;
-        *(s16 *)(arg0 + 0xE4) = 0;
-        arg0[0x125] = 0xFF;
+        arg0->unk5 = 3;
+        arg0->unkE4 = 0;
+        arg0->immune = 0xFF;
     }
     func_15052590();
 }
