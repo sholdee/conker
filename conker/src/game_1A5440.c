@@ -4,12 +4,34 @@
 #undef func_15178E14
 #include "variables.h"
 
+typedef struct Func15178750Inner {
+    u8 pad0[0x36];
+    u8 unk36;
+} Func15178750Inner;
+
+typedef struct Func15178750Arg1 {
+    u8 pad0[0x14];
+    Func15178750Inner *unk14;
+} Func15178750Arg1;
+
+extern s32 func_15168118();
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A5440/func_15177F90.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A5440/func_15178268.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A5440/func_15178750.s")
+s32 func_15178750(s32 arg0, Func15178750Arg1 *arg1, s16 arg2) {
+    Func15178750Inner *temp;
+
+    temp = arg1->unk14;
+    if (temp->unk36 & (1 << arg2)) {
+        return func_15168118();
+    }
+    return arg0;
+}
+
+static void func_15178750_pad(void) {
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A5440/func_151787AC.s")
 

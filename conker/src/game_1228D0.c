@@ -212,7 +212,20 @@ void func_150F6138(s32 arg0, s32 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F6178.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1228D0/func_150F631C.s")
+void func_150F631C(struct260 *arg0) {
+    struct260 *temp_a1;
+    struct102 *temp_a0;
+
+    temp_a1 = arg0;
+    if (*(struct102 *volatile *)((u8 *)temp_a1 + 0x30) != NULL) {
+        func_1516972C(*(struct102 **)((u8 *)temp_a1 + 0x30));
+    }
+
+    temp_a0 = *(struct102 **)((u8 *)temp_a1 + 0x34);
+    if (temp_a0 != NULL) {
+        func_1516972C(temp_a0);
+    }
+}
 
 void func_150F631C(struct260 *arg0);
 

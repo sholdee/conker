@@ -14,6 +14,8 @@ extern s16 D_800DD1C8;
 extern s16 D_800DD1CA;
 extern s16 D_800DD1CC;
 extern s16 D_800DD1CE;
+extern s32 D_800DD1FC;
+extern s32 D_800DD200;
 extern s16 D_800DD204;
 extern s16 D_800DD206;
 
@@ -326,7 +328,19 @@ f32 func_15142B04(f32 arg0) {
 f32 func_15142B44(f32 arg0) {
     return ((arg0 + 1.0f) * (arg0 - 1.0f) * arg0) * D_800A5628;
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142B7C.s")
+Gfx *func_15142B7C(Gfx *gfx, s32 arg1, s32 arg2) {
+    if (~D_800DD200 & arg2) {
+        gSPClearGeometryMode(gfx++, arg2);
+        D_800DD200 |= arg2;
+    }
+
+    if (~D_800DD1FC & arg1) {
+        gSPSetGeometryMode(gfx++, arg1);
+        D_800DD1FC |= arg1;
+    }
+
+    return gfx;
+}
 Gfx *func_15142C10(Gfx *gfx, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 *arg5) {
     if ((arg1 != (&D_800DD1C8)[0]) || (arg2 != D_800DD1CA) || (arg3 != D_800DD1CC) ||
         (arg4 != D_800DD1CE)) {

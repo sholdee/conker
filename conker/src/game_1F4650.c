@@ -8,8 +8,10 @@ extern f32 D_800AAEA8;
 extern f32 D_800AAEAC;
 extern f32 D_800AAEB0;
 extern f32 D_800AAEB4;
+extern f32 D_800AAEB8;
 extern f32 func_151CC1D4(void *);
 extern f32 sinf(f32);
+extern void func_1514373C(f32, f32, f32 *, f32 *);
 extern void func_15145974(struct17 *, f32 *, f32 *);
 extern void func_1000FD38(void *, void *, s32);
 extern s32 func_151C87E0(s32, s32);
@@ -532,7 +534,29 @@ void func_151CBB6C(struct102 *arg0, void **arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CBBE0.s")
+s32 func_151CBBE0(void *arg0) {
+    typedef struct {
+        u8 pad0[0x18];
+        f32 unk18;
+        u8 pad1C[4];
+        f32 unk20;
+        f32 unk24;
+        f32 unk28;
+    } Struct151CBBE0;
+    register Struct151CBBE0 *base;
+    f32 scaled;
+    f32 temp_f0;
+
+    base = (Struct151CBBE0 *)((s32)arg0 + 0x70);
+    temp_f0 = func_151CC1D4(arg0);
+    if (temp_f0 != base->unk28) {
+        base->unk28 = temp_f0;
+        scaled = ((temp_f0 - base->unk18) * base->unk20) * D_800AAEB8;
+        func_1514373C(base->unk24 + scaled,
+            55.0f, (f32 *)((s32)arg0 + 0x10), (f32 *)((s32)arg0 + 0x14));
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CBC60.s")
 

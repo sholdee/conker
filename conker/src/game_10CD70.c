@@ -3,6 +3,28 @@
 #include "variables.h"
 
 
+extern f32 D_800A0FB4;
+extern f32 D_800A0FB8;
+extern void *func_1513418C(void *, s32, u8, s32);
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    u8 unk8;
+    u8 pad9[3];
+    void *unkC;
+    u8 unk10;
+    u8 pad11[3];
+    struct17 unk14;
+    f32 unk20;
+    f32 unk24;
+    s16 unk28;
+    u8 unk2A;
+    u8 unk2B;
+    s8 unk2C;
+    u8 unk2D;
+} Struct150E0348;
+
 typedef struct { u8 c[3]; } Outer;
 extern Outer D_80088984;
 
@@ -85,7 +107,24 @@ void func_150E0300(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_10CD70/func_150E0348.s")
+void func_150E0348(void *arg0, u8 arg1, s32 arg2) {
+    Struct150E0348 sp18;
+
+    sp18.unk0 = 0;
+    sp18.unk4 = 0;
+    sp18.unk8 = *((u8 *)arg0 + 0x3B);
+    sp18.unk10 = 0;
+    sp18.unkC = arg0;
+    sp18.unk14 = *(struct17 *)&D_800A5480;
+    sp18.unk28 = 0x12C;
+    sp18.unk2A = 0x1B;
+    sp18.unk2B = 0xB;
+    sp18.unk2C = -1;
+    sp18.unk2D = 0;
+    sp18.unk20 = D_800A0FB4;
+    sp18.unk24 = D_800A0FB8;
+    func_1513418C(&sp18, 0, arg1, arg2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_10CD70/func_150E03F8.s")
 
