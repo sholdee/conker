@@ -449,7 +449,44 @@ void func_1516F984(Obj1516F984 *arg0, s32 arg1) {
     arg0->field_0x18 = temp >> 8;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516F9C4.s")
+s32 func_1516F9C4(Obj1516FadeStepState *arg0) {
+    s32 temp_a1;
+    s32 temp_v0;
+    s32 temp;
+
+    temp_a1 = arg0->field_0x24;
+    temp_v0 = arg0->field_0x1F;
+    if (temp_a1 != 0) {
+        if (temp_v0 != 0xFF) {
+            temp_v0 += D_800BE9E4 << 4;
+            if (temp_v0 >= 0x100) {
+                temp_v0 = 0xFF;
+            }
+            arg0->field_0x1F = temp_v0;
+            temp_a1 = ((volatile Obj1516FadeStepState *)arg0)->field_0x24;
+        }
+    } else {
+        if (temp_v0 != 0) {
+            temp_v0 -= D_800BE9E4 << 3;
+            if (temp_v0 < 0) {
+                temp_v0 = 0;
+            }
+            arg0->field_0x1F = temp_v0;
+        }
+        temp = (temp_v0 << 9) >> 8;
+        arg0->field_0x16 = temp;
+        arg0->field_0x14 = temp;
+        temp_a1 = ((volatile Obj1516FadeStepState *)arg0)->field_0x24;
+    }
+
+    if ((temp_a1 == 0) && (temp_v0 == 0)) {
+        return 1;
+    }
+
+    func_1516F864((s32)arg0);
+    func_1516F984((Obj1516F984 *)arg0, 0xF0);
+    return 0;
+}
 
 void func_1516FA88(s16 arg0, s16 arg1, s16 arg2, s32 arg3, u8 arg4, s32 arg5) {
     func_1516D99C(arg0, arg1, arg2, 0x1B,

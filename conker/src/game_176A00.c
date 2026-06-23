@@ -12,6 +12,10 @@ extern f32 D_800A5790;
 extern f32 D_800A5794;
 extern f32 D_800A5798;
 extern f32 D_800A579C;
+extern f32 D_800A57A0;
+extern f32 D_800A57A4;
+extern f32 D_800A57A8;
+extern f32 D_800A57AC;
 extern f32 D_800A5888;
 extern f32 D_800A588C;
 extern f32 D_800A5890;
@@ -441,7 +445,58 @@ s32 func_1514A19C(struct Foo1514A19CObj *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514A380.s")
+typedef struct {
+    char pad_0x0[0x8];
+    f32 field_0x8;
+    char pad_0xC[0xC];
+    f32 field_0x18;
+} Struct1514A380ObjExtra;
+
+typedef struct {
+    char pad_0x0[0x2C];
+    f32 field_0x2C;
+    f32 field_0x30;
+    char pad_0x34[0x3C];
+    u8 field_0x70;
+    char pad_0x71[0x1];
+    u8 field_0x72;
+    u8 field_0x73;
+    u8 field_0x74;
+    char pad_0x75[0x9B];
+    Struct1514A380ObjExtra field_0x110;
+} Struct1514A380Obj;
+
+s32 func_1514A380(Struct1514A380Obj *arg0) {
+    Struct1514A380ObjExtra *temp_v0;
+    s32 var_v1;
+    s32 flags;
+
+    flags = arg0->field_0x74;
+    var_v1 = 1;
+    temp_v0 = &arg0->field_0x110;
+    if (!(flags & 2)) {
+        arg0->field_0x2C += (temp_v0->field_0x8 - arg0->field_0x2C) * D_800A57A0;
+        if ((temp_v0->field_0x8 * D_800A57A4) < arg0->field_0x2C) {
+            arg0->field_0x74 |= 2;
+            flags = arg0->field_0x74;
+        } else {
+            var_v1 = 0;
+            flags = arg0->field_0x74;
+        }
+    }
+    if (!(flags & 8)) {
+        arg0->field_0x30 += (temp_v0->field_0x18 - arg0->field_0x30) * D_800A57A8;
+        if ((temp_v0->field_0x18 * D_800A57AC) < arg0->field_0x30) {
+            arg0->field_0x74 |= 8;
+        } else {
+            var_v1 = 0;
+        }
+    }
+    if (var_v1) {
+        func_1513F680(arg0, arg0->field_0x70, 4, arg0->field_0x72, arg0->field_0x73);
+    }
+    return 1;
+}
 
 struct Foo1514A498 {
     char pad1C[0x1C];
