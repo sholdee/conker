@@ -7,6 +7,7 @@
 
 extern f32 D_800A8D50;
 extern f32 D_800A8D54;
+extern f32 D_800A8D5C;
 extern f32 D_800A8D60;
 
 struct Data151A561C {
@@ -67,8 +68,9 @@ struct header151A3504 {
 };
 
 struct260 *func_151A3504(struct frame151A3504 *, u8);
-void func_151A4590(void *, u8);
+void func_151A4590(s32, u8);
 void func_151A499C(void *, u8);
+void *func_1513418C(void *, s32, u8, s32);
 struct260 *func_15130374(void *, u8, s32, u8, s32);
 u16 func_10010154(u16, void *, u16, s16, u16);
 s32 func_15160A58(void *, s32, void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
@@ -170,7 +172,48 @@ struct260 *func_151A3504(struct frame151A3504 *arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A3BE4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D0840/func_151A4590.s")
+struct frame151A4590 {
+    s32 unk0;
+    s32 unk4;
+    u8 unk8;
+    u8 pad9[3];
+    void *unkC;
+    u8 unk10;
+    u8 pad11[3];
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    s16 unk28;
+    u8 unk2A;
+    u8 unk2B;
+    s8 unk2C;
+    u8 unk2D;
+};
+
+void func_151A4590(s32 arg0, u8 arg1) {
+    struct frame151A4590 sp18;
+
+    if (arg0 != 0) {
+        sp18.unk0 = 0;
+        sp18.unk4 = 0;
+        sp18.unk8 = *((u8 *)arg0 + 0x3B);
+        sp18.unk10 = 1;
+        sp18.unk14 = 0.0f;
+        sp18.unk18 = 0.0f;
+        sp18.unk1C = 0.0f;
+        sp18.unk20 = D_800A8D5C;
+        sp18.unk24 = 3.0f;
+        sp18.unk28 = 0x64;
+        sp18.unk2A = 0xA;
+        sp18.unk2B = 1;
+        sp18.unk2C = -1;
+        sp18.unk2D = 0;
+        sp18.unkC = (void *)arg0;
+        func_1513418C(&sp18, 0, arg1, 0);
+    }
+}
 
 void func_151A4638(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, void *arg6) {
     struct260 *ret;
