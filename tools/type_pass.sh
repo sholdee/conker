@@ -22,9 +22,12 @@ LOCAL struct for each pointer that is accessed via offsets. Use OFFSET-BASED fie
 THE LOOP:
 0. Read the function. For each pointer (arg or local) accessed via  *(T*)((cast)base + 0xNN) , collect EVERY
    (offset, access-type) it is read/written at.
-1. Define a LOCAL struct at the TOP of $2.c for each such pointer (or reuse an existing struct from
-   $REPO/conker/include/structs.h if one already matches the offsets/types — check first). Place each field
-   at its EXACT byte offset using explicit padding, e.g.:
+1. FIRST look for an existing struct to REUSE — check the TOP of $2.c (other functions in THIS file often
+   already define the right struct for this pointer) AND $REPO/conker/include/structs.h. If one already has
+   compatible fields at these offsets, REUSE it (extend it with any missing fields at their offsets) rather
+   than defining a duplicate. ONLY if none fits, define a new LOCAL struct at the top of $2.c — name it after
+   the DATA/role it represents or neutrally (e.g. by its size/first owner), NOT after this function, so other
+   functions on the same struct converge on it. Place each field at its EXACT byte offset using padding, e.g.:
      typedef struct { char pad_0[0x14]; s32 field_0x14; f32 field_0x18; char pad_1[0xC]; s16 field_0x28; } Foo;
    A field at offset O must have the SAME type+size as the cast there; pad every gap so each field lands on its
    exact offset. Verify the struct's implied size covers the largest offset accessed.
