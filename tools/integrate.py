@@ -97,8 +97,13 @@ def main():
     sh(f"git add {files} tools/ido_cookbook.md")
     if sh("git diff --cached --quiet").returncode == 0:
         print("INTEGRATE: nothing staged (already committed?); no commit"); return
-    msg = (f"game: match {len(good)} functions via orchestrator{cycle_tag()}\\n\\n{funcs}\\n\\n"
-           "asm-differ score 0; force-clean full-ROM sha1 verifies.\\n\\n"
+    if os.environ.get("CONKER_TYPING"):                         # Phase-1 typing pass (type_pass.sh)
+        head = f"game: type {len(good)} functions (offset-casts -> struct access){cycle_tag()}"
+        body = "byte-identical; force-clean full-ROM sha1 verifies. Offset-cast access -> local typed struct."
+    else:
+        head = f"game: match {len(good)} functions via orchestrator{cycle_tag()}"
+        body = "asm-differ score 0; force-clean full-ROM sha1 verifies."
+    msg = (f"{head}\\n\\n{funcs}\\n\\n{body}\\n\\n"
            "Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>")
     r = sh(f'git commit -q -m "$(printf \'{msg}\')"')
     write_rom_status(True, sh("git rev-parse --short HEAD").stdout.strip())
