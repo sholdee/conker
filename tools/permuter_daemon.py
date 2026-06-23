@@ -46,6 +46,9 @@ def import_new():
             s = json.load(open(sp))
         except Exception:
             continue
+        if s.get("score", 1) == 0:
+            continue                       # base-0 seed (matched / object-match-but-ROM-fail): the
+                                           # permuter would just load score 0 and exit — never import
         func, file = s["func"], s["file"]
         if imported(func):
             continue

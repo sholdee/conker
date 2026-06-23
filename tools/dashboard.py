@@ -7,7 +7,7 @@ Scrapes the live state already emitted by the pipeline (codex logs with SCORE li
 attempts.tsv, .nearmiss, git, the linker map, permuter dirs) and serves it as a
 self-refreshing page. Does not touch the matching pipeline.
 """
-import http.server, socketserver, json, os, re, glob, subprocess, time, sys, importlib.util
+import http.server, socketserver, json, os, re, glob, subprocess, time, sys, importlib.util, threading
 
 REPO = os.environ.get("CONKER_REPO", os.path.expanduser("~/conker"))
 INNER = os.path.join(REPO, "conker")
@@ -219,6 +219,21 @@ def collect():
             "cycle": cycle_status(), "cycle_matched": cycle_matched(),
             "rom": rom_status(), "tree": tree_status()}
 
+# Decouple data collection from the request path: ONE background thread refreshes the snapshot on a
+# fixed cadence, serializing it once. do_GET just writes the pre-built bytes — so client count never
+# drives git/pgrep load and a slow rebuild never blocks a request. (Collectors keep their own cached()
+# TTLs, so each git/pgrep still runs at most once per its TTL even though the refresher loops faster.)
+REFRESH = 2.5
+_snapshot_json = json.dumps({"updated": "starting…"}).encode()
+def _refresher():
+    global _snapshot_json
+    while True:
+        try:
+            _snapshot_json = json.dumps(collect()).encode()
+        except Exception:
+            pass
+        time.sleep(REFRESH)
+
 HTML = r"""<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Conker decomp</title>
 <style>
 :root{color-scheme:dark}
@@ -301,10 +316,7 @@ class H(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             if self.path.startswith("/state.json"):
-                try:
-                    body = json.dumps(collect()).encode()
-                except Exception as e:
-                    body = json.dumps({"error": str(e)}).encode()
+                body = _snapshot_json            # pre-built by the refresher; no work on this thread
                 ct = "application/json"
             else:
                 body = HTML.encode(); ct = "text/html"
@@ -316,8 +328,13 @@ class H(http.server.BaseHTTPRequestHandler):
         except Exception:
             pass
 
+class _Server(socketserver.ThreadingTCPServer):
+    allow_reuse_address = True
+    daemon_threads = True            # don't let in-flight requests block shutdown
+
 if __name__ == "__main__":
-    socketserver.TCPServer.allow_reuse_address = True
-    with socketserver.TCPServer(("", PORT), H) as httpd:
+    _snapshot_json = json.dumps(collect()).encode()           # warm the first snapshot synchronously
+    threading.Thread(target=_refresher, daemon=True).start()  # then refresh on a fixed cadence
+    with _Server(("", PORT), H) as httpd:
         print(f"dashboard: http://localhost:{PORT}  (CONKER_REPO={REPO})")
         httpd.serve_forever()
