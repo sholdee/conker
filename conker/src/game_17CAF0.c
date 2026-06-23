@@ -171,11 +171,38 @@ struct Local151539B4Spawn {
     u8 pad3A[2];
 };
 
+struct Local15153CCCArg {
+    struct Local151539B4Header unk0;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    s16 unk24;
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    s16 unk2C;
+    s16 unk2E;
+    s16 unk30;
+    s16 unk32;
+    u8 unk34;
+    u8 pad35[3];
+    f32 unk38;
+    s16 unk3C;
+    s16 unk3E;
+    s32 unk40;
+};
+
 extern void func_15143794(s32, s32, f32, f32 *);
 extern void func_150CCEB0(struct Local15152874Spawn *, u8, u8);
 extern void (*D_8008AC60[])(u8 *);
 extern s32 (*D_8008ACC8[])(void *);
 extern void func_15156190(void *, u8, s32, u8, s32);
+extern f32 D_800A5FFC;
+extern void func_1514F808(struct Local1514F6E8 *, f32, struct Vec3F *);
+extern void func_151DA6F8(struct Local15153CCCArg *, struct Vec3F *, f32, s16, s32, f32, s32, s32, f32, f32, s32, u8, s32, s16, s16, s32, u8, s32);
 
 struct Local15152ABCOut {
     u8 unk0;
@@ -594,16 +621,61 @@ void func_151539B4(struct Local151539B4Arg *arg0, u8 arg1) {
     }
 }
 
-extern void func_15153CCC(struct Local1514FEFC *, s32, s32, u8, s32);
+extern void func_15153CCC(struct Local1514FEFC *, struct Local15153CCCArg *, s32, u8, s32);
 
 void func_15153C84(void *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4) {
     struct Local1514FEFC sp24;
 
     func_1514F640(arg0, &sp24);
-    func_15153CCC(&sp24, arg1, arg2, arg3, arg4);
+    func_15153CCC(&sp24, (struct Local15153CCCArg *)arg1, arg2, arg3, arg4);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15153CCC.s")
+void func_15153CCC(struct Local1514FEFC *arg0, struct Local15153CCCArg *arg1Struct, s32 arg2, u8 arg3, s32 arg4) {
+    u8 spB4[4];
+    s32 count;
+    s32 rand0;
+    s32 rand1;
+    s32 rand2;
+    f32 randf0;
+    f32 randf1;
+    f32 temp_f24;
+
+    if (func_1514F6E8((struct Local1514F6E8 *)arg0) != 0) {
+        count = (func_150ADA20() % (u32)(arg1Struct->unk26 + 1)) + arg1Struct->unk24;
+        if (count != 0) {
+            temp_f24 = D_800A5FFC;
+            do {
+                func_1514F808((struct Local1514F6E8 *)arg0,
+                              (func_150ADA68() * arg1Struct->unk20) + arg1Struct->unk1C,
+                              (struct Vec3F *)(spB4 - 0xC));
+                randf1 = func_150ADA68();
+                rand2 = func_150ADA20();
+                rand0 = func_150ADA20();
+                randf0 = func_150ADA68();
+                rand1 = func_150ADA20();
+                func_151DA6F8(arg1Struct,
+                              (struct Vec3F *)(spB4 - 0xC),
+                              ((randf1 = randf1) * arg1Struct->unk18) + arg1Struct->unk14,
+                              (s16)((rand2 % (u32)(arg1Struct->unk2E + 1)) + arg1Struct->unk2C),
+                              (rand0 % (u32)(arg1Struct->unk32 + 1)) + arg1Struct->unk30,
+                              ((randf0 = randf0) * arg1Struct->unk10) + arg1Struct->unkC,
+                              (rand1 % (u32)(arg1Struct->unk2A + 1)) + arg1Struct->unk28,
+                              func_150ADA68() < arg1Struct->unk38,
+                              temp_f24,
+                              temp_f24,
+                              1,
+                              arg1Struct->unk34,
+                              arg2,
+                              arg1Struct->unk3C,
+                              arg1Struct->unk3E,
+                              arg1Struct->unk40,
+                              arg3,
+                              arg4);
+                count--;
+            } while (count != 0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15153F18.s")
 
