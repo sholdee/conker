@@ -25,10 +25,10 @@ void func_151011E8(Field124Owner *arg0) {
     func_1513CA6C((struct210 *)arg0);
 }
 
-void func_15101210(struct210 *arg0) {
-    s32 temp = *(s32 *)((s32)arg0 + 0x124) + 0x110;
-    *(s32 *)(temp + 0x28) = 0;
-    func_1513CAA0(arg0);
+void func_15101210(Field124Owner *arg0) {
+    Field124ChildBlock *temp = (Field124ChildBlock *)(arg0->field_0x124 + 0x110);
+    temp->field_0x28 = 0;
+    func_1513CAA0((struct210 *)arg0);
 }
 
 void func_151617C4(struct210 *arg0);

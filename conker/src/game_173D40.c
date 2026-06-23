@@ -182,7 +182,7 @@ void func_15146D60(ActorFields *arg0, s32 arg1, s32 arg2) {
     }
 }
 
-void func_15146E84(s32 arg0, s32 arg1, s32 arg2) {
+void func_15146E84(ActorFields *arg0, s32 arg1, s32 arg2) {
     Struct15147040 sp7C;
     Struct15146E84Buffer sp58;
     u8 temp_color;
@@ -190,8 +190,8 @@ void func_15146E84(s32 arg0, s32 arg1, s32 arg2) {
     s32 temp_rand;
     f32 temp_f0;
 
-    if (*(s32 *)(arg0 + 0x1D4) != 0) {
-        if (func_15146890(&sp7C, (ActorFields *)arg0, (s32)sp58.values, (u8)arg1) != 0) {
+    if (arg0->field_0x1D4 != 0) {
+        if (func_15146890(&sp7C, (ActorFields *)*(s32 *)&arg0, (s32)sp58.values, (u8)arg1) != 0) {
             temp_color = func_151D8E20();
             if (arg2 >= 0x47) {
                 func_15142180(temp_color, &sp7C, sp58.values[6], 1.0f, 1.0f);
