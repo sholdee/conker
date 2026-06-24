@@ -17,6 +17,8 @@ extern u8 D_800D2100;
 extern u8 D_800D2101;
 extern u8 D_800BE590;
 extern u16 D_800BE598[];
+extern s32 func_1503D660(s32 arg0, s32 arg1);
+extern s32 func_1503D774(s32 arg0, s32 arg1);
 
 typedef struct {
     u8 pad0[0x2];
@@ -358,7 +360,38 @@ void func_150843AC(void *arg0, s32 arg1)
 }
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084488.s")
+void func_15084488(u8 *arg0, s32 arg1, s32 arg2) {
+    s32 count;
+    s32 i;
+    GameAEB40Def *temp_v0;
+    u8 *ptr;
+    u8 *list;
+    s32 idx;
+
+    idx = arg0[4];
+    if (idx != 0xFF) {
+        func_1503D774(idx, arg2);
+        temp_v0 = (GameAEB40Def *)D_800D1C90[idx];
+        list = arg0 + 4;
+        count = temp_v0->unk4;
+        if (count == 0) {
+            count = 1;
+        } else {
+            list = (u8 *)D_80086CAC[temp_v0->unk5];
+        }
+        i = 0;
+        ptr = list;
+        count += temp_v0->unk38;
+        if (count > 0) {
+            do {
+                func_1503D774(*ptr, arg2);
+                func_1503D660(*ptr, arg2);
+                i++;
+                ptr++;
+            } while (i != count);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AEB40/func_15084558.s")
 

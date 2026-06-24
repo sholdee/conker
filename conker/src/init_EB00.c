@@ -210,38 +210,6 @@ s32 func_1000F44C(u16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000F568.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000F6B8.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000F85C.s")
-// NON-MATCHING: not even close
-// void func_1000F85C(s32 arg0, s16 arg1, s32 arg2) {
-//     f32 sp1C;
-//     s32 sp18;
-//     s16 temp_a1;
-//     s16 temp_a1_2;
-//     s32 temp_t6;
-//     s16 phi_a1;
-//
-//     temp_t6 = arg0 & 0xFFFF;
-//     temp_a1 = arg1;
-//     if (temp_t6 >= 16) {
-//         sp18 = temp_t6;
-//         arg1 = temp_a1;
-//         temp_a1_2 = arg1;
-//         if (func_1000F3D0(temp_t6) != 0) {
-//             if (temp_a1_2 == 16) {
-//                 sp18 = sp18;
-//                 arg1 = temp_a1_2;
-//                 sp1C = alCents2Ratio(arg2, temp_a1_2);
-//                 arg2 = (s32) sp1C;
-//                 phi_a1 = arg1;
-//             } else {
-//                 phi_a1 = temp_a1_2;
-//                 if (temp_a1_2 == 0x11) {
-//                     phi_a1 = (u16)0x10;
-//                 }
-//             }
-//             func_10017714((((sp18 & 0xF) * 0xC) + 0x80040000) - 0x25E8, phi_a1, arg2);
-//         }
-//     }
-// }
 
 void func_1000F91C(u16 arg0, u16 arg1, s16 arg2, u8 arg3, s32 arg4,
                    s16 arg5, s16 arg6, s16 arg7, s16 arg8, s16 arg9) {
@@ -321,7 +289,23 @@ s32 func_1000FE88(struct15 *arg0, s32 arg1, s32 *arg2) {
 // }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000FF90.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1001001C.s")
+void func_1001001C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s32 i;
+    struct15 *tmp;
+
+    tmp = D_80041FE0;
+    i = 0;
+    if (D_80042760 > 0) {
+        do {
+            if ((arg0 == tmp->unk14) && (arg1 == tmp->unk18) && (arg2 == tmp->unk1C)) {
+                *(f32 *)&tmp->unk2C = alCents2Ratio(arg4);
+                tmp->unkC = arg3;
+            }
+            i++;
+            tmp++;
+        } while (i < D_80042760);
+    }
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_100100E0.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_10010154.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_10010344.s")
