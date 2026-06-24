@@ -173,18 +173,6 @@ void func_151A9EC0(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AA170.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AA17C.s")
-
-extern void func_1519F400(void);
-
-void func_151AA1D0(void) {
-    func_1519F400();
-}
-
-void func_151AA1F0(void) {
-    func_1519F400();
-}
-
 struct s_151AA210_arg {
     char pad0[0x18];
     s32 unk18;
@@ -198,6 +186,29 @@ struct s_151AA210_buf {
 
 extern void func_15147D64(s32, s32);
 extern void func_1519F3B8(struct s_151AA210_arg *);
+
+void func_151AA17C(struct s_151AA210_arg *arg0) {
+    s32 temp;
+    struct s_151AA210_buf sp1C;
+
+    temp = arg0->unk18;
+    sp1C.unk0 = temp;
+    sp1C.unk4 = arg0->unk1C;
+    temp = (s32)&sp1C;
+    func_15147D64(temp, 0xA);
+    func_151494E0(temp, 0xA);
+    func_1519F3B8(arg0);
+}
+
+extern void func_1519F400(void);
+
+void func_151AA1D0(void) {
+    func_1519F400();
+}
+
+void func_151AA1F0(void) {
+    func_1519F400();
+}
 
 void func_151AA210(struct s_151AA210_arg *arg0) {
     s32 temp;

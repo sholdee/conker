@@ -21,6 +21,7 @@ extern f32 D_800AB228;
 extern f32 D_800AB22C;
 extern f32 D_800AB230;
 extern f32 D_800AB234;
+extern s32 allocate_memory(s32, s32, s32, s32);
 
 void func_1503F404(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 s32 func_15132A4C(void *, s32, s32, s32, u8, s32);
@@ -452,7 +453,33 @@ void func_151D5648(void *arg0, u8 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D5B6C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D5D60.s")
+void func_151D5D60(s32 arg0, s16 arg1, s32 arg2, s32 *arg3, s8 *arg4) {
+    s8 sp27;
+    s32 base;
+    s32 *slot;
+
+    if (arg4 == NULL) {
+        arg4 = &sp27;
+    }
+    *arg4 = 0;
+
+    slot = (s32 *)(*(s32 *)&arg0 + (arg1 * 4));
+    base = *slot;
+    if (base != 0) {
+        goto block_6;
+    }
+    base = allocate_memory(arg2 * 2, 1, 2, 1);
+    *slot = base;
+    if (base == 0) {
+        *arg3 = 0;
+        return;
+    }
+    *arg4 = 1;
+    base = *slot;
+
+block_6:
+    *arg3 = ((D_800BE9C0 != 0) ? 0 : arg2) + base;
+}
 
 void func_151D5E30(s32 *arg0) {
     s32 i;
