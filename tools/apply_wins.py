@@ -14,47 +14,75 @@ NM = os.path.join(INNER, "nonmatchings")
 def sh(cmd, cwd=REPO):
     return subprocess.run(cmd, shell=True, cwd=cwd, capture_output=True, text=True)
 
-def extract_func(srcfile):
-    """Return the agent's local decls + the winning function, stripping the permuter's inlined
-    project-type preamble. The permuter inlines project header types (scalars AND named/anon
-    typedef-struct blocks like Tri/Gdma/Gtri) so it can compile standalone; the project src
-    #includes those types, so they must be dropped or they REDEFINE the header and the port fails
-    to compile. Match-stage seeds carry no local typedefs (agents add extern/prototype decls, not
-    typedefs), so dropping every typedef is safe; a wrong strip just yields a graceful .noport."""
+def _project_types():
+    """Type names DEFINED in the project headers (Gfx, Tri, Mtx, s32, f32, ...). The permuter inlines
+    these to compile standalone; the project src #includes them, so re-emitting them REDEFINES and the
+    port fails. We strip ONLY these — agent-local typedefs (e.g. a typed struct_<hex> from the type
+    sweep) are NOT in headers and MUST be kept or the function references an undefined type."""
+    names = set()
+    td = re.compile(r'\btypedef\b[^;{}]*?(\w+)\s*;')      # typedef <...> NAME;  (scalar/alias/fn-ptr)
+    cb = re.compile(r'\}\s*(\w+)\s*;')                     # } NAME;  (struct/union/enum/typedef-struct)
+    for h in glob.glob(os.path.join(INNER, "include", "**", "*.h"), recursive=True):
+        try:
+            txt = open(h, errors="ignore").read()
+        except OSError:
+            continue
+        names.update(m.group(1) for m in td.finditer(txt))
+        names.update(m.group(1) for m in cb.finditer(txt))
+    return names
+
+def extract_func(srcfile, project_types=None):
+    """Return the agent's local decls + the winning function, stripping ONLY the permuter's inlined
+    PROJECT types (those in project_types) — they redefine the headers and break the port. Agent-local
+    typedefs (a typed struct_<hex> from the type sweep) are KEPT (not in headers; the function needs
+    them). A typedef is stripped iff the type NAME it defines is project-defined."""
+    if project_types is None:
+        project_types = _project_types()
     lines = open(srcfile).read().splitlines()
     out, i, n = [], 0, len(lines)
     intrinsic = re.compile(r"sqrtf|fabsf|#pragma intrinsic")
     ts_open = re.compile(r"^\s*typedef\s+(struct|union|enum)\b")   # block typedef (named OR anon)
     s_open = re.compile(r"^\s*(struct|union|enum)\s+struct\d+\b")  # bare anon project-struct expansion
     td_any = re.compile(r"^\s*typedef\b")                          # any other typedef (scalar/alias/fn-ptr)
+    name_re = re.compile(r'(\w+)\s*;')
     while i < n:
         ln = lines[i]
         if intrinsic.search(ln):
             i += 1; continue
-        if ts_open.match(ln) or s_open.match(ln):
-            # find the opening brace in a short window (permuter emits "typedef struct\n{")
+        if ts_open.match(ln) or s_open.match(ln):                 # multi-line block typedef/struct
             j = i
             while j < n and j < i + 3 and "{" not in lines[j]:
                 j += 1
             if j < n and "{" in lines[j]:
                 depth = 0
-                while j < n:                          # brace-count to the matching close (incl "} Name;")
+                while j < n:                                       # brace-count to matching close ("} Name;")
                     depth += lines[j].count("{") - lines[j].count("}")
                     j += 1
                     if depth <= 0:
                         break
-                i = j; continue
-            i += 1; continue                          # forward/one-line block typedef -> drop the line
-        if td_any.match(ln):                          # scalar/alias/fn-ptr typedef -> drop to terminating ';'
-            while i < n and ";" not in lines[i]:
-                i += 1
-            i += 1; continue
-        out.append(ln); i += 1
+                stmt_end = j
+            else:
+                stmt_end = i + 1                                   # forward/one-line block typedef
+        elif td_any.match(ln):                                    # scalar/alias/fn-ptr typedef
+            j = i
+            while j < n and ";" not in lines[j]:
+                j += 1
+            stmt_end = j + 1
+        else:
+            out.append(ln); i += 1; continue
+        # decide keep-vs-strip by the defined type NAME (identifier before the final ';')
+        stmt = " ".join(lines[i:stmt_end])
+        m = list(name_re.finditer(stmt))
+        tyname = m[-1].group(1) if m else None
+        if tyname is None or tyname in project_types:             # project type (or unparseable) -> strip
+            i = stmt_end; continue
+        out.extend(lines[i:stmt_end]); i = stmt_end               # agent-local type -> KEEP
     return "\n".join(out).strip() + "\n"
 
 def main():
     r = sh(f"python3 {REPO}/tools/permuter_daemon.py collect")
     wins = [l.split() for l in r.stdout.splitlines() if l.startswith("WIN ")]
+    ptypes = _project_types()              # compute the project-type set ONCE for all wins
     committed = []
     for _, func, file, src in wins:
         cfile = os.path.join(INNER, f"src/{file}.c")
@@ -62,7 +90,7 @@ def main():
         pragma = f'#pragma GLOBAL_ASM("asm/nonmatchings/{file}/{func}.s")'
         if pragma not in orig:
             continue
-        body = extract_func(src)
+        body = extract_func(src, ptypes)
         open(cfile, "w").write(orig.replace(pragma, body, 1))
         sc = sh(f"{REPO}/tools/iter_match.sh {file} {func}")
         if re.search(r"SCORE: 0\b", sc.stdout):
