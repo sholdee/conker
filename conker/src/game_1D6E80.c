@@ -13,6 +13,7 @@ extern f32 D_800A8F88;
 extern f32 D_800A8F8C;
 extern f32 D_800A8F90;
 extern f32 D_800A8FEC;
+extern f32 D_800A9014;
 extern s32 func_15045800(f32 *, s32, f32, s32);
 extern s32 func_151ABE40(f32 *, s32, s32, s32, s32);
 extern s32 func_10010FFC(s32, s32, s32, s32, s32, s32);
@@ -21,6 +22,7 @@ extern void func_151ABE00(void *);
 extern void *func_15190770(void *, s32, s32, s32);
 extern void func_151346EC(u8 *);
 extern void func_1513470C(u8 *);
+extern u8 func_151D8E20(void);
 extern f32 D_800A8FF0;
 extern f32 D_800A8F94;
 
@@ -665,7 +667,31 @@ void func_151AB854(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB920.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB930.s")
+void func_151AB930(struct127 *arg0) {
+    struct260 *temp_v0;
+    struct {
+        struct127 *unk0;
+        u8 unk4;
+        u8 pad5[3];
+        s32 unk8;
+        f32 unkC;
+        f32 unk10;
+        f32 unk14;
+        u8 unk18;
+    } sp28;
+
+    sp28.unk0 = arg0;
+    sp28.unk4 = ((volatile struct127 *)arg0)->unique_id;
+    sp28.unk8 = arg0->unk84.uh;
+    sp28.unkC = 0.0f;
+    sp28.unk10 = D_800A9014;
+    sp28.unk14 = 3.0f;
+    sp28.unk18 = func_151D8E20();
+    temp_v0 = func_151491F4(0x3C, -1, 0xE, 1, 9, 0x1C, 0xFF, 0);
+    if (temp_v0 != NULL) {
+        memcpy((void *)((s32)temp_v0 + 0x28), &sp28, 0x1C);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AB9C8.s")
 
