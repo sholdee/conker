@@ -2,6 +2,8 @@
 #include "functions.h"
 #include "variables.h"
 
+extern s32 D_800DDD58;
+extern s32 func_1517D074(s32, s16, s16, s16, f32, s32, s32, s32, s32, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517B500.s")
 
@@ -88,7 +90,34 @@ void func_1517D5FC(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, s32 arg5)
     func_1517D578(arg0, arg1, arg2, D_800DBFF0[arg3].unk380, arg4, arg5, D_800DDD1C >> 3);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517D690.s")
+s32 func_1517D690(s32 arg0, s32 arg1) {
+    s32 saved;
+
+    saved = D_800DDD58;
+    if ((D_800DDD1C = D_800DDD1C + 5) >= 0xC8) {
+        D_800DDD1C -= 0xC8;
+    }
+
+    if (D_8008CEB0 != 0) {
+        do {
+            D_8008CEB0 = D_8008CEB0 - 1;
+            if (arg1 != 0) {
+                arg0 = func_1517D074(arg0,
+                                      D_800DDD28[D_8008CEB0].unk0,
+                                      D_800DDD28[D_8008CEB0].unk2,
+                                      D_800DDD28[D_8008CEB0].unk4,
+                                      D_800DDD28[D_8008CEB0].unkC,
+                                      (s32)(u16)D_800DDD28[D_8008CEB0].unk8,
+                                      (s32)(u16)D_800DDD28[D_8008CEB0].unkA,
+                                      0x10, 0x20,
+                                      ((D_800DDD28[D_8008CEB0].unk6 * 0x280) << 1) + arg1);
+            }
+        } while (D_8008CEB0 != 0);
+    }
+
+    D_800DDD58 = saved;
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517D7B0.s")
 

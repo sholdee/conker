@@ -13,6 +13,13 @@ void func_1515F0AC(f32, s32);
 extern void func_10004074(void *);
 extern f32 D_800A6530;
 
+struct Struct1515FBC4 {
+    u8 pad0[0x98];
+    struct127 *unk98;
+};
+
+struct Struct1515FBC4 *func_15105C24(s32);
+
 s32 *func_1515D440(void) {
     s32 *temp;
 
@@ -408,7 +415,23 @@ s32 func_1515FB94(struct127 *arg0, s32 arg1) {
     return func_1505D024(arg0, 0x6002D, arg0->unk7A, -1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515FBC4.s")
+void func_1515FBC4(struct127 *arg0, s32 arg1) {
+    struct Struct1515FBC4 *temp_v0;
+    struct127 *temp_v1;
+    s32 temp_a3;
+
+    temp_v1 = 0;
+    temp_v0 = func_15105C24(arg1);
+    if (temp_v0 != 0) {
+        temp_v1 = temp_v0->unk98;
+    }
+    if (temp_v1 != 0) {
+        temp_a3 = ((s32)temp_v1 - (s32)D_800CC2D0) / (s32)sizeof(struct127);
+    } else {
+        temp_a3 = -1;
+    }
+    func_1505D024(arg0, 0x6002E, arg0->unk7A, temp_a3);
+}
 
 s32 func_1505D024(struct127 *arg0, s32 arg1, u16 arg2, s32 arg3);
 
