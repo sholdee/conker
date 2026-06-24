@@ -61,7 +61,17 @@ s32 func_15041480(u8 arg0) {
     return i;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6E770/func_15041508.s")
+Gfx *func_15041508(Gfx *gfx, s32 arg1, s32 arg2, s32 arg3)
+{
+  s32 rem;
+  rem = arg3 % 8;
+ { Gfx *_g = (Gfx *) (gfx++); _g->words.w0 = (((unsigned int) ((((unsigned int) 0xe4) & ((0x01 << 8) - 1)) << 24)) | ((unsigned int) ((((unsigned int) ((arg1 + 8) << 2)) & ((0x01 << 12) - 1)) << 12))) | ((unsigned int) ((((unsigned int) ((arg2 + 12) << 2)) & ((0x01 << 12) - 1)) << 0)); _g->words.w1 = (((unsigned int) ((((unsigned int) 0) & ((0x01 << 3) - 1)) << 24)) | ((unsigned int) ((((unsigned int) (arg1 << 2)) & ((0x01 << 12) - 1)) << 12))) | ((unsigned int) ((((unsigned int) (arg2 << 2)) & ((0x01 << 12) - 1)) << 0)); { Gfx *_g = (Gfx *) (gfx++); _g->words.w0 = (unsigned int) ((((unsigned int) 0xe1) & ((0x01 << 8) - 1)) << 24); _g->words.w1 = (unsigned int) (((unsigned int) ((((unsigned int) ((rem * 8) << 5)) & ((0x01 << 16) - 1)) << 16)) | ((unsigned int) ((((unsigned int) ((((arg3 - rem) / 8) * 0x180) & 0xFFFFu)) & ((0x01 << 16) - 1)) << 0))); } ; { Gfx *_g = (Gfx *) (gfx++); _g->words.w0 = (unsigned int) ((((unsigned int) 0xf1) & ((0x01 << 8) - 1)) << 24); _g->words.w1 = (unsigned int) (((unsigned int) ((((unsigned int) 0x400) & ((0x01 << 16) - 1)) << 16)) | ((unsigned int) ((((unsigned int) 0x400) & ((0x01 << 16) - 1)) << 0))); }
+    ;
+  }
+  ;
+  return gfx;
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6E770/func_150415E0.s")
 
