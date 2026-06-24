@@ -55,7 +55,26 @@ void func_150C553C(struct102 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F2820/func_150C56A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F2820/func_150C5B88.s")
+typedef struct {
+    s32 unk0;
+    u8 pad4[0x10];
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+} Sub150C5B88;
+
+s32 func_150C5B88(struct102 *arg0) {
+    Sub150C5B88 **temp_v1;
+
+    temp_v1 = (Sub150C5B88 **)((u8 *)arg0 + 0xC8);
+    if ((*temp_v1)->unk0 == 0) {
+        return 0;
+    }
+    *(f32 *)((u8 *)arg0 + 0x24) = (*temp_v1)->unk14;
+    *(f32 *)((u8 *)arg0 + 0x28) = (*temp_v1)->unk18;
+    *(f32 *)((u8 *)arg0 + 0x2C) = (*temp_v1)->unk1C;
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F2820/func_150C5BD4.s")
 

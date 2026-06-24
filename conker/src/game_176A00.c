@@ -808,7 +808,61 @@ void func_1514C2F0(f32 arg0, f32 arg1, f32 arg2, f32 arg3,
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514C470.s")
+void func_1514C470(f32 arg0, f32 arg1, f32 arg2, f32 arg3,
+                   f32 arg4, f32 arg5, f32 arg6, u8 arg7,
+                   s32 arg8, f32 arg9, s32 arg10, u8 arg11) {
+    Func1514C2F0Callback *callbacks;
+    Func1514C2F0Callback callback;
+    f32 pad[1];
+    f32 step_z;
+    f32 step_y;
+    f32 step_x;
+    f32 inv;
+    f32 cur_x;
+    f32 cur_y;
+    f32 cur_z;
+    f32 temp_arg0;
+    f32 temp_arg1;
+    s16 i;
+
+    callbacks = &D_8008AA00[arg7];
+    i = 0;
+    if (arg6 < 2.0f) {
+        return;
+    }
+
+    if ((s32) arg6 & 1) {
+        inv = 1.0f / (arg6 - 1.0f);
+        step_x = (arg3 - arg0) * inv;
+        step_y = (arg4 - arg1) * inv;
+        step_z = (arg5 - arg2) * inv;
+    } else {
+        inv = 1.0f / (arg6 - 1.0f);
+        step_x = (arg3 - arg0) * inv;
+        step_y = (arg4 - arg1) * inv;
+        step_z = (arg5 - arg2) * inv;
+    }
+
+    cur_x = arg0;
+    temp_arg0 = arg0;
+    temp_arg1 = arg1;
+    cur_y = arg1;
+    cur_z = arg2;
+    do {
+        callback = *callbacks;
+        if (callback != 0) {
+            if (callback(0, i, cur_x, cur_y, cur_z, temp_arg0, temp_arg1, arg2,
+                         0, 0, 0.0f, arg8, arg9, arg10, arg11) == 0) {
+                return;
+            }
+        }
+        arg6 -= 1.0f;
+        cur_x += step_x;
+        i++;
+        cur_y += step_y;
+        cur_z += step_z;
+    } while (0.0f < arg6);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514C678.s")
 

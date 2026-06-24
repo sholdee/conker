@@ -114,7 +114,18 @@ void func_15165F80(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_193430/func_15166118.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_193430/func_15166204.s")
+void func_15166204(EffectType4Object *arg0) {
+    s32 temp_v0;
+
+    temp_v0 = arg0->field_0x92;
+    arg0->field_0x9E = arg0->field_0x9E + (arg0->field_0x96 * D_800BE9E4);
+    temp_v0 -= D_800BE9E4;
+    if (temp_v0 <= 0) {
+        func_1516972C((struct102 *)arg0);
+        return;
+    }
+    arg0->field_0x92 = temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_193430/func_15166268.s")
 
