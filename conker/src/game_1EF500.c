@@ -9,6 +9,7 @@ typedef void (*GameFunc151C455CCallback)(struct17 *, s32);
 
 extern GameFunc151C455CDispatch D_8008FBD0[];
 extern s32 func_150ADA20(void);
+extern f32 D_800AAA7C;
 extern f32 D_800AAA80;
 extern f32 D_800AAA84;
 
@@ -76,7 +77,31 @@ s32 func_151C2EF0(s32 a0, s32 a1, struct108 *a2, s32 a3, s32 arg4, s32 arg5) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C3B0C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C436C.s")
+void func_151C436C(s32 a0, f32 *a1, s32 a2) {
+    f32 x;
+    f32 tx;
+    f32 y;
+    f32 ty;
+    f32 z;
+    f32 tz;
+    f32 factor;
+
+    if (a2 > 0) {
+        x = a1[4];
+        tx = a1[7];
+        y = a1[5];
+        ty = a1[8];
+        z = a1[6];
+        tz = a1[9];
+        factor = D_800AAA7C;
+        do {
+            a1[4] += (tx - a1[4]) * factor;
+            a1[5] += (ty - a1[5]) * factor;
+            a1[6] += (tz - a1[6]) * factor;
+            a2--;
+        } while (a2 > 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C43E0.s")
 
