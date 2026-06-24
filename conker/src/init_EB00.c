@@ -112,7 +112,22 @@ s32 func_1000EF40(struct57 *arg0, struct57 *arg1, s32 *arg2, s32 arg3, s32 arg4,
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000EFB4.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000F1A8.s")
+void func_1000F1A8(void) {
+    s32 i;
+
+    D_80042760 = 0;
+    D_80041FD9 = 1;
+    D_80041FD8 = 0;
+    bzero(D_800425E0, 0x180);
+
+    for (i = 0; i < 0x10; i++) {
+        D_800425E0[i].unk2 = i + 0x10;
+    }
+
+    D_80041F50 = 0;
+    func_100176EC();
+    D_80041F60 = D_80041F61 = 0;
+}
 
 void func_10017780(u8 arg0, u16 arg1);
 s32* allocate_memory(s32, s32, s32, s32);

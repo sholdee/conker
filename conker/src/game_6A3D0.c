@@ -130,7 +130,22 @@ s32 func_1503D804(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503D984.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503DA3C.s")
+s32 func_1503DA3C(s32 arg0, s32 arg1) {
+    u8 *v0 = (u8 *)(&D_800D19A0)[arg0];
+    u8 *v1 = v0 - 0x38;
+    u8 *temp;
+    s32 ret;
+
+    if (v0 == 0) {
+        return 0xFF;
+    }
+    if (*(u32 *)(v1 + 0x34) < (u32)(arg1 + 1)) {
+        return 0xFF;
+    }
+    temp = *(u8 **)(v1 + 0x30);
+    ret = temp ? temp[arg1] : 0xFF;
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503DA9C.s")
 

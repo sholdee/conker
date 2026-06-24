@@ -258,7 +258,28 @@ s32 func_1000CA18(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return tmp | 0x80000000;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000CAE4.s")
+s32 func_1000CAE4(s32 arg0, u8 arg1, f32 arg2, f32 arg3, f32 arg4) {
+    s32 sp24;
+
+    sp24 = arg0 & 2;
+    arg0 = arg0 & 1;
+    if (D_800BE9F0 == 0x42) {
+        func_10011FA0((s32 *)4);
+        if (arg0 == 0) {
+            arg0 = 1;
+            func_1000E704(0x58, 1, 0xFFFF);
+        }
+    } else if (arg0 != 0) {
+        func_1000E704(0x58, 0, 0xFFFF);
+        func_1000E40C(0x58, 0x3E80);
+        arg0 = 0;
+    }
+    if (sp24 == 0) {
+        func_10008790(arg1, 0x1000, 0, 1);
+        sp24 = 2;
+    }
+    return sp24 | arg0;
+}
 
 void func_1000CBA8(s32 arg0) {
     if (D_800417B0[0] != NULL) {

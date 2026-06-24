@@ -3,6 +3,14 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct {
+    s32 unk0;
+} func_160006CC_sp3C;
+
+extern u8 D_160037F0;
+extern func_160006CC_sp3C D_16003B48;
+
+void func_160006CC(struct118 *arg0);
 
 void func_16000000(void) {
     func_160012B0(278, &D_160046AC);
@@ -165,7 +173,33 @@ void func_16000424(struct118 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/debugger/debugger/func_16000590.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/debugger/debugger/func_160006CC.s")
+void func_160006CC(struct118 *arg0) {
+    func_160006CC_sp3C sp3C;
+    u8 *var_s3;
+    u8 *var_s1;
+    s32 temp_s0;
+    u8 var_v0;
+    u8 temp_v0;
+
+    var_s3 = (u8 *)&sp3C;
+    temp_s0 = 0x123;
+    sp3C = D_16003B48;
+    var_s1 = &D_160037F0;
+    func_16001338(0xC0, 0xC0, 0xFF);
+    var_v0 = *(volatile u8 *)&D_160037F0;
+
+    do {
+        var_s3[0] = var_v0;
+        var_s3[1] = var_s1[1];
+        func_160012B0(temp_s0, var_s3);
+        temp_s0 += 3;
+        temp_v0 = var_s1[2];
+        func_16001044(temp_s0, 0, ((s32 *)arg0)[temp_v0 + 1]);
+        var_v0 = var_s1[3];
+        temp_s0 += 0xD;
+        var_s1 += 3;
+    } while (var_v0 != 0);
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/debugger/debugger/func_1600078C.s")
 // NON-MATCHING: close but still some stuff to figure out
 // void func_1600078C(void) {
