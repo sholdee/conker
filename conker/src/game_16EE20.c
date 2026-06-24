@@ -1000,7 +1000,17 @@ void func_15146508(struct127 *arg0, struct127 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_1514654C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_1514672C.s")
+s32 func_1514672C(struct17 *arg0) {
+    f32 temp_f2;
+    f32 temp_f0;
+
+    temp_f2 = D_800A56C4;
+block_1514672C:
+    if ((temp_f2 < fabsf(arg0->unk0)) || (temp_f2 < fabsf(arg0->unk8)) || (temp_f0 = arg0->unk4, (temp_f2 < temp_f0)) || (temp_f0 < D_800A56C8)) {
+        return 0;
+    }
+    return 1;
+}
 // NON-MATCHING: JUSTREG: first 3 statements are out of order
 // s32 func_1514672C(struct17 *arg0) {
 //     if ((D_800A56C4 < fabsf(arg0->unk0)) || (D_800A56C4 < fabsf(arg0->unk8)) || (D_800A56C4 < arg0->unk4) || (arg0->unk4 < D_800A56C8)) {
