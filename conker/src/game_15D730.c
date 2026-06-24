@@ -5,8 +5,29 @@
 #include "variables.h"
 
 extern f32 sqrtf(f32);
+extern f32 D_800A3848;
+extern f32 D_800A384C;
 extern f32 D_800A3850;
 extern void (*D_80089814[])(s32 *);
+
+typedef struct Obj15131B7C {
+    u8 pad0[0x3C];
+    f32 unk3C;
+    f32 unk40;
+    f32 unk44;
+    u8 pad48[0x10];
+    f32 unk58;
+    f32 unk5C;
+    f32 unk60;
+    f32 unk64;
+    s32 unk68;
+} Obj15131B7C;
+
+typedef struct Struct15131B7CArg3 {
+    u8 unk0;
+    u8 pad1[3];
+    f32 unk4;
+} Struct15131B7CArg3;
 
 typedef struct Struct15130280 {
     s32 unk0;
@@ -278,7 +299,21 @@ s32 func_15131B3C(Obj15130280 *arg0, s32 arg1) {
     return func_151319C4(arg0, arg1, &arg0->field_0xB0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15131B7C.s")
+s32 func_15131B7C(Obj15131B7C *arg0, s32 arg1, f32 *arg2, Struct15131B7CArg3 *arg3) {
+    arg0->unk44 = (arg0->unk3C * D_800A3848) + arg2[1];
+    arg0->unk58 = arg0->unk58 * arg3->unk4;
+    arg0->unk5C = arg0->unk5C * -arg3->unk4;
+    arg0->unk60 = arg0->unk60 * arg3->unk4;
+    if (fabsf(arg0->unk5C) < D_800A384C) {
+        arg0->unk58 = 0.0f;
+        arg0->unk5C = 0.0f;
+        arg0->unk60 = 0.0f;
+        arg0->unk64 = 0.0f;
+        arg3->unk0 = arg3->unk0 & 0xFFFE;
+        arg0->unk68 = arg0->unk68 & ~6;
+    }
+    return 1;
+}
 
 extern s32 (*D_80089878[])(s32 *, s32, u8);
 
