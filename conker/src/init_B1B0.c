@@ -97,7 +97,66 @@ struct137 *func_1000B2F4(s32 arg0) {
     return NULL;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000B3D4.s")
+void func_1000B3D4(struct151 *arg0, struct151 *arg1) {
+    s32 i;
+    s32 limit;
+    struct151 *var_s2;
+    struct151 **slot;
+    struct151 *temp_v0;
+    struct151 *temp_a0;
+
+    var_s2 = NULL;
+    i = 0;
+    limit = 3;
+    if ((&arg1)[0] != NULL) {
+        temp_v0 = (struct151 *)(&arg1)[0]->unk60;
+        if ((temp_v0 != NULL) && (arg0 != temp_v0)) {
+            if (temp_v0->unk4 == arg0->unk4) {
+                arg0->unk4 = -1;
+                return;
+            }
+            temp_v0->unk4 = -1;
+        }
+        (&arg1)[0]->unk60 = (struct00 *)arg0;
+        return;
+    }
+
+    do {
+        if (var_s2 == NULL) {
+            slot = &D_800417B0[i];
+            temp_v0 = *slot;
+            if ((temp_v0 == NULL) || ((temp_v0->unk4 <= 0) && (temp_v0->unk60 == NULL))) {
+                temp_v0 = (struct151 *)func_1000B2F4(0);
+                var_s2 = temp_v0;
+                if (temp_v0 != NULL) {
+                    temp_v0->unk0 = i;
+                    temp_v0->unk60 = (struct00 *)arg0;
+                    *slot = temp_v0;
+                    goto block_20;
+                } else {
+                    arg0->unk4 = -1;
+                    return;
+                }
+            }
+        }
+        if (var_s2 == NULL) {
+            slot = &D_800417B0[i];
+            temp_v0 = *slot;
+            if (temp_v0 != NULL) {
+                temp_a0 = (struct151 *)temp_v0->unk60;
+                if ((temp_a0 != NULL) && (temp_a0->unk4 == 0)) {
+                    var_s2 = (struct151 *)-1;
+                    func_1000B294(temp_a0);
+                    ((struct151 *)(*slot)->unk60)->unk4 = -1;
+                    ((struct151 *)(*slot)->unk60)->unk0 = -1;
+                    (*slot)->unk60 = (struct00 *)arg0;
+                }
+            }
+        }
+block_20:
+        i++;
+    } while (i != limit);
+}
 
 s32 func_1000B548(s32 *arg0) {
     s32 ret = 0;
