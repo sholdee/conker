@@ -1252,3 +1252,5 @@ Special empty-guard case:
 - Redundant default in a real `else` can preserve a plain-branch CFG while the store DCEs: after `x=0; if (cond) { setup; x=1; } else { x=0; }`, IDO can keep `bne ...; move x,zero` plus the true-arm `b join; li x,1`. Empty/goto elses may delete the join branch.
 - Stack byte-buffer string init: when the target copies a literal into a stack buffer via
   rodata word store plus tail byte, write exact-sized `u8 buf[N] = "..."`; N includes the NUL.
+- Empty label as scheduler fence: an otherwise unused C label between statement groups can emit no code but split IDO's scheduling block; use it to stop a prior store/reload/setup from sinking into a following branch/call delay slot or to keep a later load from hoisting across a boundary.
+- Extra formal as register-colored local: when no visible prototype/in-file caller constrains the signature, add an unused formal in the desired arg register (`a1`/`a2`/...) and immediately assign it from the real source; IDO can keep that value in the arg reg without allocating a named-local stack/debug slot.
