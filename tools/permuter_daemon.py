@@ -29,6 +29,8 @@ NM_DIR = os.path.join(INNER, "nonmatchings")
 MAX_PARALLEL = 10         # permuter dirs running at once (24-core host, nice-19; raised 6->10 to work the
                           # import backlog faster AND permute seeds before src-context drifts them to noport)
 THREADS = 2               # -j per permuter
+PERM_MAX_SCORE = int(os.environ.get("PERM_MAX_SCORE", "200"))   # skip seeds this far off — local permutation
+                          # won't close a hundreds-of-instructions gap, so they'd just waste a slot forever
 
 def sh(cmd, cwd=INNER):
     return subprocess.run(cmd, shell=True, cwd=cwd, capture_output=True, text=True)
@@ -174,6 +176,8 @@ def _eligible(exclude):
             continue
         # base.c already score 0 in isolation (permuter exits instantly with "Found zero"): nothing
         # to permute — these object-matches-but-ROM-fails were hogging slots from real near-misses.
+        if _seed_score(f) > PERM_MAX_SCORE:             # too far off for local permutation to ever close
+            continue
         log = f"/tmp/permd_{f}.log"
         if os.path.exists(log):
             try:
@@ -182,14 +186,13 @@ def _eligible(exclude):
             except OSError:
                 pass
         out.append(d)
-    # PRIORITIZE by closeness: lowest seed score first (a score-5 near-miss is far likelier to crack
-    # than a score-80 one), so the 10 slots aren't wasted on far seeds while close ones wait. FAIR-SHOT
-    # guard: a seed already permuted (its /tmp/permd log exists) ranks BEHIND never-tried ones — a close
-    # seed that didn't crack in a full run is most likely an intrinsic residual, so explore fresh seeds
-    # before re-grinding it. Ties: newest import first.
+    # PRIORITIZE by CLOSENESS first: lowest seed score wins, so the 10 slots always work the likeliest-to-
+    # crack seeds. A close seed beats a far one even if the close one was already tried (a tried score-10 is
+    # far likelier to crack on a re-run than an untried score-60). Secondary: untried before tried (give each
+    # a first shot within a score band); tie: newest import first.
     def prio(d):
         f = os.path.basename(d)
-        return (os.path.exists(f"/tmp/permd_{f}.log"), _seed_score(f), -os.path.getmtime(d))
+        return (_seed_score(f), os.path.exists(f"/tmp/permd_{f}.log"), -os.path.getmtime(d))
     return sorted(out, key=prio)
 
 def _launch_one(func, seconds):
