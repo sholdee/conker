@@ -208,7 +208,32 @@ void func_150DBC60(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_108E90/func_150DD640.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_108E90/func_150DDED0.s")
+void func_150DDED0(void *arg0) {
+    struct102 *temp_v0;
+    s32 temp_v1;
+
+    temp_v0 = (struct102 *)func_151491F4(0x64, 2, -1, 1, 0, 1, 0xFF, 0);
+    if (temp_v0 != 0) {
+        temp_v1 = ((u8 *)arg0)[0x72];
+        switch (temp_v1) {
+        case 0xFB:
+            ((u8 *)temp_v0)[0x28] = 1;
+            return;
+        case 0xFC:
+            ((u8 *)temp_v0)[0x28] = 2;
+            return;
+        case 0xFD:
+            ((u8 *)temp_v0)[0x28] = 4;
+            return;
+        case 0xFE:
+            ((u8 *)temp_v0)[0x28] = 3;
+            return;
+        default:
+            func_1516972C(temp_v0);
+            break;
+        }
+    }
+}
 
 s32 func_150DBD70(s32);
 

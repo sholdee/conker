@@ -4,6 +4,15 @@
 
 
 s32 func_15167A68(s32, s32, s32, s32, s32, s32);
+extern s32 func_1510D0EC(s32, s32, s32, s32);
+extern u8 D_A48[];
+
+#define WGFX151D2830(pkt, a, b)    \
+{                                   \
+    Gfx *_g = (Gfx *)(pkt);         \
+    _g->words.w0 = (u32)(a);        \
+    _g->words.w1 = (u32)(b);        \
+}
 
 struct Obj151D26C0 {
     u8  pad0[0xE];
@@ -77,4 +86,32 @@ void func_151D275C(struct Obj151D26C0 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FFB70/func_151D2830.s")
+Gfx *func_151D2830(Gfx *gfx, struct Obj151D26C0 *arg1, s16 arg2) {
+    s32 temp_v0;
+
+    if ((arg2 != arg1->unk10) || (arg1->unk14 == 0)) {
+        return gfx;
+    }
+
+    WGFX151D2830(gfx++, 0xD7000002, 0xFFFFFFFF);
+    WGFX151D2830(gfx++, 0xE7000000, 0);
+    WGFX151D2830(gfx++, 0xFC12D225, 0xFFA7FFFF);
+    WGFX151D2830(gfx++, 0xEF002C3F, 0x00504244);
+
+    temp_v0 = func_1510D0EC((s32)D_A48, 0, 3, 0);
+
+    WGFX151D2830(gfx++, 0xFD700000, temp_v0);
+    WGFX151D2830(gfx++, 0xF5700000, 0x07018060);
+    WGFX151D2830(gfx++, 0xE6000000, 0);
+    WGFX151D2830(gfx++, 0xF3000000, 0x077FF000);
+    WGFX151D2830(gfx++, 0xE7000000, 0);
+    WGFX151D2830(gfx++, 0xF5681000, 0x00018060);
+    WGFX151D2830(gfx++, 0xF2000000, 0x000FC0FC);
+    WGFX151D2830(gfx++, 0xFB000000, (arg1->unk14 & 0xFF) | 0x00FF0000);
+    gSPTextureRectangle(gfx++, 0, 0, 0x500, 0x3C0, 0, arg1->unk12 << 3, 0x400, 0x400, 0x400);
+    WGFX151D2830(gfx++, 0xE7000000, 0);
+    WGFX151D2830(gfx++, 0xFB000000, ((arg1->unk14 >> 1) & 0xFF) | 0xFF000000);
+    gSPTextureRectangle(gfx++, 0, 0, 0x500, 0x3C0, 0, arg1->unk12 << 3, 0, 0x200, 0x200);
+
+    return gfx;
+}
