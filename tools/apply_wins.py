@@ -14,21 +14,24 @@ NM = os.path.join(INNER, "nonmatchings")
 def sh(cmd, cwd=REPO):
     return subprocess.run(cmd, shell=True, cwd=cwd, capture_output=True, text=True)
 
+_TD = re.compile(r'\btypedef\b[^;{}]*?(\w+)\s*;')         # typedef <...> NAME;  (scalar/alias/fn-ptr)
+_CB = re.compile(r'\}\s*(\w+)\s*;')                        # } NAME;  (struct/union/enum/typedef-struct)
+
+def _type_names(text):
+    """Type names DEFINED in a chunk of C (typedef targets + `} NAME;` tags)."""
+    return {m.group(1) for m in _TD.finditer(text)} | {m.group(1) for m in _CB.finditer(text)}
+
 def _project_types():
     """Type names DEFINED in the project headers (Gfx, Tri, Mtx, s32, f32, ...). The permuter inlines
     these to compile standalone; the project src #includes them, so re-emitting them REDEFINES and the
-    port fails. We strip ONLY these — agent-local typedefs (e.g. a typed struct_<hex> from the type
-    sweep) are NOT in headers and MUST be kept or the function references an undefined type."""
+    port fails. We strip these (plus the names already in the TARGET src file — see main) — agent-local
+    typedefs NOT defined anywhere else MUST be kept or the function references an undefined type."""
     names = set()
-    td = re.compile(r'\btypedef\b[^;{}]*?(\w+)\s*;')      # typedef <...> NAME;  (scalar/alias/fn-ptr)
-    cb = re.compile(r'\}\s*(\w+)\s*;')                     # } NAME;  (struct/union/enum/typedef-struct)
     for h in glob.glob(os.path.join(INNER, "include", "**", "*.h"), recursive=True):
         try:
-            txt = open(h, errors="ignore").read()
+            names |= _type_names(open(h, errors="ignore").read())
         except OSError:
             continue
-        names.update(m.group(1) for m in td.finditer(txt))
-        names.update(m.group(1) for m in cb.finditer(txt))
     return names
 
 def extract_func(srcfile, project_types=None):
@@ -90,7 +93,9 @@ def main():
         pragma = f'#pragma GLOBAL_ASM("asm/nonmatchings/{file}/{func}.s")'
         if pragma not in orig:
             continue
-        body = extract_func(src, ptypes)
+        # strip project types AND types already defined in THIS target file (a sibling match since the
+        # seed snapshot may have hoisted the same local struct -> re-emitting it would redeclare).
+        body = extract_func(src, ptypes | _type_names(orig))
         open(cfile, "w").write(orig.replace(pragma, body, 1))
         sc = sh(f"{REPO}/tools/iter_match.sh {file} {func}")
         if re.search(r"SCORE: 0\b", sc.stdout):
