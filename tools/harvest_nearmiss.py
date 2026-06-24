@@ -30,13 +30,22 @@ def extract_def(text, fn):
     return None
 
 
-# keep-best: skip if an existing seed is better or equal
+# keep-best: skip if an existing seed is better or equal — BUT still backfill a missing
+# .full.c (old-harvester seeds have the json without it; the permuter needs the .full.c).
 if os.path.exists(out):
     try:
-        if json.load(open(out)).get("score", 999999) <= score:
-            sys.exit(0)
+        better_or_equal = json.load(open(out)).get("score", 999999) <= score
     except Exception:
-        pass
+        better_or_equal = False
+    if better_or_equal:
+        full = out[:-5] + ".full.c"
+        if not os.path.exists(full):
+            try:
+                shutil.copy(cpath, full)
+                print(f"harvest: {func} backfilled .full.c (score {score}, json kept)")
+            except OSError:
+                pass
+        sys.exit(0)
 try:
     body = extract_def(open(cpath).read(), func)
 except Exception:
