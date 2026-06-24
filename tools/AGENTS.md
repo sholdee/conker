@@ -5,52 +5,33 @@ Two engines run in PARALLEL: the **orchestrator** (LLM agents match `GLOBAL_ASM`
 **permuter daemon** (cracks JUSTREG residue on spare CPU). You coordinate them BETWEEN runs.
 
 ## LATEST STATE & PENDING (read FIRST after compaction)
-- **Active run:** `bash tools/orchestrator_codex.sh 12 400 8` (cycle 5), tracked → notifies. At **~62.7% matched
-  (3703/5904), ~32% bytes**. Rate declining (47→37→27%/cycle) = the FRONTIER, NOT a bug (see FAILURE ANALYSIS);
-  keep matching ($0 trickle), do not treat the decline as fixable.
-- **UNCOMMITTED tools — live on-disk, COMMIT AT GAP:** `dashboard.py` (worker `best` now from
-  `/tmp/best_<func>.score` not the codex log; phase pgrep uses `[x]pat` bracket trick to stop self-match; typing
-  card/phase), `harvest_nearmiss.py` + `permuter_daemon.py` (PERMUTER SEED FIX below), NEW `build_actor.py` +
-  `map_select.py` (Phase-2 analysis). Already committed: type_pass/type_select/type_orchestrator/struct_cluster,
-  integrate add-back + CONKER_TYPING msg.
-- **GAP CHECKLIST (cycle-5 gap):**
-  1. **Cookbook tweaks** (commit, so distill's `git checkout -- ido_cookbook.md` can't revert): (a) diagnostic
-     reframe "far score on a big func = one early residue cascading; diagnose the FIRST mismatch, don't chase
-     magnitude"; (b) BAIL bullets: reloc-spelling `%lo(sym±off)` on identical bytes + stack-aggregate off-by-one-
-     word; (c) `register`/`volatile` grows the -g3 frame, try last.
-  2. Commit the uncommitted tools above + push sholdee.
-  3. **Wire `match→type` into `orchestrator_codex.sh`** (after match rounds): `while pairs=$(python3
-     tools/type_select.py 12); [ -n "$pairs" ]; do bash tools/type_pass.sh $pairs; done` — self-skips when no
-     casts. CANNOT edit while running.
-  4. **Permuter — BACKFILL then feed (it is PAUSED, killed 2026-06-23; was idle-spinning).** Diagnosis: 323
-     `.nearmiss` json seeds but only 4 had `.full.c` (the rest are stale OLD-harvester seeds the fixed importer
-     skips), and those 4 had all since MATCHED → `nonmatchings_perm/` was EMPTY → supervisor spin-looped
-     "topped up 6 (was 0 running)" launching workers that instantly died. So the reservoir is ~99% unusable.
-     FIX = **backfill `.full.c` for STILL-UNMATCHED seeds**: for each `.nearmiss/<func>.json` whose
-     `asm/nonmatchings/*/<func>.s` still exists (still a stub), re-run `iter_match.sh` once to regenerate the
-     compilable `.full.c` (harvest_nearmiss now saves it). $0 Claude (codex/CPU only) but iter_match swaps `src`
-     + builds → RACES the live orchestrator, so run ONLY at the gap (tree quiescent). THEN prune any seed dirs
-     w/o `.full.c`, `permuter_daemon.py import_new`, VERIFY one worker actually compiles+permutes (real proof),
-     then RELAUNCH the supervisor (`setsid python3 tools/permuter_daemon.py supervise 180 3600 >/tmp/permuter_
-     supervise.log 2>&1 </dev/null &`). Do NOT relaunch the supervisor until the backfill has fed it — else it
-     resumes the empty-pantry spin-loop.
-  5. **EFFORT TRIAGE — progress-gated bail + difficult-list shelving** (stops the far-grind: measured 10/13 live
-     slots were on >500-score funcs; no `attempts.tsv` existed so plateau was undetectable). Design (agreed
-     2026-06-23, user-approved): **(a) instrument** — `iter_match.sh` appends `(func, round, best_score)` to
-     `attempts.tsv` each round (it already computes the score). **(b) progress-gated bail, NOT count-gated** — the
-     match loop/prompt bails when best-score shows NO improvement for M iterations (stall), NOT at a fixed attempt
-     count. Keeps the converging "one-residue-away" agent running; kills only true plateaus. Tie to the diagnostic
-     reframe: bail only after the FIRST mismatch was diagnosed + its fix tried + score still won't move. Keep a
-     generous absolute ceiling as backstop. **(c) shelve on stall** — that stall verdict writes `func + last_score
-     + reason` to `difficult_functions.txt`; `similar_chunk.py` SELECT excludes that list (ONE signal drives both
-     layers). **(d) thaw, don't abandon** — re-admit a shelved func only when its inputs change (new typed struct /
-     new shared decl / neighboring permuter crack), not permanently. **(e) bias SELECT toward tractable** —
-     prefer near/mid + low-instr + never-plateaued; let the permuter own the 321-`.nearmiss` reservoir. NOTE: this
-     raises throughput-per-token on the tractable frontier and stops the bleed; it does NOT raise the intrinsic
-     ceiling (~80-85% of the tail stays hard). Shelve criterion is ATTEMPTS-WITHOUT-PROGRESS, never raw score (a
-     far score is often one early residue cascading = crackable). CANNOT edit `iter_match.sh`/`similar_chunk.py`/
-     `orchestrator_codex.sh` while running.
-  6. Relaunch.
+- **Active run:** `bash tools/orchestrator_codex.sh 12 400 8` (cycle 6, relaunched 2026-06-23 at the cycle-5 gap),
+  tracked → notifies. At **~62.7% matched (~2263 GLOBAL_ASM stubs left), ~32% bytes**. Rate declining = the
+  FRONTIER, NOT a bug (see FAILURE ANALYSIS); keep matching ($0 trickle), do not treat the decline as fixable.
+- **CYCLE-5 GAP WORK — ALL DONE & COMMITTED (2026-06-23):**
+  1. ✅ Cookbook tweaks (score-magnitude-tracks-size reframe; reloc-spelling + stack-aggregate-off-by-word BAIL
+     bullets; register/volatile-last + STALL rule) — committed `0df39e8`.
+  2. ✅ Committed tool fixes (dashboard truthfulness, permuter seed `.full.c`, map_select/build_actor) — `0df39e8`.
+  3. ✅ `match→type` sweep wired into `orchestrator_codex.sh` after the rounds (type_pass commits via integrate,
+     so distill's checkout can't lose it; 20-batch cap; self-skips when cast-free) — committed `22ded99`.
+  5. ✅ EFFORT TRIAGE — committed `22ded99`: `difficult_functions.py` derives a plateau SHELF from the
+     attempts.tsv history (≥2 attempts, FLAT, not a near-miss; or repeatedly uncompilable — NEVER on raw score
+     height); `similar_chunk.py` SELECT skips it (bypassed on `CONKER_REPROBE=1`); orchestrator derives the shelf
+     each cycle + RE-PROBES the whole shelf every 5th cycle (thaw); match prompt got the STALL bail (revert after
+     ~3 no-progress iters post first-mismatch diagnosis). NOTE: 5a "instrument" was already done — the orchestrator
+     ALREADY appends `(func,file,best,size)` to `attempts.tsv` every round. Shelf was 18 funcs at relaunch.
+  6. ✅ Relaunched (cleared the attempted-log first — see PERMUTER below).
+- **PERMUTER — still PAUSED; feeding it ORGANICALLY now (NOT a separate backfill script).** Diagnosis stays: 323
+  `.nearmiss` json but only 4 had `.full.c` (rest are stale old-harvester seeds the fixed importer skips) and
+  those 4 had all MATCHED → empty pantry → killed the spin-looping supervisor. KEY: `supervise` does NOT auto-run
+  `import_new` (must run it manually); and NOTHING was clearing `/tmp/orchestrator_attempted_all.txt` (936 funcs)
+  so the near-miss RE-ATTEMPT priority in similar_chunk never fired. FIX CHOSEN at this gap: **cleared the
+  attempted-log before relaunch**, so cycle 6 re-attempts all ~215 still-stub near-misses FIRST (lowest-score
+  first, each seeded with its prior best at `/tmp/prev_<func>.c`) — this organically regenerates their `.full.c`
+  via the committed harvest fix AND matches some outright. **NEXT GAP (after cycle 6): run `python3
+  tools/permuter_daemon.py import_new`, VERIFY one worker compiles+permutes, THEN relaunch the supervisor**
+  (`setsid python3 tools/permuter_daemon.py supervise 180 3600 >/tmp/permuter_supervise.log 2>&1 </dev/null &`).
+  Do NOT relaunch the supervisor until `.full.c` exist for still-stubs (`ls .nearmiss/*.full.c`) — else empty spin.
 - **PERMUTER SEED FIX (harvest side validated):** permuter seeds died on undefined-symbol COMPILE errors — the
   `.nearmiss` body lacked the func's supporting externs/struct decls. FIX: `harvest_nearmiss.py` also saves the
   whole compilable best-C file as `.nearmiss/<func>.full.c`; `import_new` imports from it (skips seeds w/o it).
