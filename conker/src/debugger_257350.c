@@ -1,8 +1,11 @@
 #include <ultra64.h>
 
+#include "libc/stdarg.h"
 #include "functions.h"
 #include "variables.h"
 
+
+extern s32 func_16001BB4(s32 (*arg0)(u8 *, u8 *, u32), u8 *arg1, u8 *arg2, va_list arg3);
 
 // whats wrong with bcopy?
 u8* func_16001AD0(u8 *arg0, u8 *arg1, u32 arg2) {
@@ -32,7 +35,17 @@ s32 func_16001B00(u8 *arg0) {
     return var_v1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/debugger_257350/func_16001B34.s")
+s32 func_16001B34(u8 *arg0, u8 *arg1, ...) {
+    va_list args;
+    s32 temp_v0;
+
+    va_start(args, arg1);
+    temp_v0 = func_16001BB4(func_16001B8C, arg0, arg1, args);
+    if (temp_v0 >= 0) {
+        arg0[temp_v0] = 0;
+    }
+    return temp_v0;
+}
 // s32 func_16001BB4(void *arg0, s32 arg1, void *arg2, s32 arg3) ;
 // NON-MATCHING: need to work out  func_16001BB4
 // s32 func_16001B34(s8 arg0[], s32 arg1, s32 arg2, s32 arg3) {
