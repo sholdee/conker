@@ -410,6 +410,7 @@ s32 func_1000E134(s32 arg0) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000E17C.s")
+
 #pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000E2F4.s")
 
 void func_1000E40C(s32 arg0, s32 arg1) {
@@ -429,7 +430,47 @@ void func_1000E40C(s32 arg0, s32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000E46C.s")
+s32 func_1000E46C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 var_v1;
+    struct151 *temp_v0;
+    struct151 *temp_v1;
+
+    temp_v0 = func_1000B1FC(arg0);
+    arg1 = (arg1 * 0xFF) / 100;
+    temp_v1 = temp_v0;
+    if (arg1 >= 0x100) {
+        arg1 = 0xFF;
+    } else if (arg1 < 0) {
+        arg1 = 0;
+    }
+    if (temp_v0 != NULL) {
+        if (temp_v0->unk0 >= 0) {
+            if (arg3 < 0) {
+                func_1000886C(*(u8 *)((u8 *)temp_v1 + 3), arg2, arg1);
+                return 1;
+            }
+            func_10008790(*(u8 *)((u8 *)temp_v1 + 3), arg2, arg1, arg3);
+            return 1;
+        }
+        if (arg1 == 0) {
+            temp_v0->unk38 |= arg2;
+        } else if (arg1 > 0) {
+            temp_v0->unk38 &= ~arg2;
+        }
+        var_v1 = 0;
+        if (arg2 != 0) {
+            do {
+                if (arg2 & 1) {
+                    temp_v0->unk3C[var_v1] = arg1;
+                }
+                var_v1 += 1;
+                arg2 = arg2 >> 1;
+            } while (arg2 != 0);
+        }
+        return 1;
+    }
+    return 0;
+}
 s32 func_1000E588(s32 arg0, s32 arg1, s32 arg2) {
     struct151 *temp_v0;
 
