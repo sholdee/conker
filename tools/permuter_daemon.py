@@ -66,6 +66,10 @@ def import_new():
             if os.path.exists(base) and os.path.getmtime(full) <= os.path.getmtime(base):
                 continue
             shutil.rmtree(os.path.join(NM_DIR, func), ignore_errors=True)
+            try:
+                os.remove(f"/tmp/permd_{func}.log")     # improved seed -> fresh-shot priority again
+            except OSError:
+                pass
         cfile = f"src/{file}.c"
         cpath = os.path.join(INNER, cfile)
         try:
@@ -113,10 +117,16 @@ def _stub_set():
             pass
     return s
 
+def _seed_score(func):
+    """The harvested near-miss score (lower = closer to a match = likelier to crack)."""
+    try:
+        return json.load(open(os.path.join(NEARMISS, func + ".json"))).get("score", 9999)
+    except Exception:
+        return 9999
+
 def _eligible(exclude):
-    # newest imports first, skip cracked / no-port / already-running. Deterministically PRUNE seeds
-    # whose func has since been matched by codex (no longer a stub) — they'd just load score-0 and
-    # exit, wasting a slot. Keeps the permuter on the real backlog without a manual prune step.
+    # skip cracked / no-port / already-running. Deterministically PRUNE seeds whose func has since
+    # been matched by codex (no longer a stub) — they'd just load score-0 and exit, wasting a slot.
     stubs = _stub_set()
     out = []
     for d in glob.glob(os.path.join(NM_DIR, "func_*")):
@@ -136,7 +146,15 @@ def _eligible(exclude):
             except OSError:
                 pass
         out.append(d)
-    return sorted(out, key=os.path.getmtime, reverse=True)
+    # PRIORITIZE by closeness: lowest seed score first (a score-5 near-miss is far likelier to crack
+    # than a score-80 one), so the 10 slots aren't wasted on far seeds while close ones wait. FAIR-SHOT
+    # guard: a seed already permuted (its /tmp/permd log exists) ranks BEHIND never-tried ones — a close
+    # seed that didn't crack in a full run is most likely an intrinsic residual, so explore fresh seeds
+    # before re-grinding it. Ties: newest import first.
+    def prio(d):
+        f = os.path.basename(d)
+        return (os.path.exists(f"/tmp/permd_{f}.log"), _seed_score(f), -os.path.getmtime(d))
+    return sorted(out, key=prio)
 
 def _launch_one(func, seconds):
     log = f"/tmp/permd_{func}.log"
