@@ -10,6 +10,7 @@ extern f32 D_800A8F74;
 extern f32 D_800A8F7C;
 extern f32 D_800A8F84;
 extern f32 D_800A8F88;
+extern f32 D_800A8F90;
 extern f32 D_800A8FEC;
 extern s32 func_15045800(f32 *, s32, f32, s32);
 extern s32 func_151ABE40(f32 *, s32, s32, s32, s32);
@@ -169,7 +170,24 @@ void func_151A9EC0(u8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151A9FC8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AA09C.s")
+void func_151AA09C(u8 *arg0) {
+    u8 *v1 = *((u8 **)(arg0 + 0x18));
+    f32 sp30[3];
+
+    goto dummy_label_151AA09C; dummy_label_151AA09C: ;
+    sp30[0] = *((f32 *)(v1 + 0x14));
+    if (D_800A8F90 < (*((f32 *)(v1 + 0x118)))) {
+        sp30[1] = (*((f32 *)(v1 + 0x118))) + 100.0f;
+    } else {
+        sp30[1] = (*((f32 *)(v1 + 0x18))) + 150.0f;
+    }
+    sp30[2] = *((f32 *)(v1 + 0x1C));
+    ((s32 *)sp30)[-1] = (s32)(arg0 + 0x34);
+    if (func_15045800(sp30, 0, sp30[1] - 300.0f, (s32)(arg0 + 0x34)) != 0) {
+        sp30[1] = *((f32 *)(arg0 + 0x34));
+        func_151ABE40(sp30, ((s32 *)sp30)[-1], 4, arg0[0xC], arg0[0x1]);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AA170.s")
 

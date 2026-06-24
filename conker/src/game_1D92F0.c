@@ -270,7 +270,26 @@ void func_151ACB94(s32 arg0, s32 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AD92C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE06C.s")
+void func_151AE0E4(u8 *arg0, u8 arg1);
+void func_151AE264(GameObjectFxOwner *arg0);
+
+void func_151AE06C(struct127 *arg0, struct133 *arg1) {
+    u8 sp1F;
+    u8 temp_a1;
+    u8 sp1E;
+
+    if (func_151ACB38((u8 *)arg0, &sp1F) != 0) {
+        temp_a1 = arg1->unk1B;
+        if (*((u8 *)arg0->unk31C + 0x98) == 0) {
+            func_151AE0E4((u8 *)arg0, temp_a1);
+        } else if (temp_a1 == *((u8 *)arg0->unk31C + 0x98)) {
+        } else {
+            sp1E = temp_a1;
+            func_151AE264((GameObjectFxOwner *)arg0);
+            func_151AE0E4((u8 *)arg0, sp1E);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE0E4.s")
 

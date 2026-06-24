@@ -9,6 +9,11 @@ s32 func_1513264C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, u8 arg5, s32
 s32 func_151464B8(s16 *arg0);
 extern u8 D_800C3E90;
 extern s32 (*D_8008998C[])(s32);
+extern s32 D_800A3880[];
+extern s32 D_800DC640[];
+s32 func_1502B6BC(s32 *arg0, s32 arg1, s32 *arg2, s32 arg3, s32 arg4, s32 arg5);
+s32 func_1510CE60(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4);
+void func_15168E54(s32 arg0, s32 arg1);
 
 typedef struct {
     u8 pad_0[0x60];
@@ -213,7 +218,18 @@ s32 func_15133510(s32 arg0, MatrixTransformFields *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133588.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_151336A8.s")
+s32 func_151336A8(s32 arg0, s32 **arg1, s32 arg2) {
+    s32 sp2C;
+    s32 sp28;
+
+    *arg1 = (s32 *)func_1502B6BC(&sp2C, 0, &sp28, 2, 9, D_800A3880[arg0]);
+    if (*arg1 == 0) {
+        return 0;
+    }
+    func_1510CE60(**arg1, 0, 1, 0x3E, &D_800DC640[arg0]);
+    func_15168E54(**arg1, (s32)*arg1);
+    return 1;
+}
 
 s32 func_15142838(s32 arg0, f32 arg1, f32 arg2, s32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8);
 
