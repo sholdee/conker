@@ -3,7 +3,9 @@
 #include "variables.h"
 
 extern u16 *D_800C35C8[];
+extern u16 *D_800C35D8[];
 extern u8 *D_800C35F0[];
+extern u8 D_800C363A[];
 extern void func_1507E7E4(void *, s32, s32, s32, s32);
 extern s8 D_8008FD84[];
 extern u8 D_800C35E8;
@@ -69,7 +71,28 @@ extern void func_1516D328(s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501CE54.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501CFF8.s")
+s32 func_1501CFF8(s32 arg0) {
+    s32 sum;
+    s32 i;
+    s32 count;
+    s32 limit;
+    u16 *ptr;
+
+    sum = 0;
+    i = 0;
+    if ((count = D_800C363A[arg0]) > 0) {
+        limit = count;
+        ptr = D_800C35D8[arg0];
+loop:
+        sum += *ptr;
+        i++;
+        ptr++;
+        if (i < limit) {
+            goto loop;
+        }
+    }
+    return sum;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501D044.s")
 
