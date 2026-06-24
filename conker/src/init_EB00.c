@@ -247,7 +247,16 @@ void func_1000F9D4(u16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000FC18.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000FD38.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000FDF4.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000FE88.s")
+s32 func_1000FE88(struct15 *arg0, s32 arg1, s32 *arg2) {
+    if (arg1 < *arg2) {
+        if (((struct15 *)((u8 *)arg0 + (arg1 * 0x30)))->unk24 != 0) {
+            func_100111C8(((struct15 *)((u8 *)arg0 + (arg1 * 0x30)))->unk24);
+        }
+        ((struct15 *)((u8 *)arg0 + (arg1 * 0x30)))->unk10 |= 0x80;
+        return 0;
+    }
+    return 1;
+}
 // ? func_1000FE88(s32 arg0, s32 arg1, void *arg2) {
 //     void *sp1C;
 //     s32 temp_t7;
