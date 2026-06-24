@@ -39,6 +39,40 @@ def imported(func):
 def cracked(func):
     return bool(glob.glob(os.path.join(NM_DIR, func, "output-0-*")))
 
+# ---- crack ledger: append-only, monotonic LIFETIME accounting -------------------------------------
+# A live scan of output-0 dirs CANNOT count lifetime cracks: _eligible rmtree's a dir once its func
+# matches, so every PORTED crack (the successes) vanishes, while noports linger. This ledger records
+# every crack + outcome durably. Written by supervise (sweeps before pruning) + apply_wins (outcomes).
+CRACK_LEDGER = os.path.join(REPO, ".permuter_cracks.tsv")
+
+def ledger_funcs(event):
+    """Distinct funcs that have a row with this event."""
+    s = set()
+    try:
+        for ln in open(CRACK_LEDGER):
+            p = ln.rstrip("\n").split("\t")
+            if len(p) >= 4 and p[3] == event:
+                s.add(p[1])
+    except OSError:
+        pass
+    return s
+
+def log_crack_event(func, score, event):
+    """Append (ts, func, score, event). 'cracked' is deduped per func (lifetime = distinct funcs)."""
+    if event == "cracked" and func in ledger_funcs("cracked"):
+        return
+    try:
+        with open(CRACK_LEDGER, "a") as f:
+            f.write(f"{int(time.time())}\t{func}\t{score}\t{event}\n")
+    except OSError:
+        pass
+
+def sweep_cracks():
+    """Record any output-0 dir as 'cracked' (deduped) BEFORE _eligible can prune it."""
+    for d in glob.glob(os.path.join(NM_DIR, "func_*", "output-0-*")):
+        func = os.path.basename(os.path.dirname(d))
+        log_crack_event(func, _seed_score(func), "cracked")
+
 def import_new():
     # [audit 5] backstop: a SIGKILL between a seed's copy and its finally-restore could leave a seed
     # body in the live tree. import_new runs only on a clean tree (between orchestrator runs), so
@@ -196,6 +230,7 @@ def supervise(interval=180, per_timeout=3600):
     print(f"supervise: maintaining {MAX_PARALLEL} permuters (check every {interval}s, "
           f"{per_timeout}s each); pid {os.getpid()}")
     while True:
+        sweep_cracks()                       # record cracks to the ledger BEFORE _topup/_eligible prune
         launched, running = _topup(per_timeout)
         if launched:
             print(f"supervise: topped up {launched} (was {running} running)", flush=True)

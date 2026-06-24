@@ -10,6 +10,8 @@ import glob, json, os, re, subprocess, sys
 REPO = os.path.expanduser("~/conker")
 INNER = os.path.join(REPO, "conker")
 NM = os.path.join(INNER, "nonmatchings")
+sys.path.insert(0, os.path.join(REPO, "tools"))
+import permuter_daemon as _pd          # reuse the crack-ledger logger (single source of truth)
 
 def sh(cmd, cwd=REPO):
     return subprocess.run(cmd, shell=True, cwd=cwd, capture_output=True, text=True)
@@ -93,6 +95,8 @@ def main():
         pragma = f'#pragma GLOBAL_ASM("asm/nonmatchings/{file}/{func}.s")'
         if pragma not in orig:
             continue
+        sc0 = _pd._seed_score(func)
+        _pd.log_crack_event(func, sc0, "cracked")     # ensure the crack is in the ledger (sweep may miss)
         # strip project types AND types already defined in THIS target file (a sibling match since the
         # seed snapshot may have hoisted the same local struct -> re-emitting it would redeclare).
         body = extract_func(src, ptypes | _type_names(orig))
@@ -100,10 +104,12 @@ def main():
         sc = sh(f"{REPO}/tools/iter_match.sh {file} {func}")
         if re.search(r"SCORE: 0\b", sc.stdout):
             committed.append((file, func))
+            _pd.log_crack_event(func, sc0, "ported")
             print(f"  PORTS  {func} ({file})")
         else:
             open(cfile, "w").write(orig)          # revert
             open(os.path.join(NM, func, ".noport"), "w").close()
+            _pd.log_crack_event(func, sc0, "noport")
             m = re.search(r"SCORE: (\d+)", sc.stdout)
             print(f"  noport {func} (project score {m.group(1) if m else '?'})")
     if committed:

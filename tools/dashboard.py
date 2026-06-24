@@ -185,17 +185,59 @@ def nearmiss():
         return {"bands": bands, "total": sum(bands.values())}
     return cached("nearmiss", 20, build)
 
+def permuter_slots():
+    """Live per-slot detail: func, seed score, recent-best score, iteration — from ps + permd-log tails."""
+    try:
+        out = subprocess.run("ps -eo args 2>/dev/null | grep '[p]ermuter.py nonmatchings'",
+                             shell=True, capture_output=True, text=True).stdout
+    except Exception:
+        return []
+    slots = []
+    for f in sorted(set(re.findall(r'nonmatchings/(func_\w+)', out))):
+        seed = None
+        try:
+            seed = json.load(open(os.path.join(REPO, ".nearmiss", f + ".json"))).get("score")
+        except Exception:
+            pass
+        best = iters = None
+        try:
+            with open(f"/tmp/permd_{f}.log", "rb") as fh:        # logs are huge + \r-heavy: read the tail
+                fh.seek(0, 2); sz = fh.tell(); fh.seek(max(0, sz - 4000))
+                tail = fh.read().decode("utf-8", "ignore").replace("\r", "\n")
+            scs = [int(x) for x in re.findall(r'score = (\d+)', tail)]
+            if seed is not None:
+                scs.append(seed)                                 # best is never worse than the seed start
+            if scs:
+                best = min(scs)                                  # tightest cheap bound on the global best
+            its = re.findall(r'iteration (\d+)', tail)
+            if its:
+                iters = int(its[-1])
+        except OSError:
+            pass
+        slots.append({"func": f, "seed": seed, "best": best, "iters": iters})
+    return sorted(slots, key=lambda s: s["best"] if s["best"] is not None
+                  else (s["seed"] if s["seed"] is not None else 9999))
+
 def permuter():
     def build():
-        seeded = len(glob.glob(os.path.join(INNER, "nonmatchings/func_*")))
-        cracked = len(glob.glob(os.path.join(INNER, "nonmatchings/func_*/output-0-*")))
+        # LIFETIME stats from the append-only ledger — a live output-0 scan CANNOT count lifetime cracks
+        # because _eligible rmtree's a dir once its func matches (every ported success vanishes). The
+        # ledger (written by supervise's sweep + apply_wins) is monotonic and survives pruning.
+        cracked, ported, noport = set(), set(), set()
         try:
-            live = subprocess.run("pgrep -f '[p]ermuter.py' | wc -l", shell=True,
-                                  capture_output=True, text=True).stdout.strip()
-        except Exception:
-            live = "?"
-        return {"seeded": seeded, "cracked": cracked, "backlog": seeded - cracked, "live": live}
-    return cached("permuter", 15, build)
+            for ln in open(os.path.join(REPO, ".permuter_cracks.tsv")):
+                p = ln.rstrip("\n").split("\t")
+                if len(p) >= 4:
+                    {"cracked": cracked, "ported": ported, "noport": noport}.get(p[3], set()).add(p[1])
+        except OSError:
+            pass
+        seeded = len(glob.glob(os.path.join(INNER, "nonmatchings/func_*")))
+        slots = permuter_slots()
+        return {"seeded": seeded, "live": len(slots),
+                "lifetime": len(cracked), "ported": len(ported),
+                "noport": len(noport - ported), "pending": len(cracked - ported - noport),
+                "slots": slots}
+    return cached("permuter", 8, build)
 
 def cycle_status():
     try:
@@ -469,7 +511,7 @@ h1{font-size:16px;margin:0 0 6px}.sub{color:#8b949e;font-size:11px;margin-bottom
   <div class=card><h2>Near-miss reservoir (re-attempt runway)</h2><div class=nm id=nm></div></div>
   <div class=card><h2>Unmatched runway (by instr size)</h2><div class=nm id=runway></div></div>
   <div class=card><h2>Typing sweep <span style="color:#8b949e;font-size:11px">offset-casts → structs</span></h2><div id=typing></div></div>
-  <div class=card><h2>Permuter (backstop)</h2><div class=kv id=perm></div></div>
+  <div class=card><h2>Permuter <span style="color:#8b949e;font-size:11px">closest-first backstop · live slots</span></h2><div class=kv id=perm></div><div id=pslots style="margin-top:10px"></div></div>
 </div>
 <script>
 const $=id=>document.getElementById(id);
@@ -523,7 +565,11 @@ async function tick(){
  $('commits').innerHTML=(d.commits||[]).map(c=>`<div class=cm><b>+${c.n??'?'}</b> <span style="color:${c.kind==='type'?'#a371f7':'#3fb950'}">${c.kind||'match'}</span> ${c.cycle?`<span style="color:#388bfd">c${c.cycle}</span>`:''} <span>${c.when}</span> ${c.hash}</div>`).join('')||'—';
  const nm=d.nearmiss.bands,mx=Math.max(1,...Object.values(nm));
  $('nm').innerHTML=Object.entries(nm).map(([k,v])=>`<div><div class=b style="height:${Math.round(v/mx*56)}px"></div><small>${v}<br>${k}</small></div>`).join('')+`<div style="align-self:center;color:#8b949e">Σ${d.nearmiss.total}</div>`;
- const pm=d.permuter;$('perm').innerHTML=`<div><b>${pm.cracked}</b>cracked</div><div><b>${pm.backlog}</b>backlog</div><div><b>${pm.seeded}</b>seeded</div><div><b>${pm.live}</b>live procs</div>`;
+ const pm=d.permuter;
+ $('perm').innerHTML=`<div><b style=color:#3fb950>${pm.ported}</b>ported</div><div><b>${pm.lifetime}</b>cracked total</div><div><b>${pm.pending}</b>pending</div><div><b>${pm.noport}</b>noport</div><div><b>${pm.seeded}</b>seeded</div><div><b>${pm.live}</b>live slots</div>`;
+ $('pslots').innerHTML=(pm.slots||[]).map(s=>`<div class=worker>
+   <div class="sc ${scClass(s.best)}" title="seed score ${s.seed}">${s.best==null?(s.seed==null?'—':s.seed):s.best}</div>
+   <div class=fn><b>${s.func}</b> <span>seed ${s.seed==null?'?':s.seed} · ${s.iters!=null?s.iters.toLocaleString()+' it':'starting…'}</span></div></div>`).join('')||'<span style=color:#6e7681>no live slots</span>';
 }
 tick();setInterval(tick,3000);
 </script></body></html>"""
