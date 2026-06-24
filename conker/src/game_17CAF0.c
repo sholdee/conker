@@ -489,7 +489,79 @@ void func_1514FBFC(struct Arg1514FBFC *arg0, u8 arg1, s32 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_1514FCE8.s")
+struct Local1514FCE8 {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s32 unk8;
+    s32 unkC;
+    struct Vec3F unk10;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+    s32 unk34;
+    s32 unk38;
+    f32 unk3C;
+    f32 unk40;
+    f32 unk44;
+    f32 unk48;
+    s16 unk4C;
+    s16 unk4E;
+    s16 unk50;
+    s16 unk52;
+    s16 unk54;
+    s16 unk56;
+    s8 unk58;
+};
+
+extern void func_151A2A14(struct Vec3F *, s16, s16, f32, f32, f32, s32, f32, f32, f32, f32, s16, s16, s16, s16, s16, s16, s8, u8, s32);
+
+void func_1514FCE8(struct Local1514FCE8 *arg0, u8 arg1, s32 arg2) {
+    s32 count;
+    s32 rand0;
+    s32 rand1;
+    s32 rand2;
+    f32 randf0;
+    f32 randf1;
+    f32 randf2;
+
+    count = (func_150ADA20() % (u32)(arg0->unkC + 1)) + arg0->unk8;
+    if (count != 0) {
+        do {
+            rand0 = func_150ADA20();
+            rand1 = func_150ADA20();
+            randf0 = func_150ADA68();
+            randf1 = func_150ADA68();
+            randf2 = func_150ADA68();
+            rand2 = func_150ADA20();
+            func_151A2A14(&arg0->unk10,
+                          (s16)((rand0 % (u32)(arg0->unk2 + 1)) + arg0->unk0),
+                          (s16)((rand1 % (u32)(arg0->unk6 + 1)) + arg0->unk4),
+                          ((randf0 = randf0) * arg0->unk20) + arg0->unk1C,
+                          ((randf1 = randf1) * arg0->unk28) + arg0->unk24,
+                          ((randf2 = randf2) * arg0->unk30) + arg0->unk2C,
+                          (rand2 % (u32)(arg0->unk38 + 1)) + arg0->unk34,
+                          arg0->unk3C,
+                          arg0->unk40,
+                          arg0->unk44,
+                          arg0->unk48,
+                          arg0->unk4C,
+                          arg0->unk4E,
+                          arg0->unk50,
+                          arg0->unk52,
+                          arg0->unk54,
+                          arg0->unk56,
+                          arg0->unk58,
+                          arg1,
+                          arg2);
+            count--;
+        } while (count != 0);
+    }
+}
 
 struct Local1514FF44Arg {
     u8 pad0[0xC];

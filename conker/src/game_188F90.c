@@ -6,6 +6,16 @@ extern s32 (*D_8008B078[])(void *);
 extern s32 (*D_8008B07C[])(void *);
 s32 func_1514401C(u8, void *, void *, u8);
 
+struct Struct1515C158Inner {
+    u8 pad0[0x8];
+    struct Struct1515C158Inner *next;
+    u8 padC[0x38];
+    s32 unk44;
+    s32 unk48;
+};
+
+extern u8 D_800DCE50[];
+
 typedef struct {
     u8 pad0[0x10];
     u8 unk10;
@@ -203,7 +213,23 @@ s32 func_1515C0F8(struct102 *arg0, s32 *arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_188F90/func_1515C158.s")
+void func_1515C158(void) {
+    s32 i;
+    struct Struct1515C158Inner *node;
+
+    i = 0;
+    do {
+        node = *(struct Struct1515C158Inner **)&D_800DCE50[i + 0xC8];
+        i += 0x1A0;
+        if (node != 0) {
+            do {
+                node->unk44 = 0;
+                node->unk48 = -1;
+                node = node->next;
+            } while (node != 0);
+        }
+    } while ((u8 *)&D_800DD190 != &D_800DCE50[i]);
+}
 
 struct Struct1515C1A0 {
     u8 pad0[4];

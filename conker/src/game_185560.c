@@ -47,6 +47,7 @@ typedef struct {
 extern Struct151580B0 *func_15167A68(s32, s32, s32, s32, s32, s32);
 extern s32 func_1515D480(s32);
 extern s32 func_1515D440(void);
+s32 func_15159370();
 
 s32 func_151580B0(void *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4, u8 arg5, s32 arg6) {
     Struct151580B0 *temp_v0;
@@ -290,7 +291,70 @@ void func_15158B3C(Struct15158B3Cb *a0, Struct15158B3Ca *a1, u8 a2)
 }
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_185560/func_15158BD0.s")
+typedef struct {
+    u8 pad0[0x14];
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    u8 pad20[0x3B - 0x20];
+    u8 unk3B;
+} Struct15158BD0_src;
+
+typedef struct {
+    u8 pad0[0x10];
+    s32 unk10;
+    s32 unk14;
+    Struct15158BD0_src *unk18;
+    u8 unk1C;
+    u8 pad1D[0x20 - 0x1D];
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    u8 unk2C;
+    u8 unk2D;
+    u8 unk2E;
+    u8 unk2F;
+    u8 unk30;
+    u8 unk31;
+    u8 pad32[0x50 - 0x32];
+    u8 unk50;
+} Struct15158BD0_ret;
+
+s32 func_15158BD0(Struct15158BD0_src *arg0, u8 arg1, s32 arg2) {
+    Struct15158BD0_ret *temp_v0;
+    Struct15158BD0_ret *sp2C;
+
+    if (arg0 == 0) {
+        return 0;
+    }
+    temp_v0 = (Struct15158BD0_ret *)func_15167A68(0x2E, 0, arg2 + 0x58, 1, 0xFF, 1);
+    if (temp_v0 == 0) {
+        return 0;
+    }
+    sp2C = temp_v0;
+    temp_v0->unk18 = arg0;
+    temp_v0->unk1C = arg0->unk3B;
+    temp_v0->unk2C = 2;
+    temp_v0->unk2D = 2;
+    temp_v0->unk2E = 2;
+    temp_v0->unk2F = 3;
+    temp_v0->unk30 = 0;
+    temp_v0->unk20 = arg0->unk14;
+    temp_v0->unk24 = arg0->unk18;
+    temp_v0->unk28 = arg0->unk1C;
+    temp_v0->unk31 = 0;
+    if (arg1 != 0) {
+        temp_v0->unk31 |= 1;
+    }
+    sp2C->unk10 = 1;
+    sp2C->unk14 = 0;
+    if (func_15159370(arg0, (u8 *)sp2C + 0x1D, sp2C) == 0) {
+        func_1516979C((struct102 *)sp2C);
+        return 0;
+    }
+    sp2C->unk50 = 0;
+    return sp2C;
+}
 
 void func_1514EDF0(struct102 *, s32);
 
