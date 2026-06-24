@@ -11,9 +11,11 @@ Two engines run in PARALLEL: the **orchestrator** (LLM agents match `GLOBAL_ASM`
   cycle-7 gap 1/2 ported, cycle-8 gap **6/12 ported (50% port rate)** → 7 permuter byte-exact matches the LLM
   loop never got. Pipeline proven end-to-end: harvest→`import_new`→supervisor permutes→`collect`→`apply_wins`→
   ROM-gated commit. Reservoir 123 `.full.c`, 98 imported dirs.
-  **GAP ROUTINE (every gap, BETWEEN orchestrator runs, after the matching cycle ends):** (1) PAUSE supervisor
-  `pkill -9 -f '[p]ermuter_daemon.py supervise'; pkill -9 -f '[p]ermuter.py nonmatchings'; rm -f /tmp/permuter_
-  supervisor.pid` (avoid dir-race with import_new); (2) `python3 tools/permuter_daemon.py collect`; (3) `python3
+  **GAP ROUTINE (every gap, BETWEEN orchestrator runs, after the matching cycle ends):** (1) PAUSE supervisor —
+  DO NOT use `pkill -9 -f permuter...`: your shell cmd contains that string so pkill -9 KILLS YOUR OWN SHELL
+  mid-routine. Use the comm-checked PID kill: `for p in $(pgrep -f permuter); do [ "$p" = "$$" ] && continue; c=$(ps
+  -o comm= -p $p); case "$c" in python3|timeout|nice) kill -9 $p;; esac; done; rm -f /tmp/permuter_supervisor.pid`
+  (avoids dir-race with import_new); (2) `python3 tools/permuter_daemon.py collect`; (3) `python3
   tools/apply_wins.py` (extract func → iter_match SCORE 0 → integrate ROM gate → commit; non-porters get
   `.noport`); (4) `python3 tools/permuter_daemon.py import_new` (ingest new near-misses + re-import improved/stale
   seeds, which rmtree's the dir and CLEARS stale `.noport` for a fresh crack); (5) RELAUNCH ONE supervisor
