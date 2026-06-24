@@ -3,7 +3,7 @@
 #include "functions.h"
 #include "variables.h"
 
-void func_10010E78(s32 arg0, s32 arg1, u16 arg2, s16 arg3, u8 arg4,
+s32 func_10010E78(s32 arg0, s32 arg1, u16 arg2, s16 arg3, u8 arg4,
                    s32 arg5, s16 arg6, s16 arg7, s16 arg8, s16 arg9,
                    s16 argA);
 
@@ -476,7 +476,20 @@ void func_10010AA8(struct127 *arg0) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_10010BE8.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_10010E78.s")
+
+s32 func_10010E78(s32 arg0, s32 arg1, u16 arg2, s16 arg3, u8 arg4,
+                  s32 arg5, s16 arg6, s16 arg7, s16 arg8, s16 arg9,
+                  s16 argA) {
+    s32 sp2C;
+    u32 temp_t1;
+
+    temp_t1 = func_1000F6B8(arg5, arg6, arg7, arg8, &sp2C, (s32) arg9, (s32) argA);
+    temp_t1 = (u32) (arg2 * temp_t1) >> 0xF;
+    if (temp_t1 != 0) {
+        return func_10010BE8((u16) arg0, arg1, temp_t1, sp2C & 0x7F, arg3, (sp2C & 0x80) | arg4, D_80041FD9);
+    }
+    return 0;
+}
 
 void func_10010F30(s32 arg0, u16 arg1, u8 arg2, s16 arg3, u8 arg4) {
     func_10010BE8(0, arg0, arg1, arg2, arg3, arg4, D_80041FD9);
