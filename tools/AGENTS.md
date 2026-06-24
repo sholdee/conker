@@ -5,9 +5,17 @@ Two engines run in PARALLEL: the **orchestrator** (LLM agents match `GLOBAL_ASM`
 **permuter daemon** (cracks JUSTREG residue on spare CPU). You coordinate them BETWEEN runs.
 
 ## LATEST STATE & PENDING (read FIRST after compaction)
-- **Active run:** `bash tools/orchestrator_codex.sh 12 400 8` (cycle 6, relaunched 2026-06-23 at the cycle-5 gap),
-  tracked → notifies. At **~62.7% matched (~2263 GLOBAL_ASM stubs left), ~32% bytes**. Rate declining = the
-  FRONTIER, NOT a bug (see FAILURE ANALYSIS); keep matching ($0 trickle), do not treat the decline as fixable.
+- **Active run:** `bash tools/orchestrator_codex.sh 12 400 8` (CYCLE 8, relaunched 2026-06-24), tracked → notifies.
+  ~2241 GLOBAL_ASM stubs left, ~32% bytes. Rate declining = the FRONTIER, NOT a bug (FAILURE ANALYSIS); keep it.
+- **PERMUTER NOW LIVE (2026-06-24) — runs CONCURRENTLY with matching.** Supervisor up (`permuter_daemon.py
+  supervise 180 3600`, ~6 dirs / ~10 worker procs, nice-19, self-contained temp dirs — safe during orchestrator).
+  Proven end-to-end this gap: `import_new` imported 30 seeds; of 110 existing imported dirs, 23 were already
+  CRACKED; `apply_wins` PORTED + committed the first real permuter win **func_15041508** (LLM loop never got it).
+  **GAP ROUTINE (every gap, tree quiescent, BETWEEN orchestrator runs):** `python3 tools/permuter_daemon.py
+  collect` then `python3 tools/apply_wins.py` (ports cracks: extract func → iter_match SCORE 0 → integrate ROM
+  gate → commit; non-porters get `.noport`), then `python3 tools/permuter_daemon.py import_new` (ingest new
+  near-misses), then relaunch matching. The supervisor keeps permuting across gaps; relaunch it only if dead
+  (`pgrep -f '[p]ermuter_daemon.py supervise'`; clear `/tmp/permuter_supervisor.pid` first). Reservoir: 50 `.full.c`.
 - **CYCLE-5 GAP WORK — ALL DONE & COMMITTED (2026-06-23):**
   1. ✅ Cookbook tweaks (score-magnitude-tracks-size reframe; reloc-spelling + stack-aggregate-off-by-word BAIL
      bullets; register/volatile-last + STALL rule) — committed `0df39e8`.
