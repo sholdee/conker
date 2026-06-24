@@ -15,7 +15,24 @@ void func_151C69A0(void *a0, s32 a1, s32 a2) {
     func_151C69CC(a0, a2, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F3780/func_151C69CC.s")
+typedef struct 
+{
+  s32 unk0;
+  s32 unk4;
+  s32 unk8;
+} D_800AAB08Entry;
+extern s32 D_800AAB00[];
+extern D_800AAB08Entry D_800AAB08[];
+void func_151C69CC(void *a0, s32 a1, u8 a2);
+void func_151C69CC(void *a0, s32 a1, u8 a2)
+{
+  D_800AAB08Entry *temp_a0;
+  s32 temp_a2;
+  temp_a2 = ((s32 *) a0)[0x1D4 / 4] + D_800AAB00[a2];
+  temp_a0 = &D_800AAB08[a2];
+  func_15143134(temp_a0, a1, temp_a2);
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F3780/func_151C6A28.s")
 
