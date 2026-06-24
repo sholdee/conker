@@ -76,7 +76,30 @@ s32 func_1518E298(struct Struct1518E298 *arg0, s32 arg1, s32 arg2, s32 arg3) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518E308.s")
+struct Struct1518E308Entry {
+    struct102 *unk0;
+    u8 pad4[0x14];
+};
+
+void func_1518E308(void *arg0) {
+    struct Struct1518E308Entry *var_s0;
+    s32 var_s1;
+    s32 sp28[2];
+
+    var_s0 = (struct Struct1518E308Entry *)((char *)arg0 + 0x48);
+    sp28[1] = (s32)var_s0;
+    *(s32 *)((char *)arg0 + 0x28) = 0;
+    var_s1 = 0;
+    *(f32 *)((char *)arg0 + 0x24) = 0.0f;
+    do {
+        if (var_s0->unk0 != NULL) {
+            func_1516972C(var_s0->unk0);
+        }
+        var_s1++;
+        var_s0++;
+    } while (var_s1 != 0x64);
+    bzero((void *)sp28[1], 0x960);
+}
 
 void func_1518E37C(void *arg0, u8 arg1) {
     if (arg1 != *(u8 *)((char *)arg0 + 0x22)) {
