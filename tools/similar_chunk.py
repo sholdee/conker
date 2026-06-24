@@ -140,10 +140,24 @@ def candidate_stubs(maxi, attempted):
     return rows
 
 
+def _nondefault_flag_files():
+    """Src files the Makefile builds with a NON-default OPT_FLAGS (default is -O2 -g3). libultra is -O1/-g,
+    and several init_*.c are -g (=-O0) or -O2. The match prompt + cookbook are -O2 -g3-specific, so the
+    pipeline must NOT attempt these — wrong opt level => wrong codegen idioms (they need -O0-literal or
+    per-file handling). The BUILD stays correct (asm_processor applies the real flag), this only stops us
+    feeding mis-modelled files to agents. See mkst/conker#32 (libultra flag map)."""
+    try:
+        mk = open(os.path.join(ROOT, "Makefile")).read()
+    except OSError:
+        return set()
+    return {m.group(1) for m in re.finditer(r'\$\(SRC_DIR\)/([\w/]+)\.c\.o:\s*OPT_FLAGS', mk)}
+
+
 def segment_stubs(maxi, attempted):
     """Stubs from the init/debugger segments — the files the game RANK never lists. Enabled by
     CONKER_SEGMENTS (e.g. "init,debugger"). Reads each file's GLOBAL_ASM pragmas directly and sizes
-    from the asm instruction count; smallest-first; handles the debugger/ subdir; distinct funcs."""
+    from the asm instruction count; smallest-first; handles the debugger/ subdir; distinct funcs.
+    SKIPS files with a non-default Makefile OPT_FLAGS (the -O2 -g3 prompt/cookbook don't apply)."""
     segs = os.environ.get("CONKER_SEGMENTS", "")
     pats = []
     if "init" in segs:
@@ -153,10 +167,13 @@ def segment_stubs(maxi, attempted):
     if not pats:
         return []
     PRAG = re.compile(r'GLOBAL_ASM\("(asm/nonmatchings/[^"]+/(func_[0-9A-Fa-f]+)\.s)"\)')
+    nondefault = _nondefault_flag_files()
     rows, seen = [], set()
     for pat in pats:
         for c in glob.glob(os.path.join(ROOT, pat)):
             file = os.path.relpath(c, os.path.join(ROOT, "src"))[:-2]   # "init_1050" or "debugger/foo"
+            if file in nondefault:                 # non -O2 -g3 build (e.g. -g/-O0) -> prompt/cookbook wrong
+                continue
             try:
                 txt = open(c).read()
             except OSError:
