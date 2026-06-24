@@ -42,7 +42,34 @@ void func_1507EE58(s32 arg0, void *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507EEB8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507EEF4.s")
+void func_1507EEF4(void) {
+    u8 *state;
+    s32 value;
+
+    state = (u8 *)D_800D154C->unk31C;
+    value = state[0x64];
+    state += 0x58;
+
+    if (value == 0) {
+        state[0xC] = 1;
+        state[0xD] = 0;
+        return;
+    }
+
+    if (value == 1) {
+        func_150ADA20();
+        if (state[0xD] >= 3) {
+            state[0xC] = 2;
+            state[0xD] = 0;
+        }
+        return;
+    }
+
+    if (state[0xD] >= ((func_150ADA20() & 3) + 8)) {
+        state[0xC] = 1;
+        state[0xD] = 0;
+    }
+}
 
 void func_1507EFA0(s32 c, u8 *arg1) {
     s32 i = 4;
