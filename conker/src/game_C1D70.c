@@ -41,21 +41,64 @@ Gfx *func_15094F40(Gfx *arg0) {
     return arg0;
 }
 
-extern void func_15095060(s32, s32, s32);
+typedef struct {
+    u32 unk0;
+    u8 unk4;
+    u8 pad5;
+    u16 unk6;
+    u16 unk8;
+    u8 unkA;
+    u8 unkB;
+} struct15095060_arg0;
+
+typedef struct {
+    u32 unk0;
+    u16 unk4;
+    u16 unk6;
+    u8 unk8;
+    u8 unk9;
+    u8 unkA;
+} struct15095060_d;
+
+typedef struct {
+    u8 pad0[0x10];
+    struct15095060_d *unk10;
+} struct15095060_arg2;
+
+extern void func_15095060(struct15095060_arg0 *, s32, struct15095060_arg2 *);
 extern void func_150950D4(s32, s32 *, s32, s32, s32, s32, s32, s32, s32, s32);
-extern s32 D_800D2C90;
+extern struct15095060_d D_800D2C90;
 
 void func_15094F70(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
-    func_15095060(arg1, arg2, arg3);
-    func_150950D4(arg0, &D_800D2C90, arg4, arg5, 0, arg6, arg7, 0x100, 0x100, arg8);
+    func_15095060((struct15095060_arg0 *)arg1, arg2, (struct15095060_arg2 *)arg3);
+    func_150950D4(arg0, (s32 *)&D_800D2C90, arg4, arg5, 0, arg6, arg7, 0x100, 0x100, arg8);
 }
 
 void func_15094FE8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10) {
-    func_15095060(arg1, arg2, arg3);
-    func_150950D4(arg0, &D_800D2C90, arg4, arg5, 0, arg6, arg7, arg8, arg9, arg10);
+    func_15095060((struct15095060_arg0 *)arg1, arg2, (struct15095060_arg2 *)arg3);
+    func_150950D4(arg0, (s32 *)&D_800D2C90, arg4, arg5, 0, arg6, arg7, arg8, arg9, arg10);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_15095060.s")
+void func_15095060(struct15095060_arg0 *arg0, s32 arg1, struct15095060_arg2 *arg2) {
+    u32 temp_v0;
+
+    if (arg2 != 0) {
+        arg2->unk10 = &D_800D2C90;
+    }
+
+    temp_v0 = arg0->unk0;
+    if (temp_v0 < 0x10000000U) {
+        D_800D2C90.unk0 = temp_v0;
+    } else {
+        D_800D2C90.unk0 = ((u32 *)temp_v0)[arg1 >> 8];
+    }
+
+    D_800D2C90.unk4 = arg0->unk6;
+    D_800D2C90.unk6 = arg0->unk8;
+    D_800D2C90.unk8 = arg0->unkA;
+    D_800D2C90.unk9 = arg0->unkB;
+    D_800D2C90.unkA = arg0->unk4;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_150950D4.s")
 
