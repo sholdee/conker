@@ -592,6 +592,7 @@ struct Local1514FEFC { u8 unk0[0x2C]; };
 extern void func_1514F640(void *, struct Local1514FEFC *);
 extern void func_1514FF44(struct Local1514FEFC *, struct Local1514FF44Arg *, s32, u8, s32);
 extern void func_151D9014(struct Local1514FF44Arg *, struct Vec3F *, s32, f32, s32, s32, f32, s32, f32, f32, s32, s32, s32, s32, u8, s32);
+extern f32 D_800A5FF4;
 
 void func_1514FEFC(void *arg0, s32 arg1, s32 arg2, u8 arg3, s32 arg4) {
     struct Local1514FEFC sp24;
@@ -636,7 +637,54 @@ void func_1514FF44(struct Local1514FEFC *arg0, struct Local1514FF44Arg *arg1, s3
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15150178.s")
+struct Local15150178Angles {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+};
+
+void func_15150178(struct Local15150178Angles *arg0, struct Local1514FF44Arg *arg1, s32 arg2, u8 arg3, s32 arg4) {
+    u8 spB4[4];
+    s32 count;
+    s32 rand0;
+    s32 rand1;
+    f32 randf0;
+    f32 randf1;
+    f32 randf2;
+    f32 randf3;
+    f32 one;
+
+    count = (func_150ADA20() % (u32)(arg1->unkE + 1)) + arg1->unkC;
+
+    if (count != 0) {
+        one = D_800A5FF4;
+        do {
+            rand0 = func_150ADA20();
+            rand1 = func_150ADA20();
+            func_15143794((s16)((rand0 % (u32)(arg0->unk2 + 1)) + arg0->unk0),
+                          (s16)((rand1 % (u32)(arg0->unk6 + 1)) + arg0->unk4),
+                          (func_150ADA68() * arg1->unk14) + arg1->unk10,
+                          (f32 *)(spB4 - 0xC));
+
+            randf0 = func_150ADA68();
+            rand0 = func_150ADA20();
+            rand1 = func_150ADA20();
+            randf1 = func_150ADA68();
+            randf2 = func_150ADA68();
+            randf3 = func_150ADA68();
+
+            func_151D9014(arg1, (struct Vec3F *)(spB4 - 0xC), arg1->unk31,
+                          ((randf0 = randf0) * arg1->unk20) + arg1->unk1C,
+                          (rand0 % (u32)(arg1->unk1A + 1)) + arg1->unk18,
+                          (rand1 % (u32)(arg1->unk25 + 1)) + arg1->unk24,
+                          ((randf1 = randf1) * arg1->unk2C) + arg1->unk28,
+                          randf2 < arg1->unk34, one, one, 1, arg2,
+                          arg1->unk38, randf3 < arg1->unk3C, arg3, arg4);
+            count--;
+        } while (count != 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15150400.s")
 
