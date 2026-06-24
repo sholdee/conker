@@ -26,7 +26,8 @@ PERM = "../tools/decomp-permuter"
 PY = os.path.expanduser("~/conker/.venv/bin/python3")   # venv python (has permuter deps)
 NEARMISS = os.path.join(REPO, ".nearmiss")
 NM_DIR = os.path.join(INNER, "nonmatchings")
-MAX_PARALLEL = 6          # permuter dirs running at once
+MAX_PARALLEL = 10         # permuter dirs running at once (24-core host, nice-19; raised 6->10 to work the
+                          # import backlog faster AND permute seeds before src-context drifts them to noport)
 THREADS = 2               # -j per permuter
 
 def sh(cmd, cwd=INNER):
