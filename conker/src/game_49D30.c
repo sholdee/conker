@@ -31,6 +31,9 @@ extern s32 D_800C3668[];
 extern s32 func_15023BB0(void *, s32, s32, s16 **, s32, s32, s32, s32, s32, s32, s32);
 extern void func_15022640(u8, s32);
 extern struct131 *func_151149AC(u8);
+extern struct127 *func_1505EEF4(s32);
+extern void func_15082A44(void *, s32, s32, s32, s32);
+extern u8 D_800D2100;
 
 typedef struct {
     f32 unk0;
@@ -304,7 +307,42 @@ void func_150222E0(s32 arg0, s32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15022398.s")
+void func_15022398(s32 arg0, s32 arg1) {
+    struct127 *temp_v0;
+    s32 temp_a1;
+    s32 temp_id;
+
+    if (D_800C35C8[arg1][arg0] != 0) {
+        if (*(u16 *)&D_800C35F0[arg1][arg0 * 8] == 2) {
+            temp_id = D_800C35F0[arg1][(arg0 * 8) + 2];
+            temp_a1 = func_15083E0C(temp_id);
+            if (temp_a1 != -1) {
+                temp_v0 = func_1505EEF4(temp_a1);
+                if (temp_v0 != 0) {
+                    if (temp_v0->unk5 == 3) {
+                        if (D_800C35F0 != &D_800C35F0[arg1]) {
+                            temp_v0->unk5 = 4;
+                        } else {
+                            temp_v0->unk5 = 0;
+                        }
+                    }
+                    if (temp_id == 1) {
+                        temp_v0->unkF4 &= -0x2B;
+                    }
+                } else {
+                    if (temp_a1 < D_800D2100) {
+                        func_15082A44((struct_game49D30_2 *)((temp_a1 * 0x30) + (s32)D_800D20FC), temp_a1, 0, arg1, 0);
+                        temp_v0 = func_1505EEF4(temp_a1);
+                        if (temp_v0 != 0) {
+                            func_1505E650(temp_v0, 0, 0.0f, 0.0f, 0.0f, 0.0f, 1);
+                            func_1502225C(((s32)temp_v0 - (s32)D_800CC2D0) / (s32)sizeof(struct127), arg1);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15022528.s")
 

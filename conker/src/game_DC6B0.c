@@ -9,6 +9,13 @@ extern void func_150A7960(f32 *, f32, f32, f32, f32 *, f32 *, f32 *);
 extern void func_150E1AB0(s32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, u16, s32, s32, s16, s16, s32, u8, s16, s32, s32, u8, f32, f32, f32, f32, f32, f32);
 extern void func_150E2DB4(struct127 *, u8, s16, s32, f32, f32, f32, f32, f32, f32, s16, s16, u16, u8);
 extern void func_15179008(s32);
+extern void func_15131828(void *, void *, void *, void *);
+extern void func_15131958(void *, s32, void *);
+
+typedef struct {
+    char pad0[0xC];
+    s32 unkC;
+} struct150AF6E4;
 
 void func_150AF200(s32 arg0, s32 arg1) {
     struct131 *temp;
@@ -40,7 +47,14 @@ void func_150AF2E0(void *arg0, s16 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150AF328.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_DC6B0/func_150AF6E4.s")
+s32 func_150AF6E4(u8 *arg0, s32 arg1) {
+    struct150AF6E4 *temp_a2;
+
+    temp_a2 = (struct150AF6E4 *)(arg0 + 0xA8);
+    func_15131828(arg0, arg0 + 0xAC, temp_a2, arg0 + 0xAA);
+    func_15131958(arg0 + 0x58, temp_a2->unkC, temp_a2);
+    return 1;
+}
 
 extern void func_1515FF74(void *, s32, u8, s32);
 

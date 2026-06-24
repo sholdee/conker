@@ -24,9 +24,16 @@ extern f32 D_800AB234;
 
 void func_1503F404(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 s32 func_15132A4C(void *, s32, s32, s32, u8, s32);
+void func_15131828(void *, void *, void *, void *);
+void func_15131958(void *, s32, void *);
 void func_151541B8(void *, f32, s32, f32, f32, u8, s32);
 struct conker151D5514;
 void func_1514FCE8(struct conker151D5514 *a0, u8 a1, s32 a2);
+
+typedef struct {
+    char pad_0x00[0xC];
+    s32 field_0x0C;
+} ActorA8State;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D3480.s")
 
@@ -283,7 +290,14 @@ block_151D4C38:
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_200930/func_151D4D04.s")
+s32 func_151D4D04(u8 *arg0, s32 arg1) {
+    ActorA8State *temp_a2;
+
+    temp_a2 = (ActorA8State *)(arg0 + 0xA8);
+    func_15131828(arg0, arg0 + 0xAC, temp_a2, arg0 + 0xAA);
+    func_15131958(arg0 + 0x58, temp_a2->field_0x0C, temp_a2);
+    return 1;
+}
 
 void func_151D469C(void *arg0, s32 a1, s32 a2, s32 a3, s32 a4);
 
