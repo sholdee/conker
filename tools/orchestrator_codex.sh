@@ -13,6 +13,16 @@ CYCLE=$(( $(cat "$REPO/.cycle" 2>/dev/null || echo 0) + 1 )); echo "$CYCLE" > "$
 status() { printf '{"cycle":%s,"round":%s,"rounds":%s}\n' "$CYCLE" "$1" "$ROUNDS" > /tmp/cycle_status.json; }
 status 0
 
+# EFFORT TRIAGE: derive the proven-plateau shelf from attempts.tsv (similar_chunk SELECT skips it),
+# so agents stop re-grinding far functions that never improve across attempts. Re-probe the whole
+# shelf every 5th cycle (thaw — a typing/struct/ref change since last attempt may have unstuck it).
+CONKER_REPO="$REPO" python3 tools/difficult_functions.py || true
+if [ $(( CYCLE % 5 )) -eq 0 ]; then
+  export CONKER_REPROBE=1; echo "cycle $CYCLE: RE-PROBE (difficult-shelf ignored this cycle)"
+else
+  unset CONKER_REPROBE || true
+fi
+
 match_prompt() {  # $1=func  $2=file  (heredoc expands the paths; no $ / backticks remain)
   cat <<EOF
 You are matching ONE function in the mkst/conker N64 decompilation (IDO 5.3, -O2 -g3) to byte-identical assembly, using a real compile+diff loop.
@@ -30,6 +40,7 @@ THE LOOP:
 2. Replace the line  #pragma GLOBAL_ASM("asm/nonmatchings/$2/$1.s")  in $REPO/conker/src/$2.c with your candidate C.
 3. Run:  CONKER_REPO=$REPO $REPO/tools/iter_match.sh $2 $1   -- it builds ONLY your object and prints a diff then "SCORE: N" (0 = byte-perfect).
 4. Read the diff (TARGET vs CURRENT; r = register-only; > = extra instr; missing line = absent instr), refine, re-run. Up to ~12 iterations toward 0.
+4b. STALL RULE (do not waste iterations): score MAGNITUDE tracks function SIZE, not wrongness — one early wrong instr cascades into a huge score. So ALWAYS diagnose the FIRST diverging instruction and fix THAT; never chase the magnitude. BUT if BEST has not improved for ~3 consecutive iterations AFTER you've diagnosed that first mismatch and applied its indicated fix, it is a plateau: STOP, REVERT to the stub (per WHEN DONE), and finish. Grinding a stalled diff for more iterations almost never reaches 0 — your best is already captured.
 
 HARD RULES (a violation corrupts the shared build tree):
 - ONLY edit $REPO/conker/src/$2.c. NEVER touch other src/ files or shared headers. Add any missing extern/prototype as a LOCAL declaration at the TOP of your file.
@@ -101,6 +112,17 @@ for c in json.load(sys.stdin): print(c['func'], c['file'])" > /tmp/codex_chunk.t
     fi
   done < /tmp/codex_chunk.txt
 done
+
+# TYPE SWEEP: convert this run's freshly-matched funcs from raw offset-casts to local typed structs
+# (byte-IDENTICAL, iter_match SCORE-0 verified, integrate-gated + COMMITTED by type_pass.sh). Self-skips
+# when no casts remain. Runs AFTER matching so newly-matched funcs get typed before distill's checkout.
+echo "=== TYPE SWEEP (offset-casts -> local typed structs; iter_match-verified, integrate-committed) ==="
+tsweep=0
+while pairs=$(CONKER_REPO="$REPO" python3 tools/type_select.py "$CHUNK" 2>/dev/null); [ -n "$pairs" ]; do
+  bash tools/type_pass.sh $pairs || break
+  tsweep=$((tsweep+1)); [ "$tsweep" -ge 20 ] && { echo "TYPE SWEEP: hit 20-batch cap, stopping"; break; }
+done
+echo "TYPE SWEEP: done ($tsweep batches)"
 
 echo "=== DISTILL (codex, append-only to ido_reference.md) ==="
 cp tools/ido_reference.md /tmp/ref_before.md

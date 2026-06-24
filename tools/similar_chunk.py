@@ -148,6 +148,14 @@ def main():
     if os.path.exists(LOG):
         attempted = set(l.strip() for l in open(LOG) if l.strip())
 
+    # EFFORT TRIAGE: also skip proven-plateau funcs (tools/difficult_functions.txt, derived from the
+    # attempts.tsv history by difficult_functions.py). Bypassed on re-probe cycles (CONKER_REPROBE=1)
+    # so a func thawed by a typing/struct/ref change since its last attempt still gets a fresh shot.
+    if os.environ.get("CONKER_REPROBE") != "1":
+        dpath = os.path.join(HERE, "difficult_functions.txt")
+        if os.path.exists(dpath):
+            attempted |= set(l.strip() for l in open(dpath) if l.strip())
+
     rows = candidate_stubs(maxi, attempted)
 
     # Build / load the matched corpus once (cached).
