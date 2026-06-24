@@ -203,6 +203,7 @@ extern s32 (*D_8008ACC8[])(void *);
 extern void func_15156190(void *, u8, s32, u8, s32);
 extern f32 D_800A5FF0;
 extern f32 D_800A5FFC;
+extern f32 D_800A6000;
 extern void func_1514F808(struct Local1514F6E8 *, f32, struct Vec3F *);
 extern void func_151DA6F8(struct Local15153CCCArg *, struct Vec3F *, f32, s16, s32, f32, s32, s32, f32, f32, s32, u8, s32, s16, s16, s32, u8, s32);
 
@@ -1017,7 +1018,56 @@ void func_15153CCC(struct Local1514FEFC *arg0, struct Local15153CCCArg *arg1Stru
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15153F18.s")
+void func_15153F18(struct Local15150178Angles *arg0, struct Local15153CCCArg *arg1, register s32 arg2, u8 arg3, register s32 arg4) {
+    u8 spB4[4];
+    s32 count;
+    s32 rand0;
+    s32 rand1;
+    s32 rand2;
+    f32 randf0;
+    f32 randf1;
+    f32 temp_f24;
+
+    count = (func_150ADA20() % (u32)(arg1->unk26 + 1)) + arg1->unk24;
+
+    if (count != 0) {
+        temp_f24 = D_800A6000;
+        do {
+            rand1 = func_150ADA20();
+            rand0 = func_150ADA20();
+            func_15143794((s16)((rand1 % (u32)(arg0->unk2 + 1)) + arg0->unk0),
+                          (s16)((rand0 % (u32)(arg0->unk6 + 1)) + arg0->unk4),
+                          (func_150ADA68() * arg1->unk20) + arg1->unk1C,
+                          (f32 *)(spB4 - 0xC));
+
+            randf0 = func_150ADA68();
+            rand2 = func_150ADA20();
+            rand1 = func_150ADA20();
+            randf1 = func_150ADA68();
+            rand0 = func_150ADA20();
+
+            func_151DA6F8(arg1,
+                          (struct Vec3F *)(spB4 - 0xC),
+                          ((randf0 = randf0) * arg1->unk18) + arg1->unk14,
+                          (s16)((rand2 % (u32)(arg1->unk2E + 1)) + arg1->unk2C),
+                          (rand1 % (u32)(arg1->unk32 + 1)) + arg1->unk30,
+                          ((randf1 = randf1) * arg1->unk10) + arg1->unkC,
+                          (rand0 % (u32)(arg1->unk2A + 1)) + arg1->unk28,
+                          func_150ADA68() < arg1->unk38,
+                          temp_f24,
+                          temp_f24,
+                          1,
+                          arg1->unk34,
+                          arg2,
+                          arg1->unk3C,
+                          arg1->unk3E,
+                          arg1->unk40,
+                          arg3,
+                          arg4);
+            count--;
+        } while (count != 0);
+    }
+}
 
 void *func_151541B8(struct Vec3F *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, u8 arg5, s32 arg6) {
     void *ret;
