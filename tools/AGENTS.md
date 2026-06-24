@@ -7,15 +7,24 @@ Two engines run in PARALLEL: the **orchestrator** (LLM agents match `GLOBAL_ASM`
 ## LATEST STATE & PENDING (read FIRST after compaction)
 - **Active run:** `bash tools/orchestrator_codex.sh 12 400 8` (CYCLE 8, relaunched 2026-06-24), tracked → notifies.
   ~2241 GLOBAL_ASM stubs left, ~32% bytes. Rate declining = the FRONTIER, NOT a bug (FAILURE ANALYSIS); keep it.
-- **PERMUTER NOW LIVE (2026-06-24) — runs CONCURRENTLY with matching.** Supervisor up (`permuter_daemon.py
-  supervise 180 3600`, ~6 dirs / ~10 worker procs, nice-19, self-contained temp dirs — safe during orchestrator).
-  Proven end-to-end this gap: `import_new` imported 30 seeds; of 110 existing imported dirs, 23 were already
-  CRACKED; `apply_wins` PORTED + committed the first real permuter win **func_15041508** (LLM loop never got it).
-  **GAP ROUTINE (every gap, tree quiescent, BETWEEN orchestrator runs):** `python3 tools/permuter_daemon.py
-  collect` then `python3 tools/apply_wins.py` (ports cracks: extract func → iter_match SCORE 0 → integrate ROM
-  gate → commit; non-porters get `.noport`), then `python3 tools/permuter_daemon.py import_new` (ingest new
-  near-misses), then relaunch matching. The supervisor keeps permuting across gaps; relaunch it only if dead
-  (`pgrep -f '[p]ermuter_daemon.py supervise'`; clear `/tmp/permuter_supervisor.pid` first). Reservoir: 50 `.full.c`.
+- **PERMUTER LIVE & PRODUCING MATCHES (2026-06-24) — runs CONCURRENTLY with matching.** MEASURED yield so far:
+  cycle-7 gap 1/2 ported, cycle-8 gap **6/12 ported (50% port rate)** → 7 permuter byte-exact matches the LLM
+  loop never got. Pipeline proven end-to-end: harvest→`import_new`→supervisor permutes→`collect`→`apply_wins`→
+  ROM-gated commit. Reservoir 123 `.full.c`, 98 imported dirs.
+  **GAP ROUTINE (every gap, BETWEEN orchestrator runs, after the matching cycle ends):** (1) PAUSE supervisor
+  `pkill -9 -f '[p]ermuter_daemon.py supervise'; pkill -9 -f '[p]ermuter.py nonmatchings'; rm -f /tmp/permuter_
+  supervisor.pid` (avoid dir-race with import_new); (2) `python3 tools/permuter_daemon.py collect`; (3) `python3
+  tools/apply_wins.py` (extract func → iter_match SCORE 0 → integrate ROM gate → commit; non-porters get
+  `.noport`); (4) `python3 tools/permuter_daemon.py import_new` (ingest new near-misses + re-import improved/stale
+  seeds, which rmtree's the dir and CLEARS stale `.noport` for a fresh crack); (5) RELAUNCH ONE supervisor
+  `setsid python3 tools/permuter_daemon.py supervise 180 3600 >/tmp/permuter_supervise.log 2>&1 </dev/null &`;
+  (6) relaunch matching. **OPS GOTCHA:** `pgrep -fc '...supervise'` SELF-MATCHES your own shell cmd (the string
+  is in it, brackets don't help the non-pgrep parts) — verify the REAL count with `ps -eo args | grep -c
+  '^python3 .*permuter_daemon.py supervise'` (want exactly 1). Two supervisors = double-launched workers.
+  **NON-PORTS:** permuter score-0 is relative to its ISOLATED import; STALE imports (base.c older than current
+  src) crack against old context and score ~30-80 in-project (won't port) — they refresh on re-import. `apply_
+  wins` extract is now redefinition-aware (`_project_types()`): strips only project-header typedefs (Gfx/Mtx/
+  s32, 461 names), KEEPS agent-local typed `struct_<hex>` (the type-sweep's) — else typed funcs fail to compile.
 - **CYCLE-5 GAP WORK — ALL DONE & COMMITTED (2026-06-23):**
   1. ✅ Cookbook tweaks (score-magnitude-tracks-size reframe; reloc-spelling + stack-aggregate-off-by-word BAIL
      bullets; register/volatile-last + STALL rule) — committed `0df39e8`.
