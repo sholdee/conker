@@ -270,6 +270,7 @@ void func_15181D00(s32 arg0, s32 arg1) {
 }
 
 extern f32 D_800A72B0;
+extern f32 D_800A72B4;
 
 void func_15181D70(s32 arg0) {
     (&D_800DDDD8)[arg0] = D_800A72B0;
@@ -287,7 +288,26 @@ void func_15181DC8(s32 arg0) {
     (&D_800DDE20)[arg0] = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_15181E18.s")
+void func_15181E18(s32 arg0) {
+    u8 *p;
+
+    if (D_800BE616 != 0) {
+        p = &D_800DDDA0[arg0 * 3];
+        p[0] = 0;
+        p[1] = 0;
+        p[2] = 0;
+        (&D_800DDE28)[arg0] = 0x19;
+        (&D_800DDDB0)[arg0] = 0;
+        ((u8 *)&D_800DDDAC)[arg0] = 0;
+        ((u8 *)&D_800DDDC0)[arg0] = 0;
+    } else {
+        ((u8 *)&D_800DDE3C)[arg0] = 1;
+        (&D_800DDDC8)[arg0] = 1.0f;
+        D_800DDDE8[arg0][0] = 0.0f;
+        D_800DDDE8[arg0][1] = 0.0f;
+        (&D_800DDDD8)[arg0] = D_800A72B4;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_15181EE0.s")
 
