@@ -15,25 +15,40 @@ def sh(cmd, cwd=REPO):
     return subprocess.run(cmd, shell=True, cwd=cwd, capture_output=True, text=True)
 
 def extract_func(srcfile):
-    """Return the agent's local decls + the winning function, stripping the
-    permuter's base-typedef / intrinsic / project-struct-expansion preamble."""
+    """Return the agent's local decls + the winning function, stripping the permuter's inlined
+    project-type preamble. The permuter inlines project header types (scalars AND named/anon
+    typedef-struct blocks like Tri/Gdma/Gtri) so it can compile standalone; the project src
+    #includes those types, so they must be dropped or they REDEFINE the header and the port fails
+    to compile. Match-stage seeds carry no local typedefs (agents add extern/prototype decls, not
+    typedefs), so dropping every typedef is safe; a wrong strip just yields a graceful .noport."""
     lines = open(srcfile).read().splitlines()
     out, i, n = [], 0, len(lines)
-    skip_scalar = re.compile(r"^\s*typedef\s+(unsigned|signed|long|short|float|int|char|double)\b")
-    fwd = re.compile(r"^\s*typedef struct (struct\d+|_PermuterTemp\d+) ")
     intrinsic = re.compile(r"sqrtf|fabsf|#pragma intrinsic")
-    expand = re.compile(r"^\s*struct struct\d+\s*$|^\s*struct struct\d+\s*\{")
+    ts_open = re.compile(r"^\s*typedef\s+(struct|union|enum)\b")   # block typedef (named OR anon)
+    s_open = re.compile(r"^\s*(struct|union|enum)\s+struct\d+\b")  # bare anon project-struct expansion
+    td_any = re.compile(r"^\s*typedef\b")                          # any other typedef (scalar/alias/fn-ptr)
     while i < n:
         ln = lines[i]
-        if skip_scalar.match(ln) or fwd.match(ln) or intrinsic.search(ln):
+        if intrinsic.search(ln):
             i += 1; continue
-        if expand.match(ln):                      # multi-line project-struct expansion
-            depth = ln.count("{") - ln.count("}")
-            i += 1
-            while i < n and depth > 0:
-                depth += lines[i].count("{") - lines[i].count("}")
+        if ts_open.match(ln) or s_open.match(ln):
+            # find the opening brace in a short window (permuter emits "typedef struct\n{")
+            j = i
+            while j < n and j < i + 3 and "{" not in lines[j]:
+                j += 1
+            if j < n and "{" in lines[j]:
+                depth = 0
+                while j < n:                          # brace-count to the matching close (incl "} Name;")
+                    depth += lines[j].count("{") - lines[j].count("}")
+                    j += 1
+                    if depth <= 0:
+                        break
+                i = j; continue
+            i += 1; continue                          # forward/one-line block typedef -> drop the line
+        if td_any.match(ln):                          # scalar/alias/fn-ptr typedef -> drop to terminating ';'
+            while i < n and ";" not in lines[i]:
                 i += 1
-            continue
+            i += 1; continue
         out.append(ln); i += 1
     return "\n".join(out).strip() + "\n"
 
