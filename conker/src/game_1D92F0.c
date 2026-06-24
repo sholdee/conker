@@ -69,8 +69,37 @@ typedef struct {
     f32 field_0x28;
 } ObjectLinkPayload;
 
+typedef struct {
+    char pad_0[0x4];
+    s16 field_0x04;
+    u16 field_0x06;
+    f32 field_0x08;
+    f32 field_0x0C;
+    s16 field_0x10;
+    u16 field_0x12;
+    u8 field_0x14;
+    u8 field_0x15;
+    char pad_0x16[0x2];
+    f32 field_0x18;
+    f32 field_0x1C;
+    f32 field_0x20;
+    f32 field_0x24;
+    f32 field_0x28;
+} ObjectSpawnParams;
+
+typedef struct {
+    s32 field_0x00;
+    s32 field_0x04;
+    u8 field_0x08;
+} ObjectSpawnPayload;
+
 extern struct_AF4D0 D_800A9DF0[];
 extern f32 D_800AA0E4;
+extern s8 D_800A9023[];
+extern ObjectSpawnParams D_800A9180[];
+
+void func_15143794(s32, s32, f32, f32 *);
+void func_151D9014(f32 *, f32 *, s32, f32, s32, s32, f32, s32, f32, f32, s32, s32, s32, s32, u8, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151ABE40.s")
 
@@ -133,7 +162,52 @@ s32 func_151AC550(ObjectEffectState *arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AC61C.s")
+s32 func_151AC61C(s32 arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5, s32 arg6, s32 arg7, s16 arg8, s32 arg9, s32 argA, s32 argB, s32 argC, ObjectSpawnPayload *argD, u8 argE) {
+    ObjectSpawnParams *params;
+    f32 sp78[4];
+    f32 sp64[5];
+    s32 temp1[2];
+    f32 tempf1;
+    s32 temp0;
+    f32 tempf0;
+    f32 tempf2;
+
+    params = &D_800A9180[D_800A9023[argB * 5]];
+    sp78[-1] = arg2;
+    sp78[0] = arg3;
+    sp78[1] = arg4;
+
+    temp1[0] = func_150ADA20();
+    tempf0 = func_150ADA68();
+    func_15143794(arg8,
+                  (s16)((temp1[0] % (u32)(params->field_0x06 + 1)) + params->field_0x04),
+                  ((tempf0 = tempf0) * params->field_0x0C) + params->field_0x08,
+                  &sp64[1]);
+
+    tempf0 = func_150ADA68();
+    temp0 = func_150ADA20();
+    temp1[0] = func_150ADA20();
+    tempf1 = func_150ADA68();
+    tempf2 = func_150ADA68();
+
+    func_151D9014(&sp78[-1],
+                  &sp64[1],
+                  argD->field_0x08,
+                  ((tempf0 = tempf0) * params->field_0x24) + params->field_0x20,
+                  (temp0 % (u32)(params->field_0x12 + 1)) + params->field_0x10,
+                  (temp1[0] % (u32)(params->field_0x15 + 1)) + params->field_0x14,
+                  ((tempf1 = tempf1) * params->field_0x1C) + params->field_0x18,
+                  tempf2 < params->field_0x28,
+                  1.0f,
+                  1.0f,
+                  1,
+                  argD->field_0x00,
+                  1,
+                  0,
+                  argE,
+                  argD->field_0x04);
+    return 1;
+}
 
 typedef struct {
     char pad_0[0x2C];
