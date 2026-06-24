@@ -46,15 +46,32 @@ def map_sizes():
     return cached("map", 999999, build)
 
 def stub_map():
+    """Stubs from COMMITTED HEAD — NOT the working tree. The matching agents de-stub functions in the
+    working tree mid-round BEFORE integrate gates them, so a working-tree read counts dozens of unproven
+    in-flight matches and the progress % fluctuates up/down as integrate commits-or-reverts them. Reading
+    HEAD shows only committed matches, which is what progress()/runway()/history should reflect. (The live
+    in-flight churn is surfaced separately by tree_status()'s 'N in-flight' badge.)"""
     def build():
         s = {}
-        for c in glob.glob(os.path.join(INNER, "src/*.c")):
-            try:
-                txt = open(c).read()
-            except Exception:
-                continue
-            for m in re.finditer(r'GLOBAL_ASM\("asm/nonmatchings/([^/]+)/(func_[0-9A-F]+)\.s"\)', txt):
-                s[m.group(2)] = m.group(1)
+        # [^"]+ (not [^/]+) so NESTED asm paths (nonmatchings/a/b/func.s) match too — else nested-path
+        # stubs are missed and counted as matched, overstating %.
+        try:
+            out = subprocess.run(
+                ["git", "-C", REPO, "grep", "-hoE",
+                 r'asm/nonmatchings/[^"]+/func_[0-9A-Fa-f]+\.s', "HEAD", "--", "conker/src/*.c"],
+                capture_output=True, text=True, timeout=10).stdout
+        except Exception:
+            out = ""
+        for m in re.finditer(r'asm/nonmatchings/([^"\n]+)/(func_[0-9A-Fa-f]+)\.s', out):  # [^"\n]: stay on
+            s[m.group(2)] = m.group(1)                                                     # one line (no quotes
+        if not s:                                # git grep failed/empty -> fall back to working tree   # in -o out)
+            for c in glob.glob(os.path.join(INNER, "src/*.c")):   # (don't degrade to a false 100%)
+                try:
+                    txt = open(c).read()
+                except Exception:
+                    continue
+                for m in re.finditer(r'GLOBAL_ASM\("asm/nonmatchings/([^"]+)/(func_[0-9A-Fa-f]+)\.s"\)', txt):
+                    s[m.group(2)] = m.group(1)
         return s
     return cached("stubs", 20, build)
 
