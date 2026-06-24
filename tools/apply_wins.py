@@ -103,8 +103,7 @@ def main():
         open(cfile, "w").write(orig.replace(pragma, body, 1))
         sc = sh(f"{REPO}/tools/iter_match.sh {file} {func}")
         if re.search(r"SCORE: 0\b", sc.stdout):
-            committed.append((file, func))
-            _pd.log_crack_event(func, sc0, "ported")
+            committed.append((file, func))       # object-matches; 'ported' logged only after integrate COMMITS
             print(f"  PORTS  {func} ({file})")
         else:
             open(cfile, "w").write(orig)          # revert
@@ -114,7 +113,16 @@ def main():
             print(f"  noport {func} (project score {m.group(1) if m else '?'})")
     if committed:
         args = " ".join(f"{f} {fn}" for f, fn in committed)
-        print(sh(f". {REPO}/.venv/bin/activate && python3 {REPO}/tools/integrate.py {args}").stdout.strip())
+        out = sh(f". {REPO}/.venv/bin/activate && python3 {REPO}/tools/integrate.py {args}").stdout
+        print(out.strip())
+        # [verify finding 3] log 'ported' ONLY for funcs integrate ACTUALLY committed — an iter_match SCORE:0
+        # object-match can still be ROM-gate-reverted (integrate's bisect/abort). Parse "committed N — f1, f2".
+        done = set()
+        for m in re.finditer(r'committed \d+ — (.+)', out):
+            done.update(x.strip() for x in m.group(1).split(","))
+        for f, fn in committed:
+            if fn in done:
+                _pd.log_crack_event(fn, _pd._seed_score(fn), "ported")
     else:
         print("apply_wins: no porting winners this pass")
 

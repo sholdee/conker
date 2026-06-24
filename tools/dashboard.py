@@ -199,24 +199,24 @@ def permuter_slots():
             seed = json.load(open(os.path.join(REPO, ".nearmiss", f + ".json"))).get("score")
         except Exception:
             pass
-        best = iters = None
+        recent_low = iters = None
         try:
             with open(f"/tmp/permd_{f}.log", "rb") as fh:        # logs are huge + \r-heavy: read the tail
                 fh.seek(0, 2); sz = fh.tell(); fh.seek(max(0, sz - 4000))
                 tail = fh.read().decode("utf-8", "ignore").replace("\r", "\n")
             scs = [int(x) for x in re.findall(r'score = (\d+)', tail)]
-            if seed is not None:
-                scs.append(seed)                                 # best is never worse than the seed start
             if scs:
-                best = min(scs)                                  # tightest cheap bound on the global best
+                recent_low = min(scs)            # lowest score in the recent TAIL window — NOT the global
+                                                 # best (the true best may have scrolled off); UI labels it.
             its = re.findall(r'iteration (\d+)', tail)
             if its:
                 iters = int(its[-1])
         except OSError:
             pass
-        slots.append({"func": f, "seed": seed, "best": best, "iters": iters})
-    return sorted(slots, key=lambda s: s["best"] if s["best"] is not None
-                  else (s["seed"] if s["seed"] is not None else 9999))
+        # seed = the exact near-miss score (reliable closeness, the sort/chip key). recent_low only conveys
+        # genuine sub-seed progress when present. iters None => just launched, no evaluated score yet.
+        slots.append({"func": f, "seed": seed, "iters": iters, "recent_low": recent_low})
+    return sorted(slots, key=lambda s: s["seed"] if s["seed"] is not None else 9999)
 
 def permuter():
     def build():
@@ -231,12 +231,18 @@ def permuter():
                     {"cracked": cracked, "ported": ported, "noport": noport}.get(p[3], set()).add(p[1])
         except OSError:
             pass
+        # RECONCILE against committed HEAD [verify findings 1,2]: a cracked func no longer a stub that we
+        # didn't port was matched by the ORCHESTRATOR (cracked here, but the LLM loop committed first). The
+        # ledger is blind to orchestrator matches, so without this such funcs sit in pending/noport FOREVER.
+        # Count them as 'superseded' and exclude from pending/noport.
+        st = set(stub_map().keys())
+        superseded = {f for f in cracked if f not in st} - ported
         seeded = len(glob.glob(os.path.join(INNER, "nonmatchings/func_*")))
         slots = permuter_slots()
-        return {"seeded": seeded, "live": len(slots),
-                "lifetime": len(cracked), "ported": len(ported),
-                "noport": len(noport - ported), "pending": len(cracked - ported - noport),
-                "slots": slots}
+        return {"seeded": seeded, "live": len(slots), "lifetime": len(cracked),
+                "ported": len(ported), "noport": len(noport - ported - superseded),
+                "pending": len(cracked - ported - noport - superseded),
+                "superseded": len(superseded), "slots": slots}
     return cached("permuter", 8, build)
 
 def cycle_status():
@@ -566,10 +572,13 @@ async function tick(){
  const nm=d.nearmiss.bands,mx=Math.max(1,...Object.values(nm));
  $('nm').innerHTML=Object.entries(nm).map(([k,v])=>`<div><div class=b style="height:${Math.round(v/mx*56)}px"></div><small>${v}<br>${k}</small></div>`).join('')+`<div style="align-self:center;color:#8b949e">Σ${d.nearmiss.total}</div>`;
  const pm=d.permuter;
- $('perm').innerHTML=`<div><b style=color:#3fb950>${pm.ported}</b>ported</div><div><b>${pm.lifetime}</b>cracked total</div><div><b>${pm.pending}</b>pending</div><div><b>${pm.noport}</b>noport</div><div><b>${pm.seeded}</b>seeded</div><div><b>${pm.live}</b>live slots</div>`;
- $('pslots').innerHTML=(pm.slots||[]).map(s=>`<div class=worker>
-   <div class="sc ${scClass(s.best)}" title="seed score ${s.seed}">${s.best==null?(s.seed==null?'—':s.seed):s.best}</div>
-   <div class=fn><b>${s.func}</b> <span>seed ${s.seed==null?'?':s.seed} · ${s.iters!=null?s.iters.toLocaleString()+' it':'starting…'}</span></div></div>`).join('')||'<span style=color:#6e7681>no live slots</span>';
+ $('perm').innerHTML=`<div><b style=color:#3fb950>${pm.ported}</b>ported</div><div><b>${pm.lifetime}</b>cracked total</div><div><b>${pm.pending}</b>pending</div><div><b>${pm.noport}</b>noport</div><div><b>${pm.superseded||0}</b>superseded</div><div><b>${pm.live}</b>live slots</div>`;
+ $('pslots').innerHTML=(pm.slots||[]).map(s=>{
+   const prog=(s.recent_low!=null&&s.seed!=null&&s.recent_low<s.seed)?` · ↓${s.recent_low}`:'';
+   const txt=s.iters!=null?`${s.iters.toLocaleString()} it${prog}`:'starting…';
+   return `<div class=worker><div class="sc ${scClass(s.seed)}" title="seed (near-miss) score — lower = closer">${s.seed==null?'—':s.seed}</div>
+   <div class=fn><b>${s.func}</b> <span>seed ${s.seed==null?'?':s.seed} · ${txt}</span></div></div>`;
+ }).join('')||'<span style=color:#6e7681>no live slots</span>';
 }
 tick();setInterval(tick,3000);
 </script></body></html>"""

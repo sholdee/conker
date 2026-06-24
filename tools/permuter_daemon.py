@@ -74,6 +74,8 @@ def sweep_cracks():
         log_crack_event(func, _seed_score(func), "cracked")
 
 def import_new():
+    sweep_cracks()                       # [verify 4] ledger any pending crack BEFORE re-import rmtree's it
+                                         # (import_new runs while the supervisor's sweep is paused at the gap)
     # [audit 5] backstop: a SIGKILL between a seed's copy and its finally-restore could leave a seed
     # body in the live tree. import_new runs only on a clean tree (between orchestrator runs), so
     # restore any such leak before we start touching files.
