@@ -68,7 +68,7 @@ void func_15143134(void *, void *, s32);
 void func_15143874(s32, f32, f32 *, f32 *);
 void func_151C329C(void *, s32, s32);
 void *func_151407D0(void *, s32, void *, s32, s32, s32, s32, s32, s32, s32);
-void func_151602C0(Header *, Header2 *, s32, s32, s32, s32, s32, s32, s32, u8, s32);
+struct225 *func_151602C0(Header *, Header2 *, s32, s32, s32, s32, s32, s32, s32, u8, s32);
 s32 func_15160A58(s32, s32, void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
 void func_150F0A24(f32 *);
 
@@ -453,7 +453,27 @@ s32 func_150F00EC(Arg150F00EC *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_11C2B0/func_150F0198.s")
+struct225 *func_150F0198(u8 arg0, u8 arg1, u8 arg2, u8 arg3, s32 arg4, u8 arg5, s32 arg6) {
+    struct225 *temp_v0;
+    Header header;
+    Header2 header2;
+    s32 payload;
+
+    payload = arg4;
+    header.unk0 = 2;
+    header.unk1 = -1;
+    header.unk2 = 0x12C;
+    header.unk4 = 0x21;
+    header2.unk0 = 0;
+    header2.unk4 = 0;
+    header2.unk8 = 0;
+
+    temp_v0 = func_151602C0(&header, &header2, arg0, arg1, arg2, arg3, 0xFF, 0, 4, arg5, arg6);
+    if (temp_v0 != NULL) {
+        memcpy(&temp_v0->unk18, &payload, 4);
+    }
+    return temp_v0;
+}
 
 typedef struct {
     u8 pad_0[0x12C];
