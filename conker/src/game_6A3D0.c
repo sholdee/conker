@@ -17,6 +17,12 @@ struct Dst1503D804 {
     s16 unk2;
 };
 
+struct D800D19A0Header {
+    u8 pad_0[0x30];
+    u8 *field_0x30;
+    u32 field_0x34;
+};
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503CF20.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_6A3D0/func_1503D368.s")
@@ -132,17 +138,17 @@ s32 func_1503D804(s32 arg0) {
 
 s32 func_1503DA3C(s32 arg0, s32 arg1) {
     u8 *v0 = (u8 *)(&D_800D19A0)[arg0];
-    u8 *v1 = v0 - 0x38;
+    struct D800D19A0Header *v1 = (struct D800D19A0Header *)(v0 - 0x38);
     u8 *temp;
     s32 ret;
 
     if (v0 == 0) {
         return 0xFF;
     }
-    if (*(u32 *)(v1 + 0x34) < (u32)(arg1 + 1)) {
+    if (v1->field_0x34 < (u32)(arg1 + 1)) {
         return 0xFF;
     }
-    temp = *(u8 **)(v1 + 0x30);
+    temp = v1->field_0x30;
     ret = temp ? temp[arg1] : 0xFF;
     return ret;
 }
