@@ -6,6 +6,7 @@
 
 extern s32 func_10010F30(s32, u16, u8, s16, u8);
 extern s32 func_151EF610(void);
+extern f32 D_800A8F74;
 extern f32 D_800A8F7C;
 extern f32 D_800A8F84;
 extern f32 D_800A8F88;
@@ -78,7 +79,24 @@ typedef struct {
     f32 unk34;
 } struct_151A9EC0_arg;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151A99D0.s")
+void func_151A99D0(u8 *arg0) {
+    u8 *v1 = *((u8 **)(arg0 + 0x18));
+    f32 sp30[3];
+
+    goto dummy_label_151A99D0; dummy_label_151A99D0: ;
+    sp30[0] = *((f32 *)(v1 + 0x14));
+    if (D_800A8F74 < (*((f32 *)(v1 + 0x118)))) {
+        sp30[1] = (*((f32 *)(v1 + 0x118))) + 100.0f;
+    } else {
+        sp30[1] = (*((f32 *)(v1 + 0x18))) + 150.0f;
+    }
+    sp30[2] = *((f32 *)(v1 + 0x1C));
+    ((s32 *)sp30)[-1] = (s32)(arg0 + 0x34);
+    if (func_15045800(sp30, 0, sp30[1] - 300.0f, (s32)(arg0 + 0x34)) != 0) {
+        sp30[1] = *((f32 *)(arg0 + 0x34));
+        func_151ABE40(sp30, ((s32 *)sp30)[-1], 3, arg0[0xC], arg0[0x1]);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151A9AA4.s")
 
