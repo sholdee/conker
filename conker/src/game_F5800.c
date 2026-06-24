@@ -18,10 +18,16 @@ extern f32 D_800A0570;
 extern f32 D_800A0574;
 extern f32 D_800A0578;
 extern f32 D_800A057C;
+extern f32 D_800A04F0;
+extern f32 D_800A04F4;
+extern f32 D_800A04F8;
+extern f32 D_800A04FC;
 
 void func_15143794(s32, s32, f32, f32 *);
 struct260 *func_15130374(void *, u8, s32, u8, s32);
 s32 func_15132A4C(void *, s32, s32, s32, u8, s32);
+extern void func_1503E5F8(f32 (*)[4], f32 *, f32 *, f32 *, f32 *, f32 *, f32 *, f32 *, f32 *, f32 *);
+extern struct260 *func_15073118(struct108 *, s32, s32, f32, f32, f32, f32, f32, f32, f32, s32);
 
 typedef struct {
     u8 pad0[2];
@@ -124,7 +130,64 @@ void func_150C84F4(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F5800/func_150C8600.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F5800/func_150C8730.s")
+typedef struct {
+    u8 pad0[0x34];
+    Mtx *unk34;
+} Struct150C8730Arg0;
+
+typedef struct {
+    f32 sp48;
+    f32 sp4C;
+    f32 sp50;
+    f32 sp54;
+    f32 sp58;
+    f32 sp5C;
+    f32 sp60;
+    f32 sp64[4][4];
+    u8 padA4[0x14];
+} Struct150C8730Stack;
+
+s32 func_150C8730(Struct150C8730Arg0 *arg0, struct108 *arg1) {
+    Struct150C8730Stack sp48;
+    f32 sp44;
+    f32 sp40;
+    s32 temp_v0_2;
+    s32 temp_v1;
+    Mtx *temp_a1;
+    register s16 temp_t7;
+
+    temp_v0_2 = arg1->unk2D0;
+    if (temp_v0_2 == 0) {
+        return 0;
+    }
+
+    temp_v1 = *(u16 *)((u8 *)arg1 + 0x84);
+    if (((temp_v1 == 0x14) && (10.0f < *(f32 *)((u8 *)temp_v0_2 + 8))) || (temp_v1 == 0x23)) {
+        temp_v0_2 = D_800BE9C0;
+        temp_a1 = arg0->unk34;
+        temp_a1 = (Mtx *)((u8 *)temp_a1 + ((temp_v0_2 == 0) << 6));
+        guMtxL2F((f32 (*)[4])((u8 *)sp48.sp64 - 8), temp_a1);
+        ((f32 (*)[4])((u8 *)sp48.sp64 - 8))[0][3] = 0.0f;
+        ((f32 (*)[4])((u8 *)sp48.sp64 - 8))[1][3] = 0.0f;
+        ((f32 (*)[4])((u8 *)sp48.sp64 - 8))[2][3] = 0.0f;
+        ((f32 (*)[4])((u8 *)sp48.sp64 - 8))[3][3] = 1.0f;
+        func_1503E5F8((f32 (*)[4])((u8 *)sp48.sp64 - 8), (f32 *)((u8 *)&sp48.sp60 - 8), (f32 *)((u8 *)&sp48.sp5C - 8), (f32 *)((u8 *)&sp48.sp58 - 8), (f32 *)((u8 *)&sp48.sp48 - 8), (f32 *)((u8 *)&sp44 - 8), (f32 *)((u8 *)&sp40 - 8), (f32 *)((u8 *)&sp48.sp54 - 8), (f32 *)((u8 *)&sp48.sp50 - 8), (f32 *)((u8 *)&sp48.sp4C - 8));
+
+        arg0 = (Struct150C8730Arg0 *) func_15073118(arg1, -1, 0x4E, 0.0f, 0.0f, 0.0f, 0.0f, D_800A04F0, D_800A04F4, D_800A04F8, 0xC8);
+        *(f32 *)((u8 *)arg0 + 0x14) = *(f32 *)((u8 *)&sp48.sp60 - 8);
+        *(f32 *)((u8 *)arg0 + 0x18) = *(f32 *)((u8 *)&sp48.sp5C - 8);
+        *(f32 *)((u8 *)arg0 + 0x1C) = *(f32 *)((u8 *)&sp48.sp58 - 8);
+        *(f32 *)((u8 *)arg0 + 0xB8) = *(f32 *)((u8 *)&sp48.sp48 - 8);
+        *(f32 *)((u8 *)arg0 + 0x40) = *(f32 *)((u8 *)&sp44 - 8);
+        *(f32 *)((u8 *)arg0 + 0xC4) = *(f32 *)((u8 *)&sp40 - 8);
+        temp_t7 = (s32)((*(f32 *)((u8 *)arg0 + 0x40) - 90.0f) * D_800A04FC);
+        *(s16 *)((u8 *)arg0 + 0x76) = temp_t7;
+        *(s16 *)((u8 *)arg0 + 0x7A) = temp_t7;
+        return 1;
+    }
+
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_F5800/func_150C88D0.s")
 
