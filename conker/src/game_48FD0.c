@@ -4,9 +4,11 @@
 
 extern u8 D_80084060[];
 extern OSTimer D_800BE6E0;
+extern f32 D_80096960;
 
 s64 __ll_mul(u64 arg0, s32 arg1, s32 arg2);
 u64 __ull_div(u64 arg0, u64 arg1);
+void func_1501C0F0(u8 arg0, f32 arg1, f32 arg2);
 
 void func_1501BB20(void) {
     if (D_80084064 != 0) {
@@ -17,7 +19,30 @@ void func_1501BB20(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_48FD0/func_1501BBB8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_48FD0/func_1501C010.s")
+void func_1501C010(u8 arg0, u8 arg1) {
+    f32 temp_f0;
+    f32 temp_f12;
+    f32 temp_f2;
+    u32 temp_v0;
+
+    temp_v0 = arg1;
+    if (arg1 >= 9) {
+        arg1 = 8;
+        temp_v0 = 8;
+    }
+    if (temp_v0 == 8) {
+        temp_f2 = 20.0f;
+        temp_f12 = 0.0f;
+    } else if (temp_v0 == 0) {
+        temp_f2 = 0.0f;
+        temp_f12 = 99.0f;
+    } else {
+        temp_f0 = ((f32)(u32)arg1 - 1.0f) * D_80096960 * 5.0f;
+        temp_f2 = temp_f0 + 2.0f;
+        temp_f12 = 7.0f - temp_f0;
+    }
+    func_1501C0F0(arg0, temp_f2, temp_f12);
+}
 
 void func_1501C0F0(u8 arg0, f32 arg1, f32 arg2) {
     u8 temp = D_80084060[arg0];

@@ -4,6 +4,9 @@
 
 
 extern void func_150D6730(s32 arg0, s32 arg1, s32 arg2);
+extern s32 func_15133EEC(s32 arg0, u16 arg1, u8 arg2, s32 arg3);
+extern u32 D_80083740[];
+extern u32 D_800838C0[];
 
 void func_151D6970(s32 arg0, s32 arg1) {
     if ((D_800BE9F0 == 0x32) || (D_800BE9F0 == 0x33)) {
@@ -54,4 +57,13 @@ void func_151D70CC(s32 *arg0, s32 arg1, u8 arg2) {
     func_15169850(arg1, arg2, arg0[0x12], arg0[0x12] + 4, (s32)arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_203E20/func_151D710C.s")
+void func_151D710C(Gfx *arg0, void *arg1, s32 arg2, s32 arg3, u8 *arg4) {
+    if (*(u8 *)((u8 *)arg1 + 0x43) < 0xFF) {
+        gSPSegment(arg0++, 8, D_80083740);
+    } else {
+        gSPSegment(arg0++, 8, D_800838C0);
+    }
+
+    func_15133EEC(func_15133EEC((s32)arg0, 0xC3, 6, 3), 0xC3, 7, 3);
+    *arg4 = 1;
+}

@@ -90,7 +90,16 @@ void func_1509F5A8(s32 arg0, s32 arg1, s32 arg2) {
     func_10010F30(temp, (u16)arg2, 0x40, 0, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F5F4.s")
+void func_1509F5F4(u16 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
+    struct127 *temp;
+
+    temp = func_1505EEF4(arg2);
+    if (temp != 0) {
+        if ((arg5 != 0) || (func_10010894(temp) == 0)) {
+            func_10010344(arg0, temp, arg1, arg3, arg4);
+        }
+    }
+}
 
 extern struct127 *func_1505EEF4();
 
