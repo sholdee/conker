@@ -140,6 +140,45 @@ def candidate_stubs(maxi, attempted):
     return rows
 
 
+def segment_stubs(maxi, attempted):
+    """Stubs from the init/debugger segments — the files the game RANK never lists. Enabled by
+    CONKER_SEGMENTS (e.g. "init,debugger"). Reads each file's GLOBAL_ASM pragmas directly and sizes
+    from the asm instruction count; smallest-first; handles the debugger/ subdir; distinct funcs."""
+    segs = os.environ.get("CONKER_SEGMENTS", "")
+    pats = []
+    if "init" in segs:
+        pats.append("src/init_*.c")
+    if "debugger" in segs:
+        pats += ["src/debugger_*.c", "src/debugger/*.c"]
+    if not pats:
+        return []
+    PRAG = re.compile(r'GLOBAL_ASM\("(asm/nonmatchings/[^"]+/(func_[0-9A-Fa-f]+)\.s)"\)')
+    rows, seen = [], set()
+    for pat in pats:
+        for c in glob.glob(os.path.join(ROOT, pat)):
+            file = os.path.relpath(c, os.path.join(ROOT, "src"))[:-2]   # "init_1050" or "debugger/foo"
+            try:
+                txt = open(c).read()
+            except OSError:
+                continue
+            for asmrel, func in PRAG.findall(txt):
+                if func in attempted or func in seen:
+                    continue
+                try:
+                    a = open(os.path.join(ROOT, asmrel)).read()
+                except OSError:
+                    continue
+                if "handwritten" in a:
+                    continue
+                n = len(re.findall(r'(?m)^\s+/\*', a))
+                if n < 6 or n > maxi:
+                    continue
+                seen.add(func)
+                rows.append((n, file, func))
+    rows.sort()
+    return rows
+
+
 def main():
     count = int(sys.argv[1]) if len(sys.argv) > 1 else 5
     maxi = int(sys.argv[2]) if len(sys.argv) > 2 else 55
@@ -216,6 +255,23 @@ def main():
     picked = []
     seen_files = set()
     picked_funcs = set()
+
+    # RESERVED SLICE (CONKER_SEGMENTS): pre-seed up to CONKER_SEG_SLOTS init/debugger stubs — the segments
+    # the game RANK never selects, so they make progress alongside game in the SAME pipeline (one integrate,
+    # no concurrency risk). The game loops below then fill the rest of `count`; if no segment stubs remain,
+    # the slots fall through to game (no permanent waste once init/debugger are exhausted). ref_c empty —
+    # the agent still gets the target asm + m2c draft + cookbook.
+    seg_slots = int(os.environ.get("CONKER_SEG_SLOTS", "3")) if os.environ.get("CONKER_SEGMENTS") else 0
+    for n, file, func in (segment_stubs(maxi, attempted) if seg_slots else []):
+        if len(picked) >= seg_slots:
+            break
+        if file in seen_files or func in picked_funcs:
+            continue
+        picked.append({"func": func, "file": file, "ref_func": "", "ref_file": "",
+                       "ref_similarity": 0.0, "ref_c": "", "ref2_c": "", "ref3_c": ""})
+        seen_files.add(file)
+        picked_funcs.add(func)
+
     for sim, n, file, func, refs in ordered:
         if file in seen_files:
             continue
