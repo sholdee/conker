@@ -13,6 +13,8 @@ extern f32 D_800A3214;
 extern f32 D_800A2FF4;
 extern f32 D_800A2FF8;
 extern f32 D_800A2FFC;
+extern f32 D_800A2FB0;
+extern f32 D_800A2FB4;
 
 struct Struct1511F31CArg {
     u8 pad0[0x10];
@@ -179,6 +181,23 @@ struct C_15115E0C {
     f32 unk1C;
 };
 
+struct Obj151163C0 {
+    f32 unk0;
+    u8 pad4[0xE];
+    s16 unk12;
+    u8 pad14[0x4];
+    f32 unk18;
+    u8 pad1C[0x20];
+    s32 unk3C;
+    u8 pad40[0x1C];
+    s16 unk5C;
+    u8 pad5E[0x2];
+    f32 unk60;
+    u8 pad64[0x18];
+    s32 unk7C;
+    s32 unk80;
+};
+
 void func_15115E0C(struct B_15115E0C *arg0, struct C_15115E0C *arg1) {
     f32 s;
     f32 c;
@@ -219,7 +238,33 @@ void func_15115EDC(struct S_15115EDC *arg0, struct A_15115EDC *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151162D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_151163C0.s")
+void func_151163C0(struct Obj151163C0 *arg0) {
+    volatile f32 sp2C;
+    u32 sp28;
+    u32 sp24;
+    volatile f32 sp20;
+    s16 sp1E;
+    f32 sp18;
+    f32 temp_f2;
+    u32 temp_t2;
+    s32 temp_v0;
+
+    temp_v0 = arg0->unk3C;
+    temp_t2 = (temp_v0 >> 8) & 0xFF;
+    sp28 = (temp_v0 >> 0x10) & 0xFF;
+    sp2C = (f32)(temp_v0 & 0xFF);
+    sp24 = (temp_v0 >> 0x18) & 0xFF;
+    sp20 = (f32)temp_t2 * 1.40625f;
+    sp1E = arg0->unk12;
+    sp18 = arg0->unk0;
+    arg0->unk18 = cosf((f32)arg0->unk7C * D_800A2FB0) * sp2C;
+    temp_f2 = cosf((f32)arg0->unk80 * D_800A2FB4) * sp20;
+    arg0->unk0 = temp_f2;
+    arg0->unk7C = arg0->unk7C + (sp28 * D_800BE9E4);
+    arg0->unk80 = arg0->unk80 + (sp24 * D_800BE9E4);
+    arg0->unk5C = arg0->unk12 - sp1E;
+    arg0->unk60 = temp_f2 - sp18;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_142560/func_1511650C.s")
 
