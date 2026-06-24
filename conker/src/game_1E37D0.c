@@ -3,6 +3,36 @@
 #include "variables.h"
 
 extern void func_150A7960(f32 *, f32, f32, f32, f32 *, f32 *, f32 *);
+extern s32 func_15147A80(void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
+
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+} Vec151B6320;
+
+typedef struct {
+    Vec151B6320 unk0;
+    s16 unkC;
+    s16 unkE;
+    s32 unk10;
+    u8 unk14;
+    u8 unk15;
+    u8 pad16[2];
+} Header151B6320;
+
+typedef struct {
+    f32 *unk0;
+    u8 unk4;
+    u8 pad5[3];
+    Vec151B6320 unk8;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    s32 unk28;
+} Payload151B6320;
 
 typedef struct {
     s32 unk0;
@@ -29,7 +59,34 @@ typedef struct {
     struct151B76CCList *unk98;
 } struct151B76CCArg0;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E37D0/func_151B6320.s")
+void func_151B6320(f32 *arg0, u8 arg1, s32 arg2) {
+    s32 top_dummy;
+    Header151B6320 header;
+    s32 pad_dummy;
+    Payload151B6320 payload;
+    s32 *temp_v0;
+
+    header.unk15 = 0xA;
+    header.unk0.unk0 = arg0[5];
+    header.unk0.unk4 = arg0[6];
+    header.unk0.unk8 = arg0[7];
+    header.unkC = 0x12C;
+    header.unkE = 6;
+    payload.unk0 = arg0;
+    payload.unk4 = *(u8 *)((u8 *)arg0 + 0x3B);
+    payload.unk8 = header.unk0;
+    payload.unk14 = 0.0f;
+    payload.unk18 = 0.0f;
+    payload.unk20 = -16384.0f;
+    payload.unk1C = -16384.0f;
+    payload.unk24 = 0.0f;
+    header.unk10 = 0xD;
+
+    temp_v0 = (s32 *)func_15147A80(&header, 0x30, 0x1C, 0xB, 0xB, 0xB, 0, 0, 0, arg1, arg2);
+    if (temp_v0 != NULL) {
+        memcpy((void *)temp_v0[0x98 / 4], &payload, 0x2C);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E37D0/func_151B6420.s")
 

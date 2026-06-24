@@ -21,6 +21,7 @@ extern s16 D_800DD206;
 extern s32 D_800DD218;
 extern s32 D_800DD21C;
 extern u8 D_800C3E90;
+extern u8 D_8008A160[];
 extern s32 D_800DCA00;
 extern Mtx *D_800DCA04;
 extern f32 D_800DCA08;
@@ -337,7 +338,14 @@ void func_15142914(f32 mtx[4][4], f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 ar
     mtx[2][1] *= arg1;
     mtx[2][2] *= arg1;
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_151429E0.s")
+void func_151429E0(u8 arg0, u8 *arg1, u8 *arg2, u8 *arg3) {
+    u8 *temp_v1;
+
+    temp_v1 = &D_8008A160[((func_150ADA20() & 3) * 3) + (arg0 * 0xC)];
+    *arg1 = temp_v1[0];
+    *arg2 = temp_v1[1];
+    *arg3 = temp_v1[2];
+}
 s32 func_15142A5C(struct127 *arg0) {
     void *temp_v0 = arg0->unk2D0;
     s32 ret = 0;

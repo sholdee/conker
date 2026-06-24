@@ -3,6 +3,7 @@
 #include "variables.h"
 
 extern u8 D_1A37E0[];
+extern u8 D_800D9F68[];
 
 #define WGFX1510CDB8(pkt, a, b)     \
 {                                   \
@@ -47,7 +48,7 @@ void func_1510D608(s32 arg0, s32 arg1) {
     }
 }
 
-extern s32 func_1510D694(s16);
+void func_1510D694(s32);
 extern s32 func_10004074(s16 *);
 
 void func_1510D630(s16 *arg0) {
@@ -66,9 +67,21 @@ void func_1510D630(s16 *arg0) {
     func_10004074(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_139FC0/func_1510D694.s")
-
-extern u8 D_800D9F68[];
+void func_1510D694(s32 arg0) {
+    if ((s8)D_800BC448[arg0] != 0) {
+        if (D_800D9F68[arg0] != 0) {
+            if (--D_800D9F68[arg0] == 0) {
+                if (arg0 < D_800D9F58) {
+                    D_800D9F58 = arg0;
+                }
+                if (D_800D9F5C < arg0) {
+                    D_800D9F5C = arg0;
+                }
+                func_1510D608(arg0, 3);
+            }
+        }
+    }
+}
 
 void func_1510D720(s32 arg0) {
     if ((s8)D_800BC448[arg0] != 0) {

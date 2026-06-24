@@ -48,6 +48,9 @@ typedef struct {
 } Struct150E81A8Small;
 
 extern Struct150E81A8Vec D_800A1290[];
+extern f32 *D_80088A3C;
+extern f32 *D_80088A40;
+extern f32 D_800A130C;
 extern f32 D_800A1354;
 extern f32 D_800A1358;
 extern f32 D_800A135C;
@@ -68,7 +71,20 @@ extern s32 func_151337C0(f32 *arg0);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E6B84.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_113D60/func_150E6E34.s")
+void func_150E6E34(f32 *out) {
+    f32 *p;
+    f32 t;
+
+    if (func_150ADA68() < D_800A130C) {
+        p = D_80088A3C;
+    } else {
+        p = D_80088A40;
+    }
+    t = func_150ADA68();
+    out[0] = p[0] + (p[3] - p[0]) * t;
+    out[1] = p[1] + (p[4] - p[1]) * t;
+    out[2] = p[2] + (p[5] - p[2]) * t;
+}
 
 extern s32 func_1514470C(struct134 *, s32);
 

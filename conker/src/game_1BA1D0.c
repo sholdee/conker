@@ -1,8 +1,11 @@
 #include <ultra64.h>
+#define func_15169260 func_15169260_s32
 #include "functions.h"
+#undef func_15169260
 #include "variables.h"
 
 void func_1518E308(void *);
+void func_15169260(void *, s32, s32, u8);
 extern f32 D_800A8004;
 extern f32 D_800A7B68;
 extern f32 D_800A7B6C;
@@ -367,7 +370,18 @@ s32 func_1518F384(void *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F45C.s")
+struct Struct1518F45CData {
+    s32 unk0;
+};
+
+extern struct Struct1518F45CData D_800A74D4;
+
+void func_1518F45C(s32 arg0, u8 arg1) {
+    struct Struct1518F45CData sp1C;
+
+    sp1C = D_800A74D4;
+    func_15169260(&sp1C, 1, arg0, arg1);
+}
 
 struct Struct1518F49C {
     s32 unk0;
@@ -662,7 +676,7 @@ void func_151906E0(void *arg0, s32 *arg1, u8 arg2) {
 }
 
 extern void func_151D343C(void *, s32);
-extern void func_1518F45C(void *, s32);
+extern void func_1518F45C(s32, u8);
 
 struct tmp1519072C {
     s32 unk0;
@@ -802,5 +816,5 @@ void func_15191B8C(s32 arg0, u8 arg1) {
 
     sp1C = D_800A8010;
     func_151494E0(arg0, arg1);
-    func_15169260((s32)&sp1C, 1, arg0, arg1);
+    func_15169260(&sp1C, 1, arg0, arg1);
 }

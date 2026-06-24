@@ -35,6 +35,7 @@ struct Struct151E4314 {
 extern s8 D_800AB692[];
 extern struct Struct151E4314 D_800AB7A4[];
 extern s8 D_800E0C00[];
+extern s8 D_800E0BEB;
 extern s16 D_800E0A80;
 extern s16 D_8008FDCC;
 extern u8 **D_800E0BD8;
@@ -466,7 +467,15 @@ s32 func_151E5F64(s32 arg0) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E5FAC.s")
+s8 func_151E5FAC(void) {
+    if (D_800E0BEB != 0) {
+        if (D_8008FD8C >= 5) {
+            return D_8008FD90;
+        }
+        return D_8008FD8C;
+    }
+    return D_8008FD90;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E5FF4.s")
 

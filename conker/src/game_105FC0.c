@@ -179,7 +179,54 @@ void func_150DA4E0(void *arg0) {
     func_15147928(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150DA50C.s")
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+    char pad5[0x3C - 0x5];
+    f32 unk3C;
+} SubA_150DA50C;
+
+typedef struct {
+    s32 unk0;
+    union {
+        u8 b4;
+        s32 w4;
+    } u4;
+    union {
+        f32 f8;
+        struct {
+            u8 b8;
+            u8 b9;
+        } s;
+    } u8;
+} ArgB_150DA50C;
+
+void func_150DA50C(void *arg0, s32 arg1, u8 arg2) {
+    SubA_150DA50C *temp_v1 = *(SubA_150DA50C **)((u8 *)arg0 + 0x98);
+    ArgB_150DA50C *b = (ArgB_150DA50C *)arg1;
+    s32 temp;
+
+    if (arg2 == 0x44) {
+        if ((b->unk0 == temp_v1->unk0) || (b->u4.b4 == temp_v1->unk4)) {
+            temp_v1->unk3C = b->u8.f8;
+        }
+trailing_label_150DA50C:
+        ;
+    } else if (arg2 == 0) {
+        temp = b->unk0;
+        if ((temp == temp_v1->unk0) || (temp_v1->unk4 == b->u4.b4)) {
+            func_1516972C(arg0);
+        }
+    } else if (arg2 == 0x2D) {
+        if (temp_v1->unk0 == b->unk0) {
+            temp_v1->unk0 = b->u4.w4;
+            temp_v1->unk4 = b->u8.s.b9;
+        } else if (temp_v1->unk0 == b->u4.w4) {
+            temp_v1->unk0 = b->unk0;
+            temp_v1->unk4 = b->u8.s.b8;
+        }
+    }
+}
 
 struct s_150DA5EC {
     s32 unk0;

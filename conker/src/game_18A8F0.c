@@ -10,6 +10,7 @@ s32 func_150A1DA0(u8 *, struct178 *, s32);
 f32 func_1515F008(s16 *, s32);
 void func_1515F040(f32, s32);
 void func_1515F0AC(f32, s32);
+extern void func_10004074(void *);
 extern f32 D_800A6530;
 
 s32 *func_1515D440(void) {
@@ -184,7 +185,29 @@ f32 func_1515F008(s16 *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F0AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18A8F0/func_1515F10C.s")
+struct Node1515F10C {
+    struct Node1515F10C *next;
+};
+
+void func_1515F10C(struct Node1515F10C *arg0) {
+    struct Node1515F10C *node;
+    struct Node1515F10C *prev;
+
+    node = (struct Node1515F10C *)D_800DCD78;
+    prev = 0;
+    if (node != arg0) {
+        do {
+            prev = node;
+            node = node->next;
+        } while (node != arg0);
+    }
+    if (prev != 0) {
+        prev->next = node->next;
+    } else {
+        D_800DCD78 = (s32)node->next;
+    }
+    func_10004074(node);
+}
 
 struct Node1515F170 {
     struct Node1515F170 *next;

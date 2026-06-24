@@ -194,6 +194,8 @@ s32 func_151BD2BC(s32 *arg0) {
 }
 
 extern f32 D_800AA850;
+extern f32 D_800AA860;
+extern f32 D_800AA864;
 
 typedef struct {
     /* 0x00 */ u8  unk0;
@@ -273,7 +275,15 @@ void func_151BD2F8(void *arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BD43C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1E73B0/func_151BD750.s")
+f32 func_151BD750(s16 *arg0) {
+    s16 temp;
+    f32 ret;
+
+    temp = arg0[0x40];
+    ret = (1.0f + 1.0f) * (f32) temp * D_800AA860 + D_800AA864;
+    arg0[0x40] = temp + D_800BE9E4;
+    return ret;
+}
 
 extern void func_1513170C(void);
 

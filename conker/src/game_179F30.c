@@ -63,6 +63,7 @@ extern f32 D_800A5DEC;
 extern f32 D_800A5DF0;
 extern Vec3w1514F308 D_800A5970;
 extern Vec3w1514F308 D_800A597C;
+extern u8 D_800A58A0;
 extern u8 D_800A5958;
 extern u8 D_800A5964;
 extern s32 D_800A58D0;
@@ -87,6 +88,7 @@ extern void (*D_8008AACC[])(struct127 *);
 extern u8 *D_8008AB90[];
 extern u8 D_800A5EC0[];
 extern u8 D_800A5ED8[];
+s32 func_15160A58(s32, s32, void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
 s32 func_1518D1C0(s32, s32, s32, s32, s32, s32, s32 *);
 s32 func_1515D5F8(s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
 void func_150C4120(s32, s32, s32, s32);
@@ -446,7 +448,9 @@ void func_1514DB98(void) {
     func_1514F194();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DBB8.s")
+void func_1514DBB8(s32 arg0) {
+    func_15160A58(arg0, 2, &D_800A58A0, 2, 0x12C, 0x28, 0xFF, 0xFF, 0xFF, 0xFF, 0, -1, 0, 0, 0xFF, 1);
+}
 
 void func_1514DC38(struct127 *arg0) {
     func_1500EE18(arg0, 0xFF, 1);
