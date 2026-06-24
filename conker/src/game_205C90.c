@@ -74,7 +74,27 @@ void func_151D8A24(struct102 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_205C90/func_151D8B24.s")
+void func_1501C17C(u8);
+void func_151D8B24(struct102 *arg0)
+{
+  s32 i;
+  s32 j;
+  i = 0;
+  j = 0;
+  do
+  {
+    if (arg0->unk13 & (1 << j))
+    {
+      func_1501C17C((u8) i);
+    }
+    i++;
+    j = (i = (u8) i);
+  }
+  while (j < 4);
+}
+
+void func_151D8B24(struct102 *);
+
 
 void func_151D8B24(struct102 *);
 

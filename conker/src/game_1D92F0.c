@@ -452,7 +452,56 @@ void func_151AE890(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, u
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AE984.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AEAB4.s")
+u8 func_150ADA20(void);
+f32 func_150ADA68(void);
+f32 func_151423D8(u8);
+extern f32 D_800A9D98;
+extern f32 D_800A9D9C;
+extern f32 D_800A9DA0;
+extern f32 D_800A9DA4;
+void func_151AEAB4(f32 *, s32, u8);
+void func_151DA6F8(f32 *, f32 *, f32, s16, s32, f32, s32, s32, f32, f32, s32, u8, s32, s16, s16, s32, u8, s32);
+void func_151AEAB4(f32 *arg0, s32 arg1, u8 arg2)
+{
+  s32 pad94;
+  struct 
+  {
+    u32 sp60;
+    u32 sp64;
+    f32 sp68;
+    u8 pad6C[4];
+    f32 sp70;
+    f32 sp74;
+    f32 sp78;
+    f32 sp7C;
+    u8 pad80[6];
+    u8 sp86;
+    u8 sp87;
+    f32 sp88[3];
+  } sp;
+  f32 temp_f12;
+  f32 temp_f2;
+  sp.sp87 = func_150ADA20();
+  sp.sp86 = ((((((((((((func_150ADA20() & 0x7F) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) - 0x3F) & 0xFF;
+  sp.sp7C = func_151423D8(sp.sp87);
+  sp.sp78 = func_151423D8((u8) (sp.sp87 - 0x40));
+  sp.sp74 = func_151423D8(sp.sp86);
+  sp.sp70 = func_151423D8((u8) (sp.sp86 - 0x40));
+  temp_f2 = ((func_150ADA68() * 80.0f) + 20.0f) * D_800A9D98;
+  temp_f12 = temp_f2 * sp.sp74;
+  sp.sp88[0] = temp_f12 * sp.sp78;
+  sp.sp88[1] = (-temp_f2) * sp.sp70;
+  sp.sp88[2] = temp_f12 * sp.sp7C;
+  goto next;
+  next:
+  *((f32 *) (((u8 *) (&sp)) - 4)) = func_150ADA68();
+
+  sp.sp60 = func_150ADA20();
+  sp.sp64 = func_150ADA20();
+  sp.sp68 = func_150ADA68();
+  func_151DA6F8(arg0, sp.sp88, ((*((f32 *) (((u8 *) (&sp)) - 4))) * D_800A9D9C) + D_800A9DA0, (s16) ((sp.sp60 % 41U) + 0x3C), (sp.sp64 % 101U) + 0x9B, (sp.sp68 * 4.0f) + D_800A9DA4, (func_150ADA20() % 5U) + 3, ((u8 *) (&arg1))[3], 1.0f, 1.0f, 0, 0, 0, 0x10, 0xF, 0, arg2, 1);
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D92F0/func_151AECA0.s")
 

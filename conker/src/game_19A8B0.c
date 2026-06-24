@@ -429,9 +429,33 @@ void func_1516F2F8(u8 a0, s32 a1, s32 a2, s32 a3, volatile u8 a4, s32 a5) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516F864.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516F8EC.s")
+void func_1516F8EC(s32 arg0, s32 arg1)
+{
+  u8 *ptr;
+  s32 val;
+  ptr = (u8 *) arg0;
+  val = (*((s8 *) (ptr + 0x26))) << 8;
+  val += ptr[0x27];
+  val = (val * arg1) >> 8;
+  ptr[0x26] = val >> 8;
+  ptr[0x27] = val & 0xFFFFu;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516F91C.s")
+extern void func_1516F8EC(s32, s32);
+
+
+void func_1516F91C(s32 arg0, s32 arg1)
+{
+  s32 v0;
+  v0 = (*((s8 *) (arg0 + 0x28))) << 8;
+  v0 += *((u8 *) (arg0 + 0x29));
+  v0 = (v0 * arg1) >> 8;
+  *((u8 *) (arg0 + 0x28)) = v0 >> 8;
+  *((u8 *) (arg0 + 0x29)) = v0 & 0xFF;
+}
+
+extern void func_1516F91C(s32, s32);
+
 
 extern void func_1516F8EC(s32, s32);
 extern void func_1516F91C(s32, s32);
