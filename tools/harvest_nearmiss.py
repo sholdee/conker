@@ -34,15 +34,20 @@ def extract_def(text, fn):
 # .full.c (old-harvester seeds have the json without it; the permuter needs the .full.c).
 if os.path.exists(out):
     try:
-        better_or_equal = json.load(open(out)).get("score", 999999) <= score
+        js = json.load(open(out)).get("score", None)
     except Exception:
-        better_or_equal = False
-    if better_or_equal:
+        js = None
+    if js is not None and js <= score:
+        # Keep the (better-or-equal) json. Backfill a MISSING .full.c ONLY when this round's bestc
+        # provably corresponds to the kept json body — i.e. the SAME score. If this attempt is WORSE
+        # (js < score), its bestc is a different (worse) body; writing it would make .full.c (what the
+        # permuter permutes) disagree with json.c (what the match agent is seeded with). Skip instead —
+        # import_new safely skips a seed lacking .full.c, so we just wait for an equal-score re-attempt.
         full = out[:-5] + ".full.c"
-        if not os.path.exists(full):
+        if not os.path.exists(full) and js == score:
             try:
                 shutil.copy(cpath, full)
-                print(f"harvest: {func} backfilled .full.c (score {score}, json kept)")
+                print(f"harvest: {func} backfilled .full.c (score {score})")
             except OSError:
                 pass
         sys.exit(0)
