@@ -20,6 +20,7 @@ extern void *func_1515548C(void *, u8, s32, s32, s32, u8, s32);
 extern void func_15160274(s32, s32, s32);
 extern void func_1515572C(s32, s32);
 extern void func_151A561C(s32, s32);
+extern void (*D_8008FC10[])(struct102 *, void **, u8);
 typedef struct {
     u8 pad0[0x14];
     f32 unk14;
@@ -383,7 +384,27 @@ void func_151C9ED4(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CA6A0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CAACC.s")
+void func_151CAACC(struct102 *arg0, void **arg1, u8 arg2) {
+    void (*fn)(struct102 *, void **, u8);
+    void *temp;
+
+    if (arg2 == 0x21) {
+        if (*(s32 *)((s32)arg0 + 0x70) == *(s32 *)arg1) {
+            func_1516972C(arg0);
+        label_151CAACC:
+            ;
+        }
+    } else if (arg2 == 0) {
+        temp = *arg1;
+        if (*(s32 *)((s32)arg0 + 0x70) == *(s32 *)((s32)temp + 0x318)) {
+            func_1516972C(arg0);
+        }
+    }
+    fn = D_8008FC10[*(u8 *)((s32)arg0 + 0x7D)];
+    if (fn != NULL) {
+        fn(arg0, arg1, arg2);
+    }
+}
 
 void func_151CAB78(void *arg0, u8 arg1) {
     typedef struct {

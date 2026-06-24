@@ -12,7 +12,23 @@ void func_1515F170(s32 arg0, u8 arg1);
 extern u8 D_800886F0[];
 extern u8 D_800886F4[];
 extern u8 D_800886F8[];
+extern void (*D_8008B358[])(struct225 *, s32, u8);
 extern void (*D_8008B37C[])(s32);
+
+typedef struct {
+    s32 unk0;
+    u8 unk4;
+} SubA15161F4C;
+
+typedef struct {
+    s32 unk0;
+    union {
+        s32 w4;
+        u8 b4;
+    } u4;
+    u8 unk8;
+    u8 unk9;
+} ArgB15161F4C;
 
 struct225 *func_151602C0(Header *header, Header2 *header2, s32 arg2, s32 arg3, s32 arg4, s32 arg5, u8 arg6, u8 arg7, s32 offset, u8 arg9, s32 argA);
 struct225 *func_1516037C(Header *src, struct226 *arg1, s32 size, u8 arg3, s32 arg4);
@@ -721,7 +737,32 @@ void func_15161F2C(struct225 *arg0) {
     func_15163F50(arg0, &arg0->unk18);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18D770/func_15161F4C.s")
+void func_15161F4C(struct225 *arg0, s32 arg1, u8 arg2) {
+    SubA15161F4C *temp_v0 = (SubA15161F4C *)((u8 *)arg0 + 0x18);
+    ArgB15161F4C *b = (ArgB15161F4C *)arg1;
+    void (*fn)(struct225 *, s32, u8);
+
+    if (arg2 == 0) {
+        if ((b->unk0 == temp_v0->unk0) || (b->u4.b4 == temp_v0->unk4)) {
+            func_1516972C(arg0);
+        trailing_label_15161F4C:
+            ;
+        }
+    } else if (arg2 == 0x2D) {
+        if (temp_v0->unk0 == b->unk0) {
+            temp_v0->unk0 = b->u4.w4;
+            temp_v0->unk4 = b->unk9;
+        } else if (temp_v0->unk0 == b->u4.w4) {
+            temp_v0->unk0 = b->unk0;
+            temp_v0->unk4 = b->unk8;
+        }
+    }
+
+    fn = D_8008B358[*(u8 *)((u8 *)arg0 + 0x1D)];
+    if (fn != NULL) {
+        fn(arg0, arg1, arg2);
+    }
+}
 
 struct225 *func_15162034(s32 arg0, u8 arg1, s32 arg2) {
     struct225 *temp_v0;
