@@ -102,31 +102,31 @@ def active():
             continue
         func, file = p
         log = f"/tmp/{logpfx}{func}.log"
-        scores, mtime = [], 0
-        if os.path.exists(log):
+        mtime = os.path.getmtime(log) if os.path.exists(log) else 0
+        # best score from iter_match's DETERMINISTIC tracked file — NOT the agent log. The agent echoes
+        # the match prompt's literal "SCORE: 0" text on its own line, which slips past an anchored regex
+        # and shows a false best=0. /tmp/best_ is what the score-0 snapshot + harvest actually trust.
+        best = None
+        bf = f"/tmp/best_{func}.score"
+        if os.path.exists(bf):
             try:
-                txt = open(log).read()
-                # ONLY iter_match's own output (line ends in the number); the match prompt
-                # contains "SCORE: 0 -> ..." text that must NOT be counted as a real score.
-                scores = [int(x) for x in re.findall(r'(?m)SCORE: (\d+)\s*$', txt)]
-                mtime = os.path.getmtime(log)
+                best = int(open(bf).read().strip())
             except Exception:
                 pass
-        best = min(scores) if scores else None
+        # iteration count from iter_match's own "BEST:" lines (one per iteration; the agent doesn't echo
+        # those, unlike "SCORE:").
+        iters = 0
+        if os.path.exists(log):
+            try:
+                iters = len(re.findall(r'(?m)^BEST: \d+', open(log).read()))
+            except Exception:
+                pass
         instrs = (sizes.get(func, (None, 0))[1] // 4) if func in sizes else None
-        # Status from log freshness + score, NOT the src de-stub state (a function is
-        # de-stubbed during ALL active work, not just on a match). While Codex is still
-        # iterating (fresh log) it's "working" even if it has already hit 0; once the log
-        # goes quiet, score 0 = matched, else idle/reverted.
+        # While Codex is still iterating (fresh log) it's "working"; once quiet, best 0 = matched.
         fresh = (time.time() - mtime) < 90 if mtime else False
-        if fresh:
-            status = "working"
-        elif best == 0:
-            status = "matched"
-        else:
-            status = "idle"
+        status = "working" if fresh else "matched" if best == 0 else "idle"
         res.append({"func": func, "file": file, "instrs": instrs, "best": best,
-                    "latest": scores[-1] if scores else None, "iters": len(scores),
+                    "latest": best, "iters": iters,
                     "status": status, "age": int(time.time() - mtime) if mtime else None})
     res.sort(key=lambda r: (r["status"] != "working", r["best"] if r["best"] is not None else 999))
     return res
@@ -173,7 +173,7 @@ def permuter():
         seeded = len(glob.glob(os.path.join(INNER, "nonmatchings/func_*")))
         cracked = len(glob.glob(os.path.join(INNER, "nonmatchings/func_*/output-0-*")))
         try:
-            live = subprocess.run("pgrep -f permuter.py | wc -l", shell=True,
+            live = subprocess.run("pgrep -f '[p]ermuter.py' | wc -l", shell=True,
                                   capture_output=True, text=True).stdout.strip()
         except Exception:
             live = "?"
@@ -343,8 +343,10 @@ def runway():
     return cached("runway", 60, build)
 
 def phase_status():
+    # bracket the first char so the pattern doesn't match the pgrep shell command's OWN cmdline
+    # (which contains the literal pattern) — that self-match pinned every phase to the first check.
     def r(pat):
-        return subprocess.run(f"pgrep -f '{pat}' >/dev/null 2>&1", shell=True).returncode == 0
+        return subprocess.run(f"pgrep -f '[{pat[0]}]{pat[1:]}' >/dev/null 2>&1", shell=True).returncode == 0
     if r("type_pass.sh") or r("type_orchestrator.sh"):          # Phase-1 typing sweep
         return "TYPE"
     return ("SELECT" if r("similar_chunk.py") else "MATCH" if r("codex exec")

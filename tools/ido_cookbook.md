@@ -150,6 +150,11 @@ before iterating.
 - A large whole-object / short-function score is often the Levenshtein of ADJACENT
   GLOBAL_ASM stubs bleeding into context. Verify in ISOLATION: `diff.py -o func -s`
   (stop-at-ret) shows 0, or raw-objdump the function's own symbol-size byte range.
+- Score MAGNITUDE tracks FUNCTION SIZE, not wrongness: on a big function ONE early
+  residue (a wrong reg/reloc/extra instr) shifts every later instruction and inflates
+  the score into the hundreds/thousands. Diagnose the FIRST diverging instruction and fix
+  THAT — do NOT chase the magnitude or assume a high score means "far". A 1200-score func
+  is often one fix from 0; a 40-score func can be genuinely unsteerable.
 
 ## When to BAIL — compact checklist (one signal per line)
 After ~4-6 iterations, if the ONLY residual is one of these, STOP, record best score,
@@ -177,6 +182,20 @@ the per-object score far above the true delta.
 - -g3 schedule/home artifacts: trailing dead doubled epilogue, callee-saved promotion of a
   cross-call pass-through, an opportunistic param-home filling an empty jal delay slot, a
   loop-rotation/strength-reduction reload, or a TU-temp-counter-driven spill-slot offset.
+- Reloc-spelling on IDENTICAL bytes: the only residual is `%lo(sym)` vs `%lo(sym+off)` (or
+  hi/lo paired to a different symbol) while the encoded BYTES match — a relocation-display
+  artifact, not a codegen miss. Not steerable from C; confirm bytes in isolation and BAIL.
+- Stack-aggregate off-by-one-WORD: a struct/array stack local whose frame offset is exactly
+  one word (4/8 bytes) off, cascading every sp-relative access. Driven by IDO's spill-slot
+  packing, not your declaration order — adding/removing a local just moves the cascade. BAIL.
+
+NOTE — `register`/`volatile` as a LAST resort: a `register` hint or `volatile` local can
+steer a stubborn value, but under -g3 it GROWS the frame (forces a home/spill slot) and
+often trades one diff for a frame-size diff. Try every non-storage lever first; reach for
+these only when nothing else moves the diff, and revert if the frame size shifts.
+STALL RULE: if BEST has not improved for ~3 iterations AFTER you've diagnosed the FIRST
+diverging instruction and tried its indicated fix, treat the diff as a plateau — record
+best, REVERT to the stub, flag permuter. Do not keep grinding a stalled diff for magnitude.
 
 For a stubborn diff, a specific instruction pattern, or a BAIL judgment not covered here,
 grep ~/conker/tools/ido_reference.md (the full idiom set, organized by section).

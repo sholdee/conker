@@ -52,6 +52,10 @@ def import_new():
         func, file = s["func"], s["file"]
         if imported(func):
             continue
+        full = os.path.join(NEARMISS, func + ".full.c")
+        if not os.path.exists(full):
+            continue                       # no whole-file snapshot -> the extracted body alone won't
+                                           # compile (undefined externs/struct fields); skip it
         cfile = f"src/{file}.c"
         cpath = os.path.join(INNER, cfile)
         try:
@@ -62,7 +66,7 @@ def import_new():
         if pragma not in orig:
             continue                       # already matched/destubbed elsewhere
         try:
-            open(cpath, "w").write(orig.replace(pragma, s["c"], 1))
+            shutil.copy(full, cpath)       # the whole compilable best-C file (carries the func's decls)
             asm = f"asm/nonmatchings/{file}/{func}.s"
             r = sh(f"{PY} {PERM}/import.py {cfile} {asm} 2>&1")
         finally:
