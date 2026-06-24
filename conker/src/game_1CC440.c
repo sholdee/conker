@@ -5,6 +5,9 @@
 void func_15143794(s32, s32, f32, f32 *);
 s32 func_1510F8CC(s32);
 void func_15152B38(void *, u8, s32);
+s32 func_1513170C(s32 *, s32);
+struct Obj151A2960;
+extern void (*D_8008F8E0[])(struct Obj151A2960 *, s32);
 extern f32 D_800A8D3C;
 extern f32 D_800A8D40;
 extern f32 D_800A8D44;
@@ -479,7 +482,39 @@ void func_151A1EE8(struct Src151A1EE8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A26EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CC440/func_151A2960.s")
+struct Sub151A2960 {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s8 unk6;
+};
+
+struct Obj151A2960 {
+    u8 pad0[0x1A];
+    s16 unk1A;
+    u8 pad1C[0x2C - 0x1C];
+    u8 unk2C;
+    u8 pad2D[0xB0 - 0x2D];
+    struct Sub151A2960 unkB0;
+};
+
+void func_151A2960(struct Obj151A2960 *arg0, s32 arg1) {
+    struct Sub151A2960 *temp_v0;
+
+    temp_v0 = &arg0->unkB0;
+    if (arg0->unk1A < temp_v0->unk0) {
+        arg0->unk2C = arg0->unk1A * temp_v0->unk2;
+    }
+    if (D_800BE616 == 0) {
+        if (-1 != temp_v0->unk4) {
+            if ((-1 != temp_v0->unk6) && (temp_v0->unk4 >= arg0->unk1A)) {
+                D_8008F8E0[temp_v0->unk6](arg0, temp_v0->unk4);
+                temp_v0->unk4 = -1;
+            }
+        }
+    }
+    func_1513170C((s32 *)arg0, arg1);
+}
 
 void func_151A2C24(s32, s32, s32, s32, f32, f32, f32, s32, f32, f32, f32, f32, s16, s16, s16, s16, s16, s16, s8, u8, s32, s32);
 
