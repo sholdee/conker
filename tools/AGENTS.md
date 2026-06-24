@@ -5,8 +5,15 @@ Two engines run in PARALLEL: the **orchestrator** (LLM agents match `GLOBAL_ASM`
 **permuter daemon** (cracks JUSTREG residue on spare CPU). You coordinate them BETWEEN runs.
 
 ## LATEST STATE & PENDING (read FIRST after compaction)
-- **Active run:** `bash tools/orchestrator_codex.sh 12 400 8` (CYCLE 8, relaunched 2026-06-24), tracked → notifies.
-  ~2241 GLOBAL_ASM stubs left, ~32% bytes. Rate declining = the FRONTIER, NOT a bug (FAILURE ANALYSIS); keep it.
+- **Active run:** `CONKER_SEGMENTS=init,debugger bash tools/orchestrator_codex.sh 12 400 8`, tracked → notifies.
+  ~2241 game stubs left, ~32% bytes. Rate declining = the FRONTIER, NOT a bug (FAILURE ANALYSIS); keep it.
+- **INIT/DEBUGGER reserved slice (option B, 2026-06-24):** the game RANK never selects init_*.c / debugger* (131
+  init + 22 debugger were stuck at 0 progress). `similar_chunk.segment_stubs()` + a reserved slice now feed them
+  through the SAME pipeline (one integrate, no concurrency risk). **ACTIVATE by relaunching the orchestrator with
+  `CONKER_SEGMENTS=init,debugger`** (default `CONKER_SEG_SLOTS=3` of each 12-chunk → ~24/cycle, drains the ~146 in
+  ~6 cycles, then falls through to game). Chose B over a parallel pipeline because integrate.py is unguarded +
+  tree-global (force-clean ROM `make` + commit, no flock) — a 2nd same-tree pipeline races make/ROM/git; a
+  worktree-isolated pipeline (option C) was overkill for 146 funcs. If relaunched WITHOUT the env, segments idle.
 - **PERMUTER LIVE & PRODUCING MATCHES (2026-06-24) — runs CONCURRENTLY with matching.** MEASURED yield so far:
   cycle-7 gap 1/2 ported, cycle-8 gap **6/12 ported (50% port rate)** → 7 permuter byte-exact matches the LLM
   loop never got. Pipeline proven end-to-end: harvest→`import_new`→supervisor permutes→`collect`→`apply_wins`→
