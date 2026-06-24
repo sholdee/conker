@@ -1,5 +1,7 @@
 #include <ultra64.h>
+#define func_15169260 func_15169260_s32_decl
 #include "functions.h"
+#undef func_15169260
 #include "variables.h"
 
 extern f32 sqrtf(f32);
@@ -47,6 +49,15 @@ typedef struct Obj15130280AngleState {
     f32 field_0xAC;
     f32 field_0xB0[2];
 } Obj15130280AngleState;
+
+typedef struct Data15131D4C {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Data15131D4C;
+
+extern Data15131D4C D_800A37F0;
+void func_15169260(Data15131D4C *, s32, s32, u8);
 
 extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
 
@@ -289,7 +300,12 @@ void func_15131C84(u8 *a0, s8 *a1, f32 a2, f32 *a3, f32 *a4, f32 *a5) {
     *a5 = a3[1] * func_151423D8((u8)(a0[1] - 0x40)) + a2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15D730/func_15131D4C.s")
+void func_15131D4C(s32 arg0, u8 arg1) {
+    Data15131D4C sp1C;
+
+    sp1C = D_800A37F0;
+    func_15169260(&sp1C, 3, arg0, arg1);
+}
 
 s32 func_15131D9C(Obj15130280AngleState *arg0, s32 arg1) {
     func_15131C84(arg0->field_0xA8, arg0->field_0xAA, arg0->field_0xAC, arg0->field_0xB0, &arg0->field_0x38, &arg0->field_0x3C);
