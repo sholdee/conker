@@ -202,7 +202,10 @@ def main():
         except Exception:
             pass
     scored_by_func = {s[3]: s for s in scored}
-    nm_order = sorted((f for f in nearmiss if f in row_file),
+    # [audit 15] exclude score-0 seeds from RE-ATTEMPT priority: a score-0-but-still-stub seed is an
+    # object-match-but-ROM-fail dead-end — re-attempting just reproduces the same and steals the top
+    # slots from real near-misses. (They remain pickable via normal similarity selection.)
+    nm_order = sorted((f for f in nearmiss if f in row_file and nearmiss[f].get("score", 999) > 0),
                       key=lambda f: nearmiss[f].get("score", 999))
     ordered, seen_q = [], set()
     for func in nm_order:

@@ -39,6 +39,10 @@ def cracked(func):
     return bool(glob.glob(os.path.join(NM_DIR, func, "output-0-*")))
 
 def import_new():
+    # [audit 5] backstop: a SIGKILL between a seed's copy and its finally-restore could leave a seed
+    # body in the live tree. import_new runs only on a clean tree (between orchestrator runs), so
+    # restore any such leak before we start touching files.
+    sh("git checkout -- src/ 2>/dev/null")
     seeds = sorted(glob.glob(os.path.join(NEARMISS, "*.json")))
     n = 0
     for sp in seeds:
@@ -50,12 +54,17 @@ def import_new():
             continue                       # base-0 seed (matched / object-match-but-ROM-fail): the
                                            # permuter would just load score 0 and exit — never import
         func, file = s["func"], s["file"]
-        if imported(func):
-            continue
         full = os.path.join(NEARMISS, func + ".full.c")
         if not os.path.exists(full):
             continue                       # no whole-file snapshot -> the extracted body alone won't
                                            # compile (undefined externs/struct fields); skip it
+        if imported(func):
+            base = os.path.join(NM_DIR, func, "base.c")
+            # [audit 8] re-import ONLY if the seed improved since import (its .full.c is newer than the
+            # imported base.c); otherwise the permuter keeps permuting a stale body. Same body -> skip.
+            if os.path.exists(base) and os.path.getmtime(full) <= os.path.getmtime(base):
+                continue
+            shutil.rmtree(os.path.join(NM_DIR, func), ignore_errors=True)
         cfile = f"src/{file}.c"
         cpath = os.path.join(INNER, cfile)
         try:
@@ -92,9 +101,12 @@ def running_funcs():
 def _stub_set():
     """Funcs still GLOBAL_ASM stubs in src (i.e. NOT yet matched by codex)."""
     s = set()
-    for c in glob.glob(os.path.join(INNER, "src", "*.c")):
+    # [audit 6/7] recurse src/ (8 subdirs) AND match [^"]+ not [^/]+ so NESTED asm paths
+    # (nonmatchings/a/b/func.s) match too — ~1/3 of seeds live under multi-segment dirs; the
+    # single-segment flat version missed them, so _eligible would rmtree their still-valid imports.
+    for c in glob.glob(os.path.join(INNER, "src", "**", "*.c"), recursive=True):
         try:
-            for m in re.finditer(r'GLOBAL_ASM\("asm/nonmatchings/[^/]+/(func_[0-9A-F]+)\.s"\)', open(c).read()):
+            for m in re.finditer(r'GLOBAL_ASM\("asm/nonmatchings/[^"]+/(func_[0-9A-Fa-f]+)\.s"\)', open(c).read()):
                 s.add(m.group(1))
         except OSError:
             pass
