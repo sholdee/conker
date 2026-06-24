@@ -726,7 +726,35 @@ f32 func_15144AA8(s32 arg0) {
 struct17 *func_15144B34(s32 arg0) {
     return (struct17 *)&D_800DBFF0[arg0].unk2F8;
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15144B68.s")
+f32 func_15144B68(f32 arg0);
+extern f32 D_800A56A4;
+f32 func_15144B68(f32 arg0)
+{
+  f32 new_var;
+  new_var = D_800A56A4;
+  if (1)
+  {
+    f32 v = arg0;
+    if (new_var < v)
+    {
+      do
+      {
+        v -= new_var;
+      }
+      while (new_var < v);
+    }
+    if (v < 0.0f)
+    {
+      do
+      {
+        v += new_var;
+      }
+      while (v < 0.0f);
+    }
+    return v;
+  }
+}
+
 f32 func_15144BC8(f32 arg0) {
     f32 v = arg0;
     if (360.0f < v) {
