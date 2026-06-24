@@ -32,6 +32,21 @@ Two engines run in PARALLEL: the **orchestrator** (LLM agents match `GLOBAL_ASM`
   tools/permuter_daemon.py import_new`, VERIFY one worker compiles+permutes, THEN relaunch the supervisor**
   (`setsid python3 tools/permuter_daemon.py supervise 180 3600 >/tmp/permuter_supervise.log 2>&1 </dev/null &`).
   Do NOT relaunch the supervisor until `.full.c` exist for still-stubs (`ls .nearmiss/*.full.c`) — else empty spin.
+- **PERMUTER-FEED AUDIT (workflow `wco6ydl5u`, 29 agents, 2026-06-23): 16 confirmed bugs.** FIXED & COMMITTED
+  this gap: [1] harvest backfilled a `.full.c` body that disagreed with the kept json when scores differed →
+  now backfills only when `js == score` (`ba1c745`); [6/7] `permuter_daemon._stub_set` single-segment regex +
+  flat `src/*.c` glob missed 102/323 NESTED-path seeds → `_eligible` would `rmtree` ~1/3 of valid imports →
+  recurse + `[^"]+` (`49ef333`); [5] `import_new` `git checkout -- src/` backstop for a SIGKILL-leaked seed body;
+  [8] `import_new` re-imports an improved seed instead of pinning a stale `base.c`; [15] `similar_chunk` drops the
+  22 score-0 (object-match-but-ROM-fail) seeds from re-attempt priority (`49ef333`). **QUEUED FOR THIS GAP (need
+  orchestrator edits — unsafe while it runs):** [2/9/10] in `orchestrator_codex.sh:79` (+ `type_pass.sh:61`)
+  broaden the round-start clear `rm -f /tmp/{match,best,bestc}_func_*` → `_*` (38 non-`func_` stubs leak stale
+  /tmp → stale `/tmp/match_<f>.c` can be `cp`'d into live src = corruption); [4] orchestrator harvest block: skip
+  `best==0` so no new score-0 `.nearmiss` seeds are written; [13] decide re-attempt CADENCE — near-misses only get
+  re-attempted+backfilled when the attempted-log is cleared; the one-time clear handled cycle-7's 215, but future
+  near-misses need a per-cycle (or periodic) `/tmp/orchestrator_attempted_*.txt` clear to keep feeding. SKIPPED
+  (low/none): [3] non-`func_` permuter globs (0 such seeds today), [14] shelf blocks backfill 4/5 cycles (only 18
+  plateaus), [16] placeholder near-miss burns one slot. Full report: the `wco6ydl5u` task output.
 - **PERMUTER SEED FIX (harvest side validated):** permuter seeds died on undefined-symbol COMPILE errors — the
   `.nearmiss` body lacked the func's supporting externs/struct decls. FIX: `harvest_nearmiss.py` also saves the
   whole compilable best-C file as `.nearmiss/<func>.full.c`; `import_new` imports from it (skips seeds w/o it).
