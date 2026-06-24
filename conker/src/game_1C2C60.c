@@ -5,6 +5,7 @@
 #include "variables.h"
 
 void func_1519CDB0(s32, f32, s32);
+extern void *allocate_memory(s32, s32, s32, s32);
 
 s32 func_15195DD4(s32, s32, s32, s32, s32, s32, s32);
 s32 func_151422C0();
@@ -21,7 +22,34 @@ extern s32 D_800E08E8;
 extern s32 D_800E08EC;
 extern s32 D_800E08F0;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1C2C60/func_151957B0.s")
+typedef struct Struct151957B0 {
+    struct Struct151957B0 *prev;
+    struct Struct151957B0 *next;
+} Struct151957B0;
+
+void *func_151957B0(s32 size, void *head, void *tail) {
+    Struct151957B0 *node;
+    Struct151957B0 *prev;
+
+    node = allocate_memory(size, 1, 0, 0);
+    if (node != 0) {
+        node->next = 0;
+        prev = *(Struct151957B0 **)tail;
+        if (prev != 0) {
+            node->prev = prev;
+            (*(Struct151957B0 **)tail)->next = node;
+            *(Struct151957B0 **)tail = node;
+        } else {
+            node->prev = 0;
+            *(Struct151957B0 **)tail = node;
+            *(Struct151957B0 **)head = node;
+        }
+    }
+    return node;
+}
+
+void trailing_151957B0(void) {
+}
 
 void func_1519582C(void) {
     D_800E08E0 = D_800E08E4 = 0;
