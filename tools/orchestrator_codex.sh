@@ -23,6 +23,23 @@ else
   unset CONKER_REPROBE || true
 fi
 
+# [audit 13] PERMUTER-FEED CADENCE: re-admit near-misses that still need a .full.c backfill (json present,
+# .full.c absent) by removing them from the attempted-log, so each cycle re-attempts them ONCE to regenerate
+# their compilable snapshot. SELF-LIMITING: once .full.c exists the func stays excluded (the permuter owns it),
+# so the backlog drains over a few cycles instead of re-grinding forever.
+ALOG="/tmp/orchestrator_attempted_${CONKER_PARTITION:-all}.txt"
+if [ -f "$ALOG" ]; then
+  CONKER_REPO="$REPO" python3 - "$REPO" "$ALOG" <<'PY' || true
+import os, sys, glob
+repo, logf = sys.argv[1], sys.argv[2]
+need = {os.path.basename(j)[:-5] for j in glob.glob(os.path.join(repo, ".nearmiss", "*.json"))
+        if not os.path.exists(j[:-5] + ".full.c")}
+keep = [l for l in open(logf).read().splitlines() if l.strip() and l.strip() not in need]
+open(logf, "w").write("\n".join(keep) + ("\n" if keep else ""))
+print(f"re-admitted {len(need)} backfill-needing near-misses for re-attempt", file=sys.stderr)
+PY
+fi
+
 match_prompt() {  # $1=func  $2=file  (heredoc expands the paths; no $ / backticks remain)
   cat <<EOF
 You are matching ONE function in the mkst/conker N64 decompilation (IDO 5.3, -O2 -g3) to byte-identical assembly, using a real compile+diff loop.
@@ -76,7 +93,9 @@ for c in json.load(sys.stdin): print(c['func'], c['file'])" > /tmp/codex_chunk.t
   echo "round $r: $(wc -l < /tmp/codex_chunk.txt) candidates"
 
   echo "=== round $r: MATCH (codex exec --full-auto, parallel, distinct files) ==="
-  rm -f /tmp/match_func_*.c /tmp/best_func_*.score /tmp/bestc_func_*.c   # clear per-round best-tracking
+  rm -f /tmp/match_*.c /tmp/best_*.score /tmp/bestc_*.c   # clear per-round best-tracking ([audit 2/9/10]:
+         # was func_*-only, leaking stale snapshots for the 38 non-func_ stubs; a stale match_<f>.c could
+         # then be cp'd into live src on a later cycle. These prefixes are unique to iter_match — safe glob.)
   while read -r func file; do
     match_prompt "$func" "$file" > "/tmp/codexp_${func}.txt"
     ( timeout 2400 codex exec --full-auto --cd "$REPO" "$(cat /tmp/codexp_${func}.txt)" \
@@ -103,8 +122,10 @@ for c in json.load(sys.stdin): print(c['func'], c['file'])" > /tmp/codex_chunk.t
     size=$(grep -cE '^\s+/\*' "$REPO/conker/asm/nonmatchings/${file}/${func}.s" 2>/dev/null)
     printf '%s\t%s\t%s\t%s\n' "$func" "$file" "${best:-NA}" "${size:-NA}" >> "$REPO/tools/attempts.tsv"
     # harvest .nearmiss from the best-C IF still a stub (uncommitted), structurally close, keep-best
-    if [ "${best:-NA}" != NA ] && [ -f "/tmp/bestc_${func}.c" ] \
+    if [ "${best:-NA}" != NA ] && [ "$best" -gt 0 ] 2>/dev/null && [ -f "/tmp/bestc_${func}.c" ] \
        && grep -q "GLOBAL_ASM(\"asm/nonmatchings/${file}/${func}\.s\")" "$REPO/conker/src/${file}.c" 2>/dev/null; then
+       # [audit 4] best>0 guard: a score-0-but-still-stub is an object-match-but-ROM-fail dead-end;
+       # harvesting it just creates a seed import_new refuses (and re-attempt now skips, audit 15).
       half=$(( ${size:-0} / 2 ))
       if [ "$best" -le 80 ] 2>/dev/null || { [ "$half" -gt 0 ] && [ "$best" -le "$half" ] 2>/dev/null; }; then
         CONKER_REPO="$REPO" python3 tools/harvest_nearmiss.py "$func" "$file" "$best" "/tmp/bestc_${func}.c" 2>/dev/null

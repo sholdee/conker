@@ -58,7 +58,7 @@ while [ $# -ge 2 ]; do echo "$1 $2" >> /tmp/type_chunk.txt; shift 2; done
 echo "type_pass: typing $(wc -l < /tmp/type_chunk.txt) functions"
 
 echo "=== TYPE (codex --full-auto, parallel, distinct files) ==="
-rm -f /tmp/best_func_*.score /tmp/bestc_func_*.c /tmp/match_func_*.c
+rm -f /tmp/best_*.score /tmp/bestc_*.c /tmp/match_*.c   # [audit 2/9/10] not func_*-only (38 non-func_ stubs)
 while read -r func file; do
   type_prompt "$func" "$file" > "/tmp/typep_${func}.txt"
   ( timeout 1800 codex exec --full-auto --cd "$REPO" "$(cat /tmp/typep_${func}.txt)" \
