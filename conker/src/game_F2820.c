@@ -76,7 +76,35 @@ s32 func_150C5B88(struct102 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_F2820/func_150C5BD4.s")
+extern void func_15143134(void *, s32, s32);
+s32 func_150C5BD4(struct102 *arg0)
+{
+  u8 *p = ((u8 *) arg0) + 0xC8;
+  int new_var;
+  s32 t0;
+  if ((*((s32 *) (*((s32 *) p)))) == 0)
+  {
+    return 0;
+  }
+  if (p[4] != (*(((u8 *) (*((s32 *) p))) + 0x3B)))
+  {
+    return 0;
+  }
+  t0 = *((s32 *) (((u8 *) (*((s32 *) p))) + 0x1D4));
+  if (t0 == 0)
+  {
+    *((f32 *) (((u8 *) arg0) + 0x24)) = *((f32 *) (((u8 *) (*((s32 *) p))) + 0x14));
+    *((f32 *) (((u8 *) arg0) + 0x28)) = *((f32 *) (((u8 *) (*((s32 *) p))) + 0x18));
+    *((f32 *) (((u8 *) arg0) + 0x2C)) = *((f32 *) (((u8 *) (*((s32 *) p))) + 0x1C));
+  }
+  else
+  {
+    new_var = (((((p[5] << 6) & 0xFFFFFFFFFFFFFFFFu) & 0xFFFFFFFFFFFFFFFFu) & 0xFFFFFFFFFFFFFFFFu) & 0xFFFFFFFFFFFFFFFFu) & 0xFFFFFFFFFFFFFFFFu;
+    func_15143134(p + 0x8, (s32) (((u8 *) arg0) + 0x24), t0 + (((((new_var & 0xFFFFFFFFFFFFFFFFu) & 0xFFFFFFFFFFFFFFFFu) & 0xFFFFFFFFFFFFFFFFu) & 0xFFFFFFFFFFFFFFFFu) & 0xFFFFFFFFFFFFFFFFu));
+  }
+  return 1;
+}
+
 
 void func_150C5C74(s32 arg0) {
     func_1514D3B0(arg0, 0x15, 1, 0);

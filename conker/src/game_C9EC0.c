@@ -107,7 +107,32 @@ void func_1509CCB4(s32 arg0) {
     func_1509CE64((void *)D_8008743C[arg0].unk0, func_1509CCB4);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CCF4.s")
+extern s32 D_800D2E70;
+extern struct102 *D_800D2E4C;
+extern GameC9EC0Struct D_80087440[];
+void func_1509CCB4();
+void func_1509CCB4(s32 arg0);
+s32 func_1509CCF4(s32 arg0)
+{
+  u16 *p;
+  s32 count;
+  count = 0;
+  p = (u16 *) D_80087440[arg0].unk0;
+  while ((*p) != 0xFFFF)
+  {
+    ((u8 *) D_800D2E4C)[(*p) >> 3] |= 1 << ((*p) & 7);
+    if ((((u8 *) (&D_800D2E70))[*p] != 3) != ((0, 0U)))
+    {
+      ((u8 *) (&D_800D2E70))[*p] = 3;
+      func_1509CCB4(*p);
+      count++;
+    }
+    p++;
+  }
+
+  return count;
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C9EC0/func_1509CDDC.s")
 

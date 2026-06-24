@@ -106,7 +106,42 @@ s32 func_1517A9A8(s32 arg0, s32 arg1) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A7260/func_1517AA20.s")
+u8 func_150ADA20(void);
+extern void func_1517A644(f32, u8, s16, s16, s32);
+void func_1517AA20(f32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+{
+  s32 randX;
+  s32 randZ;
+  s32 arg2s;
+  s32 i;
+  s32 limit;
+  s32 randBit;
+  u32 offset;
+  f32 pos;
+  if (arg0 < 12.0f)
+  {
+  }
+  else
+  {
+    limit = (s32) (arg0 * 8.0f);
+    arg0 *= 0.5f;
+ arg2s = (s16) arg2; i = 0; if (arg4 > 0) { do {
+        randX = func_150ADA20() & 0x3F;
+        randZ = func_150ADA20() & 0x3F;
+        randX -= 0x20;
+        randZ -= 0x20;
+        offset = (((u32) func_150ADA20()) % ((u32) limit)) >> 4;
+        pos = ((f32) offset) + arg0;
+        randBit = func_150ADA20();
+        randBit &= 1;
+        func_1517A644(pos, randBit, (s16) (arg1 + randX), (s16) arg2s, arg3 + randZ);
+        i += 1;
+      }
+      while (i != arg4);
+    }
+  }
+}
+
 
 extern void func_1510B7B4(s32, s32);
 

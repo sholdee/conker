@@ -88,7 +88,51 @@ void func_150FCFB0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_129EE0/func_150FD514.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_129EE0/func_150FDB0C.s")
+void func_150FDB0C(void *arg0, s32 arg1, u8 arg2)
+{
+  u8 *new_var2;
+  s32 *v0;
+  s32 a2;
+  s32 v1;
+  s32 *new_var;
+ v0 = (s32 *) (((u8 *) arg0) + 0x110); if (arg2 == 0x2D) { v1 = *((s32 *) arg1); ; if (v1 == (*v0)) {
+      new_var2 = (u8 *) v0;
+      *v0 = *((s32 *) (arg1 + 4));
+      *((u8 *) (new_var2 + 4)) = *((u8 *) (arg1 + 9));
+    }
+    else
+    {
+      if ((*((s32 *) (arg1 + 4))) == (*v0))
+      {
+        *v0 = v1;
+        *((u8 *) (((u8 *) v0) + 4)) = *((u8 *) (arg1 + 8));
+      }
+      dummy_label_150FDB0C:
+      ;
+
+      ;
+      ;
+    }
+  }
+  else
+  {
+    new_var = (s32 *) arg1;
+    v1 = arg2 == 0;
+    if (v1)
+    {
+      v1 = *new_var;
+      if (v1 != (*v0))
+      {
+        if ((*((u8 *) (((u8 *) v0) + 4))) != (*((u8 *) (arg1 + 4))))
+        {
+          return;
+        }
+      }
+      *v0 = 0;
+    }
+  }
+}
+
 
 ScaleUpdateNode *func_150FDBA0(ScaleUpdateState *arg0, s16 arg1) {
     ScaleUpdateNode *node;

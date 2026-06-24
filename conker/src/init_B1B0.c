@@ -292,7 +292,33 @@ void func_1000CBA8(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000CBF0.s")
+extern struct151 *D_800417B0[];
+void func_1000CBF0(s32 arg0, s32 arg1, s32 arg2)
+{
+  s32 i;
+  struct151 **temp_v1;
+  struct151 *temp_a0;
+ i = 0; do {
+    if ((1 << i) & arg2)
+    {
+      temp_v1 = &D_800417B0[i];
+      temp_a0 = *temp_v1;
+      if (temp_a0 != 0)
+      {
+        temp_a0->unk5A = arg0;
+        (*temp_v1)->unk5C = arg1;
+        if (arg1 == 0)
+        {
+          (*temp_v1)->unk58 = (u16) arg0;
+        }
+      }
+    }
+    i++;
+    arg1 += 0;
+  }
+  while (i != 3);
+}
+
 // NON-MATCHING: JUSTREG? need some love
 // void func_1000CBF0(s32 *arg0, s32 *arg1, s32 arg2) {
 //     struct151 *tmp;
