@@ -29,7 +29,7 @@ extern s32 func_1502B6BC(s32 *, s32, s32 *, s32, s32, s32, s32);
 extern u8 *D_800C3688[][30];
 extern s32 D_800C3668[];
 extern s32 func_15023BB0(void *, s32, s32, s16 **, s32, s32, s32, s32, s32, s32, s32);
-extern void func_15022640(u8, s32);
+extern void func_15022640(s32, s32);
 extern struct131 *func_151149AC(u8);
 extern struct127 *func_1505EEF4(s32);
 extern void func_15082A44(void *, s32, s32, s32, s32);
@@ -247,6 +247,8 @@ extern s16 D_800C3598[];
 extern f32 D_800C35A0;
 extern u8 D_800C3510[];
 extern u8 D_800C3518[][25];
+extern u8 D_800C354A[];
+extern u8 D_800C3550[][30];
 
 void func_150221E8(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
     D_800C35A0 = arg3;
@@ -346,7 +348,28 @@ void func_15022398(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15022528.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15022640.s")
+void func_15022640(s32 arg0, s32 arg1) {
+    s32 i;
+    s32 count;
+    s32 limit;
+    u8 *count_ptr;
+
+    i = 0;
+    count_ptr = &D_800C354A[arg1];
+    count = *count_ptr;
+    limit = count;
+    if (count > 0) {
+        do {
+            if (arg0 == D_800C3550[arg1][i]) {
+                return;
+            }
+            i++;
+        } while (i < limit);
+    }
+
+    D_800C3550[arg1][count] = arg0;
+    *count_ptr = count + 1;
+}
 
 void func_150226BC(s32 arg0, s32 arg1) {
     struct131 *temp_v0;

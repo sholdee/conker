@@ -9,6 +9,7 @@ struct Obj150104F0 {
 };
 
 extern u8 D_800D9950[];
+extern u8 D_800D9946[];
 extern struct Obj150104F0 *func_151149AC(u32);
 
 // ???
@@ -40,7 +41,30 @@ dummy_label_927029:
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_3D9A0/func_15010600.s")
+void func_15010600(void) {
+    s32 i;
+
+    D_800D9921 = 0;
+    D_800D9920 = 0;
+    D_800D9928 = 0;
+    D_800D9938 = 0;
+    D_800D9929 = 0;
+    for (D_800D9939 = 0, i = 0;;) {
+        D_800D992A[i + 1] = 0;
+        D_800D993A[i + 1] = 0;
+        D_800D992A[i + 2] = 0;
+        D_800D993A[i + 2] = 0;
+        D_800D992A[i + 3] = 0;
+        D_800D993A[i + 3] = 0;
+        i += 4;
+        D_800D992A[i - 4] = 0;
+        D_800D993A[i - 4] = 0;
+        if (&D_800D9946[0] != &D_800D993A[i]) {
+            continue;
+        }
+        break;
+    }
+}
 // NON-MATCHING: addresses are wrong :(
 // void func_15010600(void) {
 //     s32 i;
