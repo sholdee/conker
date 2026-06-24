@@ -573,7 +573,41 @@ s32 func_1514A498(struct Foo1514A498 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514A4EC.s")
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+} Struct1514A4ECVec;
+
+struct Foo1514A4EC {
+    char pad0[0x34];
+    Struct1514A4ECVec unk34;
+    Struct1514A4ECVec unk40;
+    char pad4C[0xE4];
+    f32 unk130;
+    f32 unk134;
+    f32 unk138;
+    f32 unk13C;
+    f32 unk140;
+};
+
+s32 func_1514A4EC(struct Foo1514A4EC *arg0) {
+    f32 temp_f0;
+    s32 new_var;
+
+    temp_f0 = arg0->unk140;
+    arg0->unk40 = arg0->unk34;
+    arg0->unk130 = arg0->unk130 * temp_f0;
+    arg0->unk134 = arg0->unk134 + (arg0->unk13C * D_800BE9A4);
+    new_var = arg0 && arg0;
+    arg0->unk138 = arg0->unk138 * temp_f0;
+    arg0->unk34.unk0 = arg0->unk34.unk0 + (arg0->unk130 * D_800BE9A4);
+    arg0->unk34.unk4 = arg0->unk34.unk4 + (arg0->unk134 * D_800BE9A4);
+    if (new_var && arg0) {
+    }
+    arg0->unk34.unk8 = arg0->unk34.unk8 + (arg0->unk138 * D_800BE9A4);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_176A00/func_1514A594.s")
 
