@@ -33,6 +33,7 @@ extern void func_1502C608(s32);
 extern void func_1502DF38(s32, s32);
 extern void func_1502E4C4(s32);
 extern void func_1502EAFC(struct127 *);
+extern void func_1502EC34(void *, s32 *, s32 *, s32 *, s32 *);
 extern void func_1502EEF4(s32);
 extern void func_1502F264(s32);
 extern void func_1502FBE8(struct127 *);
@@ -123,7 +124,26 @@ s32 func_1502C3BC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502C974.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502CC34.s")
+void func_1502CC34(void *arg0, s32 arg1, s32 arg2, void *arg3, s32 *arg4, s32 *arg5, s32 *arg6, s32 *arg7, s32 *arg8, s32 *arg9, s32 *argA, s32 *argB, s32 *argC, s32 *argD) {
+    u8 *temp_v0;
+    u8 *temp_v1;
+
+    temp_v0 = D_800D9B68[arg1];
+    *arg4 = temp_v0[0];
+    temp_v1 = D_800D9B78[arg1];
+    *arg5 = temp_v0[1];
+    *arg6 = temp_v0[2];
+    *arg7 = temp_v1[0];
+    *arg8 = temp_v1[1];
+    *arg9 = temp_v1[2];
+    *argA = 0;
+    *argB = 0;
+    *argC = 0;
+    *argD = *(s32 *)((u8 *)arg3 + 0xC);
+    if (((u8 *)arg0)[0xA4] != 0) {
+        func_1502EC34(arg0, argA, argB, argC, argD);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502CCFC.s")
 
