@@ -13,6 +13,7 @@ extern s32 func_15144E80(struct Vec3F *, struct Vec3F *, struct Vec3F *, struct 
 extern f32 func_15144A74(struct Vec3F *, struct Vec3F *);
 extern s32 func_15145128(struct Vec3F *, struct Vec3F *, f32 *, f32 *);
 extern void func_1514F8F8(void *, void *, struct Vec3F *, struct Vec3F *, f32, u8, s32);
+extern void *func_15130280(void *, u8, s32, s32, u8, s32);
 extern f32 D_800A601C;
 extern f32 D_800A6020;
 extern f32 D_800A6024;
@@ -328,6 +329,99 @@ struct Local15152ABCStack {
 
 extern struct Local15152ABCColor D_800A5FE0[];
 extern s32 func_15147DA0(void *, void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32 *, s32, u8, s32);
+
+struct Local15153634Block {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+};
+
+struct Local15153634Arg {
+    s16 unk0;
+    s16 unk2;
+    u8 unk4;
+    u8 pad5;
+    u16 unk6;
+    s32 unk8;
+    s32 unkC;
+    s16 unk10;
+    s16 unk12;
+    s32 unk14;
+    s32 unk18;
+    u8 unk1C;
+    u8 unk1D;
+    u8 unk1E;
+    u8 unk1F;
+    u8 unk20;
+    u8 unk21;
+    u8 unk22;
+    u8 unk23;
+    u8 unk24;
+    u8 unk25;
+    s16 unk26;
+    s16 unk28;
+    s16 unk2A;
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+    struct Local15153634Block unk38;
+    s16 unk44;
+    s16 unk46;
+    s16 unk48;
+    s16 unk4A;
+    f32 unk4C;
+    f32 unk50;
+    f32 unk54;
+    f32 unk58;
+    s32 unk5C;
+    s8 unk60;
+    s8 unk61;
+    u8 unk62;
+    u8 unk63;
+    u8 unk64;
+    u8 pad65[3];
+    f32 unk68;
+};
+
+struct Local15153634Spawn {
+    s32 unk00;
+    s32 unk04;
+    u16 unk08;
+    s16 unk0A;
+    s32 unk0C;
+    s32 unk10;
+    u8 unk14;
+    u8 unk15;
+    u8 unk16;
+    u8 unk17;
+    u8 unk18;
+    u8 unk19;
+    u8 unk1A;
+    u8 unk1B;
+    u8 unk1C;
+    u8 unk1D;
+    s16 unk1E;
+    s16 unk20;
+    s16 unk22;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    struct Local15153634Block unk30;
+    u8 pad3C[0xC];
+    f32 unk48;
+    f32 unk4C;
+    f32 unk50;
+    f32 unk54;
+    s32 unk58;
+    u8 pad5C[4];
+    u8 unk60;
+    u8 unk61;
+    s8 unk62;
+    s8 unk63;
+    u8 pad64[2];
+    u8 unk66;
+    u8 pad67[9];
+};
 
 struct Local15151A38Header {
     s32 unk0;
@@ -911,7 +1005,73 @@ void func_15152ABC(struct Local15152ABCOut *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15153298.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_17CAF0/func_15153634.s")
+void func_15153634(struct Local15153634Arg *arg0, u8 arg1, u8 arg2, s32 arg3) {
+    struct Local15153634Spawn sp90;
+    f32 sp8C;
+    s32 count;
+    s16 randS1;
+    s16 randS2;
+    f32 temp_f20;
+    f32 temp_f22;
+    f32 temp_f24;
+    f32 temp_f26;
+    f32 temp_f28;
+    f32 temp_f2;
+    register void *ret;
+
+    count = (func_150ADA20() % (u32)(arg0->unk2 + 1)) + arg0->unk0;
+    sp8C = arg0->unk68;
+    sp90.unk1D = arg0->unk4;
+    sp90.unk08 = arg0->unk6;
+    sp90.unk04 = arg0->unkC;
+    sp90.unk00 = arg0->unk8;
+    sp90.unk0C = 0;
+    sp90.unk14 = arg0->unk1C;
+    sp90.unk15 = arg0->unk1D;
+    sp90.unk16 = arg0->unk1E;
+    sp90.unk17 = arg0->unk1F;
+    sp90.unk18 = arg0->unk20;
+    sp90.unk19 = arg0->unk21;
+    sp90.unk1A = arg0->unk22;
+    sp90.unk30 = arg0->unk38;
+    sp90.unk58 = arg0->unk5C;
+    sp90.unk1C = arg0->unk25;
+    sp90.unk62 = arg0->unk60;
+    sp90.unk63 = arg0->unk61;
+    sp90.unk1E = arg0->unk26;
+    sp90.unk20 = arg0->unk28;
+    sp90.unk60 = arg0->unk62;
+    sp90.unk61 = arg0->unk63;
+    sp90.unk22 = arg0->unk2A;
+    sp90.unk24 = arg0->unk2C;
+    sp90.unk66 = arg1;
+
+    if (count != 0) {
+        do {
+            randS1 = (func_150ADA20() % (u32)(arg0->unk48 + 1)) + arg0->unk44;
+            randS2 = (func_150ADA20() % (u32)(arg0->unk4A + 1)) + arg0->unk46;
+            temp_f24 = func_151423D8((u8)randS2);
+            temp_f26 = func_151423D8((u8)(randS2 - 0x40));
+            temp_f28 = func_151423D8((u8)randS1);
+            temp_f22 = func_151423D8((u8)(randS1 - 0x40));
+            temp_f20 = (func_150ADA68() * arg0->unk50) + arg0->unk4C;
+            sp90.unk0A = (func_150ADA20() % (u32)(arg0->unk12 + 1)) + arg0->unk10;
+            sp90.unk10 = (func_150ADA20() % (u32)(arg0->unk18 + 1)) + arg0->unk14;
+            temp_f2 = temp_f20 * temp_f24;
+            sp90.unk28 = sp90.unk2C = (func_150ADA68() * arg0->unk34) + arg0->unk30;
+            sp90.unk48 = temp_f2 * temp_f22;
+            sp90.unk4C = -temp_f20 * temp_f26;
+            sp90.unk50 = temp_f2 * temp_f28;
+            sp90.unk54 = (func_150ADA68() * arg0->unk58) + arg0->unk54;
+            sp90.unk1B = (func_150ADA20() % (u32)(arg0->unk24 + 1)) + arg0->unk23;
+            ret = func_15130280(&sp90, arg0->unk64, 0, 4, arg2, arg3);
+            if (ret != NULL) {
+                memcpy((u8 *)ret + 0xA8, &sp8C, 4);
+            }
+            count--;
+        } while (count != 0);
+    }
+}
 
 void func_151539B4(struct Local151539B4Arg *arg0, u8 arg1) {
     struct Local151539B4Spawn sp7C;
