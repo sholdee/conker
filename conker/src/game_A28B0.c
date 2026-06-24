@@ -4,6 +4,9 @@
 #include "variables.h"
 
 s32 func_1505D024(struct127 *arg0, s32 arg1, u16 arg2, s32 arg3);
+void func_1504715C(f32 *arg0, struct127 *arg1);
+void func_1514B364(f32 *arg0, f32 *arg1, s32 arg2, s32 arg3);
+void func_15197A7C(struct127 *arg0);
 
 typedef struct {
     char pad_0[0x8];
@@ -512,8 +515,27 @@ void func_150766D0(void) {
 void func_15076760(void) {
 }
 
-// ???
-#pragma GLOBAL_ASM("asm/nonmatchings/game_A28B0/func_15076768.s")
+void func_15076768(void) {
+    struct {
+        f32 sp20[9];
+        f32 sp44[3];
+    } stack;
+
+    switch (D_800D1890) {
+    case 0:
+        func_15197A7C(D_800D154C);
+        break;
+    case 1:
+        stack.sp44[0] = D_800D154C->x_position;
+        stack.sp44[1] = -390.0f;
+        stack.sp44[2] = D_800D154C->z_position;
+        goto call_func_1504715C;
+call_func_1504715C:
+        func_1504715C(stack.sp20, D_800D154C);
+        func_1514B364(stack.sp44, stack.sp20, 0xFF, 0);
+        break;
+    }
+}
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_A28B0/func_150767F4.s")

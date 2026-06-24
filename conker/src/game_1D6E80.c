@@ -6,6 +6,7 @@
 
 extern s32 func_10010F30(s32, u16, u8, s16, u8);
 extern s32 func_151EF610(void);
+extern f32 D_800A8F7C;
 extern f32 D_800A8F88;
 extern f32 D_800A8FEC;
 extern s32 func_15045800(f32 *, s32, f32, s32);
@@ -80,7 +81,26 @@ typedef struct {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151A9AA4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151A9BA0.s")
+void func_151A9BA0(u8 *arg0) {
+    u8 *v1 = *((u8 **)(arg0 + 0x18));
+    f32 sp30[3];
+    s32 temp;
+
+    goto dummy_label_151A9BA0; dummy_label_151A9BA0: ;
+    sp30[0] = *((f32 *)(v1 + 0x14));
+    if (D_800A8F7C < (*((f32 *)(v1 + 0x118)))) {
+        sp30[1] = (*((f32 *)(v1 + 0x118))) + 100.0f;
+    } else {
+        sp30[1] = (*((f32 *)(v1 + 0x18))) + 150.0f;
+    }
+    sp30[2] = *((f32 *)(v1 + 0x1C));
+    temp = (s32)(arg0 + 0x34);
+    if (func_15045800(sp30, 0, sp30[1] - 300.0f, temp) != 0) {
+        sp30[1] = *((f32 *)(arg0 + 0x34));
+        func_151ABE40(sp30, temp, 1, arg0[0xC], arg0[0x1]);
+        func_10010FFC(0, 0x11, 0x5208, 0, 0, (s32)v1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151A9CA0.s")
 
