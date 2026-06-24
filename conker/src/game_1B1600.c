@@ -7,6 +7,15 @@ extern struct vtx151857DC *(*D_8008D498[])(struct vtx151857DC *, struct vtx15185
 extern s32 (*D_8008D4C0[])(struct vtx151857DC *);
 
 extern f32 D_800D3688;
+extern s32 D_800DE01C;
+extern s32 D_800DE020;
+extern s32 D_800DE024;
+extern s32 D_800DE030;
+extern s32 D_800DE034;
+extern s32 D_800DE038;
+extern f32 D_800DE03C;
+extern u8 D_800DE040;
+extern u8 D_800DE041;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B1600/func_15184150.s")
 
@@ -226,7 +235,44 @@ struct vtx151857DC *func_15185DD4(struct vtx151857DC *arg0, s32 arg1, s32 arg2, 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B1600/func_15186794.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1B1600/func_151872B0.s")
+void func_151872B0(s32 arg0) {
+    D_800DE01C = 0x258;
+    D_800DE020 = 0xB4;
+    D_800DE024 = 0x5A;
+    D_800DE030 = 0x3F8;
+    D_800DE034 = 0;
+    D_800DE038 = 1;
+    D_800DE03C = 1.0f;
+    D_800DE040 = 1;
+    D_800DE041 = 1;
+
+    switch (arg0) {
+    case 0x21:
+        D_800DE01C = 0x12C0;
+        D_800DE020 = D_800DE01C - 1;
+        D_800DE024 = D_800DE01C - 2;
+        D_800DE030 = 0x3F2;
+        D_800DE034 = 1;
+        D_800DE038 = 4;
+        D_800DE040 = 0;
+        break;
+    case 0x22:
+        D_800DE01C = 0x960;
+        D_800DE020 = D_800DE01C - 1;
+        D_800DE024 = D_800DE01C - 2;
+        D_800DE038 = 4;
+        D_800DE040 = 0;
+        break;
+    case 0x14:
+        D_800DE041 = 0;
+        break;
+    case 0x29:
+        D_800DE01C = 0x4B0;
+        D_800DE020 = 0x258;
+        D_800DE024 = 0x12C;
+        break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1B1600/func_151873E4.s")
 
