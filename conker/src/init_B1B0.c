@@ -173,7 +173,52 @@ s32 func_1000B548(s32 *arg0) {
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000B638.s")
+s32 func_1000B638(s32 arg0, u8 arg1, s32 arg2, s32 arg3) {
+    s32 sp1C;
+    struct151 *temp_v0;
+
+    sp1C = arg0 & 2;
+    arg0 = arg0 & 1;
+    temp_v0 = D_800417B0[arg1];
+    if ((temp_v0 == NULL) || (temp_v0->unk30 < 500)) {
+        D_80041F04 &= ~1;
+    }
+
+    if (D_80041F04 & 1) {
+        if (arg0 == 0) {
+            func_100088F0(arg1, 0x8000, 1);
+            if ((D_800BE9F0 == 1) || (D_800BE9F0 == 12)) {
+                func_10008790(arg1, 0x7000, 0, 0);
+            } else if (D_800BE9F0 != 7) {
+                func_10008790(arg1, 0xCA, 0, 0);
+            }
+            func_100085B8(arg1, 0xF, 1);
+        }
+        arg0 = 1;
+    } else if (arg0 != 0) {
+        func_100088F0(arg1, 0x8000, 0);
+        if ((D_800BE9F0 == 1) || (D_800BE9F0 == 12)) {
+            func_10008790(arg1, 0x7000, 0xFF, 0);
+        } else if (D_800BE9F0 != 7) {
+            func_10008790(arg1, 0xCA, 0xFF, 0);
+        }
+        func_100085B8(arg1, 0xF, 0);
+        arg0 = 0;
+    }
+
+    if (D_800BE9F0 == 39) {
+        func_10011FA0((s32 *)4);
+        if (sp1C == 0) {
+            sp1C = 2;
+            func_1000E704(1, 1, 0xFFFF);
+        }
+    } else if (sp1C != 0) {
+        func_1000E704(1, 0, 0xFFFF);
+        sp1C = 0;
+    }
+
+    return sp1C | arg0;
+}
 
 
 s32 func_1000B830(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
