@@ -2,8 +2,81 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_800A2110;
+struct126 *func_150FF288(struct127 *arg0);
+void func_150FF2AC(struct127 *arg0, struct17 *arg1, struct17 *arg2, struct17 *arg3);
+void func_151D5148(struct127 *arg0);
+void func_150FF2D4(u8 *, struct17 *, struct17 *, struct17 *, struct17 *, struct17 *, struct17 *, struct17 *, struct17 *, struct17 *, s32 *, s32 *, struct17 *, struct127 *, struct126 *);
+s32 func_151C229C(struct17 *arg0, struct17 *arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9, f32 arg10, s32 arg11, struct127 *arg12, s32 arg13, s32 arg14, s32 arg15, s32 arg16, s32 arg17, s32 arg18, s32 arg19, s32 arg20, f32 arg21, s32 arg22, s32 arg23, s32 arg24, s32 arg25, s32 arg26);
+void func_151D3F14(struct17 *arg0, u8 arg1, s32 arg2);
+void func_151D4408(struct17 *, struct17 *, void *, struct127 *, f32, s32, s32);
+void func_150FF474(struct17 *, struct17 *, s32, s32);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12C1E0/func_150FED30.s")
+typedef u8 Func150FED30Entry[0x40];
+
+void func_150FED30(struct127 *arg0, s32 arg1, s32 arg2) {
+    struct17 sp14C;
+    struct17 sp140;
+    struct17 sp134;
+    struct17 sp128;
+    struct17 sp11C;
+    struct17 sp110;
+    struct17 sp104;
+    struct17 spF8;
+    struct17 spEC;
+    struct17 spA4[6];
+    s32 spA0;
+    s32 sp9C;
+    struct126 *temp;
+    u8 sp97;
+    s32 rand;
+    s32 mode;
+    s32 variant;
+    f32 rand1;
+    f32 rand0;
+
+    temp = func_150FF288(arg0);
+    if (temp != 0) {
+        func_151D5148(arg0);
+        func_150FF2AC(arg0, &sp134, &sp128, &sp11C);
+
+        if ((arg0->unk1D4 != 0) && ((arg0->unk74 & 0xF) != 0xF)) {
+            sp97 = 1;
+        } else {
+            sp97 = 0;
+        }
+
+        func_150FF2D4(&sp97, spA4, &sp14C, &sp110, &sp104, &sp134, &sp128, &sp11C, &spF8, &spEC, &spA0, &sp9C, &sp140, arg0, temp);
+
+        rand0 = func_150ADA68();
+        rand1 = func_150ADA68();
+        rand = func_150ADA20();
+
+        if (D_800BE616 != 0) {
+            mode = 0x35;
+        } else {
+            mode = 0x1A;
+        }
+
+        if (arg0->id == 0x98) {
+            variant = 1;
+        } else {
+            variant = -1;
+        }
+
+        func_151C229C(&sp140, &sp134, spA0, sp9C, 1, 0, 300.0f, D_800A2110,
+                      (rand0 * 10.0f) + 25.0f, (rand1 * 200.0f) + 600.0f,
+                      50.0f, (rand % 0x9CU) + 0x64, arg0, 0x63, 1, 1, 1,
+                      0, 1, 0, mode, 0.0f, 0xFF, variant, 0,
+                      ((u8 *)&arg1)[3], arg2);
+
+        if (sp97 != 0) {
+            func_151D3F14(&sp14C, ((u8 *)&arg1)[3], arg2);
+            func_151D4408(&sp110, &sp104, (*(Func150FED30Entry **)&arg0->unk1D4)[*((u8 *)temp + 2)], arg0, 1.0f, ((u8 *)&arg1)[3], arg2);
+            func_150FF474(&sp14C, spA4, ((u8 *)&arg1)[3], arg2);
+        }
+    }
+}
 
 extern s32 func_1514654C(struct127 *, struct126 *, s32, void *, void *, s32);
 extern f32 D_800A2050;

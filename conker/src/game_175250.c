@@ -7,6 +7,34 @@ extern s32 func_15147A80(void *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s3
 
 struct Struct15147DA0_cpy { s32 unk0[8]; };
 
+struct Struct15148AF4_entry {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    s16 unk10;
+    s16 unk12;
+};
+
+struct Struct15148AF4_data {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+};
+
+struct Struct15148AF4_arg0 {
+    u8 pad0[0x25];
+    u8 unk25;
+    u8 pad26[7];
+    s8 unk2D;
+    s8 unk2E;
+    u8 pad2F[0x65];
+    struct Struct15148AF4_entry *unk94;
+    struct Struct15148AF4_data *unk98;
+};
+
 s32 func_15147DA0(void *arg0, void *arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5,
                   s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10, s32 *arg11,
                   s32 arg12, u8 arg13, s32 arg14) {
@@ -38,7 +66,28 @@ s32 func_15147DA0(void *arg0, void *arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_175250/func_151488C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_175250/func_15148AF4.s")
+s32 func_15148AF4(struct Struct15148AF4_arg0 *arg0) {
+    s32 idx;
+    struct Struct15148AF4_entry *entries;
+    struct Struct15148AF4_data *data;
+    struct Struct15148AF4_entry *entry;
+
+    entries = arg0->unk94;
+    data = arg0->unk98;
+    idx = arg0->unk2E;
+    do {
+        idx -= 1;
+        if (idx < 0) {
+            idx = arg0->unk25 - 1;
+        }
+        entry = (struct Struct15148AF4_entry *)((u8 *)entries + (idx * 0x14));
+        entry->unkC = entry->unkC - (data->unk10 * D_800BE9A4);
+        entry->unk0 = entry->unk0 + (data->unk4 * D_800BE9A4);
+        entry->unk4 = entry->unk4 + (entry->unkC * D_800BE9A4);
+        entry->unk8 = entry->unk8 + (data->unkC * D_800BE9A4);
+    } while (idx != arg0->unk2D);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_175250/func_15148BA4.s")
 
