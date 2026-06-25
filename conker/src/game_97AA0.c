@@ -5,7 +5,74 @@
 extern f32 D_80099A28;
 struct225 *func_151602C0(Header *, Header2 *, s32, s32, s32, s32, s32, s32, s32, s32, s32);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_97AA0/func_1506A5F0.s")
+extern f32 D_80099A10;
+extern f32 D_80099A14;
+extern f32 D_80099A18;
+extern f32 D_80099A1C;
+extern f32 D_80099A20;
+extern f32 D_80099A24;
+extern void func_151A6F00(void *, s32, u8, s32);
+struct struct1506A5F0
+{
+  s16 unk00;
+  u8 pad02[2];
+  struct17 unk04;
+  s16 unk10;
+  u8 pad12[2];
+  f32 unk14;
+  s16 unk18;
+  s16 unk1A;
+  s16 unk1C;
+  s16 unk1E;
+  f32 unk20;
+  f32 unk24;
+  f32 unk28;
+  f32 unk2C;
+  f32 unk30;
+  f32 unk34;
+  f32 unk38;
+  f32 unk3C;
+  f32 unk40;
+  f32 unk44;
+  f32 unk48;
+  f32 unk4C;
+  f32 unk50;
+  s8 unk54;
+  s8 unk55;
+  s16 unk56;
+  s16 unk58;
+};
+void func_1506A5F0(struct127 *arg0, s32 arg1)
+{
+  struct struct1506A5F0 sp1C;
+  sp1C.unk00 = 3;
+  sp1C.unk04.unk0 = arg0->x_position;
+  sp1C.unk04.unk4 = arg0->y_position;
+  sp1C.unk04.unk8 = arg0->z_position;
+  sp1C.unk14 = D_80099A10;
+  sp1C.unk20 = D_80099A14;
+  sp1C.unk24 = D_80099A18;
+  sp1C.unk10 = 0x5A;
+  sp1C.unk18 = 0;
+  sp1C.unk1A = 0xFF;
+  sp1C.unk1C = -0x40;
+  sp1C.unk1E = 0x28;
+  sp1C.unk30 = 0.0f;
+  sp1C.unk34 = 0.0f;
+  sp1C.unk38 = 0.0f;
+  sp1C.unk54 = 0;
+  sp1C.unk55 = 0;
+  sp1C.unk56 = 0x32;
+  sp1C.unk58 = 0x19;
+  sp1C.unk3C = D_80099A1C;
+  sp1C.unk40 = D_80099A20;
+  sp1C.unk44 = D_80099A24;
+  sp1C.unk48 = (f32) ((s16) 0);
+  sp1C.unk4C = -4.0f;
+  sp1C.unk50 = 8.0f;
+  func_151A6F00(&sp1C, 1, 0xFF, 1);
+}
+
 
 s32 func_150E0348(s32, s32, s32);
 

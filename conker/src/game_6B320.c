@@ -211,7 +211,36 @@ void func_1503EEC0(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_6B320/func_1503EF4C.s")
+extern s32 func_1503EF4C(s32 arg0, s32 arg1, s32 arg2);
+extern struct func_1503DE70_s *D_8008446C[];
+extern struct e1f4_s D_800C6664[];
+extern struct e1f4_s D_800C6668[];
+s32 func_1503EF4C(s32 arg0, s32 arg1, s32 arg2)
+{
+  struct func_1503DE70_s *row;
+  struct func_1503DE70_s *p;
+  row = D_8008446C[arg0];
+  p = (struct func_1503DE70_s *) (((u8 *) row) + (arg1 * 8));
+  if (((struct func_1503DE70_s *) (((u8 *) row) + (arg1 * 8)))->unk0 != 0)
+  {
+    if ((p->unk0 & (D_800C6664 + arg2)->f) == 0)
+    {
+      goto ret0;
+    }
+  }
+  if (p->unk4 != 0)
+  {
+    if ((p->unk4 & (D_800C6668 + arg2)->f) == 0)
+    {
+      goto ret0;
+    }
+  }
+  return 1;
+  ret0:
+  return 0;
+
+}
+
 
 extern u8 D_80098914[];
 

@@ -1812,7 +1812,19 @@ void func_15071FB0(void) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_15071FDC.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_150721A4.s")
+void func_1506160C(struct127 *, s32, u8, u8, s32);
+extern s32 D_800D1580;
+extern struct127 *D_800D154C;
+void func_150721A4(void)
+{
+  u8 new_var;
+  u16 temp_a2 = D_800D1580;
+  unsigned short temp_t6 = D_800D1580 >> 8;
+  u8 temp_t7 = D_800D1580 >> 16;
+  new_var = temp_t7;
+  func_1506160C(D_800D154C, new_var & 0xFFu, temp_a2, temp_t6, 0);
+}
+
 
 struct127 *func_150721E8(struct127 *arg0) {
     return func_15072208(arg0, 0);

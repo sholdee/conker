@@ -830,7 +830,52 @@ s32 func_1519187C(void *arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15191980.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15191A84.s")
+void func_1516972C(struct102 *arg0);
+void func_15169850(s32, u8, s32, s32, s32);
+void func_15191A84(struct102 *arg0, s32 arg1, u8 arg2)
+{
+  s32 *new_var2;
+  struct Struct1518F49C *p;
+  u8 *new_var3;
+  u8 old;
+  u8 *new_var;
+  p = (struct Struct1518F49C *) (((u8 *) arg0) + 0x28);
+  new_var2 = (s32 *) (&arg1);
+  if (((arg2 == 0xC) || (arg2 == 0xE)) || (arg2 == 0x50))
+  {
+    if ((((struct Struct1518F49C *) arg1)->unk0 == p->unk0) || ((*((u8 *) ((*new_var2) + 4))) == p->unk4))
+    {
+      func_1516972C(arg0);
+    }
+  }
+  else
+    if (arg2 == 0x4E)
+  {
+    func_1516972C(arg0);
+  }
+  else
+    if (arg2 == 0xD)
+  {
+    if ((((struct Struct1518F49C *) arg1)->unk0 == p->unk0) || ((*((u8 *) ((*((s32 *) (&arg1))) + 4))) == p->unk4))
+    {
+      old = *((u8 *) (((u8 *) arg0) + 0xD));
+      new_var = (u8 *) (((u8 *) arg0) + 0xD);
+      new_var3 = (u8 *) arg0;
+      *new_var = (*((u8 *) (((u8 *) arg0) + 0xD))) | 1;
+      *((s16 *) (new_var3 + 0xE)) = 0x64;
+      dummy_label_15191A84_1:
+      ;
+
+      ;
+      ;
+    }
+  }
+  else
+  {
+    func_15169850(arg1, arg2, (s32) p, (s32) (&p->unk4), (s32) arg0);
+  }
+}
+
 
 extern s32 D_800A8010;
 

@@ -109,7 +109,39 @@ void func_15019414(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_45B80/func_15019464.s")
+s32 func_1501A490(s32 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void func_1510B958(s32 arg0);
+s32 func_1510B9D0(s32 arg0, s16 arg1);
+s32 func_1515D6D0(s32 arg0, s32 arg1);
+s32 func_1517EFAC(s32 arg0);
+extern s16 D_80084480;
+extern s32 D_800BE9F0;
+extern s32 D_800BE628;
+extern u8 D_800BE9C0;
+extern u8 D_800BEAC0;
+extern u16 D_800D18A0;
+s32 func_1510FEA0(s32 arg0, s32 arg1);
+s32 func_15019464(Gfx *arg0, s16 arg1)
+{
+ func_1510B958(arg1); { Gfx *_g = (Gfx *) (arg0++); _g->words.w0 = ((((unsigned int) ((((unsigned int) 0xdc) & ((0x01 << 8) - 1)) << 24)) | ((unsigned int) ((((unsigned int) (((sizeof(Vp)) - 1) / 8)) & ((0x01 << 5) - 1)) << 19))) | ((unsigned int) ((((unsigned int) (0 / 8)) & ((0x01 << 8) - 1)) << 8))) | ((unsigned int) ((((unsigned int) 8) & ((0x01 << 8) - 1)) << 0)); _g->words.w1 = (unsigned int) ((((D_800BE628 ^ 0) + (arg1 * 0x180)) + (D_800BE9C0 * 0x10)) + 0x40); } ;
+  arg0 = (Gfx *) func_1501A490((s32) arg0, arg1, 0, 0, 0, 0);
+  if (D_800BEAC0 != 0)
+  {
+    return (s32) arg0;
+  }
+  if (D_80084480 != 0)
+  {
+    return (s32) arg0;
+  }
+  arg0 = (Gfx *) func_1510FEA0((s32) arg0, D_800BE9F0);
+  if ((func_1517EFAC(arg1) != 0) || ((D_800D18A0 & (1 << arg1)) != 0))
+  {
+    return (s32) arg0;
+  }
+  arg0 = (Gfx *) func_1515D6D0((s32) arg0, arg1);
+  return func_1510B9D0((s32) arg0, arg1);
+}
+
 // NON-MATCHING: 70% of the way there... maybe.
 // s32 func_15019464(Gfx *arg0, s16 arg1) {
 //     s32 temp_s0;

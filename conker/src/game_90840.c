@@ -81,7 +81,40 @@ void func_15063628(struct127 *arg0, f32 arg1) {
     func_150636A4(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_150636A4.s")
+extern struct127 D_800CC2D0[26];
+void func_150636A4(struct127 *arg0);
+struct tgt150636A4
+{
+  u8 pad0[0x195];
+  u8 unk195;
+  u8 unk196;
+};
+struct mid150636A4
+{
+  u8 pad0[0x31C];
+  struct tgt150636A4 *unk31C;
+};
+struct sub150636A4
+{
+  u8 pad0[0xB0];
+  struct mid150636A4 *unkB0;
+};
+void func_150636A4(struct127 *arg0)
+{
+  struct tgt150636A4 *new_var;
+  struct mid150636A4 *temp_v0;
+  temp_v0 = ((struct sub150636A4 *) arg0->unk31C)->unkB0;
+  if (temp_v0 != 0)
+  {
+    new_var = temp_v0->unk31C;
+    if (new_var != 0)
+    {
+      temp_v0->unk31C->unk195 = 0x1E;
+      temp_v0->unk31C->unk196 = arg0 - D_800CC2D0;
+    }
+  }
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_90840/func_150636F0.s")
 

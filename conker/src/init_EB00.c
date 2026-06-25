@@ -208,7 +208,26 @@ s32 func_1000F44C(u16 arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000F4D8.s")
+s32 func_100173C4(struct31 **arg0);
+extern struct120 D_800425E0[];
+extern struct120 D_800426A0[];
+s32 func_1000F4D8(u16 arg0)
+{
+  struct120 *temp_s0;
+  arg0 &= 0x7FFF;
+ temp_s0 = D_800425E0; do { if (temp_s0->unk8 != 0) { if ((temp_s0->unk4 & 0x7FFF) == arg0) {
+        if (func_100173C4(&temp_s0->unk8) != 0)
+        {
+          return 1;
+        }
+      }
+    }
+    temp_s0++;
+  }
+  while (temp_s0 != D_800426A0);
+  return 0;
+}
+
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000F568.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000F6B8.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000F85C.s")

@@ -200,7 +200,110 @@ void func_160006CC(struct118 *arg0) {
         var_s1 += 3;
     } while (var_v0 != 0);
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/debugger/debugger/func_1600078C.s")
+void func_160012B0(s32 arg0, u8 *arg1);
+void func_16001338(u8 arg0, u8 arg1, u8 arg2);
+extern s32 D_8002D4B0;
+extern s32 *D_8002D8B0;
+extern s32 D_16003B4C;
+extern struct118 *D_1600389C;
+extern u8 D_160047B0[];
+extern u8 D_160047BC[];
+extern u8 D_160047C0[];
+void func_1600078C(void)
+{
+  s32 temp_s0;
+  s32 temp_s0_2;
+  s32 y;
+  s32 i;
+  u32 *addr;
+  u32 word;
+  u32 dataStart;
+  u32 prefix;
+  temp_s0 = ((s32 *) D_1600389C)[0x3D];
+  func_16001338(0, 255, 0);
+  func_160012B0(0xB, D_160047B0);
+  addr = (u32 *) (temp_s0 + (D_16003B4C * 4));
+  if ((((((((u32) addr) & 3) & 0xFFFFu) & 0xFFFFu) == 0) && (((u32) addr) >= 0x80000000U)) && (((u32) addr) < 0x80800001U))
+  {
+    dataStart = (u32) (&D_8002D4B0);
+    if (D_16003B4C == 0)
+    {
+      func_16001338(255, 0, 0);
+    }
+    else
+      if ((((u32) addr) >= dataStart) && (((u32) addr) < (dataStart + 0x400)))
+    {
+      func_16001338(128, 128, 255);
+    }
+    else
+      if ((((u32) addr) >= ((u32) (&D_8002D8B0))) && (((u32) addr) < (((u32) (&D_8002D8B0)) + 0x4000)))
+    {
+      func_16001338(255, 128, 128);
+    }
+    else
+    {
+      func_16001338(255, 255, 255);
+    }
+    y = 0x61;
+    i = 0;
+    do
+    {
+      func_16001044(y, 0, addr);
+      func_160012B0(y + 8, D_160047BC);
+      word = *addr;
+      prefix = (word >> 24) & 0xFF;
+      if (prefix == 0x80)
+      {
+        func_16001338(128, 128, 255);
+      }
+      else
+        if (prefix == 0x15)
+      {
+        func_16001338(255, 0, 0);
+      }
+      else
+        if (prefix == 0x16)
+      {
+        func_16001338(128, 255, 128);
+      }
+      else
+        if (prefix == 0x10)
+      {
+        func_16001338(255, 0, 0);
+      }
+      else
+      {
+        func_16001338(255, 255, 255);
+      }
+      func_16001044(y + 0xC, 0, word);
+      temp_s0_2 = y + 0x16;
+      func_160012B0(temp_s0_2, D_160047C0);
+      func_16001338(255, 255, 255);
+      func_16001044(temp_s0_2, 1, word);
+      if ((((u32) addr) >= dataStart) && (((u32) addr) < (dataStart + 0x400)))
+      {
+        func_16001338(128, 128, 255);
+      }
+      else
+        if ((((u32) addr) >= ((u32) (&D_8002D8B0))) && (((u32) addr) < (((u32) (&D_8002D8B0)) + 0x4000)))
+      {
+        func_16001338(255, 128, 128);
+      }
+      else
+      {
+        func_16001338(255, 255, 255);
+      }
+      i += 1;
+      y += 0x20;
+      addr += 1;
+    }
+    while (i != 0x16);
+  }
+}
+
+void func_160012B0(s32 arg0, u8 *arg1);
+void func_16001338(u8 arg0, u8 arg1, u8 arg2);
+
 // NON-MATCHING: close but still some stuff to figure out
 // void func_1600078C(void) {
 //     s32 temp_s0;

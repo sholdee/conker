@@ -620,4 +620,42 @@ s32 func_150235DC(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1502378C.s")
+void func_150627D4(struct127 *arg0);
+extern s32 D_800C3654;
+extern u8 D_800C3E78;
+extern struct127 D_800CC2D0[26];
+extern void func_1504A730(void);
+extern void func_1507E73C(struct127 *);
+extern void func_1507FEA0(struct127 *);
+extern void func_15061B4C(void);
+extern void func_1502178C(struct127 *, s32, s32);
+extern s32 func_150229E4(struct127 *);
+void func_15022998(s32 *arg0);
+void func_1502378C(void)
+{
+  s32 new_var;
+  s32 *new_var2;
+  s32 i;
+  s32 limit;
+  s32 active;
+  struct127 *obj;
+  obj = D_800CC2D0;
+ i = 0; if ((*((u8 *) (&D_800C3654))) != 0) { func_1504A730(); return; } for (active = 1, limit = 0x19; i != (limit ^ 0); obj++) { if (obj->interaction_state != 0) { D_800C3E78 = i;
+      func_15022998(new_var2 = (s32 *) obj);
+      func_1507E73C(obj);
+      new_var = func_150229E4(obj);
+      if (new_var != 0)
+      {
+ do { } while (0);
+        func_1502178C(obj, 0, -1);
+        func_150627D4(obj);
+        func_1507FEA0(obj);
+        obj->unk2FF = active & 0xFFFFFFFF;
+      }
+    }
+    i++;
+  }
+
+  func_15061B4C();
+}
+
