@@ -999,48 +999,45 @@ struct252 *func_1505C1A4(struct127 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_1505C1E4.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_1505C7D8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_83300/func_1505D024.s")
-// NON-MATCHING: 1 line + regalloc
-// s32 func_1505D024(struct127 *arg0, s32 arg1, u16 arg2, s32 arg3) {
-//     s32 pad;
-//     s32 ret;
-//     s32 temp_lo;
-//     struct252 *sp30;
-//
-//     sp30 = &D_8009A9F8;
-//     if (D_800C35EA == 1) {
-//         return 0;
-//     }
-//     if ((arg1 & 0x20000) && (arg0->immune != 0)) {
-//         return 0;
-//     }
-//     if ((arg1 & 0x40000) && (arg0->stunned != 0)) {
-//         return 0;
-//     }
-//     if (((arg1 << 0xB) >= 0) && (arg0->health == 0)) {
-//         return 0;
-//     }
-//     if (arg3 == -1) {
-//         D_800D1340 = (u8)0;
-//     } else {
-//         D_800D1340 = arg3 + 1;
-//     }
-//     D_800D1292 = arg2;
-//     D_800D1296 = arg2;
-//     if (arg1 & 0x10000) {
-//         sp30 = func_1505C1A4(D_800D154C);
-//     }
-//
-//     temp_lo = ((s32)arg0 - (s32)D_800CC2D0) / (s32)sizeof(struct127);
-//     ret = 1 << temp_lo;
-//     if (arg1 & 0x80000) {
-//         // lw instead of move.
-//         ret = func_1505C1E4(&D_800D121C, arg0, sp30, arg1 & 0xFF, temp_lo + 1, 0, 7);
-//     } else {
-//         func_1505B9C4(&D_800D121C, arg0, sp30, sp30, arg1 & 0xFF, temp_lo + 1, 7);
-//     }
-//     return ret;
-// }
+s32 func_1505D024(struct127 *arg0, s32 arg1, u16 arg2, s32 arg3) {
+    s32 pad;
+    s32 ret;
+    s32 temp_lo;
+    struct252 *sp30;
+
+    sp30 = &D_8009A9F8;
+    if (D_800C35EA == 1) {
+        return 0;
+    }
+    if ((arg1 & 0x20000) && (arg0->immune != 0)) {
+        return 0;
+    }
+    if ((arg1 & 0x40000) && (arg0->stunned != 0)) {
+        return 0;
+    }
+    if (((arg1 << 0xB) >= 0) && (arg0->health == 0)) {
+        return 0;
+    }
+    if (arg3 == -1) {
+        D_800D1340 = (u8)0;
+    } else {
+        D_800D1340 = arg3 + 1;
+    }
+    D_800D1292 = arg2;
+    D_800D1296 = arg2;
+    if (arg1 & 0x10000) {
+        sp30 = func_1505C1A4(D_800D154C);
+    }
+
+    temp_lo = arg0 - D_800CC2D0;
+    ret = 1 << temp_lo;
+    if (arg1 & 0x80000) {
+        ret = func_1505C1E4(&D_800D121C, arg0, sp30, arg1 & 0xFF, temp_lo + 1, 0, 7);
+    } else {
+        func_1505B9C4(&D_800D121C, arg0, (s32)sp30, (s32)sp30, arg1 & 0xFF, temp_lo + 1, 7);
+    }
+    return ret;
+}
 
 void func_1505D1C4(f32 arg0, f32 arg1, f32 arg2, s32 arg3, s32 arg4, u16 arg5, s32 arg6, s32 arg7) {
     s32 pad;
