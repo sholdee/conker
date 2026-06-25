@@ -820,7 +820,25 @@ void func_150774B4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_A28B0/func_15077508.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_A28B0/func_150778F0.s")
+extern struct127 *D_800D154C;
+extern u8 D_800D2108[];
+void func_150778F0(void)
+{
+  u8 temp_t9;
+  temp_t9 = (*((u8 **) (&D_800D2108)))[(*D_800D154C).unk13F] - 1;
+  if (D_800D154C->unk21F != 0)
+  {
+    temp_t9 = D_800D154C->unk21F;
+  }
+  D_800D154C->unk21E += D_800D154C->unk221;
+  D_800D154C->unk21E += temp_t9;
+  D_800D154C->unk21E %= temp_t9;
+  if (D_800D154C->unk21E < D_800D154C->unk220)
+  {
+    D_800D154C->unk21E = D_800D154C->unk220;
+  }
+}
+
 // NON-MATCHING: close but not there yet
 // void func_150778F0(void) {
 //     u8 temp_t9;
