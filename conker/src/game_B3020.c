@@ -615,7 +615,36 @@ void func_1508B1D4(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508C5B8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508C9CC.s")
+s32 func_1508C9CC(void) {
+    s32 count;
+    s32 ret;
+    s8 cur;
+    struct127 *obj;
+    struct126 *unk31C;
+
+    count = 0;
+    ret = -1;
+    cur = D_800D23B0[0x1702];
+    do {
+        cur = (s8)(cur + 1);
+        if (cur >= D_8008FD8C) {
+            cur = 0;
+        }
+
+        obj = &D_800CC2D0[cur];
+        if (obj->interaction_state != 0) {
+            unk31C = obj->unk31C;
+            if ((unk31C != 0) && (unk31C->unk84 != 0) && ((D_800D18A0 & (1 << cur)) == 0)) {
+                count = D_8008FD8C;
+                ret = cur;
+            }
+        }
+        count++;
+    } while (count < D_8008FD8C);
+
+    D_800D23B0[0x1702] = cur;
+    return ret;
+}
 
 s32 func_1508CA88(void) {
     s8 **p2;
