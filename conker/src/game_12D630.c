@@ -57,4 +57,22 @@ void func_15100230(struct102 *arg0, void *arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12D630/func_151002BC.s")
+void func_151002BC(struct260 *arg0) {
+    struct {
+        struct127 *unk0;
+        u8 unk4;
+        u8 pad5;
+        s16 unk6;
+    } *p;
+    struct127 *obj;
+
+    p = (void *)((u8 *)arg0 + 0x28);
+    obj = *(struct127 **)((u8 *)arg0 + 0x28);
+    if ((obj->interaction_state == 0) || (obj->id == 0xFF) || (obj->unique_id != p->unk4)) {
+        arg0->unkE = -1;
+        return;
+    }
+    if (obj->camera != 0) {
+        p->unk6 = p->unk6 - D_800BE9E4;
+    }
+}
