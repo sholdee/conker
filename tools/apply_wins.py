@@ -84,6 +84,58 @@ def extract_func(srcfile, project_types=None):
         out.extend(lines[i:stmt_end]); i = stmt_end               # agent-local type -> KEEP
     return "\n".join(out).strip() + "\n"
 
+def _conflict_syms(out):
+    """Symbols/tags cfe reports as conflicting/redeclared — i.e. the body's agent-local decl clashes with a
+    project header. We strip those decls so the header's canonical declaration wins."""
+    syms = set()
+    for pat in (r"redeclaration of '(?:struct |union |enum )?(\w+)'",
+                r"redefinition of '(?:struct |union |enum )?(\w+)'",
+                r"conflicting types for '(\w+)'",
+                r"'(\w+)' redeclared"):
+        syms.update(re.findall(pat, out))
+    return syms
+
+def _func_def_line(lines, func):
+    """Index of the line that begins the FUNCTION DEFINITION (not a prototype); len(lines) if not found."""
+    for i, l in enumerate(lines):
+        if re.search(rf'\b{re.escape(func)}\s*\(', l):
+            after = " ".join(lines[i:i + 4]).split(func, 1)[1]
+            br, sc = after.find('{'), after.find(';')
+            if br != -1 and (sc == -1 or br < sc):
+                return i
+    return len(lines)
+
+def _strip_decls(body, syms, func):
+    """Remove PREAMBLE declarations (extern/var/prototype/struct-tag) whose declared NAME is in syms. Only the
+    preamble before the function definition is touched, so the function and its body are never altered."""
+    lines = body.splitlines()
+    fdef = _func_def_line(lines, func)
+    pre, keep = lines[:fdef], lines[fdef:]
+    out, i, n = [], 0, len(pre)
+    declname = re.compile(r'\b(\w+)\s*(?:\[[^\]]*\])?\s*[;(,=]')
+    while i < n:
+        ln = pre[i]
+        if re.match(r'\s*(?:typedef\s+)?(?:struct|union|enum)\b', ln) and '{' in " ".join(pre[i:i + 3]):
+            j = i                                            # struct/union/enum block: skip to matching close
+            while j < n and '{' not in pre[j]:
+                j += 1
+            depth = 0
+            while j < n:
+                depth += pre[j].count('{') - pre[j].count('}')
+                j += 1
+                if depth <= 0:
+                    break
+            stmt = " ".join(pre[i:j])
+            names = set(re.findall(r'\b(?:struct|union|enum)\s+(\w+)', stmt)) | set(re.findall(r'\}\s*(\w+)\s*;', stmt))
+            if names & syms:
+                i = j; continue                              # strip the whole conflicting block
+            out.extend(pre[i:j]); i = j; continue
+        m = declname.search(ln)
+        if m and m.group(1) in syms:
+            i += 1; continue                                 # strip the conflicting single-line decl
+        out.append(ln); i += 1
+    return "\n".join(out + keep).strip() + "\n"
+
 def main():
     r = sh(f"python3 {REPO}/tools/permuter_daemon.py collect")
     wins = [l.split() for l in r.stdout.splitlines() if l.startswith("WIN ")]
@@ -100,16 +152,31 @@ def main():
         # strip project types AND types already defined in THIS target file (a sibling match since the
         # seed snapshot may have hoisted the same local struct -> re-emitting it would redeclare).
         body = extract_func(src, ptypes | _type_names(orig))
-        open(cfile, "w").write(orig.replace(pragma, body, 1))
-        sc = sh(f"{REPO}/tools/iter_match.sh {file} {func}")
-        if re.search(r"SCORE: 0\b", sc.stdout):
-            committed.append((file, func))       # object-matches; 'ported' logged only after integrate COMMITS
-            print(f"  PORTS  {func} ({file})")
+        # COMPILER-GUIDED CONFLICT RESOLVE: the permuter's crack is byte-correct but the agent's local
+        # extern/struct/proto decls can clash with the project headers (cfe 'redeclaration'/'conflicting
+        # types' -> 999999). Compile; if it's a redeclaration conflict, strip exactly the decls cfe named
+        # (headers provide them) and retry. Gate-safe: a bad strip can only yield a noport, never a commit.
+        sc, stripped = None, 0
+        for _ in range(6):
+            open(cfile, "w").write(orig.replace(pragma, body, 1))
+            sc = sh(f"{REPO}/tools/iter_match.sh {file} {func}")
+            if re.search(r"SCORE: 0\b", sc.stdout):
+                break
+            syms = _conflict_syms(sc.stdout)
+            if not syms:
+                break                             # not a redeclaration conflict -> genuine non-port
+            nb = _strip_decls(body, syms, func)
+            if nb == body:
+                break                             # nothing left to strip
+            body = nb; stripped += 1
+        if sc is not None and re.search(r"SCORE: 0\b", sc.stdout):
+            committed.append((file, func))        # object-matches; 'ported' logged only after integrate COMMITS
+            print(f"  PORTS  {func} ({file}){' [resolved '+str(stripped)+' conflicts]' if stripped else ''}")
         else:
             open(cfile, "w").write(orig)          # revert
             open(os.path.join(NM, func, ".noport"), "w").close()
             _pd.log_crack_event(func, sc0, "noport")
-            m = re.search(r"SCORE: (\d+)", sc.stdout)
+            m = re.search(r"SCORE: (\d+)", sc.stdout) if sc else None
             print(f"  noport {func} (project score {m.group(1) if m else '?'})")
     if committed:
         args = " ".join(f"{f} {fn}" for f, fn in committed)
