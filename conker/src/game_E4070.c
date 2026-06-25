@@ -55,7 +55,39 @@ void func_150B6DFC(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B6E3C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B709C.s")
+typedef struct {
+    u8 pad0[0x18];
+    s32 unk18;
+    u8 pad1C[0x10];
+    f32 unk2C;
+    f32 unk30;
+    u8 pad34[0x11];
+    u8 unk45;
+} Struct150B709C;
+
+void func_150B709C(Struct150B709C *arg0) {
+    s32 div;
+    s32 var_v0;
+    s32 var_v1;
+
+    div = 0x1E;
+    var_v0 = arg0->unk18;
+    if (var_v0 == div) {
+        var_v1 = arg0->unk45;
+        var_v1 += D_800BE9E4 * 8;
+        if (var_v1 >= 0x100) {
+            var_v1 = 0;
+        }
+        arg0->unk45 = var_v1;
+    }
+    var_v0 += D_800BE9E4 * 2;
+    if (var_v0 >= 0x1F) {
+        var_v0 = div;
+    }
+    arg0->unk18 = var_v0;
+    arg0->unk2C = (f32)(((var_v0 * -0x54) / div) + 0xE6);
+    arg0->unk30 = (f32)(((var_v0 * -0x32) / div) + 0xAA);
+}
 
 extern s32 D_800BE9E4;
 void func_150B71A8(void *arg0)

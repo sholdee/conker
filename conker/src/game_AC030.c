@@ -3,6 +3,8 @@
 #include "variables.h"
 
 
+extern u8 D_800B85A4[];
+
 void func_1507EB80(u8 *buf, s32 *count, u8 c) {
     if (*count + 1 < 40) {
         buf[*count] = c;
@@ -109,7 +111,37 @@ s32 func_1507F4C0(s32 arg0) {
     return func_150ADA20() % mod + base;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507F54C.s")
+void func_1507F54C(struct127 *arg0) {
+    s32 idx;
+    s32 anim;
+
+    idx = arg0->unk13C;
+    if (idx >= 0x64) {
+        switch (D_800B85A4[idx * 0x32C]) {
+        case 0x57:
+            anim = 0x115;
+            break;
+        case 0x8C:
+            anim = 0x1A5;
+            break;
+        case 0xA8:
+        case 0xA9:
+            anim = 0x1AF;
+            break;
+        case 0x89:
+        case 0xBA:
+            anim = 0x1FA;
+            break;
+        default:
+            anim = 0xD8;
+            break;
+        }
+        func_1505E650(arg0, anim, 1.0f, 4.0f, 0.0f, 0.0f, 0);
+        return;
+    }
+
+    func_1505E650(arg0, 0xF, 1.0f, 3.0f, 0.0f, 0.0f, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_AC030/func_1507F640.s")
 
