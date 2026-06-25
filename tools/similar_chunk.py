@@ -358,6 +358,12 @@ def main():
                            f"gap is project-context (a drifted neighbor, a constant, or rodata/jtbl). Start from "
                            f"THIS and close it. If the residual is an externalized jtbl or unreconcilable rodata, "
                            f"BAIL per the cookbook. */")
+                elif nm.get("src") == "manual-comment":
+                    hdr = (f"/* a PRIOR DEVELOPER's manual decomp attempt (was left commented-out, never matched; "
+                           f"may be incomplete or rough -- the score {nm.get('score','?')} is a coarse quality "
+                           f"estimate, NOT a measured asm-differ score). Use it as a starting point: finish/fix it "
+                           f"toward a byte-exact match, re-deriving types from the asm. BAIL per the cookbook if "
+                           f"it's far off or unsteerable. */")
                 else:
                     hdr = f"/* your previous best attempt: SCORE {nm.get('score','?')} -- refine THIS toward 0 */"
                 open(pp, "w").write(hdr + "\n" + nm["c"])
