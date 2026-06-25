@@ -351,7 +351,36 @@ void func_1506B5E4(void) {
     D_800D154C->unk2D0->unk10 = 0.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_1506B634.s")
+void func_1506B634(s32 arg0) {
+    u32 temp_v0;
+    u32 temp_v1;
+    u8 temp_a0;
+    struct126 *temp_a1;
+    struct127 *volatile *temp_a2;
+
+    temp_v0 = func_150ADA20();
+    temp_a2 = (struct127 *volatile *)&D_800D154C;
+    temp_v1 = temp_v0 % (u32)(u8)arg0;
+    temp_a0 = temp_v1;
+    temp_a1 = (*temp_a2)->unk31C;
+    if (temp_a1->unk16 != 0) {
+        if (D_800BE9F0 == 0x29) {
+            if ((u8)temp_v1 == 7) {
+                temp_a0 = 0;
+            }
+        }
+        temp_a1->unkE = ((u8 *)D_80099ABC)[temp_a0];
+    } else {
+        temp_a1->unkE = ((u8 *)D_80099AB4)[(u8)temp_v1];
+    }
+
+    if ((*temp_a2)->unk31C->unkE == 0xA7) {
+        D_800D1580 = 0xFF020144;
+        D_800D154C->unk31C->unkC = (func_150ADA20() % 3U) + 2;
+        func_1506E8D8();
+        D_800D154C->xz_velocity = D_800D154C->xz_velocity * D_80099C38;
+    }
+}
 
 void func_1506B740(void) {
     u8 res = func_150ADA20() & 0xFF;
