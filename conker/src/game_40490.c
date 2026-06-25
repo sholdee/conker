@@ -24,6 +24,7 @@ extern u8 D_800C35E8;
 extern void func_1510F800(s32);
 s32 func_151BE850(struct17 *arg0, s32 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
 s32 func_15149550(void *, s32, s32, u8, u8, s32);
+extern void func_150A7960(f32 *, f32, f32, f32, f32 *, f32 *, f32 *);
 
 typedef struct {
     f32 unk0;
@@ -690,8 +691,79 @@ s32 func_15015300(struct134 *arg0) {
     return 1;
 }
 
+void func_15015354(struct134 *arg0) {
+    struct {
+        struct134 *unk0;
+        s16 unk4;
+        u8 pad6[2];
+        f32 unk8;
+        f32 points[4][3];
+        f32 diffs[4][3];
+        s32 unk6C;
+        s32 unk70;
+    } payload;
+    struct260 *temp_v0;
+    f32 z;
+    f32 y;
+    f32 x;
+    f32 corners[4][3];
+    f32 mtx[4][4];
+    s32 i;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_15015354.s")
+    payload.unk0 = arg0;
+    payload.unk4 = -1;
+    payload.unk8 = 0.0f;
+    *(u8 *)&arg0->unk14 = 1;
+    x = (f32)arg0->unk0;
+    y = (f32)(s16)arg0->unk2;
+    z = (f32)arg0->unk4;
+
+    corners[0][0] = (f32)(s16)arg0->unk6;
+    corners[0][1] = 0.0f;
+    corners[0][2] = (f32)(s16)arg0->unkA;
+    corners[1][0] = (f32)(s16)arg0->unk6;
+    corners[1][1] = 0.0f;
+    corners[1][2] = (f32)-(s16)arg0->unkA;
+    corners[2][0] = (f32)-(s16)arg0->unk6;
+    corners[2][1] = 0.0f;
+    corners[2][2] = (f32)-(s16)arg0->unkA;
+    corners[3][0] = (f32)-(s16)arg0->unk6;
+    corners[3][1] = 0.0f;
+    corners[3][2] = (f32)(s16)arg0->unkA;
+
+    func_150A8050(mtx, *(f32 *)&arg0->unkC, *(f32 *)&arg0->unk10, 0.0f);
+
+    mtx[3][0] = x;
+    mtx[3][1] = y;
+    mtx[3][2] = z;
+
+    for (i = 0; i < 4; i = (i + 1) & 0xFF) {
+        func_150A7960(mtx[0], corners[i][0], corners[i][1], corners[i][2],
+                      &payload.points[i][0], &payload.points[i][1], &payload.points[i][2]);
+    }
+
+    payload.diffs[0][0] = payload.points[1][0] - payload.points[0][0];
+    payload.diffs[0][1] = payload.points[1][1] - payload.points[0][1];
+    payload.diffs[0][2] = payload.points[1][2] - payload.points[0][2];
+    payload.diffs[1][0] = payload.points[2][0] - payload.points[1][0];
+    payload.diffs[1][1] = payload.points[2][1] - payload.points[1][1];
+    payload.diffs[1][2] = payload.points[2][2] - payload.points[1][2];
+    payload.diffs[2][0] = payload.points[3][0] - payload.points[2][0];
+    payload.diffs[2][1] = payload.points[3][1] - payload.points[2][1];
+    payload.diffs[2][2] = payload.points[3][2] - payload.points[2][2];
+    payload.diffs[3][0] = payload.points[0][0] - payload.points[3][0];
+    payload.diffs[3][1] = payload.points[0][1] - payload.points[3][1];
+    payload.diffs[3][2] = payload.points[0][2] - payload.points[3][2];
+
+    func_1510F800(0);
+    payload.unk6C = func_1510FD20(arg0->unk0, arg0->unk4);
+    payload.unk70 = 0;
+
+    temp_v0 = func_15149130(0x12C, -1, 0x3D, -1, 0, 0x2E, (struct37 *)0x74, 0xFF, 0);
+    if (temp_v0 != NULL) {
+        memcpy((u8 *)temp_v0 + 0x28, &payload, 0x74);
+    }
+}
 s32 func_15015644(struct134 *arg0) {
     struct {
         struct134 *unk0;

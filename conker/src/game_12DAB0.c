@@ -2,6 +2,10 @@
 #include "functions.h"
 #include "variables.h"
 
+extern void func_151D5D60();
+extern s32 func_15144E80(struct17 *, struct17 *, struct17 *, struct17 *);
+extern s32 func_15145128(struct17 *, struct17 *, f32 *, f32 *);
+
 typedef struct {
     char pad_0[0x197];
     u8 field_0x197;
@@ -38,6 +42,21 @@ typedef struct {
     s32 field_0x170;
     u8 field_0x174;
 } Field124Owner;
+
+typedef struct {
+    char pad0[0x2C];
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+    char pad40[0x80];
+    char unkC0[0x40];
+    s16 *unk100[4];
+    u8 unk110;
+    u8 unk111;
+    u8 unk112[0xC];
+} Struct15101F50;
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_15100600.s")
@@ -120,7 +139,62 @@ void func_15101350(Field124Owner *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_151019C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_15101F50.s")
+s16 *func_15101F50(Struct15101F50 *arg0, s16 arg1) {
+    s32 unused;
+    s16 *var_v0;
+    s16 *ret;
+    struct17 sp40;
+    struct17 sp34;
+    u8 sp33;
+
+    func_151D5D60(arg0->unk100, arg1, 0x40, &var_v0, &sp33);
+    ret = var_v0;
+    if (var_v0) {
+        if (sp33) {
+            memcpy(arg0->unk100[arg1], arg0->unkC0, 0x40);
+            memcpy(arg0->unk100[arg1] + 0x20, arg0->unkC0, 0x40);
+        }
+    } else {
+        return 0;
+    }
+
+    if (!(arg0->unk110 & 1)) {
+        return 0;
+    }
+
+    if (func_15144E80((struct17 *)arg0->unk112, &sp40, &sp34, 0) == 0) {
+        return 0;
+    }
+
+    func_15145128(&sp40, &sp40, 0, 0);
+    func_15145128(&sp34, &sp34, 0, 0);
+
+    sp40.unk0 *= arg0->unk2C;
+    sp40.unk4 *= arg0->unk2C;
+    sp40.unk8 *= arg0->unk2C;
+    sp34.unk0 *= arg0->unk30;
+    sp34.unk4 *= arg0->unk30;
+    sp34.unk8 *= arg0->unk30;
+
+    var_v0[0] = (arg0->unk34 - sp40.unk0) + sp34.unk0;
+    var_v0[1] = (arg0->unk38 - sp40.unk4) + sp34.unk4;
+    var_v0[2] = (arg0->unk3C - sp40.unk8) + sp34.unk8;
+    var_v0[3] = 0;
+    var_v0[8] = (arg0->unk34 + sp40.unk0) + sp34.unk0;
+    var_v0[9] = (arg0->unk38 + sp40.unk4) + sp34.unk4;
+    var_v0[10] = (arg0->unk3C + sp40.unk8) + sp34.unk8;
+    var_v0[11] = 0;
+    var_v0[16] = (arg0->unk34 + sp40.unk0) - sp34.unk0;
+    var_v0[17] = (arg0->unk38 + sp40.unk4) - sp34.unk4;
+    var_v0[18] = (arg0->unk3C + sp40.unk8) - sp34.unk8;
+    var_v0[19] = 0;
+    var_v0[24] = (arg0->unk34 - sp40.unk0) - sp34.unk0;
+    var_v0[25] = (arg0->unk38 - sp40.unk4) - sp34.unk4;
+    var_v0[26] = (arg0->unk3C - sp40.unk8) - sp34.unk8;
+    var_v0[27] = 0;
+
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_12DAB0/func_151022AC.s")
 
