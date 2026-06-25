@@ -1259,3 +1259,7 @@ Special empty-guard case:
 - Private-BSS `u64` wait loops: when the target saves a timestamp in a TU-local BSS slot and compares high/low words with carry, declare a function-scope `static u64` and write the natural `while (now < saved + K) {}`; hand-rolled hi/lo compares can grow the frame or change reloc spelling.
 - Single-use variadic wrapper: when target homes all incoming arg regs and passes the
   first unnamed arg slot (`addiu aN,sp,K`, often in a `jal` delay slot), use real `...` + `va_start(args,last_named); callee(..., args);`. Fixed args plus `&argN` may shrink the frame or spill locals instead.
+- Side-effect call tree nudge: when inlining calls fixes FPU operand order but grows the
+  frame, serialize them with a comma assignment (`i = (f = fcall(), icall())`) and use `((f = f) * x)` at the multiply to perturb the AST without a new temp.
+- Inert stack padding: an unused `volatile s32 pad[N];` can reserve/tune stack space with
+  no emitted body instructions; adjust `N` to move spill slots/frame size when ordinary dummy locals are DCE'd or land at the wrong offset.
