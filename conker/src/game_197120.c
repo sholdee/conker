@@ -100,6 +100,8 @@ struct Struct1516A538 {
 
 extern u8 func_150ADA20(void);
 extern void func_15171D4C(f32, f32, f32, s32, s32, s32, f32, s32, s32, s32, s32, s32, s32, s32);
+extern void func_1516F864(s32);
+extern void func_1516F94C(s32, s32);
 
 void func_1516A538(struct Struct1516A538 *arg0) {
     u32 b;
@@ -128,4 +130,63 @@ void func_1516A538(struct Struct1516A538 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_197120/func_1516A648.s")
+typedef struct {
+    char pad_0[0xE];
+    s16 field_0xE;
+    s16 field_0x10;
+    s16 field_0x12;
+    s16 field_0x14;
+    s16 field_0x16;
+    s16 field_0x18;
+    char pad_0x1A[0x5];
+    u8 field_0x1F;
+    char pad_0x20[0x4];
+    u8 field_0x24;
+    char pad_0x25[0x7];
+    u8 field_0x2C;
+    u8 field_0x2D;
+} Obj1516A648;
+
+s32 func_1516A648(Obj1516A648 *arg0) {
+    s32 temp_a1;
+    s32 temp_v0;
+    s32 temp_v1;
+
+    temp_a1 = arg0->field_0x24;
+    temp_v0 = arg0->field_0x1F;
+    if (temp_a1 != 0) {
+        if (temp_v0 != 0xFF) {
+            temp_v0 += D_800BE9E4 << 4;
+            if (temp_v0 >= 0x100) {
+                temp_v0 = 0xFF;
+            }
+            arg0->field_0x1F = temp_v0;
+            temp_a1 = ((volatile Obj1516A648 *)arg0)->field_0x24;
+        }
+    } else {
+        if (temp_v0 != 0) {
+            temp_v0 -= D_800BE9E4 << 2;
+            if (temp_v0 < 0) {
+                temp_v0 = 0;
+            }
+            arg0->field_0x1F = temp_v0;
+            temp_a1 = ((volatile Obj1516A648 *)arg0)->field_0x24;
+        }
+    }
+
+    if ((temp_a1 == 0) && (temp_v0 == 0)) {
+        return 1;
+    }
+
+    arg0->field_0x18 = arg0->field_0x18 - 0x12C;
+    func_1516F864((s32)arg0);
+    temp_v1 = func_1510F8D8(arg0->field_0xE, arg0->field_0x10, arg0->field_0x12, 0) + 0xA;
+    arg0->field_0x2C = temp_v1 >> 8;
+    arg0->field_0x2D = temp_v1 & 0xFF;
+    if (arg0->field_0x10 < temp_v1) {
+        arg0->field_0x10 = temp_v1;
+        arg0->field_0x18 = (s16)(s32)((f32)(s32)arg0->field_0x18 * -0.5f);
+        func_1516F94C((s32)arg0, 0xE6);
+    }
+    return 0;
+}
