@@ -29,8 +29,11 @@ NM_DIR = os.path.join(INNER, "nonmatchings")
 MAX_PARALLEL = 10         # permuter dirs running at once (24-core host, nice-19; raised 6->10 to work the
                           # import backlog faster AND permute seeds before src-context drifts them to noport)
 THREADS = 2               # -j per permuter
-PERM_MAX_SCORE = int(os.environ.get("PERM_MAX_SCORE", "200"))   # skip seeds this far off — local permutation
-                          # won't close a hundreds-of-instructions gap, so they'd just waste a slot forever
+PERM_MAX_SCORE = int(os.environ.get("PERM_MAX_SCORE", "80"))     # DATA-DRIVEN: the max seed score that has
+                          # EVER cracked is 80 (n=39); nothing above it cracks, so skip those seeds entirely.
+KICK_ITERS = int(os.environ.get("KICK_ITERS", "300000"))        # DATA-DRIVEN: latest observed crack was at
+                          # ~234K iters; every stuck seed is past 260K. Past this, a seed is an intrinsic
+                          # residual — kill its worker + deprioritize it so the slot goes to a fresher seed.
 
 def sh(cmd, cwd=INNER):
     return subprocess.run(cmd, shell=True, cwd=cwd, capture_output=True, text=True)
@@ -162,6 +165,17 @@ def _seed_score(func):
     except Exception:
         return 9999
 
+def _log_iters(func):
+    """How many iterations this seed has been permuted (current run), from the permd-log tail. 0 if none."""
+    try:
+        with open(f"/tmp/permd_{func}.log", "rb") as fh:
+            fh.seek(0, 2); sz = fh.tell(); fh.seek(max(0, sz - 2000))
+            t = fh.read().decode("utf-8", "ignore").replace("\r", "\n")
+        its = re.findall(r'iteration (\d+)', t)
+        return int(its[-1]) if its else 0
+    except OSError:
+        return 0
+
 def _eligible(exclude):
     # skip cracked / no-port / already-running. Deterministically PRUNE seeds whose func has since
     # been matched by codex (no longer a stub) — they'd just load score-0 and exit, wasting a slot.
@@ -186,13 +200,15 @@ def _eligible(exclude):
             except OSError:
                 pass
         out.append(d)
-    # PRIORITIZE by CLOSENESS first: lowest seed score wins, so the 10 slots always work the likeliest-to-
-    # crack seeds. A close seed beats a far one even if the close one was already tried (a tried score-10 is
-    # far likelier to crack on a re-run than an untried score-60). Secondary: untried before tried (give each
-    # a first shot within a score band); tie: newest import first.
+    # PRIORITY (data-informed, n=39 cracks): (1) seeds ground past KICK_ITERS without cracking rank LAST —
+    # nothing has ever cracked past ~234K iters, so they're intrinsic residuals; give the slot to a fresher
+    # seed. (2) Then least-ground-so-far first (spread coverage across the ≤80 band — score is only a WEAK
+    # within-band predictor, so we rotate by iterations rather than over-focusing the lowest scores). (3) Light
+    # score tiebreak (small sample → keep a mild low-score lean). (4) newest import.
     def prio(d):
         f = os.path.basename(d)
-        return (_seed_score(f), os.path.exists(f"/tmp/permd_{f}.log"), -os.path.getmtime(d))
+        it = _log_iters(f)
+        return (it > KICK_ITERS, it, _seed_score(f), -os.path.getmtime(d))
     return sorted(out, key=prio)
 
 def _launch_one(func, seconds):
@@ -201,6 +217,27 @@ def _launch_one(func, seconds):
         f"nice -n 19 timeout {seconds} {PY} {PERM}/permuter.py nonmatchings/{func} "
         f"--best-only --stop-on-zero -j {THREADS} > {log} 2>&1",
         shell=True, cwd=INNER, start_new_session=True)   # detach so it survives the launcher
+
+def _kick_overground():
+    """Kill workers ground past KICK_ITERS without cracking — empirically intrinsic residuals (no crack ever
+    seen past ~234K iters); freeing the slot lets _topup launch a fresher seed (which _eligible now prefers)."""
+    r = subprocess.run("ps -eo pid,args", shell=True, capture_output=True, text=True)
+    seen = {}
+    for line in r.stdout.splitlines():
+        m = re.search(r'^\s*(\d+)\s.*permuter\.py nonmatchings/(func_\w+)', line)
+        if m:
+            seen.setdefault(m.group(2), int(m.group(1)))      # func -> representative pid
+    for func, pid in seen.items():
+        it = _log_iters(func)
+        if it > KICK_ITERS:
+            try:
+                os.killpg(os.getpgid(pid), 9)                 # kill the worker session (main + -j children)
+            except OSError:
+                try:
+                    os.kill(pid, 9)
+                except OSError:
+                    pass
+            print(f"supervise: kicked {func} ({it} iters, no crack)", flush=True)
 
 def _topup(seconds):
     """Fill free slots up to MAX_PARALLEL without duplicating running funcs."""
@@ -236,6 +273,7 @@ def supervise(interval=180, per_timeout=3600):
           f"{per_timeout}s each); pid {os.getpid()}")
     while True:
         sweep_cracks()                       # record cracks to the ledger BEFORE _topup/_eligible prune
+        _kick_overground()                   # then free slots of intrinsic-residual seeds (no crack >234K iters)
         launched, running = _topup(per_timeout)
         if launched:
             print(f"supervise: topped up {launched} (was {running} running)", flush=True)
