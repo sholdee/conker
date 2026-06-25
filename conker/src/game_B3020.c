@@ -666,7 +666,55 @@ s32 func_1508CA88(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508DA1C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508DAEC.s")
+extern struct127 D_800CC2D0[26];
+extern s8 *D_800D23B0;
+s32 func_1508DAEC(s32 arg0, s32 arg1)
+{
+  s8 *base;
+  s32 value;
+  s32 *entry;
+  s8 *slot;
+  s32 slotOffset;
+  int mode;
+  struct127 *obj;
+  base = D_800D23B0;
+  value = arg0 * 4;
+  entry = (s32 *) (((s32) base) + value);
+  if (base == 0)
+  {
+    return 0;
+  }
+  value = entry[0x3AC];
+  if (value >= 0)
+  {
+    if (arg1 < 0)
+    {
+      return 1;
+    }
+    entry[0x3AC] = -1;
+    slotOffset = value * 4;
+    obj = &D_800CC2D0[arg0];
+    slot = D_800D23B0 + slotOffset;
+    if (((*((s32 *) (slot + 0x11F4))) & 2) == 0)
+    {
+      *((s32 *) (slot + 0xF70)) = -1;
+      *((s32 *) ((D_800D23B0 + slotOffset) + 0x10F0)) = -1;
+      mode = *((s32 *) (D_800D23B0 + 0xEAC));
+      if (arg1 == 1)
+      {
+        *((s32 *) ((D_800D23B0 + slotOffset) + 0x12F4)) = 0x12C;
+        obj = &D_800CC2D0[arg0];
+        mode = 4;
+        *((s32 *) ((D_800D23B0 + slotOffset) + 0x1374)) = (s32) obj->x_position;
+        *((s32 *) ((D_800D23B0 + slotOffset) + 0x13F4)) = (s32) (obj->y_position + 50.0f);
+        *((s32 *) ((D_800D23B0 + slotOffset) + 0x1474)) = (s32) obj->z_position;
+      }
+      *((s32 *) ((D_800D23B0 + slotOffset) + 0x1070)) = mode;
+    }
+  }
+  return 0;
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_1508DC24.s")
 
