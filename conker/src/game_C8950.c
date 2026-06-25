@@ -87,7 +87,56 @@ void func_1509B764(Node1509 *arg0) {
     D_800D2F48.length--;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C8950/func_1509B810.s")
+void func_1509B810(Node1509 *arg0) {
+    Node1509 *tail;
+    Node1509 *head;
+    s32 mask;
+    s32 key;
+    s32 i;
+
+    mask = 0xFFFF03FF;
+    tail = (Node1509 *)D_800D2F48.unk8;
+    key = *(u16 *)arg0 & mask;
+    if (D_800D2F48.length == 0) {
+        D_800D2F48.unk4 = (struct249 *)arg0;
+        D_800D2F48.unk8 = (s32)arg0;
+        arg0->next = 0;
+        arg0->prev = 0;
+        D_800D2F48.length += 1;
+        return;
+    }
+
+    i = 0;
+    if ((s32)D_800D2F48.length > 0) {
+        do {
+            i++;
+            if (((*(u16 *)tail & mask) < key)) {
+            if (tail == (Node1509 *)D_800D2F48.unk8) {
+                    arg0->prev = tail;
+                    arg0->next = 0;
+                    tail->next = arg0;
+                    D_800D2F48.unk8 = (s32)arg0;
+                    D_800D2F48.length += 1;
+                    return;
+                }
+                arg0->prev = tail;
+                arg0->next = tail->next;
+                tail->next->prev = arg0;
+                tail->next = arg0;
+                D_800D2F48.length += 1;
+                return;
+            }
+            tail = tail->prev;
+        } while (i < (s32)D_800D2F48.length);
+    }
+
+    head = (Node1509 *)D_800D2F48.unk4;
+    D_800D2F48.unk4 = (struct249 *)arg0;
+    arg0->prev = 0;
+    arg0->next = head;
+    head->prev = arg0;
+    D_800D2F48.length += 1;
+}
 
 void func_1509B8FC(s16 arg0) {
     struct248 *temp_v0;
