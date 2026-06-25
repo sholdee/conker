@@ -5,6 +5,7 @@
 extern u8 D_800A3FE6[];
 extern u8 D_800A4058[];
 extern u8 D_800A4068[];
+extern f32 D_800A45B0;
 extern f32 D_800A4830;
 extern f32 D_800A4834;
 extern f32 D_800A4838;
@@ -229,7 +230,36 @@ void func_15134C98(struct260 *arg0, s32 arg1, u8 arg2) {
 void func_15134CD4(f32 arg0, f32 arg1, s32 arg2, s32 arg3) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15134CEC.s")
+typedef struct {
+    u8 pad0[0x14];
+    f32 unk14;
+    u8 pad18[0x4];
+    f32 unk1C;
+    u8 pad20[0xE];
+    u8 unk2E;
+    u8 pad2F[0x41];
+    f32 unk70;
+    f32 unk74;
+} Struct15134CEC;
+
+s32 func_15134CEC(Struct15134CEC *arg0) {
+    s32 temp_v1;
+
+    arg0->unk70 += 0.125f * D_800BE9A4;
+    temp_v1 = arg0->unk2E;
+    arg0->unk74 += D_800A45B0 * D_800BE9A4;
+    arg0->unk14 += arg0->unk70 * D_800BE9A4;
+    arg0->unk1C += arg0->unk74 * D_800BE9A4;
+    if (arg0->unk14 > 130.0f) {
+        return 0;
+    }
+    temp_v1 -= D_800BE9E4 * 2;
+    if (temp_v1 < 0) {
+        return 0;
+    }
+    arg0->unk2E = temp_v1;
+    return 1;
+}
 
 extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
 

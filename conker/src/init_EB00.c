@@ -7,6 +7,7 @@ s32 func_10010E78(s32 arg0, s32 arg1, u16 arg2, s16 arg3, u8 arg4,
                    s32 arg5, s16 arg6, s16 arg7, s16 arg8, s16 arg9,
                    s16 argA);
 void func_1000ECCC(void);
+void func_10011624(struct15 *arg0, s32 *arg1, s32 arg2, s32 arg3);
 
 
 s32 func_1000EB00(struct04 *arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 arg6, s32 arg7, u16 *arg8) {
@@ -231,7 +232,57 @@ void func_1000F9D4(u16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     func_1000F85C(arg0, 256, tmp & 0x80);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000FA64.s")
+u16 func_1000FA64(u16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4,
+                  u16 arg5, s16 arg6, s32 arg7, void *arg8, s32 arg9,
+                  s32 argA, s32 argB) {
+    s32 sp24;
+    s32 temp_a2;
+
+    if (D_80042760 < 0x20) {
+        temp_a2 = D_80042760;
+        D_80042760++;
+    } else {
+        return 0;
+    }
+
+    if (arg7 != 0) {
+        D_80041FE0[temp_a2].unk10 = argA | 0x12;
+    } else {
+        D_80041FE0[temp_a2].unk10 = (argA & 0x108) | 2;
+    }
+
+    if (argA & 0x40) {
+        arg2 = func_15083E0C((u8)arg1);
+        if (arg2 == -1) {
+            return 0;
+        }
+    }
+
+    D_80041FE0[temp_a2].unk24 = 0;
+    *((u8 *)&D_80041FE0[temp_a2] + 0x23) = 0;
+    *((u8 *)&D_80041FE0[temp_a2] + 0x22) = 0;
+    *((u16 *)&D_80041FE0[temp_a2] + 0) = arg0;
+    *((s16 *)&D_80041FE0[temp_a2] + 1) = arg1;
+    *((s16 *)&D_80041FE0[temp_a2] + 2) = arg2;
+    *((s16 *)&D_80041FE0[temp_a2] + 3) = arg3;
+    *((u16 *)&D_80041FE0[temp_a2] + 4) = arg5;
+    *((s16 *)&D_80041FE0[temp_a2] + 5) = arg6;
+    D_80041FE0[temp_a2].unkC = arg4;
+    D_80041FE0[temp_a2].unk14 = arg7;
+    D_80041FE0[temp_a2].unk18 = (s32)arg8;
+    D_80041FE0[temp_a2].unk1C = arg9;
+    *(f32 *)&D_80041FE0[temp_a2].unk2C = alCents2Ratio(argB);
+    D_80041FE0[temp_a2].unk26 = 0;
+    *(u16 *)&D_80041FE0[temp_a2].unk28 = 0;
+    *(s16 *)&D_80041FE0[temp_a2].unk20 = argB;
+    sp24 = D_80042760;
+    func_10011624(D_80041FE0, &D_80042760, temp_a2, temp_a2 + 1);
+    if (sp24 == D_80042760) {
+        D_80041FE0[temp_a2].unk10 |= 0x1000;
+        return D_80041FE0[temp_a2].unk24;
+    }
+    return 0;
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000FC18.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000FD38.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000FDF4.s")
