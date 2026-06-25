@@ -79,7 +79,24 @@ void func_1509F47C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4, s32 arg5) {
     func_15114D24(temp, func_1000F568(arg0, (u8)(arg1 - arg0 + 1)), arg2, arg4, arg5, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_CBDB0/func_1509F4E8.s")
+void func_10010F88(s32 arg0, u16 arg1, s16 arg2, u8 arg3, s32 arg4, s16 arg5, s16 arg6, s16 arg7, s16 arg8, s16 arg9);
+extern struct178 D_800D3098[73];
+extern s32 func_1000F568(s32, u8);
+void func_1509F4E8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+{
+  struct178 *e;
+  s32 h;
+  e = &((struct178 *) (*((s32 *) (&D_800D3098))))[0, arg3];
+  h = *((s16 *) (&e->unk6[0]));
+  if (((u32) arg4) >= ((u32) h))
+  {
+    arg4 = h - 1;
+  }
+  func_10010F88(func_1000F568(arg0, (u8) ((arg1 - arg0) + 1)), (u16) arg2, 0, 0, 0, e->unk0, e->pad2, e->unk4, arg4, h);
+}
+
+extern s32 func_1000F568(s32, u8);
+
 
 extern s32 func_1000F568(s32, u8);
 

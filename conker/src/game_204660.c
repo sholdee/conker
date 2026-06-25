@@ -206,7 +206,87 @@ void func_151D7830(s32 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D792C.s")
+extern f32 D_800BE9A4;
+struct func_151D792C_vec
+{
+  s32 unk0;
+  s32 unk4;
+  s32 unk8;
+};
+struct func_151D792C_entry
+{
+  struct func_151D792C_vec unk0;
+  f32 unkC;
+  f32 unk10;
+  f32 unk14;
+  s32 unk18;
+};
+struct func_151D792C_obj
+{
+  u8 pad0[0x1E];
+  u16 unk1E;
+  u8 pad20[5];
+  u8 unk25;
+  u8 pad26[6];
+  s8 unk2C;
+  s8 unk2D;
+  s8 unk2E;
+  u8 pad2F[0x25];
+  f32 unk54;
+  f32 unk58;
+  f32 unk5C;
+  u8 pad60[0x34];
+  struct func_151D792C_entry *unk94;
+};
+void func_151D8718(f32 *arg0, f32 *arg1, f32 arg2);
+s32 func_151D792C(struct func_151D792C_obj *arg0)
+{
+  struct func_151D792C_entry *base;
+  struct func_151D792C_entry *entry;
+  s32 i;
+  s32 stride;
+  base = arg0->unk94;
+  if ((arg0->unk2C < 2) && (arg0->unk1E & 8))
+  {
+    return 0;
+  }
+  i = arg0->unk2E;
+  if (i != arg0->unk2D)
+  {
+    do
+    {
+      i -= 1;
+      if (i < 0)
+      {
+        i = arg0->unk25 - 1;
+      }
+      entry = &base[i];
+      func_151D8718((f32 *) entry, &entry->unkC, D_800BE9A4);
+    }
+    while (i != arg0->unk2D);
+  }
+  stride = sizeof(struct func_151D792C_entry);
+  stride_set:
+  if (arg0->unk2C <= 0)
+  {
+    goto zero;
+  }
+
+  ;
+  *((struct func_151D792C_vec *) (&arg0->unk54)) = ((struct func_151D792C_entry *) (((u8 *) base) + (arg0->unk2D * stride)))->unk0;
+  goto done;
+  zero:
+  arg0->unk54 = 0.0f;
+
+  arg0->unk58 = 0.0f;
+  arg0->unk5C = 0.0f;
+  done:
+  return 1;
+
+}
+
+void func_151D8718(f32 *arg0, f32 *arg1, f32 arg2);
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_204660/func_151D7A38.s")
 
