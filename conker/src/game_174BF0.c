@@ -6,6 +6,9 @@ extern f32 D_800A5760;
 extern void *func_15167A68(s32, s32, s32, s32, s32, s32);
 extern s32 *func_1515D480(s32);
 extern s32 *func_1515D440(void);
+extern s32 (*D_8008A200[])(void *, s8);
+extern s32 (*D_8008A23C[])(void *, s8);
+extern s32 (*D_8008A284[])(void *, s8);
 
 typedef struct {
     s32 unk0;
@@ -27,7 +30,61 @@ typedef struct {
     u8 unkA0[1];
 } Struct15147A80Obj;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_174BF0/func_15147740.s")
+void func_15147740(void *arg0) {
+    s32 mode;
+    s8 failed;
+
+    failed = 0;
+    if (*(u16 *)((u8 *)arg0 + 0x1E) & 1) {
+        *(s16 *)((u8 *)arg0 + 0x1C) -= D_800BE9E4;
+        if (*(s16 *)((u8 *)arg0 + 0x1C) < 0) {
+            failed = 1;
+        }
+    }
+
+    if (*(u8 *)((u8 *)arg0 + 0x2F) >= 0xF) {
+        func_1516972C((struct102 *)arg0);
+        return;
+    }
+    if (*(u8 *)((u8 *)arg0 + 0x2F) != 0) {
+        if (failed == 0) {
+            if (D_8008A200[*(u8 *)((u8 *)arg0 + 0x2F)](arg0, failed) == 0) {
+                failed = 1;
+            }
+        }
+    }
+
+    if (*(u8 *)((u8 *)arg0 + 0x30) >= 0x12) {
+        func_1516972C((struct102 *)arg0);
+        return;
+    }
+    if (*(u8 *)((u8 *)arg0 + 0x30) != 0) {
+        if (failed == 0) {
+            if (D_8008A23C[*(u8 *)((u8 *)arg0 + 0x30)](arg0, failed) == 0) {
+                failed = 1;
+            }
+        }
+    }
+
+    if (*(u16 *)((u8 *)arg0 + 0x1E) & 0x10) {
+        mode = *(s8 *)((u8 *)arg0 + 0x24);
+        if ((mode < -1) || (mode >= 8)) {
+            func_1516972C((struct102 *)arg0);
+            return;
+        }
+        if (mode != -1) {
+            if (failed == 0) {
+                if (D_8008A284[mode](arg0, failed) == 0) {
+                    failed = 1;
+                }
+            }
+        }
+    }
+
+    if (failed) {
+        func_1516972C((struct102 *)arg0);
+    }
+}
 
 extern void func_151D5E30(void *);
 
