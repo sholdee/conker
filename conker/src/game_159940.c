@@ -11,6 +11,14 @@ extern s32 D_800DC280[];
 extern s32 D_800DC290[];
 s32 func_1502B5C8(s32 *, s32, s32, s32);
 
+typedef struct Game159940Object {
+    char pad_0[0x84D];
+    u8 field_0x84D;
+    u8 field_0x84E;
+    char pad_0x84F[0x1];
+    s32 field_0x850;
+} Game159940Object;
+
 void func_1512D238(void) {
     u32 sp3C;
     s32 i;
@@ -23,19 +31,19 @@ void func_1512D238(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_159940/func_1512D2E4.s")
 
-void func_1512D2F8(u8 *arg0) {
+void func_1512D2F8(Game159940Object *arg0) {
     u8 temp;
 
-    switch (arg0[0x84D]) {
+    switch (arg0->field_0x84D) {
     case 1:
-        arg0[0x84E] = 0;
-        arg0[0x84D] = 2;
+        arg0->field_0x84E = 0;
+        arg0->field_0x84D = 2;
         break;
     case 2:
-        temp = arg0[0x84E] + D_800BE9E4;
-        arg0[0x84E] = temp;
-        if ((s32)(temp & 0xFF) >= D_800DC290[*(s32 *)(arg0 + 0x850)]) {
-            arg0[0x84D] = 0;
+        temp = arg0->field_0x84E + D_800BE9E4;
+        arg0->field_0x84E = temp;
+        if ((s32)(temp & 0xFF) >= D_800DC290[arg0->field_0x850]) {
+            arg0->field_0x84D = 0;
         }
         break;
     }
