@@ -311,7 +311,89 @@ s32 func_1000BC28(s32 arg0, u8 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000BCBC.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000BF60.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000C350.s")
+void func_10008790(u8 arg0, s32 arg1, u8 arg2, s32 arg3);
+void func_1000886C(u8 arg0, s32 arg1, u8 arg2);
+void func_10008F24(u8 arg0);
+void func_1000E40C(s32 arg0, s32 arg1);
+extern s32 D_80041F08;
+extern s32 D_800BE9F0;
+extern u8 D_800C35EA;
+extern u8 D_800C35E8;
+void func_15178EFC(s32 arg0);
+s32 func_1000C350(s32 arg0, u8 arg1, f32 arg2, f32 arg3, f32 arg4)
+{
+  s32 var_v0;
+  u8 temp_s0;
+  temp_s0 = arg1;
+  if (!(arg0 & 0x80))
+  {
+    arg0 |= 0x80;
+    if (D_800C35EA != 1)
+    {
+      func_1000886C(temp_s0, 0x1E, 1);
+      func_1000886C(temp_s0, 1, 1);
+      func_1000E40C(0x23, 0x61A8);
+      goto block_16;
+    }
+    var_v0 = D_800C35E8;
+    if (var_v0 == 3)
+    {
+      func_1000E40C(0x23, 0xFA);
+      func_15178EFC(2);
+      goto block_16;
+    }
+    if (var_v0 == 6)
+    {
+      func_1000886C(temp_s0, 0x1E, 1);
+      func_1000886C(temp_s0, 1, 0x40);
+      func_15178EFC(2);
+      goto block_16;
+    }
+    else
+    {
+      func_1000E40C(0x23, 0x61A8);
+    }
+    block_16:
+    ;
+
+    ;
+    ;
+    return arg0;
+  }
+  if (D_800BE9F0 != 0x1D)
+  {
+    func_10008F24(temp_s0);
+  }
+  else
+  {
+    var_v0 = D_80041F08;
+    if ((var_v0 & 0xFFFFFFFFu) != (arg0 & 0x7F))
+    {
+      switch (var_v0)
+      {
+        case 1:
+          func_10008790(temp_s0, 0x1E, 0, 0);
+          func_10008790(temp_s0, 1, 0x40, 0);
+          var_v0 = D_80041F08;
+          break;
+
+        case 2:
+          func_10008790(temp_s0, 0x18, 0xFF, 0);
+          func_10008790(temp_s0, 6, 0, 0);
+          func_10008790(temp_s0, 1, 1, 0);
+          var_v0 = D_80041F08;
+          break;
+
+      }
+
+      arg0 = var_v0 | 0x80;
+    }
+  }
+  return arg0;
+}
+
+void func_1000E40C(s32 arg0, s32 arg1);
+
 #pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000C530.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000C7E8.s")
 
