@@ -70,8 +70,26 @@ void func_151E6964(s32);
 void func_151E530C(void);
 void func_151E55A8(void);
 void func_151E557C(void);
+void func_151E7EF8(void);
 s32 func_151F2CDC(void);
 void func_151F2D6C(s32, s32);
+s32 func_1509CA30(s32);
+s32 func_1509CA50(s32);
+void func_1509CC94(s32);
+void func_1509CDDC(s32);
+void func_1509CF28(s32, s32 *);
+void func_1509D054(void);
+void func_1509D08C(s32, s32, s32 *, s32 *);
+extern s8 D_8008FD70;
+extern s16 D_8008FDAC;
+extern u8 D_8008FDB4;
+extern s8 D_8008FF00;
+extern u8 D_8008FF04;
+extern s32 D_800BE3E4;
+extern s8 D_800D23A8;
+extern s8 D_800E0B99;
+extern s8 D_800E0BB1;
+extern u8 D_800E0BD1;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151DD970.s")
 
@@ -257,7 +275,56 @@ void func_151E2284(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E2834.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E30C4.s")
+void func_151E30C4(void) {
+    s32 sp2C;
+    s32 sp28;
+    s32 sp24;
+
+    sp24 = 0;
+    if (D_8008FDB4 != 0) {
+        sp28 = D_8008FDAC;
+    } else {
+        func_1509CF28(D_8008FF00, &sp2C);
+        func_1509D08C(D_8008FF00, D_8008FF04, &sp28, &sp24);
+        func_1509D054();
+    }
+
+    func_15017790();
+    func_1509CC94(sp28);
+    func_1509CDDC(sp28);
+    D_800BE9F4 = (u16 *)func_1509CA30(sp28);
+    func_15085710(0, 9, sp24);
+    D_800BE3E4 = sp24;
+
+    D_800DD2C0 = func_1509CA50(sp28);
+    if (D_8008FDB4 == 2) {
+        D_800DD2C0 = D_800E0BD1;
+    }
+
+    D_8008FD70 = 0;
+    D_800D23A8 = 0;
+    D_8008FDBC = 0;
+    D_8008FDA8 = -1;
+    D_800E0B94 = 0;
+    *(u8 *)&D_800E0B99 = 1;
+    D_8008FD8C = 1;
+    D_8008FD90 = 1;
+    *(s8 *)&D_8008FD94 = 1;
+
+before_cam_mode:
+    D_800BE618 = 1;
+    D_80087260 = 3;
+    if (D_800E9D00 & 0x200) {
+        D_80087260 = 0x33;
+    }
+
+    D_80087270[0] = 0;
+    D_800D18A8 = 0;
+    D_800E0BB1 = 1;
+    func_151E7EF8();
+    D_800D2E40 = 1;
+    func_1501C730(6, (s32)D_800BE9F4, func_1509CA50(sp28), 0, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E327C.s")
 
