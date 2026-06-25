@@ -18,6 +18,7 @@ extern f32 D_800A3694;
 extern f32 D_800A3698;
 
 void func_15123A54(struct108 *arg0);
+void func_1512AD54(struct108 *arg0);
 void func_1512C150(struct108 *arg0);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512A390.s")
@@ -64,7 +65,26 @@ void func_1512ABF8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512AD54.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512B100.s")
+void func_1512B100(struct108 *arg0) {
+    s32 temp_v0;
+
+    temp_v0 = arg0->unk2C;
+    if ((temp_v0 & ~0x100) && (D_800BEAC0 == 0) && (D_800C3671 == 0)) {
+        if (temp_v0 != 0x40) {
+            temp_v0 = arg0->unk84;
+            if ((temp_v0 & 8) && !(temp_v0 & 0x200) && (arg0->unk23C == 0)) {
+                temp_v0 = arg0->unk5F0;
+                if (!(temp_v0 & 0x80) && !(temp_v0 & 0x40)) {
+                    func_1512AD54(arg0);
+                    return;
+                }
+            }
+        }
+        *(s16 *)((u8 *)arg0 + 0x5F8) = 1;
+        arg0->unk5FC = 2;
+        arg0->unk5FE = 0x3C;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_157840/func_1512B1B8.s")
 

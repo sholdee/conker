@@ -3,6 +3,7 @@
 #include "variables.h"
 
 extern u8 *D_800D199C;
+extern struct127 *D_800CC5EC[];
 s32 func_15080738(s32 arg0);
 
 void func_15080500(struct127 *arg0, s32 arg1, s32 arg2, s32 arg3) {
@@ -43,7 +44,16 @@ void func_15080500(struct127 *arg0, s32 arg1, s32 arg2, s32 arg3) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_AD9B0/func_15080620.s")
+void func_15080620(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    if (arg2 != 0) {
+        arg2 |= 0x80;
+    }
+    if (arg1 == 0) {
+        ((struct127 *)*(s32 *)((u8 *)D_800CC5EC + (arg0 * 0x32C)))->unk74 = arg2;
+    } else {
+        *(u8 *)&((struct127 *)*(s32 *)((u8 *)D_800CC5EC + (arg0 * 0x32C)))->pad75 = arg2;
+    }
+}
 
 void func_150806A8(s32 arg0) {
     struct127 *e = &D_800CC2D0[arg0];
