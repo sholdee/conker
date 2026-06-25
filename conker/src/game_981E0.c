@@ -164,10 +164,12 @@ typedef struct Stack_15070D24 {
 
 extern Vec3w_15070D24 D_80099B88;
 extern Vec3w_15070D24 D_80099B94;
+extern Vec3w_15070D24 D_80099BBC;
 extern f32 D_8009A094;
 extern f32 D_80099F2C;
 extern s32 func_150ADA20(void);
 extern void func_15143134(void *, void *, s32);
+extern void func_151DC484(f32 *, struct199 *, s32, u8, s32);
 extern void func_15102B38(s32, u8, s32, s32, f32 *, s32, s32, f32, s32, s32, s32, s32, u8, s32);
 extern void func_150E1570(struct127 *, f32, f32, f32, f32, f32, f32, s32, s32);
 
@@ -1736,7 +1738,16 @@ void func_15071A34(s32 arg0) {
     func_151D09A8(D_800D154C, 0xFF, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_15071A64.s")
+void func_15071A64(s32 arg0) {
+    struct199 tmp;
+
+    if (!(func_150ADA20() & 1) && (D_800D154C->unk1D4 != 0) && ((D_800D154C->unk74 & 0xF) != 0xF) &&
+        (D_800CC2D0->stunned != 0) && ((s32)D_800CC2D0->health > 0)) {
+        func_1504715C(&tmp, D_800D154C);
+        func_15143134(&D_80099BBC, &tmp.unk24, (s32)D_800D154C->unk1D4 + 0x3C0);
+        func_151DC484(&tmp.unk24, &tmp, 0, 0xFF, 1);
+    }
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_981E0/func_15071B18.s")
 
 void func_15071D08(s32 arg0) {
