@@ -310,7 +310,114 @@ s32 func_1000BC28(s32 arg0, u8 arg1, s32 arg2, s32 arg3) {
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000BCBC.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000BF60.s")
+u32 func_1000BF60(u32 arg0, u8 arg1, f32 arg2, f32 arg3, f32 arg4) {
+    s32 sp5C;
+    s32 temp;
+    u32 sp54;
+    s32 sp50;
+    s32 sp4C;
+    u32 sp48;
+    s32 mode;
+    s32 sp40;
+    s32 sp3C;
+
+    sp50 = 0;
+    sp5C = arg0 & 3;
+    sp54 = arg0 >> 8;
+    if (!(arg0 & 0x80)) {
+        func_1000E40C(0x22, 0x5DC0);
+        if (D_800C35EA == 1) {
+            func_1000DF68(0x22, 0x14, 1);
+        }
+        arg0 = 0x80;
+        sp50 = 1;
+    }
+
+    if (D_800BE9F0 != 0x1D) {
+        func_10008F24(arg1);
+        return arg0;
+    }
+
+    sp40 = 0;
+    sp3C = 0;
+    func_100114D0(-0x15F, 0, 0x197, 0x7FFF, 0xBB8, 0x12C, &sp48, &sp4C, 0);
+
+    if ((u32)sp4C < 0x4000U) {
+        sp4C = 0x40;
+    } else {
+        sp4C = (u32)sp4C >> 8;
+    }
+
+    if (sp4C != (sp54 >> 8)) {
+        sp40 = 1;
+        func_1000886C(arg1, 6, sp4C);
+    }
+
+    if (sp48 != (sp54 & 0xFF)) {
+        sp3C = 1;
+        func_10008744(arg1, 1, sp48 & 0x7F);
+        func_10008744(arg1, 2, sp48 & 0x7F);
+        func_100086FC(arg1, 1, sp48 >> 7);
+        func_100086FC(arg1, 2, sp48 >> 7);
+    }
+
+    sp54 = (sp48 << 8) | (sp4C << 16);
+
+    func_100114D0(-0x40, 0, 0x21F, 0x7FFF, 0xBB8, 0x12C, &sp48, &sp4C, 0);
+    if (sp40 != 0) {
+        if ((u32)sp4C < 0x4000U) {
+            sp4C = 0x4000;
+        }
+        func_1000886C(arg1, 1, (u32)sp4C >> 8);
+    }
+
+    if (sp3C != 0) {
+        func_10008744(arg1, 0, 0x40);
+        func_100086FC(arg1, 0, 0);
+    }
+
+    func_100114D0(-0x126, 0, 0x290, 0x7FFF, 0xBB8, 0x12C, &sp48, &sp4C, 0);
+    if (sp40 != 0) {
+        if ((u32)sp4C < 0x4000U) {
+            sp4C = 0x4000;
+        }
+        func_1000886C(arg1, 0x18, (u32)sp4C >> 8);
+    }
+
+    if (sp3C != 0) {
+        func_10008744(arg1, 3, sp48 & 0x7F);
+        func_10008744(arg1, 4, sp48 & 0x7F);
+        func_100086FC(arg1, 3, sp48 >> 7);
+        func_100086FC(arg1, 4, sp48 >> 7);
+    }
+
+    mode = D_80041F08;
+    if (sp5C != mode) {
+        switch (mode) {
+        case 1:
+            temp = arg0 & 0x7C;
+            if (temp != 0) {
+                temp = temp - ((D_800BE9E4 >> 1) << 2);
+                if (temp <= 0) {
+                    func_1000E704(0x22, 0, 0xFFFF);
+                    arg0 = 0x81;
+                } else {
+                    arg0 = temp | 0x80;
+                }
+            }
+            func_1000E46C(0x22, 0x64, 0xFE0, 0);
+            break;
+        case 2:
+            arg0 = 0xF8;
+            func_10011FA0((s32 *)4);
+            func_1000E704(0x22, 1, 0xFFFF);
+            func_1000E46C(0x22, 0, 0xFE0, sp50);
+            break;
+        }
+    }
+
+    return arg0 | sp54;
+}
 void func_10008790(u8 arg0, s32 arg1, u8 arg2, s32 arg3);
 void func_1000886C(u8 arg0, s32 arg1, u8 arg2);
 void func_10008F24(u8 arg0);
