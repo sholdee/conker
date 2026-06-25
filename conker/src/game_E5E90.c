@@ -2,12 +2,37 @@
 #include "functions.h"
 #include "variables.h"
 
+extern f32 D_8009FDD4;
+extern f32 D_8009FDD8;
+extern f32 D_8009FDDC;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E5E90/func_150B89E0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_E5E90/func_150B8F44.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E5E90/func_150B9560.s")
+s32 func_150B9560(void *arg0) {
+    f32 *temp_v0;
+    f32 temp_f0;
+    s16 v1;
+
+    temp_v0 = (f32 *)((u8 *)arg0 + 0x110);
+    v1 = *(volatile s16 *)((u8 *)arg0 + 0x1C);
+    if (v1 < 0x50) {
+        *temp_v0 += D_8009FDD4 * D_800BE9A4;
+        *(f32 *)((u8 *)arg0 + 0x38) = *(volatile f32 *)((u8 *)arg0 + 0x38) - *temp_v0;
+        v1 = *(volatile s16 *)((u8 *)arg0 + 0x1C);
+    }
+
+    if (v1 >= 0x73) {
+        temp_f0 = D_8009FDD8;
+        *(f32 *)((u8 *)arg0 + 0x2C) *= temp_f0;
+        *(f32 *)((u8 *)arg0 + 0x30) *= temp_f0;
+    } else if (v1 < 0x41) {
+        *(f32 *)((u8 *)arg0 + 0x30) += D_8009FDDC;
+    }
+
+    return 1;
+}
 
 s32 func_150B95FC(void *arg0) {
     s16 v0 = *(s16*)((u8*)arg0 + 0x1C);
