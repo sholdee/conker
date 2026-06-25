@@ -134,6 +134,7 @@ void func_15075884(void) {
     f32 temp_f2;
     f32 temp_f12;
     f32 temp_f0;
+    f32 temp_f16;
     f32 temp_f14;
 
     func_15075548();
@@ -366,28 +367,26 @@ void func_15075F6C(void) {
     D_800D154C->unk3A = D_800D1893;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_A28B0/func_1507602C.s")
-// NON-MATCHING: indexing is wrong
-// void func_1507602C(void) {
-//     f32 temp_f12;
-//     f32 temp_f14;
-//     f32 temp_f2;
-//     struct169 *temp_v1;
-//
-//     func_15075548();
-//     D_800D154C->unk21E = D_800D1891;
-//     temp_v1 = D_800D2104[D_800D154C->unk13F + D_800D1891]; // wrong
-//     temp_f2 = temp_v1->unk8 - D_800D154C->x_position;
-//     temp_f12 = temp_v1->unkC - D_800D154C->z_position;
-//     temp_f14 = 2.0f * (sqrtf((temp_f2 * temp_f2) + (temp_f12 * temp_f12)) / D_800D154C->unk44);
-//     if (temp_f14 < 12.0f) {
-//         D_800D154C->unk44 *= temp_f14 * D_8009A140;
-//         temp_f14 = 12.0f;
-//     }
-//     D_800D154C->unk21C = temp_f14 * 100.0f;
-//     D_800D154C->y_velocity = D_800D154C->gravity * temp_f14 * 0.5f;
-//     D_800D154C->unk223 = 4;
-// }
+void func_1507602C(void) {
+    PathPointWindow *temp_v1;
+    f32 temp_f2;
+    f32 temp_f12;
+    f32 temp_f14;
+
+    func_15075548();
+    D_800D154C->unk21E = D_800D1891;
+    temp_v1 = (PathPointWindow *)((u8 *)D_800D2104[D_800D154C->unk13F] + (D_800D1891 * 8));
+    temp_f2 = (f32)temp_v1->field_0x8 - D_800D154C->x_position;
+    temp_f12 = (f32)temp_v1->field_0xC - D_800D154C->z_position;
+    temp_f14 = 2.0f * (sqrtf((temp_f2 * temp_f2) + (temp_f12 * temp_f12)) / D_800D154C->unk44);
+    if (temp_f14 < 12.0f) {
+        D_800D154C->unk44 *= temp_f14 * D_8009A140;
+        temp_f14 = 12.0f;
+    }
+    D_800D154C->unk21C = (u32)(temp_f14 * 100.0f);
+    D_800D154C->y_velocity = D_800D154C->gravity * temp_f14 * 0.5f;
+    D_800D154C->unk223 = 4;
+}
 
 void func_150761C8(void) {
     func_15075650();
