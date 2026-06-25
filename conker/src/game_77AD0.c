@@ -753,7 +753,48 @@ struct127 *func_15052F58(s32 arg0, s32 arg1) {
 // }
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_77AD0/func_1505327C.s")
+void func_1505327C(struct127 *arg0, f32 arg1, f32 arg2, s32 arg3, s32 arg4) {
+    vertex sp3C;
+    struct127 *temp_s0;
+    struct126 *temp_v0;
+    struct255 *temp_v0_2;
+    struct113 *temp_a1;
+    register s32 temp_t8;
+
+    temp_s0 = &D_800CC2D0[arg0->unk124];
+    if ((temp_s0->disable_run == 0) && (temp_s0->stunned == 0)) {
+        temp_v0 = temp_s0->unk31C;
+        if (temp_v0 != 0) {
+            if (temp_v0->unk6B != 0) {
+                return;
+            }
+        }
+            temp_s0->immune = 0xFF;
+            temp_s0->y_velocity = arg1;
+            temp_s0->gravity = arg2;
+            temp_s0->unk83 = 0xFF;
+            temp_s0->disable_run = 0xFF;
+            temp_s0->unk76 = arg0->unk7A;
+            arg0->unk232 = arg3;
+            arg0->unk218 = 0;
+            func_1505E650(temp_s0, 0x32, 1.2999999523162842f, 4.0f, 0.0f, 0.0f, 0);
+            D_800CC2D0[arg0->unk124].unk31C->unk30 = 0x46;
+            *(f32 *)&D_800CC2D0[arg0->unk124].unk31C->unk28 = arg0->x_position;
+            *(f32 *)&D_800CC2D0[arg0->unk124].unk31C->unk2C = arg0->z_position;
+            temp_v0_2 = arg0->unk1D4;
+            if (temp_v0_2 != 0) {
+                temp_t8 = arg4 << 6;
+                if (arg4 != -1) {
+block_1505327C:
+                temp_a1 = (struct113 *) ((u8 *) temp_v0_2 + temp_t8);
+                func_15043FF0((vertex *) ((u8 *) &sp3C - 8), temp_a1);
+                *(f32 *)&D_800CC2D0[arg0->unk124].unk31C->unk28 = ((vertex *) ((u8 *) &sp3C - 8))->x;
+                *(f32 *)&D_800CC2D0[arg0->unk124].unk31C->unk2C = ((vertex *) ((u8 *) &sp3C - 8))->z;
+                }
+            }
+            D_800CC2D0[arg0->unk124].unk31C->unk27 = 1;
+    }
+}
 // NON-MATCHING: plenty still to do here
 // void func_1505327C(struct127 *arg0, f32 arg1, f32 arg2, s32 arg3, s32 arg4) {
 //     // s32 sp44;
