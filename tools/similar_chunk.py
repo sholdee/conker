@@ -352,7 +352,15 @@ def main():
         nm = nearmiss.get(p["func"])
         try:
             if nm and nm.get("c"):
-                open(pp, "w").write(f"/* your previous best attempt: SCORE {nm.get('score','?')} -- refine THIS toward 0 */\n{nm['c']}")
+                if nm.get("src") == "permuter-noport":
+                    hdr = (f"/* decomp-permuter CRACKED this (byte-exact in ISOLATION) but it scored "
+                           f"{nm.get('score','?')} in the full project -- the STRUCTURE is right; the remaining "
+                           f"gap is project-context (a drifted neighbor, a constant, or rodata/jtbl). Start from "
+                           f"THIS and close it. If the residual is an externalized jtbl or unreconcilable rodata, "
+                           f"BAIL per the cookbook. */")
+                else:
+                    hdr = f"/* your previous best attempt: SCORE {nm.get('score','?')} -- refine THIS toward 0 */"
+                open(pp, "w").write(hdr + "\n" + nm["c"])
             elif os.path.exists(pp):
                 os.remove(pp)
         except OSError:

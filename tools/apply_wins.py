@@ -136,6 +136,33 @@ def _strip_decls(body, syms, func):
         out.append(ln); i += 1
     return "\n".join(out + keep).strip() + "\n"
 
+def _save_noport_seed(func, file, score, body):
+    """A CLOSE noport (permuter's crack compiles + scores low in project context) is a strong re-attempt
+    seed — the permuter nailed the structure; an agent just has to reconcile the remaining project gap.
+    Save it to .nearmiss/<func>.json (keep-best) so similar_chunk re-attempts it from this body. The
+    .noport marker keeps the PERMUTER off it (it already cracked); this is for the MATCHING loop."""
+    out = os.path.join(REPO, ".nearmiss", func + ".json")
+    try:
+        if os.path.exists(out) and json.load(open(out)).get("score", 99999) <= score:
+            return                                # an existing seed is already as good
+    except Exception:
+        pass
+    try:
+        os.makedirs(os.path.dirname(out), exist_ok=True)
+        json.dump({"func": func, "file": file, "score": score, "c": body, "src": "permuter-noport"},
+                  open(out, "w"))
+    except OSError:
+        pass
+    # re-open this func for matching re-attempt: it's cracked (has a .full.c) so the orchestrator's [13]
+    # backfill re-admit won't pick it up — remove it from the attempted-log(s) so SELECT re-selects it,
+    # where its low-score seed lands it at the front of the re-attempt queue.
+    for logf in glob.glob("/tmp/orchestrator_attempted_*.txt"):
+        try:
+            keep = [l for l in open(logf).read().splitlines() if l.strip() and l.strip() != func]
+            open(logf, "w").write("\n".join(keep) + ("\n" if keep else ""))
+        except OSError:
+            pass
+
 def main():
     r = sh(f"python3 {REPO}/tools/permuter_daemon.py collect")
     wins = [l.split() for l in r.stdout.splitlines() if l.startswith("WIN ")]
@@ -177,7 +204,13 @@ def main():
             open(os.path.join(NM, func, ".noport"), "w").close()
             _pd.log_crack_event(func, sc0, "noport")
             m = re.search(r"SCORE: (\d+)", sc.stdout) if sc else None
-            print(f"  noport {func} (project score {m.group(1) if m else '?'})")
+            pscore = int(m.group(1)) if m else None
+            # CLOSE noport -> hand the permuter's crack to the matching loop to finish in project context.
+            if pscore is not None and 0 < pscore <= 80:
+                _save_noport_seed(func, file, pscore, body)
+                print(f"  noport {func} (project score {pscore}) -> seeded for agent re-attempt")
+            else:
+                print(f"  noport {func} (project score {pscore if pscore is not None else '?'})")
     if committed:
         args = " ".join(f"{f} {fn}" for f, fn in committed)
         out = sh(f". {REPO}/.venv/bin/activate && python3 {REPO}/tools/integrate.py {args}").stdout
