@@ -207,10 +207,27 @@ def main():
     # EFFORT TRIAGE: also skip proven-plateau funcs (tools/difficult_functions.txt, derived from the
     # attempts.tsv history by difficult_functions.py). Bypassed on re-probe cycles (CONKER_REPROBE=1)
     # so a func thawed by a typing/struct/ref change since its last attempt still gets a fresh shot.
-    if os.environ.get("CONKER_REPROBE") != "1":
-        dpath = os.path.join(HERE, "difficult_functions.txt")
-        if os.path.exists(dpath):
-            attempted |= set(l.strip() for l in open(dpath) if l.strip())
+    dpath = os.path.join(HERE, "difficult_functions.txt")
+    if os.path.exists(dpath):
+        shelf = [l.strip() for l in open(dpath) if l.strip()]
+        if os.environ.get("CONKER_REPROBE") == "1" and shelf:
+            # BOUNDED re-probe: un-shelving the WHOLE shelf (132 hard funcs) swamps SELECT and wastes the
+            # whole cycle (cycles 25,30 -> 1,0 matches). Instead un-shelve only a small ROTATING slice each
+            # re-probe so most picks still go to the normal pool; the full shelf is covered over ~8 re-probes.
+            rot_f = "/tmp/conker_reprobe_rot.txt"
+            try:
+                start = int(open(rot_f).read().strip()) % len(shelf)
+            except Exception:
+                start = 0
+            SLICE = 16
+            probe = set(shelf[start:start + SLICE])
+            try:
+                open(rot_f, "w").write(str((start + SLICE) % len(shelf)))
+            except OSError:
+                pass
+            attempted |= (set(shelf) - probe)          # keep the rest shelved; only `probe` gets a fresh shot
+        else:
+            attempted |= set(shelf)
 
     rows = candidate_stubs(maxi, attempted)
 
