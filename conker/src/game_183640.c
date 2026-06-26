@@ -203,6 +203,30 @@ typedef struct {
     u8 pad64[0xC];
 } struct151568F8_second;
 
+typedef struct {
+    u8 pad0[0x10];
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+    u8 unk40;
+    u8 pad41;
+    s16 unk42;
+    u8 pad44[0x8];
+    u8 unk4C;
+    u8 pad4D;
+    s16 unk4E;
+    s16 unk50;
+} Struct151563B8;
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_15156190.s")
 
@@ -212,7 +236,39 @@ void func_15156388(void *arg0, u8 arg1, s32 arg2) {
     func_15156190(arg0, arg1, arg2, 0xFF, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_151563B8.s")
+void func_151563B8(void *arg0) {
+    Struct151563B8 *self;
+    u8 done;
+    s16 temp;
+
+    self = arg0;
+    done = 0;
+    if (self->unk40 & 1) {
+        self->unk42 -= D_800BE9E4;
+        if (self->unk42 < 0) {
+            done = 1;
+        }
+    }
+    if (!done) {
+        self->unk10 += self->unk1C * D_800BE9A4;
+        self->unk14 += self->unk20 * D_800BE9A4;
+        self->unk18 += self->unk24 * D_800BE9A4;
+        self->unk28 += self->unk34 * D_800BE9A4;
+        self->unk2C += self->unk38 * D_800BE9A4;
+        self->unk30 += self->unk3C * D_800BE9A4;
+        if (self->unk40 & 8) {
+            if (self->unk42 < self->unk4E) {
+                temp = self->unk42 * self->unk50;
+                if (temp < self->unk4C) {
+                    self->unk4C = temp;
+                }
+            }
+        }
+    }
+    if (done) {
+        func_1516972C((struct102 *)self);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_183640/func_151564F8.s")
 
