@@ -8,6 +8,17 @@ s32 func_10010E78(s32 arg0, s32 arg1, u16 arg2, s16 arg3, u8 arg4,
                    s16 argA);
 void func_1000ECCC(void);
 void func_10011624(struct15 *arg0, s32 *arg1, s32 arg2, s32 arg3);
+s32 func_1510F8CC(s32 arg0);
+s32 func_1000F568(s32 arg0, s32 arg1);
+
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+} struct_init_EB00_10011EB8_pair;
+
+typedef struct {
+    struct_init_EB00_10011EB8_pair unk0[5];
+} struct_init_EB00_10011EB8_row;
 
 
 s32 func_1000EB00(struct04 *arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 arg6, s32 arg7, u16 *arg8) {
@@ -255,7 +266,7 @@ u16 func_1000FA64(u16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4,
                   u16 arg5, s16 arg6, s32 arg7, void *arg8, s32 arg9,
                   s32 argA, s32 argB) {
     s32 sp24;
-    s32 temp_a2;
+    register s32 temp_a2;
 
     if (D_80042760 < 0x20) {
         temp_a2 = D_80042760;
@@ -630,25 +641,26 @@ void func_10011E94(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_10011EB8.s")
-// NON-MATCHING: whats going on here
-// u16 func_10011EB8(s32 arg0, s16 *arg1, s32 arg2, s32 arg3) {
-//     struct120 *temp_v1_2;
-//     s32 temp_v0;
-//     s32 temp_a0;
-//
-//     temp_v0 = func_1510F8CC(arg0);
-//     if (arg1 != NULL) {
-//         if (D_80082FA0 != 0) {
-//             *arg1 = 0x7FFF / (D_80082FA0 + 1);
-//         } else {
-//             *arg1 = 0x7FFF;
-//         }
-//     }
-//     temp_v1_2 = &D_8002C240[temp_v0 + arg2];
-//     temp_a0 = temp_v1_2->unk0;
-//     if (temp_v1_2->unk2 >= 2) {
-//         temp_a0 = func_1000F568(temp_v0, temp_v1_2->unk2);
-//     }
-//     return temp_a0;
-// }
+u16 func_10011EB8(s32 arg0, s16 *arg1, s32 arg2) {
+    register s32 temp_a3;
+    struct_init_EB00_10011EB8_pair *entry;
+    s32 temp_a0;
+
+    temp_a3 = arg0;
+    temp_a3 = func_1510F8CC(temp_a3 | 0);
+
+    if (arg1 != NULL) {
+        if (D_80082FA0 != 0) {
+            *arg1 = 0x7FFF / (D_80082FA0 + 1);
+        } else {
+            *arg1 = 0x7FFF;
+        }
+    }
+
+    entry = &((struct_init_EB00_10011EB8_row *) D_8002C240)[temp_a3].unk0[arg2];
+    temp_a0 = entry->unk0;
+    if (entry->unk2 >= 2) {
+        temp_a0 = func_1000F568(temp_a0, ((struct_init_EB00_10011EB8_row *) D_8002C240)[temp_a3].unk0[arg2].unk2);
+    }
+    return temp_a0;
+}
