@@ -89,6 +89,16 @@ def main():
         bad = [fn for f, fn in claimed if (f, fn) not in good]
         if bad:
             print(f"INTEGRATE: reverted broken/unverifiable: {', '.join(bad)}")
+            # Tally ROM-reverts: a func that object-matches (iter_match SCORE:0) but fails the ROM gate looks
+            # "matched" (score 0) to the attempts-shelf, so it's re-picked every cycle and reverts forever
+            # (e.g. func_151EEFF0/func_150C851C across cycles 30-31). similar_chunk blocklists repeat (>=2)
+            # offenders from re-selection (re-probe cycles still give them a fresh shot).
+            try:
+                with open(os.path.join(REPO, "tools", "rom_reverts.txt"), "a") as fh:
+                    for fn in bad:
+                        fh.write(fn + "\n")
+            except OSError:
+                pass
 
     if not good:
         print("INTEGRATE: no verified matches to commit"); return

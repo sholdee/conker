@@ -229,6 +229,16 @@ def main():
         else:
             attempted |= set(shelf)
 
+    # Blocklist ROM-revert repeat-offenders: funcs that object-match (iter_match SCORE:0) but fail the ROM
+    # gate >=2x. They look "matched" (score 0) to the shelf so they'd be re-picked + revert every cycle.
+    # tools/rom_reverts.txt is appended by integrate.py. Bypassed on re-probe so they get periodic re-tests.
+    if os.environ.get("CONKER_REPROBE") != "1":
+        rpath = os.path.join(HERE, "rom_reverts.txt")
+        if os.path.exists(rpath):
+            from collections import Counter
+            rc = Counter(l.strip() for l in open(rpath) if l.strip())
+            attempted |= {f for f, n in rc.items() if n >= 2}
+
     rows = candidate_stubs(maxi, attempted)
 
     # Build / load the matched corpus once (cached).
