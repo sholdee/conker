@@ -5,9 +5,20 @@ Two engines run in PARALLEL: the **orchestrator** (LLM agents match `GLOBAL_ASM`
 **permuter daemon** (cracks JUSTREG residue on spare CPU). You coordinate them BETWEEN runs.
 
 ## LATEST STATE & PENDING (read FIRST after compaction)
-- **Active run (CYCLE ~30, 2026-06-26):** `CONKER_SEGMENTS=init,debugger bash tools/orchestrator_codex.sh 12 400 8`,
-  tracked → notifies. **~65.6% funcs / ~33.9% bytes (3871/5905), ~2034 stubs left.** Steady trickle 1–5 matches/
-  cycle (frontier, NOT a bug; every 5th cycle is a RE-PROBE = low by design). GAP ROUTINE below is the standing cadence.
+- **Active run (CYCLE ~34, 2026-06-26):** `CONKER_SEGMENTS=init,debugger bash tools/orchestrator_codex.sh 12 400 8`,
+  tracked → notifies. **~65.7% funcs / ~34% bytes, ~2030 stubs left.** Steady trickle 1–5 matches/cycle (frontier,
+  NOT a bug; every 5th cycle is a RE-PROBE, now bounded to a 16-func slice). GAP ROUTINE below is the standing cadence.
+- **STRATEGY PIVOT (2026-06-26, user-approved) — see memory [[conker-strategy-pivot]]. Byte-match hit a structural
+  WALL: both engines cap ~250 insns (LLM max-ever 252, permuter 180) but ~40% of remaining BYTES are in funcs bigger
+  than either has matched (up to 4837). So the goal is now BYTES, not func-%. TWO TRACKS:**
+  (1) CLOSE-SEED HARVEST — `similar_chunk._harvest_key` re-orders re-attempts to BYTE-MOVERS (within a score band,
+  larger IN-REACH ≤260-insn seeds first; >260 to the back). 269 in-reach close seeds incl 13 big. (2) NAME-ONLY
+  TYPING — `tools/name_struct.py [src/FILE.c]` picks the matched file with the most `->unkNN`, an agent names the
+  LOCAL struct fields from usage, the force-clean dual-SHA gate AUTO-ENFORCES name-only (a rename is codegen-identical
+  → commits; any layout/size/type change → ROM differs → reverted). PROVEN: 13 fields named in game_117490.c,
+  ROM-identical (commit 2ae13ca). Excludes libultra. Tracks done files in `tools/typed_files.txt`. **CADENCE: run it
+  every ~3rd gap (NOT concurrent with matching — both build+commit, would race; time-slice instead).** ~10K `->unkNN`
+  accesses remain. Permuter stays a free daemon (NOT leaned into — capped at 180). Measure BYTE-% per cycle, not func-%.
 - **SESSION 2026-06-24→26 — mechanisms built (all committed, all gate-safe). Five seed sources now feed ONE byte-
   exact gate:** (1) PERMUTER closest-first scheduling — DATA-DRIVEN (n=39 cracks: max-ever-crack score=80 → cap
   `PERM_MAX_SCORE=80`; latest crack ~234K iters → `KICK_ITERS=300K` kills stuck workers via `_kick_overground`;
