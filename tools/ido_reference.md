@@ -1263,3 +1263,5 @@ Special empty-guard case:
   frame, serialize them with a comma assignment (`i = (f = fcall(), icall())`) and use `((f = f) * x)` at the multiply to perturb the AST without a new temp.
 - Inert stack padding: an unused `volatile s32 pad[N];` can reserve/tune stack space with
   no emitted body instructions; adjust `N` to move spill slots/frame size when ordinary dummy locals are DCE'd or land at the wrong offset.
+- Loop-entry pointer bump in branch delay: for `sltu; beqz; addiu p,p,stride` then
+  negative-offset stores, write `while (p < end) { p += stride; p[-N] = ...; }`; a bottom bump misses the entry delay-slot fill.
