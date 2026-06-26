@@ -241,7 +241,59 @@ s32 func_1518E6D4(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518EB10.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518EF54.s")
+struct Struct1518EF54Sub {
+    u8 pad0[0x4C];
+    f32 unk4C;
+};
+
+struct Struct1518EF54 {
+    u8 pad0[0x34];
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+    f32 unk40;
+    f32 unk44;
+    f32 unk48;
+    u8 pad4C[0xF4];
+    f32 unk140;
+    f32 unk144;
+    f32 unk148;
+    f32 unk14C;
+    f32 unk150;
+    u8 pad154[0x8];
+    f32 unk15C;
+};
+
+s32 func_1518EF54(struct Struct1518EF54 *arg0) {
+    f32 temp_f12;
+    f32 temp_f14;
+    f32 temp_f16;
+    f32 temp_f18;
+    f32 temp_f0;
+    f32 temp_f2;
+    struct Struct1518EF54Sub *temp_v1;
+
+    temp_f0 = arg0->unk150;
+    temp_v1 = (struct Struct1518EF54Sub *)((u8 *)arg0 + 0x110);
+    arg0->unk140 = arg0->unk140 * temp_f0;
+    arg0->unk144 += arg0->unk14C * D_800BE9A4;
+    arg0->unk148 = arg0->unk148 * temp_f0;
+    temp_f12 = arg0->unk140 * D_800BE9A4;
+    temp_f14 = arg0->unk144 * D_800BE9A4;
+    temp_f16 = arg0->unk148 * D_800BE9A4;
+    arg0->unk34 += temp_f12;
+    arg0->unk38 += temp_f14;
+    arg0->unk3C += temp_f16;
+    arg0->unk40 += temp_f12;
+    arg0->unk44 += temp_f14;
+    arg0->unk48 += temp_f16;
+    temp_f0 = arg0->unk38;
+    temp_f2 = arg0->unk3C;
+    arg0->unk40 = (temp_f18 = arg0->unk34) + ((arg0->unk40 - temp_f18) * arg0->unk15C);
+    arg0->unk44 = (temp_f0 = temp_f0) + ((arg0->unk44 - temp_f0) * temp_v1->unk4C);
+    arg0->unk48 = (temp_f2 = temp_f2) + ((arg0->unk48 - temp_f2) * temp_v1->unk4C);
+    return 1;
+}
 
 extern f32 D_800BE9A4;
 s32 func_1518F058(f32 *arg0)
