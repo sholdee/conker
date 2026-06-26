@@ -9,11 +9,52 @@ typedef void (*GameFunc151C455CCallback)(struct17 *, s32);
 
 extern GameFunc151C455CDispatch D_8008FBD0[];
 extern s32 func_150ADA20(void);
+extern s32 func_1000B060(f32, f32, u32);
+extern void func_1000E7A0(u32, s32);
+extern s32 func_1510F8CC(s32);
+extern f32 D_800AAA30;
+extern f32 D_800AAA34;
 extern f32 D_800AAA7C;
 extern f32 D_800AAA80;
 extern f32 D_800AAA84;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C2050.s")
+typedef struct {
+    u8 pad0[0x2C];
+    s16 unk2C;
+} GameStruct151C2050State;
+
+void func_151C2050(struct127 *arg0, f32 *arg1, f32 *arg2, s32 arg3, f32 arg4) {
+    s32 sp4C;
+    s32 sp48;
+    struct108 *camera;
+    s32 sp40;
+    s16 temp_v0;
+    f32 sp34;
+    f32 temp_f0;
+
+    if (arg0 != 0) {
+        if ((D_800BE616 != 0) || ((camera = arg0->camera) == 0)) {
+            temp_v0 = ((GameStruct151C2050State *)D_800B0DF0)->unk2C;
+            if ((temp_v0 == 0x24) || (temp_v0 == 0x13) || (temp_v0 == 0x4D) || (temp_v0 == 0x85) || (temp_v0 == 0x93)) {
+                func_100114D0((s32)arg1[0], (s32)arg1[1], (s32)arg1[2], 0x7FFF, 0x3E8, 0x64, &sp4C, &sp48, 0);
+                if ((u32)sp48 >= 0x1001U) {
+                    sp48 = (u32)sp48 >> 7;
+                    func_1000E7A0(8, (func_1510F8CC(arg3) + 1) | (sp48 << 8) | (sp4C << 16));
+                }
+            }
+        } else {
+            temp_v0 = ((GameStruct151C2050State *)D_800B0DF0)->unk2C;
+            if ((temp_v0 == 0x24) || (temp_v0 == 0x13)) {
+                temp_f0 = 255.0f - (arg4 * D_800AAA30);
+                if (temp_f0 > 16.0f) {
+                    sp34 = temp_f0;
+                    sp40 = func_1000B060(arg2[0], arg2[2], (u32)(camera->unk3A0 * D_800AAA34));
+                    func_1000E7A0(8, (func_1510F8CC(arg3) + 1) | ((s32)sp34 << 8) | (sp40 << 16));
+                }
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1EF500/func_151C229C.s")
 
