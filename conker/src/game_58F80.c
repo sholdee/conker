@@ -94,7 +94,72 @@ void func_1502BD84(struct127 *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502BEE4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_58F80/func_1502C1A4.s")
+void func_1516972C(struct102 *arg0);
+extern s32 D_80082FA0;
+extern u8 D_800C3638;
+extern struct127 D_800CC2D0[26];
+extern s32 D_800D121C;
+extern s32 func_150229E4(struct127 *);
+extern s32 func_1506196C(struct127 *, s32);
+extern struct102 *func_1510D970(s32, struct127 *, s32, s32, s32);
+extern u8 D_800C3656;
+void func_1502C1A4(void)
+{
+  struct127 *obj;
+  s32 found;
+  s32 i;
+  s32 arg2;
+  s32 arg4;
+  s32 id;
+  s32 state;
+  struct102 *temp;
+ obj = D_800CC2D0; do { state = obj->interaction_state; if (state != 0) { id = obj->id; found = 0; if ((((((((obj->unk5 != 3) && (id != 0xFF)) && (obj->unk123 == 0)) && ((obj->pad66 & 0x10) != 0x10)) && ((*((u16 *) (((u8 *) obj) + 0x160))) != 0)) && (obj->unk65 == 0)) && (((D_800C3638 == 0) || (D_800C3656 != 0)) || (func_150229E4(obj) != 0))) && ((obj->unk88 == 0) || (obj->unkCC >= (-0x96)))) { i = 0; if (D_80082FA0 >= 0) { do {
+            if (func_1506196C(obj, i) != 0)
+            {
+              found = 1;
+            }
+            i++;
+          }
+          while (D_80082FA0 >= i);
+        }
+      }
+      if (found != 0)
+      {
+        if ((*((struct102 **) (((u8 *) obj) + 0x2D4))) == 0)
+        {
+          arg2 = 0;
+          if (obj->id == 0x4D)
+          {
+            arg2 = 2;
+            arg4 = 1;
+          }
+          else
+          {
+            arg4 = 0;
+          }
+          *((struct102 **) (((u8 *) obj) + 0x2D4)) = func_1510D970(0, obj, arg2, 0, arg4);
+          alloc_done:
+          ;
+
+          ;
+          ;
+        }
+      }
+      else
+      {
+        temp = *((struct102 **) (((u8 *) obj) + 0x2D4));
+        if (temp != 0)
+        {
+          func_1516972C(temp);
+          *((struct102 **) (((u8 *) obj) + 0x2D4)) = 0;
+        }
+      }
+    }
+    obj++;
+  }
+  while (obj != ((struct127 *) (&D_800D121C)));
+}
+
 
 extern s32 D_800C3E88;
 extern s32 D_800C3E8C;
