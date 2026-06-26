@@ -288,8 +288,19 @@ def main():
     # [audit 15] exclude score-0 seeds from RE-ATTEMPT priority: a score-0-but-still-stub seed is an
     # object-match-but-ROM-fail dead-end — re-attempting just reproduces the same and steals the top
     # slots from real near-misses. (They remain pickable via normal similarity selection.)
+    # CLOSE-SEED HARVEST (2026-06-26 pivot): the project optimizes func-% but the GOAL is BYTES, and
+    # ~40% of remaining bytes sit in funcs bigger than either engine has ever matched (LLM 252 / permuter
+    # 180 insns). So among the close seeds, bias to BYTE-MOVERS: within a score band, attempt the larger
+    # IN-REACH funcs (more bytes per match) first, and push out-of-reach (>260-insn) seeds to the back of
+    # their band. Targets the 101-250 band + the big close-seeds (the only evidence-backed path into the tail).
+    def _harvest_key(f):
+        sc = nearmiss[f].get("score", 999)
+        s = scored_by_func.get(f)
+        sz = s[1] if s else 0                                   # instruction count (byte proxy)
+        band = 0 if sc <= 20 else 1 if sc <= 40 else 2          # closest seeds first
+        return (band, sz > 260, -min(sz, 260))                 # in-reach byte-movers first within band
     nm_order = sorted((f for f in nearmiss if f in row_file and nearmiss[f].get("score", 999) > 0),
-                      key=lambda f: nearmiss[f].get("score", 999))
+                      key=_harvest_key)
     ordered, seen_q = [], set()
     for func in nm_order:
         ordered.append(scored_by_func.get(func, (0.0, 0, row_file[func], func, [])))
