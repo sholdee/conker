@@ -41,7 +41,28 @@ struct151 *func_1000B1B0(s32 arg0) {
 //     return NULL;
 // }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/init_B1B0/func_1000B294.s")
+void func_1000B294(s32 *arg0) {
+    struct151 *temp_v0;
+    struct151 *temp_a1;
+    u32 i;
+
+    i = 0;
+
+    do {
+        temp_v0 = D_800417B0[i];
+    if (temp_v0 != NULL) {
+        if (arg0 == temp_v0->unk10) {
+            temp_v0->unk10 = (s32 *)temp_v0;
+                temp_v0 = D_800417B0[i];
+        }
+        temp_a1 = (struct151 *)temp_v0->unk60;
+        if ((temp_a1 != NULL) && (arg0 == temp_a1->unk10)) {
+            temp_a1->unk10 = (s32 *)temp_a1;
+        }
+    }
+        i++;
+    } while ((struct151 **)&D_800417BC != &D_800417B0[i]);
+}
 // NON-MATCHING: no idea.
 // struct151 * func_1000B294(s32 *arg0) {
 //     s32 i;
