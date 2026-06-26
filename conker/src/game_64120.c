@@ -6,6 +6,9 @@
 extern f32 D_80098250;
 extern f32 D_8009862C;
 extern s16 D_800C3FF4[];
+extern u16 *D_80084380[];
+extern u8 D_80097E7C[];
+extern u8 D_80098050[];
 
 typedef struct {
     u8 pad0[0x324];
@@ -84,7 +87,54 @@ GameStruct_15039A54 *func_15039A54(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_15039A78.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_15039CC8.s")
+void func_15039CC8(struct127 *arg0) {
+    s32 id;
+    s32 i;
+    s32 idx;
+    s32 count;
+    s32 value;
+    u16 *table;
+    u8 *ptr;
+    u8 *write_ptr;
+
+    ptr = *(u8 **)((u8 *)arg0 + 0x324);
+    if (ptr != NULL) {
+        id = arg0->id;
+        if (((id == 0x53) && (arg0->unk84.uh == 0x15)) || (D_800BE9B4 != 0)) {
+            for (value = 0x28, i = 0, write_ptr = ptr; i != 3;) {
+                i++;
+                write_ptr++;
+                write_ptr[0x2F] = value;
+                write_ptr[0x32] = 0;
+                write_ptr[0x35] = 4;
+            }
+        }
+
+        idx = D_80097E7C[id];
+        if (idx != 0) {
+            idx--;
+            table = D_80084380[idx];
+            count = D_80098050[idx];
+            for (i = 0; i < count; i++) {
+                if (arg0->unk84.uh == table[i]) {
+                    arg0->unk2FB |= 4;
+                    return;
+                }
+            }
+
+            if (arg0->interaction_state == 1) {
+                if ((arg0->health == 0) ||
+                        ((arg0->in_water != 0) && (arg0->xz_velocity < 5.0f)) ||
+                        (((u8 *)arg0->unk31C)[0x197] != 0) ||
+                        (arg0->xz_velocity > 20.0f)) {
+                    arg0->unk2FB |= 4;
+                }
+            } else if (arg0->health == 0) {
+                arg0->unk2FB |= 4;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_15039ED0.s")
 
