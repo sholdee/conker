@@ -1265,3 +1265,5 @@ Special empty-guard case:
   no emitted body instructions; adjust `N` to move spill slots/frame size when ordinary dummy locals are DCE'd or land at the wrong offset.
 - Loop-entry pointer bump in branch delay: for `sltu; beqz; addiu p,p,stride` then
   negative-offset stores, write `while (p < end) { p += stride; p[-N] = ...; }`; a bottom bump misses the entry delay-slot fill.
+- WRONG RETURN TYPE in a shared header affects caller codegen too: a visible `u8`/`u16`
+  callee makes call results spill/narrow as bytes/halves; hide it with the `#define`-before-include escape hatch and redeclare the true `s32` return so direct `jal`s keep word-sized `v0` temps. Function-pointer or value casts are too late and can emit `jalr`/keep narrow spills.
