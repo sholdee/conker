@@ -45,6 +45,11 @@ void func_15085B70(s32 arg0) {
 
 extern f32 D_800D2360[];
 extern u8 D_800D237C[];
+extern f32 D_8009D9CC;
+extern u8 D_8008729C;
+extern s32 D_800D2354;
+extern f32 sqrtf(f32);
+f32 func_15086D94(f32, f32, f32, f32, f32);
 
 u8 func_15085DA8(f32 arg0) {
     s32 i = 0;
@@ -55,7 +60,59 @@ u8 func_15085DA8(f32 arg0) {
     return D_800D237C[i];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15085DF8.s")
+s32 func_15085DF8(f32 arg0, f32 arg1, f32 arg2, s8 arg3, s8 arg4) {
+    f32 sp70;
+    f32 sp6C;
+    f32 sp68;
+    f32 temp_f2;
+    f32 temp_f16;
+    f32 temp_f18;
+    f32 temp_f20;
+    f32 bestDist;
+    s32 i;
+    s32 useGate;
+    s32 bestIdx;
+    B3020Struct *entry;
+
+    useGate = 0;
+    bestDist = D_8009D9CC;
+    if (arg3 == 0) {
+        useGate = 1;
+    }
+
+    if (D_8008729C != 0xFF) {
+        entry = &D_800D2350[D_8008729C];
+        temp_f2 = (f32) entry->unk0 - arg0;
+        temp_f16 = (f32) entry->unk2 - arg1;
+        temp_f18 = (f32) entry->unk4 - arg2;
+        if ((useGate == 0) || ((useGate != 0) && (sp70 = temp_f2, sp6C = temp_f16, sp68 = temp_f18, func_15086D94(arg0, arg1, arg2, temp_f2, temp_f18) < 0.0f))) {
+            bestDist = (temp_f2 * temp_f2) + (temp_f16 * temp_f16) + (temp_f18 * temp_f18) + 10.0f;
+        }
+        D_8008729C = 0xFF;
+    }
+
+    bestIdx = 0xFF;
+    i = 0;
+    if (D_80087290 > 0) {
+        do {
+            entry = &D_800D2350[i];
+            if (((arg4 == ((u8 *)entry)[6]) || (arg4 == -1)) && ((arg3 == ((u8 *)entry)[0xE]) || (arg3 == -1))) {
+                temp_f2 = (f32) entry->unk0 - arg0;
+                temp_f16 = (f32) entry->unk2 - arg1;
+                temp_f18 = (f32) entry->unk4 - arg2;
+                temp_f20 = (temp_f2 * temp_f2) + (temp_f16 * temp_f16) + (temp_f18 * temp_f18);
+                if ((temp_f20 < bestDist) && ((useGate == 0) || ((useGate != 0) && (func_15086D94(arg0, arg1, arg2, temp_f2, temp_f18) < 0.0f)))) {
+                    bestDist = temp_f20;
+                    bestIdx = i;
+                }
+            }
+            i++;
+        } while (i < D_80087290);
+    }
+
+    D_800D2354 = (s32) sqrtf(bestDist);
+    return bestIdx;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_B3020/func_15086098.s")
 
