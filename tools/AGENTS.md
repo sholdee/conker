@@ -5,8 +5,21 @@ Two engines run in PARALLEL: the **orchestrator** (LLM agents match `GLOBAL_ASM`
 **permuter daemon** (cracks JUSTREG residue on spare CPU). You coordinate them BETWEEN runs.
 
 ## LATEST STATE & PENDING (read FIRST after compaction)
-- **Active run:** `CONKER_SEGMENTS=init,debugger bash tools/orchestrator_codex.sh 12 400 8`, tracked → notifies.
-  ~2241 game stubs left, ~32% bytes. Rate declining = the FRONTIER, NOT a bug (FAILURE ANALYSIS); keep it.
+- **Active run (CYCLE ~30, 2026-06-26):** `CONKER_SEGMENTS=init,debugger bash tools/orchestrator_codex.sh 12 400 8`,
+  tracked → notifies. **~65.6% funcs / ~33.9% bytes (3871/5905), ~2034 stubs left.** Steady trickle 1–5 matches/
+  cycle (frontier, NOT a bug; every 5th cycle is a RE-PROBE = low by design). GAP ROUTINE below is the standing cadence.
+- **SESSION 2026-06-24→26 — mechanisms built (all committed, all gate-safe). Five seed sources now feed ONE byte-
+  exact gate:** (1) PERMUTER closest-first scheduling — DATA-DRIVEN (n=39 cracks: max-ever-crack score=80 → cap
+  `PERM_MAX_SCORE=80`; latest crack ~234K iters → `KICK_ITERS=300K` kills stuck workers via `_kick_overground`;
+  priority = least-iters-first, score weak within-band). (2) PERMUTER conflict RESOLVER in `apply_wins` — on a
+  compile-fail noport, parse cfe `redeclaration/conflicting` syms, strip those agent-local decls, retry (lifted
+  port rate ~50%→66%). (3) NOPORT FEEDBACK — a close noport (project score ≤80) → saved as `.nearmiss` seed
+  (`src:permuter-noport`) + re-opened in attempted-log → matching loop finishes it. (4) MANUAL-COMMENT HARVEST —
+  `queue_comment_seeds.py` turned 117 dev decomp-attempt comments into `.nearmiss` seeds (`src:manual-comment`,
+  scored 35/50/80 by author notes); converting ~3/cycle (steerable subset; regalloc-stuck ones feed the permuter).
+  (5) ACCURATE CRACK LEDGER `.permuter_cracks.tsv` (sweep+apply_wins write; dashboard reconciles vs HEAD →
+  ported/pending/noport/superseded, conservation holds). DASHBOARD progress now from committed HEAD (not working
+  tree). `similar_chunk` gives permuter-noport + manual-comment seeds targeted prompt hints.
 - **INIT/DEBUGGER reserved slice (option B, 2026-06-24):** the game RANK never selects init_*.c / debugger* (131
   init + 22 debugger were stuck at 0 progress). `similar_chunk.segment_stubs()` + a reserved slice now feed them
   through the SAME pipeline (one integrate, no concurrency risk). **ACTIVATE by relaunching the orchestrator with
