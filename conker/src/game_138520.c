@@ -55,7 +55,10 @@ void func_1510B32C(s32 arg0, f32 arg1, f32 arg2, f32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_138520/func_1510B51C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_138520/func_1510B5F8.s")
+void func_1510B5F8(s32 arg0, u16 *perspNorm, f32 fovy, f32 aspect, f32 near, f32 far, f32 scale) {
+    guPerspectiveF((f32 (*)[4])((u8 *)D_800BE628 + arg0 * 0x180 + 0xBC), perspNorm, fovy, aspect, near, far, scale);
+    guMtxF2L((f32 (*)[4])((u8 *)D_800BE628 + arg0 * 0x180 + 0xBC), (Mtx *)((u8 *)D_800BE628 + arg0 * 0x180 + D_800BE9C0 * 0x40 + 0x100));
+}
 
 void func_1510B690(void) {
     s32 i;
