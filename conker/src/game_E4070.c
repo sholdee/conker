@@ -263,7 +263,36 @@ void func_150B768C(void) {
     D_800D9890 = 3;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_E4070/func_150B76BC.s")
+void func_150B76BC(s32 arg0, s32 arg1) {
+    struct_7484 sp24;
+
+    sp24.unk1C = (f32)arg0;
+    sp24.unk20 = 170.0f;
+    sp24.unk31 = 1;
+    sp24.unk2C = 0x58;
+    sp24.unk2E = 0x40;
+    sp24.unk30 = 6;
+    sp24.unk14 = 0;
+    sp24.unk16 = 0;
+    sp24.unk18 = 0;
+    sp24.unk0 = &D_800918E8;
+    sp24.unk32 = 0xFF;
+    sp24.unk33 = 0;
+    sp24.unk34 = 0;
+    sp24.unk35 = 0xFF;
+    sp24.unk24 = 0;
+    sp24.unk26 = 0;
+    sp24.unk39 = 0;
+    sp24.unk36 = 7;
+    sp24.unk37 = 0x15;
+    sp24.unk38 = 1;
+    sp24.unk28 = 0x51;
+    sp24.unk2A = 0x51;
+    if (D_800D9898[arg1] != 0) {
+        func_1516972C((struct102 *)D_800D9898[arg1]);
+    }
+    D_800D9898[arg1] = (s32 *)func_15169968(&sp24);
+}
 
 void func_150B77A8(void) {
     struct_7484 sp24;
