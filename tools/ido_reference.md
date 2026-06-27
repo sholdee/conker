@@ -1274,3 +1274,5 @@ Special empty-guard case:
 - Symmetric field/vector arithmetic can still evaluate in the wrong order if the two
   terms use different AST shapes: cast BOTH regions to the same local overlay struct and
   access matching fields (`v->x`/`v->z`). A mixed raw-cast field vs typed/overlay field may make IDO choose the raw-cast term first even after swapping addends.
+- Same-line assignment grouping can act as the inverse of an empty-label scheduler fence:
+  under `-g3`, putting two adjacent stores on ONE physical source line can co-schedule/flip their order where separate lines keep the wrong store order.
