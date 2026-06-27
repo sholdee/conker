@@ -5,12 +5,17 @@
 void *func_151CD4C0();
 void func_151CE47C();
 
+struct Vec3w151CEC10;
+
 extern f32 D_800AB020;
 extern f32 D_800AB024;
+extern f32 D_800AB008;
 extern f32 D_800D9860;
 extern f32 func_15144AA8(s32);
 extern struct17 *func_15144B34(s32);
 extern s32 func_15046C80(f32 *, s32, f32, f32 *);
+extern struct260 *func_15147A80(void *, s32, s32, s32, s32, s32, s32, s32, s32, u8, s32);
+s32 func_151CEC10(struct Vec3w151CEC10 *, f32 *, void *);
 
 typedef struct {
     char pad_0x0[0x48];
@@ -181,7 +186,78 @@ s32 func_151CEA20(f32 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1FA770/func_151CEAAC.s")
+struct260 *func_151CEAAC(void *arg0, void *arg1, u8 arg2, u8 arg3, s32 arg4) {
+    s32 pad_dummy;
+    struct {
+        f32 unk0;
+        f32 unk4;
+        f32 unk8;
+        s16 unkC;
+        s16 unkE;
+        s32 unk10;
+        u8 unk14;
+        u8 unk15;
+        u8 pad16[2];
+    } sp6C;
+    struct {
+        void *unk0;
+        u8 unk4;
+        u8 pad5[3];
+        void *unk8;
+        f32 unkC;
+        f32 unk10;
+        f32 unk14;
+        f32 unk18;
+        u8 unk1C;
+        u8 pad1D[3];
+        f32 unk20;
+        f32 unk24;
+    } sp44;
+    struct260 *temp_v0;
+    s32 flag;
+    f32 temp_f;
+
+    sp6C.unk15 = 0x19;
+    sp6C.unkC = 0x12C;
+    sp6C.unkE = 0x10;
+    sp6C.unk10 = 0x11;
+    sp6C.unk14 = 3;
+
+    sp44.unk0 = arg0;
+    if (arg0 != NULL) {
+        sp44.unk4 = *(u8 *)((s32)arg0 + 0x3B);
+    } else {
+        sp44.unk4 = 0;
+    }
+
+    sp44.unk10 = 1.0f;
+    sp44.unk18 = 1.0f;
+    sp44.unk8 = arg1;
+    sp44.unkC = 0.0f;
+    sp44.unk14 = 0.0f;
+    if (arg2 != 0) {
+        flag = 2;
+    } else {
+        flag = 0;
+    }
+    sp44.unk1C = flag;
+
+    sp44.unk20 = (func_150ADA68() * 400.0f) + 400.0f;
+    temp_f = func_150ADA68();
+    sp44.unk24 = (temp_f + temp_f) * D_800AB008;
+
+    if (func_151CEC10((struct Vec3w151CEC10 *)&sp6C, (f32 *)arg0, arg1) == 0) {
+        sp6C.unk0 = 0.0f;
+        sp6C.unk4 = 0.0f;
+        sp6C.unk8 = 0.0f;
+    }
+
+    temp_v0 = func_15147A80(&sp6C, 0x28, 0x28, 0, 0xF, 0xF, 0, 0, 0, arg3, arg4);
+    if (temp_v0 != NULL) {
+        memcpy((void *)*(s32 *)((s32)temp_v0 + 0x98), &sp44, 0x28);
+    }
+    return temp_v0;
+}
 
 struct Vec3w151CEC10 { s32 x, y, z; };
 
