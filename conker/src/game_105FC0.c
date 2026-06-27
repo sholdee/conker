@@ -149,7 +149,99 @@ void func_150D8E1C(ConkerStruct150D8E1C *arg0) {
     arg0->unk1C = 0x28;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150D8E4C.s")
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Func150D8E4CVec;
+
+typedef struct {
+    Func150D8E4CVec unk0;
+    struct17 unkC;
+    s32 unk18;
+    s32 unk1C;
+    s32 unk20;
+} Func150D8E4CEntry;
+
+typedef struct {
+    struct127 *unk0;
+    u8 pad4[0x49];
+    s8 unk4D;
+} Func150D8E4CPayload;
+
+typedef struct {
+    u8 pad0[0x1E];
+    u16 unk1E;
+    u8 pad20[5];
+    u8 unk25;
+    u8 pad26[6];
+    s8 unk2C;
+    s8 unk2D;
+    s8 unk2E;
+    u8 pad2F[0x25];
+    f32 unk54;
+    f32 unk58;
+    f32 unk5C;
+    u8 pad60[0x34];
+    Func150D8E4CEntry *unk94;
+    Func150D8E4CPayload *unk98;
+} Func150D8E4CObj;
+
+s32 func_150D8E4C(Func150D8E4CObj *arg0)
+{
+    Func150D8E4CPayload *payload;
+    Func150D8E4CEntry *base;
+    Func150D8E4CEntry *entry;
+    struct127 *actor;
+    struct126 *stats;
+    s32 i;
+    s32 stride;
+    s32 *delta;
+
+    payload = arg0->unk98;
+    base = arg0->unk94;
+    if ((arg0->unk2C < 2) && (arg0->unk1E & 8)) {
+        return 0;
+    }
+
+    i = arg0->unk2E;
+    if (i != arg0->unk2D) {
+        do {
+            i -= 1;
+            if (i < 0) {
+                i = arg0->unk25 - 1;
+            }
+            entry = &base[i];
+            func_150D8D84((struct17 *)entry, &entry->unkC, D_800BE9A4);
+        } while (i != arg0->unk2D);
+    }
+
+    delta = &D_800BE9E4;
+    stride = sizeof(Func150D8E4CEntry);
+stride_set:
+    if (arg0->unk2C > 0) {
+        *((Func150D8E4CVec *)&arg0->unk54) =
+            ((Func150D8E4CEntry *)((u8 *)base + (arg0->unk2D * stride)))->unk0;
+    } else {
+        arg0->unk54 = 0.0f;
+        arg0->unk58 = 0.0f;
+        arg0->unk5C = 0.0f;
+    }
+
+    payload->unk4D += *delta;
+    if (payload->unk4D >= 0x3D) {
+        actor = payload->unk0;
+        if (actor != NULL) {
+            stats = actor->unk31C;
+            if (stats != NULL) {
+                stats->unk1AA++;
+            }
+        }
+        payload->unk4D = 0;
+    }
+
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_105FC0/func_150D8FAC.s")
 
