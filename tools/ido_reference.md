@@ -1271,3 +1271,6 @@ Special empty-guard case:
   `local = *(TaggedStruct *)p`; IDO emits `lwl/lwr` copy pairs into the aligned stack local before field reads. A naturally aligned typed pointer may collapse to `lw`/direct field loads.
 - Signed range normalization by repeated add/sub: for `bltzl`/`beqzl` back-edges that add
   or subtract the modulus in the delay slot, write two plain loops `while (x < 0) x += M; while (x >= M) x -= M;`, not `%`, `&`, or a single clamp.
+- Symmetric field/vector arithmetic can still evaluate in the wrong order if the two
+  terms use different AST shapes: cast BOTH regions to the same local overlay struct and
+  access matching fields (`v->x`/`v->z`). A mixed raw-cast field vs typed/overlay field may make IDO choose the raw-cast term first even after swapping addends.
