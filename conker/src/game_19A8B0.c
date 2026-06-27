@@ -196,7 +196,42 @@ void func_1516D4E8(
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516D678.s")
+void func_1516972C(struct102 *arg0);
+extern s32 D_800BE9E4;
+extern s32 (*D_8008CBA0[])(struct Obj1516D4E8 *);
+void func_1516D678(struct Obj1516D4E8 *arg0)
+{
+  s32 temp;
+  s32 ptr;
+  temp = arg0->unk24;
+  if (temp != 0)
+  {
+    temp -= D_800BE9E4;
+    if (temp < 0)
+    {
+      temp = 0;
+    }
+    arg0->unk24 = temp;
+  }
+  if (D_8008CBA0[arg0->unk23](arg0) == 1)
+  {
+    ptr = arg0->unk30;
+    if (ptr != 0)
+    {
+      *((s16 *) (ptr + 4)) = 0;
+    }
+    func_1516972C((struct102 *) arg0);
+  }
+  else
+  {
+    temp = arg0->unk10;
+    temp = (temp << 8) + arg0->unk25;
+    temp += ((u32) arg0->unk18) * ((u32) D_800BE9E4);
+    arg0->unk10 = temp >> 8;
+    arg0->unk25 = temp & 0xFFFFu;
+  }
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516D738.s")
 

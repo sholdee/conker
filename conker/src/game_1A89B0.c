@@ -7,7 +7,36 @@ extern s32 func_1517D074(s32, s16, s16, s16, f32, s32, s32, s32, s32, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517B500.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A89B0/func_1517B6E8.s")
+s32 func_1517B6E8(s16 *arg0, s16 *arg1, s32 *arg2, s32 arg3)
+{
+  s32 v0;
+  v0 = *arg2;
+  if (v0 >= 0x600)
+  {
+    arg1[1] = ((v0 >> 6) + arg0[1]) - ((0, 0x18));
+    arg1[0] = (arg0[0] + ((*arg2) >> 8)) - 6;
+    {
+      s32 temp;
+      s32 v2;
+      v2 = ((*((u8 *) arg3)) << 7) / (((*arg2) >> 6) - 0x17);
+      temp = *((u8 *) arg3);
+      v2 >>= 4;
+      if (v2 < temp)
+      {
+        *((u8 *) arg3) = v2;
+      }
+    }
+    *arg2 = 0x600;
+  }
+  else
+  {
+    arg1[0] = arg0[0];
+    arg1[1] = arg0[1];
+  }
+  arg1[2] = arg0[2];
+  return 0;
+}
+
 
 s32 func_1517B7A8(s16 *a0, s16 *a1, s32 *a2, s32 a3) {
     s32 v0 = *a2;

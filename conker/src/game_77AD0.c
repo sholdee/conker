@@ -319,7 +319,43 @@ s32 func_1504AEF4(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_77AD0/func_1504AF10.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_77AD0/func_1504B0FC.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/game_77AD0/func_1504BA38.s")
+extern s8 D_80099140[];
+extern f32 D_800991D4;
+void func_1504BA38(struct127 *arg0)
+{
+  struct temp1504BA38
+  {
+    s8 unk0;
+    s8 unk1;
+    s8 unk2;
+  };
+  struct temp1504BA38 *temp_v1;
+  s8 temp_a1;
+  int temp_v0;
+  if (arg0->unk28 > 10.0f)
+  {
+    arg0->unkCE = 0;
+    temp_v0 = temp_v1->unk1;
+    return;
+  }
+  temp_v1 = &((struct temp1504BA38 *) D_80099140)[arg0->unk184 & 0x1F];
+  temp_a1 = temp_v1->unk2;
+  if ((temp_a1 != 0) && (arg0->unkAA == 0))
+  {
+    arg0->unkAA = temp_a1;
+  }
+  temp_v0 = temp_v1->unk1;
+  if (temp_v0 == 0)
+  {
+    arg0->unkCE = temp_v1->unk0;
+    return;
+  }
+  arg0->unkCE = (s16) ((s32) ((((f32) temp_v0) * D_800991D4) * (((f32) temp_v1->unk0) - arg0->xz_velocity)));
+  if (!temp_a1)
+  {
+  }
+}
+
 // NON-MATCHING: starts to fall apart towards the end
 // void func_1504BA38(struct127 *arg0) {
 //     s8 temp_a1;
