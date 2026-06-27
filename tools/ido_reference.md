@@ -1276,3 +1276,5 @@ Special empty-guard case:
   access matching fields (`v->x`/`v->z`). A mixed raw-cast field vs typed/overlay field may make IDO choose the raw-cast term first even after swapping addends.
 - Same-line assignment grouping can act as the inverse of an empty-label scheduler fence:
   under `-g3`, putting two adjacent stores on ONE physical source line can co-schedule/flip their order where separate lines keep the wrong store order.
+- Scalar-global address/value split: when target starts a global's address setup early
+  (`lui` in a branch delay slot) but delays the `lw`, use `T *p = &D; ... *p`; `v = D` pulls the load too early.
