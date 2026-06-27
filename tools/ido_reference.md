@@ -1278,3 +1278,5 @@ Special empty-guard case:
   under `-g3`, putting two adjacent stores on ONE physical source line can co-schedule/flip their order where separate lines keep the wrong store order.
 - Scalar-global address/value split: when target starts a global's address setup early
   (`lui` in a branch delay slot) but delays the `lw`, use `T *p = &D; ... *p`; `v = D` pulls the load too early.
+- Same-width byte-store signedness can split constant coloring: if two `s8` stores of
+  `1` reuse one temp but target rematerializes the first, write it as `*(u8 *)&D = 1`; the store stays `sb`.
