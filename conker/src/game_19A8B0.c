@@ -373,7 +373,18 @@ void func_1516ED68(s32 a0, s32 a1, u8 a2, s32 a3) {
         0, 5, 0, a2, a3);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_19A8B0/func_1516EED4.s")
+void func_1516EED4(s32 a0, s32 a1, u8 a2, s32 a3) {
+    if (a0 < 4 && (*(u8 (*)[4])&D_800DD2A0)[a0] >= a1) {
+        (*(u8 (*)[4])&D_800DD2A0)[a0] = 0;
+        func_1516D99C(0, 0, 0, 4,
+            0, 0xFF, 0xFF, 0xFF, 0, 0, 0, 0,
+            2, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0x200,
+            0x200, 0, 0, 0x1E, 0, 0, a0, 0x14,
+            0, 0, 0x81, 8, 0, 1, 0, 0,
+            0, 0xC, 0, a2, a3);
+    }
+}
 
 s32 func_1516F024(Obj1516FadeState *arg0) {
     volatile s32 pad[4];
