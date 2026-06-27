@@ -88,35 +88,49 @@ typedef struct {
 } Struct150DB9E0B;
 
 typedef struct {
-    s32 unk0;
-    s16 unk4;
-    s8  unk6;
-    s8  unk7;
-    s32 unk8;
-    s32 unkC;
-    u8  unk10;
-    u8  unk11;
-    u8  unk12;
-    u8  unk13;
-    u8  unk14;
-    u8  unk15;
-    s8  unk16;
-    s8  unk17;
-    s32 unk18;
-    s32 unk1C;
-    s32 unk20;
-    s32 unk24;
-    s32 unk28;
-    s32 unk2C;
-} LocalDef150DDFAC;
+    u8 pad_0x00[0x20];
+    u8 field_0x20;
+} EffectSpawnState;
 
 typedef struct {
-    f32 unk0;
-    f32 unk4;
-    f32 unk8;
-    f32 unkC;
-    f32 unk10;
-} LocalPos150DDFAC;
+    f32 field_0x00;
+    f32 field_0x04;
+    f32 field_0x08;
+    f32 field_0x0C;
+    f32 field_0x10;
+} EffectSpawnPoint;
+
+typedef struct {
+    u8 pad_0x00[0x1];
+    u8 field_0x01;
+    u8 pad_0x02[0xA];
+    u8 field_0x0C;
+    u8 pad_0x0D[0x20];
+    s8 field_0x2D;
+    u8 pad_0x2E[0x66];
+    EffectSpawnPoint *field_0x94;
+    EffectSpawnState *field_0x98;
+} EffectSpawnSource;
+
+typedef struct {
+    s32 field_0x00;
+    s16 field_0x04;
+    s8 field_0x06;
+    u8 pad_0x07[0x1];
+    s32 field_0x08;
+    s32 field_0x0C;
+    u8 field_0x10;
+    u8 field_0x11;
+    u8 field_0x12;
+    u8 field_0x13;
+    u8 field_0x14;
+    u8 field_0x15;
+    u8 pad_0x16[0x2];
+    s32 field_0x18;
+    u8 pad_0x1C[0xC];
+    EffectSpawnPoint *field_0x28;
+    EffectSpawnState *field_0x2C;
+} EffectSpawnParams;
 
 void func_150DB9E0(s32 arg0, s32 arg1, u8 arg2) {
     Struct150DB9E0A sp78;
@@ -272,50 +286,50 @@ s32 func_150DDF88(u8 *arg0) {
     return func_150DBD70(arg0[0x28]);
 }
 
-s32 func_150DDFAC(void *arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5) {
-    LocalDef150DDFAC tmp;
+s32 func_150DDFAC(EffectSpawnSource *arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5) {
+    EffectSpawnParams tmp;
     f32 scale;
     s32 rand2;
     s32 rand1;
     s32 rand0;
 
-    tmp.unk2C = *(s32 *)((u8 *)arg0 + 0x98);
-    tmp.unk28 = *(s32 *)((u8 *)arg0 + 0x94);
+    tmp.field_0x2C = arg0->field_0x98;
+    tmp.field_0x28 = arg0->field_0x94;
     scale = func_150ADA68() * 70.0f + 10.0f;
-    *(u8 *)(tmp.unk2C + 0x20) = 4;
+    tmp.field_0x2C->field_0x20 = 4;
 
     switch (func_150ADA20() & 1) {
     case 0:
-        tmp.unk6 = 0x1D;
+        tmp.field_0x06 = 0x1D;
         break;
     case 1:
-        tmp.unk6 = 0x1E;
+        tmp.field_0x06 = 0x1E;
         break;
     }
 
-    tmp.unk8 = 0;
-    tmp.unkC = 0;
-    tmp.unk0 = 0x11;
-    tmp.unk4 = 0x64;
-    tmp.unk10 = 0xFF;
-    tmp.unk11 = 0xFF;
-    tmp.unk12 = 0;
-    tmp.unk13 = 0;
-    tmp.unk14 = 0;
-    tmp.unk15 = 0xFF;
-    tmp.unk18 = 0x30002;
+    tmp.field_0x08 = 0;
+    tmp.field_0x0C = 0;
+    tmp.field_0x00 = 0x11;
+    tmp.field_0x04 = 0x64;
+    tmp.field_0x10 = 0xFF;
+    tmp.field_0x11 = 0xFF;
+    tmp.field_0x12 = 0;
+    tmp.field_0x13 = 0;
+    tmp.field_0x14 = 0;
+    tmp.field_0x15 = 0xFF;
+    tmp.field_0x18 = 0x30002;
 
     rand0 = func_150ADA20();
     rand1 = func_150ADA20();
     rand2 = func_150ADA20();
 
     func_1513C73C((s32)&tmp, 5, 0, arg5,
-                  ((LocalPos150DDFAC *)tmp.unk28)[*(s8 *)((u8 *)arg0 + 0x2D)].unk0,
+                  tmp.field_0x28[arg0->field_0x2D].field_0x00,
                   arg4,
-                  ((LocalPos150DDFAC *)tmp.unk28)[*(s8 *)((u8 *)arg0 + 0x2D)].unk8,
+                  tmp.field_0x28[arg0->field_0x2D].field_0x08,
                   scale, scale,
                   rand0 & 0xFF, (rand2 & 1) + (rand1 & 1), 0,
-                  *(u8 *)((u8 *)arg0 + 0xC), *(u8 *)((u8 *)arg0 + 1));
+                  arg0->field_0x0C, arg0->field_0x01);
     return 1;
 }
 
