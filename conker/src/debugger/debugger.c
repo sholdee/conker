@@ -434,7 +434,55 @@ void func_16001338(u8 arg0, u8 arg1, u8 arg2) {
     D_1600388C = ((arg0 & 0xF8) << 8) | ((arg1 & 0xF8) << 3) | ((arg2 & 0xF8) >> 2) | 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/debugger/debugger/func_16001390.s")
+extern u16 D_1600388C;
+extern s32 D_160038A8;
+void func_16001390(s16 arg0, s16 arg1, register s16 arg2, s16 arg3)
+{
+  s32 count;
+  u16 *ptr;
+  if (arg2 < arg0)
+  {
+    return;
+  }
+  if (arg3 < arg1)
+  {
+    return;
+  }
+  if (arg0 < 0)
+  {
+    return;
+  }
+  if (arg1 < 0)
+  {
+    return;
+  }
+  arg2++;
+  arg3++;
+  ptr = (u16 *) func_1600160C(0);
+  ptr += arg0 + (arg1 * D_160038A8);
+  arg2 -= arg0;
+  arg3 -= arg1;
+  if (arg3 > 0)
+  {
+    do
+    {
+      count = arg2;
+      if (arg2 > 0)
+      {
+        do
+        {
+          *(ptr++) = D_1600388C;
+          count--;
+        }
+        while (count != 0);
+      }
+      arg3--;
+      ptr += D_160038A8 - arg2;
+    }
+    while (arg3 > 0);
+  }
+}
+
 #pragma GLOBAL_ASM("asm/nonmatchings/debugger/debugger/func_160014F0.s")
 
 // splat into framebuffer
