@@ -1267,3 +1267,7 @@ Special empty-guard case:
   negative-offset stores, write `while (p < end) { p += stride; p[-N] = ...; }`; a bottom bump misses the entry delay-slot fill.
 - WRONG RETURN TYPE in a shared header affects caller codegen too: a visible `u8`/`u16`
   callee makes call results spill/narrow as bytes/halves; hide it with the `#define`-before-include escape hatch and redeclare the true `s32` return so direct `jal`s keep word-sized `v0` temps. Function-pointer or value casts are too late and can emit `jalr`/keep narrow spills.
+- Unaligned struct copy from a byte stream: keep the cursor typed `u8 *` and assign
+  `local = *(TaggedStruct *)p`; IDO emits `lwl/lwr` copy pairs into the aligned stack local before field reads. A naturally aligned typed pointer may collapse to `lw`/direct field loads.
+- Signed range normalization by repeated add/sub: for `bltzl`/`beqzl` back-edges that add
+  or subtract the modulus in the delay slot, write two plain loops `while (x < 0) x += M; while (x >= M) x -= M;`, not `%`, `&`, or a single clamp.
