@@ -326,7 +326,26 @@ before_cam_mode:
     func_1501C730(6, (s32)D_800BE9F4, func_1509CA50(sp28), 0, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E327C.s")
+void func_151E327C(void) {
+    D_80087260 = 3;
+    if (D_800E9D00 & 0x200) {
+        D_80087260 = 0x33;
+    }
+
+    D_80087270[0] = 0;
+    D_8008FD8C = 1;
+    D_8008FD90 = 1;
+    *(s8 *)&D_8008FD94 = 1;
+    D_8008FDBC = 0;
+    D_800BE618 = 1;
+    D_800D23A8 = 0;
+    D_800E0B94 = 0;
+    D_800D2E40 = 0;
+    func_1501C730(6, *(s8 *)&D_800BE3DF, D_800BE3E0, 0, 1);
+    *(u8 *)&D_800E0B99 = 1;
+    D_800E0BB1 = 1;
+    func_151E7EF8();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_20AE20/func_151E3344.s")
 
