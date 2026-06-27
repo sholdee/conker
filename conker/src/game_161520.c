@@ -6,6 +6,7 @@ extern u8 D_800A3FE6[];
 extern u8 D_800A4058[];
 extern u8 D_800A4068[];
 extern f32 D_800A45B0;
+extern f32 D_800A482C;
 extern f32 D_800A4830;
 extern f32 D_800A4834;
 extern f32 D_800A4838;
@@ -686,11 +687,12 @@ s32 func_15137E10(s32 *arg0) {
 }
 
 typedef struct { f32 x, y, z; } Vec15137;
+typedef struct { u8 pad0[0x74]; f32 unk74; } Struct15137F30Scale;
 
 extern void func_15137F30(Vec15137 *a0, Vec15137 *a1, Vec15137 *a2, Vec15137 *a3,
-                          f32 sp10, s32 sp14, Vec15137 *out6C, Vec15137 *out60,
-                          Vec15137 *out54, f32 *out50, s16 *out4E, u8 *out4D,
-                          f32 *out48);
+                          f32 sp10, Struct15137F30Scale *sp14, Vec15137 *out6C,
+                          Vec15137 *out60, Vec15137 *out54, f32 *out50,
+                          s16 *out4E, u8 *out4D, f32 *out48);
 void func_15137E60(Vec15137 *arg0, Vec15137 *arg1, Vec15137 *arg2,
                    Vec15137 *arg3, f32 arg88, s32 *arg8C) {
     Vec15137 sp6C;
@@ -701,13 +703,30 @@ void func_15137E60(Vec15137 *arg0, Vec15137 *arg1, Vec15137 *arg2,
     u8 sp4D;
     f32 sp48;
 
-    func_15137F30(arg0, arg1, arg2, arg3, arg88, (s32)arg8C, &sp6C, &sp60, &sp54,
-                  &sp50, &sp4E, &sp4D, &sp48);
+    func_15137F30(arg0, arg1, arg2, arg3, arg88, (Struct15137F30Scale *)arg8C,
+                  &sp6C, &sp60, &sp54, &sp50, &sp4E, &sp4D, &sp48);
     func_151D9014(&sp6C, &sp54, 0, sp50, sp4E, sp4D, sp48, 0, 1.0f, 1.0f,
                   1, 0, 1, 0, *((u8 *)arg8C + 0xC), *((u8 *)arg8C + 1));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_161520/func_15137F30.s")
+void func_15137F30(Vec15137 *a0, Vec15137 *a1, Vec15137 *a2, Vec15137 *a3,
+                   f32 sp10, Struct15137F30Scale *sp14, Vec15137 *out6C, Vec15137 *out60,
+                   Vec15137 *out54, f32 *out50, s16 *out4E, u8 *out4D,
+                   f32 *out48) {
+    out6C->x = a0->x + a2->x * sp10;
+    out6C->y = a0->y + a2->y * sp10;
+    out6C->z = a0->z + a2->z * sp10;
+    out60->x = a1->x + a3->x * sp10;
+    out60->y = a1->y + a3->y * sp10;
+    out60->z = a1->z + a3->z * sp10;
+    out54->x = (out60->x - out6C->x) * sp14->unk74;
+    out54->y = (out60->y - out6C->y) * sp14->unk74;
+    out54->z = (out60->z - out6C->z) * sp14->unk74;
+    *out50 = (func_150ADA68() * 217.0f + -456.0f) * D_800A482C;
+    *out4E = func_150ADA20() % 31U + 30;
+    *out4D = func_150ADA20() % 156U + 100;
+    *out48 = func_150ADA68() * 35.0f + 40.0f;
+}
 
 extern u8 D_800A3FD8[];
 void func_15143134(void *, s32, s32);

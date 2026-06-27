@@ -26,6 +26,11 @@ extern void func_1513470C(u8 *);
 extern u8 func_151D8E20(void);
 extern f32 D_800A8FF0;
 extern f32 D_800A8F94;
+extern f32 D_800A8F98;
+extern f32 D_800A8F9C;
+extern f32 D_800A8FA0;
+extern s32 func_1515A920(void *, s32 *);
+extern void func_1515A238(f32 *, f32 *, f32, f32, s32, f32, s32, s32, s32, s32, s32);
 
 typedef struct {
     u8 pad0[0x3B];
@@ -305,7 +310,34 @@ void func_151AA264(void *arg0, s32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D6E80/func_151AA30C.s")
+void func_151AA30C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, struct_151A9EC0_arg *arg6) {
+    f32 sp5C[3];
+    f32 sp50[3];
+
+    if (((struct_151A9EC0_inner *)*(void **)((u8 *)arg6 + 0x1C))->unk118 < arg1) {
+        return;
+    }
+
+    if (func_1515A920(*(void **)((u8 *)arg6 + 0x1C), &((s32 *)sp50)[-2]) == 0) {
+        ((s32 *)sp50)[-2] = 0;
+    }
+
+    sp50[0] = 0.0f;
+    sp50[1] = -(((func_150ADA68() * 196.0f) + 199.0f) * D_800A8F98 * arg4);
+    sp50[2] = 0.0f;
+    sp5C[0] = arg0;
+    sp5C[1] = arg1;
+    sp5C[2] = arg2;
+
+    ((f32 *)sp50)[-6] = func_150ADA68();
+    ((f32 *)sp50)[-5] = func_150ADA68();
+    ((s32 *)sp50)[-4] = func_150ADA20();
+
+    func_1515A238(sp5C, sp50, ((((f32 *)sp50)[-6] * D_800A8F9C) + 454.0f) * D_800A8FA0,
+                  0.972683012f, ((s32 *)sp50)[-2], (((f32 *)sp50)[-5] * 101.0f) + 101.0f,
+                  (((s32 *)sp50)[-4] % 0x1FU) + 0x32, (func_150ADA20() % 0x65U) + 0x64,
+                  1, arg6->unkC, arg6->unk1);
+}
 
 typedef struct {
     /* 0x00 */ u8  unk0;

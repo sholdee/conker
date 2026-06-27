@@ -87,6 +87,37 @@ typedef struct {
     u8 pad3E[2];
 } Struct150DB9E0B;
 
+typedef struct {
+    s32 unk0;
+    s16 unk4;
+    s8  unk6;
+    s8  unk7;
+    s32 unk8;
+    s32 unkC;
+    u8  unk10;
+    u8  unk11;
+    u8  unk12;
+    u8  unk13;
+    u8  unk14;
+    u8  unk15;
+    s8  unk16;
+    s8  unk17;
+    s32 unk18;
+    s32 unk1C;
+    s32 unk20;
+    s32 unk24;
+    s32 unk28;
+    s32 unk2C;
+} LocalDef150DDFAC;
+
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+} LocalPos150DDFAC;
+
 void func_150DB9E0(s32 arg0, s32 arg1, u8 arg2) {
     Struct150DB9E0A sp78;
     Struct150DB9E0B sp38;
@@ -241,7 +272,52 @@ s32 func_150DDF88(u8 *arg0) {
     return func_150DBD70(arg0[0x28]);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_108E90/func_150DDFAC.s")
+s32 func_150DDFAC(void *arg0, s32 arg1, s32 arg2, s32 arg3, f32 arg4, s32 arg5) {
+    LocalDef150DDFAC tmp;
+    f32 scale;
+    s32 rand2;
+    s32 rand1;
+    s32 rand0;
+
+    tmp.unk2C = *(s32 *)((u8 *)arg0 + 0x98);
+    tmp.unk28 = *(s32 *)((u8 *)arg0 + 0x94);
+    scale = func_150ADA68() * 70.0f + 10.0f;
+    *(u8 *)(tmp.unk2C + 0x20) = 4;
+
+    switch (func_150ADA20() & 1) {
+    case 0:
+        tmp.unk6 = 0x1D;
+        break;
+    case 1:
+        tmp.unk6 = 0x1E;
+        break;
+    }
+
+    tmp.unk8 = 0;
+    tmp.unkC = 0;
+    tmp.unk0 = 0x11;
+    tmp.unk4 = 0x64;
+    tmp.unk10 = 0xFF;
+    tmp.unk11 = 0xFF;
+    tmp.unk12 = 0;
+    tmp.unk13 = 0;
+    tmp.unk14 = 0;
+    tmp.unk15 = 0xFF;
+    tmp.unk18 = 0x30002;
+
+    rand0 = func_150ADA20();
+    rand1 = func_150ADA20();
+    rand2 = func_150ADA20();
+
+    func_1513C73C((s32)&tmp, 5, 0, arg5,
+                  ((LocalPos150DDFAC *)tmp.unk28)[*(s8 *)((u8 *)arg0 + 0x2D)].unk0,
+                  arg4,
+                  ((LocalPos150DDFAC *)tmp.unk28)[*(s8 *)((u8 *)arg0 + 0x2D)].unk8,
+                  scale, scale,
+                  rand0 & 0xFF, (rand2 & 1) + (rand1 & 1), 0,
+                  *(u8 *)((u8 *)arg0 + 0xC), *(u8 *)((u8 *)arg0 + 1));
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_108E90/func_150DE12C.s")
 
