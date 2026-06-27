@@ -9,8 +9,10 @@ extern u8 D_800DD434;
 extern u16 D_800DD436;
 extern s32 D_800DD440;
 extern u8 D_800DD446;
+extern u16 D_800DD430;
 extern f32 D_800A7208;
 extern f32 sqrtf(f32);
+extern void func_10004074(void *arg0);
 void func_1516865C(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 s32 func_15168800();
 s32 func_1510F8D8(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -42,7 +44,42 @@ void func_15178EB0(void) {
     D_800DD440 = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1A6360/func_15178EFC.s")
+void func_15178EFC(s32 arg0) {
+    s32 temp_v0;
+    s32 i;
+    struct102 *temp_a0;
+
+    if (arg0 == 2) {
+        D_800DD434 = 0;
+        D_800DD446 = 0;
+        if (D_800DD440 != 0) {
+            i = 0;
+            do {
+                temp_a0 = *(struct102 **)(D_800DD440 + i);
+                if (temp_a0 != 0) {
+                    func_1516972C(temp_a0);
+                    *(s32 *)(D_800DD440 + i) = 0;
+                    temp_v0 = D_800DD440;
+                }
+                i += 4;
+            } while (i != 0x4B0);
+            func_10004074((void *) D_800DD440);
+            D_800DD440 = 0;
+        }
+        func_100111C8(D_800DD430);
+        D_800DD444 = 0;
+        D_800DD436 = 0;
+    } else if (arg0 == 3) {
+        if ((s8) D_800DD446 == 0) {
+            D_800DD444 = 0x258;
+        } else if (3 == (s8) D_800DD446) {
+            D_800DD446 = 1;
+        }
+        D_800DD434 = arg0;
+    } else {
+        D_800DD434 = arg0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1A6360/func_15179008.s")
 
