@@ -12,7 +12,18 @@ typedef struct
   u32 ramarray[15];
   u32 pifstatus;
 } OSPifRam;
+typedef struct
+{
+  u8 dummy;
+  u8 txsize;
+  u8 rxsize;
+  u8 cmd;
+  u16 button;
+  s8 stick_x;
+  s8 stick_y;
+} __OSContReadFormat;
 extern u8 __osContLastCmd;
+extern u8 __osMaxControllers;
 extern OSPifRam __osContPifRam;
 extern s32 D_80042A4C;
 void func_160018BC(void);
@@ -55,7 +66,33 @@ s32 func_16001700(void)
 
 s32 func_160019A8(s32 direction, void *dramAddr);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/debugger_256F80/func_16001830.s")
+void func_16001830(OSContPad *data)
+{
+  u8 *ptr;
+  __OSContReadFormat readformat;
+  s32 i;
+
+  ptr = (u8 *)&__osContPifRam;
+  i = 0;
+  if ((s32)__osMaxControllers > 0)
+  {
+    do
+    {
+      readformat = *(__OSContReadFormat *)ptr;
+      data->errno = (readformat.rxsize & CHNL_ERR_MASK) >> 4;
+      if (data->errno == 0)
+      {
+        data->button = readformat.button;
+        data->stick_x = readformat.stick_x;
+        data->stick_y = readformat.stick_y;
+      }
+      i++;
+      ptr += sizeof(__OSContReadFormat);
+      data++;
+    }
+    while (i < (s32)__osMaxControllers);
+  }
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/debugger_256F80/func_160018BC.s")
 
 // another __osSiDeviceBusy function
