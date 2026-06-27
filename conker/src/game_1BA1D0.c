@@ -10,6 +10,8 @@ extern f32 D_800A8004;
 extern f32 D_800A7B68;
 extern f32 D_800A7B6C;
 extern f32 D_800A7B70;
+extern f32 D_800A8018;
+extern void func_151D5D60();
 extern struct225 *func_151602C0(Header *, Header2 *, s32, s32, s32, s32, u8, u8, s32, u8, s32);
 
 struct SoundLinkedPayload {
@@ -854,7 +856,94 @@ s32 func_15190F9C(struct OscillatorObject *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1519108C.s")
+struct Struct1519108C {
+    char pad0[0x2C];
+    f32 unk2C;
+    f32 unk30;
+    f32 unk34;
+    f32 unk38;
+    f32 unk3C;
+    f32 unk40;
+    char pad44[0x4];
+    f32 unk48;
+    char pad4C[0x74];
+    char unkC0[0x40];
+    s16 *unk100[0xB];
+    f32 unk12C;
+};
+
+s16 *func_1519108C(struct Struct1519108C *arg0, s16 arg1) {
+    s16 *var_v0;
+    s16 *ret;
+    f32 temp_f2;
+    f32 sinval;
+    f32 temp_f18;
+    f32 temp_y_cos;
+    f32 temp_y_sin;
+    f32 var_f2;
+    f32 var_f14;
+    f32 *temp_v1;
+    f32 *temp_a0;
+    f32 temp_f0;
+    u8 sp37;
+
+    func_151D5D60(arg0->unk100, arg1, 0x40, &var_v0, &sp37);
+    ret = var_v0;
+    if (var_v0) {
+        if (sp37) {
+            memcpy(arg0->unk100[arg1], arg0->unkC0, 0x40);
+            memcpy(arg0->unk100[arg1] + 0x20, arg0->unkC0, 0x40);
+        }
+    } else {
+        return 0;
+    }
+
+    temp_v1 = &D_800DD1E8[arg1];
+    temp_a0 = &D_800DD1D8[arg1];
+    var_f14 = -1.0f;
+    var_f2 = ((*temp_v1 * (arg0->unk40 - arg0->unk34)) - (*temp_a0 * (arg0->unk48 - arg0->unk3C))) * D_800BE9A8;
+    if (var_f2 < 0.0f) {
+        var_f14 = 1.0f;
+        var_f2 = -var_f2;
+    }
+
+    temp_f0 = sqrtf(var_f2) * arg0->unk12C;
+    if (D_800A8018 < temp_f0) {
+        temp_f0 = D_800A8018;
+    }
+
+    temp_f0 = temp_f0 * var_f14;
+    sinval = sinf(temp_f0);
+    temp_f0 = cosf(temp_f0);
+    temp_f2 = arg0->unk2C * temp_f0;
+    temp_f18 = arg0->unk2C * sinval;
+    temp_y_cos = arg0->unk30 * temp_f0;
+    temp_y_sin = arg0->unk30 * sinval;
+
+    var_v0[0] = (*temp_v1 * -temp_f2) + arg0->unk34;
+    var_v0[1] = arg0->unk38 + temp_f18;
+    var_v0[2] = arg0->unk3C - (*temp_a0 * -temp_f2);
+    var_v0[3] = 0;
+
+    var_v0[8] = (*temp_v1 * temp_f2) + arg0->unk34;
+    var_v0[9] = arg0->unk38 - temp_f18;
+    var_v0[10] = arg0->unk3C - (*temp_a0 * temp_f2);
+    var_v0[11] = 0;
+
+    temp_f0 = temp_f2 - temp_y_sin;
+    var_v0[16] = (*temp_v1 * temp_f0) + arg0->unk34;
+    var_v0[17] = (arg0->unk38 - temp_f18) - temp_y_cos;
+    var_v0[18] = arg0->unk3C - (*temp_a0 * temp_f0);
+    var_v0[19] = 0;
+
+    temp_f0 = -(temp_f2 + temp_y_sin);
+    var_v0[24] = (*temp_v1 * temp_f0) + arg0->unk34;
+    var_v0[25] = (arg0->unk38 + temp_f18) - temp_y_cos;
+    var_v0[26] = arg0->unk3C - (*temp_a0 * temp_f0);
+    var_v0[27] = 0;
+
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_15191400.s")
 
