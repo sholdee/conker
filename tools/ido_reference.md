@@ -1344,3 +1344,5 @@ Special empty-guard case:
 ## Post-cutover distilled
 
 *(Staging zone: DISTILL appends new idioms below this line; a periodic maintenance pass folds them into the topical sections above.)*
+- Missing stack-arg `f32` store (`swc1 fN,off(sp)`) after recomputing a stack-passed param: type that param `volatile f32` and assign the scaled value back to it so IDO keeps the stack write. Copy the value into a non-volatile temp BEFORE the volatile store if later math must avoid a forced reload.
+- `%hi/%lo` relocation-only residue (`lui %hi(D_ABS)`/`%lo(D_ABS)` vs literal `lui 0xNNNN`/`0(reg)`): when an absolute-address symbol is only ORed/masked into an address, C may literalize it even with `extern` + `&D_ABS`; if bytes/registers match, treat as object-reloc spelling BAIL.
