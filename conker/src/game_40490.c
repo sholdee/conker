@@ -4,6 +4,7 @@
 #include "variables.h"
 
 void func_151A9390(s32 arg0, s32 arg1, struct134 *arg2, s32 arg3, f32 arg4, f32 arg5, s32 arg6, s32 arg7, s32 arg8);
+extern void (*D_80082E30[])(struct178 *);
 extern void (*D_80082F28[])(struct16 *, f32);
 extern f32 D_80096650;
 extern f32 D_80096648;
@@ -129,7 +130,37 @@ void func_15012FE0(void) {
     D_800BE575 = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_15013000.s")
+void func_15013000(void) {
+    void (**table)(struct178 *);
+    void (*func)(struct178 *);
+    s32 base;
+    struct178 *arg;
+    u32 i;
+    s32 offset;
+    u32 count;
+    u8 idx;
+
+    D_800DCDC4 = 0;
+    D_800DCD90 = 0.0f;
+fence_15013000:
+    count = D_800D3094;
+    i = 0;
+    offset = 0;
+    if (count != 0) {
+        table = D_80082E30;
+        do {
+            base = *(s32 *)&D_800D3098;
+            idx = ((u8 *)base)[offset + 0x15];
+            func = table[(u8)((s32)idx >> 2)];
+            if (func != NULL) {
+                arg = (struct178 *)(offset + base);
+                func(arg);
+            }
+            i++;
+            offset += sizeof(struct178);
+        } while (i < (u32)D_800D3094);
+    }
+}
 // requires jump table
 #pragma GLOBAL_ASM("asm/nonmatchings/game_40490/func_150130B4.s")
 
