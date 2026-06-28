@@ -2,8 +2,32 @@
 #include "functions.h"
 #include "variables.h"
 
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+} struct150948C0;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_150948C0.s")
+extern f32 *D_800D2C20;
+void func_1509499C(void *, struct150948C0 **);
+void func_150A7960(f32 *, f32, f32, f32, f32 *, f32 *, f32 *);
+
+void func_150948C0(void *arg0, s32 arg1) {
+    struct150948C0 *sp50[16];
+    s32 i;
+    struct150948C0 *point;
+    s32 out;
+
+    func_1509499C(arg0, sp50);
+    for (i = 0; i != 0x10; i++) {
+        point = sp50[i];
+        if (point != 0) {
+            out = (i * 0xC) + arg1;
+            func_150A7960(D_800D2C20, (f32)point->unk0, (f32)point->unk2, (f32)point->unk4,
+                          (f32 *)out, (f32 *)(out + 4), (f32 *)(out + 8));
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_1509499C.s")
 
