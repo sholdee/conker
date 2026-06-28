@@ -419,7 +419,22 @@ void func_1514DA38(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_179F30/func_1514DAA4.s")
+void func_1514DAA4(s32 arg0) {
+    s32 v0;
+    s32 sp1C[2];
+
+    *(s32 *)(arg0 + 0x94) |= 0x2;
+    sp1C[0] = 0;
+    sp1C[1] = 0;
+    {
+        extern s32 func_15158BD0();
+
+        if ((v0 = func_15158BD0(arg0, 1, 8)) != 0) {
+            memcpy((void *)(v0 + 0x58), sp1C, 8);
+            func_1514EC1C(v0, arg0, 0x13);
+        }
+    }
+}
 
 s32 func_15158BD0(s32, s32, s32);
 s32 func_1514EC1C(s32, s32, s16);
