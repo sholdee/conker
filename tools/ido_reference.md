@@ -4,6 +4,11 @@ Transferable idioms for matching IDO 5.3 (`-O2 -g3`) codegen, distilled from
 matched functions. Read this before iterating; append NEW generalizable idioms
 (not function-specific facts) after a batch. Keep entries tight and general.
 
+Usage (CONSUMER): this is a GREP-ON-DEMAND reference, not a read-through. Grep it by
+the instruction mnemonic or diff symptom you currently see (e.g. `cvt.w.s`, `lwl/lwr`,
+`bnel`, `%lo`, `mtc1`); each entry reads SYMPTOM -> FIX, so the FIRST line of a bullet
+carries the asm/symptom you'd grep for, then the source-level fix.
+
 ## Language / syntax (compile errors)
 - C89 ONLY: declare ALL locals at the TOP of their block, before any statement.
   A mid-block declaration is a "Syntax Error" in IDO's cfe.
@@ -85,6 +90,14 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   (`cx = -1.0f; ... (76.0f - cx)*s`). The local still folds into a lui immediate at the
   use site (no spill/extra load) but blocks the constant-fold, emitting the runtime
   `sub.s` and REUSING the offset constant elsewhere. Writing the literals directly folds.
+
+- Compare against `1.0f` then a SEPARATE `lui 0x3f80; mtc1` for the clamped value
+  (clamp-to-one): write the clamp as `x = 1` (int), NOT `x = 1.0f` — the float literal
+  CSEs/reuses the compare constant instead of minting the separate materialization.
+- Two `s8` stores of `1` REUSE one temp but the target REMATERIALIZES the first (`li`/`sb`
+  constant-coloring split): write the first as `*(u8 *)&D = 1` — same-width byte-store
+  signedness splits the constant coloring and the store stays `sb`. (Steering lever for the
+  small-literal rematerialization-for-absolute-stores noted above.)
 
 ## Return values
 - A value still live in v0 (int) or f0 (float) at `jr ra` usually means the function
@@ -294,6 +307,35 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Assignment-in-for-condition sentinel: `for (i=0; (v = arr[i+off]) != 0; i++)` keeps the sentinel load IN the test (one `lw`+`beqz`), vs pre-loading into a separate local which adds an assignment/register. [banjo-mined]
 - Loop spanning two ADDRESS-CONSTANT endpoints (e.g. summing words over a `[D_START,D_END)` code/data range as `T*`): bind BOTH the start and end pointers to separate locals BEFORE the loop (`p = (T*)D_START; e = (T*)D_END;`) so IDO materializes both `%hi`s first then both `addiu`s in declaration order. Inlining a bound in the for-condition (`p < (T*)D_END`) SWAPS the two lui/addiu pairs.
 
+- `move v0,zero; beqz; ...; li v0,1; sb v0,off` (explicit default/override of a boolean
+  STORED to a byte/stack field): assign a `s32 flag` with a FULL `if/else` then store it.
+  Direct boolean/ternary stores can shrink to a single branch-likely store.
+- Single pre-loop `lw`s of loop-invariant scalars that must schedule AFTER base-address
+  setup: place the reads in the `for` INITIALIZER (`for (a = G1, b = G2, i = 0; ...)`) — IDO
+  keeps one pre-loop `lw` each while letting earlier base-address setup finish first.
+- Global/default STORE that must happen after loop-end address setup but BEFORE iteration 0:
+  put it in the `for` INITIALIZER alongside the induction init (`for (G=0, i=0;;)`). A
+  standalone store schedules too early.
+- `li bound; ...; addiu i,1; bnel i,bound,top` (equality back-edge against a MATERIALIZED
+  limit): write `for (i=0, limit=N; i != limit; ) { ...; i++; }` or `do{}while(i != count)`,
+  NOT `i < N`. (Steerable cousin of the loop-limit-substitution BAIL.)
+- `slti; bnez low; move copy,src` (delay-slot copy before a two-arm clamp): write
+  `copy = src; if (copy >= K) { src = C; copy = src - copy; ... } else { copy = src << n;
+  ... }`. Direct `C - copy` hoists `li C`; the low-arm `copy` use fills the delay slot with
+  the shift.
+- `bne ...; move x,zero` (PLAIN branch) plus a true-arm `b join; li x,1` while the default
+  store DCEs: write a redundant default in a REAL else — `x=0; if (cond) { setup; x=1; }
+  else { x=0; }`. Empty/`goto` elses delete the join branch.
+- `u64` timestamp wait loop comparing hi/lo words WITH CARRY (saved in a TU-local BSS slot):
+  declare a function-scope `static u64` and write the natural `while (now < saved + K) {}`.
+  Hand-rolled hi/lo compares grow the frame or change reloc spelling.
+- `sltu; beqz; addiu p,p,stride` (pointer bump in the loop-ENTRY delay slot) then
+  negative-offset stores: write `while (p < end) { p += stride; p[-N] = ...; }`. A bottom
+  bump misses the entry delay-slot fill.
+- `bltzl`/`beqzl` back-edges that ADD or SUBTRACT a modulus in the delay slot (signed-range
+  normalize): write two plain loops `while (x < 0) x += M; while (x >= M) x -= M;` — NOT `%`,
+  `&`, or a single clamp.
+
 ## Type & access width (loads, stores, casts)
 - abs/trunc intrinsics: `fabsf` emits `abs.s`; `(s32)` on a float emits `trunc.w.s`;
   `sqrtf` emits a native `sqrt.s` under IDO 5.3.
@@ -365,6 +407,18 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - To deref a struct field the prototype only PARTIALLY declares (e.g. `next`@0x18 but
   not `prev`@0x1C), define a LOCAL tagged struct with explicit padding
   (`struct { u8 pad[0x18]; void *next, *prev; }`); don't edit the shared header.
+
+- `cfc1`/`ctc1`/`cvt.w.s` + overflow-correction path (float -> UNSIGNED): cast the float
+  expression to `u32`. A `(s32)`/narrow cast uses a plain `trunc.w.s` with no FCSR dance.
+  (Reverse direction of the `(u32)`-source unsigned-int-to-float rule in Constants.)
+- `lwl`/`lwr` copy pairs into an aligned stack local before field reads (unaligned struct
+  from a byte stream): keep the cursor typed `u8 *` and assign `local = *(TaggedStruct *)p;`.
+  A naturally-aligned typed pointer collapses to `lw`/direct field loads.
+- `__ll_mul`/`__ull_div` 64-bit sequence right but the low word folds as `D64+4` (for
+  `(u64)K * D64 / C`): call the helpers EXPLICITLY —
+  `__ull_div(__ll_mul(KULL, *(s32*)&D64, D64_lo), CULL)` — and type `__ll_mul` as
+  `(u64,s32,s32)` (not four `s32`s) to keep the high-half/zero materialization. (Native
+  d-ops stay a BAIL; helper CALLS are how IDO lowers 64-bit math.)
 
 ## Globals & indexing
 - Array-index form `D_xxxx[idx]` is needed for the reloc pattern `lui at,%hi; addu
@@ -599,6 +653,37 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   AFTER LICM, so nothing hoists — write the recursion literally, not a loop. (The
   residual tail loop-rotation it leaves is the unsteerable BAIL below.)
 
+- `%hi`/address of a global hoisted EARLY but its `lbu`/`lh` value-load DELAYED until a
+  compare: put the global in an INLINE equality compare (`if (D_left == complex_rhs)`) — IDO
+  hoists `D_left`'s `%hi` before the RHS address chain yet defers the value load to the
+  compare. Binding the left value to a local loads it too early.
+- Global address setup started EARLY (`lui` in a branch delay slot) but its `lw` value-load
+  DELAYED: write `T *p = &D; ... *p`. A plain `v = D` pulls the load too early. (Pointer-local
+  sibling of the inline-equality address/value split above.)
+- Prior store/reload/setup SINKING into a following branch/call delay slot (or a later load
+  hoisting across a boundary): drop an otherwise-unused C LABEL between the statement groups —
+  it emits no code but splits IDO's scheduling block (a scheduler fence).
+- Two adjacent stores emitted in the WRONG order on separate source lines (`-g3`): put them
+  on ONE physical source line to co-schedule/flip their order — the INVERSE of the
+  empty-label scheduler fence above.
+- Value must stay in an arg register (`a1`/`a2`/...) with NO named-local stack/debug slot,
+  and no prototype/in-file caller constrains the signature: add an UNUSED extra formal in
+  that arg register and immediately assign it from the real source.
+- `li v0,1` eager-primed as the constant return while IDO wants v0 for a global/base temp:
+  assign an always-true boolean from an already-dereferenced pointer (`flag = p && p;`), use
+  it only in a later EMPTY `if (flag && p) {}`, and `return 1;` — the branch DCEs but v0
+  stays the return register.
+- Inline float product lands in the WRONG FPR but a plain named `f32` temp fixes coloring at
+  the cost of a larger frame/debug slot: make that temp `register f32` — IDO keeps the FPR
+  coloring without allocating the debug local slot.
+- Inlining calls fixes FPU operand order but GROWS the frame: serialize the calls with a
+  comma assignment (`i = (f = fcall(), icall())`) and write `((f = f) * x)` at the multiply —
+  perturbs the AST/eval order without a new temp.
+- Symmetric field/vector arithmetic still evaluates terms in the WRONG order even after
+  swapping addends (the two terms use DIFFERENT AST shapes): cast BOTH regions to the SAME
+  local overlay struct and access matching fields (`v->x`/`v->z`). A mixed raw-cast-field vs
+  typed/overlay-field can make IDO pick the raw-cast term first.
+
 ## CSE & store/load duplication
 - Defeat DCE of intermediate RMW byte stores to the SAME address (`*p |= 0x80; *p &=
   0xBF;` before a final overwrite): cast the lvalue through `(volatile u8*)` to keep
@@ -696,6 +781,10 @@ matched functions. Read this before iterating; append NEW generalizable idioms
 - Defeat CSE of a doubled SIGNED-byte read (sentinel `== -1` test + index use of the same byte) WITHOUT losing signedness: cast ONLY the TEST read `volatile s8 *`, leave the index read plain `s8` - both stay `lb`. Reading the index as `u8` also breaks CSE but emits `lbu` (wrong sign).
 - Force a scaled index (`base + idx*8`) used in BOTH a loop pointer and a bound to RECOMPUTE its `sll`/`addu` rather than CSE into one shared `move`: write the scale as `<<3` (`(s32)base + (idx<<3)`). Any `*8`/`8*` form CSEs the two uses into a single computed pointer; the explicit shift forces the two separate recomputes.
 - Defeat CSE of a struct-INDEX MULTIPLY (`idx*sizeof`) shared between two sites that both index the SAME global by writing the second site in a DIFFERENT AST SHAPE: array-member-with-computed-byte-index `&((Struct*)base)[idx].member[expr]` vs the first site's pointer-add `(Struct*)base + idx`. Only the differing member-index AST forces the per-site multiply recompute; casting to a distinct same-size struct type, writing an explicit `idx*SIZE`, or binding the base to a local (which hoists the load) all FAIL to split the CSE.
+
+- Scalar global materialized as `&D` ONCE then reloaded `0(base)` on EVERY use (vs each use
+  folding to its own `%lo(D)`): cast to a `volatile` one-field struct pointer and read the
+  field repeatedly to reproduce the repeated `lw 0(base)`.
 
 ## Stack frame, homing & params
 - Param homing: a param is NEVER homed if only forwarded/used as-is; it IS homed (`sw
@@ -829,6 +918,34 @@ matched functions. Read this before iterating; append NEW generalizable idioms
   order, arg casts via prototype, last-arg literals) — often a 1-try match.
 - Cluster of HIGH-offset `arg0` fields accessed AFTER a call: assign `T *p = &arg0->sub;` (base = arg0+0x30) BEFORE the `jal` -> IDO homes a0 across the call and rematerializes `v0 = a0+0x30` after, addressing fields via small offsets. Call-crossing analog of hoist-above-branches.
 - IRRECONCILABLE caller/callee signature conflict (same TU, callee NOT in a shared header): when a callee's OWN body homes its params one way (e.g. `swc1 f12/f14` => begins `(f32,f32,...)`) but an in-file CALLER's forwarding call places the opposite class in those slots (e.g. an INTEGER in $a0 via `andi`), no single C signature satisfies both, and IDO REJECTS every decoupling workaround: a block-scope/local extern with a different arg form is "Incompatible type" redeclaration vs the file-scope def; an empty-paren `void f();` is "prototype and non-prototype not compatible" after default-arg promotion; omitting the decl makes the call implicit-int vs the def's return type. So matching the caller forces changing the callee's DEFINITION, which breaks the callee's own match. Not matchable in isolation under "keep the rest of the file matching"; harvest the per-caller body (often byte-perfect) as a permuter seed and bail.
+
+- `lw` reload of an ALREADY-HOMED param (one-off, full word): write `tmp = *(s32 *)&arg0;`
+  to force the plain `lw` from the arg slot. Plain `tmp = (s32)arg0` may reuse the old reg;
+  `volatile` can add address code.
+- `lw`/`lh off(sp)` reloading a homed/stack arg on EACH use, and `&arg` adds unwanted
+  address arithmetic: type ONLY that param `volatile s32`/`volatile s16` — plain uses then
+  force the stack reloads with no pointer temp. (Repeated-reload analog of the one-off
+  `*(s32*)&arg0` cast above.)
+- `addiu sp,K` to a LOWER stack base than the visible buffer (target passes/uses a base
+  below IDO's allocated slot): declare the smaller byte buffer and set `p = (T*)(buf - bias)`,
+  then access/pass through `p` — emits the lower `addiu sp,K` without growing the frame.
+- Rodata word-store + tail byte copying a literal into a stack buffer: write an exact-sized
+  `u8 buf[N] = "...";` (N INCLUDES the NUL).
+- Stack space/frame size needs tuning but ordinary dummy locals get DCE'd or land at the
+  wrong offset: declare an unused `volatile s32 pad[N];` — it reserves/tunes stack space with
+  NO emitted body; adjust `N` to move spill slots/frame size.
+- Scanning extra word args with `p=&last+1; p=(s32*)(((s32)p+3)&-4)+1; v=*(p-1)`: hand-roll
+  that pointer walk in C (fixed signature) instead of `...`/`va_list`, to avoid the variadic
+  frame/homes.
+- All incoming arg regs homed and the first UNNAMED arg slot passed (`addiu aN,sp,K`, often
+  in a `jal` delay slot): use real `...` + `va_start(args, last_named); callee(..., args);`.
+  Fixed args plus `&argN` may shrink the frame or spill locals. (Opposite recommendation
+  from the fixed-signature stack-arg walk above — pick by whether the slot is passed onward.)
+- Shared-header callee with a `u8`/`u16` RETURN TYPE makes CALLER results spill/narrow as
+  bytes/halves: hide it with the `#define func_xxxx func_xxxx_orig`-before-`#include` escape
+  hatch and redeclare the true `s32` return locally so direct `jal`s keep word-sized `v0`
+  temps. Function-pointer/value casts are too late (emit `jalr`/keep narrow spills).
+  (Return-type analog of the wrong-param-width shared-header escape hatch above.)
 
 ## Float-arg CSE & zero registers
 - Multiple ZERO float args CSE into one FPU register: passing several `0.0f` args makes
@@ -1225,58 +1342,5 @@ Special empty-guard case:
   rule to a scalar one-word shift.)
 
 ## Post-cutover distilled
-- Float clamp-to-one: when target compares with `1.0f` but later materializes a separate
-  `lui 0x3f80; mtc1` for the clamped f32, write `x = 1` (int), not `x = 1.0f` (CSEs/reuses compare const).
-- 64-bit helper reloc control: when `(u64)K * D64 / C` emits the right `__ll_mul`/`__ull_div`
-  sequence but the low word folds as `D64+4`, call helpers explicitly: `__ull_div(__ll_mul(KULL, *(s32*)&D64, D64_lo), CULL)`. Type `__ll_mul` as `(u64,s32,s32)`, not four `s32`s, to keep the high-half/zero materialization.
-- One-off full-word reload of a homed param: after the arg is already homed, `tmp = *(s32 *)&arg0;`
-  forces a plain `lw` from the arg slot; plain `tmp = (s32)arg0` may reuse the old reg, while `volatile` can add address code.
-- Boolean temp stored to a byte/stack field: when target wants explicit default/override (`move v0,zero; beqz; ...; li v0,1; sb v0,off`), assign a `s32 flag` with full `if/else` then store it. Direct boolean/ternary stores can shrink to a branch-likely store.
-- Inline equality compare can split a global's address setup from its value load: `if (D_left == complex_rhs)` may hoist `D_left`'s `%hi` before the RHS address chain but delay its `lbu`/`lh` until the compare. Binding the left value to a local loads it too early.
-- Stack local with biased logical base: when IDO allocates a visible buffer at a higher
-  stack slot but the target passes/uses a lower base, declare the smaller byte buffer and set `p = (T*)(buf - bias)`; access/pass through `p` to emit the lower `addiu sp,K` without growing the frame.
-- Repeated scalar global reloads through one base: if direct/non-volatile reads fold each
-  use into `%lo(D)` but target materializes `&D` once and reloads `0(base)` each time, cast to a `volatile` one-field struct pointer and read the field repeatedly.
-- One-time loop-invariant scalar reads can move later in the pre-loop schedule if placed
-  in the `for` initializer (`for (a = G1, b = G2, i = 0; ... )`): IDO keeps single pre-loop `lw`s while allowing earlier base-address setup to finish first.
-- Fixed-signature stack-arg walk: when the asm scans extra word args with `p=&last+1`;
-  `p=(s32*)(((s32)p+3)&-4)+1; v=*(p-1)`, hand-roll that pointer walk instead of `...`/`va_list` to avoid the variadic frame/homes.
-- Pre-loop scalar STORE scheduling: when a global/default store must happen after loop-end
-  address setup but before iteration 0, put it in the `for` initializer with the induction init (`for (G=0, i=0;;)`). A standalone store schedules too early.
-- Float-to-u32 conversion: cast the float expression to `u32` to get the long FCSR `cfc1/ctc1/cvt.w.s` + overflow-correction path; `(s32)`/narrow casts use plain `trunc.w.s`.
-- Scalar equality-backedge loop: for target `li bound; ...; addiu i,1; bnel i,bound,top`,
-  write `for (i=0, limit=N; i != limit; ) { ...; i++; }` / `do{}while(i != count)`, not `< N`.
-- Volatile scalar PARAM reloads: when target reloads a homed/stack arg (`lw`/`lh off(sp)`) and `&arg` adds unwanted address arithmetic, type only that param `volatile s32`/`volatile s16`; plain uses force the stack reloads without a pointer temp.
-- Branch-delay copy before a split clamp: for `slti; bnez low; move copy,src`, write
-  `copy = src; if (copy >= K) { src = C; copy = src - copy; ... } else { copy = src << n; ... }`. Direct `C-copy` hoists `li C`; low-arm `copy` use can fill the slot with the shift instead.
-- Redundant default in a real `else` can preserve a plain-branch CFG while the store DCEs: after `x=0; if (cond) { setup; x=1; } else { x=0; }`, IDO can keep `bne ...; move x,zero` plus the true-arm `b join; li x,1`. Empty/goto elses may delete the join branch.
-- Stack byte-buffer string init: when the target copies a literal into a stack buffer via
-  rodata word store plus tail byte, write exact-sized `u8 buf[N] = "..."`; N includes the NUL.
-- Empty label as scheduler fence: an otherwise unused C label between statement groups can emit no code but split IDO's scheduling block; use it to stop a prior store/reload/setup from sinking into a following branch/call delay slot or to keep a later load from hoisting across a boundary.
-- Extra formal as register-colored local: when no visible prototype/in-file caller constrains the signature, add an unused formal in the desired arg register (`a1`/`a2`/...) and immediately assign it from the real source; IDO can keep that value in the arg reg without allocating a named-local stack/debug slot.
-- Constant-return v0 reservation: when IDO uses v0 for a global/base temp but the target eager-primes `li v0,1`, assign an always-true boolean local from an already-dereferenced pointer (`flag = p && p;`) and use it only in a later empty `if (flag && p) {}` while still `return 1`; the branch DCEs but v0 stays the return.
-- `register f32` scalar temp: when an inline float product lands in the wrong FPR but a plain named `f32` temp fixes coloring at the cost of a larger frame/stack slot, make that temp `register f32`; IDO can keep the FPR-coloring without allocating the debug local slot.
-- Private-BSS `u64` wait loops: when the target saves a timestamp in a TU-local BSS slot and compares high/low words with carry, declare a function-scope `static u64` and write the natural `while (now < saved + K) {}`; hand-rolled hi/lo compares can grow the frame or change reloc spelling.
-- Single-use variadic wrapper: when target homes all incoming arg regs and passes the
-  first unnamed arg slot (`addiu aN,sp,K`, often in a `jal` delay slot), use real `...` + `va_start(args,last_named); callee(..., args);`. Fixed args plus `&argN` may shrink the frame or spill locals instead.
-- Side-effect call tree nudge: when inlining calls fixes FPU operand order but grows the
-  frame, serialize them with a comma assignment (`i = (f = fcall(), icall())`) and use `((f = f) * x)` at the multiply to perturb the AST without a new temp.
-- Inert stack padding: an unused `volatile s32 pad[N];` can reserve/tune stack space with
-  no emitted body instructions; adjust `N` to move spill slots/frame size when ordinary dummy locals are DCE'd or land at the wrong offset.
-- Loop-entry pointer bump in branch delay: for `sltu; beqz; addiu p,p,stride` then
-  negative-offset stores, write `while (p < end) { p += stride; p[-N] = ...; }`; a bottom bump misses the entry delay-slot fill.
-- WRONG RETURN TYPE in a shared header affects caller codegen too: a visible `u8`/`u16`
-  callee makes call results spill/narrow as bytes/halves; hide it with the `#define`-before-include escape hatch and redeclare the true `s32` return so direct `jal`s keep word-sized `v0` temps. Function-pointer or value casts are too late and can emit `jalr`/keep narrow spills.
-- Unaligned struct copy from a byte stream: keep the cursor typed `u8 *` and assign
-  `local = *(TaggedStruct *)p`; IDO emits `lwl/lwr` copy pairs into the aligned stack local before field reads. A naturally aligned typed pointer may collapse to `lw`/direct field loads.
-- Signed range normalization by repeated add/sub: for `bltzl`/`beqzl` back-edges that add
-  or subtract the modulus in the delay slot, write two plain loops `while (x < 0) x += M; while (x >= M) x -= M;`, not `%`, `&`, or a single clamp.
-- Symmetric field/vector arithmetic can still evaluate in the wrong order if the two
-  terms use different AST shapes: cast BOTH regions to the same local overlay struct and
-  access matching fields (`v->x`/`v->z`). A mixed raw-cast field vs typed/overlay field may make IDO choose the raw-cast term first even after swapping addends.
-- Same-line assignment grouping can act as the inverse of an empty-label scheduler fence:
-  under `-g3`, putting two adjacent stores on ONE physical source line can co-schedule/flip their order where separate lines keep the wrong store order.
-- Scalar-global address/value split: when target starts a global's address setup early
-  (`lui` in a branch delay slot) but delays the `lw`, use `T *p = &D; ... *p`; `v = D` pulls the load too early.
-- Same-width byte-store signedness can split constant coloring: if two `s8` stores of
-  `1` reuse one temp but target rematerializes the first, write it as `*(u8 *)&D = 1`; the store stays `sb`.
+
+*(Staging zone: DISTILL appends new idioms below this line; a periodic maintenance pass folds them into the topical sections above.)*
