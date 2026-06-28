@@ -327,6 +327,57 @@ def main():
         seen_files.add(file)
         picked_funcs.add(func)
 
+    # BIG-FUNC LANE (CONKER_BIGLANE): reserve slots for large funcs (>= BIGFUNC_MIN insns) — the ~40%
+    # of remaining BYTES both engines stall on. RE-ADMITTED every cycle: selects via candidate_stubs with
+    # ONLY the ROM-revert blocklist (ignores the attempted-log AND the difficult shelf), so a big func
+    # RESUMES from its carried-forward /tmp/prev_<func>.c instead of being attempted once and shelved.
+    # Closest carried seed first, then biggest (most bytes). Honors seen_files (one actor per file).
+    # Inert unless CONKER_BIGLANE=1.
+    if os.environ.get("CONKER_BIGLANE") == "1" and \
+       int(os.environ.get("CONKER_ROUND", "1") or "1") <= int(os.environ.get("CONKER_BIGLANE_ROUNDS", "2")):
+        # bound wall-clock: only seed big funcs in the first BIGLANE_ROUNDS rounds/cycle (each adds a
+        # heavy ~5400s agent that the round's `wait` barrier blocks on). 2 rounds -> <=2 big attempts/cycle.
+        big_slots = int(os.environ.get("CONKER_BIGLANE_SLOTS", "1"))
+        bigmin = int(os.environ.get("CONKER_BIGFUNC_MIN", "200"))
+        bigmaxi = int(os.environ.get("CONKER_BIGLANE_MAXI", str(maxi)))
+        rom_block = set()
+        rpath = os.path.join(HERE, "rom_reverts.txt")
+        if os.path.exists(rpath):
+            from collections import Counter as _Counter
+            rom_block = {f for f, c in _Counter(
+                l.strip() for l in open(rpath) if l.strip()).items() if c >= 2}
+        big_rows = [r for r in candidate_stubs(bigmaxi, rom_block) if r[0] >= bigmin]
+
+        def _big_key(r):
+            n, _file, func = r
+            sc = nearmiss[func].get("score", 999999) if func in nearmiss else 999999
+            return (sc, -n)                          # closest carried seed first, then biggest
+        big_rows.sort(key=_big_key)
+        taken = 0
+        for n, file, func in big_rows:
+            if taken >= big_slots or len(picked) >= count:
+                break
+            if file in seen_files or func in picked_funcs:
+                continue
+            s = scored_by_func.get(func)
+            if s:
+                ref_cs = []
+                for rfunc, rfile in s[4][:3]:
+                    r = corpus_by_name.get(rfunc)
+                    ref_cs.append((fs.extract_c_body(c_text(rfile), rfunc) or "") if r else "")
+                rf, rfl = (s[4][0] if s[4] else ("", ""))
+                picked.append({"func": func, "file": file, "ref_func": rf, "ref_file": rfl,
+                               "ref_similarity": round(s[0], 3),
+                               "ref_c": ref_cs[0] if ref_cs else "",
+                               "ref2_c": ref_cs[1] if len(ref_cs) > 1 else "",
+                               "ref3_c": ref_cs[2] if len(ref_cs) > 2 else ""})
+            else:
+                picked.append({"func": func, "file": file, "ref_func": "", "ref_file": "",
+                               "ref_similarity": 0.0, "ref_c": "", "ref2_c": "", "ref3_c": ""})
+            seen_files.add(file)
+            picked_funcs.add(func)
+            taken += 1
+
     for sim, n, file, func, refs in ordered:
         if file in seen_files:
             continue

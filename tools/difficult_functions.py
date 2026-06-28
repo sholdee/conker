@@ -28,9 +28,16 @@ MIN_ATTEMPTS = int(sys.argv[1]) if len(sys.argv) > 1 else 2
 NEAR = int(sys.argv[2]) if len(sys.argv) > 2 else 80
 FLAT_FRAC = float(sys.argv[3]) if len(sys.argv) > 3 else 0.10
 
+# BIG-FUNC LANE (CONKER_BIGLANE): never shelve large funcs. They need cumulative multi-cycle progress
+# from a carried-forward seed, not a 2-attempt plateau verdict (two huge size-proportional scores look
+# "flat" and shelve them instantly). size is attempts.tsv column 4. Inert unless CONKER_BIGLANE=1.
+BIGLANE = os.environ.get("CONKER_BIGLANE") == "1"
+BIGFUNC_MIN = int(os.environ.get("CONKER_BIGFUNC_MIN", "200"))
+
 scores = collections.defaultdict(list)   # func -> [numeric score, ...] in attempt order
 na = collections.Counter()               # func -> count of NA (uncompilable) attempts
 file_of = {}
+size_of = {}                             # func -> latest instruction count (attempts.tsv col 4)
 
 if not os.path.exists(TSV):
     open(OUT, "w").close(); sys.exit(0)
@@ -41,6 +48,11 @@ for line in open(TSV):
         continue
     func, file, score = p[0], p[1], p[2]
     file_of[func] = file
+    if len(p) > 3:
+        try:
+            size_of[func] = int(p[3])
+        except ValueError:
+            pass
     try:
         scores[func].append(int(score))
     except ValueError:
@@ -52,6 +64,8 @@ for func in set(list(scores) + list(na)):
     best = min(sc) if sc else None
     if best == 0:
         continue                         # already matched — never shelve
+    if BIGLANE and size_of.get(func, 0) >= BIGFUNC_MIN:
+        continue                         # big-func lane owns these — never shelve (multi-cycle grind)
     if len(sc) >= MIN_ATTEMPTS and best is not None and best > NEAR:
         spread = max(sc) - min(sc)
         if max(sc) == 0 or spread / max(sc) < FLAT_FRAC:   # flat across retries -> plateau

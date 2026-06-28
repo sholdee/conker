@@ -134,6 +134,12 @@ The matching now runs on **Codex** (zero Claude tokens), via a shell mirror of t
   151-250≈487, 251-400≈280, 400+≈210. Next bumps: 400, then uncapped. Bigger funcs = lower count, more bytes each.
 - **Cadence each gap (lean — minimal Claude tokens):** force-clean ROM gate → `apply_wins.py` →
   `permuter_daemon.py import_new` → relaunch `orchestrator_codex.sh` → `git push sholdee decomp/game-matches`.
+- **BIG-FUNC LANE (`CONKER_BIGLANE=1`, opt-in):** targets the byte wall — funcs ≥200 insn the normal flow
+  shelves after 2 plateaus and the permuter can't touch. Adds a re-admitting selection lane (resumes from
+  a carried-forward `/tmp/prev_<func>.c` each cycle), a region-anchored prompt, heavy 5400s timeout for
+  ≥250, and always-harvest carry-forward. Bounded to the first 2 rounds/cycle. Activate:
+  `CONKER_BIGLANE=1 CONKER_SEGMENTS=init,debugger bash tools/orchestrator_codex.sh 12 400 8`. Knobs +
+  design in `tools/PLANS_match_rate.md` (Plan A). Measure in BYTES + `attempts.tsv` col-4 best-score trend.
 - **Cookbook is TIERED:** `ido_cookbook.md` = 182-line CORE (always read); `ido_reference.md` = full
   270-bullet set (grep on-demand). Codex/Claude prompts read core + grep reference.
 - **DISTILL (back on):** `orchestrator_codex.sh` ends each run with a codex distill step — skims the run's
@@ -236,6 +242,23 @@ grep -cE '^\s+- \[0x[0-9A-Fa-f]+, asm\]' conker/conker.us.yaml     # un-stubbed 
 - Some permuter wins don't port (isolated import context ≠ project) — `apply_wins` auto-`.noport`s them.
 - jtbl-externalized & native-64-bit functions are unmatchable as stubbed C (BAIL — see cookbook).
 - After `stub_expand`, run `permuter_daemon import_new` only between runs; the `expected/` refresh is automatic.
+
+## TROUBLESHOOTING
+- **ENOSPC but `df -h` shows free space → it's INODES, not bytes.** `/tmp` is a tmpfs with a fixed
+  inode cap (~1M). The permuter leaks `/tmp/permuterXXXX.{c,o}` on every `timeout`-SIGTERM kill; over days
+  these exhaust the inode table at ~1% byte use. **Diagnose with `df -i /tmp`** (not `df -h`). Deadlock
+  symptom: Bash/Write/the `!` prefix all fail (each needs to spool to `/tmp`); only Read works → fix from a
+  REAL external terminal. Clean: `find /tmp -maxdepth 1 -name 'permuter*' -delete` (`rm /tmp/permuter*` dies
+  on arg-list-too-long at that scale). MITIGATED: `permuter_daemon.py` `_reap_tmp()` prunes `permuter*`
+  >30min old each supervise loop (180s) — but it only runs while a supervisor is alive. See memory
+  `conker-tmpfs-inode-leak.md`.
+- **A cycle can crash AFTER committing its match** (e.g. in a later round). `.cycle` == last `[cycle N]`
+  commit does NOT prove the cycle finished cleanly — read `/tmp/orchestrator_run.log`, don't trust the
+  counter alone. (`.cycle` AHEAD of the last commit still reliably means it died mid-cycle.)
+- **ROM badge red but sha1 looks correct** = stale `/tmp/rom_status.json` with `"ok": false` from a failed
+  verify (e.g. a crashed build). Only `integrate.py` writes it, and only `true` on a successful commit, so it
+  stays red until the next match lands. If HEAD is verified-good (`make -C conker verify` → `OK`), it's safe
+  to refresh the file's `ok`/`at`/`commit` by hand to clear the badge immediately.
 
 ## FRESH HOST
 `tools/setup.sh`, then place `baserom.us.z64` (sha1 `4cbadd3c…`) in repo root, then run THE CYCLE.

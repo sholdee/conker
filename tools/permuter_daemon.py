@@ -256,6 +256,30 @@ def run(seconds):
 
 PIDFILE = "/tmp/permuter_supervisor.pid"
 
+def _reap_tmp(max_age=1800):
+    """Delete orphaned /tmp/permuter*.{c,o} temps. decomp-permuter writes one .c/.o
+    per candidate compile and removes them on the normal compile->score path within
+    milliseconds; but when supervise()'s `timeout` SIGTERMs a permuter mid-iteration,
+    the in-flight pair is orphaned (SIGTERM bypasses its KeyboardInterrupt-only
+    cleanup). Over days of topping up 10 workers these leaked ~1M files and exhausted
+    the /tmp tmpfs INODE table (not bytes) -> ENOSPC despite 90% free space
+    (2026-06-27 outage). Anything older than max_age is provably an orphan."""
+    cutoff = time.time() - max_age
+    n = 0
+    try:
+        with os.scandir("/tmp") as it:
+            for e in it:
+                if not e.name.startswith("permuter"):
+                    continue
+                try:
+                    if e.is_file(follow_symlinks=False) and e.stat().st_mtime < cutoff:
+                        os.remove(e.path); n += 1
+                except OSError:
+                    pass
+    except OSError:
+        pass
+    return n
+
 def supervise(interval=180, per_timeout=3600):
     """Long-running: keep MAX_PARALLEL permuters alive forever, auto-replacing the
     dead/cracked/timed-out with the newest seeds. Launch detached (setsid) once;
@@ -277,6 +301,9 @@ def supervise(interval=180, per_timeout=3600):
         launched, running = _topup(per_timeout)
         if launched:
             print(f"supervise: topped up {launched} (was {running} running)", flush=True)
+        reaped = _reap_tmp()                  # prune orphaned /tmp/permuter* temps (tmpfs inode guard)
+        if reaped:
+            print(f"supervise: reaped {reaped} orphaned /tmp/permuter* temps", flush=True)
         time.sleep(interval)
 
 def file_of(func):

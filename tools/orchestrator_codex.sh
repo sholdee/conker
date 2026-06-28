@@ -40,13 +40,23 @@ print(f"re-admitted {len(need)} backfill-needing near-misses for re-attempt", fi
 PY
 fi
 
-match_prompt() {  # $1=func  $2=file  (heredoc expands the paths; no $ / backticks remain)
+match_prompt() {  # $1=func  $2=file  $3=size  (heredoc expands the paths; no $ / backticks remain)
+  local bigblock=""
+  if [ "${CONKER_BIGLANE:-}" = "1" ] && [ "${3:-0}" -ge "${CONKER_BIGFUNC_MIN:-200}" ] 2>/dev/null; then
+    bigblock="BIG FUNCTION (~$3 insns) -- a large function both engines stall on. Use a REGION-ANCHORED strategy; do NOT rewrite the whole body each iteration:
+- FIRST match the FRAME (prologue/epilogue: stack frame size, saved registers, \$ra restore) byte-identical before the body -- a wrong frame size shifts every stack offset below it.
+- Then walk the asm-differ diff TOP-DOWN: fix ONLY the region around the FIRST diverging instruction, re-run iter_match, confirm that region is now identical, advance. Track 'matched through instruction K'; never let an identical region regress.
+- Treat the .s as a sequence of basic blocks (each label / branch target starts one); make block N identical before block N+1.
+- Big often means IDO -O2 INLINED a helper (memcpy / struct-copy / small leaf): a repeated load/store stride or unrolled copy -> write the inline-expanding C (a loop or struct assignment), not a call.
+- You have a LARGER budget here: grind ~30 iterations methodically, region by region. Your best is snapshotted automatically -- don't fear losing it.
+"
+  fi
   cat <<EOF
 You are matching ONE function in the mkst/conker N64 decompilation (IDO 5.3, -O2 -g3) to byte-identical assembly, using a real compile+diff loop.
 
 YOUR FUNCTION: $1  (in $REPO/conker/src/$2.c)
 Target asm: $REPO/conker/asm/nonmatchings/$2/$1.s
-
+$bigblock
 THE LOOP:
 0. FIRST read $REPO/tools/ido_cookbook.md (core IDO 5.3 -O2 idioms; obey its When-to-BAIL checklist). For a stubborn diff or specific instruction pattern, grep $REPO/tools/ido_reference.md if it exists.
 0b. WORKED EXAMPLES: read /tmp/ref_$1.c (and /tmp/ref2_$1.c, /tmp/ref3_$1.c if present) -- the byte-matching C of the 3 most similar already-matched functions. Diff each one's asm against YOUR target .s to see what carries over; reuse their structure, casts, loop/branch shapes, and idioms as templates, ADAPTING offsets/constants/symbols to your function. Use them for style -- do NOT force your function into their exact shape, and do NOT copy verbatim.
@@ -77,8 +87,9 @@ You curate $REPO/tools/ido_reference.md, a grep-on-demand set of transferable ID
 This run's match agents left reasoning logs at /tmp/codexm_*.log (each is one function's compile+diff loop). Skim them for a matching TECHNIQUE that is genuinely NOVEL and TRANSFERABLE — a codegen idiom, a register-shaping trick, a diff-reading insight — NOT already covered, even loosely, by an existing bullet. READ $REPO/tools/ido_reference.md FIRST. Ignore function-specific facts (addresses, constants, per-function offsets). When in doubt, add NOTHING.
 
 If (and ONLY if) you found something genuinely new:
-- APPEND to the END of $REPO/tools/ido_reference.md. If there is no "## Post-cutover distilled" heading at the end, add that heading line first, then your bullet(s) beneath it.
-- One or two TIGHT lines per idiom; at most a few bullets total. NEVER modify, reorder, or delete any existing line — APPEND ONLY.
+- APPEND to the END of $REPO/tools/ido_reference.md, beneath the final "## Post-cutover distilled" heading (it exists; if somehow missing, add it first). That tail is the STAGING zone — a periodic maintenance pass folds it into the topical sections above, so just append here.
+- One or two TIGHT lines per idiom; at most a few bullets total. Write each SYMPTOM-FIRST and GREP-ATOMIC: the FIRST physical line must carry the diff SYMPTOM plus the key instruction mnemonic an agent would grep for (e.g. \`cvt.w.s\`, \`lwl/lwr\`, \`bnel\`, \`%lo\`), THEN the fix.
+- NEVER modify, reorder, or delete any existing line — APPEND ONLY (a non-append edit trips the guard and is auto-reverted, wasting the run).
 - Edit ONLY ido_reference.md. Touch no other file; run no build.
 EOF
 }
@@ -86,7 +97,7 @@ EOF
 for r in $(seq 1 "$ROUNDS"); do
   status "$r"
   echo "=== round $r: SELECT ==="
-  CONKER_REPO="$REPO" python3 tools/similar_chunk.py "$CHUNK" "$MAXI" \
+  CONKER_REPO="$REPO" CONKER_ROUND="$r" python3 tools/similar_chunk.py "$CHUNK" "$MAXI" \
     | python3 -c "import json,sys
 for c in json.load(sys.stdin): print(c['func'], c['file'])" > /tmp/codex_chunk.txt
   [ -s /tmp/codex_chunk.txt ] || { echo "round $r: candidate pool empty -- stopping"; break; }
@@ -97,8 +108,11 @@ for c in json.load(sys.stdin): print(c['func'], c['file'])" > /tmp/codex_chunk.t
          # was func_*-only, leaking stale snapshots for the 38 non-func_ stubs; a stale match_<f>.c could
          # then be cp'd into live src on a later cycle. These prefixes are unique to iter_match — safe glob.)
   while read -r func file; do
-    match_prompt "$func" "$file" > "/tmp/codexp_${func}.txt"
-    ( timeout 2400 codex exec --full-auto --cd "$REPO" "$(cat /tmp/codexp_${func}.txt)" \
+    size=$(grep -cE '^\s+/\*' "$REPO/conker/asm/nonmatchings/${file}/${func}.s" 2>/dev/null)
+    to=2400   # heavy budget only for big-lane funcs past the heavy threshold (default >250 insns)
+    if [ "${CONKER_BIGLANE:-}" = "1" ] && [ "${size:-0}" -ge "${CONKER_BIGFUNC_HEAVY:-250}" ] 2>/dev/null; then to=5400; fi
+    match_prompt "$func" "$file" "${size:-0}" > "/tmp/codexp_${func}.txt"
+    ( timeout "$to" codex exec --full-auto --cd "$REPO" "$(cat /tmp/codexp_${func}.txt)" \
         > "/tmp/codexm_${func}.log" 2>&1 ) &
   done < /tmp/codex_chunk.txt
   wait   # NOTE: can't safely kill codex mid-work — its work runs in a DETACHED broker, so killing
@@ -127,7 +141,9 @@ for c in json.load(sys.stdin): print(c['func'], c['file'])" > /tmp/codex_chunk.t
        # [audit 4] best>0 guard: a score-0-but-still-stub is an object-match-but-ROM-fail dead-end;
        # harvesting it just creates a seed import_new refuses (and re-attempt now skips, audit 15).
       half=$(( ${size:-0} / 2 ))
-      if [ "$best" -le 80 ] 2>/dev/null || { [ "$half" -gt 0 ] && [ "$best" -le "$half" ] 2>/dev/null; }; then
+      if [ "$best" -le 80 ] 2>/dev/null || { [ "$half" -gt 0 ] && [ "$best" -le "$half" ] 2>/dev/null; } \
+         || { [ "${CONKER_BIGLANE:-}" = "1" ] && [ "${size:-0}" -ge "${CONKER_BIGFUNC_MIN:-200}" ] 2>/dev/null; }; then
+        # big-lane: ALWAYS harvest (any score) so the func carries forward a prev-seed and resumes closer.
         CONKER_REPO="$REPO" python3 tools/harvest_nearmiss.py "$func" "$file" "$best" "/tmp/bestc_${func}.c" 2>/dev/null
       fi
     fi
