@@ -142,8 +142,10 @@ for c in json.load(sys.stdin): print(c['func'], c['file'])" > /tmp/codex_chunk.t
        # harvesting it just creates a seed import_new refuses (and re-attempt now skips, audit 15).
       half=$(( ${size:-0} / 2 ))
       if [ "$best" -le 80 ] 2>/dev/null || { [ "$half" -gt 0 ] && [ "$best" -le "$half" ] 2>/dev/null; } \
-         || { [ "${CONKER_BIGLANE:-}" = "1" ] && [ "${size:-0}" -ge "${CONKER_BIGFUNC_MIN:-200}" ] 2>/dev/null; }; then
-        # big-lane: ALWAYS harvest (any score) so the func carries forward a prev-seed and resumes closer.
+         || { [ "${CONKER_BIGLANE:-}" = "1" ] && [ "${size:-0}" -ge "${CONKER_BIGFUNC_MIN:-200}" ] 2>/dev/null && [ "$best" -le "${size:-0}" ] 2>/dev/null; }; then
+        # big-lane: harvest IN-PROGRESS big funcs (best <= size, ~<1 residue/insn) so they carry forward a
+        # prev-seed and resume closer. NOT hopeless thousands-score attempts (those flood permuter import +
+        # git .nearmiss with seeds the agent can't resume from and the permuter (<=80) won't crack).
         CONKER_REPO="$REPO" python3 tools/harvest_nearmiss.py "$func" "$file" "$best" "/tmp/bestc_${func}.c" 2>/dev/null
       fi
     fi
