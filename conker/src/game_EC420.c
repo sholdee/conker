@@ -54,6 +54,24 @@ typedef struct {
     /* 0x6 */ s16 unk6;
 } Struct150C04C0Color;
 
+typedef struct {
+    char pad_0[0x14];
+    s16 field_0x14;
+    s16 field_0x16;
+    char pad_0x18[0x7];
+    u8 field_0x1F;
+    char pad_0x20[0x4];
+    u8 field_0x24;
+    char pad_0x25[0x1];
+    u8 field_0x26;
+    u8 field_0x27;
+    char pad_0x28[0x4];
+    u8 field_0x2C;
+    s8 field_0x2D;
+    s8 field_0x2E;
+    u8 field_0x2F;
+} Struct150BF0F4;
+
 extern Struct150C04C0Word D_800A0108;
 extern f32 D_800A0170;
 extern f32 D_800A0174;
@@ -88,7 +106,59 @@ void func_150BEF7C(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_EC420/func_150BF0F4.s")
+s32 func_150BF0F4(Struct150BF0F4 *arg0) {
+    s32 temp_v0;
+    s32 temp_v1;
+    s32 temp_a1;
+
+    temp_v0 = arg0->field_0x1F;
+    temp_v1 = arg0->field_0x26;
+    temp_a1 = arg0->field_0x24;
+    if (temp_a1 != 0) {
+        if (temp_v0 != temp_v1) {
+            temp_v0 += D_800BE9E4 * arg0->field_0x27;
+            if (temp_v1 < temp_v0) {
+                temp_v0 = temp_v1;
+            }
+            arg0->field_0x1F = temp_v0;
+            temp_a1 = ((volatile Struct150BF0F4 *)arg0)->field_0x24;
+        }
+    } else {
+        if (temp_v0 != 0) {
+            temp_v0 -= D_800BE9E4 * arg0->field_0x2F;
+            if (temp_v0 < 0) {
+                temp_v0 = 0;
+            }
+            arg0->field_0x1F = temp_v0;
+            temp_a1 = ((volatile Struct150BF0F4 *)arg0)->field_0x24;
+        }
+    }
+
+    if ((temp_a1 == 0) && (temp_v0 == 0)) {
+        return 1;
+    }
+
+    temp_v0 = arg0->field_0x2D;
+    temp_v0 *= D_800BE9E4;
+    arg0->field_0x14 = arg0->field_0x14 + temp_v0;
+    temp_v1 = arg0->field_0x14;
+    temp_v0 = arg0->field_0x2E;
+    temp_v0 *= D_800BE9E4;
+    arg0->field_0x16 = arg0->field_0x16 + temp_v0;
+    if ((temp_v1 <= 0) || (temp_v1 <= 0)) {
+        arg0->field_0x16 = 0;
+        arg0->field_0x14 = arg0->field_0x16;
+        return 1;
+    }
+
+    temp_v1 = arg0->field_0x2C;
+    temp_v1 += D_800BE9E4;
+    if (temp_v1 >= 0x80) {
+        temp_v1 = 0x7F;
+    }
+    arg0->field_0x2C = temp_v1;
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_EC420/func_150BF21C.s")
 
