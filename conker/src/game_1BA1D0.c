@@ -13,6 +13,10 @@ extern f32 D_800A7B70;
 extern f32 D_800A8018;
 extern void func_151D5D60();
 extern struct225 *func_151602C0(Header *, Header2 *, s32, s32, s32, s32, u8, u8, s32, u8, s32);
+struct Struct1519021CArg1;
+extern void func_151D2AB0(s32);
+extern s32 func_151D2F00(s32, s32, s32, s32);
+extern struct225 *func_1519021C(s32, struct Struct1519021CArg1 *, u8, s16, u8, s32);
 
 struct SoundLinkedPayload {
     u8 pad_0x0[0x46];
@@ -495,7 +499,78 @@ s32 func_1518F51C(void *arg0, u8 arg1, s32 arg2, s32 arg3, s8 arg4, s8 arg5, u8 
     return func_1518F5D0(arg0, (void *)(D_8008D630[sp33] + arg1 * 0x50), (s16)arg2, (s8)arg3, arg4, arg5, arg6, arg7, arg8, arg9);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1BA1D0/func_1518F5D0.s")
+struct Struct1518F5D0Data {
+    u32 unk0[0x11];
+    s32 unk44;
+    u32 unk48[2];
+};
+
+struct Struct1518F5D0Payload {
+    f32 unk0;
+    struct Struct1518F5D0Data unk4;
+    struct225 *unk54;
+    s8 unk58;
+    s8 unk59;
+    u8 unk5A;
+    u8 unk5B;
+    u32 pad5C;
+};
+
+struct Struct1518F5D0Init {
+    void *unk0;
+    u8 unk4;
+    u8 pad5;
+    s16 unk6;
+    s8 unk8;
+    s8 unk9;
+    s8 unkA;
+    s8 unkB;
+    s8 unkC;
+    s8 unkD;
+    u8 padE[2];
+};
+
+s32 func_1518F5D0(void *arg0, void *arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, s32 arg7, u8 arg8, s32 arg9) {
+    struct Struct1518F5D0Init init;
+    struct Struct1518F5D0Payload payload;
+    struct Struct1518F5D0Payload *temp_s0;
+    s32 temp_v0;
+    s8 flag;
+
+    payload.unk0 = 0.0f;
+    payload.unk4 = *(struct Struct1518F5D0Data *)arg1;
+    payload.unk58 = arg3;
+    init.unk0 = arg0;
+    payload.unk59 = arg4;
+    payload.unk5A = arg6;
+    init.unk4 = ((struct127 *)arg0)->unique_id;
+    if (arg2 == -1) {
+        init.unk6 = 0x12C;
+    } else {
+        init.unk6 = arg2;
+    }
+    flag = (arg2 == -1) ? 0 : 1;
+    init.unk8 = flag;
+    init.unk9 = 0;
+    init.unkA = 0;
+    init.unkB = 0;
+    init.unkC = 0;
+    init.unkD = 1;
+
+    temp_v0 = func_151D2F00((s32)&init, arg7 + 0x60, arg8, arg9);
+    if (temp_v0 != 0) {
+        temp_s0 = (struct Struct1518F5D0Payload *)(temp_v0 + 0x30);
+        memcpy(temp_s0, &payload, 0x5C);
+        if (arg5 != -1) {
+            temp_s0->unk54 = func_1519021C(temp_v0, arg0, arg5, arg2, arg8, arg9);
+        } else {
+            temp_s0->unk54 = 0;
+        }
+        func_151D2AB0(temp_s0->unk4.unk44);
+        func_1000FA64(0x4D, (s16)(s32)((struct127 *)arg0)->x_position, (s16)(s32)((struct127 *)arg0)->y_position, (s16)(s32)((struct127 *)arg0)->z_position, 0x3A98, 0x7D0, 0x320, (s32)func_1518E298, temp_v0, (s32)arg0, 0, 0);
+    }
+    return temp_v0;
+}
 
 extern f32 func_150ADA68(void);
 extern f32 D_800BE9A4;
