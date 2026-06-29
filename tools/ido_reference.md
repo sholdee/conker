@@ -1353,3 +1353,4 @@ Special empty-guard case:
 - `lw/sw` wanted for a float-valued field copy but typed assignment emits `lwc1/swc1`: bit-copy through integer/raw lvalues (`((s32 *)&dst)[i] = *(s32 *)(base+off)`) instead of `f32` fields.
   This preserves GPR word loads/stores and can avoid the FPU-register/frame shift caused by semantic float assignment.
 - `swc1` stores followed by an `lh`/`lhu` reload schedule wrong (reload hoists into FP latency slot): cast the stores and reload through matching `volatile` lvalues to force store-then-reload order without changing widths.
+- `li a0,N` / `move a0,s0` plus `addiu s0,s0,1` across repeated calls: pass one index local as `i++` directly in each call expression so IDO materializes the next call index early while preserving the output pointer's saved-reg lifetime.
