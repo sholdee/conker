@@ -7,6 +7,20 @@
 
 extern void *func_15167A68(s32, s32, s32, s32, u8, s32);
 extern s32 (*D_8008B0D0[])(void *);
+extern char D_800A6540[];
+extern char D_800A6548[];
+extern char D_800A657C[];
+extern char D_800A6584[];
+extern char D_800A65B8[];
+extern char D_800A65C0[];
+extern char D_800A65F4[];
+extern char D_800A65FC[];
+extern char D_800A6630[];
+extern char D_800A663C[];
+extern f32 D_800A6674;
+extern f32 D_800A6678;
+extern f32 D_800A667C;
+extern f32 D_800A6680;
 
 typedef struct {
     s32 unk0;
@@ -73,7 +87,19 @@ void func_15160090(void *arg0, s32 arg1, u8 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_18D250/func_151600D8.s")
+s32 func_151600D8(void *arg0) {
+    f32 *p;
+    s32 i;
+
+    p = (f32 *)((s32)arg0 + 0x18);
+    i = 0;
+    p[0] = (f32)func_151422DC(i++, D_800A6540, -2000, 2000, 0, D_800A6548, 0x1C4) * D_800A6674;
+    p[1] = (f32)func_151422DC(i++, D_800A657C, -2000, 2000, 0, D_800A6584, 0x1C9) * D_800A6678;
+    p[2] = (f32)func_151422DC(i++, D_800A65B8, 0, 2000, 500, D_800A65C0, 0x1CE) * D_800A667C;
+    p[3] = (f32)func_151422DC(i++, D_800A65F4, 0, 2000, 500, D_800A65FC, 0x1D3) * D_800A6680;
+    *(s32 *)&p[4] = func_151422DC(i, D_800A6630, 0, 0x10000, 0x10000, D_800A663C, 0x1D9);
+    return 1;
+}
 
 void func_15160274(s32 arg0, u8 arg1) {
     Data_15160274 sp1C;
