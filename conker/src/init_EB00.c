@@ -6,7 +6,6 @@
 s32 func_10010E78(s32 arg0, s32 arg1, u16 arg2, s16 arg3, u8 arg4,
                    s32 arg5, s16 arg6, s16 arg7, s16 arg8, s16 arg9,
                    s16 argA);
-void func_1000ECCC(void);
 void func_10011624(struct15 *arg0, s32 *arg1, s32 arg2, s32 arg3);
 s32 func_1510F8CC(s32 arg0);
 s32 func_1000F568(s32 arg0, s32 arg1);
@@ -20,6 +19,22 @@ typedef struct {
     struct_init_EB00_10011EB8_pair unk0[5];
 } struct_init_EB00_10011EB8_row;
 
+typedef struct {
+    u16 unk0;
+    u8 pad2[6];
+    u16 unk8;
+    s16 unkA;
+    s32 unkC;
+    u8 pad10[8];
+    union {
+        s32 w;
+        u16 h[2];
+    } unk18;
+    struct127 *unk1C;
+} struct_init_EB00_1000ECCC;
+
+s32 func_1000ECCC(struct_init_EB00_1000ECCC *arg0, s32 arg1, s32 arg2, s32 arg3,
+                  s32 arg4, s32 arg5, u16 *arg6);
 
 s32 func_1000EB00(struct04 *arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 arg6, s32 arg7, u16 *arg8) {
     if (arg0->unk24 != 0) {
@@ -79,7 +94,35 @@ s32 func_1000EC24(struct251 *arg0, s32 arg1, s32 *arg2, struct11 *arg3, struct04
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/init_EB00/func_1000ECCC.s")
+s32 func_1000ECCC(struct_init_EB00_1000ECCC *arg0, s32 arg1, s32 arg2, s32 arg3,
+                  s32 arg4, s32 arg5, u16 *arg6) {
+    s16 temp_a1;
+    s16 temp_t4;
+    s32 temp_v1;
+
+    temp_v1 = arg0->unk18.w;
+    temp_a1 = temp_v1;
+    if (*arg6 != 0) {
+        arg0->unk18.w = (*arg6 << 16) | (temp_v1 & 0xFFFF);
+        arg0->unk0 = 0;
+        *arg6 = 0;
+        temp_v1 = arg0->unk18.w;
+    }
+
+    temp_a1 -= D_800BE9E4;
+    temp_t4 = temp_v1 >> 16;
+    if (temp_a1 <= 0) {
+        *arg6 = temp_t4;
+        arg0->unk0 = temp_t4;
+        if (func_10010894(arg0->unk1C) == 0) {
+            func_10010344(*arg6, arg0->unk1C, arg0->unkC, arg0->unkA, arg0->unk8);
+        }
+        return 1;
+    }
+
+    arg0->unk18.w = (temp_v1 & 0xFFFF0000) | temp_a1;
+    return 0;
+}
 // ? func_1000ECCC(void *arg0, ? arg1, ? arg2, ? arg3, void *arg6) {
 //     s16 temp_a1;
 //     s32 temp_t4;
