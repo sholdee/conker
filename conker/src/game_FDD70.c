@@ -2,10 +2,51 @@
 #include "functions.h"
 #include "variables.h"
 
+extern s8 *D_80088890;
+extern s8 *D_80088894;
+extern s8 *D_80088898;
+extern s8 *D_8008889C;
+extern s32 *D_800DBF94;
+
+extern struct131 *func_151149AC(s32);
+extern void func_151951E0(struct127 *);
+extern void func_15136C3C(struct127 *, s32, s32, s32, s32, s32, s32, s32);
+extern void func_1507CD64(struct127 *, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FDD70/func_150D08C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FDD70/func_150D0E90.s")
+void func_150D0E90(s32 arg0) {
+    struct131 *temp;
+    s32 idx;
+    s32 i;
+
+    D_80088890 += D_800BE9E4 * 0x28;
+    D_80088894 += D_800BE9E4 * -0x42;
+    D_80088898 += D_800BE9E4 * -8;
+    D_8008889C += D_800BE9E4 * 0x5C;
+
+    i = 0;
+    if (D_800CC2D0->unk31C->unk120 == 0) {
+        do {
+            temp = func_151149AC((0xFA - i) & 0xFF);
+            idx = temp - D_800DBEF4;
+            if (D_800DBF94[idx] & 1) {
+                func_151951E0(D_800CC2D0);
+                func_10010154(0x627, D_800CC2D0, 0x7FFF, 0xC8, 0x2BC);
+            }
+            i += 1;
+        } while (i != 3);
+
+        temp = func_151149AC(0xFB);
+        idx = temp - D_800DBEF4;
+        if (D_800DBF94[idx] & 1) {
+            func_10010154(0x627, D_800CC2D0, 0x7FFF, 0xC8, 0x2BC);
+            func_15136C3C(D_800CC2D0, 1, 1, 1, 1, 0, 0xFF, 1);
+            func_15145A50(D_800CC2D0);
+            func_1507CD64(D_800CC2D0, 6);
+        }
+    }
+}
 
 typedef struct {
     /* 0x00 */ u8  unk0;
