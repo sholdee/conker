@@ -1,6 +1,8 @@
 #include <ultra64.h>
 
+#define func_15083E90 func_15083E90_s32_proto
 #include "functions.h"
+#undef func_15083E90
 #include "variables.h"
 
 extern f32 D_800A5698;
@@ -33,6 +35,7 @@ extern f32 D_800DCA08;
 extern f32 D_800DCA0C;
 extern f32 D_800DCA10;
 
+struct127 *func_15083E90();
 void func_150A7960(f32 *, f32, f32, f32, f32 *, f32 *, f32 *);
 void func_15142314(Mtx *, s32, f32 *);
 Gfx *func_15094FE8(Gfx *, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
@@ -290,7 +293,31 @@ f32 func_151423D8(u8 arg0) {
     }
     return -D_8009A220[temp_v1];
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game_16EE20/func_15142444.s")
+struct127 *func_15142444(u8 arg0, struct127 *arg1) {
+    s32 temp_v0;
+    struct127 *ret;
+
+    temp_v0 = arg0;
+    if (temp_v0 == 0xFF) {
+        if (arg1->unk1D4 != NULL) {
+            return arg1;
+        }
+        return NULL;
+    }
+
+    if ((arg1 != NULL) && (arg1->interaction_state != 0) && (temp_v0 == arg1->unique_id)) {
+        if (arg1->unk1D4 != NULL) {
+            return arg1;
+        }
+        return NULL;
+    }
+
+    ret = func_15083E90();
+    if ((ret != NULL) && (ret->unk1D4 != NULL)) {
+        return ret;
+    }
+    return NULL;
+}
 void func_150A8050(f32 (*)[4], f32, f32, f32);
 
 void func_151424F4(Mtx *arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9, f32 arg10, f32 arg11) {
