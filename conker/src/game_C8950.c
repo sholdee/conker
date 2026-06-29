@@ -4,8 +4,12 @@
 
 
 struct249 *func_1509B704(s16 arg0);
+s32 func_1509B5AC(s32 arg0, s32 arg1);
+void func_1509B810();
+s32 func_1509B8FC(s16 arg0);
 void func_1509C120(void);
 void func_1509C3A0(void);
+void func_150ADAF0();
 
 
 void func_1509B4A0(s32 arg0, s32 arg1) {
@@ -39,7 +43,33 @@ u16 *func_1509B570(s32 arg0) {
     return NULL;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C8950/func_1509B5AC.s")
+s32 func_1509B5AC(s32 arg0, s32 arg1) {
+    register struct249 *node;
+
+    node = func_1509B704((s16)arg0);
+    if ((arg1 == 0) && (*(u8 *)((arg0 >> 3) + (s32)D_800D2E4C) & (1 << (arg0 & 7)))) {
+        return 0;
+    }
+
+    if (node == 0) {
+        node = (struct249 *)func_1509B8FC((s16)arg0);
+        func_1509B810(node);
+        if ((*(u8 *)(((s32)(node->unk0 & (s32)0xFFFF03FF) >> 3) + (s32)D_800D2E4C) & (1 << ((s32)(node->unk0 & (s32)0xFFFF03FF) & 7))) == 0) {
+            D_8003C8E0 = 0x6000000;
+            func_150ADAF0(node, 0);
+            D_8003C8E0 = 0;
+        }
+        if ((arg1 == 0) || (node->unk0 & 0x400)) {
+            node->unk0 |= 0x4000;
+        }
+    } else if (arg1 != 0) {
+        if ((node->unk0 & 0x1000) && !(node->unk0 & 0x800)) {
+            bzero((u8 *)node + ((struct248 *)node)->unkA, ((struct248 *)node)->unk6);
+        }
+    }
+
+    return (s32)node;
+}
 
 struct249 *func_1509B704(s16 arg0) {
     struct249 *tmp;
@@ -138,7 +168,7 @@ void func_1509B810(Node1509 *arg0) {
     D_800D2F48.length += 1;
 }
 
-void func_1509B8FC(s16 arg0) {
+s32 func_1509B8FC(s16 arg0) {
     struct248 *temp_v0;
     s16 sp18[2];
 
