@@ -1348,3 +1348,5 @@ Special empty-guard case:
 - `%hi/%lo` relocation-only residue (`lui %hi(D_ABS)`/`%lo(D_ABS)` vs literal `lui 0xNNNN`/`0(reg)`): when an absolute-address symbol is only ORed/masked into an address, C may literalize it even with `extern` + `&D_ABS`; if bytes/registers match, treat as object-reloc spelling BAIL.
 - `lbu`/`sll` byte-stream big-endian length loads schedule wrong: overlay the cursor with a local byte-field struct (`pad; b4,b5,b6,b7`) and build the word from those fields inline; this avoids temp-local homes and gives IDO the byte-field load/add tree.
 - `lbu`/`ori`/`sb` byte-set block still JUSTREG after a scheduler-fence label: add an otherwise-unused block-local old-byte read plus named `u8 *` pointer/base temps, then store through the named pointer to rotate temps without changing branch shape.
+- `slti`/`bnezl` immediate-bound loop keeps becoming a `li`+equality back-edge, and `(s16)` increment fixes it but adds `sll/sra`: use `i = (i + 1) | 0` in the `for` increment.
+  The no-op OR is DCE'd but blocks trip-count substitution while preserving the indexed `sll`/`addu` body.
