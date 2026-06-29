@@ -88,11 +88,114 @@ typedef struct {
 
 extern GameStruct_15039A54 D_80098068[];
 
+typedef struct {
+    struct108 *unk0;
+    u8 pad4[0x328];
+} GameStruct_800CC5E8;
+
+extern GameStruct_800CC5E8 D_800CC5E8[];
+
 GameStruct_15039A54 *func_15039A54(s32 arg0, s32 arg1) {
     return &D_80098068[arg1];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_15039A78.s")
+void func_15039A78(f32 *arg0, f32 *arg1, f32 *arg2, f32 *arg3, f32 arg4, f32 arg5, s32 arg6) {
+    GameStruct_15039A54 *temp_v0;
+    struct108 *temp_v1;
+    f32 temp_f0;
+    f32 temp_f0_2;
+    f32 temp_f12;
+    f32 temp_f14;
+    f32 temp_f12_2;
+    f32 temp_f2;
+    f32 temp_f2_2;
+    f32 temp_f2_3;
+    f32 var_f12;
+    f32 var_f12_2;
+
+    temp_v1 = D_800CC5E8[arg6].unk0;
+    temp_v0 = func_15039A54(arg6, 0);
+    if ((temp_v1 != NULL) && (temp_v1->unk2C != 0x100)) {
+        temp_f12 = temp_v0->unk10;
+        temp_f0 = *arg0;
+        if (((temp_v0->unk0 + temp_f12) < temp_f0) || (temp_f2 = temp_v0->unk4, (temp_f0 < (temp_f2 - temp_f12)))) {
+            *arg0 = arg4;
+            *arg1 = arg5;
+            if (arg2 != NULL) {
+                *arg2 = *arg0;
+                *arg3 = *arg1;
+            }
+            return;
+        }
+
+        if (arg2 != NULL) {
+            *arg2 = temp_f0;
+            *arg3 = *arg1;
+            temp_f2 = temp_v0->unk4;
+            temp_f0 = *arg0;
+        }
+
+        if (temp_f0 < temp_f2) {
+            *arg0 = temp_f2;
+        } else {
+            temp_f2_2 = temp_v0->unk0;
+            if (temp_f2_2 < temp_f0) {
+                var_f12 = temp_f2_2;
+            } else {
+                var_f12 = temp_f0;
+            }
+            *arg0 = var_f12;
+        }
+
+        temp_f14 = temp_v0->unk8;
+        temp_f12 = temp_v0->unk14;
+        temp_f2_3 = *arg1;
+        if (((temp_f14 + temp_f12) < temp_f2_3) || (temp_f0_2 = temp_v0->unkC, (temp_f2_3 < (temp_f0_2 - temp_f12)))) {
+            *arg1 = arg5;
+            return;
+        }
+
+        if (temp_f2_3 < temp_f0_2) {
+            *arg1 = temp_f0_2;
+        } else {
+            if (temp_f14 < temp_f2_3) {
+                temp_f12 = temp_f14;
+            } else {
+                temp_f12 = temp_f2_3;
+            }
+            *arg1 = temp_f12;
+        }
+        return;
+    }
+
+    temp_f0 = *arg0;
+    temp_f2 = temp_v0->unk4;
+    if (temp_f0 < temp_f2) {
+        *arg0 = temp_f2;
+    } else {
+        temp_f2_2 = temp_v0->unk0;
+        if (temp_f2_2 < temp_f0) {
+            var_f12 = temp_f2_2;
+        } else {
+            var_f12 = temp_f0;
+        }
+        *arg0 = var_f12;
+    }
+
+    temp_f2_3 = *arg1;
+    temp_f0_2 = temp_v0->unkC;
+    if (temp_f2_3 < temp_f0_2) {
+        *arg1 = temp_f0_2;
+    } else {
+        temp_f14 = temp_v0->unk8;
+        if (temp_f14 < temp_f2_3) {
+            var_f12 = temp_f14;
+        } else {
+            var_f12 = temp_f2_3;
+        }
+        *arg1 = var_f12;
+    }
+}
 
 void func_15039CC8(struct127 *arg0) {
     s32 id;
