@@ -1,5 +1,7 @@
 #include <ultra64.h>
+#define func_1502B7F0 func_1502B7F0_5
 #include "functions.h"
+#undef func_1502B7F0
 #include "variables.h"
 
 extern s32 D_800E0A74;
@@ -16,6 +18,14 @@ extern u8 D_800BE740;
 extern s8 D_8008FD90;
 extern s8 D_800E0BD3;
 extern s32 *D_800E0BD8;
+extern u8 D_7FB;
+extern u8 D_887;
+extern u8 D_800E0A94;
+extern u8 D_800E0C85;
+extern s32 D_8009013C;
+extern s32 func_1510D0EC(void *, s32, s32, s32);
+extern s32 func_1502B7F0(s32 *, s32, s32);
+extern void func_10004074(void *);
 Gfx *func_151ED1E0(Gfx *);
 void func_15042D94(s32, s32, s32, s32);
 Gfx *func_151ED430(Gfx *, void *, s32, s32, s32, s32, f32, s32);
@@ -288,6 +298,64 @@ void func_151EDB58(GameStruct151EDB58 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151EE184.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151EEBE8.s")
+Gfx *func_151EEBE8(Gfx *gfx, s32 arg1) {
+    s32 image;
+
+    gDPPipeSync(gfx++);
+    gDPSetEnvColor(gfx++, 0xFF, 0xFF, 0xFF, D_800E0A94);
+    image = func_1510D0EC(&D_7FB, 0, 3, 0);
+    if (image != (s32)0x80000000) {
+        gDPSetTextureImage(gfx++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, image);
+        gDPSetTile(gfx++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_MIRROR, 5, 0, G_TX_CLAMP, 6, 0);
+        gDPLoadSync(gfx++);
+        gDPLoadBlock(gfx++, G_TX_LOADTILE, 0, 0, 0x5FF, 0);
+        gDPPipeSync(gfx++);
+        gDPSetTile(gfx++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 12, 0, G_TX_RENDERTILE, 0, G_TX_MIRROR, 5, 0, G_TX_CLAMP, 6, 0);
+        gDPSetTileSize(gfx++, G_TX_RENDERTILE, 0, 0, 0xBC, 0x7C);
+        gDPSetOtherMode(gfx++, 0x002C3F, 0x504244);
+        gfx = func_151E86E4(gfx, 0x190, 0x100, 0x250, 0x200, 0, 0, 0, 0x400, 0x400);
+        gfx = func_151E86E4(gfx, 0x250, 0x100, 0x310, 0x200, 0, 0x5E0, 0, -0x400, 0x400);
+    }
+
+    gDPPipeSync(gfx++);
+    image = func_1510D0EC(&D_887, 0, 3, 0);
+    if (image != (s32)0x80000000) {
+        gDPSetTextureImage(gfx++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, image);
+        gDPSetTile(gfx++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 0, 0, G_TX_LOADTILE, 0, G_TX_CLAMP, 5, 0, G_TX_CLAMP, 5, 0);
+        gDPLoadSync(gfx++);
+        gDPLoadBlock(gfx++, G_TX_LOADTILE, 0, 0, 0x3FF, 0);
+        gDPPipeSync(gfx++);
+        gDPSetTile(gfx++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 8, 0, G_TX_RENDERTILE, 0, G_TX_CLAMP, 5, 0, G_TX_CLAMP, 5, 0);
+        gDPSetTileSize(gfx++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+        gfx = func_151E86E4(gfx, 0x250, 0xBC, 0x290, 0xFC, 0, 0, 0, 0x400, 0x400);
+        gfx = func_151E86E4(gfx, 0x180, 0xBC, 0x1D0, 0xFC, 0, 0x200, 0x200, 0x400, 0x400);
+    }
+
+    {
+        s32 sp48;
+
+        {
+            u32 count;
+
+            if (D_800E0C85 != (arg1 + 1)) {
+                sp48 = 0;
+                count = func_1502B7F0(&sp48, 1, 0x1D);
+                if ((u32)arg1 < (u32)(count >> 1)) {
+                    D_8009013C = ((u16 *)sp48)[arg1];
+                } else {
+                    D_8009013C = 0;
+                }
+                func_10004074((void *)sp48);
+                D_800E0C85 = arg1 + 1;
+            }
+        }
+    }
+
+    if (D_8009013C != 0) {
+        gDPPipeSync(gfx++);
+        gfx = func_151ED430(gfx, &D_8009013C, 0x94, 0x60, 1, 2, 1.0f, 0);
+    }
+    return gfx;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_215960/func_151EEFF0.s")
