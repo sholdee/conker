@@ -1352,3 +1352,4 @@ Special empty-guard case:
   The no-op OR is DCE'd but blocks trip-count substitution while preserving the indexed `sll`/`addu` body.
 - `lw/sw` wanted for a float-valued field copy but typed assignment emits `lwc1/swc1`: bit-copy through integer/raw lvalues (`((s32 *)&dst)[i] = *(s32 *)(base+off)`) instead of `f32` fields.
   This preserves GPR word loads/stores and can avoid the FPU-register/frame shift caused by semantic float assignment.
+- `swc1` stores followed by an `lh`/`lhu` reload schedule wrong (reload hoists into FP latency slot): cast the stores and reload through matching `volatile` lvalues to force store-then-reload order without changing widths.
