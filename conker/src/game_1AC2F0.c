@@ -104,10 +104,38 @@ s32 func_1517EFDC(void) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1AC2F0/func_1517F08C.s")
+#define WGFX1517F08C(pkt, a, b)     \
+{                                   \
+    Gfx *_g = (Gfx *)(pkt);         \
+    _g->words.w0 = (u32)(a);        \
+    _g->words.w1 = (u32)(b);        \
+}
+
+Gfx *func_1517F08C(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    typedef struct {
+        char pad0[0x24];
+        f32 unk24;
+        f32 unk28;
+        f32 unk2C;
+        f32 unk30;
+        char pad34[0x14C];
+    } Struct1517F08C;
+    WGFX1517F08C(arg0++, 0xE7000000, 0);
+    WGFX1517F08C(arg0++, 0xFCFFFFFF, 0xFFFDF6FB);
+    gDPSetPrimColor(arg0++, 0, 0, arg2, arg3, arg4, arg1);
+    WGFX1517F08C(arg0++, 0xEF002CFF, 0x504344);
+
+    gDPFillRectangle(arg0++,
+        ((Struct1517F08C *)D_800BE628)[arg5].unk2C,
+        ((Struct1517F08C *)D_800BE628)[arg5].unk24,
+        ((Struct1517F08C *)D_800BE628)[arg5].unk30,
+        ((Struct1517F08C *)D_800BE628)[arg5].unk28);
+
+    return arg0;
+}
 
 extern u8 D_800DDDA0[];
-s32 func_1517F08C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+Gfx *func_1517F08C(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
 s32 func_1517F3A0(s32 arg0, s32 arg1) {
     s32 v0 = func_1517EF00(arg1);
