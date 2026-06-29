@@ -63,7 +63,64 @@ typedef struct Struct150E5558 {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_111670/func_150E41C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_111670/func_150E42F8.s")
+u8 func_150ADA20(void);
+extern s32 D_800DBE3C;
+extern s32 D_800DBE4C;
+extern s32 D_800DBE5C;
+extern f32 D_800A1060;
+extern s32 func_1510F8CC(s32);
+extern s32 func_1510F8D8(s32, s32, s32, s32 *);
+extern void func_150E4550(f32, f32, f32, s32, s32, s32, s32);
+typedef struct Struct150E42F8D99F0
+{
+  s16 unk0;
+  s16 pad2;
+  s16 unk4;
+} Struct150E42F8D99F0;
+extern Struct150E42F8D99F0 D_800D99F0;
+void func_150E42F8(s32 arg0)
+{
+  s32 temp_s0;
+  s32 temp_s1;
+  s32 temp_s2;
+  s32 sp70;
+  s32 temp_v0;
+  s32 sp68;
+  s32 idx;
+  s32 i;
+  f32 temp_f20;
+  s32 sp58;
+  sp58 = 0;
+  i = 0;
+  sp70 = D_800D99F0.unk0;
+  sp68 = D_800D99F0.unk4;
+  if (arg0 > 0)
+  {
+ temp_f20 = D_800A1060; do {
+      temp_s0 = (func_150ADA20() % 0x1F4) + sp70;
+      temp_s1 = (func_150ADA20() % 0x1F4) + sp68;
+      temp_s2 = temp_s1;
+      temp_s1 = func_1510F8D8(temp_s0, 0x2710, temp_s2, &sp58);
+      if ((temp_f20 != ((f32) temp_s1)) && (sp58 != 0))
+      {
+        idx = (sp58 - D_800DBE3C) / 12;
+        if ((idx >= 0) && (idx < D_800DBE4C))
+        {
+          temp_v0 = func_1510F8CC(((s32 *) D_800DBE5C)[idx]);
+          if (temp_v0 != 0)
+          {
+            func_150E4550((f32) temp_s0, (f32) temp_s1, (f32) temp_s2, 0, temp_v0, sp58, 0xFF);
+          }
+        }
+      }
+      i++;
+    }
+    while (i != arg0);
+  }
+}
+
+extern void func_150E42F8(s32);
+
 
 extern void func_150E41C0(void);
 extern void func_150E42F8(s32);
