@@ -1350,3 +1350,5 @@ Special empty-guard case:
 - `lbu`/`ori`/`sb` byte-set block still JUSTREG after a scheduler-fence label: add an otherwise-unused block-local old-byte read plus named `u8 *` pointer/base temps, then store through the named pointer to rotate temps without changing branch shape.
 - `slti`/`bnezl` immediate-bound loop keeps becoming a `li`+equality back-edge, and `(s16)` increment fixes it but adds `sll/sra`: use `i = (i + 1) | 0` in the `for` increment.
   The no-op OR is DCE'd but blocks trip-count substitution while preserving the indexed `sll`/`addu` body.
+- `lw/sw` wanted for a float-valued field copy but typed assignment emits `lwc1/swc1`: bit-copy through integer/raw lvalues (`((s32 *)&dst)[i] = *(s32 *)(base+off)`) instead of `f32` fields.
+  This preserves GPR word loads/stores and can avoid the FPU-register/frame shift caused by semantic float assignment.
