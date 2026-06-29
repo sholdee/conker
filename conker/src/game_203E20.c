@@ -4,9 +4,33 @@
 
 
 extern void func_150D6730(s32 arg0, s32 arg1, s32 arg2);
+extern s32 func_15042E3C(s32 arg0, ...);
 extern s32 func_15133EEC(s32 arg0, u16 arg1, u8 arg2, s32 arg3);
+extern char D_800AB254[];
 extern u32 D_80083740[];
 extern u32 D_800838C0[];
+
+typedef struct Obj151D7000 {
+    s32 unk0;
+    u8 pad4[0x37];
+    u8 unk3B;
+} Obj151D7000;
+
+typedef struct Sub151D7000 {
+    Obj151D7000 *unk0;
+    u8 unk4;
+    u8 pad5[0x3];
+    s32 unk8;
+    s16 unkC;
+    s16 unkE;
+} Sub151D7000;
+
+typedef struct Arg151D7000 {
+    u8 pad0[0xE];
+    s16 unkE;
+    u8 pad10[0x38];
+    Sub151D7000 *unk48;
+} Arg151D7000;
 
 void func_151D6970(s32 arg0, s32 arg1) {
     if ((D_800BE9F0 == 0x32) || (D_800BE9F0 == 0x33)) {
@@ -51,7 +75,34 @@ s32 func_151D6E60(struct Foo203E20 *arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_203E20/func_151D7000.s")
+s32 func_151D7000(Arg151D7000 *arg0) {
+    Obj151D7000 *obj;
+    Sub151D7000 *sub;
+    s16 temp;
+    s16 pad;
+    s16 value;
+
+    sub = arg0->unk48;
+    obj = sub->unk0;
+    if ((obj->unk0 == 0) || (obj->unk3B != sub->unk4)) {
+        return 0;
+    }
+
+    temp = arg0->unkE;
+    if (temp < sub->unkC) {
+        value = temp * sub->unkE;
+        if (value < 0) {
+            value = 0;
+        }
+    } else {
+        value = 0xFF;
+    }
+
+    func_150432CC((s32)obj, 0x109);
+    func_1504332C(0x32, 0x7D, 0x1C, value);
+    func_15042D78(0x81);
+    return func_15042E3C((s32)D_800AB254, sub->unk8);
+}
 
 void func_151D70CC(s32 *arg0, s32 arg1, u8 arg2) {
     func_15169850(arg1, arg2, arg0[0x12], arg0[0x12] + 4, (s32)arg0);
