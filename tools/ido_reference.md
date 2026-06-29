@@ -1354,3 +1354,5 @@ Special empty-guard case:
   This preserves GPR word loads/stores and can avoid the FPU-register/frame shift caused by semantic float assignment.
 - `swc1` stores followed by an `lh`/`lhu` reload schedule wrong (reload hoists into FP latency slot): cast the stores and reload through matching `volatile` lvalues to force store-then-reload order without changing widths.
 - `li a0,N` / `move a0,s0` plus `addiu s0,s0,1` across repeated calls: pass one index local as `i++` directly in each call expression so IDO materializes the next call index early while preserving the output pointer's saved-reg lifetime.
+- `jal` wants `sw a3,off(sp)` in its delay slot and the next null check wants `beqz v0; lw a3,off(sp)`, but C gives pre-`jal` spill/`li` slot or `move v1,v0`: use a block-scope empty-paren `extern s32 callee();` and fold the call into `if ((ret = callee(...)) != 0)`.
+  The old-style declaration loosens arg setup for the `jal` slot; assignment-in-condition keeps the return in `v0` for the branch-delay reload.
