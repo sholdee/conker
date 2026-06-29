@@ -10,6 +10,8 @@ extern u16 *D_80084380[];
 extern u8 D_80097E7C[];
 extern u8 D_80098050[];
 
+void func_15039A78(f32 *, f32 *, f32 *, f32 *, f32, f32, s32);
+
 typedef struct {
     u8 pad0[0x324];
     f32 *unk324;
@@ -76,7 +78,12 @@ s32 func_15037880(s32 arg0, f32 *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_15038620.s")
 
 typedef struct {
-    s32 unk0[6];
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
 } GameStruct_15039A54;
 
 extern GameStruct_15039A54 D_80098068[];
@@ -136,7 +143,73 @@ void func_15039CC8(struct127 *arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_15039ED0.s")
+void func_15039ED0(s32 arg0, f32 *arg1, f32 *arg2, f32 *arg3, f32 *arg4, f32 arg5, f32 arg6, s32 arg7) {
+    GameStruct_15039A54 *temp_v0;
+    f32 temp_f0;
+    f32 temp_f0_2;
+    f32 temp_f12;
+    f32 temp_f12_2;
+    f32 temp_f12_3;
+    f32 temp_f14;
+    f32 var_f2;
+    f32 var_f2_2;
+
+    if (arg0 == 0) {
+        func_15039A78(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+        return;
+    }
+
+    temp_v0 = func_15039A54(arg7, arg0);
+    temp_f12 = temp_v0->unk10;
+    temp_f0 = *arg1;
+    if (((temp_v0->unk0 + temp_f12) < temp_f0) || (var_f2 = temp_v0->unk4, (temp_f0 < (var_f2 - temp_f12)))) {
+        *arg1 = arg5;
+        *arg2 = arg6;
+        if (arg3 != NULL) {
+            *arg3 = *arg1;
+            *arg4 = *arg2;
+        }
+        return;
+    }
+
+    if (arg3 != NULL) {
+        *arg3 = temp_f0;
+        *arg4 = *arg2;
+        var_f2 = temp_v0->unk4;
+        temp_f0 = *arg1;
+    }
+
+    if (temp_f0 < var_f2) {
+        *arg1 = var_f2;
+    } else {
+        temp_f12_2 = temp_v0->unk0;
+        if (temp_f12_2 < temp_f0) {
+            var_f2 = temp_f12_2;
+        } else {
+            var_f2 = temp_f0;
+        }
+        *arg1 = var_f2;
+    }
+
+    temp_f12_3 = temp_v0->unk8;
+    temp_f14 = temp_v0->unk14;
+    temp_f0_2 = *arg2;
+    if (((temp_f12_3 + temp_f14) < temp_f0_2) || (var_f2_2 = temp_v0->unkC, (temp_f0_2 < (var_f2_2 - temp_f14)))) {
+        *arg2 = arg6;
+        return;
+    }
+
+    if (temp_f0_2 < var_f2_2) {
+        *arg2 = var_f2_2;
+    } else {
+        if (temp_f12_3 < temp_f0_2) {
+            var_f2_2 = temp_f12_3;
+        } else {
+            var_f2_2 = temp_f0_2;
+        }
+        *arg2 = var_f2_2;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_64120/func_1503A08C.s")
 

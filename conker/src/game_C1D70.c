@@ -8,8 +8,15 @@ typedef struct {
     s16 unk4;
 } struct150948C0;
 
+typedef struct {
+    u8 pad0;
+    u8 unk1;
+    u8 pad2[2];
+    s32 unk4;
+} struct1509499C_arg0;
+
 extern f32 *D_800D2C20;
-void func_1509499C(void *, struct150948C0 **);
+void func_1509499C(struct1509499C_arg0 *, s32 *);
 void func_150A7960(f32 *, f32, f32, f32, f32 *, f32 *, f32 *);
 
 void func_150948C0(void *arg0, s32 arg1) {
@@ -18,7 +25,7 @@ void func_150948C0(void *arg0, s32 arg1) {
     struct150948C0 *point;
     s32 out;
 
-    func_1509499C(arg0, sp50);
+    func_1509499C(arg0, (s32 *)sp50);
     for (i = 0; i != 0x10; i++) {
         point = sp50[i];
         if (point != 0) {
@@ -29,7 +36,32 @@ void func_150948C0(void *arg0, s32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_1509499C.s")
+void func_1509499C(struct1509499C_arg0 *arg0, s32 *arg1) {
+    s32 packed;
+    s32 value;
+    s32 i;
+    s32 lo;
+
+    value = arg0->unk4;
+    packed = arg0->unk1;
+    lo = (s16)(packed & 0xF);
+    i = 0;
+    packed = (s16)((packed >> 4) + 1);
+
+    for (; i < lo; i++) {
+        arg1[i] = 0;
+    }
+
+    i = lo;
+    for (; i < packed; i++) {
+        arg1[i] = value;
+        value += 0x10;
+    }
+
+    for (; i < 0x10; i++) {
+        arg1[i] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_C1D70/func_15094AB8.s")
 
