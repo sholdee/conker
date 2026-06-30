@@ -4,6 +4,14 @@
 
 extern s32 (*D_800888A0[])(struct260 *);
 
+struct struct_150D032C_prefix {
+    u8 bytes[5];
+};
+
+extern struct struct_150D032C_prefix D_800A0880;
+extern f32 D_800A0888;
+void func_15042D94(s32, s32, s32, u8 *);
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150CF140.s")
 
 typedef struct {
@@ -444,7 +452,49 @@ void func_150D02B4(u8 arg0, s32 arg1, s16 arg2, u8 arg3, void *arg4) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_FC5F0/func_150D032C.s")
+struct frame150D032C {
+    f32 unk0;
+    s16 unk4;
+    u8 pad[2];
+};
+
+s32 func_150D032C(struct260 *arg0) {
+    struct inner150CFE3C *inner;
+    struct frame150D032C *state;
+    u8 sp28[0x50];
+    struct struct_150D032C_prefix sp20;
+
+    inner = (struct inner150CFE3C *)((u8 *)arg0 + 0x28);
+    sp20 = D_800A0880;
+    state = *(struct frame150D032C **)((u8 *)arg0 + 0x48);
+
+    if (((u8 *)arg0)[0x30] & 1) {
+        state->unk4 = 0;
+        state->unk0 = 0.0f;
+    }
+
+    if (state->unk0 < (f32)inner->unk14) {
+        state->unk0 = state->unk0 + (D_800A0888 * D_800BE9A4);
+        if (state->unk0 > 1.0f) {
+            do {
+                state->unk4 = state->unk4 + 1;
+                if (inner->unk14 < state->unk4) {
+                    state->unk4 = inner->unk14;
+                }
+                state->unk0 = state->unk0 - 1.0f;
+            } while (state->unk0 > 1.0f);
+        }
+    }
+
+    memcpy(sp28, &sp20, 4);
+    memcpy(&sp28[4], inner->unk18[inner->unk15], state->unk4);
+    sp28[state->unk4 + 4] = 0x20;
+    sp28[state->unk4 + 5] = 0xBB;
+    sp28[state->unk4 + 6] = 0;
+    func_1504332C(0, 0xFF, 0, 0x96);
+    func_15042D94(0xF, 0xBE, 0x80, sp28);
+    return 1;
+}
 
 void func_150D04C4(u8 arg0, s32 arg1, s16 arg2, u8 arg3, void *arg4) {
     struct frame150D0134 sp30;

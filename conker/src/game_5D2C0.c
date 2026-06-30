@@ -25,6 +25,9 @@ extern void func_150A7A48(f32 arg0[4][4], f32 arg1[4][4], f32 arg2[4][4]);
 extern void func_1503E5F8();
 extern void *allocate_memory(s32 size, s32 arg1, s32 arg2, s32 arg3);
 extern void func_10004074(void *arg0);
+void func_15031C14(void *arg0);
+void func_1503F7B8(void *arg0);
+void func_1518CA04(s32 arg0);
 s32 func_1502FE10(s32 arg0, void *arg1, void *arg2, void *arg3, void *arg4, void *arg5, void *arg6);
 s32 func_1503F62C(s32 arg0, s32 arg1, void *arg2, void *arg3, void *arg4, void *arg5, void *arg6);
 
@@ -104,6 +107,27 @@ typedef struct Func1502FFD8Arg0 {
     void *unk48;
 } Func1502FFD8Arg0;
 
+typedef struct Func15030158Arg0 {
+    u8 unk0;
+    u8 unk1;
+    u8 pad2[6];
+    u8 unk8;
+    u8 unk9;
+    u8 padA[0x1A];
+    s32 unk24;
+    void *unk28;
+    void *unk2C;
+    s32 unk30;
+    void *unk34;
+    u8 pad38[0xC];
+    void *unk44;
+    void *unk48;
+    void *unk4C;
+    void *unk50;
+    struct Func15030158Arg0 *unk54;
+    struct Func15030158Arg0 *unk58;
+} Func15030158Arg0;
+
 s32 func_1502FFD8(Func1502FFD8Arg0 *arg0, u8 *arg1) {
     s32 sp3C;
     s32 flags;
@@ -147,7 +171,72 @@ s32 func_1502FFD8(Func1502FFD8Arg0 *arg0, u8 *arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_5D2C0/func_15030158.s")
+void func_15030158(Func15030158Arg0 *arg0, s32 arg1) {
+    void *temp_a0;
+    s32 *head;
+
+    if (arg1 == 0) {
+        func_15031C14(arg0);
+    }
+    if (arg0->unk9 != 0) {
+        if (arg0->unk8 != 0) {
+            if (arg1 != 0) {
+                func_10004074(arg0->unk28);
+                func_10004074(arg0->unk2C);
+            } else {
+                func_100043B4(arg0->unk28, 4);
+                func_100043B4(arg0->unk2C, 4);
+            }
+        }
+        temp_a0 = arg0->unk48;
+        if (temp_a0 != 0) {
+            func_1503F7B8(temp_a0);
+        }
+        func_1518CA04(arg0->unk1);
+    }
+    temp_a0 = arg0->unk34;
+    if (temp_a0 != 0) {
+        if (arg1 != 0) {
+            func_10004074(temp_a0);
+        } else {
+            func_100043B4(temp_a0, 4);
+        }
+    }
+    if (arg0->unk44 != 0) {
+        void *temp_v0;
+
+        temp_v0 = arg0->unk44;
+        func_10004074(temp_v0);
+    }
+    temp_a0 = arg0->unk4C;
+    if (temp_a0 != 0) {
+        if (arg1 != 0) {
+            func_10004074(temp_a0);
+        } else {
+            func_100043B4(temp_a0, 4);
+        }
+    }
+    temp_a0 = arg0->unk50;
+    if (temp_a0 != 0) {
+        if (arg1 != 0) {
+            func_10004074(temp_a0);
+        } else {
+            func_100043B4(temp_a0, 4);
+        }
+    }
+
+    head = (s32 *)(s32)&D_800C3EE0;
+    if ((s32)arg0 == *head) {
+        *head = (s32)arg0->unk54;
+    }
+    if (arg0->unk58 != 0) {
+        arg0->unk58->unk54 = arg0->unk54;
+    }
+    if (arg0->unk54 != 0) {
+        arg0->unk54->unk58 = arg0->unk58;
+    }
+    func_10004074(arg0);
+}
 
 s32 func_15030310(void *arg0, s32 arg1, s32 arg2);
 
