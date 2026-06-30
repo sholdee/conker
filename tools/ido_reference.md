@@ -1363,3 +1363,7 @@ Special empty-guard case:
   IDO reserves the debug halfword slot without emitted code or frame growth, shifting the following sub-word local to the target offset.
 - `blez` vs `beqz` entry guard on `for (i=0; i<count; i++)`: type the count/loop bound unsigned so IDO emits a plain zero-count `beqz`.
   A signed count makes the guard skip negative counts too (`blez`) even when the unrolled loop body already matches.
+- `%hi/%lo` + `lw/sw 0(vN)` wanted for a scalar global but C folds to direct `%lo(D)(at)`: keep an integer-cast pointer local, `p = (T *)(s32)&D; ... *p ...`.
+  This preserves the address register through both load and store; plain `&D` or volatile pointer forms can still fold the store or rotate the temp register.
+- `mflo v0` followed by an `lh`/`lhu` reload schedules wrong or hoists the halfword load: bind the product through a reused `s32 temp_v0` and update fields inline.
+  Avoid pre-binding neighboring halfword locals; making them transient lets `mflo v0` stay live long enough to block the early reload/register shift.
