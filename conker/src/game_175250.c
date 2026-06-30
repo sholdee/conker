@@ -22,12 +22,15 @@ struct Struct15148AF4_data {
     f32 unk8;
     f32 unkC;
     f32 unk10;
+    u8 pad14[4];
+    u8 unk18;
 };
 
 struct Struct15148AF4_arg0 {
     u8 pad0[0x25];
     u8 unk25;
-    u8 pad26[7];
+    u8 pad26[6];
+    s8 unk2C;
     s8 unk2D;
     s8 unk2E;
     u8 pad2F[0x65];
@@ -91,7 +94,47 @@ s32 func_15148AF4(struct Struct15148AF4_arg0 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_175250/func_15148BA4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_175250/func_15148DE0.s")
+s32 func_15148DE0(void *arg0) {
+    s32 idx;
+    s32 step;
+    s32 step2;
+    s8 temp_v0;
+    s32 phase;
+    struct Struct15148AF4_data *data;
+    struct Struct15148AF4_entry *entries;
+
+    temp_v0 = *(s8 *)((u8 *)arg0 + 0x2C);
+    if (temp_v0 >= 3) {
+        *(s8 *)((u8 *)arg0 + 0x2C) = temp_v0 - 1;
+        entries = *(struct Struct15148AF4_entry **)((u8 *)arg0 + 0x94);
+        data = *(struct Struct15148AF4_data **)((u8 *)arg0 + 0x98);
+        idx = *(s8 *)((u8 *)arg0 + 0x2D);
+        step = (0x1000 / *(s8 *)((u8 *)arg0 + 0x2C)) & 0xFFFF;
+        phase = (data->unk18 & 0x20) ? 0x1000 : 0;
+        *(s8 *)((u8 *)arg0 + 0x2E) = *(s8 *)((u8 *)arg0 + 0x2E) - 1;
+        if (*(s8 *)((u8 *)arg0 + 0x2E) < 0) {
+            *(s8 *)((u8 *)arg0 + 0x2E) = *(u8 *)((u8 *)arg0 + 0x25) - 1;
+        }
+        if (idx != *(s8 *)((u8 *)arg0 + 0x2E)) {
+            step2 = step;
+            step = 0x14;
+            do {
+                ((struct Struct15148AF4_entry *)((u8 *)entries + (idx * step)))->unk10 = phase;
+                if (data->unk18 & 0x20) {
+                    phase = (phase - step2) & 0xFFFF;
+                } else {
+                    phase = (phase + step2) & 0xFFFF;
+                }
+                idx++;
+                if (idx == *(u8 *)((u8 *)arg0 + 0x25)) {
+                    idx = 0;
+                }
+            } while (idx != *(s8 *)((u8 *)arg0 + 0x2E));
+        }
+        return 1;
+    }
+    return 0;
+}
 
 s32 func_15148EF8(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
     u8 *temp = (u8 *)*(s32 *)((u8 *)arg0 + 0x98);
