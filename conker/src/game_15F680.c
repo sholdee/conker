@@ -216,7 +216,80 @@ s32 func_15133510(s32 arg0, MatrixTransformFields *arg1) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15133588.s")
+extern void (*D_800899F8[])(void *, void *, u8);
+void func_151B9660(void *arg0);
+typedef struct 
+{
+  u8 pad_0[0x60];
+  s32 field_0x60;
+  u8 pad_64[2];
+  u16 field_0x66;
+  u8 field_0x68;
+  u8 pad_69[0x13];
+  s32 field_0x7C;
+  u8 field_0x80;
+} Func15133588Arg0;
+typedef struct 
+{
+  s32 field_0x0;
+  s32 field_0x4;
+  u8 field_0x8;
+  u8 field_0x9;
+} Func15133588Arg1;
+void func_15133588(Func15133588Arg0 *arg0, Func15133588Arg1 *arg1, u8 arg2)
+{
+  s32 temp_v0;
+  s32 temp_v0_2;
+  s32 temp_v1;
+  u8 var_v0;
+  void (*callback)(void *, void *, u8);
+  temp_v0 = arg2;
+  if ((temp_v0 == 0x1B) && (arg0->field_0x66 == 0x22))
+  {
+    func_151B9660(arg0);
+  }
+  if (temp_v0 == 0x2D)
+  {
+    temp_v0_2 = arg1->field_0x0;
+    ;
+    if (temp_v0_2 == arg0->field_0x7C)
+    {
+      arg0->field_0x7C = arg1->field_0x4;
+      arg0->field_0x80 = arg1->field_0x9;
+    }
+    else
+      if (arg0->field_0x7C != arg1->field_0x4)
+    {
+    }
+    else
+    {
+      arg0->field_0x7C = temp_v0_2;
+      arg0->field_0x80 = arg1->field_0x8;
+      second_update_done:
+      ;
+
+      ;
+      ;
+    }
+  }
+  else
+    if (temp_v0 == 0)
+  {
+    temp_v0_2 = arg1->field_0x0;
+    if ((temp_v0_2 == arg0->field_0x7C) || (arg0->field_0x80 == (*((u8 *) (&arg1->field_0x4)))))
+    {
+      arg0->field_0x7C = 0;
+      arg0->field_0x80 = 0;
+    }
+  }
+  var_v0 = (arg0->field_0x60 & 0x100) ? (arg0->field_0x68) : (0);
+  callback = D_800899F8[var_v0];
+  if (0 != callback)
+  {
+    callback(arg0, arg1, arg2);
+  }
+}
+
 
 s32 func_151336A8(s32 arg0, s32 **arg1, s32 arg2) {
     s32 sp2C;
