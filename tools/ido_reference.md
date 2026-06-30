@@ -1369,3 +1369,5 @@ Special empty-guard case:
   Avoid pre-binding neighboring halfword locals; making them transient lets `mflo v0` stay live long enough to block the early reload/register shift.
 - `lui`/`mtc1` float literal split by an unrelated `lwc1` field load: inline the field use in the expression instead of prebinding the field/literal to temps.
   Letting CSE own the field load can keep the literal's `lui; mtc1` pair adjacent before the dependent `mul.s`.
+- `gDPFillRectangle`/`F6000000` `sll`/`or` packing-order diff (same stores, wrong build order/registers):
+  choose official macro vs raw `w0/w1` writer per command; spell coordinate casts/shifts in the asm order.
