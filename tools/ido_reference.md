@@ -1357,3 +1357,7 @@ Special empty-guard case:
 - `jal` wants `sw a3,off(sp)` in its delay slot and the next null check wants `beqz v0; lw a3,off(sp)`, but C gives pre-`jal` spill/`li` slot or `move v1,v0`: use a block-scope empty-paren `extern s32 callee();` and fold the call into `if ((ret = callee(...)) != 0)`.
   The old-style declaration loosens arg setup for the `jal` slot; assignment-in-condition keeps the return in `v0` for the branch-delay reload.
 - `lwc1`/`mul.s`/`add.s` Horner chain load order wrong: spell the polynomial in forward Horner form (`(((C3*x)+C2)*x)+C1`) instead of algebraically equivalent `C1 + (((C3*x)+C2)*x)`. The tree shape controls coefficient load interleaving and final add operand regs.
+- Missing `lw off(sp)` reload before an indexed `lhu` after an unsigned bound check: keep the formal signed (`s32`) and cast only the compare to `(u32)`, then index as `((u16 *)base)[arg]`.
+  A `u32` formal CSEs the compare/index value; the signed formal plus unsigned compare splits them and can restore the homed-arg reload/delay-slot shape.
+- `sh`/`lh off(sp)` halfword spill lands two bytes high/low with otherwise matching code: insert an UNUSED `s16 pad;` before the live `s16` local.
+  IDO reserves the debug halfword slot without emitted code or frame growth, shifting the following sub-word local to the target offset.
