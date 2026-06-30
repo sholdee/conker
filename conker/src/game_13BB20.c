@@ -22,8 +22,16 @@ typedef struct unkfunc_1510FE30 {
     s16 unkC;
 } unkfunc_1510FE30;
 
+typedef struct unkfunc_1510F8D8 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+} unkfunc_1510F8D8;
+
 extern unkfunc_1510FE30 *D_800DBE48;
 
+extern s32 func_150A3A70(s32, s32);
 extern void func_150A6760(s32);
 extern void func_150F33F8(s32);
 extern s32 func_1510FE30(s32);
@@ -52,7 +60,7 @@ void func_1510E8BC(s32 a0, s32 a1, s32 a2, s32 a3, s32 arg4, s32 arg5, f32 arg6,
 
 extern void func_150A49F4(void);
 
-void func_1510F800(void) {
+void func_1510F800() {
     func_150A49F4();
 }
 
@@ -60,7 +68,41 @@ void func_1510F800(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_13BB20/func_1510F8CC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_13BB20/func_1510F8D8.s")
+s32 func_1510F8D8(s32 arg0, s32 arg1, s32 arg2, s32 *arg3) {
+    s32 count;
+    s32 bestIndex;
+    s32 i;
+    unkfunc_1510F8D8 *entries;
+    f32 arg1f;
+    f32 best;
+    f32 current;
+
+    func_1510F800(0);
+    count = func_150A3A70(arg0, arg2);
+    if (count == 0) {
+        return -10000;
+    }
+
+    entries = (unkfunc_1510F8D8 *)&D_800D3300;
+    bestIndex = 0;
+    arg1f = (f32)arg1;
+    best = arg1f - ((f32)entries[0].unk0 * 0.00390625f);
+
+    for (i = 1; i < count; i++) {
+        current = arg1f - ((f32)entries[i].unk0 * 0.00390625f);
+        if (((best >= 0.0f) && (current < best) && (current >= 0.0f)) ||
+            ((best < 0.0f) && (best < current))) {
+            best = current;
+            bestIndex = i;
+        }
+    }
+
+    if (arg3 != NULL) {
+        *arg3 = entries[bestIndex].unk4;
+    }
+
+    return (s32)((f32)entries[bestIndex].unk0 * 0.00390625f);
+}
 
 void func_1510FC34(s32 arg0) {
     struct108 *temp_v0;
