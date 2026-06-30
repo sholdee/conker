@@ -229,7 +229,136 @@ s32 func_1519D030(void *arg0, s32 arg1, s16 arg2, u8 arg3, u8 arg4, s32 arg5) {
     return temp_v0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519D240.s")
+extern f32 D_800BE9A4;
+extern s32 D_800BE9E4;
+typedef struct 
+{
+  f32 unk0;
+  f32 unk4;
+  f32 unk8;
+  f32 unkC;
+  f32 unk10;
+  f32 unk14;
+  f32 unk18;
+  s16 unk1C;
+  s16 unk1E;
+  u8 unk20;
+  u8 pad21[3];
+} Trail1519D240;
+typedef struct 
+{
+  f32 unk0;
+  f32 unk4;
+  f32 unk8;
+  f32 unkC;
+  f32 unk10;
+  f32 unk14;
+  f32 unk18;
+  s16 unk1C;
+  s16 unk1E;
+  u8 unk20;
+  u8 pad21[3];
+} Trail1519D240Alt;
+typedef struct 
+{
+  u8 pad0[0x25];
+  u8 unk25;
+  u8 pad26[6];
+  s8 unk2C;
+  s8 unk2D;
+  s8 unk2E;
+  u8 pad2F[0x25];
+  f32 unk54;
+  f32 unk58;
+  f32 unk5C;
+  u8 pad60[0x34];
+  Trail1519D240 *unk94;
+  Payload1519D030 *unk98;
+} Arg1519D240;
+s32 func_1519D240(Arg1519D240 *arg0)
+{
+  Payload1519D030 *payload;
+  Trail1519D240 *entries;
+  s32 index;
+  s32 offset;
+  register s32 mask;
+  s16 temp;
+  Trail1519D240 *entry;
+  Trail1519D240Alt *same_entry;
+  payload = arg0->unk98;
+  entries = arg0->unk94;
+  if ((arg0->unk2C < 2) && (payload->unk6 & 1))
+  {
+    return 0;
+  }
+  index = arg0->unk2E;
+  mask = -3;
+  if (index != arg0->unk2D)
+  {
+    do
+    {
+      index -= 1;
+      if (index < 0)
+      {
+        index = arg0->unk25 - 1;
+      }
+      offset = index * (sizeof(Trail1519D240));
+      entry = &entries[index];
+      entry->unk20 = 0xFF;
+      same_entry = (Trail1519D240Alt *) (((u8 *) entries) + offset);
+      temp = entry->unk1E;
+      entry->unkC *= payload->unk30;
+      entry->unk10 += payload->unk24 * D_800BE9A4;
+      entry->unk14 *= payload->unk30;
+      entry->unk0 += same_entry->unkC * D_800BE9A4;
+      entry->unk4 += same_entry->unk10 * D_800BE9A4;
+      entry->unk8 += same_entry->unk14 * D_800BE9A4;
+      if (temp > 0)
+      {
+        entry->unk1E = temp - D_800BE9E4;
+      }
+      else
+      {
+        entry->unk1C -= D_800BE9E4 * payload->unk46;
+      }
+      entry->unk18 += D_800BE9A4 * payload->unk34;
+      if (entry->unk1C < 0)
+      {
+        payload->unk6 &= mask;
+        if (index != arg0->unk2D)
+        {
+          do
+          {
+            arg0->unk2D++;
+            if (arg0->unk2D == arg0->unk25)
+            {
+              arg0->unk2D = 0;
+            }
+            arg0->unk2C--;
+          }
+          while (index != arg0->unk2D);
+        }
+        entries[arg0->unk2D].unk1C = 0;
+      }
+    }
+    while (index != arg0->unk2D);
+  }
+  if (arg0->unk2C > 0)
+  {
+    entry = entries;
+    mask = arg0->unk2D;
+    entry += mask;
+    *((Vec1519D030 *) (&arg0->unk54)) = *((Vec1519D030 *) (&entry->unk0));
+  }
+  else
+  {
+    arg0->unk54 = 0.0f;
+    arg0->unk58 = 0.0f;
+    arg0->unk5C = 0.0f;
+  }
+  return 1;
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1CA420/func_1519D454.s")
 
