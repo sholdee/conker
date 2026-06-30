@@ -1356,3 +1356,4 @@ Special empty-guard case:
 - `li a0,N` / `move a0,s0` plus `addiu s0,s0,1` across repeated calls: pass one index local as `i++` directly in each call expression so IDO materializes the next call index early while preserving the output pointer's saved-reg lifetime.
 - `jal` wants `sw a3,off(sp)` in its delay slot and the next null check wants `beqz v0; lw a3,off(sp)`, but C gives pre-`jal` spill/`li` slot or `move v1,v0`: use a block-scope empty-paren `extern s32 callee();` and fold the call into `if ((ret = callee(...)) != 0)`.
   The old-style declaration loosens arg setup for the `jal` slot; assignment-in-condition keeps the return in `v0` for the branch-delay reload.
+- `lwc1`/`mul.s`/`add.s` Horner chain load order wrong: spell the polynomial in forward Horner form (`(((C3*x)+C2)*x)+C1`) instead of algebraically equivalent `C1 + (((C3*x)+C2)*x)`. The tree shape controls coefficient load interleaving and final add operand regs.
