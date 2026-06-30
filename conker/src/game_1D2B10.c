@@ -69,7 +69,52 @@ void func_151A6B3C(struct210 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1D2B10/func_151A6B68.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1D2B10/func_151A6BD8.s")
+extern s32 D_800A5770;
+extern s32 D_800DCE50[][0x68];
+typedef struct Func151A6BD8Obj
+{
+  u8 pad0[8];
+  struct Func151A6BD8Obj *next;
+  u8 padC[7];
+  u8 type;
+  u8 pad14[0x14];
+  s32 owner;
+} Func151A6BD8Obj;
+Func151A6BD8Obj *func_151A6BD8(s32 arg0)
+{
+  u8 i;
+  u8 j;
+  Func151A6BD8Obj *obj;
+ i = 0; do {
+    j = 0;
+    do
+    {
+      obj = (Func151A6BD8Obj *) D_800DCE50[j][(&D_800A5770)[i]];
+      if (obj != 0)
+      {
+        do
+        {
+          if ((obj->type == 0x2C) && (arg0 == obj->owner))
+          {
+            return obj;
+          }
+          obj = obj->next;
+        }
+        while (obj != 0);
+      }
+      next_j:
+      j++;
+
+    }
+    while (j < 2);
+    next_i:
+    i++;
+
+  }
+  while (i < 2);
+  return 0;
+}
+
 
 void func_151A6C90(void *arg0, u8 arg1, s32 arg2) {
     struct17 sp9C;
