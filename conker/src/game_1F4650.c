@@ -672,7 +672,31 @@ void func_151CC290(s32 arg0) {
     func_1515572C((s32)&sp1C, 0x46);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CC2BC.s")
+void func_151CC2BC(void *arg0, s32 *arg1, u8 arg2) {
+    typedef struct {
+        s32 field_0x0;
+        u8 pad_0x4[0x8];
+        u8 field_0xC;
+        u8 pad_0xD[0x1F];
+        f32 field_0x2C;
+        f32 field_0x30;
+        f32 field_0x34;
+        f32 field_0x38;
+        u8 pad_0x3C[0x14];
+        f32 field_0x50;
+    } State;
+    State *base;
+
+    base = (State *)((s32)arg0 + 0x70);
+    if ((arg2 == 0x46) && (*arg1 == *(s32 *)((u8 *)base + 0))) {
+        base->field_0xC |= 2;
+        base->field_0x50 = 35.0f;
+        *(u8 *)((s32)arg0 + 0x2B) = (u32)base->field_0x2C;
+        *(u8 *)((s32)arg0 + 0x2C) = (u32)base->field_0x30;
+        *(u8 *)((s32)arg0 + 0x2D) = (u32)base->field_0x34;
+        *(u8 *)((s32)arg0 + 0x2E) = (u32)base->field_0x38;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_1F4650/func_151CC524.s")
 
