@@ -1361,3 +1361,5 @@ Special empty-guard case:
   A `u32` formal CSEs the compare/index value; the signed formal plus unsigned compare splits them and can restore the homed-arg reload/delay-slot shape.
 - `sh`/`lh off(sp)` halfword spill lands two bytes high/low with otherwise matching code: insert an UNUSED `s16 pad;` before the live `s16` local.
   IDO reserves the debug halfword slot without emitted code or frame growth, shifting the following sub-word local to the target offset.
+- `blez` vs `beqz` entry guard on `for (i=0; i<count; i++)`: type the count/loop bound unsigned so IDO emits a plain zero-count `beqz`.
+  A signed count makes the guard skip negative counts too (`blez`) even when the unrolled loop body already matches.
