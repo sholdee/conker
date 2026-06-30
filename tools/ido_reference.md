@@ -1367,3 +1367,5 @@ Special empty-guard case:
   This preserves the address register through both load and store; plain `&D` or volatile pointer forms can still fold the store or rotate the temp register.
 - `mflo v0` followed by an `lh`/`lhu` reload schedules wrong or hoists the halfword load: bind the product through a reused `s32 temp_v0` and update fields inline.
   Avoid pre-binding neighboring halfword locals; making them transient lets `mflo v0` stay live long enough to block the early reload/register shift.
+- `lui`/`mtc1` float literal split by an unrelated `lwc1` field load: inline the field use in the expression instead of prebinding the field/literal to temps.
+  Letting CSE own the field load can keep the literal's `lui; mtc1` pair adjacent before the dependent `mul.s`.
