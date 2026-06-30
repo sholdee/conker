@@ -243,6 +243,27 @@ grep -cE '^\s+- \[0x[0-9A-Fa-f]+, asm\]' conker/conker.us.yaml     # un-stubbed 
 - jtbl-externalized & native-64-bit functions are unmatchable as stubbed C (BAIL — see cookbook).
 - After `stub_expand`, run `permuter_daemon import_new` only between runs; the `expected/` refresh is automatic.
 
+## BIG-FUNC CONVERSION (open R&D — the hard tail)
+Big funcs (>=200 insn, ~40% of remaining BYTES) reach near-miss (score 10-34) but DON'T convert. Root
+cause (proven, 2026-06-29): the LLM's best-C is byte-perfect compiled in ISOLATION (the decomp-permuter's
+world, score 0) but N>0 in the full-file PROJECT build — a full-TU stack-frame/local-LAYOUT residue. So
+**the permuter can NEVER crack them** (it's 0 in isolation, nothing to permute), and the LLM oscillates.
+DEAD ENDS (all tried, all failed): frame-targeted prompt clause (live in big-lane, 0 conversions);
+header fixes (callee sigs + sqrtf both red herrings — sqrtf already intrinsic via `2.0L/PR/gu.h`);
+hand-rolled layout search `tools/inproject_search.py` (decl+struct mutations can't reach statement-driven
+spill/regalloc).
+- **The real engine = `tools/inproject_permute.py` (v3):** decomp-permuter's STATEMENT-level randomizer as
+  a library + an IN-PROJECT scorer (each candidate placed in real src, built via `iter_match.sh`).
+  `CONKER_REPO=$HOME/conker python3 tools/inproject_permute.py FUNC FILE [iters] [seed]`. Builds are fast
+  (~0.37s) so thousands of iters are cheap. Pipeline validated; search uses SHORT-WALK sampling (baseline
+  is a sharp optimum — cumulative walks just climb away). Run ONLY between cycles (de-stubs live src;
+  restores on exit unless it cracks → writes `/tmp/inproj_<func>.c`, leaves src de-stubbed for integrate).
+- **OPEN QUESTION under test:** does short-walk sampling find a path below the baseline, or is the residue
+  context-forced (structure-unreachable)? If the latter, the blocker is the never-isolated full-file
+  mechanism that inflates the frame (NOT callee sigs / sqrtf / stripped decls). See memory
+  `conker-bigfunc-residue-analysis.md`. **Do big-func R&D in the GAP windows (loop paused); never block the
+  healthy normal trickle on it.**
+
 ## TROUBLESHOOTING
 - **ENOSPC but `df -h` shows free space → it's INODES, not bytes.** `/tmp` is a tmpfs with a fixed
   inode cap (~1M). The permuter leaks `/tmp/permuterXXXX.{c,o}` on every `timeout`-SIGTERM kill; over days
