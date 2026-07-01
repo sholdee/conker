@@ -219,7 +219,7 @@ def main():
                 start = int(open(rot_f).read().strip()) % len(shelf)
             except Exception:
                 start = 0
-            SLICE = 16
+            SLICE = int(os.environ.get("CONKER_REPROBE_SLICE", "16"))   # thaw harder: raise via env
             probe = set(shelf[start:start + SLICE])
             try:
                 open(rot_f, "w").write(str((start + SLICE) % len(shelf)))

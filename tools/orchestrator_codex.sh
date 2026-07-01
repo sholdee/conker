@@ -17,7 +17,7 @@ status 0
 # so agents stop re-grinding far functions that never improve across attempts. Re-probe the whole
 # shelf every 5th cycle (thaw — a typing/struct/ref change since last attempt may have unstuck it).
 CONKER_REPO="$REPO" python3 tools/difficult_functions.py || true
-if [ $(( CYCLE % 5 )) -eq 0 ]; then
+if [ $(( CYCLE % ${CONKER_REPROBE_EVERY:-5} )) -eq 0 ]; then
   export CONKER_REPROBE=1; echo "cycle $CYCLE: RE-PROBE (difficult-shelf ignored this cycle)"
 else
   unset CONKER_REPROBE || true
