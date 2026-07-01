@@ -59,7 +59,7 @@ extern struct_game49D30_0 *D_800C3A50[];
 extern struct_game49D30_1 *D_800C3868[][30];
 extern struct_game49D30_2 D_800C3D48;
 extern void func_1501F72C(s32, f32, f32 *, s32, s32 *);
-extern void func_1501FFE8(f32 *, struct_game49D30_1 *, s32, u16);
+extern void func_1501FFE8(f32 *, struct_game49D30_1 *, s32, s32);
 extern void func_1516D2E0(s32);
 extern void func_1516D328(s32);
 
@@ -299,7 +299,49 @@ void func_1501FE68(s32 arg0, f32 arg1, f32 *arg2, s32 arg3) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_1501FFE8.s")
+void func_1501FFE8(f32 *arg0, struct_game49D30_1 *arg1, s32 arg2, s32 arg3) {
+    s32 flags;
+    s32 start;
+    s32 count;
+    s32 outIdx;
+    s32 i;
+    s32 outOffset;
+
+    flags = 6;
+    if ((arg2 - 1) >= 0) {
+        flags = 7;
+        start = arg2 - 1;
+        count = 3;
+        outIdx = 0;
+    } else {
+        start = arg2;
+        count = 2;
+        outIdx = 1;
+    }
+
+    if ((arg2 + 2) < arg3) {
+        flags |= 8;
+        count++;
+    }
+
+    for (i = start; i < start + count; outIdx++, i++) {
+        outOffset = outIdx * 12;
+        *(f32 *)((u8 *)arg0 + outOffset + 0) = (f32) arg1[i].unk0;
+        *(f32 *)((u8 *)arg0 + outOffset + 4) = (f32) arg1[i].unk2;
+        *(f32 *)((u8 *)arg0 + outOffset + 8) = (f32) arg1[i].unk4;
+    }
+
+    if (!(flags & 1)) {
+        arg0[0] = arg0[3];
+        arg0[1] = arg0[4];
+        arg0[2] = arg0[5];
+    }
+    if (!(flags & 8)) {
+        arg0[9] = arg0[6];
+        arg0[10] = arg0[7];
+        arg0[11] = arg0[8];
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_49D30/func_15020388.s")
 
@@ -717,4 +759,3 @@ void func_1502378C(void)
 
   func_15061B4C();
 }
-
