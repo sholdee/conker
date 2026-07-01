@@ -14,6 +14,89 @@ extern s32 D_800DC640[];
 s32 func_1502B6BC(s32 *arg0, s32 arg1, s32 *arg2, s32 arg3, s32 arg4, s32 arg5);
 s32 func_1510CE60(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4);
 void func_15168E54(s32 arg0, s32 arg1);
+s32 func_15046C80(f32 *arg0, s32 arg1, f32 arg2, void *arg3);
+s32 func_15044380(f32 arg0, f32 arg1, f32 arg2, void *arg3, s32 arg4, s32 arg5);
+
+typedef struct {
+    u8 bytes[0x10];
+    u16 tail;
+} Bytes18_15132DDC;
+
+typedef struct {
+    u8 pad_0[0x10];
+    f32 field_0x10;
+    u8 pad_14[0xC];
+    f32 field_0x20;
+    f32 field_0x24;
+    f32 field_0x28;
+    u8 pad_2C[0xC];
+    f32 field_0x38;
+    f32 field_0x3C;
+    f32 field_0x40;
+    f32 field_0x44;
+    f32 field_0x48;
+    f32 field_0x4C;
+    f32 field_0x50;
+    f32 field_0x54;
+    f32 field_0x58;
+    f32 field_0x5C;
+    s32 field_0x60;
+    u8 pad_64[0xF];
+    u8 field_0x73;
+    u8 field_0x74;
+    u8 field_0x75;
+    u8 pad_76[0x9A];
+    f32 field_0x110;
+    Bytes18_15132DDC field_0x114;
+    u8 pad_126[0x6];
+    u8 field_0x12C;
+    u8 field_0x12D;
+    u8 pad_12E[0x6];
+    f32 field_0x134;
+    f32 field_0x138;
+    f32 field_0x13C;
+    f32 field_0x140;
+    f32 field_0x144;
+    u8 field_0x148;
+    u8 field_0x149;
+    s8 field_0x14A;
+} Func15132DDCArg0;
+
+typedef struct {
+    s32 field_0x0;
+    u8 pad_4[0x10];
+    f32 field_0x14;
+    f32 field_0x18;
+    f32 field_0x1C;
+    u8 pad_20[0x8];
+    f32 field_0x28;
+    u8 pad_2C[0xB8];
+    s16 field_0xE4;
+    s16 field_0xE6;
+    u8 pad_E8[0x10];
+    s32 field_0xF8;
+    u8 pad_FC[0x50];
+    f32 field_0x14C;
+    f32 field_0x150;
+    u8 pad_154[0x2C];
+    f32 field_0x180;
+    u8 pad_184[0x4];
+    s32 field_0x188;
+    Bytes18_15132DDC field_0x18C;
+    u8 pad_19E[0x192];
+    f32 field_0x330[3];
+    f32 field_0x33C[3];
+} Func15132DDCLocals;
+
+typedef s32 (*Func15132DDCCallback34)(Func15132DDCArg0 *, f32, f32, f32, f32, void *);
+typedef s32 (*Func15132DDCCallback70)(Func15132DDCArg0 *, f32, f32, f32, f32);
+typedef s32 (*Func15132DDCCallback74)(Func15132DDCArg0 *, void *, f32, f32, f32);
+
+extern Func15132DDCCallback34 D_80089934[];
+extern Func15132DDCCallback70 D_80089970[];
+extern Func15132DDCCallback74 D_80089974[];
+extern f32 D_800A386C;
+extern f32 D_800A3870;
 
 typedef struct {
     u8 pad_0[0x60];
@@ -194,7 +277,124 @@ void func_15132A88(Obj15132A88 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15132B80.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_15132DDC.s")
+s32 func_15132DDC(Func15132DDCArg0 *arg0) {
+    Func15132DDCLocals sp38;
+    register f32 temp_f0;
+
+    if (arg0->field_0x60 & 7) {
+        memcpy(sp38.field_0x33C, &arg0->field_0x38, 0xC);
+    }
+
+    if (arg0->field_0x60 & 8) {
+        arg0->field_0x48 += arg0->field_0x5C * D_800BE9A4;
+    }
+
+    if (arg0->field_0x60 & 0x20) {
+        arg0->field_0x38 += arg0->field_0x44 * D_800BE9A4;
+        arg0->field_0x3C += arg0->field_0x48 * D_800BE9A4;
+        arg0->field_0x40 += arg0->field_0x4C * D_800BE9A4;
+    }
+
+    if (arg0->field_0x60 & 0x40) {
+        arg0->field_0x20 += arg0->field_0x50 * D_800BE9A4;
+        arg0->field_0x24 += arg0->field_0x54 * D_800BE9A4;
+        arg0->field_0x28 += arg0->field_0x58 * D_800BE9A4;
+    }
+
+    if (arg0->field_0x60 & 7) {
+        sp38.field_0x330[0] = arg0->field_0x38;
+        sp38.field_0x330[1] = sp38.field_0x33C[1];
+        sp38.field_0x330[2] = arg0->field_0x40;
+
+        if (func_15046C80(sp38.field_0x330, 0, arg0->field_0x3C - arg0->field_0x10, &arg0->field_0x110) != 0) {
+            if ((arg0->field_0x12D == 1) || ((arg0->field_0x12D == 2) && (arg0->field_0x12C & 1))) {
+                arg0->field_0x148 |= 1;
+                if (arg0->field_0x60 & 0x10) {
+                    temp_f0 = sqrtf((arg0->field_0x44 * arg0->field_0x44) +
+                                    (arg0->field_0x48 * arg0->field_0x48) +
+                                    (arg0->field_0x4C * arg0->field_0x4C));
+                    if (temp_f0 > 1.0f) {
+                        arg0->field_0x148 |= 8;
+                        arg0->field_0x140 = temp_f0;
+                        arg0->field_0x144 = 1.0f / temp_f0;
+                    }
+                }
+
+                if (arg0->field_0x73 != 0) {
+                    if (D_80089934[arg0->field_0x73](arg0, sp38.field_0x33C[0], sp38.field_0x33C[1],
+                                                     sp38.field_0x33C[2], arg0->field_0x110,
+                                                     &arg0->field_0x114) == 0) {
+                        return 0;
+                    }
+                }
+
+                if (arg0->field_0x60 & 0x10) {
+                    memcpy(&arg0->field_0x134, &arg0->field_0x38, 0xC);
+                }
+            }
+
+            if (arg0->field_0x12D == 3) {
+                arg0->field_0x148 |= 2;
+                if (arg0->field_0x74 != 0) {
+                    if (D_80089970[arg0->field_0x74](arg0, sp38.field_0x33C[0], sp38.field_0x33C[1],
+                                                     sp38.field_0x33C[2], arg0->field_0x110) == 0) {
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        if (arg0->field_0x60 & 4) {
+            sp38.field_0x0 = 4;
+            sp38.field_0x14 = arg0->field_0x38;
+            sp38.field_0x18 = arg0->field_0x3C;
+            sp38.field_0x1C = arg0->field_0x40;
+            sp38.field_0x188 = 0;
+            sp38.field_0x18C = arg0->field_0x114;
+            sp38.field_0x28 = 1.0f;
+            sp38.field_0x14C = 1.0f;
+            sp38.field_0xE4 = (s16)(s32)arg0->field_0x10;
+            sp38.field_0x150 = 1.0f;
+            sp38.field_0xE6 = (s16)(s32)arg0->field_0x10;
+            if (arg0->field_0x12C & 2) {
+                sp38.field_0x180 = arg0->field_0x110;
+            } else {
+                sp38.field_0x180 = D_800A386C;
+            }
+            sp38.field_0xF8 = 0;
+
+            if (func_15044380(sp38.field_0x33C[0], sp38.field_0x33C[1], sp38.field_0x33C[2], &sp38, 0, 0) != 0) {
+                arg0->field_0x148 |= 4;
+                if (arg0->field_0x60 & 0x10) {
+                    temp_f0 = sqrtf((arg0->field_0x44 * arg0->field_0x44) +
+                                    (arg0->field_0x48 * arg0->field_0x48) +
+                                    (arg0->field_0x4C * arg0->field_0x4C));
+                    if (temp_f0 > 1.0f) {
+                        arg0->field_0x148 |= 0x10;
+                        arg0->field_0x140 = temp_f0;
+                        arg0->field_0x144 = 1.0f / temp_f0;
+                        arg0->field_0x14A = (s8)(s32)(func_150484A0(sp38.field_0x14 - arg0->field_0x38,
+                                                                     sp38.field_0x1C - arg0->field_0x40) *
+                                                       D_800A3870);
+                    }
+                }
+
+                if (arg0->field_0x75 != 0) {
+                    if (D_80089974[arg0->field_0x75](arg0, &sp38, sp38.field_0x33C[0],
+                                                     sp38.field_0x33C[1], sp38.field_0x33C[2]) == 0) {
+                        return 0;
+                    }
+                }
+
+                if (arg0->field_0x60 & 0x10) {
+                    memcpy(&arg0->field_0x134, &arg0->field_0x38, 0xC);
+                }
+            }
+        }
+    }
+
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_15F680/func_151332DC.s")
 
