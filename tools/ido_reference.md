@@ -1373,3 +1373,6 @@ Special empty-guard case:
   choose official macro vs raw `w0/w1` writer per command; spell coordinate casts/shifts in the asm order.
 - `jal` wants an unused arg setup in the delay slot (`move a0,zero`) but typing the callee param inserts a callee-body `sw a0,off(sp)` / shifts following symbols: define the callee with an old-style empty parameter list (`void f()`) and call `f(0)`.
   This keeps the direct `jal` + arg setup without a function-pointer `jalr`, while the callee body stays unprototyped and emits no debug param home.
+- `lbu/sb` tail on a 0x12 aggregate copy when target uses `lhu/sh` after `swl/swr`: don't model the span as flat `u8[N]` or split fields; use one nested value-copied struct like `struct { u8 bytes[0x10]; u16 tail; }` so IDO keeps one aggregate base and emits the halfword tail copy.
+- `mtc1 zero` + `mul.s` wanted for a zero product but `0.0f * x` folds away: write the zero as integer `0 * x` inside the float expression.
+  The int-zero form can force IDO to materialize zero and keep the runtime `mul.s` without a separate zero temp; a named/register `f32 zero` may still fold or perturb allocation.
