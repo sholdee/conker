@@ -1371,3 +1371,5 @@ Special empty-guard case:
   Letting CSE own the field load can keep the literal's `lui; mtc1` pair adjacent before the dependent `mul.s`.
 - `gDPFillRectangle`/`F6000000` `sll`/`or` packing-order diff (same stores, wrong build order/registers):
   choose official macro vs raw `w0/w1` writer per command; spell coordinate casts/shifts in the asm order.
+- `jal` wants an unused arg setup in the delay slot (`move a0,zero`) but typing the callee param inserts a callee-body `sw a0,off(sp)` / shifts following symbols: define the callee with an old-style empty parameter list (`void f()`) and call `f(0)`.
+  This keeps the direct `jal` + arg setup without a function-pointer `jalr`, while the callee body stays unprototyped and emits no debug param home.
