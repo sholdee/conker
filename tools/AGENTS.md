@@ -252,17 +252,16 @@ DEAD ENDS (all tried, all failed): frame-targeted prompt clause (live in big-lan
 header fixes (callee sigs + sqrtf both red herrings — sqrtf already intrinsic via `2.0L/PR/gu.h`);
 hand-rolled layout search `tools/inproject_search.py` (decl+struct mutations can't reach statement-driven
 spill/regalloc).
-- **The real engine = `tools/inproject_permute.py` (v3):** decomp-permuter's STATEMENT-level randomizer as
-  a library + an IN-PROJECT scorer (each candidate placed in real src, built via `iter_match.sh`).
-  `CONKER_REPO=$HOME/conker python3 tools/inproject_permute.py FUNC FILE [iters] [seed]`. Builds are fast
-  (~0.37s) so thousands of iters are cheap. Pipeline validated; search uses SHORT-WALK sampling (baseline
-  is a sharp optimum — cumulative walks just climb away). Run ONLY between cycles (de-stubs live src;
-  restores on exit unless it cracks → writes `/tmp/inproj_<func>.c`, leaves src de-stubbed for integrate).
-- **OPEN QUESTION under test:** does short-walk sampling find a path below the baseline, or is the residue
-  context-forced (structure-unreachable)? If the latter, the blocker is the never-isolated full-file
-  mechanism that inflates the frame (NOT callee sigs / sqrtf / stripped decls). See memory
-  `conker-bigfunc-residue-analysis.md`. **Do big-func R&D in the GAP windows (loop paused); never block the
-  healthy normal trickle on it.**
+- **`tools/inproject_permute.py` (v3) — built, run, DECISIVE NEGATIVE:** decomp-permuter's STATEMENT-level
+  randomizer (library) + IN-PROJECT scorer (`iter_match`). On func_150CF140 (baseline 10): 400 iters, 390
+  built, ZERO improvements — best never dipped below 10. So even the full statement-level randomizer,
+  searching in-project, cannot reduce the residue.
+- **ANSWER: the residue is CONTEXT-FORCED, not function-structure-reachable.** No permuter (isolated or
+  in-project) can crack these — the frame inflation is imposed by the full-file COMPILATION CONTEXT (a global
+  type/symbol), independent of the function body. ALL permuter/search paths are RULED OUT. The only remaining
+  path: isolate WHAT global context forces the +16 frame and fix it (diff codegen under varied global type
+  defs). Don't re-run inproject_search/inproject_permute expecting a crack. See memory
+  `conker-bigfunc-residue-analysis.md`. **Big funcs are a hard tail — keep the normal trickle as the driver.**
 
 ## TROUBLESHOOTING
 - **ENOSPC but `df -h` shows free space → it's INODES, not bytes.** `/tmp` is a tmpfs with a fixed
