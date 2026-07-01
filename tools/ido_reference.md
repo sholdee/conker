@@ -1376,3 +1376,7 @@ Special empty-guard case:
 - `lbu/sb` tail on a 0x12 aggregate copy when target uses `lhu/sh` after `swl/swr`: don't model the span as flat `u8[N]` or split fields; use one nested value-copied struct like `struct { u8 bytes[0x10]; u16 tail; }` so IDO keeps one aggregate base and emits the halfword tail copy.
 - `mtc1 zero` + `mul.s` wanted for a zero product but `0.0f * x` folds away: write the zero as integer `0 * x` inside the float expression.
   The int-zero form can force IDO to materialize zero and keep the runtime `mul.s` without a separate zero temp; a named/register `f32 zero` may still fold or perturb allocation.
+- `addiu` loop induction bumps in the wrong order at a scalar remainder/back-edge: order the `for` increment comma list to match the asm (`outIdx++, i++` vs `i++, outIdx++`).
+  Moving one bump into the loop body can defeat IDO's unroll/induction recognition; keep the bumps in the increment list when the loop shape already matches.
+- `addiu` then `sll` wanted for fixed-point coords but C emits `sll` then `addiu -4`: spell the value as `(w - 1) << 2`, not `w * 4 - 4`.
+  This is useful around `gDPSetTileSize`/rectangle coordinate macros where expression reassociation changes the command-word build order.
